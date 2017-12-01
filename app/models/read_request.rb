@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: read_requests
@@ -15,7 +16,6 @@
 #  index_read_requests_on_request_id_and_user_id  (request_id,user_id) UNIQUE
 #  index_read_requests_on_user_id                 (user_id)
 #
-
 
 class ReadRequest < ApplicationRecord
   belongs_to :request

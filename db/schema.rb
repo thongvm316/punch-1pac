@@ -164,7 +164,7 @@ ActiveRecord::Schema.define(version: 20171201065420) do
 
   create_table "users", force: :cascade do |t|
     t.bigint "company_id", null: false
-    t.bigint "department_id", null: false
+    t.bigint "department_id"
     t.string "role", default: "normal", null: false
     t.string "name", null: false
     t.string "gender", default: "male", null: false

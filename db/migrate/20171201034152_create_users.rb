@@ -4,7 +4,7 @@ class CreateUsers < ActiveRecord::Migration[5.1]
   def change
     create_table :users do |t|
       t.bigint :company_id, null: false
-      t.bigint :department_id, null: false
+      t.bigint :department_id
       t.string :role, null: false, default: 'normal'
       t.string :name, null: false
       t.string :gender, null: false, default: 'male'

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: read_announcements
@@ -15,7 +16,6 @@
 #  index_read_announcements_on_announcement_id_and_user_id  (announcement_id,user_id) UNIQUE
 #  index_read_announcements_on_user_id                      (user_id)
 #
-
 
 class ReadAnnouncement < ApplicationRecord
   belongs_to :announcement

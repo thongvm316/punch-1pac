@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: attendances
@@ -17,7 +18,6 @@
 #  index_attendances_on_user_id          (user_id)
 #  index_attendances_on_user_id_and_day  (user_id,day) UNIQUE
 #
-
 
 class Attendance < ApplicationRecord
   belongs_to :user

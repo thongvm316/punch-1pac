@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: holidays
@@ -17,10 +18,9 @@
 #  index_holidays_on_admin_id  (admin_id)
 #
 
-
 class Holiday < ApplicationRecord
   belongs_to :admin
-  has_many :company_holidays
+  has_many :company_holidays, dependent: :destroy
   has_many :companies, through: :company_holidays
 
   validates :country, presence: true

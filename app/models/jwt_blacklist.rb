@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: jwt_blacklists
@@ -13,7 +14,6 @@
 #
 #  index_jwt_blacklists_on_jti  (jti) UNIQUE
 #
-
 
 class JwtBlacklist < ApplicationRecord
   self.table_name = 'jwt_blacklist'

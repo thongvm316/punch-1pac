@@ -1,11 +1,12 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: users
 #
 #  id                     :integer          not null, primary key
 #  company_id             :integer          not null
-#  department_id          :integer          not null
+#  department_id          :integer
 #  role                   :string           default(NULL), not null
 #  name                   :string           not null
 #  gender                 :string           default("male"), not null
@@ -36,10 +37,10 @@ class User < ApplicationRecord
   enumerize :language, in: %i[vi en jp]
 
   belongs_to :company
-  belongs_to :department
-  has_many :attendances
-  has_many :sessions
-  has_many :requests
+  belongs_to :department, optional: true
+  has_many :attendances, dependent: :destroy
+  has_many :sessions, dependent: :destroy
+  has_many :requests, dependent: :destroy
 
   validates :name, presence: true, length: { maximum: 100 }
   validates :email, presence: true, uniqueness: true, length: { maximum: 200 }

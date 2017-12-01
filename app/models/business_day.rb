@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: business_days
@@ -15,7 +16,6 @@
 #
 #  index_business_days_on_company_id  (company_id)
 #
-
 
 class BusinessDay < ApplicationRecord
   belongs_to :company

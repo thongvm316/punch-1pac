@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: departments
@@ -14,10 +15,9 @@
 #  index_departments_on_company_id  (company_id)
 #
 
-
 class Department < ApplicationRecord
   belongs_to :company
-  has_many :users
+  has_many :users, dependent: :nullify
 
   validates :name, presence: true
 end

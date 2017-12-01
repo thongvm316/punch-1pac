@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: allowed_ips
@@ -16,9 +17,8 @@
 #  index_allowed_ips_on_ip_address                 (ip_address)
 #
 
-
 class AllowedIp < ApplicationRecord
   belongs_to :company
 
-  validates :ip_address , presence: true
+  validates :ip_address, presence: true
 end
