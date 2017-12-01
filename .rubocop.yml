@@ -1,19 +1,15 @@
 AllCops:
   Exclude:
     - 'db/schema.rb'
-    - 'db/migrate/*'
     - 'doc/**/*'
   DisplayCopNames: true
   DisplayStyleGuide: true
   ExtraDetails: true
-  TargetRubyVersion: 2.3
+  TargetRubyVersion: 2.4
 
 Rails:
   Enabled: true
 
-Lint/HandleExceptions:
-  Exclude:
-    - 'config/puma.rb'
 Lint/ScriptPermission:
   Enabled: false
 
@@ -29,8 +25,6 @@ Metrics/LineLength:
 
 Metrics/MethodLength:
   Max: 20
-  Exclude:
-    - 'db/**/*.rb'
 
 Metrics/CyclomaticComplexity:
   Max: 7
@@ -39,8 +33,6 @@ Metrics/PerceivedComplexity:
   Max: 8
 
 Metrics/AbcSize:
-  Exclude:
-    - 'db/**/*.rb'
   Max: 25
 
 Style/AsciiComments:
@@ -55,9 +47,6 @@ Style/ClassAndModuleChildren:
 Style/Documentation:
   Enabled: false
 
-Layout/ExtraSpacing:
-  Exclude:
-    - 'db/migrate/*.rb'
 
 Style/Lambda:
   EnforcedStyle: literal
@@ -67,8 +56,6 @@ Style/NumericLiterals:
 
 Style/BracesAroundHashParameters:
   EnforcedStyle: no_braces
-  Exclude:
-    - 'db/fixtures/*.rb'
 
 Bundler/OrderedGems:
   Enabled: false
