@@ -10,7 +10,7 @@
 #  client_ip   :inet             not null
 #  client_name :string           not null
 #  client_os   :string           not null
-#  client_ua   :text             not null
+#  client_ua   :string(1000)     not null
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #
@@ -20,6 +20,13 @@
 #  index_sessions_on_user_id  (user_id)
 #
 
-
 class Session < ApplicationRecord
+  belongs_to :user
+
+  validates :jti, presence: true, uniqueness: true
+  validates :exp, presence: true
+  validates :client_ip, presence: true
+  validates :client_name, presence: true
+  validates :client_os, presence: true
+  validates :client_ua, presence: true, length: { maximum: 1000 }
 end

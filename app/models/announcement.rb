@@ -9,7 +9,7 @@
 #  send_status :string           default("sending"), not null
 #  status      :string           default("normal"), not null
 #  title       :string           not null
-#  content     :text             not null
+#  content     :string(2000)     not null
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #
@@ -18,6 +18,15 @@
 #  index_announcements_on_admin_id  (admin_id)
 #
 
-
 class Announcement < ApplicationRecord
+  extend Enumerize
+
+  enumerize :send_type, in: %i[all owners]
+  enumerize :send_status, in: %i[sending sent]
+  enumerize :status, in: %i[normal urgent]
+
+  belongs_to :admin
+
+  validates :title, presence: true
+  validates :content, presence: true, length: { maximum: 2000 }
 end

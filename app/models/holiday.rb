@@ -19,4 +19,12 @@
 
 
 class Holiday < ApplicationRecord
+  belongs_to :admin
+  has_many :company_holidays
+  has_many :companies, through: :company_holidays
+
+  validates :country, presence: true
+  validates :name, presence: true
+  validates :started_at, presence: true
+  validates :ended_at, presence: true
 end

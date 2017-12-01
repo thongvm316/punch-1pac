@@ -18,4 +18,7 @@
 
 
 class AllowedIp < ApplicationRecord
+  belongs_to :company
+
+  validates :ip_address , presence: true
 end

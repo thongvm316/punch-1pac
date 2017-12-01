@@ -27,4 +27,17 @@
 
 
 class Company < ApplicationRecord
+  belongs_to :owner, class: User, foreign_key: :owner_id
+  has_many :users
+  has_many :allowed_ips
+  has_many :business_days
+  has_many :company_holidays
+  has_many :holidays, through: :company_holidays
+
+  validates :namespace, presence: true, uniqueness: true
+  validates :name, presence: true
+  validates :county, presence: true
+  validates :industry, presence: true
+  validates :address, presence: true
+  validates :phone_number, presence: true
 end

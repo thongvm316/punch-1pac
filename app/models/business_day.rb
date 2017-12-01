@@ -18,4 +18,9 @@
 
 
 class BusinessDay < ApplicationRecord
+  belongs_to :company
+
+  validates :started_at, presence: true
+  validates :ended_at, presence: true
+  validates :weekday, presence: true
 end

@@ -6,7 +6,7 @@
 #  id            :integer          not null, primary key
 #  attendance_id :integer          not null
 #  user_id       :integer          not null
-#  reason        :text             not null
+#  reason        :string(500)      not null
 #  attended_at   :time
 #  left_at       :time
 #  status        :string           default("pending"), not null
@@ -19,6 +19,13 @@
 #  index_requests_on_user_id        (user_id)
 #
 
-
 class Request < ApplicationRecord
+  extend Enumerize
+
+  enumerize :status, in: %i[pending approved rejected]
+
+  belongs_to :attendance
+  belongs_to :user
+
+  validates :reason, presence: true, length: { maximum: 500 }
 end

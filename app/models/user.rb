@@ -6,7 +6,7 @@
 #  id                     :integer          not null, primary key
 #  company_id             :integer          not null
 #  department_id          :integer          not null
-#  role                   :string           default("normal"), not null
+#  role                   :string           default(NULL), not null
 #  name                   :string           not null
 #  gender                 :string           default("male"), not null
 #  avatar_data            :text
@@ -26,9 +26,21 @@
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
 #
 
-
 class User < ApplicationRecord
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable and :omniauthable
+  extend Enumerize
+
   devise :database_authenticatable, :registerable, :recoverable, :validatable
+
+  enumerize :role, in: %i[superadmin admin member]
+  enumerize :gender, in: %i[male female]
+  enumerize :language, in: %i[vi en jp]
+
+  belongs_to :company
+  belongs_to :department
+  has_many :attendances
+  has_many :sessions
+  has_many :requests
+
+  validates :name, presence: true, length: { maximum: 100 }
+  validates :email, presence: true, uniqueness: true, length: { maximum: 200 }
 end
