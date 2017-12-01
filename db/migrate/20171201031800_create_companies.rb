@@ -3,7 +3,6 @@
 class CreateCompanies < ActiveRecord::Migration[5.1]
   def change
     create_table :companies do |t|
-      t.bigint :owner_id, null: false
       t.string :namespace, null: false
       t.string :name, null: false
       t.string :country, null: false

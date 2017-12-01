@@ -60,7 +60,6 @@ ActiveRecord::Schema.define(version: 20171201065420) do
   end
 
   create_table "companies", force: :cascade do |t|
-    t.bigint "owner_id", null: false
     t.string "namespace", null: false
     t.string "name", null: false
     t.string "country", null: false
@@ -107,12 +106,12 @@ ActiveRecord::Schema.define(version: 20171201065420) do
     t.index ["admin_id"], name: "index_holidays_on_admin_id"
   end
 
-  create_table "jwt_blacklists", force: :cascade do |t|
+  create_table "jwt_blacklist", force: :cascade do |t|
     t.string "jti", null: false
     t.datetime "exp", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["jti"], name: "index_jwt_blacklists_on_jti", unique: true
+    t.index ["jti"], name: "index_jwt_blacklist_on_jti", unique: true
   end
 
   create_table "read_announcements", force: :cascade do |t|
@@ -166,6 +165,7 @@ ActiveRecord::Schema.define(version: 20171201065420) do
     t.bigint "company_id", null: false
     t.bigint "department_id"
     t.string "role", default: "normal", null: false
+    t.boolean "owner", default: false, null: false
     t.string "name", null: false
     t.string "gender", default: "male", null: false
     t.text "avatar_data"

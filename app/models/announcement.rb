@@ -25,9 +25,4 @@ class Announcement < ApplicationRecord
   enumerize :send_type, in: %i[all owners]
   enumerize :send_status, in: %i[sending sent]
   enumerize :status, in: %i[normal urgent]
-
-  belongs_to :admin
-
-  validates :title, presence: true
-  validates :content, presence: true, length: { maximum: 2000 }
 end
