@@ -31,7 +31,7 @@ ActiveRecord::Schema.define(version: 20171201065420) do
     t.string "send_status", default: "sending", null: false
     t.string "status", default: "normal", null: false
     t.string "title", null: false
-    t.text "content", null: false
+    t.string "content", limit: 2000, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["admin_id"], name: "index_announcements_on_admin_id"
@@ -138,7 +138,7 @@ ActiveRecord::Schema.define(version: 20171201065420) do
   create_table "requests", force: :cascade do |t|
     t.bigint "attendance_id", null: false
     t.bigint "user_id", null: false
-    t.text "reason", null: false
+    t.string "reason", limit: 500, null: false
     t.time "attended_at"
     t.time "left_at"
     t.string "status", default: "pending", null: false
@@ -155,7 +155,7 @@ ActiveRecord::Schema.define(version: 20171201065420) do
     t.inet "client_ip", null: false
     t.string "client_name", null: false
     t.string "client_os", null: false
-    t.text "client_ua", null: false
+    t.string "client_ua", limit: 1000, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["jti"], name: "index_sessions_on_jti", unique: true

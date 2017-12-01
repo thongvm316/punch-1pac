@@ -9,7 +9,7 @@ class CreateSessions < ActiveRecord::Migration[5.1]
       t.inet :client_ip, null: false
       t.string :client_name, null: false
       t.string :client_os, null: false
-      t.text :client_ua, null: false, limit: 5000
+      t.string :client_ua, null: false, limit: 1000
 
       t.timestamps null: false
     end

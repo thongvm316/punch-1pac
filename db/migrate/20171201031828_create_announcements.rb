@@ -8,7 +8,7 @@ class CreateAnnouncements < ActiveRecord::Migration[5.1]
       t.string :send_status, null: false, default: 'sending'
       t.string :status, null: false, default: 'normal'
       t.string :title, null: false
-      t.text :content, null: false, limit: 2000
+      t.string :content, null: false, limit: 2000
 
       t.timestamps null: false
     end
