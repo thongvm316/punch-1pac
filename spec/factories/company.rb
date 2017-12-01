@@ -13,6 +13,6 @@ FactoryBot.define do
     activated 1
     timezone 'Hanoi'
     breaktime 1.0
-    breakdays { ['sunday', 'saturday'] }
+    breakdays { %w[sunday saturday] }
   end
 end

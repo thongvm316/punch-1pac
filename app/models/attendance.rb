@@ -21,7 +21,7 @@
 
 class Attendance < ApplicationRecord
   belongs_to :user
-  has_many :requests
+  has_many :requests, dependent: :destroy
 
   validates :day, presence: true
 end
