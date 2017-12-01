@@ -1,11 +1,9 @@
 # frozen_string_literal: true
-
 # == Schema Information
 #
 # Table name: companies
 #
 #  id           :integer          not null, primary key
-#  owner_id     :integer          not null
 #  namespace    :string           not null
 #  name         :string           not null
 #  country      :string           not null
@@ -27,7 +25,6 @@
 #
 
 class Company < ApplicationRecord
-  belongs_to :owner, class: User, foreign_key: :owner_id
   has_many :users, dependent: :destroy
   has_many :allowed_ips, dependent: :destroy
   has_many :business_days, dependent: :destroy
@@ -36,7 +33,7 @@ class Company < ApplicationRecord
 
   validates :namespace, presence: true, uniqueness: true
   validates :name, presence: true
-  validates :county, presence: true
+  validates :country, presence: true
   validates :industry, presence: true
   validates :address, presence: true
   validates :phone_number, presence: true

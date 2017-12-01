@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-
 # == Schema Information
 #
 # Table name: users
@@ -8,6 +7,7 @@
 #  company_id             :integer          not null
 #  department_id          :integer
 #  role                   :string           default(NULL), not null
+#  owner                  :boolean          default(FALSE), not null
 #  name                   :string           not null
 #  gender                 :string           default("male"), not null
 #  avatar_data            :text
@@ -43,5 +43,5 @@ class User < ApplicationRecord
   has_many :requests, dependent: :destroy
 
   validates :name, presence: true, length: { maximum: 100 }
-  validates :email, presence: true, uniqueness: true, length: { maximum: 200 }
+  validates :email, presence: true, uniqueness: true, length: { maximum: 100 }
 end

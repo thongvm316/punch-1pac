@@ -21,6 +21,7 @@
 
 class Attendance < ApplicationRecord
   belongs_to :user
+  has_many :requests
 
   validates :day, presence: true
 end
