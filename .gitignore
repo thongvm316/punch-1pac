@@ -41,7 +41,6 @@ Thumbs.db
 coverage
 config/secrets.yml
 config/database.yml
-.rspec
 *.orig
 *.map
 

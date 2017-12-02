@@ -5,7 +5,7 @@ require_relative 'boot'
 require 'rails'
 # Pick the frameworks you want:
 require 'active_model/railtie'
-# require "active_job/railtie"
+require "active_job/railtie"
 require 'active_record/railtie'
 require 'action_controller/railtie'
 require 'action_mailer/railtie'
@@ -23,6 +23,14 @@ module Punch
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.1
 
+    config.time_zone = 'Hanoi'
+    config.active_record.default_timezone = :utc
+    config.active_record.time_zone_aware_types = %i[datetime time]
+
+    config.generators do |g|
+      g.test_framework :rspec
+      g.fixture_replacement :factory_bot, dir: 'spec/factories'
+    end
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.

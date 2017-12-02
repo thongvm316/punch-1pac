@@ -27,6 +27,7 @@ gem 'devise'
 gem 'devise-jwt'
 gem 'pundit'
 
+# Application dependencies
 gem 'active_model_serializers', '~> 0.10.0'
 gem 'activerecord-import'
 gem 'bootsnap', require: false
