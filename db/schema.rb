@@ -108,7 +108,7 @@ ActiveRecord::Schema.define(version: 20171201065420) do
 
   create_table "jwt_blacklist", force: :cascade do |t|
     t.string "jti", null: false
-    t.datetime "exp", null: false
+    t.bigint "exp", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["jti"], name: "index_jwt_blacklist_on_jti", unique: true
@@ -164,14 +164,14 @@ ActiveRecord::Schema.define(version: 20171201065420) do
   create_table "users", force: :cascade do |t|
     t.bigint "company_id", null: false
     t.bigint "department_id"
+    t.string "email", null: false
+    t.string "password_digest", null: false
     t.string "role", default: "normal", null: false
     t.boolean "owner", default: false, null: false
     t.string "name", null: false
     t.string "gender", default: "male", null: false
     t.text "avatar_data"
     t.string "language", default: "en", null: false
-    t.string "email", default: "", null: false
-    t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "created_at", null: false
