@@ -1,12 +1,11 @@
 # frozen_string_literal: true
-
 # == Schema Information
 #
 # Table name: jwt_blacklist
 #
 #  id         :integer          not null, primary key
 #  jti        :string           not null
-#  exp        :datetime         not null
+#  exp        :integer          not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #

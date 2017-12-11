@@ -23,8 +23,8 @@ gem 'sidekiq-scheduler'
 gem 'redis-namespace'
 
 # Authentication and Authorization
-gem 'devise'
-gem 'devise-jwt'
+gem 'bcrypt'
+gem 'jwt'
 gem 'pundit'
 
 # Application dependencies
