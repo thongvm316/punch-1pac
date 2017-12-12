@@ -11,11 +11,15 @@ module JWTAuthenticable
   end
 
   def authenticate_user
-    @current_user ||= begin
-                        User.find(jwt_decode['sub'])
-                      rescue ActiveRecord::RecordNotFound
-                        head(401)
-                      end
+    @current_user ||= User.find(jwt_decode['sub'])
+  rescue ActiveRecord::RecordNotFound
+    head(401)
+  rescue JWT::InvalidJtiError
+    render json: { message: 'Token is revoked' }, status: 401
+  rescue JWT::ExpiredSignature
+    render json: { message: 'Token is expired' }, status: 401
+  rescue JWT::DecodeError
+    render json: { message: 'Token is invalid' }, status: 401
   end
 
   def current_user
@@ -38,16 +42,8 @@ module JWTAuthenticable
   end
 
   def jwt_decode
-    JWT.decode(token, ENV.fetch('JWT_KEY') { 'jwt_secret_key' }, true, {
-      algorithm: ALGORITHM,
-      verify_jti: ->(jti) { jwt_revoked?(jti) }
-    }).first
-  rescue JWT::DecodeError
-    render json: { message: 'Token is invalid' }, status: 401
-  rescue JWT::InvalidJtiError
-    render json: { message: 'Token is revoked' }, status: 401
-  rescue JWT::ExpiredSignature
-    render json: { message: 'Token is expired' }, status: 200
+    @payload ||= JWT.decode(token, ENV.fetch('JWT_KEY') { 'jwt_secret_key' }, true, algorithm: ALGORITHM,
+                                                                                    verify_jti: ->(jti) { jwt_revoked?(jti) }).first
   end
 
   def revoke_jwt!

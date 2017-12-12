@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  get 'healthcheck' => 'healthcheck#index', defaults: { format: :json }
-  post 'login' => 'sessions#create', defaults: { format: :json }
-  delete 'logout' => 'sessions#destroy', defaults: { format: :json }
+  namespace :v1, defaults: { format: :json } do
+    post 'login' => 'sessions#create'
+    delete 'logout' => 'sessions#destroy'
+  end
 end
