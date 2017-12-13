@@ -46,8 +46,8 @@ module JWTAuthenticable
                                                                                     verify_jti: ->(jti) { jwt_revoked?(jti) }).first
   end
 
-  def revoke_jwt!
-    payload = jwt_decode
+  def revoke_jwt!(usession = nil)
+    payload = usession || jwt_decode
     JwtBlacklist.create(jti: payload['jti'], exp: payload['exp'])
   end
 
