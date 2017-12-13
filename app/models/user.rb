@@ -9,7 +9,7 @@
 #  department_id          :integer
 #  email                  :string           not null
 #  password_digest        :string           not null
-#  role                   :string           default(NULL), not null
+#  role                   :string           default("member"), not null
 #  owner                  :boolean          default(FALSE), not null
 #  name                   :string           not null
 #  gender                 :string           default("male"), not null

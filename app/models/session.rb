@@ -7,11 +7,13 @@
 #  id          :integer          not null, primary key
 #  user_id     :integer          not null
 #  jti         :string           not null
-#  exp         :datetime         not null
-#  client_ip   :inet             not null
-#  client_name :string           not null
-#  client_os   :string           not null
-#  client_ua   :string(1000)     not null
+#  exp         :integer          not null
+#  ip_address  :inet             not null
+#  client      :string
+#  device_name :string
+#  device_type :string           not null
+#  os          :string           not null
+#  user_agent  :string(1000)     not null
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #
@@ -26,8 +28,25 @@ class Session < ApplicationRecord
 
   validates :jti, presence: true, uniqueness: true
   validates :exp, presence: true
-  validates :client_ip, presence: true
-  validates :client_name, presence: true
-  validates :client_os, presence: true
-  validates :client_ua, presence: true, length: { maximum: 1000 }
+  validates :ip_address, presence: true
+  validates :device_type, presence: true
+  validates :os, presence: true
+  validates :user_agent, presence: true, length: { maximum: 1000 }
+
+  def self.track!(user, payload, request)
+    client = DeviceDetector.new(request.user_agent)
+    session = find_by(jti: payload['jti'])
+    data = {
+      user_id: user.id,
+      jti: payload[:jti],
+      exp: payload[:exp],
+      ip_address: request.remote_ip,
+      client: client.name,
+      device_name: client.device_name,
+      device_type: client.device_type,
+      os: "#{client.os_name}_#{client.os_full_version}",
+      user_agent: request.user_agent
+    }
+    session ? session.update_attributes(data) : create(data)
+  end
 end
