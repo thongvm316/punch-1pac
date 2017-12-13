@@ -44,7 +44,7 @@ RSpec.describe V1::UsersController, type: :controller do
   end
 
   describe 'update' do
-    context 'when failed' do
+    context 'when not found' do
       before { authenticate_user(user) }
 
       subject { patch :update, params: { id: -1 } }
@@ -54,7 +54,18 @@ RSpec.describe V1::UsersController, type: :controller do
         expect(response.status).to eq 404
       end
     end
-    context 'when fail' do
+    context 'when not invalid params' do
+      before { authenticate_user(user) }
+
+      subject { patch :update, params: { id: user.id, user: { email: 'thoi' } } }
+
+      it do
+        is_expected
+        expect(response.status).to eq 422
+      end
+    end
+
+    context 'when success' do
       before { authenticate_user(user) }
 
       subject { patch :update, params: { id: user.id, user: { name: 'thoi' } } }
@@ -69,13 +80,13 @@ RSpec.describe V1::UsersController, type: :controller do
     let(:company) { create :company }
     let(:user) { create :user, company: company }
 
-    describe 'import_csv' do
+    describe 'create_multi' do
       before { authenticate_user(user) }
 
       context 'when success' do
         let(:csv_file) { fixture_file_upload('files/valid.csv', 'text/csv') }
 
-        subject { post :import_csv, params: { csv_file: csv_file } }
+        subject { post :create_multi, params: { csv_file: csv_file } }
 
         it do
           is_expected
@@ -87,7 +98,7 @@ RSpec.describe V1::UsersController, type: :controller do
       context 'when failed some' do
         let(:csv_file) { fixture_file_upload('files/invalid_at_line_2.csv', 'text/csv') }
 
-        subject { post :import_csv, params: { csv_file: csv_file } }
+        subject { post :create_multi, params: { csv_file: csv_file } }
 
         it do
           is_expected
@@ -99,7 +110,7 @@ RSpec.describe V1::UsersController, type: :controller do
       context 'when failed all' do
         let(:csv_file) { fixture_file_upload('files/invalid_all.csv', 'text/csv') }
 
-        subject { post :import_csv, params: { csv_file: csv_file } }
+        subject { post :create_multi, params: { csv_file: csv_file } }
 
         it do
           is_expected
