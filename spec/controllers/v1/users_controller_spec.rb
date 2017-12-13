@@ -6,96 +6,83 @@ RSpec.describe V1::UsersController, type: :controller do
   let(:company) { create :company }
   let(:user) { create :user, company: company }
 
-  describe 'index' do
+  describe 'GET #index' do
     before { authenticate_user(user) }
 
-    context 'when success' do
+    context 'when company had users' do
       subject { get :index }
-      it do
+      it 'should return users' do
         is_expected
+
         expect(response.status).to eq 200
+        expect(response.body).to be_json_as(Array)
       end
     end
   end
 
-  describe 'delete' do
+  describe 'DELETE #destroy' do
     before { authenticate_user(user) }
 
-    context 'when success' do
+    context 'when params valid' do
       let(:test_user) { create :user, company: company }
 
       subject { delete :destroy, params: { id: test_user.id } }
 
-      it do
+      it 'should deleted' do
         is_expected
+
         expect(response.status).to eq 200
         expect(User.find_by(id: test_user.id)).to be_nil
       end
     end
 
-    context 'when failed' do
+    context 'when not found' do
       subject { delete :destroy, params: { id: -1 } }
 
-      it do
-        is_expected
-        expect(response.status).to eq 404
-      end
+      its(:code) { is_expected.to eq '404' }
     end
   end
 
-  describe 'update' do
+  describe 'PATCH #update' do
     context 'when not found' do
       before { authenticate_user(user) }
 
       subject { patch :update, params: { id: -1 } }
 
-      it do
-        is_expected
-        expect(response.status).to eq 404
-      end
+      its(:code) { is_expected.to eq '404' }
     end
-    context 'when not invalid params' do
+    context 'when invalid params' do
       before { authenticate_user(user) }
 
       subject { patch :update, params: { id: user.id, user: { email: 'thoi' } } }
 
-      it do
-        is_expected
-        expect(response.status).to eq 422
-      end
+      its(:code) { is_expected.to eq '422' }
     end
 
-    context 'when success' do
+    context 'when params valid' do
       before { authenticate_user(user) }
 
       subject { patch :update, params: { id: user.id, user: { name: 'thoi' } } }
-      it do
-        is_expected
-        expect(response.status).to eq 200
-      end
+
+      its(:code) { is_expected.to eq '200' }
+      its(:body) { is_expected.to be_json_as(response_user) }
     end
   end
 
-  describe '.create' do
+  describe 'POST #create' do
     let(:company) { create :company }
     let(:user) { create :user, company: company }
 
-    describe 'create_multi' do
+    describe 'multiple users' do
       before { authenticate_user(user) }
 
-      context 'when success' do
+      context 'when valid csv file' do
         let(:csv_file) { fixture_file_upload('files/valid.csv', 'text/csv') }
 
         subject { post :create_multi, params: { csv_file: csv_file } }
 
-        it do
-          is_expected
-          expect(response.status).to eq 200
-          expect(response.body).to be_json_as(
-            users: Array.new(3) { response_user },
-            errors: { lines: [] }
-          )
-        end
+        its(:code) { is_expected.to eq '200' }
+        its(:body) { is_expected.to be_json_as(users: Array.new(3) { response_user }, errors: { lines: [] }) }
       end
 
       context 'when failed some' do
@@ -103,14 +90,8 @@ RSpec.describe V1::UsersController, type: :controller do
 
         subject { post :create_multi, params: { csv_file: csv_file } }
 
-        it do
-          is_expected
-          expect(response.status).to eq 200
-          expect(response.body).to be_json_as(
-            users: Array.new(2) { response_user },
-            errors: { lines: Array }
-          )
-        end
+        its(:code) { is_expected.to eq '200' }
+        its(:body) { is_expected.to be_json_as(users: Array.new(2) { response_user }, errors: { lines: Array }) }
       end
 
       context 'when failed all' do
@@ -118,14 +99,8 @@ RSpec.describe V1::UsersController, type: :controller do
 
         subject { post :create_multi, params: { csv_file: csv_file } }
 
-        it do
-          is_expected
-          expect(response.status).to eq 200
-          expect(response.body).to be_json_as(
-            users: Array.new(0),
-            errors: { lines: Array }
-          )
-        end
+        its(:code) { is_expected.to eq '200' }
+        its(:body) { is_expected.to be_json_as(users: [], errors: { lines: Array }) }
       end
     end
 
@@ -145,11 +120,8 @@ RSpec.describe V1::UsersController, type: :controller do
 
         subject { post :create, params: { user: valid_params } }
 
-        it do
-          is_expected
-          expect(response.status).to eq 200
-          expect(response.body).to be_json_as(response_user)
-        end
+        its(:code) { is_expected.to eq '200' }
+        its(:body) { is_expected.to be_json_as(response_user) }
       end
 
       context 'when fails validation' do
@@ -164,11 +136,8 @@ RSpec.describe V1::UsersController, type: :controller do
 
         subject { post :create, params: { user: params } }
 
-        it do
-          is_expected
-          expect(response.status).to eq 422
-          expect(response.body).to be_json_as(response_422(error))
-        end
+        its(:code) { is_expected.to eq '422' }
+        its(:body) { is_expected.to be_json_as(response_422(error)) }
       end
     end
   end
