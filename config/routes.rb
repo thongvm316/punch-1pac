@@ -5,8 +5,10 @@ Rails.application.routes.draw do
     post   'login'  => 'sessions#login'
     delete 'logout' => 'sessions#logout'
 
-    resources :users
-    post 'user/import_csv' => 'users#import_csv'
+    resources :users do
+      post 'create_multi', on: :collection
+    end
+
 
     resources :sessions, only: %i[index destroy]
 
