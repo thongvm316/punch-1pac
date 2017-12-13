@@ -7,7 +7,7 @@ class CreateUsers < ActiveRecord::Migration[5.1]
       t.bigint   :department_id
       t.string   :email, null: false
       t.string   :password_digest, null: false
-      t.string   :role, null: false, default: 'normal'
+      t.string   :role, null: false, default: 'member'
       t.boolean  :owner, null: false, default: false
       t.string   :name, null: false
       t.string   :gender, null: false, default: 'male'

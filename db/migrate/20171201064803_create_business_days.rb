@@ -6,7 +6,7 @@ class CreateBusinessDays < ActiveRecord::Migration[5.1]
       t.bigint :company_id, null: false
       t.time :started_at, null: false
       t.time :ended_at, null: false
-      t.date :weekday, null: false
+      t.string :weekday, null: false
 
       t.timestamps null: false
     end
