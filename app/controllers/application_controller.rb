@@ -26,9 +26,4 @@ class ApplicationController < ActionController::API
   def render_422(error_messages)
     render json: { message: 'Unprocessable Entity', errors: error_messages }, status: 422
   end
-
-  def render_404(e = nil)
-    logger.error "exception(#{e.class}): #{e.message} #{e.backtrace.first}" if e
-    render json: { message: 'Not Found' }, status: :not_found
-  end
 end
