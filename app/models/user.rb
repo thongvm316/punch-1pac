@@ -74,4 +74,19 @@ class User < ApplicationRecord
     self.reset_password_sent_at = Time.current
     save!
   end
+
+  def self.import_csv(file, company_id)
+    users = []
+    lines = []
+    CSV.foreach(file.path, headers: true).with_index(1) do |row, line|
+      params = row.to_hash.merge(company_id: company_id, password_confirmation: row['password'])
+      user = User.new(params)
+      if user.save
+        users << user
+      else
+        lines << line
+      end
+    end
+    { users: users, errors: { lines: lines } }
+  end
 end
