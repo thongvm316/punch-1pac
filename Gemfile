@@ -23,9 +23,9 @@ gem 'sidekiq-scheduler'
 gem 'redis-namespace'
 
 # Authentication and Authorization
-gem 'pundit'
 gem 'bcrypt'
 gem 'jwt'
+gem 'pundit'
 
 # Application dependencies
 gem 'active_model_serializers', '~> 0.10.0'
