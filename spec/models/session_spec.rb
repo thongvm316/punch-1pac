@@ -12,10 +12,10 @@ RSpec.describe Session, type: :model do
     it { should validate_presence_of(:jti) }
     it { should validate_uniqueness_of(:jti) }
     it { should validate_presence_of(:exp) }
-    it { should validate_presence_of(:client_ip) }
-    it { should validate_presence_of(:client_name) }
-    it { should validate_presence_of(:client_os) }
-    it { should validate_presence_of(:client_ua) }
-    it { should validate_length_of(:client_ua).is_at_most(1000) }
+    it { should validate_presence_of(:ip_address) }
+    it { should validate_presence_of(:device_type) }
+    it { should validate_presence_of(:os) }
+    it { should validate_presence_of(:user_agent) }
+    it { should validate_length_of(:user_agent).is_at_most(1000) }
   end
 end

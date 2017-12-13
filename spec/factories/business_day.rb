@@ -5,6 +5,6 @@ FactoryBot.define do
     association(:company, factory: :company, strategy: :build)
     started_at { Time.current }
     ended_at { Time.current }
-    weekday { Time.current }
+    weekday 'monday'
   end
 end

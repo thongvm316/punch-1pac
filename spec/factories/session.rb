@@ -5,9 +5,11 @@ FactoryBot.define do
     association(:user, factory: :user, strategy: :build)
     jti { Faker::Internet.password }
     exp { Time.current }
-    client_ip { Faker::Internet.ip_v4_address }
-    client_name 'chrome'
-    client_os 'linux'
-    client_ua 'user-agent'
+    ip_address { Faker::Internet.ip_v4_address }
+    client 'chrome'
+    device_name 'macbook'
+    device_type 'laptop'
+    os 'mac_osx'
+    user_agent { Faker::Internet.user_agent }
   end
 end
