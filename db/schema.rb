@@ -27,8 +27,8 @@ ActiveRecord::Schema.define(version: 20171201065420) do
 
   create_table "announcements", force: :cascade do |t|
     t.bigint "admin_id", null: false
-    t.string "send_type", default: "all", null: false
-    t.string "send_status", default: "sending", null: false
+    t.string "target", default: "everyone", null: false
+    t.boolean "sent", default: false, null: false
     t.string "status", default: "normal", null: false
     t.string "title", null: false
     t.string "content", limit: 2000, null: false
