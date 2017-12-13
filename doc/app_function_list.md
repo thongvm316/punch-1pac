@@ -4,8 +4,7 @@
 
 * Login Logout
 * Forgot password
-* View sessions
-* Revoke JWT/session
+* Able to revoke JWT sessions
 
 ## User
 
@@ -16,43 +15,22 @@
 * Edit user's group
 * Delete user
 
-## User settings
-
-* Change password
-* Change email
-* Change language
+## Group
+* todo
 
 ## Department
 
-* View department
-* Create department
-* Edit department
-* Delete department
+* Create group
+* Edit group
+* Delete group
 
 ## Company
 
-* Set company attendance's rules
 * Edit company
-* Delete
-* Deactive company
-
-## Business day
-
-* View business day
-* Create business day
-* Edit business day
-* Delete business day
-
-## Allowed Ips
-
-* View allowed ip address
-* Create allowed ip address
-* Edit allowed ip address
-* Delete allowed ip address
+* Delete/Deactive company
 
 ## Holiday
 
-* Add holiday
 * Import holiday
 * Edit holiday
 * Delete holiday
@@ -71,7 +49,12 @@
 * Change request's status
 * Track unread request
 
-## Announcement
+## Notification
 
-* View announcement
+* Read notifications
 * Track unread notifications
+
+## Setting
+
+* Switch system's language
+* Allow company's IP only
