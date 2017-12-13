@@ -9,7 +9,6 @@ Rails.application.routes.draw do
       post 'create_multi', on: :collection
     end
 
-
     resources :sessions, only: %i[index destroy]
 
     resource :companies, only: %i[update destroy] do

@@ -91,7 +91,10 @@ RSpec.describe V1::UsersController, type: :controller do
         it do
           is_expected
           expect(response.status).to eq 200
-          expect(response.body).to be_json_as(response_users_success_all(3))
+          expect(response.body).to be_json_as(
+            users: Array.new(3) { response_user },
+            errors: { lines: [] }
+          )
         end
       end
 
@@ -103,7 +106,10 @@ RSpec.describe V1::UsersController, type: :controller do
         it do
           is_expected
           expect(response.status).to eq 200
-          expect(response.body).to be_json_as(response_users_success_some(2))
+          expect(response.body).to be_json_as(
+            users: Array.new(2) { response_user },
+            errors: { lines: Array }
+          )
         end
       end
 
@@ -115,7 +121,10 @@ RSpec.describe V1::UsersController, type: :controller do
         it do
           is_expected
           expect(response.status).to eq 200
-          expect(response.body).to be_json_as(response_users_success_some(0))
+          expect(response.body).to be_json_as(
+            users: Array.new(0),
+            errors: { lines: Array }
+          )
         end
       end
     end

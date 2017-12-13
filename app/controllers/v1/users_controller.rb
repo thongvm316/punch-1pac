@@ -2,7 +2,7 @@
 
 class V1::UsersController < ApplicationController
   before_action :user_params, only: [:create]
-  before_action :set_user, only: [:update, :destroy]
+  before_action :set_user, only: %i[update destroy]
 
   def index
     users = current_company.users
