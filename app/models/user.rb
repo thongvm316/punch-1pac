@@ -29,15 +29,10 @@
 #
 
 class User < ApplicationRecord
-  extend Enumerize
   has_secure_password
 
   REGEX_VALID_EMAIL = /\A([\w+\-].?)+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i
   PASSWORD_RESET_TOKEN_EXPIRE = 1800.0
-
-  enumerize :role, in: %i[superadmin admin member]
-  enumerize :gender, in: %i[male female]
-  enumerize :language, in: %i[vi en jp]
 
   belongs_to :company
   belongs_to :department, optional: true
@@ -49,6 +44,21 @@ class User < ApplicationRecord
   validates :email, presence: true, uniqueness: true, length: { maximum: 100 }, format: { with: REGEX_VALID_EMAIL }
   validates :password, length: { minimum: 6, maximum: 32 }, allow_nil: true
   validates :password_confirmation, presence: true, if: -> { password.present? }
+  validates :role, inclusion: { in: %w[member admin superadmin] }
+  validates :gender, inclusion: { in: %w[male female] }
+  validates :language, inclusion: { in: %w[vi en jp] }
+
+  def superadmin?
+    role == 'superadmin'
+  end
+
+  def admin?
+    role == 'admin'
+  end
+
+  def member?
+    role == 'member'
+  end
 
   def reset_password_token_valid?(token)
     user = find_by!(reset_password_token: token)

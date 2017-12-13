@@ -4,15 +4,15 @@
 #
 # Table name: announcements
 #
-#  id          :integer          not null, primary key
-#  admin_id    :integer          not null
-#  send_type   :string           default("all"), not null
-#  send_status :string           default("sending"), not null
-#  status      :string           default("normal"), not null
-#  title       :string           not null
-#  content     :string(2000)     not null
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
+#  id         :integer          not null, primary key
+#  admin_id   :integer          not null
+#  target     :string           default("everyone"), not null
+#  sent       :boolean          default(FALSE), not null
+#  status     :string           default("normal"), not null
+#  title      :string           not null
+#  content    :string(2000)     not null
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
 #
 # Indexes
 #
@@ -20,9 +20,20 @@
 #
 
 class Announcement < ApplicationRecord
-  extend Enumerize
+  validates :target, inclusion: { in: %w[everyone owners] }
+  validates :status, inclusion: { in: %w[normal urgent] }
 
-  enumerize :send_type, in: %i[all owners]
-  enumerize :send_status, in: %i[sending sent]
-  enumerize :status, in: %i[normal urgent]
+  default_scope -> { order(id: :desc) }
+
+  scope :for_all, ->() { where(target: %w[everyone owners]) }
+  scope :for_everyone, ->() { where(target: 'everyone') }
+  scope :unread, ->(user_id) { where.not(id: ReadAnnouncement.select(:announcement_id).where(user_id: user_id)) }
+
+  def self.for_user(user)
+    if user.owner?
+      Announcement.for_all
+    else
+      Announcement.for_everyone
+    end
+  end
 end

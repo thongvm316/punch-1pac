@@ -21,12 +21,9 @@
 #
 
 class Request < ApplicationRecord
-  extend Enumerize
-
-  enumerize :status, in: %i[pending approved rejected]
-
   belongs_to :attendance
   belongs_to :user
 
   validates :reason, presence: true, length: { maximum: 500 }
+  validates :status, inclusion: { in: %w[pending approved rejected] }
 end
