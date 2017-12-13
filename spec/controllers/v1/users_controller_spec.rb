@@ -69,76 +69,74 @@ RSpec.describe V1::UsersController, type: :controller do
     end
   end
 
-  describe 'POST #create' do
+  describe 'POST #create_multi' do
     let(:company) { create :company }
     let(:user) { create :user, company: company }
 
-    describe 'multiple users' do
-      before { authenticate_user(user) }
+    before { authenticate_user(user) }
 
-      context 'when valid csv file' do
-        let(:csv_file) { fixture_file_upload('files/valid.csv', 'text/csv') }
+    context 'when valid csv file' do
+      let(:csv_file) { fixture_file_upload('files/valid.csv', 'text/csv') }
 
-        subject { post :create_multi, params: { csv_file: csv_file } }
+      subject { post :create_multi, params: { csv_file: csv_file } }
 
-        its(:code) { is_expected.to eq '200' }
-        its(:body) { is_expected.to be_json_as(users: Array.new(3) { response_user }, errors: { lines: [] }) }
-      end
-
-      context 'when failed some' do
-        let(:csv_file) { fixture_file_upload('files/invalid_at_line_2.csv', 'text/csv') }
-
-        subject { post :create_multi, params: { csv_file: csv_file } }
-
-        its(:code) { is_expected.to eq '200' }
-        its(:body) { is_expected.to be_json_as(users: Array.new(2) { response_user }, errors: { lines: Array }) }
-      end
-
-      context 'when failed all' do
-        let(:csv_file) { fixture_file_upload('files/invalid_all.csv', 'text/csv') }
-
-        subject { post :create_multi, params: { csv_file: csv_file } }
-
-        its(:code) { is_expected.to eq '200' }
-        its(:body) { is_expected.to be_json_as(users: [], errors: { lines: Array }) }
-      end
+      its(:code) { is_expected.to eq '200' }
+      its(:body) { is_expected.to be_json_as(users: Array.new(3) { response_user }, errors: { lines: [] }) }
     end
 
-    describe 'create user' do
-      before { authenticate_user(user) }
+    context 'when failed some' do
+      let(:csv_file) { fixture_file_upload('files/invalid_at_line_2.csv', 'text/csv') }
 
-      context 'when success' do
-        let(:valid_params) do
-          password = Faker::Internet.password
-          {
-            name: Faker::Name.name,
-            email: Faker::Internet.email,
-            password: password,
-            password_confirmation: password
-          }
-        end
+      subject { post :create_multi, params: { csv_file: csv_file } }
 
-        subject { post :create, params: { user: valid_params } }
+      its(:code) { is_expected.to eq '200' }
+      its(:body) { is_expected.to be_json_as(users: Array.new(2) { response_user }, errors: { lines: Array }) }
+    end
 
-        its(:code) { is_expected.to eq '200' }
-        its(:body) { is_expected.to be_json_as(response_user) }
+    context 'when failed all' do
+      let(:csv_file) { fixture_file_upload('files/invalid_all.csv', 'text/csv') }
+
+      subject { post :create_multi, params: { csv_file: csv_file } }
+
+      its(:code) { is_expected.to eq '200' }
+      its(:body) { is_expected.to be_json_as(users: [], errors: { lines: Array }) }
+    end
+  end
+
+  describe 'POST #create' do
+    before { authenticate_user(user) }
+
+    context 'when success' do
+      let(:valid_params) do
+        password = Faker::Internet.password
+        {
+          name: Faker::Name.name,
+          email: Faker::Internet.email,
+          password: password,
+          password_confirmation: password
+        }
       end
 
-      context 'when fails validation' do
-        let(:params) { { username: '' } }
-        let(:error) do
-          {
-            password: Array,
-            name:     Array,
-            email:    Array
-          }
-        end
+      subject { post :create, params: { user: valid_params } }
 
-        subject { post :create, params: { user: params } }
+      its(:code) { is_expected.to eq '200' }
+      its(:body) { is_expected.to be_json_as(response_user) }
+    end
 
-        its(:code) { is_expected.to eq '422' }
-        its(:body) { is_expected.to be_json_as(response_422(error)) }
+    context 'when fails validation' do
+      let(:params) { { username: '' } }
+      let(:error) do
+        {
+          password: Array,
+          name:     Array,
+          email:    Array
+        }
       end
+
+      subject { post :create, params: { user: params } }
+
+      its(:code) { is_expected.to eq '422' }
+      its(:body) { is_expected.to be_json_as(response_422(error)) }
     end
   end
 end
