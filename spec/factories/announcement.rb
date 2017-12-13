@@ -2,11 +2,11 @@
 
 FactoryBot.define do
   factory :announcement do
-    association(:admin, factory: :admin, strategy: :build)
+    admin_id 1
     title { Faker::Lorem.sentence }
     content { Faker::Lorem.paragraph }
-    send_type 'all'
-    send_status 'sending'
+    target 'everyone'
+    sent 1
     status 'normal'
   end
 end

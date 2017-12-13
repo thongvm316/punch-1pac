@@ -14,6 +14,11 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :announcements, only: %i[index show] do
+      post 'read' => 'read_announcements#create', on: :member
+      get  'latest', on: :collection
+    end
+
     resources :business_days, only: %i[index create update destroy], constraints: { id: /\d+/ }
     resources :allowed_ips, only: %i[index create update destroy], constraints: { id: /\d+/ }
     resources :departments, only: %i[index show create update destroy], constraints: { id: /\d+/ }

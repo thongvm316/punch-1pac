@@ -18,13 +18,9 @@
 #
 
 class BusinessDay < ApplicationRecord
-  extend Enumerize
-
   belongs_to :company
-
-  enumerize :weekday, in: %i[monday tuesday wednesday thursday friday saturday sunday]
 
   validates :started_at, presence: true
   validates :ended_at, presence: true
-  validates :weekday, presence: true
+  validates :weekday, presence: true, inclusion: { in: %w[monday tuesday wednesday thursday friday saturday sunday] }
 end
