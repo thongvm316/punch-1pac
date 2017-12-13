@@ -12,7 +12,7 @@ class CreateCompanies < ActiveRecord::Migration[5.1]
       t.string :postal_code
       t.string :tax_code
       t.boolean :activated, null: false, default: true
-      t.string :timezone, null: false, default: 'Hanoi'
+      t.string :timezone, null: false, default: 'Asia/Hanoi'
       t.float :breaktime, null: false, default: 1
       t.string :breakdays, null: false, array: true, default: []
 

@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :company do
-    namespace { Faker::Lorem.word }
+    sequence(:namespace, 1) { |i| "namespace_#{i}" }
     name { Faker::Name.name }
     country { Faker::Address.country }
     industry 'startup'
@@ -11,7 +11,7 @@ FactoryBot.define do
     postal_code { Faker::Address.postcode }
     tax_code { Faker::Internet.password }
     activated 1
-    timezone 'Hanoi'
+    timezone 'Asia/Bangkok'
     breaktime 1.0
     breakdays { %w[sunday saturday] }
   end

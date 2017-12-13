@@ -8,7 +8,7 @@
 #  company_id :integer          not null
 #  started_at :time             not null
 #  ended_at   :time             not null
-#  weekday    :date             not null
+#  weekday    :string           not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
@@ -18,7 +18,11 @@
 #
 
 class BusinessDay < ApplicationRecord
+  extend Enumerize
+
   belongs_to :company
+
+  enumerize :weekday, in: %i[monday tuesday wednesday thursday friday saturday sunday]
 
   validates :started_at, presence: true
   validates :ended_at, presence: true

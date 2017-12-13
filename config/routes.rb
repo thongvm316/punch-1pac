@@ -2,7 +2,20 @@
 
 Rails.application.routes.draw do
   namespace :v1, defaults: { format: :json } do
-    post 'login' => 'sessions#create'
-    delete 'logout' => 'sessions#destroy'
+    post   'login'  => 'sessions#login'
+    delete 'logout' => 'sessions#logout'
+
+    resources :sessions, only: %i[index destroy]
+
+    resource :companies, only: %i[update destroy] do
+      collection do
+        match 'setup_rules', via: %i[patch put]
+        match 'deactivate', via: %i[patch put]
+      end
+    end
+
+    resources :business_days, only: %i[index create update destroy], constraints: { id: /\d+/ }
+    resources :allowed_ips, only: %i[index create update destroy], constraints: { id: /\d+/ }
+    resources :departments, only: %i[index show create update destroy], constraints: { id: /\d+/ }
   end
 end

@@ -7,6 +7,7 @@ RSpec.describe ApplicationController, type: :controller do
     include JWTAuthenticable
 
     before_action :authenticate_user
+    before_action :set_locale
 
     def index
       head(200)
@@ -14,7 +15,8 @@ RSpec.describe ApplicationController, type: :controller do
   end
 
   describe '#authenticate_user' do
-    let(:user) { create :user }
+    let!(:company) { create :company }
+    let(:user) { create :user, company: company }
 
     context 'when user.id exists' do
       before { authenticate_user(user) }

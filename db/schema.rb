@@ -53,7 +53,7 @@ ActiveRecord::Schema.define(version: 20171201065420) do
     t.bigint "company_id", null: false
     t.time "started_at", null: false
     t.time "ended_at", null: false
-    t.date "weekday", null: false
+    t.string "weekday", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["company_id"], name: "index_business_days_on_company_id"
@@ -69,7 +69,7 @@ ActiveRecord::Schema.define(version: 20171201065420) do
     t.string "postal_code"
     t.string "tax_code"
     t.boolean "activated", default: true, null: false
-    t.string "timezone", default: "Hanoi", null: false
+    t.string "timezone", default: "Asia/Hanoi", null: false
     t.float "breaktime", default: 1.0, null: false
     t.string "breakdays", default: [], null: false, array: true
     t.datetime "created_at", null: false
@@ -150,11 +150,13 @@ ActiveRecord::Schema.define(version: 20171201065420) do
   create_table "sessions", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.string "jti", null: false
-    t.datetime "exp", null: false
-    t.inet "client_ip", null: false
-    t.string "client_name", null: false
-    t.string "client_os", null: false
-    t.string "client_ua", limit: 1000, null: false
+    t.bigint "exp", null: false
+    t.inet "ip_address", null: false
+    t.string "client"
+    t.string "device_name"
+    t.string "device_type", null: false
+    t.string "os", null: false
+    t.string "user_agent", limit: 1000, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["jti"], name: "index_sessions_on_jti", unique: true
@@ -166,7 +168,7 @@ ActiveRecord::Schema.define(version: 20171201065420) do
     t.bigint "department_id"
     t.string "email", null: false
     t.string "password_digest", null: false
-    t.string "role", default: "normal", null: false
+    t.string "role", default: "member", null: false
     t.boolean "owner", default: false, null: false
     t.string "name", null: false
     t.string "gender", default: "male", null: false

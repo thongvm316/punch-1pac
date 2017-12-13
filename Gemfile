@@ -31,6 +31,7 @@ gem 'pundit'
 gem 'active_model_serializers', '~> 0.10.0'
 gem 'activerecord-import'
 gem 'bootsnap', require: false
+gem 'device_detector'
 gem 'enumerize'
 gem 'kaminari'
 gem 'oj'
