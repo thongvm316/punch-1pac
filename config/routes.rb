@@ -5,6 +5,9 @@ Rails.application.routes.draw do
     post   'login'  => 'sessions#login'
     delete 'logout' => 'sessions#logout'
 
+    resources :users
+    post 'user/import_csv' => 'users#import_csv'
+
     resources :sessions, only: %i[index destroy]
 
     resource :companies, only: %i[update destroy] do
