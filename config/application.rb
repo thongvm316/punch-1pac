@@ -23,21 +23,20 @@ module Punch
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.1
 
-    config.time_zone = 'Hanoi'
+    config.time_zone = 'UTC'
     config.active_record.default_timezone = :utc
     config.active_record.time_zone_aware_types = %i[datetime time]
+
+    config.i18n.default_locale = :en
+    config.i18n.available_locales = %i[en vi ja]
+    # ref https://github.com/globalize/globalize#i18n-fallbacks-for-empty-translations
+    config.i18n.fallbacks = true
 
     config.generators do |g|
       g.test_framework :rspec
       g.fixture_replacement :factory_bot, dir: 'spec/factories'
     end
-    # Settings in config/environments/* take precedence over those specified here.
-    # Application configuration should go into files in config/initializers
-    # -- all .rb files in that directory are automatically loaded.
 
-    # Only loads a smaller set of middleware suitable for API only apps.
-    # Middleware like session, flash, cookies can be added back manually.
-    # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
   end
 end
