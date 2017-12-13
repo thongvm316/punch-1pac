@@ -88,6 +88,28 @@ module JsonResponseHelper
     }
   end
 
+  def response_users_success_all(size)
+    {
+      users: Array.new(size) { response_user },
+      errors: { lines: [] }
+    }
+  end
+
+  def response_users_success_some(success_number)
+    {
+      users: Array.new(success_number) { response_user },
+      errors: { lines: Array }
+    }
+  end
+
+  def response_user
+    {
+      id: Integer,
+      email: String,
+      name: String
+    }
+  end
+
   private
 
   def nullable_response(expected_response)
