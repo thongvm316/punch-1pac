@@ -5,6 +5,10 @@ Rails.application.routes.draw do
     post   'login'  => 'sessions#login'
     delete 'logout' => 'sessions#logout'
 
+    resources :users do
+      post 'create_multi', on: :collection
+    end
+
     resources :sessions, only: %i[index destroy]
 
     resource :companies, only: %i[update destroy] do

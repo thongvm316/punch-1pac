@@ -88,6 +88,14 @@ module JsonResponseHelper
     }
   end
 
+  def response_user
+    {
+      id: Integer,
+      email: String,
+      name: String
+    }
+  end
+
   private
 
   def nullable_response(expected_response)
