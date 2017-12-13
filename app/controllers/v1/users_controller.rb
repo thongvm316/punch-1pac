@@ -18,7 +18,7 @@ class V1::UsersController < ApplicationController
   end
 
   def create_multi
-    results = User.import_csv(params[:csv_file].tempfile, current_user.company.id)
+    results = User.import_csv(params[:csv_file].tempfile, current_company.id)
     users = ActiveModelSerializers::SerializableResource.new(results[:users], each_serializer: UserSerializer).as_json
     render json: { users: users, errors: results[:errors] }, status: 200
   end
@@ -40,7 +40,7 @@ class V1::UsersController < ApplicationController
 
   def user_params
     u_params = params.require(:user).permit(:department_id, :name, :password, :password_confirmation, :email)
-    u_params.merge(company_id: current_user.company.id)
+    u_params.merge(company_id: current_company.id)
   end
 
   def update_user_params
