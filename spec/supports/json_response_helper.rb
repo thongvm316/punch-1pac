@@ -77,6 +77,17 @@ module JsonResponseHelper
     }
   end
 
+  def response_announcement
+    {
+      id: Integer,
+      title: String,
+      content: String,
+      target: String,
+      status: String,
+      created_at: time_iso8601_response
+    }
+  end
+
   private
 
   def nullable_response(expected_response)
