@@ -32,6 +32,7 @@ class Company < ApplicationRecord
   has_many :departments, dependent: :destroy
   has_many :company_holidays, dependent: :destroy
   has_many :holidays, through: :company_holidays
+  has_many :custom_holidays, dependent: :destroy
 
   validates :namespace, presence: true, uniqueness: true
   validates :name, presence: true

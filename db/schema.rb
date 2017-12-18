@@ -89,8 +89,9 @@ ActiveRecord::Schema.define(version: 20171213093419) do
 
   create_table "custom_holidays", force: :cascade do |t|
     t.bigint "company_id", null: false
-    t.date "started_at"
-    t.date "ended_at"
+    t.date "started_at", null: false
+    t.date "ended_at", null: false
+    t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["company_id"], name: "index_custom_holidays_on_company_id"
