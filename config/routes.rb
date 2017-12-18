@@ -9,6 +9,15 @@ Rails.application.routes.draw do
       post 'create_multi', on: :collection
     end
 
+    resources :custom_holidays, only: %i[index create update destroy]
+
+    resources :holidays, only: %i[index] do
+      collection do
+        post 'import'
+        delete 'company_destroy'
+      end
+    end
+
     resources :sessions, only: %i[index destroy]
 
     resource :companies, only: %i[update destroy] do

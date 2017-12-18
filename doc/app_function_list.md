@@ -52,10 +52,10 @@
 
 ## Holiday
 
-* Add holiday
-* Import holiday
-* Edit holiday
-* Delete holiday
+* Add custom holiday
+* Import system holiday
+* Edit custom holiday
+* Delete system holiday 
 
 ## Attendance
 
