@@ -1,7 +1,10 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :custom_holiday do
-    company nil
-    started_at "2017-12-13"
-    ended_at "2017-12-13"
+    association(:company, factory: :company, strategy: :build)
+    started_at { Faker::Date.backward(14) }
+    ended_at { Faker::Date.forward(14) }
+    name { Faker::Lorem.word }
   end
 end

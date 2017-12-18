@@ -96,6 +96,15 @@ module JsonResponseHelper
     }
   end
 
+  def response_holiday
+    {
+      id:         Integer,
+      name:       String,
+      started_at: String,
+      ended_at:   String
+    }
+  end
+
   private
 
   def nullable_response(expected_response)
