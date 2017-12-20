@@ -26,4 +26,6 @@ class Request < ApplicationRecord
 
   validates :reason, presence: true, length: { maximum: 500 }
   validates :status, inclusion: { in: %w[pending approved rejected] }
+
+  scope :in_group, ->(user) { where(user_id: User.where(group_id: user.group_id)) }
 end

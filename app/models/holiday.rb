@@ -25,4 +25,6 @@ class Holiday < ApplicationRecord
   scope :available_for_company, ->(company_id, ids) {
     Holiday.where(id: ids).where.not(id: CompanyHoliday.select(:holiday_id).where(company_id: company_id))
   }
+  scope :selected_attr, -> { select(:id, :name, :started_at, :ended_at) }
+  scope :in_holiday, ->(target_date) { where('? BETWEEN started_at AND ended_at', target_date) }
 end

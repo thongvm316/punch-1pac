@@ -15,7 +15,7 @@ Lint/ScriptPermission:
 
 Metrics/ModuleLength:
   Exclude:
-    - 'spec/support/json_response_helper.rb'
+    - 'spec/supports/json_response_helper.rb'
 
 Metrics/BlockLength:
   Enabled: false

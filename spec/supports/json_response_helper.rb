@@ -21,6 +21,16 @@ module JsonResponseHelper
     { message: 'Unprocessable Entity', errors: errors }
   end
 
+  def response_pagination
+    {
+      current_page: Integer,
+      next_page: nullable_response(Integer),
+      prev_page: nullable_response(Integer),
+      per_page: Integer,
+      total_count: Integer
+    }
+  end
+
   def response_department
     {
       id: Integer,
@@ -38,8 +48,8 @@ module JsonResponseHelper
   def response_business_day
     {
       id: Integer,
-      started_at: /\d{2}:\d{2}/,
-      ended_at: /\d{2}:\d{2}/,
+      started_at: hour_min_response,
+      ended_at: hour_min_response,
       weekday: String
     }
   end
@@ -105,6 +115,31 @@ module JsonResponseHelper
     }
   end
 
+  def response_request
+    {
+      id:          Integer,
+      reason:      String,
+      attended_at: hour_min_response,
+      left_at:     hour_min_response,
+      status:      String,
+      updated_at:  time_iso8601_response,
+      user:        response_user
+    }
+  end
+
+  def response_attendance
+    {
+      id:               Integer,
+      day:              date_response,
+      attended_at:      nullable_response(hour_min_response),
+      left_at:          nullable_response(hour_min_response),
+      attending_status: nullable_response(String),
+      leaving_status:   nullable_response(String),
+      off_status:       nullable_response(String),
+      user:             response_user
+    }
+  end
+
   private
 
   def nullable_response(expected_response)
@@ -122,5 +157,13 @@ module JsonResponseHelper
 
   def time_iso8601_response
     /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}[-\+]{1}\d{2}:\d{2}$/
+  end
+
+  def hour_min_response
+    /\d{2}:\d{2}/
+  end
+
+  def date_response
+    /\d{4}-\d{2}-\d{2}/
   end
 end

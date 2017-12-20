@@ -6,6 +6,7 @@
 #
 #  id                     :integer          not null, primary key
 #  company_id             :integer          not null
+#  group_id               :integer
 #  department_id          :integer
 #  email                  :string           not null
 #  password_digest        :string           not null
@@ -35,6 +36,7 @@ class User < ApplicationRecord
   PASSWORD_RESET_TOKEN_EXPIRE = 1800.0
 
   belongs_to :company
+  belongs_to :group, optional: true
   belongs_to :department, optional: true
   has_many :attendances, dependent: :destroy
   has_many :sessions, dependent: :destroy

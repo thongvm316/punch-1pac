@@ -4,6 +4,7 @@ class CreateUsers < ActiveRecord::Migration[5.1]
   def change
     create_table :users do |t|
       t.bigint   :company_id, null: false
+      t.bigint   :group_id
       t.bigint   :department_id
       t.string   :email, null: false
       t.string   :password_digest, null: false

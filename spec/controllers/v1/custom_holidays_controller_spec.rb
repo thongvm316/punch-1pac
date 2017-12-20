@@ -82,7 +82,7 @@ RSpec.describe V1::CustomHolidaysController, type: :controller do
       its(:code) { is_expected.to eq '200' }
     end
     context 'when holiday have exist' do
-      subject { post :destroy, params: { id: -1 } }
+      subject { post :destroy, params: { id: 0 } }
 
       its(:code) { is_expected.to eq '404' }
     end

@@ -2,7 +2,9 @@
 
 class ApplicationController < ActionController::API
   include JWTAuthenticable
+  include AppErrors
 
+  rescue_from AppErrors::Error403, with: :forbidden
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
 
   before_action :set_locale
@@ -17,6 +19,10 @@ class ApplicationController < ActionController::API
 
   def set_locale
     Time.zone = current_company.timezone
+  end
+
+  def forbidden
+    render json: { message: 'Forbidden' }, status: 403
   end
 
   def not_found

@@ -26,6 +26,9 @@ class CustomHoliday < ApplicationRecord
 
   validate :ended_at_and_started_at
 
+  scope :selected_attr, -> { select(:id, :name, :started_at, :ended_at) }
+  scope :in_holiday, ->(target_date) { where('? BETWEEN started_at AND ended_at', target_date) }
+
   private
 
   def ended_at_and_started_at

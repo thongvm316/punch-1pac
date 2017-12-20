@@ -6,6 +6,8 @@ FactoryBot.define do
     day { Time.current }
     attended_at { Time.current }
     left_at { Time.current }
-    status { %w[attend_late leave_early] }
+    attending_status 'attend_late'
+    leaving_status 'leave_early'
+    off_status 'holiday'
   end
 end

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  namespace :v1, defaults: { format: :json } do
+  namespace :v1, defaults: { format: :json }, constraints: { id: /\d+/ } do
     post   'login'  => 'sessions#login'
     delete 'logout' => 'sessions#logout'
 
@@ -32,8 +32,16 @@ Rails.application.routes.draw do
       get  'latest', on: :collection
     end
 
-    resources :business_days, only: %i[index create update destroy], constraints: { id: /\d+/ }
-    resources :allowed_ips, only: %i[index create update destroy], constraints: { id: /\d+/ }
-    resources :departments, only: %i[index show create update destroy], constraints: { id: /\d+/ }
+    resources :attendances, only: %i[create update]
+    resources :requests, only: %i[index create update destroy] do
+      member do
+        post 'approve' => 'requests#approve'
+        post 'reject'  => 'requests#reject'
+        post 'read'    => 'read_requests#create'
+      end
+    end
+    resources :business_days, only: %i[index create update destroy]
+    resources :allowed_ips, only: %i[index create update destroy]
+    resources :departments, only: %i[index show create update destroy]
   end
 end
