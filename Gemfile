@@ -80,6 +80,7 @@ group :test do
   gem 'rspec-json_matcher'
   gem 'database_rewinder'
   gem 'shoulda-matchers'
+  gem 'timecop'
 end
 
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
