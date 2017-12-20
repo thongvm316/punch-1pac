@@ -7,7 +7,9 @@ class CreateAttendances < ActiveRecord::Migration[5.1]
       t.date :day, null: false
       t.time :attended_at
       t.time :left_at
-      t.text :status, array: true, null: false, default: ['absent']
+      t.string :attending_status
+      t.string :leaving_status
+      t.string :off_status
 
       t.timestamps null: false
     end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171213093419) do
+ActiveRecord::Schema.define(version: 20171214170528) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -42,7 +42,9 @@ ActiveRecord::Schema.define(version: 20171213093419) do
     t.date "day", null: false
     t.time "attended_at"
     t.time "left_at"
-    t.text "status", default: ["absent"], null: false, array: true
+    t.string "attending_status"
+    t.string "leaving_status"
+    t.string "off_status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id", "day"], name: "index_attendances_on_user_id_and_day", unique: true
@@ -105,6 +107,16 @@ ActiveRecord::Schema.define(version: 20171213093419) do
     t.index ["company_id"], name: "index_departments_on_company_id"
   end
 
+  create_table "group_permissions", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "groups", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "holidays", force: :cascade do |t|
     t.bigint "admin_id", null: false
     t.string "country", null: false
@@ -122,6 +134,11 @@ ActiveRecord::Schema.define(version: 20171213093419) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["jti"], name: "index_jwt_blacklist_on_jti", unique: true
+  end
+
+  create_table "permissions", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "read_announcements", force: :cascade do |t|
@@ -173,8 +190,14 @@ ActiveRecord::Schema.define(version: 20171213093419) do
     t.index ["user_id"], name: "index_sessions_on_user_id"
   end
 
+  create_table "user_permissions", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.bigint "company_id", null: false
+    t.bigint "group_id"
     t.bigint "department_id"
     t.string "email", null: false
     t.string "password_digest", null: false
