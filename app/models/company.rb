@@ -41,4 +41,10 @@ class Company < ApplicationRecord
   validates :address, presence: true
   validates :phone_number, presence: true
   validates :timezone, inclusion: { in: ActiveSupport::TimeZone.all.map { |tz| tz.tzinfo.name } }
+
+  def in_holiday(target_date)
+    return true if custom_holidays.in_holiday(target_date).exists?
+    return true if holidays.in_holiday(target_date).exists?
+    false
+  end
 end

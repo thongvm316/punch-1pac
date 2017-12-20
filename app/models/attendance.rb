@@ -4,14 +4,16 @@
 #
 # Table name: attendances
 #
-#  id          :integer          not null, primary key
-#  user_id     :integer          not null
-#  day         :date             not null
-#  attended_at :time
-#  left_at     :time
-#  status      :text             default(["\"absent\""]), not null, is an Array
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
+#  id               :integer          not null, primary key
+#  user_id          :integer          not null
+#  day              :date             not null
+#  attended_at      :time
+#  left_at          :time
+#  attending_status :string
+#  leaving_status   :string
+#  off_status       :string
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
 #
 # Indexes
 #
@@ -24,4 +26,9 @@ class Attendance < ApplicationRecord
   has_many :requests, dependent: :destroy
 
   validates :day, presence: true
+  validates :attending_status, inclusion: %w[attend_ok attend_late], allow_nil: true
+  validates :leaving_status, inclusion: %w[leave_ok leave_early], allow_nil: true
+  validates :off_status, inclusion: %w[holiday weekend annual_leave], allow_nil: true
+
+  scope :attended, -> { where.not(attended_at: nil) }
 end
