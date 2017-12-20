@@ -14,5 +14,13 @@ FactoryBot.define do
     timezone 'Asia/Bangkok'
     breaktime 1.0
     breakdays { %w[sunday saturday] }
+
+    trait :with_business_days do
+      after(:create) do |company|
+        %w[monday tuesday wednesday thursday friday].each do |wday|
+          company.business_days << create(:business_day, started_at: '08:00', ended_at: '17:30', weekday: wday)
+        end
+      end
+    end
   end
 end
