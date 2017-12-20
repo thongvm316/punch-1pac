@@ -37,7 +37,7 @@ RSpec.describe V1::UsersController, type: :controller do
     end
 
     context 'when not found' do
-      subject { delete :destroy, params: { id: -1 } }
+      subject { delete :destroy, params: { id: 0 } }
 
       its(:code) { is_expected.to eq '404' }
     end
@@ -47,7 +47,7 @@ RSpec.describe V1::UsersController, type: :controller do
     context 'when not found' do
       before { authenticate_user(user) }
 
-      subject { patch :update, params: { id: -1 } }
+      subject { patch :update, params: { id: 0 } }
 
       its(:code) { is_expected.to eq '404' }
     end
