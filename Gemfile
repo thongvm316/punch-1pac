@@ -33,6 +33,11 @@ gem 'oj'
 gem 'rack-cors'
 gem 'shrine'
 
+group :production do
+  gem 'bugsnag'
+  gem 'lograge'
+end
+
 group :development, :test do
   gem 'bullet'
 
@@ -48,10 +53,10 @@ end
 
 group :development do
   gem 'listen', '>= 3.0.5', '< 3.2'
-
   gem 'annotate'
-
   gem 'letter_opener'
+
+  gem 'strong_migrations'
 
   gem 'rubocop', require: false
   gem 'rails_best_practices', require: false
@@ -70,9 +75,7 @@ end
 
 group :test do
   gem 'simplecov', require: false
-  gem 'rails-controller-testing'
   gem 'rspec-its'
-  gem 'rspec-request_describer'
   gem 'rspec-json_matcher'
   gem 'database_rewinder'
   gem 'shoulda-matchers'

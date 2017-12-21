@@ -38,6 +38,7 @@ module Punch
       g.fixture_replacement :factory_bot, dir: 'spec/factories'
     end
 
+    config.active_job.queue_adapter = :sidekiq
     config.api_only = true
   end
 end
