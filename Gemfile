@@ -11,11 +11,7 @@ end
 # Core
 gem 'rails', '~> 5.1.4'
 gem 'puma', '~> 3.7'
-
-# Postgres
 gem 'pg', '~> 0.18'
-gem 'pghero'
-gem 'pg_query', '>= 0.9.0'
 
 # Background job
 gem 'sidekiq'
