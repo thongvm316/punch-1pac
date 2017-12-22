@@ -108,11 +108,15 @@ ActiveRecord::Schema.define(version: 20171214170528) do
   end
 
   create_table "group_permissions", force: :cascade do |t|
+    t.bigint "group_id", null: false
+    t.bigint "permission_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "groups", force: :cascade do |t|
+    t.bigint "company_id", null: false
+    t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -137,6 +141,10 @@ ActiveRecord::Schema.define(version: 20171214170528) do
   end
 
   create_table "permissions", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "action", null: false
+    t.string "controller", null: false
+    t.integer "role", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -191,6 +199,8 @@ ActiveRecord::Schema.define(version: 20171214170528) do
   end
 
   create_table "user_permissions", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "permission_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -201,7 +211,7 @@ ActiveRecord::Schema.define(version: 20171214170528) do
     t.bigint "department_id"
     t.string "email", null: false
     t.string "password_digest", null: false
-    t.string "role", default: "member", null: false
+    t.integer "role", default: 0, null: false
     t.boolean "owner", default: false, null: false
     t.string "name", null: false
     t.string "gender", default: "male", null: false

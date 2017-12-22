@@ -9,6 +9,7 @@ RSpec.describe Company, type: :model do
     it { should have_many(:business_days).dependent(:destroy) }
     it { should have_many(:company_holidays).dependent(:destroy) }
     it { should have_many(:holidays).through(:company_holidays) }
+    it { should have_many(:groups) }
   end
 
   describe 'validations' do
