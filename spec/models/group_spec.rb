@@ -11,5 +11,6 @@ RSpec.describe Group, type: :model do
 
   describe 'validations' do
     it { should validate_presence_of(:name) }
+    it { should validate_presence_of(:group_permissions) }
   end
 end
