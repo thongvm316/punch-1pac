@@ -22,4 +22,10 @@ class Permission < ApplicationRecord
   validates :name, presence: true
   validates :action, presence: true
   validates :controller, presence: true
+
+  scope :filter, ->(params) {
+    query = all
+    query = query.where(role: params[:role]) if params[:role].present?
+    query
+  }
 end
