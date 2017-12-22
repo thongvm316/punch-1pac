@@ -47,7 +47,6 @@ group :development, :test do
   gem 'pry-coolline'
   gem 'awesome_print'
 
-  gem 'rspec-rails'
   gem 'factory_bot_rails'
   gem 'faker'
 end
@@ -76,6 +75,8 @@ end
 
 group :test do
   gem 'simplecov', require: false
+  gem 'rspec-rails'
+  gem 'rspec_junit_formatter'
   gem 'rspec-its'
   gem 'rspec-json_matcher'
   gem 'database_rewinder'
