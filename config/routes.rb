@@ -18,6 +18,9 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :groups, only: %i[index show create update destroy]
+    resources :permissions, only: %i[index]
+
     resources :sessions, only: %i[index destroy]
 
     resource :companies, only: %i[update destroy] do

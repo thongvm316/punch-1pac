@@ -12,35 +12,12 @@
 #
 
 class Group < ApplicationRecord
+  belongs_to :company
   has_many :group_permissions, dependent: :destroy
   has_many :permissions, through: :group_permissions
-  belongs_to :company
+
+  accepts_nested_attributes_for :group_permissions
 
   validates :name, presence: true
-
-  def create_with_permission(permission_ids)
-    return false unless valid_permission?(permission_ids)
-    ActiveRecord::Base.transaction do
-      save!
-      group_permissions = permission_ids.map do |permission_id|
-        { group_id: id, permission_id: permission_id }
-      end
-      GroupPermission.import!(group_permissions)
-    end
-
-    true
-  rescue StandardError => _
-    false
-  end
-
-  private
-
-  def valid_permission?(permission_ids)
-    if permission_ids.empty?
-      errors.add(:permission, I18n.t('errors.messages.permission.can_not_empty'))
-      false
-    else
-      true
-    end
-  end
+  validates :group_permissions, presence: true
 end
