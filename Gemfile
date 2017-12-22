@@ -36,6 +36,7 @@ gem 'kaminari'
 gem 'oj'
 gem 'rack-cors'
 gem 'shrine'
+gem 'virtus'
 
 group :development, :test do
   gem 'bullet'
