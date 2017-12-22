@@ -9,6 +9,8 @@ jobs:
     working_directory: ~/Projects/1punch-api
     docker:
        - image: circleci/ruby:2.4.2-node
+         environment:
+           RAILS_ENV: test
        - image: circleci/postgres:10
 
     steps:
@@ -31,6 +33,7 @@ jobs:
             - ./vendor/bundle
           key: 1punch-api0v1-dependencies-{{ checksum "Gemfile.lock" }}
 
+      - run: bin/setup
       # Database setup
       - run: bundle exec rake db:create
       - run: bundle exec rake db:schema:load
