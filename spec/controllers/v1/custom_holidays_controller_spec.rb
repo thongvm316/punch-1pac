@@ -9,12 +9,12 @@ RSpec.describe V1::CustomHolidaysController, type: :controller do
 
   describe 'GET #index' do
     context 'when valid param' do
-      let!(:custom_holiday_list) { create_list :custom_holiday, 10, company: company }
+      let!(:custom_holiday_list) { create_list :custom_holiday, 2, company: company }
 
       subject { get :index }
 
       its(:code) { is_expected.to eq '200' }
-      its(:body) { is_expected.to be_json_as(Array.new(10) { response_holiday }) }
+      its(:body) { is_expected.to be_json_as(Array.new(custom_holiday_list.size) { response_holiday }) }
     end
   end
 
@@ -24,7 +24,7 @@ RSpec.describe V1::CustomHolidaysController, type: :controller do
 
       subject { post :create, params: { holiday: custom_holiday } }
 
-      its(:code) { is_expected.to eq '200' }
+      its(:code) { is_expected.to eq '201' }
       its(:body) { is_expected.to be_json_as(response_holiday) }
     end
 
@@ -57,6 +57,7 @@ RSpec.describe V1::CustomHolidaysController, type: :controller do
   describe 'PATCH #update' do
     context 'when valid params' do
       let(:custom_holiday) { create(:custom_holiday, company: company) }
+
       subject { patch :update, params: { id: custom_holiday.id, holiday: { started_at: '30/3/2017', ended_at: '1/4/2017' } } }
 
       its(:code) { is_expected.to eq '200' }
@@ -81,6 +82,7 @@ RSpec.describe V1::CustomHolidaysController, type: :controller do
 
       its(:code) { is_expected.to eq '200' }
     end
+
     context 'when holiday have exist' do
       subject { post :destroy, params: { id: 0 } }
 
