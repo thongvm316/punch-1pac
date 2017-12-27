@@ -28,4 +28,8 @@ class Permission < ApplicationRecord
     query = query.where(role: params[:role]) if params[:role].present?
     query
   }
+
+  def self.verify(permission_ids)
+    Permission.select(:id).where(id: permission_ids).map { |permission| { permission_id: permission.id } }
+  end
 end
