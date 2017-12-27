@@ -1,4 +1,4 @@
-name,email,password
-thoi,thoi@gg.com,password
-nhat,nhat@gg.com,password
-duong,duong@gg.com,password
+name,email,password,role
+thoi,thoi@gg.com,password,member
+nhat,nhat@gg.com,password,admin
+duong,duong@gg.com,password,superadmin
