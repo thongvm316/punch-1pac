@@ -11,5 +11,9 @@ FactoryBot.define do
     email { Faker::Internet.email }
     password { Faker::Internet.password }
     password_confirmation { password }
+    user_permissions_attributes do
+      permissions = create_list(:permission, 3).pluck(:id)
+      permissions.map { |id| { permission_id: id } }
+    end
   end
 end
