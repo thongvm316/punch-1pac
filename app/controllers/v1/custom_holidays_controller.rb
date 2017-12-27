@@ -11,7 +11,7 @@ class V1::CustomHolidaysController < ApplicationController
   def create
     holiday = current_company.custom_holidays.build(holiday_params)
     if holiday.save
-      render json: holiday, serializer: HolidaySerializer, status: 200
+      render json: holiday, serializer: HolidaySerializer, status: 201
     else
       render_422(holiday.errors.messages)
     end

@@ -10,13 +10,13 @@ RSpec.describe V1::PermissionsController, type: :controller do
 
   describe 'GET #index' do
     context 'when success' do
-      let!(:permissions) { create_list :permission, 10 }
+      let!(:permissions) { create_list :permission, 5 }
 
       subject { get :index }
 
       its(:code) { is_expected.to eq '200' }
 
-      its(:body) { is_expected.to be_json_as(Array.new(10) { response_permission }) }
+      its(:body) { is_expected.to be_json_as(Array.new(Permission.all.count) { response_permission }) }
     end
 
     context 'when filter by role' do
@@ -27,14 +27,14 @@ RSpec.describe V1::PermissionsController, type: :controller do
         subject { get :index, params: { role: 1 } }
 
         its(:code) { is_expected.to eq '200' }
-        its(:body) { is_expected.to be_json_as(Array.new(permissions_role_1.size) { response_permission }) }
+        its(:body) { is_expected.to be_json_as(Array.new(Permission.where(role: 1).count) { response_permission }) }
       end
 
       context 'when role = 2' do
         subject { get :index, params: { role: 2 } }
 
         its(:code) { is_expected.to eq '200' }
-        its(:body) { is_expected.to be_json_as(Array.new(permissions_role_2.size) { response_permission }) }
+        its(:body) { is_expected.to be_json_as(Array.new(Permission.where(role: 2).count) { response_permission }) }
       end
     end
   end

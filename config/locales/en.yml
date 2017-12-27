@@ -31,7 +31,3 @@
 
 en:
   hello: "Hello world"
-  errors:
-    messages:
-      custom_holiday:
-        ended_at: 'must be later than started at'

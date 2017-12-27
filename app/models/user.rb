@@ -46,12 +46,15 @@ class User < ApplicationRecord
   has_many :user_permissions, dependent: :destroy
   has_many :permissions, through: :user_permissions
 
+  accepts_nested_attributes_for :user_permissions
+
   validates :name, presence: true, length: { maximum: 100 }
   validates :email, presence: true, uniqueness: true, length: { maximum: 100 }, format: { with: REGEX_VALID_EMAIL }
   validates :password, length: { minimum: 6, maximum: 32 }, allow_nil: true
   validates :password_confirmation, presence: true, if: -> { password.present? }
   validates :gender, inclusion: { in: %w[male female] }
   validates :language, inclusion: { in: %w[vi en jp] }
+  validates :user_permissions, presence: true
 
   def reset_password_token_valid?(token)
     user = find_by!(reset_password_token: token)

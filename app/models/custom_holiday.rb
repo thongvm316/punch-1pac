@@ -33,6 +33,6 @@ class CustomHoliday < ApplicationRecord
 
   def ended_at_and_started_at
     return if started_at.nil? || ended_at.nil?
-    errors.add(:ended_at, I18n.t('errors.messages.custom_holiday.ended_at')) if started_at > ended_at
+    errors.add(:ended_at, I18n.t('errors.messages.greater_than', count: started_at)) if started_at > ended_at
   end
 end

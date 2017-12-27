@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class UserWithPermissionSerializer < ActiveModel::Serializer
+class UserWithPermissionSerializer < ApplicationSerializer
   attributes :id, :email, :name
   has_many :permissions
 end

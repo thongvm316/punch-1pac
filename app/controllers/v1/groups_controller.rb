@@ -15,14 +15,14 @@ class V1::GroupsController < ApplicationController
   def create
     group = current_company.groups.build(group_params)
     if group.save
-      render json: group, serializer: GroupSerializer, status: 200
+      render json: group, serializer: GroupSerializer, status: 201
     else
       render_422(group.errors.messages)
     end
   end
 
   def update
-    GroupPermission.where(group_id: @group.id).destroy_all
+    @group.group_permissions.destroy_all if group_params[:group_permissions_attributes].present?
     if @group.update_attributes(group_params)
       render json: @group, serializer: GroupSerializer, status: 200
     else
@@ -38,8 +38,8 @@ class V1::GroupsController < ApplicationController
   private
 
   def group_params
-    params.require(:group).permit(:name, group_permissions_attributes: []).tap do |group_params|
-      group_params[:group_permissions_attributes] = Permission.where(id: group_params[:group_permissions_attributes]).map { |permission| { permission_id: permission.id } }
+    params.require(:group).permit(:name, group_permissions_attributes: []).tap do |p|
+      p[:group_permissions_attributes] = Permission.verify(params.require(:group)[:permission_ids])
     end
   end
 

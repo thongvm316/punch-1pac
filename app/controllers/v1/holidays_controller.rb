@@ -12,7 +12,7 @@ class V1::HolidaysController < ApplicationController
       { company_id: current_company.id, holiday_id: holiday.id }
     end
     CompanyHoliday.import(holidays)
-    render json: available_holidays, each_serializer: HolidaySerializer, status: 200
+    render json: available_holidays, each_serializer: HolidaySerializer, status: 201
   end
 
   def company_destroy
