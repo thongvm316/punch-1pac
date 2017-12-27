@@ -5,29 +5,30 @@ require 'rails_helper'
 RSpec.describe V1::GroupsController, type: :controller do
   let(:company) { create :company }
   let(:login_user) { create :user, company: company }
-  let(:permissions) { create_list :permission, 3 }
-  let(:permission_ids) { permissions.pluck(:id).map { |id| { permission_id: id } } }
 
   before { authenticate_user(login_user) }
 
   describe 'GET #index' do
-    let!(:groups) { create_list :group, 3, company_id: company.id, group_permissions_attributes: permission_ids }
     context 'when valid params' do
+      let(:permission_ids) { create_list(:permission, 3).pluck(:id).map { |id| { permission_id: id } } }
+      let!(:groups) { create_list :group, 3, company: company, group_permissions_attributes: permission_ids }
+
       subject { get :index }
 
       its(:code) { is_expected.to eq '200' }
-      its(:body) { is_expected.to be_json_as(Array.new(permission_ids.size) { response_group(permissions.size) }) }
+      its(:body) { is_expected.to be_json_as(Array.new(groups.size) { response_group(permission_ids.size) }) }
     end
   end
 
   describe 'GET #show' do
     context 'when valid params' do
-      let!(:group) { create :group, company_id: company.id, group_permissions_attributes: permission_ids }
+      let(:group) { create :group, company: company }
+      let(:permissions_size) { group.permissions.size }
 
       subject { get :show, params: { id: group.id } }
 
       its(:code) { is_expected.to eq '200' }
-      its(:body) { is_expected.to be_json_as(response_group(permissions.size)) }
+      its(:body) { is_expected.to be_json_as(response_group(permissions_size)) }
     end
 
     context 'when invalid params' do
@@ -40,17 +41,20 @@ RSpec.describe V1::GroupsController, type: :controller do
 
   describe 'POST #create' do
     context 'when params valid' do
-      let(:permission) { create_list :permission, 3 }
-      let(:ids) { permission.pluck(:id) }
+      let(:permission_ids) { create_list(:permission, 3).pluck(:id) }
+      let(:group_params) { { group: { name: Faker::Lorem.word, permission_ids: permission_ids } } }
 
-      subject { post :create, params: { group: { name: Faker::Lorem.word, group_permissions_attributes: ids } } }
+      subject { post :create, params: group_params }
 
-      its(:code) { is_expected.to eq '200' }
-      its(:body) { is_expected.to be_json_as(response_group(ids.size)) }
+      its(:code) { is_expected.to eq '201' }
+      its(:body) { is_expected.to be_json_as(response_group(permission_ids.size)) }
     end
 
-    context 'when have no permission' do
-      subject { post :create, params: { group: { name: Faker::Lorem.word, permission: [1, 2, 3] } } }
+    context 'when have no permissions' do
+      let(:last_permission) { Permission.last.id }
+      let(:group_params) {  { group: { name: Faker::Lorem.word, permission_ids: [last_permission + 1, last_permission + 2] } } }
+
+      subject { post :create, params: group_params }
 
       its(:code) { is_expected.to eq '422' }
       its(:body) { is_expected.to be_json_as(response_422(group_permissions: Array)) }
@@ -58,37 +62,44 @@ RSpec.describe V1::GroupsController, type: :controller do
   end
 
   describe 'PATCH #update' do
-    let!(:permissions_adding) { create_list :permission, 3 }
-    let(:ids) { permissions.pluck(:id).concat(permissions_adding.pluck(:id)) }
-    let!(:group) { create :group, company_id: company.id, group_permissions_attributes: permission_ids }
+    let(:group) { create :group, company_id: company.id }
+    let(:group_params) { { id: group.id, group: { name: 'kawasaki', permission_ids: [] } } }
 
-    context 'when params valid' do
-      subject { put :update, params: { id: group.id, group: { name: Faker::Lorem.word, group_permissions_attributes: ids } } }
+    context 'when add new permissions' do
+      let(:permissions_adding) { create_list :permission, 3 }
+      let(:ids) { group.permissions.pluck(:id).concat(permissions_adding.pluck(:id)) }
+      let!(:set_up) { group_params[:group][:permission_ids] = ids }
+
+      subject { put :update, params: group_params }
 
       its(:code) { is_expected.to eq '200' }
       its(:body) { is_expected.to be_json_as(response_group(ids.size)) }
     end
 
-    context 'when invalid params' do
-      subject { put :update, params: { id: group.id, group: { name: '', group_permissions_attributes: [] } } }
+    context 'when permissions empty' do
+      let!(:set_up) { group_params[:group][:permission_ids] = [] }
+      let(:current_permissions_in_group) { group.permissions.count }
 
-      its(:code) { is_expected.to eq '422' }
-      its(:body) { is_expected.to be_json_as(response_422(name: Array, group_permissions: Array)) }
+      subject { put :update, params: group_params }
+
+      its(:code) { is_expected.to eq '200' }
+      its(:body) { is_expected.to be_json_as(response_group(current_permissions_in_group)) }
     end
 
     context 'when permissions invalid' do
-      subject { put :update, params: { id: group.id, group: { name: 'kawasaki', group_permissions_attributes: [0] } } }
+      let!(:set_up) { group_params[:group][:permission_ids] = [0] }
+      let(:current_permissions_in_group) { group.permissions.count }
 
-      its(:code) { is_expected.to eq '422' }
-      its(:body) { is_expected.to be_json_as(response_422(group_permissions: Array)) }
+      subject { put :update, params: group_params }
+
+      its(:code) { is_expected.to eq '200' }
+      its(:body) { is_expected.to be_json_as(response_group(current_permissions_in_group)) }
     end
   end
 
   describe 'DELETE #destroy' do
     context 'when valid params' do
-      let!(:permissions) { create_list :permission, 10 }
-      let(:permission_ids) { permissions.map { |p| { permission_id: p.id } } }
-      let!(:group) { create :group, company_id: company.id, group_permissions_attributes: permission_ids }
+      let(:group) { create :group, company: company }
 
       subject { delete :destroy, params: { id: group.id } }
 
