@@ -70,4 +70,8 @@ class User < ApplicationRecord
     self.reset_password_sent_at = Time.current
     save!
   end
+
+  def manager?
+    superadmin? || admin?
+  end
 end
