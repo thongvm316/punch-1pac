@@ -2,6 +2,7 @@
 
 class V1::CompaniesController < ApplicationController
   def update
+    authorize Company
     if current_company.update_attributes(company_params)
       render json: current_company, serializer: CompanySerializer, status: 200
     else
@@ -10,6 +11,7 @@ class V1::CompaniesController < ApplicationController
   end
 
   def setup_rules
+    authorize Company
     if current_company.update_attributes(company_rule_params)
       render json: current_company, serializer: CompanySerializer, status: 200
     else
@@ -18,11 +20,13 @@ class V1::CompaniesController < ApplicationController
   end
 
   def deactivate
+    authorize Company
     current_company.update_attributes(activated: false)
     head(200)
   end
 
   def destroy
+    authorize Company
     current_company.destroy
     head(200)
   end
