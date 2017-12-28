@@ -17,6 +17,10 @@ Metrics/ModuleLength:
   Exclude:
     - 'spec/supports/json_response_helper.rb'
 
+Style/StructInheritance:
+  Exclude:
+      - 'app/policies/application_policy.rb'
+
 Metrics/BlockLength:
   Enabled: false
 
