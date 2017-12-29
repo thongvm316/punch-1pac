@@ -1,16 +1,8 @@
 # frozen_string_literal: true
 
 class UserPolicy < ApplicationPolicy
-  def index?
-    @user.manager?
-  end
-
   def show?
     @user.manager? || @user == @record
-  end
-
-  def create?
-    @user.manager?
   end
 
   def create_multi?

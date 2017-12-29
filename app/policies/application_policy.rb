@@ -9,15 +9,15 @@ class ApplicationPolicy < Struct.new(:user, :record)
   end
 
   def index?
-    false
+    @user.manager?
   end
 
   def show?
-    scope.where(id: record.id).exists?
+    @user.manager?
   end
 
   def create?
-    false
+    @user.manager?
   end
 
   def new?
@@ -25,7 +25,7 @@ class ApplicationPolicy < Struct.new(:user, :record)
   end
 
   def update?
-    false
+    @user.manager?
   end
 
   def edit?
@@ -33,7 +33,7 @@ class ApplicationPolicy < Struct.new(:user, :record)
   end
 
   def destroy?
-    false
+    @user.manager?
   end
 
   def scope

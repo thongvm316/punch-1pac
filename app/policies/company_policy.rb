@@ -1,10 +1,6 @@
 # frozen_string_literal: true
 
 class CompanyPolicy < ApplicationPolicy
-  def update?
-    @user.manager?
-  end
-
   def deactivate?
     @user.superadmin?
   end
