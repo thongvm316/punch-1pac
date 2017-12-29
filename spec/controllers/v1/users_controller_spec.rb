@@ -263,8 +263,6 @@ RSpec.describe V1::UsersController, type: :controller do
 
         its(:code) { is_expected.to eq '401' }
       end
-
-
     end
   end
 
