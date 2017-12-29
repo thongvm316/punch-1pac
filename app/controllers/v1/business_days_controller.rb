@@ -4,11 +4,13 @@ class V1::BusinessDaysController < ApplicationController
   before_action :set_business_day, only: %i[update destroy]
 
   def index
+    authorize BusinessDay
     business_days = current_company.business_days
     render json: business_days, each_serializer: BusinessDaySerializer, status: 200
   end
 
   def create
+    authorize BusinessDay
     business_day = current_company.business_days.build(business_day_params)
     if business_day.save
       render json: business_day, serializer: BusinessDaySerializer, status: 201
@@ -18,6 +20,7 @@ class V1::BusinessDaysController < ApplicationController
   end
 
   def update
+    authorize BusinessDay
     if @business_day.update_attributes(business_day_params)
       render json: @business_day, serializer: BusinessDaySerializer, status: 200
     else
@@ -26,6 +29,7 @@ class V1::BusinessDaysController < ApplicationController
   end
 
   def destroy
+    authorize BusinessDay
     @business_day.destroy
     head(200)
   end
