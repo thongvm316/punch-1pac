@@ -1,10 +1,6 @@
 # frozen_string_literal: true
 
 class HolidayPolicy < ApplicationPolicy
-  def index?
-    @user.manager?
-  end
-
   def import?
     @user.manager?
   end
