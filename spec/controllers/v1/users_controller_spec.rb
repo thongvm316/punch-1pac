@@ -334,10 +334,11 @@ RSpec.describe V1::UsersController, type: :controller do
       let(:login_user) { create :user, company: company, role: 'admin' }
 
       context 'when params validate' do
-        let(:user_params) { attributes_for(:user) }
-        let!(:set_up) do
+        let(:user_params) do
+          user_params = attributes_for(:user)
           user_params[:permission_ids] = user_params[:user_permissions_attributes].map { |id| id[:permission_id] }
           user_params.delete(:user_permissions_attributes)
+          user_params
         end
 
         subject { post :create, params: { user: user_params } }
@@ -364,9 +365,12 @@ RSpec.describe V1::UsersController, type: :controller do
       end
 
       context 'when permissions invalid' do
-        let(:user_params) { attributes_for(:user) }
-        let(:max_permission_number) { Permission.last.id }
-        let!(:set_up) { user_params[:permission_ids] = [max_permission_number + 1, max_permission_number + 2] }
+        let(:user_params) do
+          user_params = attributes_for(:user).except(:user_permissions_attributes)
+          max_permission_number = Permission.last.id
+          user_params[:permission_ids] = [max_permission_number + 1, max_permission_number + 2]
+          user_params
+        end
 
         subject { post :create, params: { user: user_params } }
 
