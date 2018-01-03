@@ -18,7 +18,7 @@ RSpec.describe V1::GroupsController, type: :controller do
       let(:login_user) { create :user, company: company, role: 'admin' }
 
       context 'when valid params' do
-        let(:permission_ids) { create_list(:permission, 3).pluck(:id).map { |id| { permission_id: id } } }
+        let(:permission_ids) { create_list(:permission, 3).map { |p| { permission_id: p.id } } }
         let!(:groups) { create_list :group, 3, company: company, group_permissions_attributes: permission_ids }
 
         subject { get :index }
