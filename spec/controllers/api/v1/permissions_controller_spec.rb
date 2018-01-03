@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe V1::PermissionsController, type: :controller do
+RSpec.describe Api::V1::PermissionsController, type: :controller do
   let(:company) { create :company }
   let(:login_user) { create :user, company: company }
 

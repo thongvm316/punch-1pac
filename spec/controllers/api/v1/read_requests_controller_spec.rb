@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe V1::ReadRequestsController, type: :controller do
+RSpec.describe Api::V1::ReadRequestsController, type: :controller do
   describe 'POST #create' do
     let(:company) { create :company }
     let(:login_user) { create :user, company: company }

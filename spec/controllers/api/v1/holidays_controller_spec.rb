@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe V1::HolidaysController, type: :controller do
+RSpec.describe Api::V1::HolidaysController, type: :controller do
   let(:company) { create :company }
   before { authenticate_user(login_user) }
 

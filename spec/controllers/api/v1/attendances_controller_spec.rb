@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe V1::AttendancesController, type: :controller do
+RSpec.describe Api::V1::AttendancesController, type: :controller do
   let(:company) { create :company, :with_business_days }
   let(:login_user) { create :user, company: company }
 

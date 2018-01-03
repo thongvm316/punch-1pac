@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe V1::SessionsController, type: :controller do
+RSpec.describe Api::V1::SessionsController, type: :controller do
   let(:company) { create :company }
   let(:user) { create :user, email: 'foo@gmail.com', password: 'password', password_confirmation: 'password', company: company }
 
