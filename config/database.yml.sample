@@ -1,7 +1,7 @@
 default: &default
   adapter: postgresql
   encoding: unicode
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  pool: <%= ENV.fetch('RAILS_MAX_THREADS') { 5 } %>
   username: minh
   password:
 
@@ -14,8 +14,22 @@ test:
   username: punch
   database: 1punch_test
 
+staging:
+  <<: *default
+  database: 1punch_staging
+  username: <%= ENV['DATABASE_USER'] %>
+  password: <%= ENV['DATABASE_PASSWORD'] %>
+  connect_timeout: 1
+  checkout_timeout: 5
+  variables:
+    statement_timeout: 5000
+
 production:
   <<: *default
   database: 1punch_production
-  username: punch
-  password: <%= ENV['PUNCH_DATABASE_PASSWORD'] %>
+  username: <%= ENV['DATABASE_USER'] %>
+  password: <%= ENV['DATABASE_PASSWORD'] %>
+  connect_timeout: 1
+  checkout_timeout: 5
+  variables:
+    statement_timeout: 5000
