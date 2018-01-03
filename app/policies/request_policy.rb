@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class RequestPolicy < ApplicationPolicy
   def create?
     true
