@@ -4,11 +4,13 @@ class V1::AllowedIpsController < ApplicationController
   before_action :set_allowed_ip, only: %i[update destroy]
 
   def index
+    authorize AllowedIp
     allowed_ips = current_company.allowed_ips
     render json: allowed_ips, each_serializer: AllowedIpSerializer, status: 200
   end
 
   def create
+    authorize AllowedIp
     allowed_ip = current_company.allowed_ips.build(allowed_ip_params)
     if allowed_ip.save
       render json: allowed_ip, serializer: AllowedIpSerializer, status: 201
@@ -18,6 +20,7 @@ class V1::AllowedIpsController < ApplicationController
   end
 
   def update
+    authorize AllowedIp
     if @allowed_ip.update_attributes(allowed_ip_params)
       render json: @allowed_ip, serializer: AllowedIpSerializer, status: 200
     else
@@ -26,6 +29,7 @@ class V1::AllowedIpsController < ApplicationController
   end
 
   def destroy
+    authorize AllowedIp
     @allowed_ip.destroy
     head(200)
   end
