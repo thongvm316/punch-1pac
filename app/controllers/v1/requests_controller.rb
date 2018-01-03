@@ -6,6 +6,7 @@ class V1::RequestsController < ApplicationController
   before_action :set_request, only: %i[update destroy]
 
   def index
+    authorize Request
     requests = Request.page(params[:page]).per(params[:per_page])
     render json: requests,
            root: 'requests',
@@ -16,6 +17,7 @@ class V1::RequestsController < ApplicationController
   end
 
   def create
+    authorize Request
     req = current_user.requests.build(request_params)
     if req.save
       render json: req, serializer: RequestSerializer, status: 201
@@ -25,6 +27,7 @@ class V1::RequestsController < ApplicationController
   end
 
   def update
+    authorize Request
     if @req.update_attributes(request_params)
       render json: @req, serializer: RequestSerializer, status: 200
     else
@@ -33,16 +36,19 @@ class V1::RequestsController < ApplicationController
   end
 
   def approve
+    authorize Request
     RequestService.new(current_user, params[:id]).approve
     head(200)
   end
 
   def reject
+    authorize Request
     RequestService.new(current_user, params[:id]).reject
     head(200)
   end
 
   def destroy
+    authorize Request
     @req.destroy
     head(200)
   end
