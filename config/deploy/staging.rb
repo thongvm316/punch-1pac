@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-set :stage, :production
+set :stage, :staging
 server '13.230.252.221', user: 'rails', roles: %w[app web]
 
 set :application, '1punch-stg.1pac.vn'
@@ -13,7 +13,7 @@ set :branch, 'master'
 set :deploy_to, '/var/www/1punch-stg.1pac.vn/public_html'
 
 # capistrano-rails
-set :rails_env, :production
+set :rails_env, :staging
 set :migration_role, :web
 
 # capistrano-rbenv

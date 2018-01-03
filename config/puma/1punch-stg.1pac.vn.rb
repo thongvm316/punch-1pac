@@ -98,7 +98,6 @@ bind "unix://#{app_path}/shared/tmp/sockets/puma.sock"
 # This can be called multiple times to add code each time.
 #
 on_restart do
-  puts 'Refreshing Gemfile'
   ENV['BUNDLE_GEMFILE'] = "#{app_path}/current/Gemfile"
 end
 
