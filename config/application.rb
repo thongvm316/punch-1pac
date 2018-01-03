@@ -38,6 +38,8 @@ module Punch
     end
 
     config.active_job.queue_adapter = :sidekiq
-    config.api_only = true
+
+    config.middleware.delete Rack::MethodOverride
+    config.middleware.delete ActionDispatch::Flash
   end
 end
