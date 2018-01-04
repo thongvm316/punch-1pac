@@ -141,6 +141,174 @@
         <a href="#">Connect</a>
       </li>
     </ul>
+
+      <div style="margin-top: 64px">
+        <h1>Checkbox & Radio</h1>
+
+        <div class="form-group">
+          <label class="form-label">Checkbox</label>
+          <label class="form-checkbox">
+            <input type="checkbox">
+            <i class="form-icon"></i> Checkbox 1
+          </label>
+          <label class="form-checkbox">
+            <input type="checkbox">
+            <i class="form-icon"></i> Checkbox 2
+          </label>
+          <label class="form-checkbox">
+            <input type="checkbox" disabled>
+            <i class="form-icon"></i> Checkbox (disabled)
+          </label>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Radio</label>
+          <label class="form-radio">
+            <input type="radio" name="gender" checked>
+            <i class="form-icon"></i> Radio 1
+          </label>
+          <label class="form-radio">
+            <input type="radio" name="gender">
+            <i class="form-icon"></i> Radio 2
+          </label>
+          <label class="form-radio">
+            <input type="radio" name="gender" disabled>
+            <i class="form-icon"></i> Radio (disabled)
+          </label>
+        </div>
+      </div>
+
+      <div style="margin-top: 64px">
+        <h1>Input</h1>
+        <h3>Text Input</h3>
+
+        <form>
+          <div class="form-group">
+            <label class="form-label">Normal</label>
+            <input class="form-input" type="text" placeholder="Normal">
+          </div>
+          <div class="form-group">
+            <input class="form-input is-success" type="text" placeholder="Error">
+          </div>
+          <div class="form-group">
+            <input class="form-input is-error" type="text" placeholder="Success">
+          </div>
+          <div class="form-group">
+            <input class="form-input" type="text" placeholder="Disabled" disabled>
+          </div>
+        </form>
+
+        <form style="margin-top: 32px">
+          <div class="form-group form-group-search">
+            <input class="form-input" type="text" placeholder="Normal">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M23.822 20.88l-6.353-6.354c.93-1.465 1.467-3.2 1.467-5.059.001-5.219-4.247-9.467-9.468-9.467s-9.468 4.248-9.468 9.468c0 5.221 4.247 9.469 9.468 9.469 1.768 0 3.421-.487 4.839-1.333l6.396 6.396 3.119-3.12zm-20.294-11.412c0-3.273 2.665-5.938 5.939-5.938 3.275 0 5.94 2.664 5.94 5.938 0 3.275-2.665 5.939-5.94 5.939-3.274 0-5.939-2.664-5.939-5.939z"/></svg>
+          </div>
+          <div class="form-group form-group-search">
+            <input class="form-input is-success" type="text" placeholder="Error">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M23.822 20.88l-6.353-6.354c.93-1.465 1.467-3.2 1.467-5.059.001-5.219-4.247-9.467-9.468-9.467s-9.468 4.248-9.468 9.468c0 5.221 4.247 9.469 9.468 9.469 1.768 0 3.421-.487 4.839-1.333l6.396 6.396 3.119-3.12zm-20.294-11.412c0-3.273 2.665-5.938 5.939-5.938 3.275 0 5.94 2.664 5.94 5.938 0 3.275-2.665 5.939-5.94 5.939-3.274 0-5.939-2.664-5.939-5.939z"/></svg>
+          </div>
+          <div class="form-group form-group-search">
+            <input class="form-input is-error" type="text" placeholder="Success">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M23.822 20.88l-6.353-6.354c.93-1.465 1.467-3.2 1.467-5.059.001-5.219-4.247-9.467-9.468-9.467s-9.468 4.248-9.468 9.468c0 5.221 4.247 9.469 9.468 9.469 1.768 0 3.421-.487 4.839-1.333l6.396 6.396 3.119-3.12zm-20.294-11.412c0-3.273 2.665-5.938 5.939-5.938 3.275 0 5.94 2.664 5.94 5.938 0 3.275-2.665 5.939-5.94 5.939-3.274 0-5.939-2.664-5.939-5.939z"/></svg>
+          </div>
+          <div class="form-group form-group-search">
+            <input class="form-input" type="text" placeholder="Disabled" disabled>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M23.822 20.88l-6.353-6.354c.93-1.465 1.467-3.2 1.467-5.059.001-5.219-4.247-9.467-9.468-9.467s-9.468 4.248-9.468 9.468c0 5.221 4.247 9.469 9.468 9.469 1.768 0 3.421-.487 4.839-1.333l6.396 6.396 3.119-3.12zm-20.294-11.412c0-3.273 2.665-5.938 5.939-5.938 3.275 0 5.94 2.664 5.94 5.938 0 3.275-2.665 5.939-5.94 5.939-3.274 0-5.939-2.664-5.939-5.939z"/></svg>
+          </div>
+        </form>
+      </div>
+
+      <div style="margin-top: 64px">
+        <h1>Text Input - with label</h1>
+
+        <form>
+          <div class="form-group">
+            <label class="form-label">Input label</label>
+            <input class="form-input" type="text" placeholder="Normal">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Input label</label>
+            <input class="form-input is-success" type="text" placeholder="Error">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Input label</label>
+            <input class="form-input is-error" type="text" placeholder="Success">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Input label</label>
+            <input class="form-input" type="text" placeholder="Disabled" disabled>
+          </div>
+        </form>
+
+        <form>
+          <div class="form-group">
+            <label class="form-label">Input label</label>
+            <input class="form-input" type="text" placeholder="Normal">
+            <p class="form-input-hint">This is a required field</p>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Input label</label>
+            <input class="form-input is-error" type="text" placeholder="Error">
+            <p class="form-input-hint">Error Message</p>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Input label</label>
+            <input class="form-input is-success" type="text" placeholder="Success">
+            <p class="form-input-hint">Positive Message</p>
+          </div>
+        </form>
+
+        <form>
+          <div class="form-group">
+            <div class="form-label-group">
+              <label class="form-label">Input label</label>
+              <label class="form-noti">min. 40 characters</label>
+            </div>
+            <textarea class="form-input" placeholder="Texarea content here" rows="3"></textarea>
+            <p class="form-input-hint">This is a required field</p>
+          </div>
+          <div class="form-group">
+            <div class="form-label-group">
+              <label class="form-label">Input label</label>
+              <label class="form-noti">min. 40 characters</label>
+            </div>
+            <textarea class="form-input is-error" placeholder="Texarea content here" rows="3"></textarea>
+            <p class="form-input-hint">This is error field</p>
+          </div>
+          <div class="form-group">
+            <div class="form-label-group">
+              <label class="form-label">Input label</label>
+              <label class="form-noti">min. 40 characters</label>
+            </div>
+            <textarea class="form-input" placeholder="Texarea content here" rows="3" disabled></textarea>
+            <p class="form-input-hint">This is disabled field</p>
+          </div>
+        </form>
+
+      </div>
+
+      <div style="margin-top: 64px">
+        <div class="accordion">
+          <input type="checkbox" id="accordion-1" hidden>
+          <label class="accordion-header c-hand" for="accordion-1">
+            Elements
+            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M0 7.33l2.829-2.83 9.175 9.339 9.167-9.339 2.829 2.83-11.996 12.17z"/></svg>
+          </label>
+          <div class="accordion-body">
+            <ul class="menu menu-nav">
+              <li class="menu-item"><a href="#">Element 1</a></li>
+              <li class="menu-item"><a href="#">Element 2</a></li>
+              <li class="menu-item"><a href="#">Element 3</a></li>
+              <li class="menu-item"><a href="#">Element 4</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="form-group form-date-picker">
+          <input type="text" placeholder="DD/MM/YYYY">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M20 20h-4v-4h4v4zm-6-10h-4v4h4v-4zm6 0h-4v4h4v-4zm-12 6h-4v4h4v-4zm6 0h-4v4h4v-4zm-6-6h-4v4h4v-4zm16-8v22h-24v-22h3v1c0 1.103.897 2 2 2s2-.897 2-2v-1h10v1c0 1.103.897 2 2 2s2-.897 2-2v-1h3zm-2 6h-20v14h20v-14zm-2-7c0-.552-.447-1-1-1s-1 .448-1 1v2c0 .552.447 1 1 1s1-.448 1-1v-2zm-14 2c0 .552-.447 1-1 1s-1-.448-1-1v-2c0-.552.447-1 1-1s1 .448 1 1v2z"/></svg>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 

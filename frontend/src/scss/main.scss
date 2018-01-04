@@ -22,6 +22,7 @@
 // Override spectre.css elements
 @import "typography";
 @import "buttons";
+@import "forms";
 
 // Layout
 @import "../../node_modules/spectre.css/src/layout";
@@ -53,6 +54,7 @@
 // Override spectre.css Components
 @import "pagination";
 @import "toast";
+@import "accordions";
 
 // Utility classes
 @import "../../node_modules/spectre.css/src/animations";

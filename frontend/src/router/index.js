@@ -7,10 +7,6 @@ Vue.use(Router);
 
 export default new Router({
   routes: [
-    {
-      path: '/modules',
-      name: 'modules',
-      component: Modules,
-    }
+    { path: '/modules', name: 'modules', component: Modules, }
   ]
 });

@@ -1,0 +1,36 @@
+.accordion {
+  .accordion-header {
+    border: .05rem solid #E2E2E2;
+    border-radius: .15rem;
+    line-height: .8rem;
+    font-size: .7rem;
+    padding: .8rem 1.8rem .8rem .8rem;
+    position: relative;
+
+    svg {
+      height: 16px;
+      width: 16px;
+      position: absolute;
+      top: 16px;
+      right: 16px;
+    }
+
+    &:hover {
+      border: .05rem solid #BABABA;
+    }
+  }
+
+  input:checked + label {
+    border: .05rem solid #575757;
+  }
+
+  .accordion-body {
+
+    .menu {
+      border: .05rem solid #575757;
+      border-radius: 3px;
+      transform: none;
+      margin-top: .4rem;
+    }
+  }
+}
