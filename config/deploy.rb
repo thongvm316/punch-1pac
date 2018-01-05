@@ -23,7 +23,7 @@ set :format_options, command_output: true, log_file: 'log/capistrano.log', color
 set :pty, false
 
 # Default value for :linked_files is []
-append :linked_files, 'config/database.yml', 'config/secrets.yml'
+append :linked_files, 'config/database.yml', 'config/secrets.yml', '.env.staging'
 
 # Default value for linked_dirs is []
 append :linked_dirs, 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'bundle', 'public/uploads', 'config/puma'
@@ -44,6 +44,7 @@ namespace :deploy do
       execute "mkdir -p #{shared_path}/config/puma"
       upload!('config/database.yml', "#{shared_path}/config/database.yml")
       upload!('config/secrets.yml', "#{shared_path}/config/secrets.yml")
+      upload!('.env.staging', "#{shared_path}/.env.staging")
       upload!('config/puma/1punch-stg.1pac.vn.rb', "#{shared_path}/config/puma/1punch-stg.1pac.vn.rb")
     end
   end
