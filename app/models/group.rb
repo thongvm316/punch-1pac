@@ -15,6 +15,8 @@ class Group < ApplicationRecord
   belongs_to :company
   has_many :group_permissions, dependent: :destroy
   has_many :permissions, through: :group_permissions
+  has_many :user_groups, dependent: :destroy
+  has_many :users, through: :user_groups
 
   accepts_nested_attributes_for :group_permissions
 

@@ -8,7 +8,7 @@ class CreateRequests < ActiveRecord::Migration[5.1]
       t.string :reason, null: false, limit: 500
       t.time :attended_at
       t.time :left_at
-      t.string :status, null: false, default: 'pending'
+      t.integer :status, null: false, default: 0
 
       t.timestamps null: false
     end
