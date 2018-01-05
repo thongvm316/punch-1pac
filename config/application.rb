@@ -32,6 +32,8 @@ module Punch
     # ref https://github.com/globalize/globalize#i18n-fallbacks-for-empty-translations
     config.i18n.fallbacks = true
 
+    config.autoload_paths += Dir[Rails.root.join('lib')]
+
     config.generators do |g|
       g.test_framework :rspec
       g.fixture_replacement :factory_bot, dir: 'spec/factories'
