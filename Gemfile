@@ -34,6 +34,9 @@ gem 'rack-cors'
 gem 'shrine'
 gem 'virtus'
 
+gem 'factory_bot_rails'
+gem 'faker'
+
 group :production do
   gem 'bugsnag'
   gem 'lograge'
@@ -46,9 +49,6 @@ group :development, :test do
   gem 'pry-byebug'
   gem 'pry-coolline'
   gem 'awesome_print'
-
-  gem 'factory_bot_rails'
-  gem 'faker'
 end
 
 group :development do
