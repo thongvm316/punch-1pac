@@ -5,7 +5,10 @@ require 'rails_helper'
 RSpec.describe Api::V1::DepartmentsController, type: :controller do
   let(:company) { create :company }
 
-  before { authenticate_user(login_user) }
+  before do
+    in_namespace(company)
+    authenticate_user(login_user)
+  end
 
   shared_examples 'a not found department' do
     its(:code) { is_expected.to eq '404' }
@@ -56,7 +59,7 @@ RSpec.describe Api::V1::DepartmentsController, type: :controller do
       let(:login_user) { create :user, company: company, role: 'admin' }
 
       context 'when department is not exists' do
-        subject { get :show, params: { id: 1 } }
+        subject { get :show, params: { id: 1 }, format: :json }
 
         it_behaves_like 'a not found department'
       end
@@ -86,7 +89,7 @@ RSpec.describe Api::V1::DepartmentsController, type: :controller do
       let(:login_user) { create :user, company: company, role: 'admin' }
 
       context 'when department is not exists' do
-        subject { patch :update, params: { id: 1 } }
+        subject { patch :update, params: { id: 1 }, format: :json }
 
         it_behaves_like 'a not found department'
       end
@@ -160,7 +163,7 @@ RSpec.describe Api::V1::DepartmentsController, type: :controller do
       let(:login_user) { create :user, company: company, role: 'admin' }
 
       context 'when department is not exists' do
-        subject { delete :destroy, params: { id: 1 } }
+        subject { delete :destroy, params: { id: 1 }, format: :json }
 
         it_behaves_like 'a not found department'
       end

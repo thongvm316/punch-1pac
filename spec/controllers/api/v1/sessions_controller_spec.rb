@@ -6,7 +6,10 @@ RSpec.describe Api::V1::SessionsController, type: :controller do
   let(:company) { create :company }
   let(:user) { create :user, email: 'foo@gmail.com', password: 'password', password_confirmation: 'password', company: company }
 
-  before { authenticate_user(user) }
+  before do
+    in_namespace(company)
+    authenticate_user(user)
+  end
 
   describe 'GET #index' do
     context 'when user.sessions are existed' do
@@ -28,7 +31,7 @@ RSpec.describe Api::V1::SessionsController, type: :controller do
 
   describe 'DELETE #destroy' do
     context 'when session is not exists' do
-      subject { delete :destroy, params: { id: 1 } }
+      subject { delete :destroy, params: { id: 1 }, format: :json }
 
       its(:code) { is_expected.to eq '404' }
       its(:body) { is_expected.to be_json_as(response_404) }
@@ -48,7 +51,7 @@ RSpec.describe Api::V1::SessionsController, type: :controller do
     end
   end
 
-  describe 'POST #create' do
+  describe 'POST #login' do
     context 'when email is wrong' do
       subject { post :login, params: { email: user.email + 'fake', password: user.password } }
 
@@ -67,14 +70,14 @@ RSpec.describe Api::V1::SessionsController, type: :controller do
       before { request.headers['User-Agent'] = Faker::Internet.user_agent(:chrome) }
 
       its(:code) { is_expected.to eq '200' }
-      its(:body) { is_expected.to be_json_as(token: String) }
+      its(:body) { is_expected.to be_json_as(access_token: String) }
       it 'track user session after login success' do
         expect { subject }.to change(Session, :count).by(1)
       end
     end
   end
 
-  describe 'DELETE #destroy' do
+  describe 'DELETE #logout' do
     context 'when token is valid' do
       subject { delete :logout }
 

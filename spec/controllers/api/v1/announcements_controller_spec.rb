@@ -6,7 +6,10 @@ RSpec.describe Api::V1::AnnouncementsController, type: :controller do
   let(:company) { create :company }
   let(:login_user) { create :user, company: company, owner: false }
 
-  before { authenticate_user(login_user) }
+  before do
+    in_namespace(company)
+    authenticate_user(login_user)
+  end
 
   describe 'GET #index' do
     let!(:announcement_1) { create :announcement, target: 'everyone' }
@@ -56,14 +59,14 @@ RSpec.describe Api::V1::AnnouncementsController, type: :controller do
     let!(:announcement_2) { create :announcement, target: 'owners' }
 
     context 'when announcement is not existed' do
-      subject { get :show, params: { id: announcement_2.id + 2 } }
+      subject { get :show, params: { id: announcement_2.id + 2 }, format: :json }
 
       its(:code) { is_expected.to eq '404' }
       its(:body) { is_expected.to be_json_as(response_404) }
     end
 
     context 'when user is not owner and announcement.target = owners' do
-      subject { get :show, params: { id: announcement_2.id } }
+      subject { get :show, params: { id: announcement_2.id }, format: :json }
 
       its(:code) { is_expected.to eq '404' }
       its(:body) { is_expected.to be_json_as(response_404) }

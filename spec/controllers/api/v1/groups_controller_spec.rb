@@ -5,7 +5,10 @@ require 'rails_helper'
 RSpec.describe Api::V1::GroupsController, type: :controller do
   let(:company) { create :company }
 
-  before { authenticate_user(login_user) }
+  before do
+    in_namespace(company)
+    authenticate_user(login_user)
+  end
 
   describe 'GET #index' do
     context 'when log in user is member' do
@@ -53,7 +56,7 @@ RSpec.describe Api::V1::GroupsController, type: :controller do
       end
 
       context 'when invalid params' do
-        subject { get :show, params: { id: 0 } }
+        subject { get :show, params: { id: 0 }, format: :json }
 
         its(:code) { is_expected.to eq '404' }
         its(:body) { is_expected.to be_json_as(response_404) }

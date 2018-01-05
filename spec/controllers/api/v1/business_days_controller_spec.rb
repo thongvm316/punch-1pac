@@ -5,7 +5,10 @@ require 'rails_helper'
 RSpec.describe Api::V1::BusinessDaysController, type: :controller do
   let(:company) { create :company }
 
-  before { authenticate_user(login_user) }
+  before do
+    in_namespace(company)
+    authenticate_user(login_user)
+  end
 
   shared_examples 'a not found business_day' do
     let(:company) { create :company }
@@ -59,7 +62,7 @@ RSpec.describe Api::V1::BusinessDaysController, type: :controller do
       let(:login_user) { create :user, company: company, role: 'admin' }
 
       context 'when business_day is not exists' do
-        subject { patch :update, params: { id: 1 } }
+        subject { patch :update, params: { id: 1 }, format: :json }
 
         it_behaves_like 'a not found business_day'
       end
@@ -133,7 +136,7 @@ RSpec.describe Api::V1::BusinessDaysController, type: :controller do
       let(:login_user) { create :user, company: company, role: 'admin' }
 
       context 'when business_day is not exists' do
-        subject { delete :destroy, params: { id: 1 } }
+        subject { delete :destroy, params: { id: 1 }, format: :json }
 
         it_behaves_like 'a not found business_day'
       end

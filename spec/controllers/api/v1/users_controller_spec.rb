@@ -6,7 +6,10 @@ RSpec.describe Api::V1::UsersController, type: :controller do
   let(:company) { create :company }
   let(:login_user) { create :user, company: company }
 
-  before { authenticate_user(login_user) }
+  before do
+    in_namespace(company)
+    authenticate_user(login_user)
+  end
 
   describe 'GET #index' do
     context 'when login user is member' do
