@@ -3,11 +3,11 @@
 class Api::V1::RequestsController < Api::V1::BaseController
   include Pagination
 
-  before_action :set_request, only: %i[update destroy]
+  before_action :set_request, only: %i[update destroy approve reject]
 
   def index
     authorize Request
-    requests = Request.page(params[:page]).per(params[:per_page])
+    requests = Request.filter_by_user(current_user).page(params[:page]).per(params[:per_page])
     render json: requests,
            root: 'requests',
            each_serializer: RequestSerializer,
@@ -27,7 +27,7 @@ class Api::V1::RequestsController < Api::V1::BaseController
   end
 
   def update
-    authorize Request
+    authorize @req
     if @req.update_attributes(request_params)
       render json: @req, serializer: RequestSerializer, status: 200
     else
@@ -36,19 +36,19 @@ class Api::V1::RequestsController < Api::V1::BaseController
   end
 
   def approve
-    authorize Request
-    RequestService.new(current_user, params[:id]).approve
+    authorize @req
+    RequestService.new(current_user, @req).approve
     head(200)
   end
 
   def reject
-    authorize Request
-    RequestService.new(current_user, params[:id]).reject
+    authorize @req
+    RequestService.new(current_user, @req).reject
     head(200)
   end
 
   def destroy
-    authorize Request
+    authorize @req
     @req.destroy
     head(200)
   end
@@ -60,6 +60,6 @@ class Api::V1::RequestsController < Api::V1::BaseController
   end
 
   def set_request
-    @req = current_user.requests.find(params[:id])
+    @req = Request.find(params[:id])
   end
 end

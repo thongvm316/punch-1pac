@@ -1,19 +1,27 @@
 # frozen_string_literal: true
 
 class RequestPolicy < ApplicationPolicy
+  def index?
+    true
+  end
+
   def create?
     true
   end
 
   def update?
-    true
+    @record.user == @user && @record.pending?
   end
 
   def approve?
-    @user.manager?
+    @user.manager? && @record.pending?
   end
 
   def reject?
-    @user.manager?
+    @user.manager? && @record.pending?
+  end
+
+  def destroy?
+    @record.user == @user && @record.pending?
   end
 end
