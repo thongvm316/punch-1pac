@@ -85,12 +85,15 @@
 | List all Permissions | index        | ✓           | ✓     | ✗     |
 
 ## Request
-|                   | Action       | Super Admin | Admin | Member|
-|:-----------------:|:------------:|:-----------:|:-----:|:-----:|
-| List all requests | index        | ✓           | ✓     | ✗     |
-| Show request      | show         | ✓           | ✓     | ✗     |
-| Create request    | create       | ✓           | ✓     | ✓     |
-| Update request    | update       | ✓           | ✓     | ✓     |
-| Approve request   | approve      | ✓           | ✓     | ✗     |
-| Reject request    | reject       | ✓           | ✓     | ✗     |
-| Destroy request   | destroy      | ✓           | ✓     | ✗     |
+|                   | Action       | Super Admin | Admin | Member| Notes |
+|:-----------------:|:------------:|:-----------:|:-----:|:-----:|:------|
+| List all requests | index        | ✓           | ✓     | ✓     | User role member: list all request that owner by himself|
+|                   |              |             |       |       | User role admin: list all request owner by users in his groups|
+|                   |              |             |       |       | User role superadmin: list all request owner by users in his company|
+|                   |              |             |       |       |       | 
+| Show request      | show         | ✓           | ✓     | ✗     |       |
+| Create request    | create       | ✓           | ✓     | ✓     |       |
+| Update request    | update       | ✓           | ✓     | ✓     | User can only update their own request with status is pending  |
+| Approve request   | approve      | ✓           | ✓     | ✗     | User with role admin or superadmin can only approve request with status is pending |
+| Reject request    | reject       | ✓           | ✓     | ✗     | User with role admin or superadmin can only reject request with status is pending  |
+| Destroy request   | destroy      | ✓           | ✓     | ✓     | User can only destroy their own request with status is pending |
