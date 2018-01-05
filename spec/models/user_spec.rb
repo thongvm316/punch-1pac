@@ -5,11 +5,12 @@ require 'rails_helper'
 RSpec.describe User, type: :model do
   describe 'associations' do
     it { should belong_to(:company) }
-    it { should belong_to(:group) }
     it { should belong_to(:department) }
     it { should have_many(:attendances).dependent(:destroy) }
     it { should have_many(:sessions).dependent(:destroy) }
     it { should have_many(:requests).dependent(:destroy) }
+    it { should have_many(:user_groups).dependent(:destroy) }
+    it { should have_many(:groups).through(:user_groups) }
   end
 
   describe 'validations' do

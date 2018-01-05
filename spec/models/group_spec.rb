@@ -7,6 +7,8 @@ RSpec.describe Group, type: :model do
     it { should have_many(:group_permissions).dependent(:destroy) }
     it { should have_many(:permissions).through(:group_permissions) }
     it { should belong_to(:company) }
+    it { should have_many(:user_groups).dependent(:destroy) }
+    it { should have_many(:users).through(:user_groups) }
   end
 
   describe 'validations' do
