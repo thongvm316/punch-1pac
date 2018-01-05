@@ -7,32 +7,63 @@ RSpec.describe Api::V1::RequestsController, type: :controller do
 
   before { authenticate_user(login_user) }
 
-  describe 'GET #index' do
-    context 'when login user is member' do
-      let(:login_user) { create :user, company: company, role: 'member' }
+  shared_examples 'request not belongs to current user' do
+    let(:req) { create :request, user: create(:user) }
 
-      subject { get :index }
+    its(:code) { is_expected.to eq '401' }
+  end
+
+  shared_examples 'request status is pending' do
+    context 'when request status is approved' do
+      let(:req) { create :request, user: login_user, status: 'approved' }
 
       its(:code) { is_expected.to eq '401' }
     end
-    context 'when login user is admin' do
+
+    context 'when request status is rejected' do
+      let(:req) { create :request, user: login_user, status: 'rejected' }
+
+      its(:code) { is_expected.to eq '401' }
+    end
+  end
+
+  describe 'GET #index' do
+    context 'when have not any request' do
       let(:login_user) { create :user, company: company, role: 'admin' }
+      subject { get :index }
 
-      context 'when have not any request' do
-        subject { get :index }
+      its(:code) { is_expected.to eq '200' }
+      its(:body) { is_expected.to be_json_as(requests: [], meta: response_pagination) }
+    end
 
-        its(:code) { is_expected.to eq '200' }
-        its(:body) { is_expected.to be_json_as(requests: [], meta: response_pagination) }
-      end
+    context 'when login user is member' do
+      let(:login_user) { create :user, :with_group, company: company, role: 'member' }
+      let!(:requests) { create_list :request, 3, user: login_user }
 
-      context 'when have requests' do
-        let!(:requests) { create_list :request, 3 }
+      subject { get :index }
 
-        subject { get :index }
+      its(:code) { is_expected.to eq '200' }
+      its(:body) { is_expected.to be_json_as(requests: Array.new(3) { response_request }, meta: response_pagination) }
+    end
 
-        its(:code) { is_expected.to eq '200' }
-        its(:body) { is_expected.to be_json_as(requests: Array.new(3) { response_request }, meta: response_pagination) }
-      end
+    context 'when login user is admin' do
+      let(:login_user) { create :user, :with_group, company: company, role: 'admin' }
+      let!(:requests) { create_list :request, 3, user: create(:user, groups: login_user.groups) }
+
+      subject { get :index }
+
+      its(:body) { is_expected.to be_json_as(requests: Array.new(3) { response_request }, meta: response_pagination) }
+      its(:code) { is_expected.to eq '200' }
+    end
+
+    context 'when login user is super admin' do
+      let(:login_user) { create :user, company: company, role: 'superadmin' }
+      let!(:requests) { create_list :request, 3, user: create(:user, company: company) }
+
+      subject { get :index }
+
+      its(:code) { is_expected.to eq '200' }
+      its(:body) { is_expected.to be_json_as(requests: Array.new(3) { response_request }, meta: response_pagination) }
     end
   end
 
@@ -91,6 +122,13 @@ RSpec.describe Api::V1::RequestsController, type: :controller do
         expect(Request.find(req.id).reason).to eq 'hehe'
       end
     end
+
+    context 'when fails authorize' do
+      subject { patch :update, params: { id: req.id, request: { reason: 'hehe' } } }
+
+      it_behaves_like 'request status is pending'
+      it_behaves_like 'request not belongs to current user'
+    end
   end
 
   describe 'POST #approve' do
@@ -106,8 +144,8 @@ RSpec.describe Api::V1::RequestsController, type: :controller do
     end
 
     context 'when login user is admin' do
+      let(:login_user) { create :user, company: company, role: 'admin' }
       context 'when request is not existed' do
-        let(:login_user) { create :user, company: company, role: 'admin' }
         let(:req) { create :request }
 
         subject { post :approve, params: { id: req.id + 1 } }
@@ -132,6 +170,12 @@ RSpec.describe Api::V1::RequestsController, type: :controller do
           expect(attendance.attended_at.strftime('%H:%M')).to eq '07:55'
           expect(attendance.attending_status).to eq 'attend_ok'
         end
+      end
+
+      context 'when fails authorize' do
+        subject { post :approve, params: { id: req.id } }
+
+        it_behaves_like 'request status is pending'
       end
     end
   end
@@ -166,39 +210,41 @@ RSpec.describe Api::V1::RequestsController, type: :controller do
           expect(Request.find(req.id).status).to eq 'rejected'
         end
       end
+
+      context 'when fails authorize' do
+        subject { post :reject, params: { id: req.id } }
+
+        it_behaves_like 'request status is pending'
+      end
     end
   end
 
   describe 'DELETE #destroy' do
-    context 'when login user is member' do
-      let(:login_user) { create :user, company: company, role: 'member' }
+    let(:login_user) { create :user, company: company, role: 'admin' }
+
+    context 'when request is not existed' do
+      subject { delete :destroy, params: { id: 1 } }
+
+      its(:code) { is_expected.to eq '404' }
+      its(:body) { is_expected.to be_json_as(response_404) }
+    end
+
+    context 'when request is existed' do
       let!(:req) { create :request, user: login_user }
 
       subject { delete :destroy, params: { id: req.id } }
 
-      its(:code) { is_expected.to eq '401' }
+      its(:code) { is_expected.to eq '200' }
+      it 'should change number of request' do
+        expect { subject }.to change(Request, :count).by(-1)
+      end
     end
 
-    context 'when login user is admin' do
-      let(:login_user) { create :user, company: company, role: 'admin' }
+    context 'when fails authorize' do
+      subject { delete :destroy, params: { id: req.id } }
 
-      context 'when request is not existed' do
-        subject { delete :destroy, params: { id: 1 } }
-
-        its(:code) { is_expected.to eq '404' }
-        its(:body) { is_expected.to be_json_as(response_404) }
-      end
-
-      context 'when request is existed' do
-        let!(:req) { create :request, user: login_user }
-
-        subject { delete :destroy, params: { id: req.id } }
-
-        its(:code) { is_expected.to eq '200' }
-        it 'should change number of request' do
-          expect { subject }.to change(Request, :count).by(-1)
-        end
-      end
+      it_behaves_like 'request status is pending'
+      it_behaves_like 'request not belongs to current user'
     end
   end
 end
