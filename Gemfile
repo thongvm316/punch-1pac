@@ -75,6 +75,7 @@ end
 
 group :test do
   gem 'simplecov', require: false
+  gem 'rails-controller-testing'
   gem 'rspec-rails'
   gem 'rspec_junit_formatter'
   gem 'rspec-its'

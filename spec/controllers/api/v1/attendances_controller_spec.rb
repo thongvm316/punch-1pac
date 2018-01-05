@@ -6,7 +6,10 @@ RSpec.describe Api::V1::AttendancesController, type: :controller do
   let(:company) { create :company, :with_business_days }
   let(:login_user) { create :user, company: company }
 
-  before { authenticate_user(login_user) }
+  before do
+    in_namespace(company)
+    authenticate_user(login_user)
+  end
 
   describe 'POST #create' do
     context 'when attendance is created with off_status = holiday/weekend/annual_leave' do
@@ -36,7 +39,7 @@ RSpec.describe Api::V1::AttendancesController, type: :controller do
 
   describe 'PATCH #update' do
     context 'when attendance is not created yet' do
-      subject { patch :update, params: { id: 1 } }
+      subject { patch :update, params: { id: 1 }, format: :json }
 
       its(:code) { is_expected.to eq '404' }
       its(:body) { is_expected.to be_json_as(response_404) }
@@ -45,7 +48,7 @@ RSpec.describe Api::V1::AttendancesController, type: :controller do
     context 'when attendance is created and not checked in yet' do
       let(:attendance) { create :attendance, user: login_user, attended_at: nil, attending_status: nil, left_at: nil, leaving_status: nil }
 
-      subject { patch :update, params: { id: attendance.id } }
+      subject { patch :update, params: { id: attendance.id }, format: :json }
 
       its(:code) { is_expected.to eq '404' }
       its(:body) { is_expected.to be_json_as(response_404) }
@@ -54,7 +57,7 @@ RSpec.describe Api::V1::AttendancesController, type: :controller do
     context 'when attendance is created and checked out' do
       let(:attendance) { create :attendance, user: login_user }
 
-      subject { patch :update, params: { id: attendance.id } }
+      subject { patch :update, params: { id: attendance.id }, format: :json }
 
       its(:code) { is_expected.to eq '404' }
       its(:body) { is_expected.to be_json_as(response_404) }

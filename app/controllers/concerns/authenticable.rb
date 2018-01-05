@@ -1,17 +1,20 @@
 # frozen_string_literal: true
 
-module JWTAuthenticable
+module Authenticable
   extend ActiveSupport::Concern
 
   EXPIRED_TIME = 30.days
   ALGORITHM = 'HS256'
 
   included do
+    before_action :current_company
     before_action :authenticate_user
+
+    helper_method :current_user, :signed_in?
   end
 
   def authenticate_user
-    @current_user ||= User.find(jwt_decode['sub'])
+    @current_user ||= current_company.users.find(jwt_decode['sub'])
   rescue ActiveRecord::RecordNotFound
     head(401)
   rescue JWT::InvalidJtiError
@@ -22,8 +25,17 @@ module JWTAuthenticable
     render json: { message: 'Token is invalid' }, status: 401
   end
 
+  def current_company
+    @current_company ||= Company.find_by!(namespace: request.subdomain)
+  end
+
   def current_user
     @current_user
+  end
+
+  def signed_in?
+    @current_user = current_company.users.find_by(id: jwt_decode['sub'])
+    @current_user.present?
   end
 
   def token

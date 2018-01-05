@@ -4,7 +4,11 @@ require 'rails_helper'
 
 RSpec.describe Api::V1::HolidaysController, type: :controller do
   let(:company) { create :company }
-  before { authenticate_user(login_user) }
+
+  before do
+    in_namespace(company)
+    authenticate_user(login_user)
+  end
 
   describe 'GET #index' do
     context 'when login user is member' do

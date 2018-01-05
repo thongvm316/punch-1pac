@@ -5,7 +5,10 @@ require 'rails_helper'
 RSpec.describe Api::V1::RequestsController, type: :controller do
   let(:company) { create :company }
 
-  before { authenticate_user(login_user) }
+  before do
+    in_namespace(company)
+    authenticate_user(login_user)
+  end
 
   shared_examples 'request not belongs to current user' do
     let(:req) { create :request, user: create(:user) }
@@ -99,7 +102,7 @@ RSpec.describe Api::V1::RequestsController, type: :controller do
     let(:req) { create :request, user: login_user }
 
     context 'when request is not existed' do
-      subject { patch :update, params: { id: req.id + 1 } }
+      subject { patch :update, params: { id: req.id + 1 }, format: :json }
 
       its(:code) { is_expected.to eq '404' }
       its(:body) { is_expected.to be_json_as(response_404) }
@@ -148,7 +151,7 @@ RSpec.describe Api::V1::RequestsController, type: :controller do
       context 'when request is not existed' do
         let(:req) { create :request }
 
-        subject { post :approve, params: { id: req.id + 1 } }
+        subject { post :approve, params: { id: req.id + 1 }, format: :json }
 
         its(:code) { is_expected.to eq '404' }
         its(:body) { is_expected.to be_json_as(response_404) }
@@ -195,7 +198,7 @@ RSpec.describe Api::V1::RequestsController, type: :controller do
       let(:login_user) { create :user, company: company, role: 'admin' }
 
       context 'when request is not existed' do
-        subject { post :reject, params: { id: req.id + 1 } }
+        subject { post :reject, params: { id: req.id + 1 }, format: :json }
 
         its(:code) { is_expected.to eq '404' }
         its(:body) { is_expected.to be_json_as(response_404) }
@@ -223,7 +226,7 @@ RSpec.describe Api::V1::RequestsController, type: :controller do
     let(:login_user) { create :user, company: company, role: 'admin' }
 
     context 'when request is not existed' do
-      subject { delete :destroy, params: { id: 1 } }
+      subject { delete :destroy, params: { id: 1 }, format: :json }
 
       its(:code) { is_expected.to eq '404' }
       its(:body) { is_expected.to be_json_as(response_404) }

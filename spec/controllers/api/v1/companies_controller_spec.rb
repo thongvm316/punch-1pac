@@ -5,7 +5,10 @@ require 'rails_helper'
 RSpec.describe Api::V1::CompaniesController, type: :controller do
   let(:company) { create :company }
 
-  before { authenticate_user(login_user) }
+  before do
+    in_namespace(company)
+    authenticate_user(login_user)
+  end
 
   describe 'PATCH #update' do
     context 'when params are valid' do

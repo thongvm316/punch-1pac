@@ -4,10 +4,10 @@ require 'rails_helper'
 
 RSpec.describe Api::V1::BaseController, type: :controller do
   controller do
-    include JWTAuthenticable
+    include Authenticable
 
     before_action :authenticate_user
-    before_action :set_locale
+    before_action :set_timezone
 
     def index
       head(200)
@@ -17,6 +17,8 @@ RSpec.describe Api::V1::BaseController, type: :controller do
   describe '#authenticate_user' do
     let!(:company) { create :company }
     let(:user) { create :user, company: company }
+
+    before { in_namespace(company) }
 
     context 'when user.id exists' do
       before { authenticate_user(user) }

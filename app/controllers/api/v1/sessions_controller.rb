@@ -2,7 +2,7 @@
 
 class Api::V1::SessionsController < Api::V1::BaseController
   skip_before_action :authenticate_user, only: %i[login]
-  skip_before_action :set_locale, only: %i[login]
+  skip_before_action :set_timezone, only: %i[login]
 
   def index
     sessions = current_user.sessions
@@ -17,12 +17,12 @@ class Api::V1::SessionsController < Api::V1::BaseController
   end
 
   def login
-    user = User.find_by(email: params[:email])
+    user = current_company.users.find_by(email: params[:email])
     if user&.authenticate(params[:password])
       data = payload(sub: user.id)
       token = jwt_encode(data)
       Session.track!(user, data, request)
-      render json: { token: token }, status: 200
+      render json: { access_token: token }, status: 200
     else
       head(401)
     end

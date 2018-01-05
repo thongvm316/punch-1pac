@@ -8,10 +8,13 @@ RSpec.describe Api::V1::ReadRequestsController, type: :controller do
     let(:login_user) { create :user, company: company }
     let(:req) { create :request }
 
-    before { authenticate_user(login_user) }
+    before do
+      in_namespace(company)
+      authenticate_user(login_user)
+    end
 
     context 'when request is not existed' do
-      subject { post :create, params: { id: req.id + 1 } }
+      subject { post :create, params: { id: req.id + 1 }, format: :json }
 
       its(:code) { is_expected.to eq '404' }
       its(:body) { is_expected.to be_json_as(response_404) }

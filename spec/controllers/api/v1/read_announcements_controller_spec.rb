@@ -6,11 +6,14 @@ RSpec.describe Api::V1::ReadAnnouncementsController, type: :controller do
   let(:company) { create :company }
   let(:login_user) { create :user, company: company, owner: false }
 
-  before { authenticate_user(login_user) }
+  before do
+    in_namespace(company)
+    authenticate_user(login_user)
+  end
 
   describe 'POST #create' do
     context 'when announcement is not existed' do
-      subject { post :create, params: { id: 1, user_id: login_user.id } }
+      subject { post :create, params: { id: 1, user_id: login_user.id }, format: :json }
 
       its(:code) { is_expected.to eq '404' }
       its(:body) { is_expected.to be_json_as(response_404) }
