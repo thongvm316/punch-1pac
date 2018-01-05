@@ -53,7 +53,7 @@ namespace :deploy do
   task :seed_db do
     on roles(:app) do
       within current_path do
-        with rails_env: :production do
+        with(rails_env: fetch(:stage)) do
           execute :bundle, :exec, :rake, 'db:seed'
         end
       end
@@ -64,7 +64,7 @@ namespace :deploy do
   task :reset_db do
     on roles(:app) do
       within current_path do
-        with rails_env: :production do
+        with(rails_env: fetch(:stage)) do
           execute :bundle, :exec, :rake, 'db:drop db:create'
         end
       end
