@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 class RequestService
-  def initialize(current_user, request_id)
+  def initialize(current_user, request)
     @user = current_user
-    @req = Request.find_by!(id: request_id, status: 'pending')
+    @req = request
     @attendance = @req.attendance
   end
 
