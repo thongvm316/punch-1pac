@@ -44,4 +44,7 @@ config/database.yml
 *.orig
 *.map
 
+.env.staging
+.env.production
+
 .byebug_history
