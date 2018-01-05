@@ -6,7 +6,6 @@
 #
 #  id                     :integer          not null, primary key
 #  company_id             :integer          not null
-#  group_id               :integer
 #  department_id          :integer
 #  email                  :string           not null
 #  password_digest        :string           not null
@@ -38,13 +37,14 @@ class User < ApplicationRecord
   enum role: { member: 0, admin: 1, superadmin: 2 }
 
   belongs_to :company
-  belongs_to :group, optional: true
   belongs_to :department, optional: true
   has_many :attendances, dependent: :destroy
   has_many :sessions, dependent: :destroy
   has_many :requests, dependent: :destroy
   has_many :user_permissions, dependent: :destroy
   has_many :permissions, through: :user_permissions
+  has_many :user_groups, dependent: :destroy
+  has_many :groups, through: :user_groups
 
   accepts_nested_attributes_for :user_permissions
 

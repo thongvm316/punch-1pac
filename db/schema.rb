@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171214170528) do
+ActiveRecord::Schema.define(version: 20180104091320) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -175,7 +175,7 @@ ActiveRecord::Schema.define(version: 20171214170528) do
     t.string "reason", limit: 500, null: false
     t.time "attended_at"
     t.time "left_at"
-    t.string "status", default: "pending", null: false
+    t.integer "status", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["attendance_id"], name: "index_requests_on_attendance_id"
@@ -198,6 +198,13 @@ ActiveRecord::Schema.define(version: 20171214170528) do
     t.index ["user_id"], name: "index_sessions_on_user_id"
   end
 
+  create_table "user_groups", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "group_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "user_permissions", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "permission_id", null: false
@@ -207,7 +214,6 @@ ActiveRecord::Schema.define(version: 20171214170528) do
 
   create_table "users", force: :cascade do |t|
     t.bigint "company_id", null: false
-    t.bigint "group_id"
     t.bigint "department_id"
     t.string "email", null: false
     t.string "password_digest", null: false

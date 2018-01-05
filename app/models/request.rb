@@ -10,7 +10,7 @@
 #  reason        :string(500)      not null
 #  attended_at   :time
 #  left_at       :time
-#  status        :string           default("pending"), not null
+#  status        :integer          default("pending"), not null
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
 #
@@ -24,8 +24,20 @@ class Request < ApplicationRecord
   belongs_to :attendance
   belongs_to :user
 
+  enum status: { pending: 0, approved: 1, rejected: 2 }
+
   validates :reason, presence: true, length: { maximum: 500 }
-  validates :status, inclusion: { in: %w[pending approved rejected] }
 
   scope :in_group, ->(user) { where(user_id: User.where(group_id: user.group_id)) }
+
+  def self.filter_by_user(user)
+    case user.role
+    when 'member'
+      user.requests
+    when 'superadmin'
+      Request.where(user_id: user.company.users)
+    when 'admin'
+      Request.where(user_id: UserGroup.select(:user_id).where(group_id: user.groups))
+    end
+  end
 end
