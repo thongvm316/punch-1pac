@@ -9,4 +9,5 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 company = FactoryBot.create(:company)
+FactoryBot.create_list(:company, 2)
 FactoryBot.create(:user, email: 'wofi.minh@1pac.vn', password: 'password', password_confirmation: 'password', company: company)
