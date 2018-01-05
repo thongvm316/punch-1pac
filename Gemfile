@@ -28,14 +28,14 @@ gem 'active_model_serializers', '~> 0.10.0'
 gem 'activerecord-import'
 gem 'bootsnap', require: false
 gem 'device_detector'
+gem 'dotenv-rails'
+gem 'factory_bot_rails'
+gem 'faker'
 gem 'kaminari'
 gem 'oj'
 gem 'rack-cors'
 gem 'shrine'
 gem 'virtus'
-
-gem 'factory_bot_rails'
-gem 'faker'
 
 group :production do
   gem 'bugsnag'
