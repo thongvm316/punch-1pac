@@ -55,4 +55,6 @@ Rails.application.configure do
     Bullet.bullet_logger = true
     Bullet.raise = true
   end
+
+  config.action_dispatch.tld_length = 0
 end
