@@ -43,7 +43,7 @@ module Authenticable
   end
 
   def jwt_encode(data = {})
-    JWT.encode(payload(data), ENV.fetch('JWT_KEY') { 'jwt_secret_key' }, ALGORITHM)
+    JWT.encode(payload(data), ENV['JWT_KEY'], ALGORITHM)
   end
 
   def payload(data)
@@ -54,8 +54,7 @@ module Authenticable
   end
 
   def jwt_decode
-    @payload ||= JWT.decode(token, ENV.fetch('JWT_KEY') { 'jwt_secret_key' }, true, algorithm: ALGORITHM,
-                                                                                    verify_jti: ->(jti) { jwt_revoked?(jti) }).first
+    @payload ||= JWT.decode(token, ENV['JWT_KEY'], true, algorithm: ALGORITHM, verify_jti: ->(jti) { jwt_revoked?(jti) }).first
   end
 
   def revoke_jwt!(usession = nil)
