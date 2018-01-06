@@ -4,11 +4,11 @@ Rails.application.routes.draw do
   constraints(SubdomainConstraint) do
     get '(*path)' => 'spa#index'
 
+    post   'login'  => 'token#create'
+    delete 'logout' => 'token#destroy'
+
     namespace :api, defaults: { format: :json }, constraints: { id: /\d+/ } do
       namespace :v1 do
-        post   'login'  => 'sessions#login'
-        delete 'logout' => 'sessions#logout'
-
         resources :users do
           post 'create_multi', on: :collection
         end
