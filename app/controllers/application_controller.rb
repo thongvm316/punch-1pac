@@ -1,7 +1,12 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
+  include Authenticable
   include AppErrors
+
+  # Only verify csrf token on request that contains session access_token
+  # So requests are from mobile app will be ignored
+  protect_from_forgery with: :exception, if: -> { session[:access_token].present? }
 
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
 
