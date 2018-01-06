@@ -6,13 +6,6 @@ module Authenticable
   EXPIRED_TIME = 30.days
   ALGORITHM = 'HS256'
 
-  included do
-    before_action :current_company
-    before_action :authenticate_user
-
-    helper_method :current_user, :signed_in?
-  end
-
   def authenticate_user
     @current_user ||= current_company.users.find(jwt_decode['sub'])
   rescue ActiveRecord::RecordNotFound
@@ -39,7 +32,7 @@ module Authenticable
   end
 
   def token
-    request.headers['Authorization']&.split&.last
+    session[:access_token] || request.headers['Authorization']&.split&.last
   end
 
   def jwt_encode(data = {})

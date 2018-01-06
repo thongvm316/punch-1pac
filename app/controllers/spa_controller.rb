@@ -1,8 +1,10 @@
 # frozen_string_literal: true
 
 class SpaController < ApplicationController
-  include Authenticable
-  skip_before_action :authenticate_user
+  before_action :current_company
+  helper_method :current_user, :signed_in?
 
-  def index; end
+  def index
+    session[:test] = request.subdomain
+  end
 end
