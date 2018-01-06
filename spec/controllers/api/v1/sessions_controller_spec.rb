@@ -50,40 +50,4 @@ RSpec.describe Api::V1::SessionsController, type: :controller do
       end
     end
   end
-
-  describe 'POST #login' do
-    context 'when email is wrong' do
-      subject { post :login, params: { email: user.email + 'fake', password: user.password } }
-
-      its(:code) { is_expected.to eq '401' }
-    end
-
-    context 'when password is wrong' do
-      subject { post :login, params: { email: user.email, password: user.password + 'fake' } }
-
-      its(:code) { is_expected.to eq '401' }
-    end
-
-    context 'when email and password are correct' do
-      subject { post :login, params: { email: user.email, password: user.password } }
-
-      before { request.headers['User-Agent'] = Faker::Internet.user_agent(:chrome) }
-
-      its(:code) { is_expected.to eq '200' }
-      its(:body) { is_expected.to be_json_as(access_token: String) }
-      it 'track user session after login success' do
-        expect { subject }.to change(Session, :count).by(1)
-      end
-    end
-  end
-
-  describe 'DELETE #logout' do
-    context 'when token is valid' do
-      subject { delete :logout }
-
-      before { authenticate_user(user) }
-
-      its(:code) { is_expected.to eq '200' }
-    end
-  end
 end

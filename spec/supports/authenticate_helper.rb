@@ -10,5 +10,6 @@ module AuthenticateHelper
     exp = Time.current.to_i + 2.days.to_i
     token = JWT.encode({ sub: user.id, jti: jti, exp: exp }, ENV['JWT_KEY'], 'HS256')
     request.headers['Authorization'] = "Bearer #{token}"
+    request.session[:access_token] = token
   end
 end

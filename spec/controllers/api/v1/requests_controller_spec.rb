@@ -16,7 +16,7 @@ RSpec.describe Api::V1::RequestsController, type: :controller do
     its(:code) { is_expected.to eq '401' }
   end
 
-  shared_examples 'request status is pending' do
+  shared_examples 'request status is not pending' do
     context 'when request status is approved' do
       let(:req) { create :request, user: login_user, status: 'approved' }
 
@@ -129,7 +129,7 @@ RSpec.describe Api::V1::RequestsController, type: :controller do
     context 'when fails authorize' do
       subject { patch :update, params: { id: req.id, request: { reason: 'hehe' } } }
 
-      it_behaves_like 'request status is pending'
+      it_behaves_like 'request status is not pending'
       it_behaves_like 'request not belongs to current user'
     end
   end
@@ -163,6 +163,10 @@ RSpec.describe Api::V1::RequestsController, type: :controller do
         let(:attendance) { create :attendance, user: login_user, attended_at: '08:30', attending_status: 'attend_late' }
         let(:req) { create :request, attended_at: '07:55', attendance: attendance }
 
+        before { Timecop.freeze(Time.zone.local(2018, 1, 3)) }
+
+        after { Timecop.return }
+
         subject { post :approve, params: { id: req.id } }
 
         its(:code) { is_expected.to eq '200' }
@@ -178,7 +182,7 @@ RSpec.describe Api::V1::RequestsController, type: :controller do
       context 'when fails authorize' do
         subject { post :approve, params: { id: req.id } }
 
-        it_behaves_like 'request status is pending'
+        it_behaves_like 'request status is not pending'
       end
     end
   end
@@ -217,7 +221,7 @@ RSpec.describe Api::V1::RequestsController, type: :controller do
       context 'when fails authorize' do
         subject { post :reject, params: { id: req.id } }
 
-        it_behaves_like 'request status is pending'
+        it_behaves_like 'request status is not pending'
       end
     end
   end
@@ -246,7 +250,7 @@ RSpec.describe Api::V1::RequestsController, type: :controller do
     context 'when fails authorize' do
       subject { delete :destroy, params: { id: req.id } }
 
-      it_behaves_like 'request status is pending'
+      it_behaves_like 'request status is not pending'
       it_behaves_like 'request not belongs to current user'
     end
   end
