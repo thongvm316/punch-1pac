@@ -6,16 +6,25 @@ module Authenticable
   EXPIRED_TIME = 30.days
   ALGORITHM = 'HS256'
 
-  def authenticate_user
-    @current_user ||= current_company.users.find(jwt_decode['sub'])
-  rescue ActiveRecord::RecordNotFound
-    head(401)
-  rescue JWT::InvalidJtiError
-    render json: { message: 'Token is revoked' }, status: 401
-  rescue JWT::ExpiredSignature
-    render json: { message: 'Token is expired' }, status: 401
-  rescue JWT::DecodeError
-    render json: { message: 'Token is invalid' }, status: 401
+  def authenticate_user!
+    respond_to do |f|
+      begin
+        @current_user ||= current_company.users.find(jwt_decode['sub'])
+        return
+      rescue ActiveRecord::RecordNotFound
+        f.html { redirect_to url_for(subdomain: request.subdomain) }
+        f.json { head(401) }
+      rescue JWT::InvalidJtiError
+        f.html { redirect_to url_for(subdomain: request.subdomain) }
+        f.json { render json: { message: 'Token is revoked' }, status: 401 }
+      rescue JWT::ExpiredSignature
+        f.html { redirect_to url_for(subdomain: request.subdomain) }
+        f.json { render json: { message: 'Token is expired' }, status: 401 }
+      rescue JWT::DecodeError
+        f.html { redirect_to url_for(subdomain: request.subdomain) }
+        f.json { render json: { message: 'Token is invalid' }, status: 401 }
+      end
+    end
   end
 
   def current_company
@@ -29,6 +38,8 @@ module Authenticable
   def signed_in?
     @current_user = current_company.users.find_by(id: jwt_decode['sub'])
     @current_user.present?
+  rescue JWT::DecodeError
+    false
   end
 
   def token
