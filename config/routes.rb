@@ -2,10 +2,16 @@
 
 Rails.application.routes.draw do
   constraints(SubdomainConstraint) do
-    get '(*path)' => 'spa#index'
+    get '*path' => 'dashboard#index'
 
-    post   'login'  => 'token#create'
-    delete 'logout' => 'token#destroy'
+    post 'logout' => 'auth#destroy'
+    post '/'      => 'auth#create'
+    get  '/'      => 'auth#new', as: :login
+
+    get  'password_reset/:token' => 'password_reset#edit'
+    post 'password_reset/:token' => 'password_reset#update'
+    get  'password_reset'        => 'password_reset#new'
+    post 'password_reset'        => 'password_reset#create'
 
     namespace :api, defaults: { format: :json }, constraints: { id: /\d+/ } do
       namespace :v1 do
