@@ -8,6 +8,8 @@ class ApplicationController < ActionController::Base
   # So requests are from mobile app will be ignored
   protect_from_forgery with: :exception, if: -> { session[:access_token].present? }
 
+  rescue_from AppErrors::Error403, with: :forbidden
+  rescue_from AppErrors::Error500, with: :internal_server_error
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
 
   private
@@ -25,6 +27,13 @@ class ApplicationController < ActionController::Base
 
   def unauthorized
     render json: { message: 'Unauthorized' }, status: 401
+  end
+
+  def internal_server_error
+    respond_to do |f|
+      f.html { render file: 'errors/500.html', status: 500 }
+      f.json { render json: { message: 'Internal Server Error' }, status: 500 }
+    end
   end
 
   def render_422(error_messages)
