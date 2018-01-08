@@ -56,6 +56,8 @@ class User < ApplicationRecord
   validates :language, inclusion: { in: %w[vi en jp] }
   validates :user_permissions, presence: true
 
+  include ImageUploader::Attachment.new(:avatar)
+
   def reset_password_token_valid?(token)
     user = find_by!(reset_password_token: token)
     return false unless (Time.current - user.reset_password_sent_at) < PASSWORD_RESET_TOKEN_EXPIRE

@@ -23,9 +23,9 @@ class UserPolicy < ApplicationPolicy
   def permitted_attributes
     if @user.manager?
       [:department_id, :name, :password, :password_confirmation, :email,
-       :role, user_permissions_attributes: [:permission_id]]
+       :role, :avatar, user_permissions_attributes: [:permission_id]]
     else
-      %i[department_id name password password_confirmation email]
+      %i[department_id name password password_confirmation email avatar]
     end
   end
 
