@@ -18,6 +18,7 @@ jobs:
            POSTGRES_USER: punch
            POSTGRES_DB: 1punch_test
            POSTGRES_PASSWORD: ''
+       - image: redis
 
     steps:
       - checkout
