@@ -6,7 +6,7 @@ RSpec.describe Api::V1::BaseController, type: :controller do
   controller do
     include Authenticable
 
-    before_action :authenticate_user
+    before_action :authenticate_user!
     before_action :set_timezone
 
     def index
@@ -36,7 +36,7 @@ RSpec.describe Api::V1::BaseController, type: :controller do
         request.headers['Authorization'] = "Bearer #{token}"
       end
 
-      subject { get :index }
+      subject { get :index, format: :json }
 
       its(:code) { is_expected.to eq '401' }
     end
@@ -57,7 +57,7 @@ RSpec.describe Api::V1::BaseController, type: :controller do
         request.headers['Authorization'] = "Bearer #{token}"
       end
 
-      subject { get :index }
+      subject { get :index, format: :json }
 
       its(:code) { is_expected.to eq '401' }
       its(:body) { is_expected.to be_json_as(response_token_expired) }
@@ -72,7 +72,7 @@ RSpec.describe Api::V1::BaseController, type: :controller do
         create :jwt_blacklist, jti: jti, exp: exp
       end
 
-      subject { get :index }
+      subject { get :index, format: :json }
 
       its(:code) { is_expected.to eq '401' }
       its(:body) { is_expected.to be_json_as(response_token_revoked) }
@@ -84,7 +84,7 @@ RSpec.describe Api::V1::BaseController, type: :controller do
         request.headers['Authorization'] = "Bearer #{token}"
       end
 
-      subject { get :index }
+      subject { get :index, format: :json }
 
       its(:code) { is_expected.to eq '401' }
       its(:body) { is_expected.to be_json_as(response_token_invalid) }

@@ -5,4 +5,8 @@ module AppErrors
 
   class Error403 < StandardError; end
   class Error409 < StandardError; end
+  class Error500 < StandardError; end
+
+  class InvalidResetPwdToken < StandardError; end
+  class ExpiredResetPwdToken < StandardError; end
 end

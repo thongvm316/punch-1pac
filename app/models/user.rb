@@ -32,7 +32,7 @@ class User < ApplicationRecord
   has_secure_password
 
   REGEX_VALID_EMAIL = /\A([\w+\-].?)+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i
-  PASSWORD_RESET_TOKEN_EXPIRE = 1800.0
+  RESET_PASSWORD_TOKEN_EXPIRY = 1800.0
 
   enum role: { member: 0, admin: 1, superadmin: 2 }
 
@@ -58,19 +58,23 @@ class User < ApplicationRecord
 
   include ImageUploader::Attachment.new(:avatar)
 
-  def reset_password_token_valid?(token)
-    user = find_by!(reset_password_token: token)
-    return false unless (Time.current - user.reset_password_sent_at) < PASSWORD_RESET_TOKEN_EXPIRE
+  def self.reset_password_token_valid?(token)
+    user = find_by(reset_password_token: token)
+    raise AppErrors::InvalidResetPwdToken unless user
+    raise AppErrors::ExpiredResetPwdToken unless (Time.current - user.reset_password_sent_at) < RESET_PASSWORD_TOKEN_EXPIRY
     user
   end
 
-  def self.init_password_reset_token!
+  def init_password_reset_token!
+    count = 1
     self.reset_password_token = loop do
+      raise AppErrors::Error500 if count > 5
       random_token = SecureRandom.base58(24)
+      count += 1
       break random_token unless self.class.exists?(reset_password_token: random_token)
     end
     self.reset_password_sent_at = Time.current
-    save!
+    raise AppErrors::Error500 unless save
   end
 
   def manager?
