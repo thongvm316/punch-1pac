@@ -337,10 +337,12 @@ RSpec.describe Api::V1::UsersController, type: :controller do
       let(:login_user) { create :user, company: company, role: 'admin' }
 
       context 'when params validate' do
+        let(:avatar) { fixture_file_upload('images/avatar.png', 'image/png') }
         let(:user_params) do
           user_params = attributes_for(:user)
           user_params[:permission_ids] = user_params[:user_permissions_attributes].map { |id| id[:permission_id] }
           user_params.delete(:user_permissions_attributes)
+          user_params[:avatar] = avatar
           user_params
         end
 
@@ -365,6 +367,38 @@ RSpec.describe Api::V1::UsersController, type: :controller do
 
         its(:code) { is_expected.to eq '422' }
         its(:body) { is_expected.to be_json_as(response_422(error)) }
+      end
+
+      context 'when avatar wrong file format' do
+        let(:avatar) { fixture_file_upload('files/invalid_all.csv', 'text/csv') }
+        let(:user_params) do
+          user_params = attributes_for(:user)
+          user_params[:permission_ids] = user_params[:user_permissions_attributes].map { |id| id[:permission_id] }
+          user_params.delete(:user_permissions_attributes)
+          user_params[:avatar] = avatar
+          user_params
+        end
+
+        subject { post :create, params: { user: user_params } }
+
+        its(:code) { is_expected.to eq '422' }
+        its(:body) { is_expected.to be_json_as(response_422(avatar: Array)) }
+      end
+
+      context 'when avatar more than 2 megabytes' do
+        let(:avatar) { fixture_file_upload('images/large_avatar.jpg', 'image/png') }
+        let(:user_params) do
+          user_params = attributes_for(:user)
+          user_params[:permission_ids] = user_params[:user_permissions_attributes].map { |id| id[:permission_id] }
+          user_params.delete(:user_permissions_attributes)
+          user_params[:avatar] = avatar
+          user_params
+        end
+
+        subject { post :create, params: { user: user_params } }
+
+        its(:code) { is_expected.to eq '422' }
+        its(:body) { is_expected.to be_json_as(response_422(avatar: Array)) }
       end
 
       context 'when permissions invalid' do

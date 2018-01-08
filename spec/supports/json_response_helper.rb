@@ -104,13 +104,15 @@ module JsonResponseHelper
         id: Integer,
         email: String,
         name: String,
+        avatar_url: String,
         permissions: Array.new(permissions_size) { response_permission }
       }
     else
       {
         id: Integer,
         email: String,
-        name: String
+        name: String,
+        avatar_url: String
       }
     end
   end
