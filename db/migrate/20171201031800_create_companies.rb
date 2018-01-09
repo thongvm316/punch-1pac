@@ -15,6 +15,7 @@ class CreateCompanies < ActiveRecord::Migration[5.1]
       t.string :timezone, null: false, default: 'Asia/Hanoi'
       t.float :breaktime, null: false, default: 1
       t.string :breakdays, null: false, array: true, default: []
+      t.text   :logo_data
 
       t.timestamps null: false
     end

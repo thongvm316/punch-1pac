@@ -74,6 +74,7 @@ ActiveRecord::Schema.define(version: 20180104091320) do
     t.string "timezone", default: "Asia/Hanoi", null: false
     t.float "breaktime", default: 1.0, null: false
     t.string "breakdays", default: [], null: false, array: true
+    t.text "logo_data"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["namespace"], name: "index_companies_on_namespace", unique: true
