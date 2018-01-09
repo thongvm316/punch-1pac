@@ -37,6 +37,9 @@ gem 'rack-cors'
 gem 'shrine'
 gem 'virtus'
 
+# csv
+gem 'roo'
+
 group :production do
   gem 'bugsnag'
   gem 'lograge'
