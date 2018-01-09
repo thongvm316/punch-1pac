@@ -19,6 +19,10 @@
 @import "../../node_modules/spectre.css/src/codes";
 @import "../../node_modules/spectre.css/src/media";
 
+// Override spectre.css elements
+@import "typography";
+@import "buttons";
+
 // Layout
 @import "../../node_modules/spectre.css/src/layout";
 @import "../../node_modules/spectre.css/src/navbar";
@@ -45,6 +49,10 @@
 @import "../../node_modules/spectre.css/src/tiles";
 @import "../../node_modules/spectre.css/src/toasts";
 @import "../../node_modules/spectre.css/src/tooltips";
+
+// Override spectre.css Components
+@import "pagination";
+@import "toast";
 
 // Utility classes
 @import "../../node_modules/spectre.css/src/animations";
