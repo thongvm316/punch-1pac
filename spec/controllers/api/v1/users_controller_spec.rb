@@ -293,6 +293,24 @@ RSpec.describe Api::V1::UsersController, type: :controller do
         its(:body) { is_expected.to be_json_as(users: Array.new(3) { response_user }, errors: { lines: [] }) }
       end
 
+      context 'when valid xlsx file' do
+        let(:csv_file) { fixture_file_upload('files/valid.xlsx', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') }
+
+        subject { post :create_multi, params: { csv_file: csv_file } }
+
+        its(:code) { is_expected.to eq '201' }
+        its(:body) { is_expected.to be_json_as(users: Array.new(3) { response_user }, errors: { lines: [] }) }
+      end
+
+      context 'when valid ods file' do
+        let(:csv_file) { fixture_file_upload('files/valid.ods', 'application/vnd.oasis.opendocument.spreadsheet') }
+
+        subject { post :create_multi, params: { csv_file: csv_file } }
+
+        its(:code) { is_expected.to eq '201' }
+        its(:body) { is_expected.to be_json_as(users: Array.new(3) { response_user }, errors: { lines: [] }) }
+      end
+
       context 'when csv file empty' do
         let(:csv_file) { fixture_file_upload('files/empty.text', 'text/csv') }
 
@@ -318,6 +336,15 @@ RSpec.describe Api::V1::UsersController, type: :controller do
 
         its(:code) { is_expected.to eq '201' }
         its(:body) { is_expected.to be_json_as(users: [], errors: { lines: Array }) }
+      end
+
+      context 'when invalid mime type' do
+        let(:csv_file) { fixture_file_upload('files/image.csv', 'text/csv') }
+
+        subject { post :create_multi, params: { csv_file: csv_file } }
+
+        its(:code) { is_expected.to eq '422' }
+        its(:body) { is_expected.to be_json_as(response_422(csv_file: Array)) }
       end
     end
   end
