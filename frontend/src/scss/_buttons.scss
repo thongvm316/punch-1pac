@@ -1,0 +1,114 @@
+// Buttons
+.btn {
+  height: 2.4rem;
+  line-height: 1;
+  padding: .8rem 0;
+  width: 8rem;
+  border: $border-width solid $gray-color;
+  color: $gray-color-dark;
+  position: relative;
+
+  svg {
+    width: .8rem;
+    height: .8rem;
+    color: $primary-color;
+    position: absolute;
+    top: .8rem;
+    left: auto;
+    right: .8rem;
+  }
+
+  &:focus,
+  &:hover {
+    border-color: $gray-color-dark;
+    background: $bg-color-light;
+    color: $gray-color-dark;
+  }
+  &:active,
+  &.active {
+    background: $bg-color-light;
+    border-color: darken($gray-color, 50%);
+    color: $gray-color-dark;
+  }
+  &[disabled],
+  &:disabled,
+  &.disabled {
+    svg {
+      color: $gray-color;
+    }
+  }
+
+  // Button Primary
+  &.btn-primary {
+    svg {
+      color: $light-color;
+    }
+
+    &.disabled {
+      color: $gray-color;
+      background-color: $gray-color-light;
+      border: $gray-color-light;
+
+      svg {
+        color: $gray-color;
+      }
+    }
+  }
+
+  &.btn-sm {
+    width: 1.6rem;
+    height: 1.6rem;
+    padding: .4rem 0;
+
+    svg {
+      top: .4rem;
+      right: .4rem;
+    }
+  }
+
+  &.btn-icon {
+    width: 2.4rem;
+  }
+
+  &.group-icon {
+    text-align: left;
+    padding-left: .8rem;
+  }
+}
+
+// Button groups
+// .btn-group {
+//   display: inline-flex;
+//   flex-wrap: wrap;
+
+//   .btn {
+//     flex: 1 0 auto;
+//     &:first-child:not(:last-child) {
+//       border-bottom-right-radius: 0;
+//       border-top-right-radius: 0;
+//     }
+//     &:not(:first-child):not(:last-child) {
+//       border-radius: 0;
+//       margin-left: -$border-width;
+//     }
+//     &:last-child:not(:first-child) {
+//       border-bottom-left-radius: 0;
+//       border-top-left-radius: 0;
+//       margin-left: -$border-width;
+//     }
+//     &:focus,
+//     &:hover,
+//     &:active,
+//     &.active {
+//       z-index: $zindex-0;
+//     }
+//   }
+
+//   &.btn-group-block {
+//     display: flex;
+
+//     .btn {
+//       flex: 1 0 0;
+//     }
+//   }
+// }
