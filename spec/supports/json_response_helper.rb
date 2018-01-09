@@ -83,7 +83,8 @@ module JsonResponseHelper
       activated: boolean_response,
       timezone: String,
       breaktime: Float,
-      breakdays: Array
+      breakdays: Array,
+      logo_url: String
     }
   end
 

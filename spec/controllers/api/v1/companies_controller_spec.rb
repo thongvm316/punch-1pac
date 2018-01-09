@@ -12,35 +12,39 @@ RSpec.describe Api::V1::CompaniesController, type: :controller do
 
   describe 'PATCH #update' do
     context 'when params are valid' do
-      let(:params) { { company: { name: 'new_name' } } }
       context 'when login user is super admin' do
         let(:login_user) { create :user, company: company, role: 'superadmin' }
-        subject { patch :update, params: params }
+        let(:params) { attributes_for(:company, logo: fixture_file_upload('images/image.png', 'image/png')) }
+
+        subject { patch :update, params: { company: params } }
 
         its(:code) { is_expected.to eq '200' }
         its(:body) { is_expected.to be_json_as(response_company) }
         it 'changes company.name' do
           is_expected
-          expect(Company.find(company.id).name).to eq 'new_name'
+          expect(Company.find(company.id).name).to eq params[:name]
         end
       end
 
       context 'when login user is admin' do
         let(:login_user) { create :user, company: company, role: 'admin' }
-        subject { patch :update, params: params }
+        let(:params) { attributes_for(:company, logo: fixture_file_upload('images/image.png', 'image/png')) }
+
+        subject { patch :update, params: { company: params } }
 
         its(:code) { is_expected.to eq '200' }
         its(:body) { is_expected.to be_json_as(response_company) }
         it 'changes company.name' do
           is_expected
-          expect(Company.find(company.id).name).to eq 'new_name'
+          expect(Company.find(company.id).name).to eq params[:name]
         end
       end
 
       context 'when login user is member' do
+        let(:params) { attributes_for(:company) }
         let(:login_user) { create :user, company: company, role: 'member' }
 
-        subject { patch :update, params: params }
+        subject { patch :update, params: { company: params } }
 
         its(:code) { is_expected.to eq '401' }
       end
@@ -53,6 +57,26 @@ RSpec.describe Api::V1::CompaniesController, type: :controller do
 
       its(:code) { is_expected.to eq '422' }
       its(:body) { is_expected.to be_json_as(response_422(name: Array)) }
+    end
+
+    context 'when invalid loge mimi type' do
+      let(:login_user) { create :user, company: company, role: 'admin' }
+      let(:params) { { logo: fixture_file_upload('files/valid.csv', 'image/png') } }
+
+      subject { patch :update, params: { company: params } }
+
+      its(:code) { is_expected.to eq '422' }
+      its(:body) { is_expected.to be_json_as(response_422(logo: Array)) }
+    end
+
+    context 'when logo more than 2 mb' do
+      let(:login_user) { create :user, company: company, role: 'admin' }
+      let(:params) { { logo: fixture_file_upload('images/large_image.jpg', 'image/jpg') } }
+
+      subject { patch :update, params: { company: params } }
+
+      its(:code) { is_expected.to eq '422' }
+      its(:body) { is_expected.to be_json_as(response_422(logo: Array)) }
     end
   end
 

@@ -337,7 +337,7 @@ RSpec.describe Api::V1::UsersController, type: :controller do
       let(:login_user) { create :user, company: company, role: 'admin' }
 
       context 'when params validate' do
-        let(:avatar) { fixture_file_upload('images/avatar.png', 'image/png') }
+        let(:avatar) { fixture_file_upload('images/image.png', 'image/png') }
         let(:user_params) do
           user_params = attributes_for(:user)
           user_params[:permission_ids] = user_params[:user_permissions_attributes].map { |id| id[:permission_id] }
@@ -386,7 +386,7 @@ RSpec.describe Api::V1::UsersController, type: :controller do
       end
 
       context 'when avatar more than 2 megabytes' do
-        let(:avatar) { fixture_file_upload('images/large_avatar.jpg', 'image/png') }
+        let(:avatar) { fixture_file_upload('images/large_image.jpg', 'image/png') }
         let(:user_params) do
           user_params = attributes_for(:user)
           user_params[:permission_ids] = user_params[:user_permissions_attributes].map { |id| id[:permission_id] }

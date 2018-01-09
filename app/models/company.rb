@@ -17,6 +17,7 @@
 #  timezone     :string           default("Asia/Hanoi"), not null
 #  breaktime    :float            default(1.0), not null
 #  breakdays    :string           default([]), not null, is an Array
+#  logo_data    :text
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
 #
@@ -42,6 +43,8 @@ class Company < ApplicationRecord
   validates :address, presence: true
   validates :phone_number, presence: true
   validates :timezone, inclusion: { in: ActiveSupport::TimeZone.all.map { |tz| tz.tzinfo.name } }
+
+  include ImageUploader::Attachment.new(:logo)
 
   def in_holiday(target_date)
     return true if custom_holidays.in_holiday(target_date).exists?

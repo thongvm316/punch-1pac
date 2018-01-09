@@ -60,4 +60,9 @@ RSpec.configure do |config|
   config.include RSpec::JsonMatcher
   config.include JsonResponseHelper
   config.include AuthenticateHelper
+
+  config.after(:all) do
+    # Get rid of the linked images
+    FileUtils.rm_rf(Rails.root.join('spec', 'tmp', 'uploads')) if Rails.env.test?
+  end
 end

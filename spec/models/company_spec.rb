@@ -22,4 +22,25 @@ RSpec.describe Company, type: :model do
     it { should validate_presence_of(:address) }
     it { should validate_presence_of(:phone_number) }
   end
+
+  describe 'Upload logo' do
+    context 'when valid image' do
+      let(:att) { attributes_for :company, logo: File.open(Rails.root.join('spec', 'fixtures', 'images', 'image.png')) }
+
+      it do
+        company = Company.create(att)
+        expect(company.logo.storage_key).to eq('store')
+        expect(company.logo.metadata['mime_type']).to eq('image/png')
+      end
+    end
+
+    context 'when invalid image' do
+      let(:att) { attributes_for :company, logo: File.open(Rails.root.join('spec', 'fixtures', 'files', 'valid.csv')) }
+
+      it do
+        company = Company.create(att)
+        expect(company.errors.messages.keys).to eq([:logo])
+      end
+    end
+  end
 end
