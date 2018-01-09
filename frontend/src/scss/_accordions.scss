@@ -8,11 +8,12 @@
     position: relative;
 
     svg {
-      height: 16px;
-      width: 16px;
+      color: $primary-color;
+      height: .8rem;
       position: absolute;
-      top: 16px;
-      right: 16px;
+      right: .8rem;
+      top: .8rem;
+      width: .8rem;
     }
 
     &:hover {
@@ -27,10 +28,22 @@
   .accordion-body {
 
     .menu {
+      border-radius: $border-radius;
       border: .05rem solid #575757;
-      border-radius: 3px;
-      transform: none;
       margin-top: .4rem;
+      padding: 0;
+      transform: none;
+
+      .menu-item > a {
+        border-radius: 0;
+        padding: .8rem;
+
+        &:hover,
+        &:focus {
+          background: $primary-color;
+          color: $light-color;
+        }
+      }
     }
   }
 }

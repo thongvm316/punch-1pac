@@ -1,9 +1,10 @@
-// Override spectre.css variables
-@import "variables";
 
 // Variables and mixins
 @import "../../node_modules/spectre.css/src/variables";
 @import "../../node_modules/spectre.css/src/mixins";
+
+// Override spectre.css variables
+@import "variables";
 
 // Reset and dependencies
 @import "../../node_modules/spectre.css/src/normalize";
@@ -23,10 +24,14 @@
 @import "typography";
 @import "buttons";
 @import "forms";
+@import "media";
 
 // Layout
 @import "../../node_modules/spectre.css/src/layout";
 @import "../../node_modules/spectre.css/src/navbar";
+
+// Override spectre.css layout
+@import "navbar";
 
 // Components
 @import "../../node_modules/spectre.css/src/accordions";

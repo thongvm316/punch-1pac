@@ -19,11 +19,11 @@
     position: relative;
 
     svg {
-      height: 16px;
-      width: 16px;
+      height: .8rem;
+      width: .8rem;
       position: absolute;
-      top: 16px;
-      right: 16px;
+      top: .8rem;
+      right: .8rem;
     }
   }
 
@@ -91,6 +91,21 @@
       &:focus + .form-icon {
         @include control-shadow($error-color);
         border-color: $error-color;
+      }
+    }
+  }
+}
+
+.form-radio {
+  input {
+    &:checked + .form-icon {
+      background: $light-color;
+      border-color: $dark-color;
+
+      &::before {
+        background: $primary-color;
+        height: .4rem;
+        width: .4rem;
       }
     }
   }

@@ -1,11 +1,14 @@
 <template>
   <div class="modules">
-    <header id="header">
-      <div class="nav">
+
+    <header class="navbar">
+      <section class="navbar-section">
         <ul class="nav-list">
-          <li class="nav-logo"><a href="/"><span class="logo"></span></a></li>
-          <li class="nav-logo"><a href="/"><span class="logo"></span></a></li>
-        </ul>
+           <li class="nav-logo"><a href="/"><span class="logo"></span></a></li>
+           <li class="nav-logo"><a href="/"><span class="logo"></span></a></li>
+         </ul>
+      </section>
+      <section class="navbar-section">
         <ul class="nav-list">
           <li>
             <a href="/">
@@ -31,7 +34,7 @@
             </a>
           </li>
         </ul>
-      </div>
+      </section>
     </header>
 
     <h1>Typography</h1>
