@@ -164,6 +164,23 @@
     </div>
     <br>
 
+    <span class="bg-primary text-light docs-shape circle"></span>
+    <span class="bg-success text-light docs-shape circle"></span>
+    <span class="bg-warning text-light docs-shape circle"></span>
+    <span class="bg-error text-light docs-shape circle"></span>
+
+    <br>
+    <br>
+    <span class="label">default</span>
+    <span class="label label-primary">primary</span>
+    <span class="label label-success">success</span>
+    <span class="label label-warning">warning</span>
+    <span class="label label-error">error</span>
+
+    <br>
+    <br>
+
+
     <ul class="tab tab-block">
       <li class="tab-item">
         <a href="#">Music</a>
