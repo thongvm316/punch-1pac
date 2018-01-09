@@ -24,6 +24,7 @@
 @import "buttons";
 @import "forms";
 @import "media";
+@import "labels";
 
 // Layout
 @import "../../node_modules/spectre.css/src/layout";
@@ -64,3 +65,6 @@
 // Utility classes
 @import "../../node_modules/spectre.css/src/animations";
 @import "../../node_modules/spectre.css/src/utilities";
+
+//  Override specture.css Utility classes
+@import "utilities";
