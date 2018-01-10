@@ -179,6 +179,80 @@
       </li>
     </ul>
 
+      <div class="container" style="margin-top: 64px">
+        <h3>Primary Colors</h3>
+        <div class="columns">
+          <div class="column col-3">
+            <div class="color-block bg-primary-color">
+              <p>Primary Color</p>
+            </div>
+          </div>
+          <div class="column col-3">
+            <div class="color-block bg-primary-color-dark">
+              <p>Primary Color Dark</p>
+            </div>
+          </div>
+          <div class="column col-3">
+            <div class="color-block bg-primary-color-darkest">
+              <p>Primary Color Darkest</p>
+            </div>
+          </div>
+          <div class="column col-3">
+            <div class="color-block bg-primary-color-light">
+              <p>Primary Color Light</p>
+            </div>
+          </div>
+        </div>
+
+        <h3>Secondary Colors</h3>
+        <div class="columns">
+          <div class="column col-3">
+            <div class="color-block bg-secondary-color">
+              <p class="dark">Secondary Color</p>
+            </div>
+          </div>
+          <div class="column col-3">
+            <div class="color-block bg-secondary-color-dark">
+              <p class="dark">Secondary Color Dark</p>
+            </div>
+          </div>
+          <div class="column col-3">
+            <div class="color-block with-border bg-secondary-color-light">
+              <p class="dark">Secondary Color Light</p>
+            </div>
+          </div>
+        </div>
+
+        <h3>Gray Colors</h3>
+        <div class="columns">
+          <div class="column col-3">
+            <div class="color-block bg-dark-color">
+              <p>Dark Color</p>
+            </div>
+          </div>
+          <div class="column col-3">
+            <div class="color-block bg-gray-color">
+              <p>Gray Color</p>
+            </div>
+          </div>
+          <div class="column col-3">
+            <div class="color-block bg-gray-color-dark">
+              <p>Gray Color Dark</p>
+            </div>
+          </div>
+          <div class="column col-3">
+            <div class="color-block bg-gray-color-light">
+              <p>Gray Color Light</p>
+            </div>
+          </div>
+          <div class="column col-3">
+            <div class="color-block bg-gray-color-lightest with-border">
+              <p class="dark">Gray Color Lightest</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div style="margin-top: 64px">
         <h1>Checkbox & Radio</h1>
 

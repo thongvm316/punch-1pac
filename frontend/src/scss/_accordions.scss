@@ -1,11 +1,12 @@
 .accordion {
   .accordion-header {
-    border: .05rem solid #E2E2E2;
+    border: .05rem solid $border-color;
     border-radius: .15rem;
     line-height: .8rem;
     font-size: .7rem;
     padding: .8rem 1.8rem .8rem .8rem;
     position: relative;
+    outline: none;
 
     svg {
       color: $primary-color;
@@ -17,12 +18,16 @@
     }
 
     &:hover {
-      border: .05rem solid #BABABA;
+      border-color: $border-color-dark;
+    }
+
+    &:focus {
+      border: $dark-color;
     }
   }
 
   input:checked + label {
-    border: .05rem solid #575757;
+    border: .05rem solid $dark-color;
   }
 
   .accordion-body {

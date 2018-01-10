@@ -33,6 +33,10 @@
       border: .05rem solid #E2E2E2;
       border-radius: .15rem;
 
+      &:hover {
+        border-color: $border-color-dark;
+      }
+
       &:focus {
         outline:none;
         border-color: $dark-color;
@@ -47,9 +51,19 @@
 }
 
 .form-input {
+  border-color: $border-color;
+
+  &:hover {
+    border-color: $border-color-dark;
+  }
+
   &:focus {
     border-color: $dark-color;
     @include control-shadow($light-color);
+  }
+
+  &:disabled {
+    border-color: $border-color;
   }
 }
 

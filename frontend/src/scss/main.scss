@@ -1,10 +1,10 @@
-
 // Variables and mixins
 @import "../../node_modules/spectre.css/src/variables";
 @import "../../node_modules/spectre.css/src/mixins";
 
 // Override spectre.css variables
 @import "variables";
+@import "color-blocks";
 
 // Reset and dependencies
 @import "../../node_modules/spectre.css/src/normalize";
