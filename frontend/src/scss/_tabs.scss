@@ -1,0 +1,44 @@
+.tab {
+  border: 0;
+
+  .tab-item {
+
+    border: solid $border-color;
+    border-width: .05rem 0 .05rem .05rem;
+
+    &:first-child {
+      border-top-left-radius: $border-radius;
+      border-bottom-left-radius: $border-radius;
+    }
+
+    &:last-child {
+      border-right-width: .05rem;
+      border-top-right-radius: $border-radius;
+      border-bottom-right-radius: $border-radius;
+    }
+
+    a {
+      border-bottom: 0;
+      padding: .8rem;
+      font-size: .7rem;
+      line-height: .8rem;
+    }
+
+    &.active,
+    a.active {
+      border-right-width: .05rem;
+      border-color: $primary-color;
+      color: $primary-color;
+    }
+
+    &.active + li {
+      border-left-width: 0;
+    }
+  }
+
+  &.tab-block {
+    .tab-item {
+      text-align: left;
+    }
+  }
+}

@@ -1,0 +1,30 @@
+.form-label-group {
+  display: flex;
+  justify-content: space-between;
+}
+
+.form-group {
+
+  &.form-group-search,
+  &.form-date-picker {
+    position: relative;
+
+    svg {
+      height: .8rem;
+      width: .8rem;
+      position: absolute;
+      top: .5rem;
+      right: .8rem;
+    }
+  }
+
+  &.form-date-picker {
+    .form-input {
+      padding-right: 2rem;
+    }
+
+    svg {
+      color: $primary-color;
+    }
+  }
+}
