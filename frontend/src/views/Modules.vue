@@ -421,7 +421,7 @@
           </div>
         </div>
         <div class="form-group form-date-picker">
-          <input type="text" placeholder="DD/MM/YYYY">
+          <input class="form-input" type="text" placeholder="DD/MM/YYYY">
           <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M20 20h-4v-4h4v4zm-6-10h-4v4h4v-4zm6 0h-4v4h4v-4zm-12 6h-4v4h4v-4zm6 0h-4v4h4v-4zm-6-6h-4v4h4v-4zm16-8v22h-24v-22h3v1c0 1.103.897 2 2 2s2-.897 2-2v-1h10v1c0 1.103.897 2 2 2s2-.897 2-2v-1h3zm-2 6h-20v14h20v-14zm-2-7c0-.552-.447-1-1-1s-1 .448-1 1v2c0 .552.447 1 1 1s1-.448 1-1v-2zm-14 2c0 .552-.447 1-1 1s-1-.448-1-1v-2c0-.552.447-1 1-1s1 .448 1 1v2z"/></svg>
         </div>
       </div>
@@ -429,8 +429,74 @@
   </div>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
 .modules {
   padding: 40px;
+}
+
+.color-block {
+  height: 160px;
+  width: 160px;
+  padding: 16px;
+
+  p {
+    text-align: left;
+    vertical-align: bottom;
+    color: #ffffff;
+
+    &.dark { color: #454d5d; }
+  }
+
+  &.with-border {
+    border: 0.05rem solid #454d5d;
+  }
+}
+
+.bg-primary-color {
+  background-color: #2d91ff;
+}
+
+.bg-primary-color-dark {
+  background-color: darken(#2d91ff, 3%);
+}
+
+.bg-primary-color-darkest {
+  background-color: #0052ac;
+}
+
+.bg-primary-color-light {
+  background-color: lighten(#2d91ff, 3%);
+}
+
+.bg-secondary-color {
+  background-color: lighten(#2d91ff, 37.5%);
+}
+
+.bg-secondary-color-dark {
+  background-color: darken(#ecf5ff, 3%);
+}
+
+.bg-secondary-color-light {
+  background-color: lighten(#ecf5ff, 3%);
+}
+
+.bg-dark-color {
+ background-color: #454d5d;
+}
+
+.bg-gray-color {
+  background-color: lighten(#454d5d, 40%);
+}
+
+.bg-gray-color-dark {
+  background-color: darken(#acb3c2, 25%);
+}
+
+.bg-gray-color-light {
+  background-color: lighten(#acb3c2, 20%);
+}
+
+.bg-gray-color-lightest {
+  background-color: #eee;
 }
 </style>

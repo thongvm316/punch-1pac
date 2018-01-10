@@ -4,15 +4,6 @@
 }
 
 .form-group {
-  input,
-  textarea {
-    height: 2.4rem;
-    padding: .8rem 1.8rem .8rem .8rem;
-  }
-
-  textarea {
-    height: 6.4rem;
-  }
 
   &.form-group-search,
   &.form-date-picker {
@@ -22,105 +13,18 @@
       height: .8rem;
       width: .8rem;
       position: absolute;
-      top: .8rem;
+      top: .5rem;
       right: .8rem;
     }
   }
 
   &.form-date-picker {
-    input {
-      width: 100%;
-      border: .05rem solid #E2E2E2;
-      border-radius: .15rem;
-
-      &:hover {
-        border-color: $border-color-dark;
-      }
-
-      &:focus {
-        outline:none;
-        border-color: $dark-color;
-        @include control-shadow($light-color);
-      }
+    .form-input {
+      padding-right: 2rem;
     }
 
     svg {
       color: $primary-color;
-    }
-  }
-}
-
-.form-input {
-  border-color: $border-color;
-
-  &:hover {
-    border-color: $border-color-dark;
-  }
-
-  &:focus {
-    border-color: $dark-color;
-    @include control-shadow($light-color);
-  }
-
-  &:disabled {
-    border-color: $border-color;
-  }
-}
-
-// Form validation states
-.form-input,
-.form-select {
-  .has-success &,
-  &.is-success {
-    border-color: $success-color;
-    &:focus {
-      @include control-shadow($success-color);
-    }
-  }
-
-  .has-error &,
-  &.is-error {
-    border-color: $error-color;
-    &:focus {
-      @include control-shadow($error-color);
-    }
-  }
-}
-
-.form-checkbox,
-.form-radio,
-.form-switch {
-  .has-error &,
-  &.is-error {
-    .form-icon {
-      border-color: $error-color;
-    }
-
-    input {
-      &:checked + .form-icon {
-        background: $error-color;
-        border-color: $error-color;
-      }
-
-      &:focus + .form-icon {
-        @include control-shadow($error-color);
-        border-color: $error-color;
-      }
-    }
-  }
-}
-
-.form-radio {
-  input {
-    &:checked + .form-icon {
-      background: $light-color;
-      border-color: $dark-color;
-
-      &::before {
-        background: $primary-color;
-        height: .4rem;
-        width: .4rem;
-      }
     }
   }
 }
