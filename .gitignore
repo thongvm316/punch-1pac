@@ -49,3 +49,15 @@ config/database.yml
 .env.production
 
 .byebug_history
+
+/public/assets/
+/public/index.html
+
+/frontend/node_modules/
+/frontend/dist/
+/frontend/npm-debug.log*
+/frontend/yarn-debug.log*
+/frontend/yarn-error.log*
+/frontend/test/unit/coverage/
+/frontend/test/e2e/reports/
+/frontend/selenium-debug.log
