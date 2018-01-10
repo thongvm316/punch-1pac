@@ -165,7 +165,7 @@
     <br>
 
     <ul class="tab tab-block">
-      <li class="tab-item active">
+      <li class="tab-item">
         <a href="#">Music</a>
       </li>
       <li class="tab-item">
@@ -174,8 +174,14 @@
       <li class="tab-item">
         <a href="#">Radio</a>
       </li>
-      <li class="tab-item">
+      <li class="tab-item active">
         <a href="#">Connect</a>
+      </li>
+      <li class="tab-item">
+        <a href="#">Greed</a>
+      </li>
+      <li class="tab-item">
+        <a href="#">Zeng</a>
       </li>
     </ul>
 
