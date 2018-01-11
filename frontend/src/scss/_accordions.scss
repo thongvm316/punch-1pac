@@ -17,17 +17,14 @@
       width: .8rem;
     }
 
-    &:hover {
-      border-color: $border-color-dark;
-    }
-
+    &:hover,
     &:focus {
-      border: $dark-color;
+      border-color: $border-color-dark;
     }
   }
 
   input:checked + label {
-    border: .05rem solid $dark-color;
+    border: .05rem solid $border-color-dark;
   }
 
   .accordion-body {

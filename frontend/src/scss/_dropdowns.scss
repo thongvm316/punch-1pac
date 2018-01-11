@@ -1,0 +1,21 @@
+.dropdown {
+  .menu {
+    border-radius: $border-radius;
+    border: .05rem solid $border-color-dark;
+    margin-top: .4rem;
+    padding: 0;
+    transform: none;
+    max-height: 100rem;
+
+    .menu-item > a {
+      border-radius: 0;
+      padding: .8rem;
+
+      &:hover,
+      &:focus {
+        background: $primary-color;
+        color: $light-color;
+      }
+    }
+  }
+}

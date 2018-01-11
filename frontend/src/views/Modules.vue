@@ -182,7 +182,7 @@
 
 
     <ul class="tab tab-block">
-      <li class="tab-item">
+      <li class="tab-item active">
         <a href="#">Music</a>
       </li>
       <li class="tab-item">
@@ -191,7 +191,7 @@
       <li class="tab-item">
         <a href="#">Radio</a>
       </li>
-      <li class="tab-item active">
+      <li class="tab-item">
         <a href="#">Connect</a>
       </li>
       <li class="tab-item">
@@ -439,6 +439,7 @@
         </div>
       </div>
 
+
       <div class="form-group form-group-select">
         <select class="form-select">
           <option>Element 1</option>
@@ -447,6 +448,25 @@
           <option>Element 4</option>
         </select>
         <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M0 7.33l2.829-2.83 9.175 9.339 9.167-9.339 2.829 2.83-11.996 12.17z"/></svg>
+      </div>
+
+      <div
+        class="dropdown"
+        :class="{ active: isDropdownOpen }">
+        <div class="btn-group">
+          <a
+          class="btn group-icon dropdown-toggle"
+          @click="isDropdownOpen = !isDropdownOpen">
+            Elements
+            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M0 7.33l2.829-2.83 9.175 9.339 9.167-9.339 2.829 2.83-11.996 12.17z"/></svg>
+          </a>
+          <ul class="menu">
+            <li class="menu-item"><a href="#">Element 1</a></li>
+            <li class="menu-item"><a href="#">Element 2</a></li>
+            <li class="menu-item"><a href="#">Element 3</a></li>
+            <li class="menu-item"><a href="#">Element 4</a></li>
+          </ul>
+        </div>
       </div>
 
       <div class="form-group form-date-picker">
@@ -607,6 +627,16 @@
     </table>
   </div>
 </template>
+
+<script>
+  export default {
+    data () {
+      return {
+        isDropdownOpen: false
+      }
+    }
+  }
+</script>
 
 <style lang="scss" scoped>
 .modules {
