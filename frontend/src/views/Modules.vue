@@ -630,7 +630,7 @@
 
 <script>
   export default {
-    data() {
+    data () {
       return {
         isDropdownOpen: false
       }
