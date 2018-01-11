@@ -1,0 +1,39 @@
+// Tables
+.table {
+  max-width: 752px;
+
+  &.table-hover {
+    thead {
+      tr {
+        font-weight: 700;
+      }
+    }
+
+    tbody {
+      tr {
+        &:hover {
+          background: $secondary-color;
+        }
+
+        &.active {
+          background: $secondary-color;
+        }
+      }
+    }
+  }
+
+  td,
+  th {
+    border-bottom: 0;
+    vertical-align: middle;
+  }
+
+  .accordion > .accordion-header {
+    border: 0;
+    padding-left: 0;
+  }
+
+  .form-checkbox {
+    padding: 0;
+  }
+}
