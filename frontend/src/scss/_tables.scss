@@ -1,7 +1,5 @@
 // Tables
 .table {
-  max-width: 752px;
-
   &.table-hover {
     thead {
       tr {
@@ -28,9 +26,20 @@
     vertical-align: middle;
   }
 
-  .accordion > .accordion-header {
-    border: 0;
-    padding-left: 0;
+  .accordion {
+    .accordion-header {
+      border: 0;
+      padding-left: 0;
+    }
+
+    input:checked {
+    + label {
+        path {
+          transform-origin: 50% 50% 0px;
+          transform: rotate(180deg);
+        }
+      }
+    }
   }
 
   .form-checkbox {
