@@ -1,11 +1,12 @@
 # frozen_string_literal: true
 
-require 'roo'
-
 class UserCreateMultiForm < BaseForm
   USER_PARAMS = %w[email password password_confirmation role name gender user_permissions_attributes].freeze
+  validate :validate_not_nil
+  validate :validate_mine_types
+  validate :validate_extensions
 
-  validate :validate_csv_files
+  attr_reader :file
 
   def initialize(company, csv_file)
     @uploader = CsvUploader.new(:cache)
@@ -14,10 +15,8 @@ class UserCreateMultiForm < BaseForm
   end
 
   def save
-    unless valid?
-      @uploader.delete(@file)
-      return false
-    end
+    return false unless valid?
+
     @users = []
     @lines = []
     @permissions = load_permissions
@@ -32,8 +31,10 @@ class UserCreateMultiForm < BaseForm
         @lines << line
       end
     end
-    @uploader.delete(@file)
+
     true
+  ensure
+    @uploader.delete(@file)
   end
 
   def valid?
@@ -64,13 +65,16 @@ class UserCreateMultiForm < BaseForm
     params.select { |k, v| USER_PARAMS.include?(k.to_s) && v }
   end
 
-  def validate_csv_files
+  def validate_not_nil
     return errors.add(:csv_file, I18n.t('errors.messages.blank')) unless @file&.present?
-    return errors.add(:csv_file, I18n.t('errors.messages.blank')) unless mime_type_and_extension?
   end
 
-  def mime_type_and_extension?
-    valid_mime_types.include?(@file.mime_type) && valid_extension.include?(@file.extension)
+  def validate_mine_types
+    return errors.add(:csv_file, I18n.t('errors.messages.blank')) unless valid_mine_types.include?(@file.mime_type)
+  end
+
+  def validate_extensions
+    return errors.add(:csv_file, I18n.t('errors.messages.blank')) unless valid_extensions.include?(@file.extension)
   end
 
   def open_spreadsheet
@@ -82,11 +86,15 @@ class UserCreateMultiForm < BaseForm
     end
   end
 
-  def valid_mime_types
-    ['text/plain', 'text/csv', 'application/vnd.oasis.opendocument.spreadsheet', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet']
+  def valid_mine_types
+    [
+      'text/plain', 'text/csv',
+      'application/vnd.oasis.opendocument.spreadsheet',
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+    ]
   end
 
-  def valid_extension
+  def valid_extensions
     %w[csv ods xlsx]
   end
 end

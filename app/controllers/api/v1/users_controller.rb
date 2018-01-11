@@ -26,11 +26,11 @@ class Api::V1::UsersController < Api::V1::BaseController
 
   def create_multi
     authorize User
-    users_form = UserCreateMultiForm.new(current_company, params[:csv_file])
-    if users_form.save
-      render json: users_form.result, status: 201
+    @users_form = UserCreateMultiForm.new(current_company, params[:csv_file])
+    if @users_form.save
+      render json: @users_form.result, status: 201
     else
-      render_422(users_form.errors.messages)
+      render_422(@users_form.errors.messages)
     end
   end
 
