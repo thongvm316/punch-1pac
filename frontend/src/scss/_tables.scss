@@ -30,6 +30,14 @@
     .accordion-header {
       border: 0;
       padding-left: 0;
+      position: static;
+
+      svg {
+        position: relative;
+        top: .15rem;
+        right: 0;
+        left: .2rem;
+      }
     }
 
     input:checked {
