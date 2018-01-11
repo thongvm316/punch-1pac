@@ -478,71 +478,6 @@
     <table class="table table-hover">
       <thead>
         <tr>
-          <th>Username</th>
-          <th>Department</th>
-          <th>Requested Time</th>
-          <th>Status</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>
-            <div class="media">
-              <span class="avatar"></span>
-              <h5>Son Goku</h5>
-            </div>
-          </td>
-          <td>Marketing</td>
-          <td>20:03:14</td>
-          <td>
-            <div class="label label-success">Accept</div>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div class="media">
-              <span class="avatar"></span>
-              <h5>Thor</h5>
-            </div>
-          </td>
-          <td>Human Resource</td>
-          <td>20:03:14</td>
-          <td>
-            <div class="label label-error">Denied</div>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div class="media">
-              <span class="avatar"></span>
-              <h5>Captain American</h5>
-            </div>
-          </td>
-          <td>Driver</td>
-          <td>20:03:14</td>
-          <td>
-            <div class="label label-primary">Normal</div>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div class="media">
-              <span class="avatar"></span>
-              <h5>Bruce Lee</h5>
-            </div>
-          </td>
-          <td>Kungfu</td>
-          <td>20:03:14</td>
-          <td>
-            <div class="label label-warning">Warning</div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-
-    <table class="table table-hover">
-      <thead>
-        <tr>
           <th>
             <label class="form-checkbox">
               <input type="checkbox">
@@ -561,7 +496,7 @@
           <th>
             <div class="accordion">
               <input type="checkbox" id="accordion-3" hidden>
-              <label class="accordion-header c-hand" for="accordion-2">
+              <label class="accordion-header c-hand" for="accordion-3">
                 Department
                 <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M0 7.33l2.829-2.83 9.175 9.339 9.167-9.339 2.829 2.83-11.996 12.17z"/></svg>
               </label>
@@ -570,8 +505,17 @@
           <th>
             <div class="accordion">
               <input type="checkbox" id="accordion-4" hidden>
-              <label class="accordion-header c-hand" for="accordion-2">
+              <label class="accordion-header c-hand" for="accordion-4">
                 Role
+                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M0 7.33l2.829-2.83 9.175 9.339 9.167-9.339 2.829 2.83-11.996 12.17z"/></svg>
+              </label>
+            </div>
+          </th>
+          <th>
+            <div class="accordion">
+              <input type="checkbox" id="accordion-5" hidden>
+              <label class="accordion-header c-hand" for="accordion-5">
+                Status
                 <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M0 7.33l2.829-2.83 9.175 9.339 9.167-9.339 2.829 2.83-11.996 12.17z"/></svg>
               </label>
             </div>
@@ -586,9 +530,17 @@
               <i class="form-icon"></i>
             </label>
           </td>
-          <td>Violet Nuez</td>
+          <td>
+            <div class="media">
+              <span class="avatar"></span>
+              <h5>Captain American</h5>
+            </div>
+          </td>
           <td>Marketing</td>
           <td>South Grayson</td>
+          <td>
+            <div class="label label-success">Accept</div>
+          </td>
         </tr>
         <tr>
           <td>
@@ -597,9 +549,17 @@
               <i class="form-icon"></i>
             </label>
           </td>
-          <td>Violet Nuez</td>
+          <td>
+            <div class="media">
+              <span class="avatar"></span>
+              <h5>Captain American</h5>
+            </div>
+          </td>
           <td>Marketing</td>
           <td>South Grayson</td>
+          <td>
+            <div class="label label-warning">Warning</div>
+          </td>
         </tr>
         <tr>
           <td>
@@ -608,9 +568,17 @@
               <i class="form-icon"></i>
             </label>
           </td>
-          <td>Violet Nuez</td>
+          <td>
+            <div class="media">
+              <span class="avatar"></span>
+              <h5>Captain American</h5>
+            </div>
+          </td>
           <td>Marketing</td>
           <td>South Grayson</td>
+          <td>
+            <div class="label label-primary">Accept</div>
+          </td>
         </tr>
         <tr>
           <td>
@@ -619,9 +587,17 @@
               <i class="form-icon"></i>
             </label>
           </td>
-          <td>Violet Nuez</td>
+          <td>
+            <div class="media">
+              <span class="avatar"></span>
+              <h5>Captain American</h5>
+            </div>
+          </td>
           <td>Marketing</td>
           <td>South Grayson</td>
+          <td>
+            <div class="label label-error">Denied</div>
+          </td>
         </tr>
       </tbody>
     </table>
