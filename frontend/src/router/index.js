@@ -25,7 +25,7 @@ export default new Router({
     { path: '/modules', name: 'modules', component: Modules },
     { path: '/dashboard', name: 'dashboard', component: Dashboard },
     { path: '/attendance', name: 'attendance', component: Attendance },
-    { path: '/requests/:id', name: 'requests', component: Request },
+    { path: '/requests/:id', name: 'request', component: Request },
     { path: '/requests', name: 'requests', component: Requests },
     { path: '/groups/:id', name: 'group', component: Group },
     { path: '/groups', name: 'groups', component: Groups },

@@ -1,21 +1,14 @@
 // Buttons
 .btn {
-  height: 2.4rem;
-  line-height: 1;
-  padding: .8rem 0;
   width: 8rem;
   border: $border-width solid $gray-color;
   color: $gray-color-dark;
-  position: relative;
 
   svg {
     width: .8rem;
     height: .8rem;
     color: $primary-color;
-    position: absolute;
-    top: .8rem;
-    left: auto;
-    right: .8rem;
+    vertical-align: text-bottom;
   }
 
   &:focus,
@@ -53,26 +46,6 @@
         color: $gray-color;
       }
     }
-  }
-
-  &.btn-sm {
-    width: 1.6rem;
-    height: 1.6rem;
-    padding: .4rem 0;
-
-    svg {
-      top: .4rem;
-      right: .4rem;
-    }
-  }
-
-  &.btn-icon {
-    width: 2.4rem;
-  }
-
-  &.group-icon {
-    text-align: left;
-    padding-left: .8rem;
   }
 }
 

@@ -99,5 +99,3 @@ exports.createNotifierCallback = () => {
     })
   }
 }
-
-console.log(exports.styleLoaders().scss)

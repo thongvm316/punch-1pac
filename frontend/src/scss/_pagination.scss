@@ -1,39 +1,9 @@
 // Pagination
 .pagination {
-  align-items: center;
-
-  .page-item {
-    &:not(:first-child) {
-      margin-left: .8rem;
-    }
-
-    span {
-      padding: 0;
-    }
-
-    a {
-      border-radius: 0;
-      padding: 0;
-      color: $gray-color;
-      &:focus,
-      &:hover {
-        color: $gray-color-dark;
-      }
-    }
-
-    &.disabled {
-      a {
-        cursor: default;
-        opacity: .5;
-        pointer-events: none;
-      }
-    }
-
-    &.active {
-      a {
-        background: $light-color;
-        color: $gray-color-dark;
-      }
-    }
+  svg {
+    width: .8rem;
+    height: .8rem;
+    vertical-align: text-bottom;
+    cursor: pointer;
   }
 }
