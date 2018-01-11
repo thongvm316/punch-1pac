@@ -88,7 +88,8 @@ class UserCreateMultiForm < BaseForm
 
   def valid_mine_types
     [
-      'text/plain', 'text/csv',
+      'text/plain',
+      'text/csv',
       'application/vnd.oasis.opendocument.spreadsheet',
       'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
     ]
