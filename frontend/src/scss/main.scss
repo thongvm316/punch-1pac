@@ -21,10 +21,11 @@
 
 // Override spectre.css elements
 @import "typography";
+@import "tables";
 @import "buttons";
 @import "forms";
-@import "media";
 @import "labels";
+@import "media";
 
 // Layout
 @import "../../node_modules/spectre.css/src/layout";
