@@ -6,6 +6,7 @@
 .form-group {
 
   &.form-group-search,
+  &.form-group-select,
   &.form-date-picker {
     position: relative;
 
@@ -18,13 +19,22 @@
     }
   }
 
+  &.form-date-picker,
+  &.form-group-select {
+    svg {
+      color: $primary-color;
+    }
+  }
+
   &.form-date-picker {
     .form-input {
       padding-right: 2rem;
     }
+  }
 
-    svg {
-      color: $primary-color;
+  &.form-group-select {
+    .form-select:not([multiple]):not([size]) {
+      background: unset;
     }
   }
 }

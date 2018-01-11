@@ -418,10 +418,11 @@
           <p class="form-input-hint">This is disabled field</p>
         </div>
       </form>
-
     </div>
 
     <div style="margin-top: 64px">
+      <h1>Dropdown & Select </h1>
+
       <div class="accordion">
         <input type="checkbox" id="accordion-1" hidden>
         <label class="accordion-header c-hand" for="accordion-1">
@@ -437,6 +438,17 @@
           </ul>
         </div>
       </div>
+
+      <div class="form-group form-group-select">
+        <select class="form-select">
+          <option>Element 1</option>
+          <option>Element 2</option>
+          <option>Element 3</option>
+          <option>Element 4</option>
+        </select>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M0 7.33l2.829-2.83 9.175 9.339 9.167-9.339 2.829 2.83-11.996 12.17z"/></svg>
+      </div>
+
       <div class="form-group form-date-picker">
         <input class="form-input" type="text" placeholder="DD/MM/YYYY">
         <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M20 20h-4v-4h4v4zm-6-10h-4v4h4v-4zm6 0h-4v4h4v-4zm-12 6h-4v4h4v-4zm6 0h-4v4h4v-4zm-6-6h-4v4h4v-4zm16-8v22h-24v-22h3v1c0 1.103.897 2 2 2s2-.897 2-2v-1h10v1c0 1.103.897 2 2 2s2-.897 2-2v-1h3zm-2 6h-20v14h20v-14zm-2-7c0-.552-.447-1-1-1s-1 .448-1 1v2c0 .552.447 1 1 1s1-.448 1-1v-2zm-14 2c0 .552-.447 1-1 1s-1-.448-1-1v-2c0-.552.447-1 1-1s1 .448 1 1v2z"/></svg>
