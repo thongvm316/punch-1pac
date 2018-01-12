@@ -40,7 +40,5 @@ module Punch
     end
 
     config.active_job.queue_adapter = :sidekiq
-
-    config.middleware.delete Rack::MethodOverride
   end
 end
