@@ -5,6 +5,6 @@ FactoryBot.define do
     name       { Faker::Lorem.word }
     action     { Faker::Lorem.word }
     controller { Faker::Lorem.word }
-    role       { 1 }
+    role       { Faker::Number.between(0, 1) }
   end
 end

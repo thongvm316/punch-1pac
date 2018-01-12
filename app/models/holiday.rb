@@ -22,6 +22,8 @@ class Holiday < ApplicationRecord
   has_many :company_holidays, dependent: :destroy
   has_many :companies, through: :company_holidays
 
+  belongs_to :admin
+
   scope :available_for_company, ->(company_id, ids) {
     Holiday.where(id: ids).where.not(id: CompanyHoliday.select(:holiday_id).where(company_id: company_id))
   }

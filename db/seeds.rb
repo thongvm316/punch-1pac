@@ -10,17 +10,13 @@
 #
 company = FactoryBot.create(:company)
 FactoryBot.create(:user, email: 'wofi.minh@1pac.vn', password: 'password', password_confirmation: 'password', company: company)
-FactoryBot.create(:holiday)
-FactoryBot.create(:announcement)
 
 5.times do
   company = FactoryBot.create(:company)
-  5.times do
-    FactoryBot.create(:user, company: company)
-  end
-  FactoryBot.create(:holiday)
-  FactoryBot.create(:announcement)
+  FactoryBot.create_list(:user, 3, company: company)
 end
 
-Admin.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?
-10.times { FactoryBot.create(:permission) }
+admin = FactoryBot.create(:admin, email: 'admin@example.com', password: 'password')
+
+FactoryBot.create_list(:holiday, 3, admin: admin)
+FactoryBot.create_list(:announcement, 3, admin: admin)

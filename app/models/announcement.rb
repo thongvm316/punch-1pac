@@ -26,6 +26,8 @@ class Announcement < ApplicationRecord
   validates :title, presence: true
   validates :content, presence: true
 
+  belongs_to :admin
+
   default_scope -> { order(id: :desc) }
 
   scope :for_all, ->() { where(target: %w[everyone owners]) }
