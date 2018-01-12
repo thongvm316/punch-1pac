@@ -1,1 +1,8 @@
-# See http://www.robotstxt.org/robotstxt.html for documentation on how to use the robots.txt file
+User-Agent: *
+Allow: /$
+Allow: /privacy
+Allow: /tos
+Allow: /about
+Disallow: /
+
+# Sitemap: https://1punch.io/sitemap.xml.gz
