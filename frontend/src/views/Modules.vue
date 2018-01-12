@@ -1,6 +1,27 @@
 <template>
-  <div id="main">
-    <div class="modules">
+  <div class="main">
+    <h1 class="mb-4">This is heading - H1</h1>
+    <ul class="tab tab-block mb-4">
+      <li class="tab-item active">
+        <a href="#">Music</a>
+      </li>
+      <li class="tab-item">
+        <a href="#">Playlists</a>
+      </li>
+      <li class="tab-item">
+        <a href="#">Radio</a>
+      </li>
+      <li class="tab-item">
+        <a href="#">Connect</a>
+      </li>
+      <li class="tab-item">
+        <a href="#">Greed</a>
+      </li>
+      <li class="tab-item">
+        <a href="#">Zeng</a>
+      </li>
+    </ul>
+    <div class="content">
       <h1>Typography</h1>
       <h1>This is heading - H1</h1>
       <h2>This is heading - H2</h2>
@@ -382,15 +403,3 @@
     </div>
   </div>
 </template>
-
-<style lang="scss" scoped>
-  #main {
-    background: #eee;
-  }
-
-  .modules {
-    margin: 40px;
-    padding: 16px;
-    background: #fff;
-  }
-</style>

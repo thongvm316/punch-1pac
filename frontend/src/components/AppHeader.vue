@@ -16,7 +16,7 @@
         <a class="dropdown-toggle">
           <div class="tile tile-centered">
             <div class="tile-icon">
-              <img src="../assets/avatar-1.png" class="avatar avatar-sm" alt="Steve Rogers">
+              <img src="../assets/avatar-1.png" class="avatar avatar-md" alt="Steve Rogers">
             </div>
             <div class="tile-content mr-2">Steve Rogers</div>
             <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M0 7.33l2.829-2.83 9.175 9.339 9.167-9.339 2.829 2.83-11.996 12.17z"/></svg>
