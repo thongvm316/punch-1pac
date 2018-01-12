@@ -1,48 +1,31 @@
 .navbar {
-  border: .05rem solid $dark-color;
+  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.1);
+  padding: .4rem 0 .4rem .8rem;
 
-  .nav-list {
-    font-size: 0;
-    margin: 0;
+  .dropdown {
+    padding-right: .8rem;
 
-    li {
-      display: inline-block;
-      border: solid $dark-color;
-      border-width: 0 0 0 .05rem;
-      margin-top: 0;
-      vertical-align: middle;
-
-      a {
-        display: block;
-        padding: .8rem;
-      }
-
-      &.user-info {
-        a {
-          padding: .4rem .8rem;
-        }
-      }
-
-      &.nav-logo {
-        border: 0;
-        a {
-          padding: .4rem 0 .4rem .8rem;
-        }
-      }
+    .menu {
+      right: 0;
+      left: auto;
+      color: $gray-color-dark;
     }
+  }
 
-    svg {
-      color: $dark-color;
-      height: .8rem;
-      width: .8rem;
-    }
+  .noti-icon {
+    margin-right: 1.6rem;
+  }
 
-    .logo {
-      display: block;
-      background-color: $dark-color;
-      border-radius: $border-radius;
-      height: 1.6rem;
-      width: 2.8rem;
-    }
+  a {
+    color: $gray-color;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  svg {
+    width: .8rem;
+    height: .8rem;
+    color: $gray-color;
+    vertical-align: text-bottom;
   }
 }
