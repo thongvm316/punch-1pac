@@ -19,10 +19,3 @@
     }
   }
 </script>
-
-<style lang="scss">
-  .app-container {
-    display: flex;
-    justify-content: flex-start;
-  }
-</style>
