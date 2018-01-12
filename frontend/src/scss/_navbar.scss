@@ -1,31 +1,21 @@
 .navbar {
-  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.1);
-  padding: .4rem 0 .4rem .8rem;
+  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, .1);
+  padding: .4rem 0;
 
   .dropdown {
-    padding-right: .8rem;
 
     .menu {
-      right: 0;
-      left: auto;
+      box-shadow: 0 1px 5px 0 rgba(0, 0, 0, .1);
+      border-radius: 0;
       color: $gray-color-dark;
+      left: auto;
+      right: 0;
     }
-  }
-
-  .noti-icon {
-    margin-right: 1.6rem;
   }
 
   a {
     color: $gray-color;
     text-decoration: none;
     cursor: pointer;
-  }
-
-  svg {
-    width: .8rem;
-    height: .8rem;
-    color: $gray-color;
-    vertical-align: text-bottom;
   }
 }

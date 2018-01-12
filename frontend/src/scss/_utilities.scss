@@ -3,3 +3,5 @@
   width: .8rem;
   height: .8rem;
 }
+
+@include padding-variant(4, $unit-4); //Padding variation .8rem
