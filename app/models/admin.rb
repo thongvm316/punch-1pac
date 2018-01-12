@@ -29,6 +29,6 @@ class Admin < ApplicationRecord
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :recoverable, :rememberable, :trackable, :validatable
 
-  has_many :announcements, dependent: :destroy
-  has_many :holidays, dependent: :destroy
+  has_many :announcements
+  has_many :holidays
 end
