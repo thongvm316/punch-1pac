@@ -2,7 +2,15 @@
 
 class UserCreateMultiForm < BaseForm
   USER_PARAMS = %w[email password password_confirmation role name gender user_permissions_attributes].freeze
-  validate :validate_not_nil
+  VALID_MIME_TYPES = [
+    'text/plain',
+    'text/csv',
+    'application/vnd.oasis.opendocument.spreadsheet',
+    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+  ].freeze
+  VALID_EXTENSIONS = %w[csv ods xlsx].freeze
+
+  validate :validate_file_existed
   validate :validate_mine_types
   validate :validate_extensions
 
@@ -65,16 +73,16 @@ class UserCreateMultiForm < BaseForm
     params.select { |k, v| USER_PARAMS.include?(k.to_s) && v }
   end
 
-  def validate_not_nil
+  def validate_file_existed
     return errors.add(:csv_file, I18n.t('errors.messages.blank')) unless @file&.present?
   end
 
   def validate_mine_types
-    return errors.add(:csv_file, I18n.t('errors.messages.blank')) unless valid_mine_types.include?(@file.mime_type)
+    return errors.add(:csv_file, I18n.t('errors.messages.invalid')) unless VALID_MIME_TYPES.include?(@file.mime_type)
   end
 
   def validate_extensions
-    return errors.add(:csv_file, I18n.t('errors.messages.blank')) unless valid_extensions.include?(@file.extension)
+    return errors.add(:csv_file, I18n.t('errors.messages.invalid')) unless VALID_EXTENSIONS.include?(@file.extension)
   end
 
   def open_spreadsheet
@@ -84,18 +92,5 @@ class UserCreateMultiForm < BaseForm
     when 'ods' then Roo::OpenOffice.new(file_path)
     when 'xlsx' then Roo::Excelx.new(file_path)
     end
-  end
-
-  def valid_mine_types
-    [
-      'text/plain',
-      'text/csv',
-      'application/vnd.oasis.opendocument.spreadsheet',
-      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-    ]
-  end
-
-  def valid_extensions
-    %w[csv ods xlsx]
   end
 end
