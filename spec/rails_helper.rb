@@ -6,6 +6,21 @@ ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../../config/environment', __FILE__)
 # Prevent database truncation if the environment is production
 abort('The Rails environment is running in production mode!') if Rails.env.production?
+
+if ENV['RAILS_ENV'] == 'test'
+  require 'simplecov'
+  SimpleCov.start 'rails' do
+    add_group 'Controllers',  'app/controllers'
+    add_group 'Models',       'app/models'
+    add_group 'Serializers',  'app/serializers'
+    add_group 'Policies',     'app/policies'
+    add_group 'Forms',        'app/forms'
+    add_group 'Services',     'app/services'
+    add_group 'Mailers',      'app/mailers'
+    add_group 'Workers',      'app/workers'
+  end
+end
+
 require 'rspec/rails'
 require 'pundit/rspec'
 # Add additional requires below this line. Rails is not loaded until this point!
