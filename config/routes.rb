@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  devise_for :admins, ActiveAdmin::Devise.config
-  ActiveAdmin.routes(self)
   constraints(SubdomainConstraint) do
     get '*path' => 'dashboard#index'
 
@@ -63,7 +61,11 @@ Rails.application.routes.draw do
   end
 
   root to: 'statics#top'
+
   get 'about'   => 'statics#about'
   get 'tos'     => 'statics#tos'
   get 'privacy' => 'statics#privacy'
+
+  devise_for :admins, ActiveAdmin::Devise.config
+  ActiveAdmin.routes(self)
 end
