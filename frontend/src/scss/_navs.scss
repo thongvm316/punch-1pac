@@ -1,0 +1,27 @@
+// Navs
+.sidebar {
+  flex: 0 0 10rem;
+}
+
+.nav {
+  padding: 0 .4rem;
+
+  .nav-item {
+    padding: .4rem;
+    border-radius: $border-radius;
+
+    &:hover,
+    &.active {
+      background: $secondary-color;
+      cursor: pointer;
+
+      & > a {
+        color: $primary-color;
+      }
+
+      svg {
+        color: $primary-color;
+      }
+    }
+  }
+}
