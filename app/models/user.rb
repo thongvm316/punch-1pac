@@ -12,7 +12,7 @@
 #  role                   :integer          default("member"), not null
 #  owner                  :boolean          default(FALSE), not null
 #  name                   :string           not null
-#  gender                 :string           default("male"), not null
+#  gender                 :integer          default("male"), not null
 #  avatar_data            :text
 #  language               :string           default("en"), not null
 #  reset_password_token   :string
@@ -35,6 +35,7 @@ class User < ApplicationRecord
   RESET_PASSWORD_TOKEN_EXPIRY = 1800.0
 
   enum role: { member: 0, admin: 1, superadmin: 2 }
+  enum gender: { male: 0, female: 1 }
 
   belongs_to :company
   belongs_to :department, optional: true
@@ -52,7 +53,6 @@ class User < ApplicationRecord
   validates :email, presence: true, uniqueness: true, length: { maximum: 100 }, format: { with: REGEX_VALID_EMAIL }
   validates :password, length: { minimum: 6, maximum: 32 }, allow_nil: true
   validates :password_confirmation, presence: true, if: -> { password.present? }
-  validates :gender, inclusion: { in: %w[male female] }
   validates :language, inclusion: { in: %w[vi en jp] }
   validates :user_permissions, presence: true
 

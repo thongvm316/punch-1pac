@@ -4,9 +4,9 @@ class CreateAnnouncements < ActiveRecord::Migration[5.1]
   def change
     create_table :announcements do |t|
       t.bigint :admin_id, null: false
-      t.string :target, null: false, default: 'everyone'
+      t.integer :target, null: false, default: 0
       t.boolean :sent, null: false, default: false
-      t.string :status, null: false, default: 'normal'
+      t.integer :status, null: false, default: 0
       t.string :title, null: false
       t.string :content, null: false, limit: 2000
 

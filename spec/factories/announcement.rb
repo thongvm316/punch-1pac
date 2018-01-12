@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :announcement do
-    admin_id 1
+    association(:admin, factory: :admin, strategy: :build)
     title { Faker::Lorem.sentence }
     content { Faker::Lorem.paragraph }
     target 'everyone'

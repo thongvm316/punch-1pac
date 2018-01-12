@@ -22,6 +22,10 @@ Style/StructInheritance:
   Exclude:
       - 'app/policies/application_policy.rb'
 
+Rails/HasManyOrHasOneDependent:
+  Exclude:
+      - 'app/models/admin.rb'
+
 Metrics/BlockLength:
   Enabled: false
 

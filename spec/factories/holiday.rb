@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :holiday do
-    admin_id 1
+    association(:admin, factory: :admin, strategy: :build)
     country { Faker::Address.country }
     name { Faker::Name.name }
     started_at { Time.current }

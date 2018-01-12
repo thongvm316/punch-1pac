@@ -7,7 +7,16 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-
+#
 company = FactoryBot.create(:company)
-FactoryBot.create_list(:company, 2)
 FactoryBot.create(:user, email: 'wofi.minh@1pac.vn', password: 'password', password_confirmation: 'password', company: company)
+
+5.times do
+  company = FactoryBot.create(:company)
+  FactoryBot.create_list(:user, 3, company: company)
+end
+
+admin = FactoryBot.create(:admin, email: 'admin@example.com', password: 'password')
+
+FactoryBot.create_list(:holiday, 3, admin: admin)
+FactoryBot.create_list(:announcement, 3, admin: admin)
