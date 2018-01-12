@@ -7,7 +7,20 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-
+#
 company = FactoryBot.create(:company)
-FactoryBot.create_list(:company, 2)
 FactoryBot.create(:user, email: 'wofi.minh@1pac.vn', password: 'password', password_confirmation: 'password', company: company)
+FactoryBot.create(:holiday)
+FactoryBot.create(:announcement)
+
+5.times do
+  company = FactoryBot.create(:company)
+  5.times do
+    FactoryBot.create(:user, company: company)
+  end
+  FactoryBot.create(:holiday)
+  FactoryBot.create(:announcement)
+end
+
+Admin.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?
+10.times { FactoryBot.create(:permission) }

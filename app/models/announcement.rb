@@ -6,9 +6,9 @@
 #
 #  id         :integer          not null, primary key
 #  admin_id   :integer          not null
-#  target     :string           default("everyone"), not null
+#  target     :integer          default("everyone"), not null
 #  sent       :boolean          default(FALSE), not null
-#  status     :string           default("normal"), not null
+#  status     :integer          default("normal"), not null
 #  title      :string           not null
 #  content    :string(2000)     not null
 #  created_at :datetime         not null
@@ -20,8 +20,11 @@
 #
 
 class Announcement < ApplicationRecord
-  validates :target, inclusion: { in: %w[everyone owners] }
-  validates :status, inclusion: { in: %w[normal urgent] }
+  enum target: { everyone: 0, owners: 1 }
+  enum status: { normal: 0, urgent: 1 }
+
+  validates :title, presence: true
+  validates :content, presence: true
 
   default_scope -> { order(id: :desc) }
 
