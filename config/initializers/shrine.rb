@@ -2,7 +2,6 @@
 
 require 'shrine/storage/file_system'
 
-Shrine.plugin :activerecord
 Shrine.plugin :logging, logger: Rails.logger
 
 Shrine.storages = {
