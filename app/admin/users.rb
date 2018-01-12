@@ -9,8 +9,8 @@ ActiveAdmin.register User do
     permitted = [:company_id, :name, :gender, :password, :password_confirmation, :email,
                  :role, :avatar, :owner, :language, user_permissions_attributes: [:permission_id]]
     if %w[create update].include?(params[:action])
-      params[:user][:user_permissions_attributes] = Permission.select(:id).where('role <= ?',
-                                                                                 User.roles[params[:user][:role]])
+      params[:user][:user_permissions_attributes] = Permission.select(:id)
+                                                              .where('role <= ?', User.roles[params[:user][:role]])
                                                               .map { |p| { permission_id: p.id } }
     end
     permitted
