@@ -5,8 +5,9 @@ class AuthController < ApplicationController
   before_action :authenticate_user!, only: %i[destroy]
 
   def new
-    redirect_to(url_for(subdomain: request.subdomain, script_name: '/dashboard')) && return if signed_in?
+    redirect_to(url_for(subdomain: request.subdomain, controller: 'dashboard', action: 'index', path: 'dashboard')) && return if signed_in?
     @user = User.new
+    render :new, layout: 'static'
   end
 
   def create
