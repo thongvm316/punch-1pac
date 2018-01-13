@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class StaticsController < ApplicationController
+  layout 'static'
+
   def top; end
 
   def about; end

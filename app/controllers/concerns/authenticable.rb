@@ -12,16 +12,16 @@ module Authenticable
         @current_user ||= current_company.users.find(jwt_decode['sub'])
         return
       rescue ActiveRecord::RecordNotFound
-        f.html { redirect_to url_for(subdomain: request.subdomain) }
+        f.html { redirect_to login_url }
         f.json { head(401) }
       rescue JWT::InvalidJtiError
-        f.html { redirect_to url_for(subdomain: request.subdomain) }
+        f.html { redirect_to login_url }
         f.json { render json: { message: 'Token is revoked' }, status: 401 }
       rescue JWT::ExpiredSignature
-        f.html { redirect_to url_for(subdomain: request.subdomain) }
+        f.html { redirect_to login_url }
         f.json { render json: { message: 'Token is expired' }, status: 401 }
       rescue JWT::DecodeError
-        f.html { redirect_to url_for(subdomain: request.subdomain) }
+        f.html { redirect_to login_url }
         f.json { render json: { message: 'Token is invalid' }, status: 401 }
       end
     end

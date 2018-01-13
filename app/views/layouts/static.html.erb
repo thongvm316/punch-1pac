@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1">
+
+<title><%= yield(:title) || '1Punch' %></title>
+<meta name="description" content="<%= yield(:description) || '1Punch description' %>">
+
+<link rel="canonical" href="<%= yield(:canonical) || root_url %>">
+
+<meta property="og:title" content="<%= yield(:title) || '1Punch' %>">
+<meta property="og:site_name" content="<%= yield(:title) || '1Punch' %>">
+<meta property="og:description" content="<%= yield(:og_description) || '1Punch description' %>">
+<meta property="og:url" content="<%= yield(:og_url) || root_url %>">
+<meta property="og:image" content="">
+<meta property="og:type" content="website">
+
+<link rel="dns-prefetch" href="">
+
+<link rel="shortcut icon" type="image/x-icon" href="">
+<link rel="apple-touch-icon" sizes="180x180" href="">
+<link rel="apple-touch-icon" sizes="152x152" href="">
+<link rel="apple-touch-icon" sizes="120x120" href="">
+<link rel="apple-touch-icon" sizes="76x76" href="">
+<link rel="icon" sizes="192x192" href="">
+
+<%= stylesheet_link_tag('application', media: 'all') %>
+</head>
+
+<body>
+<%= yield %>
+<%= javascript_include_tag('application') %>
+</body>
+</html>

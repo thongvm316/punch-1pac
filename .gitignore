@@ -50,7 +50,7 @@ config/database.yml
 
 .byebug_history
 
-/public/assets/
+/public/app/
 /public/index.html
 
 /frontend/node_modules/
