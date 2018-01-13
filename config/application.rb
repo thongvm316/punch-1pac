@@ -11,7 +11,7 @@ require 'action_controller/railtie'
 require 'action_mailer/railtie'
 require 'action_view/railtie'
 # require "action_cable/engine"
-# require "sprockets/railtie"
+require 'sprockets/railtie'
 # require "rails/test_unit/railtie"
 
 # Require the gems listed in Gemfile, including any gems
@@ -40,5 +40,11 @@ module Punch
     end
 
     config.active_job.queue_adapter = :sidekiq
+
+    config.assets.enabled = true
+    config.assets.gzip = false
+    config.assets.css_compressor = :sass
+    config.assets.js_compressor = :uglifier
+    config.assets.prefix = '/static'
   end
 end
