@@ -18,6 +18,7 @@ class Api::V1::UsersController < Api::V1::BaseController
     authorize User
     user = current_company.users.build(user_params)
     if user.save
+      UserMailer.create(user.id, user_params[:password]).deliver_later
       render json: user, serializer: UserSerializer, status: 201
     else
       render_422(user.errors.messages)
