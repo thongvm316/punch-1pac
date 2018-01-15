@@ -30,10 +30,13 @@ class UserCreateMultiForm < BaseForm
     @permissions = load_permissions
 
     spreadsheet = open_spreadsheet
+    header = spreadsheet.row(1)
 
     (2..spreadsheet.last_row).each.with_index(1) do |item, line|
-      user = @company.users.build user_params(item, spreadsheet)
+      row = Hash[[header, spreadsheet.row(item)].transpose]
+      user = @company.users.build(user_params(row))
       if user.save
+        UserMailer.create(user.id, row['password'])
         @users << user
       else
         @lines << line
@@ -65,9 +68,7 @@ class UserCreateMultiForm < BaseForm
     end
   end
 
-  def user_params(item, spreadsheet)
-    header = spreadsheet.row(1)
-    row = Hash[[header, spreadsheet.row(item)].transpose]
+  def user_params(row)
     params = row.to_hash.merge(password_confirmation: row['password'])
     params[:user_permissions_attributes] = @permissions[params['role']]
     params.select { |k, v| USER_PARAMS.include?(k.to_s) && v }
