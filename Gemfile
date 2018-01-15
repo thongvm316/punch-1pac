@@ -26,6 +26,10 @@ gem 'bcrypt'
 gem 'jwt'
 gem 'pundit'
 
+# ActiveAdmin dependencies
+gem 'activeadmin'
+gem 'devise'
+
 # Application dependencies
 gem 'active_model_serializers', '~> 0.10.0'
 gem 'activerecord-import'
@@ -37,14 +41,9 @@ gem 'faker'
 gem 'kaminari'
 gem 'oj'
 gem 'rack-cors'
+gem 'roo'
 gem 'shrine'
 gem 'virtus'
-# csv
-gem 'roo'
-
-
-gem 'activeadmin'
-gem 'devise'
 
 group :production do
   gem 'bugsnag'

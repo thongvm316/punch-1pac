@@ -16,6 +16,12 @@ set :deploy_to, '/var/www/1punch-stg.1pac.vn/public_html'
 set :rails_env, :staging
 set :migration_role, :web
 
+set :assets_prefix, 'static'
+set :rails_assets_groups, :assets
+# If you need to touch public/images, public/javascripts, and public/stylesheets on each deploy
+set :normalize_asset_timestamps, ['public/static']
+set :keep_assets, 3
+
 # capistrano-rbenv
 set :rbenv_type, :user
 set :rbenv_ruby, '2.4.2'

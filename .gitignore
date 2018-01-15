@@ -51,6 +51,7 @@ config/database.yml
 .byebug_history
 
 /public/app/
+/public/static/
 /public/index.html
 
 /frontend/node_modules/
