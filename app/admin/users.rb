@@ -65,7 +65,7 @@ ActiveAdmin.register User do
   controller do
     helper ActiveAdminHelper
 
-    around_action :skip_bullet
+    around_action :skip_bullet, if: -> { Rails.env.development? }
 
     private
 
