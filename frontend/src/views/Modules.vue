@@ -297,19 +297,63 @@
             </th>
             <th>
                   Username
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M0 7.33l2.829-2.83 9.175 9.339 9.167-9.339 2.829 2.83-11.996 12.17z"/></svg>
+                  <svg viewBox="0 0 24 24">
+                    <g fill-rule="evenodd">
+                      <g fill="currentColor" fill-rule="nonzero">
+                        <g transform="translate(6.000000, 0.000000)">
+                          <polygon points="0 6.335 1.4145 7.75 6.002 3.0805 10.5855 7.75 12 6.335 6.002 0.25"></polygon>
+                        </g>
+                        <g id="icons-arrow-down" transform="translate(6.000000, 16.000000)">
+                          <polygon points="0 1.665 1.4145 0.25 6.002 4.9195 10.5855 0.25 12 1.665 6.002 7.75"></polygon>
+                        </g>
+                      </g>
+                    </g>
+                  </svg>
             </th>
             <th>
                   Department
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M0 7.33l2.829-2.83 9.175 9.339 9.167-9.339 2.829 2.83-11.996 12.17z"/></svg>
+                  <svg viewBox="0 0 24 24">
+                    <g fill-rule="evenodd">
+                      <g fill="currentColor" fill-rule="nonzero">
+                        <g transform="translate(6.000000, 0.000000)">
+                          <polygon points="0 6.335 1.4145 7.75 6.002 3.0805 10.5855 7.75 12 6.335 6.002 0.25"></polygon>
+                        </g>
+                        <g id="icons-arrow-down" transform="translate(6.000000, 16.000000)">
+                          <polygon points="0 1.665 1.4145 0.25 6.002 4.9195 10.5855 0.25 12 1.665 6.002 7.75"></polygon>
+                        </g>
+                      </g>
+                    </g>
+                  </svg>
             </th>
             <th>
                   Role
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M0 7.33l2.829-2.83 9.175 9.339 9.167-9.339 2.829 2.83-11.996 12.17z"/></svg>
+                  <svg viewBox="0 0 24 24">
+                    <g fill-rule="evenodd">
+                      <g fill="currentColor" fill-rule="nonzero">
+                        <g transform="translate(6.000000, 0.000000)">
+                          <polygon points="0 6.335 1.4145 7.75 6.002 3.0805 10.5855 7.75 12 6.335 6.002 0.25"></polygon>
+                        </g>
+                        <g id="icons-arrow-down" transform="translate(6.000000, 16.000000)">
+                          <polygon points="0 1.665 1.4145 0.25 6.002 4.9195 10.5855 0.25 12 1.665 6.002 7.75"></polygon>
+                        </g>
+                      </g>
+                    </g>
+                  </svg>
             </th>
             <th>
                   Status
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M0 7.33l2.829-2.83 9.175 9.339 9.167-9.339 2.829 2.83-11.996 12.17z"/></svg>
+                  <svg viewBox="0 0 24 24">
+                    <g fill-rule="evenodd">
+                      <g fill="currentColor" fill-rule="nonzero">
+                        <g transform="translate(6.000000, 0.000000)">
+                          <polygon points="0 6.335 1.4145 7.75 6.002 3.0805 10.5855 7.75 12 6.335 6.002 0.25"></polygon>
+                        </g>
+                        <g id="icons-arrow-down" transform="translate(6.000000, 16.000000)">
+                          <polygon points="0 1.665 1.4145 0.25 6.002 4.9195 10.5855 0.25 12 1.665 6.002 7.75"></polygon>
+                        </g>
+                      </g>
+                    </g>
+                  </svg>
             </th>
           </tr>
         </thead>
@@ -331,7 +375,7 @@
             </td>
             <td>Marketing</td>
             <td>South Grayson</td>
-            <td>
+            <td class="text-center">
               <div class="label label-success">Accept</div>
             </td>
           </tr>
@@ -352,7 +396,7 @@
             </td>
             <td>Marketing</td>
             <td>South Grayson</td>
-            <td>
+            <td class="text-center">
               <div class="label label-warning">Warning</div>
             </td>
           </tr>
@@ -373,7 +417,7 @@
             </td>
             <td>Marketing</td>
             <td>South Grayson</td>
-            <td>
+            <td class="text-center">
               <div class="label label-primary">Accept</div>
             </td>
           </tr>
@@ -394,12 +438,109 @@
             </td>
             <td>Marketing</td>
             <td>South Grayson</td>
-            <td>
+            <td class="text-center">
               <div class="label label-error">Denied</div>
             </td>
           </tr>
         </tbody>
       </table>
+
+      <h1 style="margin-top: 60px">Modal</h1>
+      <a href="#modal-setting" class="btn btn-primary">Open Modal</a>
+      <div class="modal" id="modal-setting">
+        <a href="#close" class="modal-overlay" aria-label="Close"></a>
+        <div class="modal-container">
+          <div class="modal-header">
+            <a href="#close" class="btn btn-clear float-right" aria-label="Close"></a><br>
+            <h2 class="text-center">Edit Group</h2>
+          </div>
+          <div class="modal-body">
+            <div class="content">
+              <div class="form-group">
+                <label class="form-label">Date</label>
+                <input class="form-input" type="text" placeholder="DD/MM/YYYY">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Date</label>
+                <input class="form-input" type="text" placeholder="DD/MM/YYYY">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Date</label>
+                <input class="form-input" type="text" placeholder="DD/MM/YYYY">
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <div class="text-center">
+              <a href="#close" class="btn btn-primary">Save</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <a href="#modal-setting-sm" class="btn btn-primary">Modal Sm</a>
+      <div class="modal modal-sm" id="modal-setting-sm">
+        <a href="#close" class="modal-overlay" aria-label="Close"></a>
+        <div class="modal-container">
+          <div class="modal-header">
+            <a href="#close" class="btn btn-clear float-right" aria-label="Close"></a><br>
+            <h2 class="text-center">Edit Group</h2>
+          </div>
+          <div class="modal-body">
+            <div class="content">
+              <div class="form-group">
+                <label class="form-label">Date</label>
+                <input class="form-input" type="text" placeholder="DD/MM/YYYY">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Date</label>
+                <input class="form-input" type="text" placeholder="DD/MM/YYYY">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Date</label>
+                <input class="form-input" type="text" placeholder="DD/MM/YYYY">
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <div class="text-center">
+              <a href="#close" class="btn btn-primary">Save</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <a href="#modal-setting-lg" class="btn btn-primary">Modal Lg</a>
+      <div class="modal modal-lg" id="modal-setting-lg">
+        <a href="#close" class="modal-overlay" aria-label="Close"></a>
+        <div class="modal-container">
+          <div class="modal-header">
+            <a href="#close" class="btn btn-clear float-right" aria-label="Close"></a><br>
+            <h2 class="text-center">Edit Group</h2>
+          </div>
+          <div class="modal-body">
+            <div class="content">
+              <div class="form-group">
+                <label class="form-label">Date</label>
+                <input class="form-input" type="text" placeholder="DD/MM/YYYY">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Date</label>
+                <input class="form-input" type="text" placeholder="DD/MM/YYYY">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Date</label>
+                <input class="form-input" type="text" placeholder="DD/MM/YYYY">
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <div class="text-center">
+              <a href="#close" class="btn btn-primary">Save</a>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
