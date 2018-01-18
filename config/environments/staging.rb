@@ -83,6 +83,10 @@ Rails.application.configure do
     config.logger    = ActiveSupport::TaggedLogging.new(logger)
   end
 
+  config.logger = Logglier.new("https://logs-01.loggly.com/inputs/#{ENV['LOGGLY_TOKEN']}/tag/rails/", threaded: true)
+  config.lograge.enabled = true
+  config.lograge.formatter = Lograge::Formatters::Json.new
+
   config.action_mailer.default_options = { from: '1PUNCH <no-reply@1punch.io' }
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.default_url_options = { host: '1punch.io', protocol: 'https' }

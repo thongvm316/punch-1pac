@@ -20,7 +20,7 @@ class ApplicationController < ActionController::Base
 
   def not_found
     respond_to do |f|
-      f.html { render file: 'errors/404.html', status: 404 }
+      f.html { render file: 'errors/404.html', status: 404, layout: 'static' }
       f.json { render json: { message: 'Not Found' }, status: 404 }
     end
   end
@@ -31,7 +31,7 @@ class ApplicationController < ActionController::Base
 
   def internal_server_error
     respond_to do |f|
-      f.html { render file: 'errors/500.html', status: 500 }
+      f.html { render file: 'errors/500.html', status: 500, layout: 'static' }
       f.json { render json: { message: 'Internal Server Error' }, status: 500 }
     end
   end

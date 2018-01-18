@@ -45,7 +45,8 @@ gem 'roo'
 gem 'shrine'
 gem 'virtus'
 
-group :production do
+group :staging, :production do
+  gem 'logglier', '~> 0.2.11'
   gem 'bugsnag'
   gem 'lograge'
 end
