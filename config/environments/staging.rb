@@ -46,7 +46,7 @@ Rails.application.configure do
 
   # Use the lowest log level to ensure availability of diagnostic information
   # when problems arise.
-  config.log_level = :debug
+  config.log_level = :info
 
   # Prepend all log lines with the following tags.
   config.log_tags = [:request_id]
@@ -86,6 +86,9 @@ Rails.application.configure do
   config.logger = Logglier.new("https://logs-01.loggly.com/inputs/#{ENV['LOGGLY_TOKEN']}/tag/rails/", threaded: true)
   config.lograge.enabled = true
   config.lograge.formatter = Lograge::Formatters::Json.new
+  config.lograge.custom_options = lambda do |event|
+    event.payload[:params].except('controller', 'action')
+  end
 
   config.action_mailer.default_options = { from: '1PUNCH <no-reply@1punch.io' }
   config.action_mailer.delivery_method = :smtp
@@ -101,4 +104,8 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
+  config.action_dispatch.default_headers = {
+    'Server'                 => '1Punch'
+  }
 end
