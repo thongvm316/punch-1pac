@@ -1,0 +1,29 @@
+<div class="auth-form centered">
+  <%= render('shared/flash', type: 'error', message: flash[:alert], btn_clear_opened: true) if flash[:alert] %>
+  <%= render('shared/flash', type: 'success', message: flash[:notice]) if flash[:notice] %>
+
+  <div class="panel">
+    <div class="panel-header text-center">
+      <figure class="figure">
+        <img src="<%= image_url('logo.png') %>" alt="Company's Logo">
+      </figure>
+      <h1 class="panel-title h3 mt-10">Sign in to 1PAC Vietnam</h1>
+    </div>
+    <div class="panel-body">
+      <%= form_with(model: @user, url: login_url, method: :post, local: true) do |f| %>
+        <div class="form-group">
+          <%= f.email_field :email, class: 'form-input', placeholder: 'Email', value: @user.email %>
+        </div>
+        <div class="form-group">
+          <%= f.password_field :password, class: 'form-input', placeholder: 'Password' %>
+        </div>
+        <div class="form-group">
+          <%= f.submit 'Sign In', class: 'btn btn-success btn-block' %>
+        </div>
+        <div class="form-group">
+          <%= link_to 'Forgot your password?', password_reset_url %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
