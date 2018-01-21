@@ -12,8 +12,6 @@ class ApplicationController < ActionController::Base
   rescue_from AppErrors::Error500, with: :internal_server_error
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
 
-  private
-
   def forbidden
     render json: { message: 'Forbidden' }, status: 403
   end

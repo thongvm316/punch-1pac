@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class PasswordResetController < ApplicationController
+  layout 'static'
   before_action :current_company
 
   def new
@@ -8,17 +9,23 @@ class PasswordResetController < ApplicationController
   end
 
   def create
-    @user = current_company.users.find_by(email: params[:email])
+    @user = current_company.users.find_by(email: params[:user][:email])
     respond_to do |f|
       if @user
         @user.init_password_reset_token!
         PasswordResetMailer.create(@user.id).deliver_later
-        f.html { render :create }
+        f.html do
+          flash[:notice] = "A password reset email has been sent to #{@user.email}."
+          redirect_to login_url
+        end
         f.json { head(200) }
       else
-        @msg = 'Invalid email. Please try another.'
-        f.html { render :new }
-        f.json { render json: { message: @msg }, status: 422 }
+        msg = 'Invalid email. Please try another.'
+        f.html do
+          flash.now[:alert] = msg
+          render :new
+        end
+        f.json { render json: { message: msg }, status: 422 }
       end
     end
   end
@@ -36,10 +43,9 @@ class PasswordResetController < ApplicationController
   def update
     @user = User.reset_password_token_valid?(params[:token])
     if @user.update_attributes(user_params)
-      flash[:notice] = 'New password is updated'
+      flash[:notice] = 'Password has been reset'
       redirect_to login_url
     else
-      @errors = @user.errors.messages
       render :edit
     end
   rescue AppErrors::ExpiredResetPwdToken
@@ -53,6 +59,6 @@ class PasswordResetController < ApplicationController
   private
 
   def user_params
-    params.permit(:password, :password_confirmation)
+    params.require(:user).permit(:password, :password_confirmation)
   end
 end

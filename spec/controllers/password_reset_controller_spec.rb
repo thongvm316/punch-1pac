@@ -1,4 +1,3 @@
-
 # frozen_string_literal: true
 
 require 'rails_helper'
@@ -19,37 +18,40 @@ RSpec.describe PasswordResetController, type: :controller do
   describe 'POST #create' do
     context 'when email is invalid' do
       context 'when request format is json' do
-        subject { post :create, params: { email: user.email + 'fake' }, format: :json }
+        subject { post :create, params: { user: { email: user.email + 'fake' } }, format: :json }
 
         its(:code) { is_expected.to eq '422' }
         its(:body) { is_expected.to be_json_as(message: String) }
       end
 
       context 'when request format is html' do
-        subject { post :create, params: { email: user.email + 'fake' } }
+        subject { post :create, params: { user: { email: user.email + 'fake' } } }
 
         it do
           is_expected
           expect(response.code).to eq '200'
           expect(subject).to render_template(:new)
-          expect(assigns(:msg)).to be_truthy
+          expect(flash[:alert]).to be_truthy
         end
       end
     end
 
     context 'when email is valid' do
       context 'when request format is json' do
-        subject { post :create, params: { email: user.email }, format: :json }
+        subject { post :create, params: { user: { email: user.email } }, format: :json }
 
         its(:code) { is_expected.to eq '200' }
         its(:body) { is_expected.to eq '' }
       end
 
       context 'when request format is html' do
-        subject { post :create, params: { email: user.email } }
+        subject { post :create, params: { user: { email: user.email } } }
 
-        its(:code) { is_expected.to eq '200' }
-        it { is_expected.to render_template(:create) }
+        it do
+          is_expected
+          expect(flash[:notice]).to be_truthy
+          expect(subject).to redirect_to(login_url)
+        end
       end
     end
   end
@@ -125,7 +127,7 @@ RSpec.describe PasswordResetController, type: :controller do
     context 'when password and password_confirmation are valid' do
       let!(:user) { create :user, company: company, reset_password_token: token, reset_password_sent_at: Time.current }
 
-      subject { post :update, params: { password: 'gamegame', password_confirmation: 'gamegame', token: token } }
+      subject { post :update, params: { user: { password: 'gamegame', password_confirmation: 'gamegame' }, token: token } }
 
       it do
         is_expected
@@ -137,12 +139,12 @@ RSpec.describe PasswordResetController, type: :controller do
     context 'when password and password_confirmation are invalid' do
       let!(:user) { create :user, company: company, reset_password_token: token, reset_password_sent_at: Time.current }
 
-      subject { post :update, params: { password: 'gamegame', password_confirmation: 'gamegame1', token: token } }
+      subject { post :update, params: { user: { password: 'gamegame', password_confirmation: 'gamegame1' }, token: token } }
 
       it do
         is_expected
         expect(subject).to render_template(:edit)
-        expect(assigns(:errors)).to be_truthy
+        expect(assigns(:user).errors.messages[:password_confirmation].first).to be_truthy
       end
     end
   end

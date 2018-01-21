@@ -25,9 +25,23 @@
         <ul class="menu">
           <li class="menu-item"><a href="/modules">Profile</a></li>
           <li class="menu-item"><a href="/modules">Company Setting</a></li>
-          <li class="menu-item"><a href="/modules">Logout</a></li>
+          <li class="menu-item"><a href="#" @click="logout($event)">Logout</a></li>
         </ul>
       </div>
     </section>
   </header>
 </template>
+
+<script>
+import axios from 'axios'
+
+export default {
+  name: 'appHeader',
+  methods: {
+    logout (e) {
+      e.preventDefault()
+      axios.post('/logout').then(() => { window.location.href = '/' })
+    }
+  }
+}
+</script>
