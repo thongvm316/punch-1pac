@@ -3,9 +3,7 @@
 ActiveAdmin.register Holiday do
   permit_params do
     permitted = %i[name country started_at ended_at admin_id]
-    if params[:action] == 'create'
-      params[:holiday][:admin_id] = current_admin.id
-    end
+    params[:holiday][:admin_id] = current_admin.id if params[:action] == 'create'
     permitted
   end
   menu priority: 3

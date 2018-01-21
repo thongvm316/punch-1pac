@@ -9,9 +9,7 @@ ActiveAdmin.register Announcement do
 
   permit_params do
     permitted = %i[title target sent content status admin_id]
-    if params[:action] == 'create'
-      params[:announcement][:admin_id] = current_admin.id
-    end
+    params[:announcement][:admin_id] = current_admin.id if params[:action] == 'create'
     permitted
   end
 

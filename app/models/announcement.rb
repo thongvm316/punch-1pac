@@ -30,8 +30,8 @@ class Announcement < ApplicationRecord
 
   default_scope -> { order(id: :desc) }
 
-  scope :for_all, ->() { where(target: %w[everyone owners]) }
-  scope :for_everyone, ->() { where(target: 'everyone') }
+  scope :for_all, -> { where(target: %w[everyone owners]) }
+  scope :for_everyone, -> { where(target: 'everyone') }
   scope :unread, ->(user_id) { where.not(id: ReadAnnouncement.select(:announcement_id).where(user_id: user_id)) }
 
   def self.for_user(user)
