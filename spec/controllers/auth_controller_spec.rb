@@ -15,13 +15,13 @@ RSpec.describe AuthController, type: :controller do
 
   describe 'POST #create' do
     context 'when email is wrong' do
-      subject { post :create, params: { email: user.email + 'fake', password: user.password }, format: :json }
+      subject { post :create, params: { user: { email: user.email + 'fake', password: user.password } }, format: :json }
 
       its(:code) { is_expected.to eq '401' }
     end
 
     context 'when password is wrong' do
-      subject { post :create, params: { email: user.email, password: user.password + 'fake' }, format: :json }
+      subject { post :create, params: { user: { email: user.email, password: user.password + 'fake' } }, format: :json }
 
       its(:code) { is_expected.to eq '401' }
     end
@@ -30,7 +30,7 @@ RSpec.describe AuthController, type: :controller do
       before { request.headers['User-Agent'] = Faker::Internet.user_agent(:chrome) }
 
       context 'when request from mobile' do
-        subject { post :create, params: { email: user.email, password: user.password }, format: :json }
+        subject { post :create, params: { user: { email: user.email, password: user.password } }, format: :json }
 
         its(:code) { is_expected.to eq '200' }
         its(:body) { is_expected.to be_json_as(access_token: String) }
@@ -40,7 +40,7 @@ RSpec.describe AuthController, type: :controller do
       end
 
       context 'when request from browser' do
-        subject { post :create, params: { email: user.email, password: user.password } }
+        subject { post :create, params: { user: { email: user.email, password: user.password } } }
 
         its(:code) { is_expected.to eq '302' }
         it do
@@ -53,25 +53,15 @@ RSpec.describe AuthController, type: :controller do
   end
 
   describe 'DELETE #destroy' do
-    context 'when request from mobile' do
-      subject { delete :destroy, format: :json }
+    subject { delete :destroy }
 
-      before { authenticate_user(user) }
+    before { authenticate_user(user) }
 
-      its(:code) { is_expected.to eq '200' }
-    end
-
-    context 'when request from browser' do
-      subject { delete :destroy }
-
-      before { authenticate_user(user) }
-
-      its(:code) { is_expected.to eq '302' }
-      it 'should delete access_token in session' do
-        is_expected
-        expect(subject).to redirect_to('/')
-        expect(session[:access_token]).to be_nil
-      end
+    it 'should delete access_token in session' do
+      is_expected
+      expect(response.code).to eq '200'
+      expect(response.body).to be_json_as(access_token: String)
+      expect(session[:access_token]).to be_nil
     end
   end
 end
