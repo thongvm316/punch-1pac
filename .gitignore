@@ -52,7 +52,6 @@ config/database.yml
 
 /public/static/
 /public/app/
-/public/static/
 /public/index.html
 
 /frontend/node_modules/
