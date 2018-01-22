@@ -103,6 +103,8 @@ GEM
     capistrano-sidekiq (0.10.0)
       capistrano
       sidekiq (>= 3.4)
+    capistrano-yarn (2.0.2)
+      capistrano (~> 3.0)
     capistrano3-puma (2.0.0)
       capistrano (~> 3.5)
       capistrano-bundler
@@ -439,6 +441,7 @@ DEPENDENCIES
   capistrano-rails (~> 1.1)
   capistrano-rbenv (~> 2.0)
   capistrano-sidekiq
+  capistrano-yarn
   capistrano3-puma
   database_rewinder
   device_detector
