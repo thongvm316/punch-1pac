@@ -6,6 +6,6 @@ class DashboardController < ApplicationController
   helper_method :current_user, :current_company
 
   def index
-    @webpack_assets = Oj.load_file(Rails.root.join('public', 'webpack-assets.json').to_s)
+    @webpack_assets = Oj.load_file(Rails.root.join('public', 'app', '.webpack-assets-nxu54TIPbpRWzks8.json').to_s)
   end
 end
