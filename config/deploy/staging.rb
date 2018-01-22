@@ -41,6 +41,13 @@ set :puma_user, fetch(:user)
 set :puma_conf, -> { "#{shared_path}/config/puma/1punch-stg.1pac.vn.rb" }
 set :puma_role, :web
 
+# capistrano/sidekiq
+set :sidekiq_config, 'config/sidekiq.yml'
+
+# capistrano/yarn
+set :yarn_flags, ''
+set :yarn_target_path, -> { release_path.join('frontend') }
+
 # Global options
 # --------------
 set :ssh_options, forward_agent: true
