@@ -77,6 +77,7 @@ group :development do
   gem 'capistrano-bundler', '~> 1.2'
   gem 'capistrano3-puma'
   gem 'capistrano-sidekiq'
+  gem 'capistrano-yarn'
 
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
