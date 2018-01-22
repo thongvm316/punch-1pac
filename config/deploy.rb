@@ -71,4 +71,18 @@ namespace :deploy do
       end
     end
   end
+
+  namespace :yarn do
+    desc 'Build frontend code'
+    task :build do
+      on roles(:app) do
+        within fetch(:yarn_target_path) do
+          with fetch(:yarn_env_variables, {}) do
+            execute :yarn, 'run build'
+          end
+        end
+      end
+    end
+  end
+  after 'yarn:install', 'deploy:yarn:build'
 end
