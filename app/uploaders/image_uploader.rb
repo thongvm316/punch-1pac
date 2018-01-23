@@ -12,6 +12,6 @@ class ImageUploader < Shrine
   end
 
   Attacher.default_url do |_options|
-    "/images/default_#{name}.png"
+    ActionController::Base.helpers.image_url("default/#{name}.png")
   end
 end
