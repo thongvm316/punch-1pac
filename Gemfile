@@ -41,7 +41,6 @@ gem 'faker'
 gem 'kaminari'
 gem 'oj'
 gem 'rack-cors'
-gem 'roo'
 gem 'shrine'
 gem 'virtus'
 
