@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class AttendancePolicy < ApplicationPolicy
+class Api::V1::AttendanceLoyalty < ApplicationLoyalty
   def create?
     true
   end

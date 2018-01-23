@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class RequestPolicy < ApplicationPolicy
+class Api::V1::RequestLoyalty < ApplicationLoyalty
   def index?
     true
   end
