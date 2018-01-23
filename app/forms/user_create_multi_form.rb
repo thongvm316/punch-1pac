@@ -2,13 +2,7 @@
 
 class UserCreateMultiForm < BaseForm
   USER_PARAMS = %w[email password password_confirmation role name gender user_permissions_attributes].freeze
-  VALID_MIME_TYPES = [
-    'text/plain',
-    'text/csv',
-    'application/vnd.oasis.opendocument.spreadsheet',
-    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-  ].freeze
-  VALID_EXTENSIONS = %w[csv ods xlsx].freeze
+  VALID_MIME_TYPES = ['text/plain', 'text/csv'].freeze
 
   validate :validate_file_existed
   validate :validate_mine_types
@@ -17,8 +11,7 @@ class UserCreateMultiForm < BaseForm
   attr_reader :file
 
   def initialize(company, csv_file)
-    @uploader = CsvUploader.new(:cache)
-    @file = @uploader.upload(csv_file.tempfile)
+    @file = csv_file.tempfile
     @company = company
   end
 
@@ -28,12 +21,8 @@ class UserCreateMultiForm < BaseForm
     @users = []
     @lines = []
     @permissions = load_permissions
-
-    spreadsheet = open_spreadsheet
-    header = spreadsheet.row(1)
-
-    (2..spreadsheet.last_row).each.with_index(1) do |item, line|
-      row = Hash[[header, spreadsheet.row(item)].transpose]
+    CSV.foreach(@file.path, headers: true).with_index(1) do |row, line|
+      row = row.to_hash
       user = @company.users.build(user_params(row))
       if user.save
         UserMailer.create(user.id, row['password'])
@@ -44,8 +33,6 @@ class UserCreateMultiForm < BaseForm
     end
 
     true
-  ensure
-    @uploader.delete(@file)
   end
 
   def valid?
@@ -75,23 +62,15 @@ class UserCreateMultiForm < BaseForm
   end
 
   def validate_file_existed
-    return errors.add(:csv_file, I18n.t('errors.messages.blank')) unless @file&.present?
+    return errors.add(:csv_file, I18n.t('errors.messages.blank')) unless file&.present?
   end
 
   def validate_mine_types
-    return errors.add(:csv_file, I18n.t('errors.messages.invalid')) unless VALID_MIME_TYPES.include?(@file.mime_type)
+    cmd = `file --brief --mime-type #{file.path}`
+    return errors.add(:csv_file, I18n.t('errors.messages.invalid')) unless VALID_MIME_TYPES.include?(cmd.gsub(/\s+$/, ''))
   end
 
   def validate_extensions
-    return errors.add(:csv_file, I18n.t('errors.messages.invalid')) unless VALID_EXTENSIONS.include?(@file.extension)
-  end
-
-  def open_spreadsheet
-    file_path = Rails.root.join(@file.storage.directory, @file.id)
-    case @file.extension
-    when 'csv' then Roo::CSV.new(file_path)
-    when 'ods' then Roo::OpenOffice.new(file_path)
-    when 'xlsx' then Roo::Excelx.new(file_path)
-    end
+    return errors.add(:csv_file, I18n.t('errors.messages.invalid')) unless File.extname(file) == '.csv'
   end
 end
