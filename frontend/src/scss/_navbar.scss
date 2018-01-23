@@ -7,8 +7,15 @@
   width: 100%;
   z-index: $zindex-4;
 
-  .dropdown {
+  .navbar-brand {
+    line-height: 1;
+    img {
+      height: 32px;
+      vertical-align: middle;
+    }
+  }
 
+  .dropdown {
     .menu {
       box-shadow: 0 1px 5px 0 rgba(0, 0, 0, .1);
       border-radius: 0;

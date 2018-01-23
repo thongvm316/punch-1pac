@@ -30,4 +30,21 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  auth:
+    new:
+      title: Sign in to %{company}
+      email: Email
+      password: Password
+      sign_in: Sign In
+      forgot_password: Forgot your password?
+  password_reset:
+    new:
+      title: Forgot your password?
+      description: Enter the email address you use to sign in, and we’ll send you a link to reset your password.
+      email: Email
+      send_link: Send Link
+    edit:
+      title: Reset your password
+      password: Password
+      password_confirmation: Password Confirmation
+      reset_password: Reset Password

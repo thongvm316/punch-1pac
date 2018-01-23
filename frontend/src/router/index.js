@@ -1,30 +1,31 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-import Dashboard from '../views/Dashboard'
-import Attendance from '../views/Attendance'
-import Requests from '../views/Requests'
-import Request from '../views/Request'
-import Groups from '../views/Groups'
-import Group from '../views/Group'
+import Dashboard from '../pages/Dashboard'
+import Attendances from '../pages/Attendances'
+import Requests from '../pages/Requests'
+import Request from '../pages/Request'
+import Groups from '../pages/Groups'
+import Group from '../pages/Group'
 
-import Announcements from '../views/Announcements'
-import Announcement from '../views/Announcement'
-import Settings from '../views/Settings.vue'
-import Company from '../views/Company.vue'
+import Announcements from '../pages/Announcements'
+import Announcement from '../pages/Announcement'
+import Settings from '../pages/Settings.vue'
+import Company from '../pages/Company.vue'
 
-import Error404 from '../views/Error404'
+import Error404 from '../pages/Error404'
 
-import Modules from '../views/Modules'
+import Modules from '../pages/Modules'
 
 Vue.use(Router)
 
 export default new Router({
   mode: 'history',
+  linkActiveClass: 'active',
   routes: [
     { path: '/modules', name: 'modules', component: Modules },
     { path: '/dashboard', name: 'dashboard', component: Dashboard },
-    { path: '/attendance', name: 'attendance', component: Attendance },
+    { path: '/attendances', name: 'attendance', component: Attendances },
     { path: '/requests/:id', name: 'request', component: Request },
     { path: '/requests', name: 'requests', component: Requests },
     { path: '/groups/:id', name: 'group', component: Group },

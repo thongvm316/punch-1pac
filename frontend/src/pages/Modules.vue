@@ -1,5 +1,5 @@
 <template>
-  <div class="main">
+  <main-layout>
     <h1 class="mb-4">This is heading - H1</h1>
     <ul class="tab tab-block mb-4">
       <li class="tab-item active">
@@ -542,5 +542,15 @@
         </div>
       </div>
     </div>
-  </div>
+  </main-layout>
 </template>
+
+<script>
+import MainLayout from '../layouts/Main.vue'
+
+export default {
+  components: {
+    MainLayout
+  }
+}
+</script>

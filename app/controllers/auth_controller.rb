@@ -5,6 +5,8 @@ class AuthController < ApplicationController
   before_action :current_company
   before_action :authenticate_user!, only: %i[destroy]
 
+  helper_method :current_company
+
   def new
     redirect_to(url_for(subdomain: request.subdomain, controller: 'dashboard', action: 'index', path: 'dashboard')) && return if signed_in?
     @user = User.new
