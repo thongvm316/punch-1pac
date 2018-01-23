@@ -6,7 +6,7 @@ import axios from 'axios'
 
 import './scss/main.scss'
 
-axios.defaults.headers.common['X-CSRF-Token'] = document.querySelector('meta[name=csrf-token]').getAttribute('content')
+//axios.defaults.headers.common['X-CSRF-Token'] = document.querySelector('meta[name=csrf-token]').getAttribute('content')
 
 /* eslint-disable no-new */
 new Vue({
