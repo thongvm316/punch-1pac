@@ -24,9 +24,12 @@
 <body>
 <div id="app">
 </div>
-</body>
 
+<script>
+window.INITIAL_STATE = <%= raw @initial_state.to_json %>
+</script>
 <script type="text/javascript" src="<%= @webpack_assets['manifest.js'] %>"></script>
 <script type="text/javascript" src="<%= @webpack_assets['vendor.js'] %>"></script>
 <script type="text/javascript" src="<%= @webpack_assets['app.js'] %>"></script>
+</body>
 </html>
