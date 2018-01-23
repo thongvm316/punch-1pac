@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class CompanyPolicy < ApplicationPolicy
+class Api::V1::CompaniesLoyalty < ApplicationLoyalty
   def deactivate?
     @user.superadmin?
   end

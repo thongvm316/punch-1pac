@@ -24,7 +24,7 @@ gem 'redis-namespace'
 # Authentication and Authorization
 gem 'bcrypt'
 gem 'jwt'
-gem 'pundit'
+gem 'banken'
 
 # ActiveAdmin dependencies
 gem 'activeadmin'

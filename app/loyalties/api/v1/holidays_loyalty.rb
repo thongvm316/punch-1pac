@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class HolidayPolicy < ApplicationPolicy
+class Api::V1::HolidaysLoyalty < ApplicationLoyalty
   def import?
     @user.manager?
   end

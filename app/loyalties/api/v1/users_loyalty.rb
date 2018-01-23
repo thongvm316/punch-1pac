@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class UserPolicy < ApplicationPolicy
+class Api::V1::UsersLoyalty < ApplicationLoyalty
   def show?
     @user.manager? || @user == @record
   end

@@ -2,7 +2,7 @@
 
 class Api::V1::CompaniesController < Api::V1::BaseController
   def update
-    authorize Company
+    authorize!
     if current_company.update_attributes(company_params)
       render json: current_company, serializer: CompanySerializer, status: 200
     else
@@ -11,7 +11,7 @@ class Api::V1::CompaniesController < Api::V1::BaseController
   end
 
   def setup_rules
-    authorize Company
+    authorize!
     if current_company.update_attributes(company_rule_params)
       render json: current_company, serializer: CompanySerializer, status: 200
     else
@@ -20,13 +20,13 @@ class Api::V1::CompaniesController < Api::V1::BaseController
   end
 
   def deactivate
-    authorize Company
+    authorize!
     current_company.update_attributes(activated: false)
     head(200)
   end
 
   def destroy
-    authorize Company
+    authorize!
     current_company.destroy
     head(200)
   end

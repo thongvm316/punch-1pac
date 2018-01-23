@@ -4,18 +4,18 @@ class Api::V1::UsersController < Api::V1::BaseController
   before_action :set_user, only: %i[show update destroy]
 
   def index
-    authorize User
+    authorize!
     users = current_company.users
     render json: users, each_serializer: UserSerializer, status: 200
   end
 
   def show
-    authorize @user
+    authorize! @user
     render json: @user, serializer: UserWithPermissionSerializer, status: 200
   end
 
   def create
-    authorize User
+    authorize!
     user = current_company.users.build(user_params)
     if user.save
       UserMailer.create(user.id, user_params[:password]).deliver_later
@@ -26,7 +26,7 @@ class Api::V1::UsersController < Api::V1::BaseController
   end
 
   def create_multi
-    authorize User
+    authorize!
     @users_form = UserCreateMultiForm.new(current_company, params[:csv_file])
     if @users_form.save
       render json: @users_form.result, status: 201
@@ -36,7 +36,7 @@ class Api::V1::UsersController < Api::V1::BaseController
   end
 
   def update
-    authorize @user
+    authorize! @user
 
     ApplicationRecord.transaction do
       @user.user_permissions.destroy_all if @current_user.manager?
@@ -49,7 +49,7 @@ class Api::V1::UsersController < Api::V1::BaseController
   end
 
   def destroy
-    authorize @user
+    authorize! @user
     @user.destroy
     head(200)
   end
@@ -58,7 +58,7 @@ class Api::V1::UsersController < Api::V1::BaseController
 
   def user_params
     params[:user][:user_permissions_attributes] = Permission.verify(params[:user][:permission_ids])
-    params.require(:user).permit(policy(current_user).permitted_attributes)
+    params.require(:user).permit(loyalty(current_user).permitted_attributes)
   end
 
   def set_user

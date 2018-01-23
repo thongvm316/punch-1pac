@@ -4,18 +4,18 @@ class Api::V1::DepartmentsController < Api::V1::BaseController
   before_action :set_department, only: %i[show update destroy]
 
   def index
-    authorize Department
+    authorize!
     departments = current_company.departments
     render json: departments, each_serializer: DepartmentSerializer, status: 200
   end
 
   def show
-    authorize Department
+    authorize!
     render json: @department, serializer: DepartmentSerializer, status: 200
   end
 
   def update
-    authorize Department
+    authorize!
     if @department.update_attributes(department_params)
       render json: @department, serializer: DepartmentSerializer, status: 200
     else
@@ -24,7 +24,7 @@ class Api::V1::DepartmentsController < Api::V1::BaseController
   end
 
   def create
-    authorize Department
+    authorize!
     department = current_company.departments.build(department_params)
     if department.save
       render json: department, serializer: DepartmentSerializer, status: 201

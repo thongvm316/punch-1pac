@@ -4,13 +4,13 @@ class Api::V1::CustomHolidaysController < Api::V1::BaseController
   before_action :set_holiday, only: %i[update destroy]
 
   def index
-    authorize CustomHoliday
+    authorize!
     holidays = current_company.custom_holidays
     render json: holidays, each_serializer: HolidaySerializer, status: 200
   end
 
   def create
-    authorize CustomHoliday
+    authorize!
     holiday = current_company.custom_holidays.build(holiday_params)
     if holiday.save
       render json: holiday, serializer: HolidaySerializer, status: 201
@@ -20,7 +20,7 @@ class Api::V1::CustomHolidaysController < Api::V1::BaseController
   end
 
   def update
-    authorize CustomHoliday
+    authorize!
     if @holiday.update_attributes(holiday_params)
       render json: @holiday, serializer: HolidaySerializer, status: 200
     else
@@ -29,7 +29,7 @@ class Api::V1::CustomHolidaysController < Api::V1::BaseController
   end
 
   def destroy
-    authorize CustomHoliday
+    authorize!
     @holiday.destroy
     head(200)
   end
