@@ -34,7 +34,7 @@ const webpackConfig = merge(baseWebpackConfig, {
     // Modify webpack prod conf - Add extract hash name plugin by wofi.minh
     new ManifestPlugin({
       publicPath: '/app/',
-      fileName: '.webpack-assets-nxu54TIPbpRWzks8.json'
+      fileName: '_webpack-assets-nxu54TIPbpRWzks8.json'
     }),
 
     // http://vuejs.github.io/vue-loader/en/workflow/production.html
