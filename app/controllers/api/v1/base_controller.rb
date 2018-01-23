@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 class Api::V1::BaseController < ApplicationController
-  include Pundit
+  include Banken
 
-  rescue_from Pundit::NotAuthorizedError, with: :unauthorized
+  rescue_from Banken::NotAuthorizedError, with: :unauthorized
 
   before_action :current_company
   before_action :authenticate_user!

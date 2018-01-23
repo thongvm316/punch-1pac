@@ -1,3 +1,3 @@
 # frozen_string_literal: true
 
-class Api::V1::CustomHolidayLoyalty < ApplicationLoyalty; end
+class Api::V1::CustomHolidaysLoyalty < ApplicationLoyalty; end
