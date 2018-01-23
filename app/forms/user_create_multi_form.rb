@@ -67,7 +67,7 @@ class UserCreateMultiForm < BaseForm
 
   def validate_mine_types
     cmd = `file --brief --mime-type #{file.path}`
-    return errors.add(:csv_file, I18n.t('errors.messages.invalid')) unless VALID_MIME_TYPES.include?(cmd.gsub(/\s+$/, ''))
+    return errors.add(:csv_file, I18n.t('errors.messages.invalid')) unless VALID_MIME_TYPES.include?(cmd.strip)
   end
 
   def validate_extensions
