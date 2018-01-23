@@ -11,15 +11,6 @@ RSpec.describe Api::V1::UsersController, type: :controller do
     authenticate_user(login_user)
   end
 
-  shared_examples 'file was deleted' do
-    it do
-      is_expected
-      users_form = assigns(:users_form)
-      file_path = Rails.root.join(users_form.file.storage.directory, users_form.file.id)
-      expect(File.exist?(file_path)).to be_falsey
-    end
-  end
-
   describe 'GET #index' do
     context 'when login user is member' do
       let(:login_user) { create :user, company: company, role: 'member' }
@@ -300,30 +291,6 @@ RSpec.describe Api::V1::UsersController, type: :controller do
 
         its(:code) { is_expected.to eq '201' }
         its(:body) { is_expected.to be_json_as(users: Array.new(3) { response_user }, errors: { lines: [] }) }
-
-        it_behaves_like 'file was deleted'
-      end
-
-      context 'when valid xlsx file' do
-        let(:csv_file) { fixture_file_upload('files/valid.xlsx', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') }
-
-        subject { post :create_multi, params: { csv_file: csv_file } }
-
-        its(:code) { is_expected.to eq '201' }
-        its(:body) { is_expected.to be_json_as(users: Array.new(3) { response_user }, errors: { lines: [] }) }
-
-        it_behaves_like 'file was deleted'
-      end
-
-      context 'when valid ods file' do
-        let(:csv_file) { fixture_file_upload('files/valid.ods', 'application/vnd.oasis.opendocument.spreadsheet') }
-
-        subject { post :create_multi, params: { csv_file: csv_file } }
-
-        its(:code) { is_expected.to eq '201' }
-        its(:body) { is_expected.to be_json_as(users: Array.new(3) { response_user }, errors: { lines: [] }) }
-
-        it_behaves_like 'file was deleted'
       end
 
       context 'when csv file empty' do
@@ -333,8 +300,6 @@ RSpec.describe Api::V1::UsersController, type: :controller do
 
         its(:code) { is_expected.to eq '422' }
         its(:body) { is_expected.to be_json_as(response_422(csv_file: Array)) }
-
-        it_behaves_like 'file was deleted'
       end
 
       context 'when failed some lines' do
@@ -344,8 +309,6 @@ RSpec.describe Api::V1::UsersController, type: :controller do
 
         its(:code) { is_expected.to eq '201' }
         its(:body) { is_expected.to be_json_as(users: Array.new(2) { response_user }, errors: { lines: Array }) }
-
-        it_behaves_like 'file was deleted'
       end
 
       context 'when failed all' do
@@ -355,8 +318,6 @@ RSpec.describe Api::V1::UsersController, type: :controller do
 
         its(:code) { is_expected.to eq '201' }
         its(:body) { is_expected.to be_json_as(users: [], errors: { lines: Array }) }
-
-        it_behaves_like 'file was deleted'
       end
 
       context 'when invalid mime type' do
@@ -366,8 +327,6 @@ RSpec.describe Api::V1::UsersController, type: :controller do
 
         its(:code) { is_expected.to eq '422' }
         its(:body) { is_expected.to be_json_as(response_422(csv_file: Array)) }
-
-        it_behaves_like 'file was deleted'
       end
     end
   end
