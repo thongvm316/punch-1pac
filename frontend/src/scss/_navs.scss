@@ -1,4 +1,3 @@
-// Navs
 .sidebar {
   flex: none;
   height: 100%;
@@ -13,16 +12,14 @@
     padding: .4rem;
     border-radius: $border-radius;
 
+    svg {
+      margin-right: .2rem;
+    }
+
     &:hover,
     &.active {
-      background: $secondary-color;
-      cursor: pointer;
-
-      & > a {
-        color: $primary-color;
-      }
-
-      svg {
+      svg,
+      > span {
         color: $primary-color;
       }
     }

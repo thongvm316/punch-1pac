@@ -5,6 +5,14 @@
   top: 2.4rem;
 }
 
+body {
+  background-color: $gray-color-lightest;
+}
+
+main {
+  padding-top: 48px;
+}
+
 .main {
   background: $gray-color-lightest;
   padding: .8rem 2rem 0 2rem;
@@ -23,4 +31,13 @@ svg {
   height: .8rem;
   color: $gray-color;
   vertical-align: text-bottom;
+}
+
+.footer {
+  margin-top: 1rem;
+  font-size: .6rem;
+  padding: 1.5rem 0;
+  a {
+    color: $dark-color;
+  }
 }

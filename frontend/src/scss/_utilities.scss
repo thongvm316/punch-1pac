@@ -1,3 +1,16 @@
+.bg-light {
+  background-color: $light-color;
+  color: $dark-color;
+}
+
+.text-bold-600 {
+  font-weight: 600;
+}
+
+.border-bottom {
+  border-bottom: 1px solid $gray-color;
+}
+
 .circle {
   display: inline-block;
   width: .8rem;
@@ -6,3 +19,5 @@
 
 @include margin-variant(4, $unit-4); //Margin variant .8rem
 @include padding-variant(4, $unit-4); //Padding variation .8rem
+@include margin-variant(5, $unit-5); //Margin variant .8rem
+@include padding-variant(5, $unit-5); //Padding variation .8rem

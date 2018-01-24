@@ -1,11 +1,13 @@
-.navbar {
-  background: $light-color;
-  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, .1);
-  height: 2.4rem;
-  padding: .4rem 0;
+.header {
+  background-color: $secondary-color;
   position: fixed;
   width: 100%;
   z-index: $zindex-4;
+}
+
+.navbar {
+  height: 2.4rem;
+  padding: .4rem 0;
 
   .navbar-brand {
     line-height: 1;
@@ -16,6 +18,7 @@
   }
 
   .dropdown {
+    padding: .4rem 0;
     .menu {
       box-shadow: 0 1px 5px 0 rgba(0, 0, 0, .1);
       border-radius: 0;
@@ -25,9 +28,32 @@
     }
   }
 
+  .announcement {
+    svg {
+      color: $dark-color;
+      width: 20px;
+      height: 20px;
+    }
+
+    &.badge[data-badge]::after {
+      top: 0;
+      right: 0;
+      position: absolute;
+      background-color: $error-color;
+      box-shadow: none;
+      transform: translate(.7rem, -.3rem);
+    }
+  }
+
   a {
-    color: $gray-color;
+    color: $dark-color;
     text-decoration: none;
     cursor: pointer;
+    transition: color .1s ease-in-out;
+
+    &.active,
+    &:hover {
+      color: $primary-color;
+    }
   }
 }
