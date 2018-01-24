@@ -2,7 +2,8 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 import Dashboard from '../pages/Dashboard'
-import Attendances from '../pages/Attendances'
+import GroupAttendances from '../pages/GroupAttendances'
+import MyAttendances from '../pages/MyAttendances'
 import Requests from '../pages/Requests'
 import Request from '../pages/Request'
 import Groups from '../pages/Groups'
@@ -10,8 +11,10 @@ import Group from '../pages/Group'
 
 import Announcements from '../pages/Announcements'
 import Announcement from '../pages/Announcement'
-import Settings from '../pages/Settings.vue'
-import Company from '../pages/Company.vue'
+import UserSettingsProfile from '../pages/UserSettingsProfile.vue'
+import UserSettingsPassword from '../pages/UserSettingsPassword.vue'
+import UserSettingsSecurity from '../pages/UserSettingsSecurity.vue'
+import CompanySettingsProfile from '../pages/CompanySettingsProfile.vue'
 
 import Error404 from '../pages/Error404'
 
@@ -24,16 +27,22 @@ export default new Router({
   linkActiveClass: 'active',
   routes: [
     { path: '/modules', name: 'modules', component: Modules },
-    { path: '/dashboard', name: 'dashboard', component: Dashboard },
-    { path: '/attendances', name: 'attendance', component: Attendances },
-    { path: '/requests/:id', name: 'request', component: Request },
-    { path: '/requests', name: 'requests', component: Requests },
-    { path: '/groups/:id', name: 'group', component: Group },
-    { path: '/groups', name: 'groups', component: Groups },
-    { path: '/announcements/:id', name: 'announcement', component: Announcement },
-    { path: '/announcements', name: 'announcements', component: Announcements },
-    { path: '/settings', name: 'settings', component: Settings },
-    { path: '/company', name: 'company', component: Company },
+    { path: '/dashboard', name: 'dashboard', component: Dashboard, meta: { title: 'Dashboard - 1Punch' } },
+    { path: '/attendances/groups', name: 'group-attendances', component: GroupAttendances, meta: { title: 'Group Attendances - 1Punch' } },
+    { path: '/attendances/my', name: 'my-attendances', component: MyAttendances, meta: { title: 'My Attendances - 1Punch' } },
+    { path: '/attendances', redirect: '/attendances/my' },
+    { path: '/requests/:id', name: 'request', component: Request, meta: { title: 'Request - 1Punch' } },
+    { path: '/requests', name: 'requests', component: Requests, meta: { title: 'Requests - 1Punch' } },
+    { path: '/groups/:id', name: 'group', component: Group, meta: { title: 'Group - 1Punch' } },
+    { path: '/groups', name: 'groups', component: Groups, meta: { title: 'Groups - 1Punch' } },
+    { path: '/announcements/:id', name: 'announcement', component: Announcement, meta: { title: 'Announcement - 1Punch' } },
+    { path: '/announcements', name: 'announcements', component: Announcements, meta: { title: 'Announcements - 1Punch' } },
+    { path: '/settings/profile', name: 'user-settings-profile', component: UserSettingsProfile, meta: { title: 'User Settings Profile - 1Punch' } },
+    { path: '/settings/password', name: 'user-settings-password', component: UserSettingsPassword, meta: { title: 'User Settings Password - 1Punch' } },
+    { path: '/settings/security', name: 'user-settings-security', component: UserSettingsSecurity, meta: { title: 'User Settings Security - 1Punch' } },
+    { path: '/settings', redirect: '/settings/profile' },
+    { path: '/company/settings/profile', name: 'company-settings-profile', component: CompanySettingsProfile, meta: { title: 'Company Settings Profile - 1Punch' } },
+    { path: '/company/settings', redirect: '/company/settings/profile' },
     { path: '*', component: Error404 }
   ]
 })
