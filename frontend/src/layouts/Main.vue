@@ -1,24 +1,26 @@
 <template>
   <div>
     <app-header></app-header>
-    <div class="app-container">
-      <app-sidebar></app-sidebar>
-      <div class="main">
+    <main>
+      <div class="container grid-xl py-4">
         <slot></slot>
       </div>
-    </div>
+    </main>
+    <app-footer></app-footer>
   </div>
 </template>
 
 <script>
   import AppHeader from '../components/AppHeader.vue'
   import AppSidebar from '../components/AppSidebar.vue'
+  import AppFooter from '../components/AppFooter.vue'
 
   export default {
     name: 'main-layout',
     components: {
       appSidebar: AppSidebar,
-      appHeader: AppHeader
+      appHeader: AppHeader,
+      appFooter: AppFooter
     }
   }
 </script>
