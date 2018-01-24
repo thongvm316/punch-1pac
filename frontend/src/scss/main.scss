@@ -9,6 +9,9 @@
 @import '../../node_modules/spectre.css/src/normalize';
 @import '../../node_modules/spectre.css/src/base';
 
+// Base css
+@import 'base';
+
 // Elements
 @import '../../node_modules/spectre.css/src/typography';
 @import '../../node_modules/spectre.css/src/asian';
@@ -63,12 +66,17 @@
 @import 'accordions';
 //@import "tabs";
 
+// Experimentals
+@import '../../node_modules/spectre.css/src/calendars';
+
+// Custom css by 1PAC.VN team
+@import 'box';
+@import 'list';
+@import 'setting';
+
 // Utility classes
 @import '../../node_modules/spectre.css/src/animations';
 @import '../../node_modules/spectre.css/src/utilities';
 
 //  Override specture.css Utility classes
 @import 'utilities';
-
-// Base css
-@import 'base';

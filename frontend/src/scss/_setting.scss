@@ -1,0 +1,17 @@
+.setting-sidebar {
+  margin: 0;
+  list-style: none;
+  font-size: $font-size-lg;
+  a {
+    color: $dark-color;
+
+    &.active {
+      color: $primary-color;
+      text-decoration: none;
+    }
+  }
+}
+
+.setting-form {
+  max-width: 700px;
+}

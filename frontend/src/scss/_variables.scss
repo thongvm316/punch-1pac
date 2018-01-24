@@ -38,7 +38,7 @@ $link-color-dark: darken($link-color, 5%);
 // Credit: https://www.smashingmagazine.com/2015/11/using-system-ui-fonts-practical-guide/
 $base-font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto;
 $mono-font-family: "SF Mono", "Segoe UI Mono", "Roboto Mono", Menlo, Courier, monospace;
-$fallback-font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
+$fallback-font-family: "Helvetica Neue", sans-serif;
 $cjk-zh-font-family: $base-font-family, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", $fallback-font-family;
 $cjk-jp-font-family: $base-font-family, "Hiragino Sans", "Hiragino Kaku Gothic Pro", "Yu Gothic", YuGothic, Meiryo, $fallback-font-family;
 $cjk-ko-font-family: $base-font-family, "Malgun Gothic", $fallback-font-family;
@@ -63,8 +63,8 @@ $unit-16: 3.2rem;
 // Font sizes
 $html-font-size: 20px;
 $html-line-height: 1.5;
-$font-size: .7rem;
-$font-size-sm: .6rem;
+$font-size: .8rem;
+$font-size-sm: .7rem;
 $font-size-lg: .9rem;
 $line-height: 1rem;
 
