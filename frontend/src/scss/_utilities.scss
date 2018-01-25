@@ -18,8 +18,10 @@
   height: .8rem;
 }
 
-@include margin-variant(3, $unit-3); //Margin variant .6rem
-@include padding-variant(3, $unit-3); //Padding variation .6rem
+.img-profile {
+  max-height: 130px;
+}
+
 @include margin-variant(4, $unit-4); //Margin variant .8rem
 @include padding-variant(4, $unit-4); //Padding variation .8rem
 @include margin-variant(5, $unit-5); //Margin variant 1rem
