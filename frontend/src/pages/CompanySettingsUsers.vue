@@ -11,12 +11,18 @@
           <input class="form-input" type="text" placeholder="Filter user by name">
         </div>
         <div class="float-right">
-          <a href="#" class="btn btn-primary group-icon">Add User
+          <router-link to="/company/settings/users/add"
+            tag="a"
+            class="btn btn-primary">
             <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M24 10h-10v-10h-4v10h-10v4h10v10h4v-10h10z"></path></svg>
-          </a>
-          <a href="#" class="btn group-icon">Add Multiple Users
+            Add User
+          </router-link>
+          <router-link to="/company/settings/users/add-multi"
+            tag="a"
+            class="btn">
             <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M24 10h-10v-10h-4v10h-10v4h10v10h4v-10h10z"></path></svg>
-          </a>
+            Add Multiple Users
+          </router-link>
         </div>
         <table class="table table-hover mt-4">
           <thead>
