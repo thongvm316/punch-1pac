@@ -10,7 +10,7 @@
         <form class="setting-form">
           <div class="form-group">
             <label class="form-label" for="input-example-16">Avatar</label>
-            <img :src="userAvatarUrl" :alt="userName">
+            <img  class="img-profile" :src="userAvatarUrl" :alt="userName">
             <input class="form-input" type="file" id="input-example-16">
           </div>
           <div class="form-group">

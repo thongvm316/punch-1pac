@@ -10,7 +10,7 @@
         <form class="setting-form">
           <div class="form-group">
             <label class="form-label" for="input-example-1">Logo</label>
-            <img :src="companyLogoUrl" :alt="companyName">
+            <img class="img-profile" :src="companyLogoUrl" :alt="companyName">
             <input class="form-input" type="file" id="input-example-1">
           </div>
           <div class="form-group">
