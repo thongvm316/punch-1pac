@@ -2,7 +2,7 @@
   <main-layout>
     <h1>Dashboard</h1>
 
-    <h4 class="mt-5">Status in month</h4>
+    <h3 class="border-bottom mt-5">Status in month</h3>
     <div class="mt-4">
       <span class="label label-rounded label-secondary">Arrive on time: <strong>3 days</strong></span>
       <span class="label label-rounded label-secondary">Leave on time: <strong>11 days</strong></span>
@@ -13,7 +13,7 @@
       <span class="label label-rounded label-secondary">Unpaid leave: <strong>1 day</strong></span>
     </div>
 
-    <h4 class="mt-5">Calendar</h4>
+    <h3 class="border-bottom mt-5">Calendar</h3>
     <div class="calendar calendar-lg mt-4 bg-light">
       <div class="calendar-nav navbar">
         <button class="btn btn-action btn-link btn-lg">
