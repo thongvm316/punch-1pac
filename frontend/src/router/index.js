@@ -15,6 +15,12 @@ import UserSettingsProfile from '../pages/UserSettingsProfile.vue'
 import UserSettingsPassword from '../pages/UserSettingsPassword.vue'
 import UserSettingsSecurity from '../pages/UserSettingsSecurity.vue'
 import CompanySettingsProfile from '../pages/CompanySettingsProfile.vue'
+import CompanySettingsTimeLang from '../pages/CompanySettingsTimeLang.vue'
+import CompanySettingsUsers from '../pages/CompanySettingsUsers.vue'
+import CompanySettingsDepartments from '../pages/CompanySettingsDepartments.vue'
+import CompanySettingsBusinessDays from '../pages/CompanySettingsBusinessDays.vue'
+import CompanySettingsHolidays from '../pages/CompanySettingsHolidays.vue'
+import CompanySettingsAllowedIPs from '../pages/CompanySettingsAllowedIPs.vue'
 
 import Error404 from '../pages/Error404'
 
@@ -42,6 +48,12 @@ export default new Router({
     { path: '/settings/security', name: 'user-settings-security', component: UserSettingsSecurity, meta: { title: 'User Settings Security - 1Punch' } },
     { path: '/settings', redirect: '/settings/profile' },
     { path: '/company/settings/profile', name: 'company-settings-profile', component: CompanySettingsProfile, meta: { title: 'Company Settings Profile - 1Punch' } },
+    { path: '/company/settings/timelang', name: 'company-settings-timelang', component: CompanySettingsTimeLang, meta: { title: 'Company Settings Timezone and Language - 1Punch' } },
+    { path: '/company/settings/users', name: 'company-settings-users', component: CompanySettingsUsers, meta: { title: 'Company Settings Users - 1Punch' } },
+    { path: '/company/settings/departments', name: 'company-settings-departments', component: CompanySettingsDepartments, meta: { title: 'Company Settings Departments - 1Punch' } },
+    { path: '/company/settings/business', name: 'company-settings-business', component: CompanySettingsBusinessDays, meta: { title: 'Company Settings Business Days - 1Punch' } },
+    { path: '/company/settings/holidays', name: 'company-settings-holidays', component: CompanySettingsHolidays, meta: { title: 'Company Settings Holidays - 1Punch' } },
+    { path: '/company/settings/allowed-ips', name: 'company-settings-allowed-ips', component: CompanySettingsAllowedIPs, meta: { title: 'Company Settings Allowed IPs - 1Punch' } },
     { path: '/company/settings', redirect: '/company/settings/profile' },
     { path: '*', component: Error404 }
   ]
