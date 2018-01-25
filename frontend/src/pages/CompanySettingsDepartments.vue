@@ -8,15 +8,15 @@
       <div class="column col-9">
         <h2 class="border-bottom">Departments</h2>
         <div class="text-right">
-          <a href="#add-deparment" class="btn group-icon">
-            Add Department
+          <a href="#add-deparment" class="btn">
             <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M24 10h-10v-10h-4v10h-10v4h10v10h4v-10h10z"/></svg>
+            Add Department
           </a>
           <div class="modal" id="add-deparment">
-            <a href="#close" class="modal-overlay" aria-label="Close"></a>
+            <a href="#close" class="modal-overlay"></a>
             <div class="modal-container">
               <div class="modal-header">
-                <a href="#close" class="btn btn-clear float-right" aria-label="Close"></a><br>
+                <a href="#close" class="btn btn-clear float-right"></a><br>
                 <h2 class="text-center">Add Department</h2>
               </div>
               <div class="modal-body">
@@ -42,18 +42,18 @@
             <th></th>
           </thead>
           <tbody>
-            <tr>
-              <td><a href="#edit-deparment">IT</a></td>
+            <tr @click="toggleModal">
+              <td>IT</td>
               <td>5</td>
               <td class="text-center"><button class="btn btn-error">Delete</button></td>
             </tr>
-            <tr>
-              <td><a href="#edit-deparment">Marketing</a></td>
+            <tr @click="toggleModal">
+              <td>Marketing</td>
               <td>2</td>
               <td class="text-center"><button class="btn btn-error">Delete</button></td>
             </tr>
-            <tr>
-              <td><a href="#edit-deparment">HR</a></td>
+            <tr @click="toggleModal">
+              <td>HR</td>
               <td>3</td>
               <td class="text-center"><button class="btn btn-error">Delete</button></td>
             </tr>
@@ -61,11 +61,11 @@
         </table>
       </div>
     </div>
-    <div class="modal" id="edit-deparment">
-      <a href="#close" class="modal-overlay" aria-label="Close"></a>
+    <div class="modal" :class="{ active: isModalOpen }" id="edit-deparment">
+      <a class="modal-overlay" @click="toggleModal"></a>
       <div class="modal-container">
         <div class="modal-header">
-          <a href="#close" class="btn btn-clear float-right" aria-label="Close"></a><br>
+          <a class="btn btn-clear float-right" @click="toggleModal"></a><br>
           <h2 class="text-center">Edit Department</h2>
         </div>
         <div class="modal-body">
@@ -78,7 +78,7 @@
         </div>
         <div class="modal-footer">
           <div class="text-center">
-            <a href="#close" class="btn btn-primary">Submit</a>
+            <a class="btn btn-primary" @click="toggleModal">Submit</a>
           </div>
         </div>
       </div>
@@ -91,9 +91,19 @@ import SettingLayout from '../layouts/Setting.vue'
 import CompanySettingsSidebar from '../components/CompanySettingsSidebar.vue'
 
 export default {
+  data () {
+    return {
+      isModalOpen: false
+    }
+  },
   components: {
     SettingLayout,
     CompanySettingsSidebar
+  },
+  methods: {
+    toggleModal () {
+      this.isModalOpen = !this.isModalOpen
+    }
   }
 }
 </script>

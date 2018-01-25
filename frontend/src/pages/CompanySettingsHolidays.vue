@@ -29,15 +29,15 @@
             </div>
           </div>
           <div class="column col-8 text-right">
-            <a href="#add-holiday" class="btn group-icon">
-              Add Holiday
+            <a href="#add-holiday" class="btn">
               <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M24 10h-10v-10h-4v10h-10v4h10v10h4v-10h10z"/></svg>
+              Add Holiday
             </a>
             <div class="modal" id="add-holiday">
-              <a href="#close" class="modal-overlay" aria-label="Close"></a>
+              <a href="#close" class="modal-overlay"></a>
               <div class="modal-container">
                 <div class="modal-header">
-                  <a href="#close" class="btn btn-clear float-right" aria-label="Close"></a><br>
+                  <a href="#close" class="btn btn-clear float-right"></a><br>
                   <h2 class="text-center">Add Holiday</h2>
                 </div>
                 <div class="modal-body">
@@ -74,8 +74,8 @@
             <th></th>
           </thead>
           <tbody>
-            <tr>
-              <td><a href="#edit-holiday">New Year</a></td>
+            <tr @click="toggleModal">
+              <td>New Year</td>
               <td>Vietname</td>
               <td>20-01-2018</td>
               <td>20-01-2018</td>
@@ -85,11 +85,11 @@
         </table>
       </div>
     </div>
-    <div class="modal" id="edit-holiday">
-      <a href="#close" class="modal-overlay" aria-label="Close"></a>
+    <div class="modal" :class="{ active: isModalOpen }" id="edit-holiday">
+      <a class="modal-overlay" @click="toggleModal"></a>
       <div class="modal-container">
         <div class="modal-header">
-          <a href="#close" class="btn btn-clear float-right" aria-label="Close"></a><br>
+          <a class="btn btn-clear float-right" @click="toggleModal"></a><br>
           <h2 class="text-center">Edit Holiday</h2>
         </div>
         <div class="modal-body">
@@ -110,7 +110,7 @@
         </div>
         <div class="modal-footer">
           <div class="text-center">
-            <a href="#close" class="btn btn-primary">Submit</a>
+            <a class="btn btn-primary" @click="toggleModal">Submit</a>
           </div>
         </div>
       </div>
@@ -123,9 +123,19 @@ import SettingLayout from '../layouts/Setting.vue'
 import CompanySettingsSidebar from '../components/CompanySettingsSidebar.vue'
 
 export default {
+  data () {
+    return {
+      isModalOpen: false
+    }
+  },
   components: {
     SettingLayout,
     CompanySettingsSidebar
+  },
+  methods: {
+    toggleModal () {
+      this.isModalOpen = !this.isModalOpen
+    }
   }
 }
 </script>
