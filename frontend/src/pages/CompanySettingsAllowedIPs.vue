@@ -7,16 +7,18 @@
       </div>
       <div class="column col-9">
         <h2 class="border-bottom">Allowed IPs</h2>
-        <div class="form-group d-inline-block mt-2">
-          <input class="form-input" type="text" placeholder="Filter IP by name">
-        </div>
-        <div class="float-right mt-2">
-          <a href="#add-ip" class="btn">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M24 10h-10v-10h-4v10h-10v4h10v10h4v-10h10z"/></svg>
-            Add IP
-          </a>
+        <div class="toolbar mt-5">
+          <div class="form-group clearfix">
+            <select class="form-select">
+              <option>Filter by name</option>
+            </select>
+            <a href="#add-ip" class="btn ml-5">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M24 10h-10v-10h-4v10h-10v4h10v10h4v-10h10z"/></svg>
+              Add IP
+            </a>
+          </div>
           <div class="modal" id="add-ip">
-            <a href="#close" class="modal-overlay" aria-label="Close"></a>
+            <a href="#close" class="modal-overlay"></a>
             <div class="modal-container">
               <div class="modal-header">
                 <a href="#close" class="btn btn-clear float-right"></a><br>
@@ -38,7 +40,7 @@
             </div>
           </div>
         </div>
-        <table class="table table-hover bg-light mt-3">
+        <table class="table table-hover bg-light mt-5">
           <thead>
             <th>IP Address</th>
             <th class="text-right">Created at</th>
