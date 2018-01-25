@@ -23,7 +23,7 @@
           </div>
           <div class="form-group">
             <label class="form-label" for="input-example-4">Industry</label>
-            <select class="form-input" id="input-example-4">
+            <select class="form-select" id="input-example-4">
               <option selected>Startup</option>
               <option> > 2 Years</option>
               <option> > 5 Years</option>

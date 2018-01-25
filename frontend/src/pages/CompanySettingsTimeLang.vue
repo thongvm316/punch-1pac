@@ -10,7 +10,7 @@
         <form class="setting-form">
           <div class="form-group">
             <label class="form-label" for="input-example-1">Timezone</label>
-            <select class="form-input" id="input-example-1">
+            <select class="form-select" id="input-example-1">
               <option selected>Asia/Bangkok</option>
               <option>HaNoi/Jakata/Bejing</option>
               <option>South Africa</option>
@@ -19,7 +19,7 @@
           </div>
           <div class="form-group">
             <label class="form-label" for="input-example-2">Language</label>
-            <select class="form-input" id="input-example-2">
+            <select class="form-select" id="input-example-2">
               <option selected>en</option>
               <option>fr</option>
               <option>jp</option>
