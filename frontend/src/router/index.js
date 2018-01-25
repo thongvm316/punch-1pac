@@ -17,6 +17,8 @@ import UserSettingsSecurity from '../pages/UserSettingsSecurity.vue'
 import CompanySettingsProfile from '../pages/CompanySettingsProfile.vue'
 import CompanySettingsTimeLang from '../pages/CompanySettingsTimeLang.vue'
 import CompanySettingsUsers from '../pages/CompanySettingsUsers.vue'
+import CompanySettingsUsersAdd from '../pages/CompanySettingsUsersAdd.vue'
+import CompanySettingsUsersAddMulti from '../pages/CompanySettingsUsersAddMulti.vue'
 import CompanySettingsDepartments from '../pages/CompanySettingsDepartments.vue'
 import CompanySettingsBusinessDays from '../pages/CompanySettingsBusinessDays.vue'
 import CompanySettingsHolidays from '../pages/CompanySettingsHolidays.vue'
@@ -50,6 +52,8 @@ export default new Router({
     { path: '/company/settings/profile', name: 'company-settings-profile', component: CompanySettingsProfile, meta: { title: 'Company Settings Profile - 1Punch' } },
     { path: '/company/settings/timelang', name: 'company-settings-timelang', component: CompanySettingsTimeLang, meta: { title: 'Company Settings Timezone and Language - 1Punch' } },
     { path: '/company/settings/users', name: 'company-settings-users', component: CompanySettingsUsers, meta: { title: 'Company Settings Users - 1Punch' } },
+    { path: '/company/settings/users/add', name: 'company-settings-users-add', component: CompanySettingsUsersAdd, meta: { title: 'Company Settings Add User - 1Punch' } },
+    { path: '/company/settings/users/add-multi', name: 'company-settings-users-add-multi', component: CompanySettingsUsersAddMulti, meta: { title: 'Company Settings Add Multiple Users - 1Punch' } },
     { path: '/company/settings/departments', name: 'company-settings-departments', component: CompanySettingsDepartments, meta: { title: 'Company Settings Departments - 1Punch' } },
     { path: '/company/settings/business-days', name: 'company-settings-business-days', component: CompanySettingsBusinessDays, meta: { title: 'Company Settings Business Days - 1Punch' } },
     { path: '/company/settings/holidays', name: 'company-settings-holidays', component: CompanySettingsHolidays, meta: { title: 'Company Settings Holidays - 1Punch' } },
