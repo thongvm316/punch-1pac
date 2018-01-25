@@ -8,7 +8,8 @@
 }
 
 .border-bottom {
-  border-bottom: 1px solid $gray-color;
+  border-bottom: 1px solid $border-color-dark;
+  padding-bottom: .3rem;
 }
 
 .circle {

@@ -64,15 +64,17 @@
 @import 'pagination';
 @import 'toast';
 @import 'accordions';
-//@import "tabs";
+@import "tabs";
 
 // Experimentals
 @import '../../node_modules/spectre.css/src/calendars';
 
-// Custom css by 1PAC.VN team
+// Handcoded css by 1PAC.VN team
 @import 'box';
 @import 'list';
 @import 'setting';
+@import 'datepicker';
+@import 'toolbar';
 
 // Utility classes
 @import '../../node_modules/spectre.css/src/animations';

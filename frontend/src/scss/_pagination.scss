@@ -1,6 +1,14 @@
-// Pagination
 .pagination {
   justify-content: center;
+
+  .page-item {
+    &.active,
+    &:hover {
+      svg {
+        color: $primary-color;
+      }
+    }
+  }
 
   svg {
     cursor: pointer;

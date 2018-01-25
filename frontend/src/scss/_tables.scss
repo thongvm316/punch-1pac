@@ -1,18 +1,11 @@
 // Tables
 .table {
+  font-size: .7rem;
+
   svg {
     width: .7rem;
     height: .7rem;
     color: $gray-color-dark;
-  }
-  &.table-hover {
-    tbody {
-      tr {
-        &:hover {
-          background: $secondary-color;
-        }
-      }
-    }
   }
 
   .form-checkbox {
