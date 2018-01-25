@@ -7,10 +7,10 @@
       </div>
       <div class="column col-9">
         <h2 class="border-bottom">Allowed IPs</h2>
-        <div class="form-group d-inline-block">
+        <div class="form-group d-inline-block mt-2">
           <input class="form-input" type="text" placeholder="Filter IP by name">
         </div>
-        <div class="float-right">
+        <div class="float-right mt-2">
           <a href="#add-ip" class="btn">
             <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M24 10h-10v-10h-4v10h-10v4h10v10h4v-10h10z"/></svg>
             Add IP
@@ -38,7 +38,7 @@
             </div>
           </div>
         </div>
-        <table class="table table-hover mt-4">
+        <table class="table table-hover bg-light mt-3">
           <thead>
             <th>IP Address</th>
             <th class="text-right">Created at</th>

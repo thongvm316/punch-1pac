@@ -7,7 +7,7 @@
       </div>
       <div class="column col-9">
         <h2 class="border-bottom">Departments</h2>
-        <div class="text-right">
+        <div class="text-right mt-5">
           <a href="#add-deparment" class="btn">
             <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M24 10h-10v-10h-4v10h-10v4h10v10h4v-10h10z"/></svg>
             Add Department
@@ -35,7 +35,7 @@
             </div>
           </div>
         </div>
-        <table class="table table-hover mt-4">
+        <table class="table table-hover bg-light mt-5">
           <thead>
             <th>Name</th>
             <th>Members</th>

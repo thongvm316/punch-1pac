@@ -7,7 +7,7 @@
       </div>
       <div class="column col-9">
         <h2 class="border-bottom">Holidays</h2>
-        <div class="columns">
+        <div class="columns mt-5">
           <div class="column col-4">
             <div class="form-group">
               <select class="form-select">
@@ -65,7 +65,7 @@
             </div>
           </div>
         </div>
-        <table class="table table-hover mt-4">
+        <table class="table table-hover bg-light mt-5">
           <thead>
             <th>Name</th>
             <th>Country</th>
