@@ -7,6 +7,52 @@
       </div>
       <div class="column col-9">
         <h2 class="border-bottom">Holidays</h2>
+        <div class="columns">
+          <div class="column col-4">
+            <div class="form-group">
+              <select class="form-select">
+                <option>Vietnam</option>
+                <option>Korea</option>
+                <option>Quatar</option>
+                <option>Uzbekistan</option>
+              </select>
+            </div>
+          </div>
+          <div class="column col-8">
+            <button class="btn btn-primary">Import</button>
+          </div>
+        </div>
+        <div class="columns mt-4">
+          <div class="column col-4">
+            <div class="form-group">
+              <input class="form-input" type="text" placeholder="Filter holiday by name">
+            </div>
+          </div>
+          <div class="column col-8 text-right">
+            <button class="btn group-icon">
+              Add Holiday
+              <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M24 10h-10v-10h-4v10h-10v4h10v10h4v-10h10z"/></svg>
+            </button>
+          </div>
+        </div>
+        <table class="table table-hover mt-4">
+          <thead>
+            <th>Name</th>
+            <th>Country</th>
+            <th>Start at</th>
+            <th>End at</th>
+            <th></th>
+          </thead>
+          <tbody>
+            <tr>
+              <td>New Year</td>
+              <td>Vietname</td>
+              <td>20-01-2018</td>
+              <td>20-01-2018</td>
+              <td class="text-center"><button class="btn btn-error">Delete</button></td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </setting-layout>
