@@ -1,5 +1,27 @@
 .box {
+  @include shadow-variant(.05rem);
   padding: .8rem;
   background-color: $light-color;
   border-radius: $border-radius;
+  border: .05rem solid $gray-color-light;
+
+  .box-header {
+    margin-bottom: 2rem;
+
+    h2 + span {
+      font-size: .8rem;
+      color: $gray-color;
+    }
+  }
+
+  .box-content {
+    display: flex;
+    flex: 0 0 auto;
+    justify-content: space-between;
+    align-items: center;
+
+    span {
+      vertical-align: middle;
+    }
+  }
 }
