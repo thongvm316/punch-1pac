@@ -12,6 +12,15 @@
 
 	.datepicker-calendar {
 	}
+
+  &-full-width {
+    display: block;
+    width: 100%;
+
+    .datepicker-input {
+      background-position: 98% 50%;
+    }
+  }
 }
 
 .datepicker-calendar {
