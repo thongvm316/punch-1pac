@@ -12,7 +12,7 @@
   .navbar-brand {
     line-height: 1;
     img {
-      height: 32px;
+      height: 1.6rem;
       vertical-align: middle;
     }
   }
@@ -20,19 +20,25 @@
   .dropdown {
     padding: .4rem 0;
     .menu {
-      box-shadow: 0 1px 5px 0 rgba(0, 0, 0, .1);
+      box-shadow: 0 .05rem .25rem 0 rgba(0, 0, 0, .1);
       border-radius: 0;
       color: $gray-color-dark;
       left: auto;
       right: 0;
+    }
+
+    .panel.menu {
+      padding: 0 .4rem;
+      right: -.8rem;
+      max-height: 100vh;
     }
   }
 
   .announcement {
     svg {
       color: $dark-color;
-      width: 20px;
-      height: 20px;
+      width: 1rem;
+      height: 1rem;
     }
 
     &.badge[data-badge]::after {
@@ -45,6 +51,27 @@
     }
   }
 
+  .announcement-items {
+    margin: 0;
+  }
+
+  .announcement-item {
+    border-bottom: .05rem solid $gray-color-light;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    padding: .4rem 0;
+
+    p {
+      font-size: .7rem;
+      margin-bottom: 0;
+    }
+
+    &:hover {
+      color: $primary-color;
+    }
+  }
+
   a {
     color: $dark-color;
     text-decoration: none;
@@ -54,6 +81,30 @@
     &.active,
     &:hover {
       color: $primary-color;
+    }
+  }
+
+  .panel {
+    @include shadow-variant(.05rem);
+    width: 16rem;
+
+    .panel-header {
+      padding: .3rem;
+      border-bottom: .05rem solid $gray-color-light;
+    }
+
+    .panel-body {
+      padding: 0 .8rem .8rem .8rem;
+      font-size: .7rem;
+    }
+
+    .panel-footer {
+      border-top: .05rem solid $gray-color-light;
+      padding: .2rem;
+
+      a {
+        font-size: .7rem;
+      }
     }
   }
 }
