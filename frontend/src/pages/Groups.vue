@@ -1,8 +1,10 @@
 <template>
   <main-layout>
     <h1>Groups</h1>
-    <div class="text-right">
-      <a href="#add-group" class="btn btn-primary">Add Group</a>
+    <div class="toolbar mt-5 text-right">
+      <a href="#add-group" class="btn">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M24 10h-10v-10h-4v10h-10v4h10v10h4v-10h10z"></path></svg>
+      Add Group</a>
     </div>
     <div class="columns">
       <div class="column col-3" @click="redirectGroup">

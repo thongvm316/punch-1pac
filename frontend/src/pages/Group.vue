@@ -3,7 +3,7 @@
     <h1>Group</h1>
     <div class="toolbar mt-5">
       <input type="text" class="form-input" placeholder="Search user by email"></input>
-      <a href="#" class="btn btn-primary">Add</a>
+      <a href="#" class="btn">Add</a>
     </div>
     <div class="toolbar mt-5 text-right">
       <a href="#edit-group" class="btn">Edit Group</a>

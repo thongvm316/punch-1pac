@@ -12,7 +12,7 @@
           <router-link class="mr-5" to="/groups">Groups</router-link>
         </section>
         <section class="navbar-section">
-          <span class="text-bold-600 mr-5">Jan 22, 2018 08:30</span>
+          <span class="text-bold-600 mr-5">Jan 22, 2018 {{ currentTime }}</span>
           <button class="btn btn-primary mr-5">Punch In</button>
           <span class="announcement mr-5" :class="{ badge: num_announcement }" :data-badge="num_announcement">
             <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path
@@ -43,13 +43,15 @@
 
 <script>
 import axios from 'axios'
+import moment from 'moment'
 
 export default {
   name: 'app-header',
   data () {
     return {
       isDropdownActive: false,
-      num_announcement: 0
+      num_announcement: 0,
+      currentTime: null
     }
   },
 
@@ -61,6 +63,10 @@ export default {
 
     toggleDropdown () {
       this.isDropdownActive = !this.isDropdownActive
+    },
+
+    updateCurrentTime () {
+      this.currentTime = moment().format('HH:mm')
     }
   },
 
@@ -80,6 +86,11 @@ export default {
     userAvatarUrl () {
       return window.INITIAL_STATE.user.avatar_url
     }
+  },
+
+  created () {
+    this.currentTime = moment().format('HH:mm')
+    setInterval(() => this.updateCurrentTime(), 1 * 1000)
   }
 }
 </script>
