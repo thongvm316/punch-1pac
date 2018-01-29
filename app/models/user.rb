@@ -58,12 +58,10 @@ class User < ApplicationRecord
 
   include ImageUploader::Attachment.new(:avatar)
 
-  scope :filter_by_email, ->(email) {
-    if email
-      where('email LIKE ?', "%#{email}%")
-    else
-      all
-    end
+  scope :search_by, ->(params) {
+    q = all
+    q = q.where('email LIKE ?', "%#{params[:email]}%") if params[:email].present?
+    q
   }
 
   def self.reset_password_token_valid?(token)
