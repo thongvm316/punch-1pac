@@ -31,6 +31,28 @@ RSpec.describe Api::V1::RequestsController, type: :controller do
   end
 
   describe 'GET #index' do
+    shared_examples 'filter by group' do
+      context 'when params have group_id' do
+        let!(:requests) { create_list :request, 3, user: request_creator }
+
+        subject { get :index, params: { group_id: group.id } }
+
+        its(:code) { is_expected.to eq '200' }
+        its(:body) { is_expected.to be_json_as(requests: Array.new(result_count) { response_request }, meta: response_pagination) }
+      end
+    end
+
+    shared_examples 'filter by status' do
+      context 'when params have status' do
+        let!(:requests) { create_list :request, 3, user: login_user, status: 'pending' }
+
+        subject { get :index, params: { status: 'pending' } }
+
+        its(:code) { is_expected.to eq '200' }
+        its(:body) { is_expected.to be_json_as(requests: Array.new(3) { response_request }, meta: response_pagination) }
+      end
+    end
+
     context 'when have not any request' do
       let(:login_user) { create :user, company: company, role: 'admin' }
       subject { get :index }
@@ -48,26 +70,21 @@ RSpec.describe Api::V1::RequestsController, type: :controller do
       its(:code) { is_expected.to eq '200' }
       its(:body) { is_expected.to be_json_as(requests: Array.new(3) { response_request }, meta: response_pagination) }
 
-      context 'with group filter' do
-        let!(:requests) { create_list :request, 3, user: login_user }
-        let!(:group) { create :group, company: company }
-        let(:login_user) { create :user, company: company, role: 'member', groups: [group] }
-
-        subject { get :index, params: { group_id: group.id } }
-
-        its(:code) { is_expected.to eq '200' }
-        its(:body) { is_expected.to be_json_as(requests: Array.new(3) { response_request }, meta: response_pagination) }
+      context 'when member sending his group id' do
+        let(:request_creator) { login_user }
+        let(:group) { login_user.groups.last }
+        let(:result_count) { 3 }
+        it_behaves_like 'filter by group'
       end
 
-      context 'with status filter' do
-        let!(:requests) { create_list :request, 3, user: login_user, status: 'pending' }
-        let(:login_user) { create :user, :with_group, company: company, role: 'member' }
-
-        subject { get :index, params: { status: 'pending' } }
-
-        its(:code) { is_expected.to eq '200' }
-        its(:body) { is_expected.to be_json_as(requests: Array.new(3) { response_request }, meta: response_pagination) }
+      context 'when member sending different group id' do
+        let(:request_creator) { login_user }
+        let(:group) { create :group, company: company }
+        let(:result_count) { 0 }
+        it_behaves_like 'filter by group'
       end
+
+      it_behaves_like 'filter by status'
     end
 
     context 'when login user is admin' do
@@ -78,16 +95,39 @@ RSpec.describe Api::V1::RequestsController, type: :controller do
 
       its(:body) { is_expected.to be_json_as(requests: Array.new(3) { response_request }, meta: response_pagination) }
       its(:code) { is_expected.to eq '200' }
+
+      context 'when admin sending his group id' do
+        let(:request_creator) { create :user, company: company, groups: [login_user.groups.last] }
+        let(:group) { login_user.groups.last }
+        let(:result_count) { 3 }
+        it_behaves_like 'filter by group'
+      end
+
+      context 'when admin sending different group id' do
+        let(:request_creator) { login_user }
+        let(:group) { create :group, company: company }
+        let(:result_count) { 0 }
+        it_behaves_like 'filter by group'
+      end
+
+      it_behaves_like 'filter by status'
     end
 
     context 'when login user is super admin' do
       let(:login_user) { create :user, company: company, role: 'superadmin' }
       let!(:requests) { create_list :request, 3, user: create(:user, company: company) }
+      let(:request_creator) { login_user }
+      let(:group) { create :group, company: company }
+      let(:request_creator) { create :user, company: company, groups: [group] }
+      let(:result_count) { 3 }
 
       subject { get :index }
 
       its(:code) { is_expected.to eq '200' }
       its(:body) { is_expected.to be_json_as(requests: Array.new(3) { response_request }, meta: response_pagination) }
+
+      it_behaves_like 'filter by group'
+      it_behaves_like 'filter by status'
     end
   end
 
