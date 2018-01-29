@@ -1,44 +1,36 @@
 <template>
-  <setting-layout>
-    <h1>Company Settings</h1>
-    <div class="columns">
-      <div class="column col-3">
-        <company-settings-sidebar></company-settings-sidebar>
-      </div>
-      <div class="column col-9">
-        <h2 class="border-bottom">Departments</h2>
-        <div class="toolbar text-right mt-5">
-          <a href="#add-deparment" class="btn">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M24 10h-10v-10h-4v10h-10v4h10v10h4v-10h10z"/></svg>
-            Add Department
-          </a>
-        </div>
-        <table class="table table-hover bg-light mt-5">
-          <thead>
-            <th>Name</th>
-            <th>Members</th>
-            <th></th>
-          </thead>
-          <tbody>
-            <tr @click="toggleModal">
-              <td>IT</td>
-              <td>5</td>
-              <td class="text-center"><button class="btn btn-error">Delete</button></td>
-            </tr>
-            <tr @click="toggleModal">
-              <td>Marketing</td>
-              <td>2</td>
-              <td class="text-center"><button class="btn btn-error">Delete</button></td>
-            </tr>
-            <tr @click="toggleModal">
-              <td>HR</td>
-              <td>3</td>
-              <td class="text-center"><button class="btn btn-error">Delete</button></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+  <setting-layout sidebar-type="company" title="Company Settings" subtitle="Departments">
+    <div class="toolbar text-right mt-5">
+      <a href="#add-deparment" class="btn">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M24 10h-10v-10h-4v10h-10v4h10v10h4v-10h10z"/></svg>
+        Add Department
+      </a>
     </div>
+    <table class="table table-hover bg-light mt-5">
+      <thead>
+        <th>Name</th>
+        <th>Members</th>
+        <th></th>
+      </thead>
+      <tbody>
+        <tr @click="toggleModal">
+          <td>IT</td>
+          <td>5</td>
+          <td class="text-center"><button class="btn btn-error">Delete</button></td>
+        </tr>
+        <tr @click="toggleModal">
+          <td>Marketing</td>
+          <td>2</td>
+          <td class="text-center"><button class="btn btn-error">Delete</button></td>
+        </tr>
+        <tr @click="toggleModal">
+          <td>HR</td>
+          <td>3</td>
+          <td class="text-center"><button class="btn btn-error">Delete</button></td>
+        </tr>
+      </tbody>
+    </table>
+
     <!-- Add department -->
     <div class="modal" id="add-deparment">
       <a href="#close" class="modal-overlay"></a>

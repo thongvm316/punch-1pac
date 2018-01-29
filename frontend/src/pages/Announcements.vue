@@ -1,6 +1,5 @@
 <template>
-  <main-layout>
-    <h1>Announcements</h1>
+  <main-layout title="Announcements">
     <table class="table table-hover mt-5 bg-light">
       <thead>
         <tr>

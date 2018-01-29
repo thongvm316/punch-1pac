@@ -2,7 +2,8 @@
   <div>
     <app-header></app-header>
     <main>
-      <div class="container grid-xl py-4">
+      <div class="container grid-xl">
+        <h1 class="title">{{ title }}</h1>
         <slot></slot>
       </div>
     </main>
@@ -11,16 +12,17 @@
 </template>
 
 <script>
-  import AppHeader from '../components/AppHeader.vue'
-  import AppSidebar from '../components/AppSidebar.vue'
-  import AppFooter from '../components/AppFooter.vue'
+import AppHeader from '../components/AppHeader.vue'
+import AppSidebar from '../components/AppSidebar.vue'
+import AppFooter from '../components/AppFooter.vue'
 
-  export default {
-    name: 'main-layout',
-    components: {
-      appSidebar: AppSidebar,
-      appHeader: AppHeader,
-      appFooter: AppFooter
-    }
+export default {
+  name: 'main-layout',
+  props: ['title'],
+  components: {
+    appSidebar: AppSidebar,
+    appHeader: AppHeader,
+    appFooter: AppFooter
   }
+}
 </script>

@@ -1,10 +1,11 @@
 <template>
-  <main-layout>
-    <h1>Group</h1>
-    <div class="toolbar mt-5">
+  <main-layout title="Group">
+    <div class="input-group mt-5">
       <input type="text" class="form-input" placeholder="Search user by email"></input>
-      <a href="#" class="btn">Add</a>
+      <a href="#" class="btn input-group-btn">Add</a>
     </div>
+    <p class="form-input-hint text-dark">Add a member to this group, then manager of this group can see the user's activities</p>
+
     <div class="toolbar mt-5 text-right">
       <a href="#edit-group" class="btn">Edit Group</a>
     </div>

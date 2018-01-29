@@ -1,56 +1,43 @@
 <template>
-  <setting-layout>
-    <h1>Company Settings</h1>
-    <div class="columns">
-      <div class="column col-3">
-        <company-settings-sidebar></company-settings-sidebar>
-      </div>
-      <div class="column col-9">
-        <h2 class="border-bottom">Holidays</h2>
-        <div class="toolbar mt-5">
-          <select class="form-select">
-            <option>Select country to import</option>
-            <option>Vietnam</option>
-            <option>Korea</option>
-            <option>Quatar</option>
-            <option>Uzbekistan</option>
-          </select>
-          <button class="btn btn-primary ml-5">Import</button>
-        </div>
-        <div class="toolbar clearfix mt-5">
-          <select class="form-select">
-            <option>Filter holiday by name</option>
-            <option>Vietnam</option>
-            <option>Korea</option>
-            <option>Quatar</option>
-            <option>Uzbekistan</option>
-          </select>
-          <a href="#add-holiday" class="btn float-right">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M24 10h-10v-10h-4v10h-10v4h10v10h4v-10h10z"/></svg>
-            Add Holiday
-          </a>
-        </div>
-
-        <table class="table table-hover bg-light mt-5">
-          <thead>
-            <th>Name</th>
-            <th>Country</th>
-            <th>Start at</th>
-            <th>End at</th>
-            <th></th>
-          </thead>
-          <tbody>
-            <tr @click="toggleModal">
-              <td>New Year</td>
-              <td>Vietname</td>
-              <td>20-01-2018</td>
-              <td>20-01-2018</td>
-              <td class="text-center"><button class="btn btn-error">Delete</button></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+  <setting-layout sidebar-type="company" title="Company Settings" subtitle="Holidays">
+    <div class="input-group mt-5">
+      <select class="form-select">
+        <option>Choose a country</option>
+        <option>Vietnam</option>
+        <option>Korea</option>
+        <option>Quatar</option>
+        <option>Uzbekistan</option>
+      </select>
+      <button class="btn input-group-btn">Import</button>
     </div>
+    <p class="form-input-hint text-dark">Import country's holidays for your company, then 1Punch will not count a holiday as leaving day</p>
+
+    <div class="toolbar clearfix mt-5">
+      <input type="text" class="form-input" placeholder="Filter holiday by name">
+      <a href="#add-holiday" class="btn float-right">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M24 10h-10v-10h-4v10h-10v4h10v10h4v-10h10z"/></svg>
+        Add Holiday
+      </a>
+    </div>
+
+    <table class="table table-hover bg-light mt-5">
+      <thead>
+        <th>Name</th>
+        <th>Country</th>
+        <th>Start at</th>
+        <th>End at</th>
+        <th></th>
+      </thead>
+      <tbody>
+        <tr @click="toggleModal">
+          <td>New Year</td>
+          <td>Vietname</td>
+          <td>20-01-2018</td>
+          <td>20-01-2018</td>
+          <td class="text-center"><button class="btn btn-error">Delete</button></td>
+        </tr>
+      </tbody>
+    </table>
     <!-- Add holiday -->
     <div class="modal" id="add-holiday">
       <a href="#close" class="modal-overlay"></a>
@@ -117,7 +104,6 @@
 
 <script>
 import SettingLayout from '../layouts/Setting.vue'
-import CompanySettingsSidebar from '../components/CompanySettingsSidebar.vue'
 
 export default {
   data () {
@@ -125,10 +111,11 @@ export default {
       isModalOpen: false
     }
   },
+
   components: {
-    SettingLayout,
-    CompanySettingsSidebar
+    SettingLayout
   },
+
   methods: {
     toggleModal () {
       this.isModalOpen = !this.isModalOpen
