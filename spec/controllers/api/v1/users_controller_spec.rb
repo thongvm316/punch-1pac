@@ -22,13 +22,12 @@ RSpec.describe Api::V1::UsersController, type: :controller do
     context 'when login user is admin' do
       context 'when company had users' do
         let!(:users) { create_list :user, 3, company: company }
-        let(:per_page_count) { User.count > User.default_per_page ? User.default_per_page : User.count}
         let(:login_user) { create :user, company: company, role: 'admin' }
 
         subject { get :index }
 
         its(:code) { is_expected.to eq '200' }
-        its(:body) { is_expected.to be_json_as(users: Array.new(per_page_count) { response_user }, meta: response_pagination )}
+        its(:body) { is_expected.to be_json_as(users: Array.new(4) { response_user }, meta: response_pagination )}
       end
     end
 
