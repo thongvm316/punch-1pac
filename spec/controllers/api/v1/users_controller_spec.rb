@@ -28,7 +28,7 @@ RSpec.describe Api::V1::UsersController, type: :controller do
         subject { get :index }
 
         its(:code) { is_expected.to eq '200' }
-        its(:body) { is_expected.to be_json_as(Array.new(per_page_count) { response_user }) }
+        its(:body) { is_expected.to be_json_as(users: Array.new(per_page_count) { response_user }, meta: response_pagination )}
       end
     end
 
@@ -39,7 +39,7 @@ RSpec.describe Api::V1::UsersController, type: :controller do
 
       subject { get :index, params: { email: email} }
       its(:code) { is_expected.to eq '200' }
-      its(:body) { is_expected.to be_json_as(Array.new(1) { response_user }) }
+      its(:body) { is_expected.to be_json_as(users: Array.new(1) { response_user }, meta: response_pagination) }
     end
   end
 

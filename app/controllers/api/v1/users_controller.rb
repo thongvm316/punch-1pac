@@ -2,11 +2,16 @@
 
 class Api::V1::UsersController < Api::V1::BaseController
   before_action :set_user, only: %i[show update destroy]
+  include Pagination
 
   def index
     authorize!
     users = current_company.users.filter_by_email(params[:email]).page(params[:page]).per(params[:per_page])
-    render json: users, each_serializer: UserSerializer, status: 200
+    render json: users,
+           root: 'users',
+           each_serializer: UserSerializer,
+           adapter: :json,
+           meta: pager(users)
   end
 
   def show
