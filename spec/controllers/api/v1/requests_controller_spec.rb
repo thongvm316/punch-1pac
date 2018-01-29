@@ -116,7 +116,6 @@ RSpec.describe Api::V1::RequestsController, type: :controller do
     context 'when login user is super admin' do
       let(:login_user) { create :user, company: company, role: 'superadmin' }
       let!(:requests) { create_list :request, 3, user: create(:user, company: company) }
-      let(:request_creator) { login_user }
       let(:group) { create :group, company: company }
       let(:request_creator) { create :user, company: company, groups: [group] }
       let(:result_count) { 3 }
