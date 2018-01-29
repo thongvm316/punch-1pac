@@ -15,4 +15,11 @@
   .btn {
     font-size: .7rem;
   }
+
+  &.no-border {
+    td,
+    th {
+      border: 0;
+    }
+  }
 }

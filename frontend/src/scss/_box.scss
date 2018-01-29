@@ -3,10 +3,16 @@
   padding: .8rem;
   background-color: $light-color;
   border-radius: $border-radius;
-  border: .05rem solid $gray-color-light;
 
   .box-header {
     margin-bottom: 2rem;
+
+    h2 {
+      cursor: pointer;
+      &:hover {
+        color: $primary-color;
+      }
+    }
 
     h2 + span {
       font-size: .8rem;

@@ -1,5 +1,5 @@
 .header {
-  background-color: $secondary-color;
+  background-color: $light-color;
   position: fixed;
   width: 100%;
   z-index: $zindex-4;
@@ -19,22 +19,13 @@
 
   .dropdown {
     padding: .4rem 0;
-    .menu {
-      box-shadow: 0 .05rem .25rem 0 rgba(0, 0, 0, .1);
-      border-radius: 0;
-      color: $gray-color-dark;
-      left: auto;
-      right: 0;
-    }
-
-    .panel.menu {
-      padding: 0 .4rem;
-      right: -.8rem;
-      max-height: 100vh;
+    &.active .announcement-dropdown {
+      display: block;
     }
   }
 
   .announcement {
+    cursor: pointer;
     svg {
       color: $dark-color;
       width: 1rem;
@@ -51,27 +42,6 @@
     }
   }
 
-  .announcement-items {
-    margin: 0;
-  }
-
-  .announcement-item {
-    border-bottom: .05rem solid $gray-color-light;
-    cursor: pointer;
-    display: flex;
-    justify-content: space-between;
-    padding: .4rem 0;
-
-    p {
-      font-size: .7rem;
-      margin-bottom: 0;
-    }
-
-    &:hover {
-      color: $primary-color;
-    }
-  }
-
   a {
     color: $dark-color;
     text-decoration: none;
@@ -83,28 +53,51 @@
       color: $primary-color;
     }
   }
+}
 
-  .panel {
-    @include shadow-variant(.05rem);
-    width: 16rem;
 
-    .panel-header {
-      padding: .3rem;
-      border-bottom: .05rem solid $gray-color-light;
+.announcement-dropdown {
+  display: none;
+  position: absolute;
+  top: 44px;
+  right: 0;
+  width: 300px;
+  font-size: .6rem;
+
+  &.box {
+    padding: 0;
+  }
+
+  h4 {
+    margin: 0;
+    font-size: $font-size-sm;
+    padding: .4rem .8rem;
+    border-bottom: 1px solid $border-color;
+  }
+
+  ul {
+    margin: 0;
+    list-style: none;
+  }
+
+  p {
+    margin: 0;
+  }
+
+  li {
+    margin: 0;
+    padding: .4rem .8rem;
+    border-bottom: 1px solid $border-color;
+    cursor: pointer;
+    &:hover {
+      background-color: $bg-color;
     }
+  }
 
-    .panel-body {
-      padding: 0 .8rem .8rem .8rem;
-      font-size: .7rem;
-    }
-
-    .panel-footer {
-      border-top: .05rem solid $gray-color-light;
-      padding: .2rem;
-
-      a {
-        font-size: .7rem;
-      }
-    }
+  > a {
+    font-size: .7rem;
+    padding: .4rem .8rem;
+    display: block;
+    text-align: center;
   }
 }

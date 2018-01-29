@@ -13,7 +13,7 @@ $light-color: #fff;
 $gray-color: lighten($dark-color, 40%);
 $gray-color-dark: darken($gray-color, 25%);
 $gray-color-light: lighten($gray-color, 20%);
-$gray-color-lightest: #eee;
+$gray-color-lightest: #f2f2f2;
 
 $border-color: lighten($dark-color, 60%);
 $border-color-dark: darken($border-color, 10%);

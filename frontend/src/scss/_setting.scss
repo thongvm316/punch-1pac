@@ -1,13 +1,24 @@
 .setting-sidebar {
   margin: 0;
   list-style: none;
-  font-size: $font-size-lg;
+
+  li {
+    margin-top: 0;
+  }
+
   a {
+    display: block;
+    padding: .2rem;
     color: $dark-color;
+    text-decoration: none;
+
+    &:hover {
+      background-color: $border-color;
+    }
 
     &.active {
-      color: $primary-color;
-      text-decoration: none;
+      background-color: $primary-color;
+      color: $light-color;
     }
   }
 }

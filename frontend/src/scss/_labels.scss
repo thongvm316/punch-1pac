@@ -1,33 +1,9 @@
-// Labels
 .label {
   padding: .4rem;
-  text-align: center;
 
-  // Label rounded
   &.label-rounded {
     border-radius: 5rem;
     padding-left: .4rem;
     padding-right: .4rem;
   }
-
-   //Label colors
-  //&.label-primary {
-    //@include label-variant($primary-color, rgba($primary-color, .3));
-  //}
-
-  //&.label-secondary {
-    //@include label-variant($primary-color, $secondary-color);
-  //}
-
-  //&.label-success {
-    //@include label-variant($success-color, rgba($success-color, .3));
-  //}
-
-  //&.label-warning {
-    //@include label-variant($warning-color, rgba($warning-color, .3));
-  //}
-
-  //&.label-error {
-    //@include label-variant($error-color, rgba($error-color, .3));
-  //}
 }
