@@ -58,6 +58,14 @@ class User < ApplicationRecord
 
   include ImageUploader::Attachment.new(:avatar)
 
+  scope :filter_by_email, ->(email, page) {
+    if email
+      where('email LIKE ?', "%#{email}%")
+    else
+      all
+    end.page(page)
+  }
+
   def self.reset_password_token_valid?(token)
     user = find_by(reset_password_token: token)
     raise AppErrors::InvalidResetPwdToken unless user

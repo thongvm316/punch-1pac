@@ -5,7 +5,7 @@ class Api::V1::UsersController < Api::V1::BaseController
 
   def index
     authorize!
-    users = current_company.users
+    users = current_company.users.filter_by_email(params[:email], params[:page])
     render json: users, each_serializer: UserSerializer, status: 200
   end
 
