@@ -47,6 +47,27 @@ RSpec.describe Api::V1::RequestsController, type: :controller do
 
       its(:code) { is_expected.to eq '200' }
       its(:body) { is_expected.to be_json_as(requests: Array.new(3) { response_request }, meta: response_pagination) }
+
+      context 'with group filter' do
+        let!(:requests) { create_list :request, 3, user: login_user }
+        let!(:group) { create :group, company: company }
+        let(:login_user) { create :user, company: company, role: 'member', groups: [group] }
+
+        subject { get :index, params: { group_id: group.id } }
+
+        its(:code) { is_expected.to eq '200' }
+        its(:body) { is_expected.to be_json_as(requests: Array.new(3) { response_request }, meta: response_pagination) }
+      end
+
+      context 'with status filter' do
+        let!(:requests) { create_list :request, 3, user: login_user, status: 'pending' }
+        let(:login_user) { create :user, :with_group, company: company, role: 'member' }
+
+        subject { get :index, params: { status: 'pending' } }
+
+        its(:code) { is_expected.to eq '200' }
+        its(:body) { is_expected.to be_json_as(requests: Array.new(3) { response_request }, meta: response_pagination) }
+      end
     end
 
     context 'when login user is admin' do
