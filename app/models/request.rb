@@ -29,15 +29,32 @@ class Request < ApplicationRecord
   validates :reason, presence: true, length: { maximum: 500 }
 
   scope :in_group, ->(user) { where(user_id: User.where(group_id: user.group_id)) }
+  class << self
+    def filter_by_user(user)
+      case user.role
+      when 'member'
+        user.requests
+      when 'superadmin'
+        Request.where(user_id: user.company.users)
+      when 'admin'
+        Request.where(user_id: UserGroup.select(:user_id).where(group_id: user.groups))
+      end
+    end
 
-  def self.filter_by_user(user)
-    case user.role
-    when 'member'
-      user.requests
-    when 'superadmin'
-      Request.where(user_id: user.company.users)
-    when 'admin'
-      Request.where(user_id: UserGroup.select(:user_id).where(group_id: user.groups))
+    def with_group(group_id)
+      if group_id
+        where(user_id: User.where(group_id: group_id))
+      else
+        self
+      end
+    end
+
+    def with_status(status)
+      if status
+        where(status: status)
+      else
+        self
+      end
     end
   end
 end
