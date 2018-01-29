@@ -1,6 +1,5 @@
 <template>
-  <main-layout>
-    <h1>Requests</h1>
+  <main-layout title="Requests">
     <ul class="tab mt-4">
       <router-link tag="li" class="tab-item" to="/requests/my"><a href="#">My Requests</a></router-link>
       <router-link tag="li" class="tab-item" to="/requests/groups"><a href="#">Group Requests</a></router-link>

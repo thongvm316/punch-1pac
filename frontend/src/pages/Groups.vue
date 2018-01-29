@@ -1,16 +1,16 @@
 <template>
-  <main-layout>
-    <h1>Groups</h1>
+  <main-layout title="Groups">
     <div class="toolbar mt-5 text-right">
       <a href="#add-group" class="btn">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M24 10h-10v-10h-4v10h-10v4h10v10h4v-10h10z"></path></svg>
-      Add Group</a>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M24 10h-10v-10h-4v10h-10v4h10v10h4v-10h10z"></path></svg>
+        Add Group
+      </a>
     </div>
-    <div class="columns">
-      <div class="column col-3" @click="redirectGroup">
+    <div class="columns mt-5">
+      <div class="column col-3">
         <div class="box">
           <div class="box-header">
-            <h2>Quality Assurance</h2>
+            <router-link tag="h2" to="/groups/1">Quality Assurance</router-link>
             <span>23 members</span>
           </div>
           <div class="box-content">
@@ -20,14 +20,14 @@
               <img src="/static/avatar.png" alt="Troy Kozey" class="avatar avatar-md">
               <span>+ 2</span>
             </div>
-            <a href="#">Leave</a>
+            <a @click.prevent="leave">Leave</a>
           </div>
         </div>
       </div>
-      <div class="column col-3" @click="redirectGroup">
+      <div class="column col-3">
         <div class="box">
           <div class="box-header">
-            <h2>Human Resource</h2>
+            <router-link tag="h2" to="/groups/1">Quality Assurance</router-link>
             <span>23 members</span>
           </div>
           <div class="box-content">
@@ -37,14 +37,14 @@
               <img src="/static/avatar.png" alt="Troy Kozey" class="avatar avatar-md">
               <span>+ 2</span>
             </div>
-            <a href="#">Leave</a>
+            <a @click.prevent="leave">Leave</a>
           </div>
         </div>
       </div>
-      <div class="column col-3" @click="redirectGroup">
+      <div class="column col-3">
         <div class="box">
           <div class="box-header">
-            <h2>Marketing</h2>
+            <router-link tag="h2" to="/groups/1">Quality Assurance</router-link>
             <span>23 members</span>
           </div>
           <div class="box-content">
@@ -54,14 +54,14 @@
               <img src="/static/avatar.png" alt="Troy Kozey" class="avatar avatar-md">
               <span>+ 2</span>
             </div>
-            <a href="#">Leave</a>
+            <a @click.prevent="leave">Leave</a>
           </div>
         </div>
       </div>
-      <div class="column col-3" @click="redirectGroup">
+      <div class="column col-3">
         <div class="box">
           <div class="box-header">
-            <h2>Quality Assurance</h2>
+            <router-link tag="h2" to="/groups/1">Quality Assurance</router-link>
             <span>23 members</span>
           </div>
           <div class="box-content">
@@ -71,14 +71,14 @@
               <img src="/static/avatar.png" alt="Troy Kozey" class="avatar avatar-md">
               <span>+ 2</span>
             </div>
-            <a href="#">Leave</a>
+            <a @click.prevent="leave">Leave</a>
           </div>
         </div>
       </div>
-      <div class="column col-3" @click="redirectGroup">
+      <div class="column col-3">
         <div class="box">
           <div class="box-header">
-            <h2>Human Resource</h2>
+            <router-link tag="h2" to="/groups/1">Quality Assurance</router-link>
             <span>23 members</span>
           </div>
           <div class="box-content">
@@ -88,14 +88,14 @@
               <img src="/static/avatar.png" alt="Troy Kozey" class="avatar avatar-md">
               <span>+ 2</span>
             </div>
-            <a href="#">Leave</a>
+            <a @click.prevent="leave">Leave</a>
           </div>
         </div>
       </div>
-      <div class="column col-3" @click="redirectGroup">
+      <div class="column col-3">
         <div class="box">
           <div class="box-header">
-            <h2>Marketing</h2>
+            <router-link tag="h2" to="/groups/1">Quality Assurance</router-link>
             <span>23 members</span>
           </div>
           <div class="box-content">
@@ -105,14 +105,14 @@
               <img src="/static/avatar.png" alt="Troy Kozey" class="avatar avatar-md">
               <span>+ 2</span>
             </div>
-            <a href="#">Leave</a>
+            <a @click.prevent="leave">Leave</a>
           </div>
         </div>
       </div>
-      <div class="column col-3" @click="redirectGroup">
+      <div class="column col-3">
         <div class="box">
           <div class="box-header">
-            <h2>Quality Assurance</h2>
+            <router-link tag="h2" to="/groups/1">Quality Assurance</router-link>
             <span>23 members</span>
           </div>
           <div class="box-content">
@@ -122,14 +122,14 @@
               <img src="/static/avatar.png" alt="Troy Kozey" class="avatar avatar-md">
               <span>+ 2</span>
             </div>
-            <a href="#">Leave</a>
+            <a @click.prevent="leave">Leave</a>
           </div>
         </div>
       </div>
-      <div class="column col-3" @click="redirectGroup">
+      <div class="column col-3">
         <div class="box">
           <div class="box-header">
-            <h2>Human Resource</h2>
+            <router-link tag="h2" to="/groups/1">Quality Assurance</router-link>
             <span>23 members</span>
           </div>
           <div class="box-content">
@@ -139,14 +139,14 @@
               <img src="/static/avatar.png" alt="Troy Kozey" class="avatar avatar-md">
               <span>+ 2</span>
             </div>
-            <a href="#">Leave</a>
+            <a @click.prevent="leave">Leave</a>
           </div>
         </div>
       </div>
-      <div class="column col-3" @click="redirectGroup">
+      <div class="column col-3">
         <div class="box">
           <div class="box-header">
-            <h2>Marketing</h2>
+            <router-link tag="h2" to="/groups/1">Quality Assurance</router-link>
             <span>23 members</span>
           </div>
           <div class="box-content">
@@ -156,41 +156,7 @@
               <img src="/static/avatar.png" alt="Troy Kozey" class="avatar avatar-md">
               <span>+ 2</span>
             </div>
-            <a href="#">Leave</a>
-          </div>
-        </div>
-      </div>
-      <div class="column col-3" @click="redirectGroup">
-        <div class="box">
-          <div class="box-header">
-            <h2>Quality Assurance</h2>
-            <span>23 members</span>
-          </div>
-          <div class="box-content">
-            <div class="box-content-img">
-              <img src="/static/avatar.png" alt="Troy Kozey" class="avatar avatar-md">
-              <img src="/static/avatar.png" alt="Troy Kozey" class="avatar avatar-md">
-              <img src="/static/avatar.png" alt="Troy Kozey" class="avatar avatar-md">
-              <span>+ 2</span>
-            </div>
-            <a href="#">Leave</a>
-          </div>
-        </div>
-      </div>
-      <div class="column col-3" @click="redirectGroup">
-        <div class="box">
-          <div class="box-header">
-            <h2>Human Resource</h2>
-            <span>23 members</span>
-          </div>
-          <div class="box-content">
-            <div class="box-content-img">
-              <img src="/static/avatar.png" alt="Troy Kozey" class="avatar avatar-md">
-              <img src="/static/avatar.png" alt="Troy Kozey" class="avatar avatar-md">
-              <img src="/static/avatar.png" alt="Troy Kozey" class="avatar avatar-md">
-              <span>+ 2</span>
-            </div>
-            <a href="#">Leave</a>
+            <a @click.prevent="leave">Leave</a>
           </div>
         </div>
       </div>
@@ -253,8 +219,8 @@ export default {
   },
 
   methods: {
-    redirectGroup () {
-      this.$router.push('groups/1')
+    leave () {
+      console.log('leave')
     }
   }
 }
@@ -262,6 +228,6 @@ export default {
 
 <style scoped>
   .column {
-    margin-top: .8rem;
+    margin-bottom: .8rem;
   }
 </style>

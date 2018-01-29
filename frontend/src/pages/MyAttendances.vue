@@ -1,6 +1,5 @@
 <template>
-  <main-layout>
-    <h1>Attendances</h1>
+  <main-layout title="Attendances">
     <ul class="tab mt-4">
       <router-link tag="li" class="tab-item" to="/attendances/my"><a href="#">My Attendances</a></router-link>
       <router-link tag="li" class="tab-item" to="/attendances/groups"><a href="#">Group Attendances</a></router-link>
