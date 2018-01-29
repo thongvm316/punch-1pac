@@ -22,14 +22,24 @@ RSpec.describe Api::V1::UsersController, type: :controller do
     context 'when login user is admin' do
       context 'when company had users' do
         let!(:users) { create_list :user, 3, company: company }
-        let(:current_users) { User.count }
+        let(:per_page_count) { User.count > User.default_per_page ? User.default_per_page : User.count}
         let(:login_user) { create :user, company: company, role: 'admin' }
 
         subject { get :index }
 
         its(:code) { is_expected.to eq '200' }
-        its(:body) { is_expected.to be_json_as(Array.new(current_users) { response_user }) }
+        its(:body) { is_expected.to be_json_as(Array.new(per_page_count) { response_user }) }
       end
+    end
+
+    context 'filter by email' do
+      let(:email){ Faker::Internet.email }
+      let(:login_user) { create :user, company: company, role: 'admin' }
+      let!(:user){ create :user, company: company, email: email }
+
+      subject { get :index, params: { email: email} }
+      its(:code) { is_expected.to eq '200' }
+      its(:body) { is_expected.to be_json_as(Array.new(1) { response_user }) }
     end
   end
 
