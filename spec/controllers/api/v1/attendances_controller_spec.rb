@@ -12,7 +12,6 @@ RSpec.describe Api::V1::AttendancesController, type: :controller do
   end
 
   describe 'GET #index' do
-    # (requests: Array.new(result_count) { response_request }, meta: response_pagination) }
     context 'when have search params' do
       let(:params) do
         {
