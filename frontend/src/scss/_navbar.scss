@@ -53,16 +53,24 @@
       color: $primary-color;
     }
   }
+
+  .menu .menu-item > a:focus,
+  .menu .menu-item > a:hover,
+  .menu .menu-item > a:active,
+  .menu .menu-item > a.active {
+    background-color: inherit;
+  }
 }
 
 
 .announcement-dropdown {
   display: none;
   position: absolute;
-  top: 44px;
-  right: 0;
+  top: 48px;
+  right: -72px;
   width: 300px;
   font-size: .6rem;
+  animation: slide-down .15s ease 1;
 
   &.box {
     padding: 0;
