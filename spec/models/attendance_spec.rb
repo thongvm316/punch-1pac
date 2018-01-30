@@ -16,21 +16,21 @@ RSpec.describe Attendance, type: :model do
   end
 
   describe '#scope' do
-    context '#search_by_days' do
+    context '#between' do
       let!(:attendance_1) { create :attendance, day: Date.current }
       let!(:attendance_2) { create :attendance, day: 1.day.from_now }
       let!(:attendances) { create_list :attendance, 3, day: 5.days.ago }
       it "returns attendances with day in range #{Date.current} - #{2.days.from_now}" do
-        expect(Attendance.search_by_days(Date.current, 2.days.from_now)).to eq([attendance_1, attendance_2])
+        expect(Attendance.between(Date.current, 2.days.from_now)).to eq([attendance_1, attendance_2])
       end
     end
 
-    context '#search_status' do
+    context '#with_status' do
       let!(:attend_ok) { create_list :attendance, 1, attending_status: 'attend_ok' }
       let!(:attendances) { create_list :attendance, 3 }
 
       it 'returns attendances with status attend_ok' do
-        expect(Attendance.search_status('attend_ok')).to eq(attend_ok)
+        expect(Attendance.with_status('attend_ok')).to eq(attend_ok)
       end
     end
 
