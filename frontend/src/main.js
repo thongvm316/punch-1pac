@@ -13,7 +13,7 @@ Vue.use(VueI18n)
 const i18n = new VueI18n({
   locale: 'en',
   fallbackLocale: 'en',
-  messages: messages.en
+  messages
 })
 
 // axios.defaults.headers.common['X-CSRF-Token'] = document.querySelector('meta[name=csrf-token]').getAttribute('content')
