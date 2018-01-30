@@ -3,42 +3,42 @@
     <div class="columns mt-5">
       <div class="column col-6">
         <div class="box">
-          <h2 class="subtitle">Status in month</h2>
+          <h2 class="subtitle">{{ $t('message.statusInMonth') }}</h2>
           <table class="table no-border">
             <thead>
               <tr>
-                <th>Status</th>
-                <th>Number of days</th>
+                <th>{{ $t('message.status') }}</th>
+                <th>{{ $t('message.statusInMonth') }}</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td>Arrive on time</td>
-                <td>13 days</td>
+                <td>{{ $t('message.arriveOnTime') }}</td>
+                <td>{{ $tc('message.day', 13, {count: 13}) }}</td>
               </tr>
               <tr>
-                <td>Leave on time</td>
-                <td>10 days</td>
+                <td>{{ $t('message.leaveOnTime') }}</td>
+                <td>{{ $tc('message.day', 10, {count: 10}) }}</td>
               </tr>
               <tr>
-                <td>Arrive late</td>
-                <td>3 days</td>
+                <td>{{ $t('message.arriveLate') }}</td>
+                <td>{{ $tc('message.day', 3, {count: 3}) }}</td>
               </tr>
               <tr>
-                <td>Leave early</td>
-                <td>1 day</td>
+                <td>{{ $t('message.leaveEarly') }}</td>
+                <td>{{ $tc('message.day', 1) }}</td>
               </tr>
               <tr>
-                <td>Annual leave</td>
-                <td>2 days</td>
+                <td>{{ $t('message.annualLeave') }}</td>
+                <td>{{ $tc('message.day', 2, {count: 2}) }}</td>
               </tr>
               <tr>
-                <td>Holiday</td>
-                <td>0</td>
+                <td>{{ $t('message.holiday') }}</td>
+                <td>{{ $tc('message.day', 0) }}</td>
               </tr>
               <tr>
-                <td>Unpaid leave</td>
-                <td>1 day</td>
+                <td>{{ $t('message.unpaidLeave') }}</td>
+                <td>{{ $tc('message.day', 1) }}</td>
               </tr>
             </tbody>
           </table>
@@ -46,7 +46,7 @@
       </div>
       <div class="column col-6">
         <div class="box">
-          <h2 class="subtitle">Chart in month</h2>
+          <h2 class="subtitle">{{ $t('message.chartInMonth') }}</h2>
           <div class="mt-4">
             <img class="img-responsive" src="../assets/chart.png">
           </div>
