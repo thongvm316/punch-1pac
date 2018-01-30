@@ -27,16 +27,16 @@ RSpec.describe Api::V1::UsersController, type: :controller do
         subject { get :index }
 
         its(:code) { is_expected.to eq '200' }
-        its(:body) { is_expected.to be_json_as(users: Array.new(4) { response_user }, meta: response_pagination )}
+        its(:body) { is_expected.to be_json_as(users: Array.new(4) { response_user }, meta: response_pagination) }
       end
     end
 
     context 'filter by email' do
-      let(:email){ Faker::Internet.email }
+      let(:email) { Faker::Internet.email }
       let(:login_user) { create :user, company: company, role: 'admin' }
-      let!(:user){ create :user, company: company, email: email }
+      let!(:user) { create :user, company: company, email: email }
 
-      subject { get :index, params: { email: email} }
+      subject { get :index, params: { email: email } }
       its(:code) { is_expected.to eq '200' }
       its(:body) { is_expected.to be_json_as(users: Array.new(1) { response_user }, meta: response_pagination) }
     end

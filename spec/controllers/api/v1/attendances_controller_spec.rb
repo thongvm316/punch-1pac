@@ -11,6 +11,36 @@ RSpec.describe Api::V1::AttendancesController, type: :controller do
     authenticate_user(login_user)
   end
 
+  describe 'GET #index' do
+    # (requests: Array.new(result_count) { response_request }, meta: response_pagination) }
+    context 'when have search params' do
+      let(:params) do
+        {
+          status: 'attend_ok',
+          from_date: Date.current,
+          to_date: 2.days.from_now
+        }
+      end
+      let!(:attend_ok) { create :attendance, attending_status: 'attend_ok', day: Date.current }
+      let!(:attendance_1) { create :attendance, day: Date.current }
+      let!(:attendance_2) { create :attendance, day: 1.day.from_now }
+
+      subject { get :index, params: params }
+
+      its(:code) { is_expected.to eq '200' }
+      its(:body) { is_expected.to be_json_as(attendances: Array.new(1) { response_attendance }, meta: response_pagination) }
+    end
+
+    context 'when have no search params' do
+      let!(:attendances) { create_list :attendance, 3, day: 5.days.ago }
+
+      subject { get :index }
+
+      its(:code) { is_expected.to eq '200' }
+      its(:body) { is_expected.to be_json_as(attendances: Array.new(3) { response_attendance }, meta: response_pagination) }
+    end
+  end
+
   describe 'POST #create' do
     context 'when attendance is created with off_status = holiday/weekend/annual_leave' do
       let!(:attendance) { create :attendance, user: login_user, off_status: 'holiday' }
