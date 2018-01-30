@@ -45,7 +45,7 @@ Rails.application.routes.draw do
           get  'latest', on: :collection
         end
 
-        resources :attendances, only: %i[create update]
+        resources :attendances, only: %i[index create update]
         resources :requests, only: %i[index create update destroy] do
           member do
             post 'approve' => 'requests#approve'

@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Api::V1::AttendancesController < Api::V1::BaseController
+  include Pagination
+
   def create
     authorize!
     attendance = AttendanceService.new(current_user).attend
@@ -9,6 +11,15 @@ class Api::V1::AttendancesController < Api::V1::BaseController
     else
       head(200)
     end
+  end
+
+  def index
+    attendances = Attendance.search_by(params).page(params[:page]).per(params[:per_page])
+    render json: attendances,
+           root: 'attendances',
+           each_serializer: AttendanceSerializer,
+           adapter: :json,
+           meta: pager(attendances)
   end
 
   def update

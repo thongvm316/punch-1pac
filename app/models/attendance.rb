@@ -31,4 +31,12 @@ class Attendance < ApplicationRecord
   validates :off_status, inclusion: %w[holiday weekend annual_leave], allow_nil: true
 
   scope :attended, -> { where.not(attended_at: nil) }
+  scope :between, ->(from_date, to_date) { where(day: from_date..to_date) }
+  scope :with_status, ->(status) { where(attending_status: status).or(where(leaving_status: status)).or(where(off_status: status)) }
+  scope :search_by, ->(params) {
+    q = all
+    q = q.with_status(params[:status]) if params[:status].present?
+    q = q.between(params[:from_date], params[:to_date]) if params[:from_date].present? && params[:to_date].present?
+    q
+  }
 end
