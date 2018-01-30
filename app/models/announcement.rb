@@ -33,6 +33,16 @@ class Announcement < ApplicationRecord
   scope :for_all, -> { where(target: %w[everyone owners]) }
   scope :for_everyone, -> { where(target: 'everyone') }
   scope :unread, ->(user_id) { where.not(id: ReadAnnouncement.select(:announcement_id).where(user_id: user_id)) }
+  scope :read, ->(user_id) { where(id: ReadAnnouncement.select(:announcement_id).where(user_id: user_id)) }
+
+  scope :search_by, ->(params, user_id) {
+    q = all
+    if params[:read_status].present?
+      q = q.read(user_id)   if params[:read_status] == 'read'
+      q = q.unread(user_id) if params[:read_status] == 'unread'
+    end
+    q.order(updated_at: :desc)
+  }
 
   def self.for_user(user)
     if user.owner?
