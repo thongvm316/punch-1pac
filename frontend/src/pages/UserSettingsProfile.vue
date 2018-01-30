@@ -12,11 +12,14 @@
       </div>
       <div class="form-group">
         <label class="form-label" for="input-example-18">Gender</label>
-        <select class="form-select">
-          <option>Choose an option</option>
-          <option>Male</option>
-          <option>Female</option>
-        </select>
+        <label class="form-radio">
+          <input type="radio" name="gender" checked>
+          <i class="form-icon"></i> Male
+        </label>
+        <label class="form-radio">
+          <input type="radio" name="gender">
+          <i class="form-icon"></i> Female
+        </label>
       </div>
       <div class="form-group">
         <label class="form-label" for="input-example-21">Email</label>

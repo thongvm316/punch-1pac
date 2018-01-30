@@ -26,15 +26,12 @@ import CompanySettingsAllowedIPs from '../pages/CompanySettingsAllowedIPs.vue'
 
 import Error404 from '../pages/Error404'
 
-import Modules from '../pages/Modules'
-
 Vue.use(Router)
 
 export default new Router({
   mode: 'history',
   linkActiveClass: 'active',
   routes: [
-    { path: '/modules', name: 'modules', component: Modules },
     { path: '/dashboard', name: 'dashboard', component: Dashboard, meta: { title: 'Dashboard - 1Punch' } },
     { path: '/attendances/groups', name: 'group-attendances', component: GroupAttendances, meta: { title: 'Group Attendances - 1Punch' } },
     { path: '/attendances/my', name: 'my-attendances', component: MyAttendances, meta: { title: 'My Attendances - 1Punch' } },
