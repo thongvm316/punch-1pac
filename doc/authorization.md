@@ -46,14 +46,6 @@
 | Update holiday    | update       | ✓           | ✓     | ✗     |
 | Destroy holiday   | destroy      | ✓           | ✓     | ✗     |
 
-## Custom Holiday
-|                   | Action       | Super Admin | Admin | Member|
-|:-----------------:|:------------:|:-----------:|:-----:|:-----:|
-| List all holidays | index        | ✓           | ✓     | ✗     |
-| Create holiday    | create       | ✓           | ✓     | ✗     |
-| Update holiday    | update       | ✓           | ✓     | ✗     |
-| Destroy holiday   | destroy      | ✓           | ✓     | ✗     |
-
 ## Holiday
 |                              | Action          | Super Admin | Admin | Member|
 |:----------------------------:|:---------------:|:-----------:|:-----:|:-----:|
@@ -62,13 +54,13 @@
 | Remove holiday from a company| company_destroy | ✓           | ✓     | ✗     |
 
 ## Department
-|                     | Action       | Super Admin | Admin | Member|
-|:-------------------:|:------------:|:-----------:|:-----:|:-----:|
-| List all department | index        | ✓           | ✓     | ✗     |
-| Show department     | show         | ✓           | ✓     | ✗     |
-| Create department   | create       | ✓           | ✓     | ✗     |
-| Update department   | update       | ✓           | ✓     | ✗     |
-| Destroy department  | destroy      | ✓           | ✓     | ✗     |
+|                      | Action       | Super Admin | Admin | Member|
+|:--------------------:|:------------:|:-----------:|:-----:|:-----:|
+| List all departments | index        | ✓           | ✓     | ✗     |
+| Show department      | show         | ✓           | ✓     | ✗     |
+| Create department    | create       | ✓           | ✓     | ✗     |
+| Update department    | update       | ✓           | ✓     | ✗     |
+| Destroy department   | destroy      | ✓           | ✓     | ✗     |
 
 ## Group
 |                 | Action       | Super Admin | Admin | Member|
