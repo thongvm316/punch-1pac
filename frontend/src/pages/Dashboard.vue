@@ -3,6 +3,12 @@
     <div class="columns mt-5">
       <div class="column col-6">
         <div class="box">
+          <label for="locale">Lang</label>
+          <select v-model="locale">
+            <option>en</option>
+            <option>ja</option>
+            <option>vi</option>
+          </select>
           <h2 class="subtitle">{{ $t('message.dashboard.statusInMonth') }}</h2>
           <table class="table no-border">
             <thead>
@@ -83,9 +89,19 @@ import MainLayout from '../layouts/Main.vue'
 import FullCalendar from '../components/FullCalendar.vue'
 
 export default {
+  data () {
+    return {
+      locale: 'en'
+    }
+  },
   components: {
     MainLayout,
     FullCalendar
+  },
+  watch: {
+    locale (val) {
+      this.$i18n.locale = val
+    }
   }
 }
 </script>
