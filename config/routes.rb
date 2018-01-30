@@ -42,7 +42,6 @@ Rails.application.routes.draw do
 
         resources :announcements, only: %i[index show] do
           post 'read' => 'read_announcements#create', on: :member
-          get  'latest', on: :collection
         end
 
         resources :attendances, only: %i[create update]
