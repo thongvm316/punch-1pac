@@ -2,7 +2,7 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import VueI18n from 'vue-i18n'
-import messages from './message/message'
+import en from './locale/en.js'
 
 // import axios from 'axios'
 
@@ -11,9 +11,9 @@ import './scss/main.scss'
 Vue.use(VueI18n)
 
 const i18n = new VueI18n({
-  locale: 'vi',
+  locale: 'en',
   fallbackLocale: 'en',
-  messages
+  messages: en
 })
 
 // axios.defaults.headers.common['X-CSRF-Token'] = document.querySelector('meta[name=csrf-token]').getAttribute('content')

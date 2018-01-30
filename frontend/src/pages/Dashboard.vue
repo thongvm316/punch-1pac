@@ -3,42 +3,42 @@
     <div class="columns mt-5">
       <div class="column col-6">
         <div class="box">
-          <h2 class="subtitle">{{ $t('message.statusInMonth') }}</h2>
+          <h2 class="subtitle">{{ $t('message.dashboard.statusInMonth') }}</h2>
           <table class="table no-border">
             <thead>
               <tr>
-                <th>{{ $t('message.status') }}</th>
-                <th>{{ $t('message.statusInMonth') }}</th>
+                <th>{{ $t('message.dashboard.status') }}</th>
+                <th>{{ $t('message.dashboard.statusInMonth') }}</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td>{{ $t('message.arriveOnTime') }}</td>
-                <td>{{ $tc('message.day', 13, {count: 13}) }}</td>
+                <td>{{ $t('message.dashboard.arriveOnTime') }}</td>
+                <td>{{ $tc('message.dashboard.day', 13, {count: 13}) }}</td>
               </tr>
               <tr>
-                <td>{{ $t('message.leaveOnTime') }}</td>
-                <td>{{ $tc('message.day', 10, {count: 10}) }}</td>
+                <td>{{ $t('message.dashboard.leaveOnTime') }}</td>
+                <td>{{ $tc('message.dashboard.day', 10, {count: 10}) }}</td>
               </tr>
               <tr>
-                <td>{{ $t('message.arriveLate') }}</td>
-                <td>{{ $tc('message.day', 3, {count: 3}) }}</td>
+                <td>{{ $t('message.dashboard.arriveLate') }}</td>
+                <td>{{ $tc('message.dashboard.day', 3, {count: 3}) }}</td>
               </tr>
               <tr>
-                <td>{{ $t('message.leaveEarly') }}</td>
-                <td>{{ $tc('message.day', 1) }}</td>
+                <td>{{ $t('message.dashboard.leaveEarly') }}</td>
+                <td>{{ $tc('message.dashboard.day', 1) }}</td>
               </tr>
               <tr>
-                <td>{{ $t('message.annualLeave') }}</td>
-                <td>{{ $tc('message.day', 2, {count: 2}) }}</td>
+                <td>{{ $t('message.dashboard.annualLeave') }}</td>
+                <td>{{ $tc('message.dashboard.day', 2, {count: 2}) }}</td>
               </tr>
               <tr>
-                <td>{{ $t('message.holiday') }}</td>
-                <td>{{ $tc('message.day', 0) }}</td>
+                <td>{{ $t('message.dashboard.holiday') }}</td>
+                <td>{{ $tc('message.dashboard.day', 0) }}</td>
               </tr>
               <tr>
-                <td>{{ $t('message.unpaidLeave') }}</td>
-                <td>{{ $tc('message.day', 1) }}</td>
+                <td>{{ $t('message.dashboard.unpaidLeave') }}</td>
+                <td>{{ $tc('message.dashboard.day', 1) }}</td>
               </tr>
             </tbody>
           </table>
@@ -46,7 +46,7 @@
       </div>
       <div class="column col-6">
         <div class="box">
-          <h2 class="subtitle">{{ $t('message.chartInMonth') }}</h2>
+          <h2 class="subtitle">{{ $t('message.dashboard.chartInMonth') }}</h2>
           <div class="mt-4">
             <img class="img-responsive" src="../assets/chart.png">
           </div>
