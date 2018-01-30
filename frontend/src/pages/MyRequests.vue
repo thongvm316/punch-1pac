@@ -6,10 +6,10 @@
     </ul>
 
     <div class="toolbar clearfix mt-5">
-      <a href="#add-request" class="btn float-right">
+      <button type="button" class="btn float-right" @click="toggleAddModal">
         <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M24 10h-10v-10h-4v10h-10v4h10v10h4v-10h10z"></path></svg>
         Add Request
-      </a>
+      </button>
     </div>
 
     <table class="table table-hover bg-light mt-4">
@@ -21,7 +21,7 @@
         <th>Status</th>
       </thead>
       <tbody>
-        <tr @click="toggleModal">
+        <tr @click="toggleEditModal">
           <td>Jan 20</td>
           <td>08:30</td>
           <td>18:00</td>
@@ -30,7 +30,7 @@
             <span class="label label-rounded label-success">Approved</span>
           </td>
         </tr>
-        <tr @click="toggleModal">
+        <tr @click="toggleEditModal">
           <td>Jan 20</td>
           <td>08:30</td>
           <td>18:00</td>
@@ -39,7 +39,7 @@
             <span class="label label-rounded label-warning">Pending</span>
           </td>
         </tr>
-        <tr @click="toggleModal">
+        <tr @click="toggleEditModal">
           <td>Jan 20</td>
           <td>08:30</td>
           <td>18:00</td>
@@ -74,109 +74,92 @@
         <a><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M7.33 24l-2.83-2.829 9.339-9.175-9.339-9.167 2.83-2.829 12.17 11.996z"/></svg></a>
       </li>
     </ul>
-    <!-- New Request Modal -->
-    <div class="modal" id="add-request">
-      <a href="#close" class="modal-overlay" aria-label="Close"></a>
-      <div class="modal-container">
-        <div class="modal-header">
-          <a href="#close" class="btn btn-clear float-right"></a><br>
-          <h2 class="text-center">Add Request</h2>
-        </div>
-        <div class="modal-body">
-          <div class="content">
-            <div class="form-group">
-              <label class="form-label">Date</label>
-              <datepicker
-              :minimumView="'day'"
-              :maximumView="'day'"
-              :input-class="'datepicker-input form-input'"
-              :calendar-class="'datepicker-calendar'"
-              :wrapper-class="'datepicker datepicker-full-width'"/>
-            </div>
-            <div class="form-group">
-              <label class="form-label">Started at</label>
-              <input class="form-input" type="text">
-            </div>
-            <div class="form-group">
-              <label class="form-label">Ended at</label>
-              <input class="form-input" type="text">
-            </div>
-            <div class="form-group">
-              <label class="form-label">Reason</label>
-              <textarea class="form-input"></textarea>
-            </div>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <div class="text-center">
-            <a href="#close" class="btn btn-primary">Submit</a>
-          </div>
-        </div>
-      </div>
-    </div>
 
-    <!-- Edit Request Modal -->
-    <div class="modal" :class="{ active: isModalOpen }" id="edit-request">
-      <a class="modal-overlay" @click="toggleModal"></a>
-      <div class="modal-container">
-        <div class="modal-header">
-          <a class="btn btn-clear float-right" @click="toggleModal"></a><br>
-          <h2 class="text-center">Edit Request</h2>
-        </div>
-        <div class="modal-body">
-          <div class="content">
-            <div class="form-group">
-              <label class="form-label">Date</label>
-              <datepicker
-              :minimumView="'day'"
-              :maximumView="'day'"
-              :input-class="'datepicker-input form-input'"
-              :calendar-class="'datepicker-calendar'"
-              :wrapper-class="'datepicker datepicker-full-width'"/>
-            </div>
-            <div class="form-group">
-              <label class="form-label">Started at</label>
-              <input class="form-input" type="text">
-            </div>
-            <div class="form-group">
-              <label class="form-label">Ended at</label>
-              <input class="form-input" type="text">
-            </div>
-            <div class="form-group">
-              <label class="form-label">Reason</label>
-              <textarea class="form-input"></textarea>
-            </div>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <div class="text-center">
-            <a class="btn btn-primary" @click="toggleModal">Submit</a>
-          </div>
-        </div>
+    <modal title="Add Request" :modal-open.sync="isAddModalOpen">
+      <div class="form-group">
+        <label class="form-label">Date</label>
+        <datepicker
+        :minimumView="'day'"
+        :maximumView="'day'"
+        :input-class="'datepicker-input form-input'"
+        :calendar-class="'datepicker-calendar'"
+        :wrapper-class="'datepicker datepicker-full-width'"/>
       </div>
-    </div>
+      <div class="form-group">
+        <label class="form-label">Started at</label>
+        <input class="form-input" type="text">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Ended at</label>
+        <input class="form-input" type="text">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Reason</label>
+        <textarea class="form-input"></textarea>
+      </div>
+      <div class="form-group">
+        <button type="button" class="btn">Submit</button>
+      </div>
+    </modal>
+
+    <modal title="Edit Request" :modal-open.sync="isEditModalOpen">
+      <div class="form-group">
+        <label class="form-label">Date</label>
+        <datepicker
+        :minimumView="'day'"
+        :maximumView="'day'"
+        :input-class="'datepicker-input form-input'"
+        :calendar-class="'datepicker-calendar'"
+        :wrapper-class="'datepicker datepicker-full-width'"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Started at</label>
+        <input class="form-input" type="text">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Ended at</label>
+        <input class="form-input" type="text">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Reason</label>
+        <textarea class="form-input"></textarea>
+      </div>
+      <div class="form-group">
+        <button type="button" class="btn">Save</button>
+      </div>
+    </modal>
   </main-layout>
 </template>
 
 <script>
 import Datepicker from 'vuejs-datepicker'
 import MainLayout from '../layouts/Main.vue'
+import Modal from '../components/Modal.vue'
 
 export default {
   data () {
     return {
-      isModalOpen: false
+      isEditModalOpen: false,
+      isAddModalOpen: false
     }
   },
+
   name: 'my-requests',
+
   components: {
     MainLayout,
-    Datepicker
+    Datepicker,
+    Modal
   },
+
   methods: {
-    toggleModal () {
-      this.isModalOpen = !this.isModalOpen
-    }
+    toggleEditModal () {
+      this.isEditModalOpen = !this.isEditModalOpen
+    },
+
+    toggleAddModal () {
+      this.isAddModalOpen = !this.isAddModalOpen
+    },
   }
 }
 </script>

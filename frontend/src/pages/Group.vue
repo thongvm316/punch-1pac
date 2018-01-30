@@ -2,12 +2,12 @@
   <main-layout title="Group">
     <div class="input-group mt-5">
       <input type="text" class="form-input" placeholder="Search user by email"></input>
-      <a href="#" class="btn input-group-btn">Add</a>
+      <button type="button" class="btn input-group-btn">Add</button>
     </div>
     <p class="form-input-hint text-dark">Add a member to this group, then manager of this group can see the user's activities</p>
 
     <div class="toolbar mt-5 text-right">
-      <a href="#edit-group" class="btn">Edit Group</a>
+      <button type="button" class="btn" @click="toggleEditModal">Edit Group</button>
     </div>
     <table class="table table-hover bg-light mt-5">
       <thead>
@@ -65,37 +65,39 @@
         </tr>
       </tbody>
     </table>
-    <div class="modal" id="edit-group">
-      <a href="#close" class="modal-overlay"></a>
-      <div class="modal-container">
-        <div class="modal-header clearfix">
-          <a href="#close" class="btn btn-clear float-right"></a><br>
-          <h2 class="text-center">Edit Group</h2>
-        </div>
-        <div class="modal-body">
-          <div class="content">
-            <div class="form-group">
-              <label class="form-label" for="input-example-1">Name</label>
-              <input class="form-input" type="text" id="input-example-1" placeholder="Name">
-            </div>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <div class="text-center">
-            <a href="#close" class="btn btn-primary">Save</a>
-          </div>
-        </div>
+
+    <modal title="Edit Group" :modal-open.sync="isEditModalOpen">
+      <div class="form-group">
+        <label class="form-label" for="input-example-1">Name</label>
+        <input class="form-input" type="text" id="input-example-1" placeholder="Name">
       </div>
-    </div>
+      <div class="form-group">
+        <button type="button" class="btn">Save</button>
+      </div>
+    </modal>
   </main-layout>
 </template>
 
 <script>
 import MainLayout from '../layouts/Main.vue'
+import Modal from '../components/Modal.vue'
 
 export default {
   components: {
-    MainLayout
+    MainLayout,
+    Modal
+  },
+
+  data () {
+    return {
+      isEditModalOpen: false
+    }
+  },
+
+  methods: {
+    toggleEditModal () {
+      this.isEditModalOpen = !this.isEditModalOpen
+    }
   }
 }
 </script>

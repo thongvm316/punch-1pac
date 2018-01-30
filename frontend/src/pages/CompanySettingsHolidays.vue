@@ -14,10 +14,10 @@
 
     <div class="toolbar clearfix mt-5">
       <input type="text" class="form-input" placeholder="Filter holiday by name">
-      <a href="#add-holiday" class="btn float-right">
+      <button type="button" class="btn float-right" @click="toggleAddModal">
         <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M24 10h-10v-10h-4v10h-10v4h10v10h4v-10h10z"/></svg>
         Add Holiday
-      </a>
+      </button>
     </div>
 
     <table class="table table-hover bg-light mt-5">
@@ -29,7 +29,7 @@
         <th></th>
       </thead>
       <tbody>
-        <tr @click="toggleModal">
+        <tr @click="toggleEditModal">
           <td>New Year</td>
           <td>Vietname</td>
           <td>20-01-2018</td>
@@ -38,87 +38,69 @@
         </tr>
       </tbody>
     </table>
-    <!-- Add holiday -->
-    <div class="modal" id="add-holiday">
-      <a href="#close" class="modal-overlay"></a>
-      <div class="modal-container">
-        <div class="modal-header">
-          <a href="#close" class="btn btn-clear float-right"></a><br>
-          <h2 class="text-center">Add Holiday</h2>
-        </div>
-        <div class="modal-body">
-          <div class="content">
-            <div class="form-group">
-              <label class="form-label">Name</label>
-              <input class="form-input" type="text">
-            </div>
-            <div class="form-group">
-              <label class="form-label">Start at</label>
-              <input class="form-input" type="text">
-            </div>
-            <div class="form-group">
-              <label class="form-label">End at</label>
-              <input class="form-input" type="text">
-            </div>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <div class="text-center">
-            <a href="#close" class="btn btn-primary">Submit</a>
-          </div>
-        </div>
+
+    <modal title="Add Holiday" :modal-open.sync="isAddModalOpen">
+      <div class="form-group">
+        <label class="form-label">Name</label>
+        <input class="form-input" type="text">
       </div>
-    </div>
-    <div class="modal" :class="{ active: isModalOpen }" id="edit-holiday">
-      <a class="modal-overlay" @click="toggleModal"></a>
-      <div class="modal-container">
-        <div class="modal-header">
-          <a class="btn btn-clear float-right" @click="toggleModal"></a><br>
-          <h2 class="text-center">Edit Holiday</h2>
-        </div>
-        <div class="modal-body">
-          <div class="content">
-            <div class="form-group">
-              <label class="form-label">Name</label>
-              <input class="form-input" type="text">
-            </div>
-            <div class="form-group">
-              <label class="form-label">Start at</label>
-              <input class="form-input" type="text">
-            </div>
-            <div class="form-group">
-              <label class="form-label">End at</label>
-              <input class="form-input" type="text">
-            </div>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <div class="text-center">
-            <a class="btn btn-primary" @click="toggleModal">Submit</a>
-          </div>
-        </div>
+      <div class="form-group">
+        <label class="form-label">Start at</label>
+        <input class="form-input" type="text">
       </div>
-    </div>
+      <div class="form-group">
+        <label class="form-label">End at</label>
+        <input class="form-input" type="text">
+      </div>
+      <div class="form-group">
+        <button type="button" class="btn">Submit</button>
+      </div>
+    </modal>
+
+    <modal title="Edit Holiday" :modal-open.sync="isEditModalOpen">
+      <div class="form-group">
+        <label class="form-label">Name</label>
+        <input class="form-input" type="text">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Start at</label>
+        <input class="form-input" type="text">
+      </div>
+      <div class="form-group">
+        <label class="form-label">End at</label>
+        <input class="form-input" type="text">
+      </div>
+      <div class="form-group">
+        <button type="button" class="btn">Save</button>
+      </div>
+    </modal>
   </setting-layout>
 </template>
 
 <script>
 import SettingLayout from '../layouts/Setting.vue'
+import Modal from '../components/Modal.vue'
 
 export default {
   data () {
     return {
-      isModalOpen: false
+      isAddModalOpen: false,
+      isEditModalOpen: false
     }
   },
 
   components: {
-    SettingLayout
+    SettingLayout,
+    Modal
   },
 
   methods: {
-    toggleModal () {
-      this.isModalOpen = !this.isModalOpen
+    toggleAddModal () {
+      this.isAddModalOpen = !this.isAddModalOpen
+    },
+
+    toggleEditModal () {
+      this.isEditModalOpen = !this.isEditModalOpen
     }
   }
 }
