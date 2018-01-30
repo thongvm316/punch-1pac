@@ -427,6 +427,7 @@ RSpec.describe Api::V1::UsersController, type: :controller do
           user_params = attributes_for(:user)
           user_params[:permission_ids] = user_params[:user_permissions_attributes].map { |id| id[:permission_id] }
           user_params.delete(:user_permissions_attributes)
+          user_params[:user_groups_attributes] = [group_id: company.default_group.id]
           user_params[:avatar] = avatar
           user_params
         end
