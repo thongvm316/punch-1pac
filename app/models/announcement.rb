@@ -28,15 +28,13 @@ class Announcement < ApplicationRecord
 
   belongs_to :admin
 
-  default_scope -> { order(id: :desc) }
+  default_scope -> { order(updated_at: :desc) }
 
-  scope :for_all, -> { where(target: %w[everyone owners]) }
-  scope :for_everyone, -> { where(target: 'everyone') }
   scope :unread, ->(user_id) { where.not(id: ReadAnnouncement.select(:announcement_id).where(user_id: user_id)) }
   scope :read, ->(user_id) { where(id: ReadAnnouncement.select(:announcement_id).where(user_id: user_id)) }
 
   scope :search_by, ->(params, user_id) {
-    q = order(updated_at: :desc)
+    q = all
     if params[:read_status].present?
       q = q.read(user_id)   if params[:read_status] == 'read'
       q = q.unread(user_id) if params[:read_status] == 'unread'
@@ -46,9 +44,9 @@ class Announcement < ApplicationRecord
 
   def self.for_user(user)
     if user.owner?
-      Announcement.for_all
+      where(target: %w[everyone owners])
     else
-      Announcement.for_everyone
+      where(target: 'everyone')
     end
   end
 end
