@@ -19,7 +19,7 @@ RSpec.describe Api::V1::AnnouncementsController, type: :controller do
       subject { get :index }
 
       its(:code) { is_expected.to eq '200' }
-      its(:body) { is_expected.to be_json_as([response_announcement]) }
+      its(:body) { is_expected.to be_json_as(announcements: [response_announcement], meta: response_pagination) }
     end
 
     context 'when user is owner' do
@@ -28,29 +28,32 @@ RSpec.describe Api::V1::AnnouncementsController, type: :controller do
       subject { get :index }
 
       its(:code) { is_expected.to eq '200' }
-      its(:body) { is_expected.to be_json_as(Array.new(2) { response_announcement }) }
+      its(:body) { is_expected.to be_json_as(announcements: Array.new(2) { response_announcement }, meta: response_pagination) }
     end
-  end
 
-  describe 'GET #latest' do
-    let!(:announcement_1) { create :announcement, target: 'everyone', status: 'urgent' }
-    let!(:announcement_2) { create :announcement, target: 'everyone', status: 'normal' }
-    let!(:announcement_3) { create :announcement, target: 'owners', status: 'urgent' }
-
-    context 'when user is owner' do
+    context 'when read status is read' do
+      let!(:announcement_1) { create :announcement, target: 'everyone' }
+      let!(:announcement_2) { create :announcement, target: 'owners' }
       let(:login_user) { create :user, company: company, owner: true }
 
-      subject { get :latest }
+      let!(:read_announcement_1) { create :read_announcement, user: login_user, announcement: announcement_1 }
+      let!(:read_announcement_2) { create :read_announcement, user: login_user, announcement: announcement_2 }
+
+      subject { get :index, params: { read_status: 'read' } }
 
       its(:code) { is_expected.to eq '200' }
-      its(:body) { is_expected.to be_json_as(response_announcement) }
+      its(:body) { is_expected.to be_json_as(announcements: Array.new(2) { response_announcement }, meta: response_pagination) }
     end
 
-    context 'when user is not owner' do
-      subject { get :latest }
+    context 'when read status is unread' do
+      let!(:announcement_1) { create :announcement, target: 'everyone' }
+      let!(:announcement_2) { create :announcement, target: 'owners' }
+      let(:login_user) { create :user, company: company, owner: true }
+
+      subject { get :index, params: { read_status: 'unread' } }
 
       its(:code) { is_expected.to eq '200' }
-      its(:body) { is_expected.to be_json_as(response_announcement) }
+      its(:body) { is_expected.to be_json_as(announcements: Array.new(2) { response_announcement }, meta: response_pagination) }
     end
   end
 
