@@ -48,6 +48,7 @@ class User < ApplicationRecord
   has_many :groups, through: :user_groups
 
   accepts_nested_attributes_for :user_permissions
+  accepts_nested_attributes_for :user_groups
 
   validates :name, presence: true, length: { maximum: 100 }
   validates :email, presence: true, uniqueness: true, length: { maximum: 100 }, format: { with: REGEX_VALID_EMAIL }

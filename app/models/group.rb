@@ -12,6 +12,7 @@
 #
 
 class Group < ApplicationRecord
+  DEFAULT_NAME = 'default'
   belongs_to :company
   has_many :group_permissions, dependent: :destroy
   has_many :permissions, through: :group_permissions

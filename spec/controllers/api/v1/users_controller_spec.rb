@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Api::V1::UsersController, type: :controller do
-  let(:company) { create :company }
+  let(:company) { create :company, :with_default_group }
   let(:login_user) { create :user, company: company }
 
   before do
