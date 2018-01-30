@@ -30,7 +30,7 @@ class Request < ApplicationRecord
 
   scope :in_group, ->(user) { where(user_id: User.where(group_id: user.group_id)) }
 
-  def self.filter_by_user(user)
+  scope :for_user, ->(user) {
     case user.role
     when 'member'
       user.requests
@@ -39,5 +39,12 @@ class Request < ApplicationRecord
     when 'admin'
       Request.where(user_id: UserGroup.select(:user_id).where(group_id: user.groups))
     end
-  end
+  }
+
+  scope :search_by, ->(params) {
+    q = all
+    q = where(user_id: UserGroup.select(:user_id).where(group_id: params[:group_id])) if params[:group_id].present?
+    q = where(status: params[:status]) if params[:status].present?
+    q
+  }
 end

@@ -7,7 +7,7 @@ class Api::V1::RequestsController < Api::V1::BaseController
 
   def index
     authorize!
-    requests = Request.filter_by_user(current_user).page(params[:page]).per(params[:per_page])
+    requests = Request.for_user(current_user).search_by(params).page(params[:page]).per(params[:per_page])
     render json: requests,
            root: 'requests',
            each_serializer: RequestSerializer,
