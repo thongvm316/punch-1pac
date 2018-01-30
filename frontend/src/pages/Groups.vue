@@ -6,6 +6,7 @@
         Add Group
       </button>
     </div>
+
     <div class="columns mt-5">
       <div class="column col-3">
         <div class="box">
@@ -162,30 +163,6 @@
       </div>
     </div>
 
-    <ul class="pagination mt-4">
-      <li class="page-item">
-        <a><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M16.67 0l2.83 2.829-9.339 9.175 9.339 9.167-2.83 2.829-12.17-11.996z"/></svg></a>
-      </li>
-      <li class="page-item active">
-        <a href="#">1</a>
-      </li>
-      <li class="page-item">
-        <a href="#">2</a>
-      </li>
-      <li class="page-item">
-        <a href="#">3</a>
-      </li>
-      <li class="page-item">
-        <span>...</span>
-      </li>
-      <li class="page-item">
-        <a href="#">12</a>
-      </li>
-      <li class="page-item">
-        <a><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M7.33 24l-2.83-2.829 9.339-9.175-9.339-9.167 2.83-2.829 12.17 11.996z"/></svg></a>
-      </li>
-    </ul>
-
     <modal title="Add Group" :modal-open.sync="isAddModalOpen">
       <div class="form-group">
         <label class="form-label" for="input-example-1">Name</label>
@@ -200,25 +177,16 @@
 
 <script>
 import MainLayout from '../layouts/Main.vue'
-import Modal from '../components/Modal.vue'
+import modal from '../mixins/modal'
 
 export default {
-  components: {
-    MainLayout,
-    Modal
-  },
+  mixins: [modal],
 
-  data () {
-    return {
-      isAddModalOpen: false
-    }
+  components: {
+    MainLayout
   },
 
   methods: {
-    toggleAddModal () {
-      this.isAddModalOpen = !this.isAddModalOpen
-    },
-
     leave () {
       console.log('leave')
     }

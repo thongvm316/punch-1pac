@@ -6,8 +6,7 @@
     </div>
     <p class="form-input-hint text-dark">Add a member to this group, then manager of this group can see the user's activities</p>
 
-    <div class="toolbar mt-5 text-right">
-      <button type="button" class="btn" @click="toggleEditModal">Edit Group</button>
+    <div class="toolbar mt-5 text-right"> <button type="button" class="btn" @click="toggleEditModal">Edit Group</button>
     </div>
     <table class="table table-hover bg-light mt-5">
       <thead>
@@ -80,24 +79,13 @@
 
 <script>
 import MainLayout from '../layouts/Main.vue'
-import Modal from '../components/Modal.vue'
+import modal from '../mixins/modal'
 
 export default {
+  mixins: [modal],
+
   components: {
-    MainLayout,
-    Modal
-  },
-
-  data () {
-    return {
-      isEditModalOpen: false
-    }
-  },
-
-  methods: {
-    toggleEditModal () {
-      this.isEditModalOpen = !this.isEditModalOpen
-    }
+    MainLayout
   }
 }
 </script>
