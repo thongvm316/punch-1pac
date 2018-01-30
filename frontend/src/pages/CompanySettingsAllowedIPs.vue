@@ -66,29 +66,13 @@
 
 <script>
 import SettingLayout from '../layouts/Setting.vue'
-import Modal from '../components/Modal.vue'
+import modal from '../mixins/modal'
 
 export default {
-  data () {
-    return {
-      isAddModalOpen: false,
-      isEditModalOpen: false
-    }
-  },
+  mixins: [modal],
 
   components: {
-    SettingLayout,
-    Modal
-  },
-
-  methods: {
-    toggleAddModal () {
-      this.isAddModalOpen = !this.isAddModalOpen
-    },
-
-    toggleEditModal () {
-      this.isEditModalOpen = !this.isEditModalOpen
-    }
+    SettingLayout
   }
 }
 </script>
