@@ -117,13 +117,19 @@ import Pagination from '../components/Pagination.vue'
 
 export default {
   name: 'my-requests',
-
   mixins: [modal],
-
   components: {
     MainLayout,
     Datepicker,
     Pagination
+  },
+  methods: {
+    toggleEditModal () {
+      this.isEditModalOpen = !this.isEditModalOpen
+    },
+    toggleAddModal () {
+      this.isAddModalOpen = !this.isAddModalOpen
+    }
   }
 }
 </script>

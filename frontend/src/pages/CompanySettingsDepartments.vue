@@ -59,9 +59,23 @@ import modal from '../mixins/modal'
 
 export default {
   mixins: [modal],
-
+  data () {
+    return {
+      isAddModalOpen: false,
+      isEditModalOpen: false
+    }
+  },
   components: {
-    SettingLayout
+    SettingLayout,
+  },
+  methods: {
+    toggleAddModal () {
+      this.isAddModalOpen = !this.isAddModalOpen
+    },
+
+    toggleEditModal () {
+      this.isEditModalOpen = !this.isEditModalOpen
+    }
   }
 }
 </script>
