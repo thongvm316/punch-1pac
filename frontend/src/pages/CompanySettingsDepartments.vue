@@ -66,7 +66,7 @@ export default {
     }
   },
   components: {
-    SettingLayout,
+    SettingLayout
   },
   methods: {
     toggleAddModal () {
