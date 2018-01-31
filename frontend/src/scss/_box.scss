@@ -5,9 +5,7 @@
   border-radius: $border-radius;
 
   .box-header {
-    margin-bottom: 2rem;
-
-    h2 {
+    .box-title {
       cursor: pointer;
       &:hover {
         color: $primary-color;
@@ -18,16 +16,24 @@
       font-size: .8rem;
       color: $gray-color;
     }
+
+    .form-select {
+      width: 200px;
+    }
   }
 
   .box-content {
-    display: flex;
-    flex: 0 0 auto;
-    justify-content: space-between;
-    align-items: center;
+    margin-top: 2rem;
 
-    span {
-      vertical-align: middle;
+    &.box-content-flex {
+      display: flex;
+      flex: 0 0 auto;
+      justify-content: space-between;
+      align-items: center;
+
+      span {
+        vertical-align: middle;
+      }
     }
   }
 }
