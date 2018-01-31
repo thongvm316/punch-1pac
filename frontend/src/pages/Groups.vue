@@ -11,10 +11,10 @@
       <div class="column col-3">
         <div class="box">
           <div class="box-header">
-            <router-link tag="h2" to="/groups/1">Quality Assurance</router-link>
+            <router-link tag="h2" to="/groups/1" class="box-title">Quality Assurance</router-link>
             <span>23 members</span>
           </div>
-          <div class="box-content">
+          <div class="box-content box-content-flex">
             <div class="box-content-img">
               <img src="/static/avatar.png" alt="Troy Kozey" class="avatar avatar-md">
               <img src="/static/avatar.png" alt="Troy Kozey" class="avatar avatar-md">
@@ -28,10 +28,10 @@
       <div class="column col-3">
         <div class="box">
           <div class="box-header">
-            <router-link tag="h2" to="/groups/1">Quality Assurance</router-link>
+            <router-link tag="h2" to="/groups/1" class="box-title">Quality Assurance</router-link>
             <span>23 members</span>
           </div>
-          <div class="box-content">
+          <div class="box-content box-content-flex">
             <div class="box-content-img">
               <img src="/static/avatar.png" alt="Troy Kozey" class="avatar avatar-md">
               <img src="/static/avatar.png" alt="Troy Kozey" class="avatar avatar-md">
@@ -45,10 +45,10 @@
       <div class="column col-3">
         <div class="box">
           <div class="box-header">
-            <router-link tag="h2" to="/groups/1">Quality Assurance</router-link>
+            <router-link tag="h2" to="/groups/1" class="box-title">Quality Assurance</router-link>
             <span>23 members</span>
           </div>
-          <div class="box-content">
+          <div class="box-content box-content-flex">
             <div class="box-content-img">
               <img src="/static/avatar.png" alt="Troy Kozey" class="avatar avatar-md">
               <img src="/static/avatar.png" alt="Troy Kozey" class="avatar avatar-md">
@@ -62,10 +62,10 @@
       <div class="column col-3">
         <div class="box">
           <div class="box-header">
-            <router-link tag="h2" to="/groups/1">Quality Assurance</router-link>
+            <router-link tag="h2" to="/groups/1" class="box-title">Quality Assurance</router-link>
             <span>23 members</span>
           </div>
-          <div class="box-content">
+          <div class="box-content box-content-flex">
             <div class="box-content-img">
               <img src="/static/avatar.png" alt="Troy Kozey" class="avatar avatar-md">
               <img src="/static/avatar.png" alt="Troy Kozey" class="avatar avatar-md">
@@ -79,10 +79,10 @@
       <div class="column col-3">
         <div class="box">
           <div class="box-header">
-            <router-link tag="h2" to="/groups/1">Quality Assurance</router-link>
+            <router-link tag="h2" to="/groups/1" class="box-title">Quality Assurance</router-link>
             <span>23 members</span>
           </div>
-          <div class="box-content">
+          <div class="box-content box-content-flex">
             <div class="box-content-img">
               <img src="/static/avatar.png" alt="Troy Kozey" class="avatar avatar-md">
               <img src="/static/avatar.png" alt="Troy Kozey" class="avatar avatar-md">
@@ -96,10 +96,10 @@
       <div class="column col-3">
         <div class="box">
           <div class="box-header">
-            <router-link tag="h2" to="/groups/1">Quality Assurance</router-link>
+            <router-link tag="h2" to="/groups/1" class="box-title">Quality Assurance</router-link>
             <span>23 members</span>
           </div>
-          <div class="box-content">
+          <div class="box-content box-content-flex">
             <div class="box-content-img">
               <img src="/static/avatar.png" alt="Troy Kozey" class="avatar avatar-md">
               <img src="/static/avatar.png" alt="Troy Kozey" class="avatar avatar-md">
@@ -113,10 +113,10 @@
       <div class="column col-3">
         <div class="box">
           <div class="box-header">
-            <router-link tag="h2" to="/groups/1">Quality Assurance</router-link>
+            <router-link tag="h2" to="/groups/1" class="box-title">Quality Assurance</router-link>
             <span>23 members</span>
           </div>
-          <div class="box-content">
+          <div class="box-content box-content-flex">
             <div class="box-content-img">
               <img src="/static/avatar.png" alt="Troy Kozey" class="avatar avatar-md">
               <img src="/static/avatar.png" alt="Troy Kozey" class="avatar avatar-md">
@@ -130,10 +130,10 @@
       <div class="column col-3">
         <div class="box">
           <div class="box-header">
-            <router-link tag="h2" to="/groups/1">Quality Assurance</router-link>
+            <router-link tag="h2" to="/groups/1" class="box-title">Quality Assurance</router-link>
             <span>23 members</span>
           </div>
-          <div class="box-content">
+          <div class="box-content box-content-flex">
             <div class="box-content-img">
               <img src="/static/avatar.png" alt="Troy Kozey" class="avatar avatar-md">
               <img src="/static/avatar.png" alt="Troy Kozey" class="avatar avatar-md">
@@ -147,10 +147,10 @@
       <div class="column col-3">
         <div class="box">
           <div class="box-header">
-            <router-link tag="h2" to="/groups/1">Quality Assurance</router-link>
+            <router-link tag="h2" to="/groups/1" class="box-title">Quality Assurance</router-link>
             <span>23 members</span>
           </div>
-          <div class="box-content">
+          <div class="box-content box-content-flex">
             <div class="box-content-img">
               <img src="/static/avatar.png" alt="Troy Kozey" class="avatar avatar-md">
               <img src="/static/avatar.png" alt="Troy Kozey" class="avatar avatar-md">
