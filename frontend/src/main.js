@@ -2,7 +2,7 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import VueI18n from 'vue-i18n'
-import messages from './locale/message'
+import messages from './locale/messages'
 
 // import axios from 'axios'
 
