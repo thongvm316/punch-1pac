@@ -54,7 +54,7 @@ export default {
     currentPage () {
       if (this.currentPage > this.step) {
         const first = this.currentPage - this.step
-        const last  = (this.currentPage + this.step <= this.totalPage) ? this.currentPage + this.step : this.totalPage
+        const last = (this.currentPage + this.step <= this.totalPage) ? this.currentPage + this.step : this.totalPage
         let items = []
         for (let i = first; i <= last; i++) {
           items.push(i)

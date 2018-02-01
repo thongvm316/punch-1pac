@@ -10,11 +10,9 @@
       &:hover {
         color: $primary-color;
       }
-    }
-
-    h2 + span {
-      font-size: .8rem;
-      color: $gray-color;
+      + span { font-size: .8rem;
+        color: $gray-color;
+      }
     }
 
     .form-select {

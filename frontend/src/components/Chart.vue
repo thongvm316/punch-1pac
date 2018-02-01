@@ -24,7 +24,8 @@ export default {
 
   methods: {
     createChart (canvas, type) {
-      var newChart = new Chart(canvas, {
+      /* eslint-disable no-new */
+      new Chart(canvas, {
         type: type,
         data: {
           labels: this.labels,
