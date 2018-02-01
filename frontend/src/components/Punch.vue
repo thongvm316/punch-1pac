@@ -43,6 +43,14 @@ export default {
   created () {
     this.updateCurrentTime()
     setInterval(this.updateCurrentTime, 1 * 1000)
+
+    window.addEventListener('keyup', (e) => {
+      if (e.keyCode === 13 && !this.attendedAt) this.punchIn()
+    })
+
+    window.addEventListener('keyup', (e) => {
+      if (e.keyCode === 13 && this.attendedAt && !this.leftAt) this.punchOut()
+    })
   }
 }
 </script>
