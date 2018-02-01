@@ -4,7 +4,22 @@
   background-color: $light-color;
   border-radius: $border-radius;
 
+  .box-header-flex,
+  .box-content-flex {
+    display: flex;
+    justify-content: space-between;
+    flex: 0 0 auto;
+    align-items: center;
+  }
+
   .box-header {
+    &.box-header-flex {
+      h2 {
+        margin-bottom: 0;
+        vertical-align: text-bottom;
+      }
+    }
+
     .box-title {
       cursor: pointer;
       &:hover {
@@ -24,11 +39,6 @@
     margin-top: 2rem;
 
     &.box-content-flex {
-      display: flex;
-      flex: 0 0 auto;
-      justify-content: space-between;
-      align-items: center;
-
       span {
         vertical-align: middle;
       }
