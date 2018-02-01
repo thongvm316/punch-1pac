@@ -6,17 +6,18 @@ class UserForm < BaseForm
   MEMBER_UPDATE_PARAM = %w[department_id name password password_confirmation email avatar].freeze
 
   attribute :user, User
+  attribute :current_company, Company
+  attribute :current_user, User
 
   validate :validate_group
   validate :validate_permissions
 
-  def initialize(company, current_user, params, user = nil)
+  def initialize(attrs, params, user = nil)
+    super attrs
     @params         = params
-    @company        = company
-    @current_user   = current_user
-    @group          = company.groups.find_by(id: params[:group_id])
-    @permission_ids = Permission.verify(@params[:permission_ids])
-    @user = user || @company.users.build(user_params)
+    @group          = current_company.groups.find_by(id: params[:group_id])
+    @permission_ids = Permission.verify(params[:permission_ids])
+    @user           = user || current_company.users.build(user_params)
   end
 
   def save
@@ -29,27 +30,23 @@ class UserForm < BaseForm
   end
 
   def update
-    if @current_user.manager?
-      return false unless valid?
-      update_with_manager
-    else
-      update_with_member
-    end
+    @current_user.manager? ? update_with_manager : update_with_member
   end
 
   def update_with_manager
+    return false unless valid?
     ApplicationRecord.transaction do
       @user.user_permissions.destroy_all if @current_user.manager?
       @user.update_attributes!(user_params)
     end
-    return true
+    true
   rescue ActiveRecord::RecordInvalid
-    return false
+    false
   end
 
   def update_with_member
-    params = @params.select { |k, v| MEMBER_UPDATE_PARAM.include?(k.to_s) && v }
-    @user.update(params)
+    user_params = @params.select { |k, v| MEMBER_UPDATE_PARAM.include?(k.to_s) && v }
+    @user.update(user_params)
   end
 
   def valid?
