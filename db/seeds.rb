@@ -22,4 +22,4 @@ end
 admin = FactoryBot.create(:admin, email: 'admin@example.com', password: 'password')
 
 FactoryBot.create_list(:holiday, 3, admin: admin)
-FactoryBot.create_list(:announcement, 3, admin: admin)
+FactoryBot.create_list(:announcement, 11, admin: admin)
