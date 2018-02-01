@@ -38,6 +38,8 @@
 
     <table class="table table-hover bg-light mt-5">
       <thead>
+        <th>Name</th>
+        <th>Email</th>
         <th>Date</th>
         <th>Started At</th>
         <th>Ended At</th>
@@ -45,6 +47,8 @@
       </thead>
       <tbody>
         <tr>
+          <td>Minh</td>
+          <td>wofi.minh@1pac.vn</td>
           <td>Jan 20</td>
           <td>08:30</td>
           <td>18:00</td>
@@ -54,6 +58,8 @@
           </td>
         </tr>
         <tr>
+          <td>Minh</td>
+          <td>wofi.minh@1pac.vn</td>
           <td>Jan 20</td>
           <td>08:30</td>
           <td>18:00</td>
@@ -63,6 +69,8 @@
           </td>
         </tr>
         <tr>
+          <td>Minh</td>
+          <td>wofi.minh@1pac.vn</td>
           <td>Jan 20</td>
           <td>08:30</td>
           <td>18:00</td>
@@ -72,6 +80,8 @@
           </td>
         </tr>
         <tr>
+          <td>Minh</td>
+          <td>wofi.minh@1pac.vn</td>
           <td>Jan 20</td>
           <td>08:30</td>
           <td>18:00</td>
@@ -81,6 +91,8 @@
           </td>
         </tr>
         <tr>
+          <td>Minh</td>
+          <td>wofi.minh@1pac.vn</td>
           <td>Jan 20</td>
           <td>08:30</td>
           <td>18:00</td>
@@ -90,6 +102,8 @@
           </td>
         </tr>
         <tr>
+          <td>Minh</td>
+          <td>wofi.minh@1pac.vn</td>
           <td>Jan 20</td>
           <td>08:30</td>
           <td>18:00</td>
@@ -99,6 +113,8 @@
           </td>
         </tr>
         <tr>
+          <td>Minh</td>
+          <td>wofi.minh@1pac.vn</td>
           <td>Jan 20</td>
           <td>08:30</td>
           <td>18:00</td>
@@ -108,6 +124,8 @@
           </td>
         </tr>
         <tr>
+          <td>Minh</td>
+          <td>wofi.minh@1pac.vn</td>
           <td>Jan 20</td>
           <td>08:30</td>
           <td>18:00</td>
@@ -117,6 +135,8 @@
           </td>
         </tr>
         <tr>
+          <td>Minh</td>
+          <td>wofi.minh@1pac.vn</td>
           <td>Jan 20</td>
           <td>08:30</td>
           <td>18:00</td>
@@ -126,6 +146,8 @@
           </td>
         </tr>
         <tr>
+          <td>Minh</td>
+          <td>wofi.minh@1pac.vn</td>
           <td>Jan 20</td>
           <td>08:30</td>
           <td>18:00</td>

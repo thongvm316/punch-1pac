@@ -33,8 +33,11 @@
     }
 
     &.badge[data-badge]::after {
+      width: .8rem;
+      height: .8rem;
+      font-size: .6rem;
       top: 0;
-      right: 0;
+      right: .2rem;
       position: absolute;
       background-color: $error-color;
       box-shadow: none;
@@ -55,6 +58,7 @@
   }
 
   .menu .menu-item > a {
+    font-size: $font-size-sm;
     &:focus,
     &:hover,
     &:active,
