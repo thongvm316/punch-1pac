@@ -11,8 +11,6 @@ Rails.application.routes.draw do
     get  'password_reset'        => 'password_reset#new'
     post 'password_reset'        => 'password_reset#create'
 
-    get '*path' => 'dashboard#index'
-
     namespace :api, defaults: { format: :json }, constraints: { id: /\d+/ } do
       namespace :v1 do
         resources :users do
@@ -57,6 +55,8 @@ Rails.application.routes.draw do
         resources :departments, only: %i[index show create update destroy]
       end
     end
+
+    get '*path' => 'dashboard#index'
   end
 
   root to: 'statics#top'
