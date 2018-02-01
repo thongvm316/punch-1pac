@@ -1,21 +1,12 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import VueI18n from 'vue-i18n'
-import messages from './locale/messages'
+import i18n from './locale'
 import store from './store'
 
 import axios from 'axios'
 
 import './scss/main.scss'
-
-Vue.use(VueI18n)
-
-const i18n = new VueI18n({
-  locale: 'en',
-  fallbackLocale: 'en',
-  messages
-})
 
 // axios.defaults.headers.common['X-CSRF-Token'] = document.querySelector('meta[name=csrf-token]').getAttribute('content')
 axios.defaults.baseURL = 'http://namespace_1.localhost:3000/api/v1'
