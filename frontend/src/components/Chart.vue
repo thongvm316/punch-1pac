@@ -17,8 +17,8 @@ export default {
   },
 
   mounted () {
-    var chart = this.$refs.chart
-    var ctx = chart.getContext('2d')
+    const chart = this.$refs.chart
+    const ctx = chart.getContext('2d')
     this.createChart(ctx, 'line')
   },
 
