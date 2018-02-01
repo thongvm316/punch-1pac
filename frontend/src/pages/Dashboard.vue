@@ -1,20 +1,24 @@
 <template>
   <main-layout title="Dashboard">
-    <div class="box mt-5">
-      <div class="box-header border-bottom clearfix">
-        <h2 class="d-inline-block">Chart in month</h2>
-        <select class="form-select float-right">
-          <option>{{ $t('message.dashboard.arriveOnTime') }}</option>
-          <option>{{ $t('message.dashboard.leaveOnTime') }}</option>
-          <option>{{ $t('message.dashboard.arriveLate') }}</option>
-          <option>{{ $t('message.dashboard.leaveEarly') }}</option>
-          <option>{{ $t('message.dashboard.annualLeave') }}</option>
-          <option>{{ $t('message.dashboard.holiday') }}</option>
-          <option>{{ $t('message.dashboard.unpaidLeave') }}</option>
-        </select>
-      </div>
-      <div class="box-content">
-        <chart></chart>
+    <div class="columns mt-5">
+      <div class="column col-6">
+        <div class="box">
+          <div class="box-header box-header-flex border-bottom">
+            <h2>Chart in month</h2>
+            <select class="form-select">
+              <option>{{ $t('message.dashboard.arriveOnTime') }}</option>
+              <option>{{ $t('message.dashboard.leaveOnTime') }}</option>
+              <option>{{ $t('message.dashboard.arriveLate') }}</option>
+              <option>{{ $t('message.dashboard.leaveEarly') }}</option>
+              <option>{{ $t('message.dashboard.annualLeave') }}</option>
+              <option>{{ $t('message.dashboard.holiday') }}</option>
+              <option>{{ $t('message.dashboard.unpaidLeave') }}</option>
+            </select>
+          </div>
+          <div class="box-content">
+            <chart></chart>
+          </div>
+        </div>
       </div>
     </div>
     <div class="box mt-5">
