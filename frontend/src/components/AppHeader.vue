@@ -12,9 +12,8 @@
           <router-link class="mr-5" to="/groups">Groups</router-link>
         </section>
         <section class="navbar-section">
-          <span class="text-bold-600 mr-5">{{ currentTime }}</span>
-          <button class="btn btn-primary mr-5">Punch In</button>
-          <header-announcements></header-announcements>
+          <punch/>
+          <header-announcements/>
           <div class="dropdown" :class="{ active: isDropdownActive }" @click="toggleDropdown">
             <a class="dropdown-toggle">
               <div class="tile tile-centered">
@@ -38,20 +37,20 @@
 
 <script>
 import axios from 'axios'
-import moment from 'moment'
 import HeaderAnnouncements from '../components/HeaderAnnouncements.vue'
+import Punch from '../components/Punch.vue'
 
 export default {
   name: 'app-header',
   data () {
     return {
-      isDropdownActive: false,
-      currentTime: null
+      isDropdownActive: false
     }
   },
 
   components: {
-    HeaderAnnouncements
+    HeaderAnnouncements,
+    Punch
   },
 
   methods: {
@@ -61,10 +60,6 @@ export default {
 
     toggleDropdown () {
       this.isDropdownActive = !this.isDropdownActive
-    },
-
-    updateCurrentTime () {
-      this.currentTime = moment().format('HH:mm:ss')
     }
   },
 
@@ -84,11 +79,6 @@ export default {
     userAvatarUrl () {
       return window.INITIAL_STATE.user.avatar_url
     }
-  },
-
-  created () {
-    this.currentTime = moment().format('HH:mm:ss')
-    setInterval(this.updateCurrentTime, 1 * 1000)
   }
 }
 </script>
