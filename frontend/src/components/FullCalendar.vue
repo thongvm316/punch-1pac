@@ -183,21 +183,6 @@ export default {
           day: 28,
           attend_event: 'Arrive on time',
           leave_event: 'Leave on time'
-        },
-        {
-          day: 29,
-          attend_event: 'Arrive late',
-          leave_event: 'Leave on time'
-        },
-        {
-          day: 30,
-          attend_event: 'Arrive on time',
-          leave_event: 'Leave on time'
-        },
-        {
-          day: 31,
-          attend_event: 'Arrive on time',
-          leave_event: 'Leave on time'
         }
       ]
     }
@@ -229,17 +214,17 @@ export default {
     },
 
     daysInNextMonth () {
-      var previousMonth = moment(this.dateContext).add(1, 'month')
+      const previousMonth = moment(this.dateContext).add(1, 'month')
       return previousMonth.daysInMonth()
     },
 
     daysInPreviousMonth () {
-      var nextMonth = moment(this.dateContext).subtract(1, 'month')
+      const nextMonth = moment(this.dateContext).subtract(1, 'month')
       return nextMonth.daysInMonth()
     },
 
     firstDayOfMonth () {
-      var startDate = this.dateContext.clone().startOf('month')
+      const startDate = this.dateContext.clone().startOf('month')
       return startDate.day()
     },
 
@@ -248,10 +233,10 @@ export default {
     },
 
     lastDaysPreviousMonth () {
-      var start = this.firstDayOfMonth
-      var previousDaysInMonth = this.daysInPreviousMonth
-      var previousDays = []
-      for (var i = 1; i <= previousDaysInMonth; i++) {
+      const start = this.firstDayOfMonth
+      const previousDaysInMonth = this.daysInPreviousMonth
+      let previousDays = []
+      for (let i = 1; i <= previousDaysInMonth; i++) {
         previousDays.push(i)
       }
       previousDays.splice(0, previousDays.length - start)
@@ -259,12 +244,12 @@ export default {
     },
 
     firstDaysNextMonth () {
-      var start = this.firstDayOfMonth
-      var daysNow = this.daysInMonth
-      var nextDaysInMonth = this.daysInNextMonth
-      var daysNextMonth
-      var nextDays = []
-      for (var i = 1; i <= nextDaysInMonth; i++) {
+      const start = this.firstDayOfMonth
+      const daysNow = this.daysInMonth
+      const nextDaysInMonth = this.daysInNextMonth
+      let daysNextMonth
+      let nextDays = []
+      for (let i = 1; i <= nextDaysInMonth; i++) {
         nextDays.push(i)
       }
       if ((start < 5 || daysNow < 30) || (start === 5 && daysNow === 30)) {
