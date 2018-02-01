@@ -225,7 +225,7 @@ RSpec.describe Api::V1::UsersController, type: :controller do
   end
 
   describe 'PATCH #update' do
-    let(:target_user) { create :user, company: company, role: 'member' }
+    let(:target_user) { create :user, :with_group, company: company, role: 'member' }
 
     context 'when login user is member' do
       context 'when update itself' do
@@ -295,7 +295,7 @@ RSpec.describe Api::V1::UsersController, type: :controller do
       context 'when params valid' do
         let(:permissions) { create_list(:permission, 5).pluck(:id) }
 
-        subject { patch :update, params: { id: target_user.id, user: { name: 'thoi', permission_ids: permissions } } }
+        subject { patch :update, params: { id: target_user.id, user: { name: 'thoi', permission_ids: permissions, group_id: target_user.groups.last.id } } }
 
         its(:code) { is_expected.to eq '200' }
         its(:body) { is_expected.to be_json_as(response_user(permissions.size)) }
@@ -307,7 +307,7 @@ RSpec.describe Api::V1::UsersController, type: :controller do
         subject { patch :update, params: { id: target_user.id, user: { name: 'thoi', permission_ids: [last_permission_id + 1, last_permission_id + 2] } } }
 
         its(:code) { is_expected.to eq '422' }
-        its(:body) { is_expected.to be_json_as(response_422(user_permissions: Array)) }
+        its(:body) { is_expected.to be_json_as(response_422(permissions: Array, group: Array)) }
       end
     end
 
@@ -315,20 +315,19 @@ RSpec.describe Api::V1::UsersController, type: :controller do
       let(:login_user) { create :user, company: company, role: 'superadmin' }
 
       context 'when target user is admin' do
-        let(:target_user) { create :user, company: company, role: 'admin' }
+        let(:target_user) { create :user, :with_group, company: company, role: 'admin' }
         let(:permissions) { create_list(:permission, 3).pluck(:id) }
 
-        subject { patch :update, params: { id: target_user.id, user: { name: 'thoi', permission_ids: permissions } } }
+        subject { patch :update, params: { id: target_user.id, user: { name: 'thoi', permission_ids: permissions, group_id: target_user.groups.last.id } } }
 
         its(:code) { is_expected.to eq '200' }
         its(:body) { is_expected.to be_json_as(response_user(permissions.size)) }
       end
 
       context 'when target user is member' do
-        let(:target_user) { create :user, company: company, role: 'member' }
         let(:permissions) { create_list(:permission, 3).pluck(:id) }
 
-        subject { patch :update, params: { id: target_user.id, user: { name: 'thoi', permission_ids: permissions } } }
+        subject { patch :update, params: { id: target_user.id, user: { name: 'thoi', permission_ids: permissions, group_id: target_user.groups.last.id } } }
 
         its(:code) { is_expected.to eq '200' }
         its(:body) { is_expected.to be_json_as(response_user(permissions.size)) }
@@ -427,7 +426,7 @@ RSpec.describe Api::V1::UsersController, type: :controller do
           user_params = attributes_for(:user)
           user_params[:permission_ids] = user_params[:user_permissions_attributes].map { |id| id[:permission_id] }
           user_params.delete(:user_permissions_attributes)
-          user_params[:user_groups_attributes] = [group_id: company.default_group.id]
+          user_params[:group_id] = company.default_group.id
           user_params[:avatar] = avatar
           user_params
         end
@@ -438,14 +437,28 @@ RSpec.describe Api::V1::UsersController, type: :controller do
         its(:body) { is_expected.to be_json_as(response_user) }
       end
 
+      context 'when group id missing' do
+        let(:avatar) { fixture_file_upload('images/image.png', 'image/png') }
+        let(:user_params) do
+          user_params = attributes_for(:user)
+          user_params[:permission_ids] = user_params[:user_permissions_attributes].map { |id| id[:permission_id] }
+          user_params.delete(:user_permissions_attributes)
+          user_params[:avatar] = avatar
+          user_params
+        end
+
+        subject { post :create, params: { user: user_params } }
+
+        its(:code) { is_expected.to eq '422' }
+        its(:body) { is_expected.to be_json_as(response_422(group: Array)) }
+      end
+
       context 'when params empty' do
         let(:params) { { username: '', permissions_ids: [] } }
         let(:error) do
           {
-            password:   Array,
-            name:       Array,
-            email:      Array,
-            user_permissions: Array
+            group:      Array,
+            permissions: Array
           }
         end
 
@@ -462,6 +475,7 @@ RSpec.describe Api::V1::UsersController, type: :controller do
           user_params[:permission_ids] = user_params[:user_permissions_attributes].map { |id| id[:permission_id] }
           user_params.delete(:user_permissions_attributes)
           user_params[:avatar] = avatar
+          user_params[:group_id] = company.default_group.id
           user_params
         end
 
@@ -478,6 +492,7 @@ RSpec.describe Api::V1::UsersController, type: :controller do
           user_params[:permission_ids] = user_params[:user_permissions_attributes].map { |id| id[:permission_id] }
           user_params.delete(:user_permissions_attributes)
           user_params[:avatar] = avatar
+          user_params[:group_id] = company.default_group.id
           user_params
         end
 
@@ -492,13 +507,14 @@ RSpec.describe Api::V1::UsersController, type: :controller do
           user_params = attributes_for(:user).except(:user_permissions_attributes)
           max_permission_number = Permission.last.id
           user_params[:permission_ids] = [max_permission_number + 1, max_permission_number + 2]
+          user_params[:group_id] = company.default_group.id
           user_params
         end
 
         subject { post :create, params: { user: user_params } }
 
         its(:code) { is_expected.to eq '422' }
-        its(:body) { is_expected.to be_json_as(response_422(user_permissions: Array)) }
+        its(:body) { is_expected.to be_json_as(response_422(permissions: Array)) }
       end
     end
   end
