@@ -1,18 +1,18 @@
 <template>
-  <main-layout title="Dashboard">
+  <main-layout :title="$t('title.dashboard')">
     <div class="columns mt-5">
       <div class="column col-6">
         <div class="box">
           <div class="box-header box-header-flex border-bottom">
-            <h2>Chart in month</h2>
+            <h2>{{ $t('dashboard.chartInMonth') }}</h2>
             <select class="form-select">
-              <option>{{ $t('message.dashboard.arriveOnTime') }}</option>
-              <option>{{ $t('message.dashboard.leaveOnTime') }}</option>
-              <option>{{ $t('message.dashboard.arriveLate') }}</option>
-              <option>{{ $t('message.dashboard.leaveEarly') }}</option>
-              <option>{{ $t('message.dashboard.annualLeave') }}</option>
-              <option>{{ $t('message.dashboard.holiday') }}</option>
-              <option>{{ $t('message.dashboard.unpaidLeave') }}</option>
+              <option>{{ $t('status.arriveOnTime') }}</option>
+              <option>{{ $t('status.leaveOnTime') }}</option>
+              <option>{{ $t('status.arriveLate') }}</option>
+              <option>{{ $t('status.leaveEarly') }}</option>
+              <option>{{ $t('status.annualLeave') }}</option>
+              <option>{{ $t('status.holiday') }}</option>
+              <option>{{ $t('status.unpaidLeave') }}</option>
             </select>
           </div>
           <div class="box-content">
@@ -22,24 +22,24 @@
       </div>
     </div>
     <div class="box mt-5">
-      <h2 class="subtitle">Calendar</h2>
+      <h2 class="subtitle">{{ $t('title.calendar') }}</h2>
       <full-calendar></full-calendar>
       <div class="mt-2">
         <div class="chip bg-light">
           <span class="circle bg-primary mr-2"></span>
-          Arrive on time
+          {{ $t('status.arriveOnTime') }}
         </div>
         <div class="chip bg-light">
           <span class="circle bg-success mr-2"></span>
-          Leave on time
+          {{ $t('status.leaveOnTime') }}
         </div>
         <div class="chip bg-light">
           <span class="circle bg-error mr-2"></span>
-          Unpaid leave
+          {{ $t('status.unpaidLeave') }}
         </div>
         <div class="chip bg-light">
           <span class="circle bg-warning mr-2"></span>
-          Annual leave
+          {{ $t('status.annualLeave') }}
         </div>
       </div>
     </div>

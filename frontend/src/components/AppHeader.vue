@@ -6,10 +6,10 @@
           <router-link to="/dashboard" class="navbar-brand mr-4">
             <img :src="companyLogoUrl" :alt="companyName">
           </router-link>
-          <router-link class="mr-5" to="/dashboard">Dashboard</router-link>
-          <router-link class="mr-5" to="/attendances">Attendances</router-link>
-          <router-link class="mr-5" to="/requests">Requests</router-link>
-          <router-link class="mr-5" to="/groups">Groups</router-link>
+          <router-link class="mr-5" to="/dashboard">{{ $t('header.dashboard') }}</router-link>
+          <router-link class="mr-5" to="/attendances">{{ $t('header.attendances') }}</router-link>
+          <router-link class="mr-5" to="/requests">{{ $t('header.requests') }}</router-link>
+          <router-link class="mr-5" to="/groups">{{ $t('header.groups') }}</router-link>
         </section>
         <section class="navbar-section">
           <punch/>
@@ -24,9 +24,9 @@
               </div>
             </a>
             <ul class="menu">
-              <li class="menu-item"><router-link to="/settings">Settings</router-link></li>
-              <li class="menu-item"><router-link to="/company/settings">Company Settings</router-link></li>
-              <li class="menu-item"><a href="#" @click.prevent="logout($event)">Logout</a></li>
+              <li class="menu-item"><router-link to="/settings">{{ $t('header.settings') }}</router-link></li>
+              <li class="menu-item"><router-link to="/company/settings">{{ $t('header.companySettings') }}</router-link></li>
+              <li class="menu-item"><a href="#" @click="logout($event)">{{ $t('header.logout') }}</a></li>
             </ul>
           </div>
         </section>

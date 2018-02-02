@@ -1,35 +1,35 @@
 <template>
-  <main-layout title="Requests">
+  <main-layout :title="$t('title.requests')">
     <ul class="tab mt-4">
-      <router-link tag="li" class="tab-item" to="/requests/my"><a href="#">My Requests</a></router-link>
-      <router-link tag="li" class="tab-item" to="/requests/groups"><a href="#">Group Requests</a></router-link>
+      <router-link tag="li" class="tab-item" to="/requests/my"><a href="#">{{ $t('request.myRequests') }}</a></router-link>
+      <router-link tag="li" class="tab-item" to="/requests/groups"><a href="#">{{ $t('request.groupRequests') }}</a></router-link>
     </ul>
 
     <div class="toolbar mt-5">
       <select class="form-select">
-        <option>Choose a group</option>
-        <option>HR</option>
-        <option>Accountant</option>
-        <option>Engineer</option>
-        <option>Administrator</option>
+        <option>{{ $t('placeholder.filterByGroup') }}</option>
+        <option>{{ $t('group.accountant') }}</option>
+        <option>{{ $t('group.developers') }}</option>
+        <option>{{ $t('group.marketing') }}</option>
+        <option>{{ $t('group.hr') }}</option>
       </select>
       <select class="form-select">
-        <option>Filter by status</option>
-        <option>Approved</option>
-        <option>Pending</option>
-        <option>Denied</option>
+        <option>{{ $t('placeholder.filterByStatus') }}</option>
+        <option>{{ $t('status.approved') }}</option>
+        <option>{{ $t('status.pending') }}</option>
+        <option>{{ $t('status.rejected') }}</option>
       </select>
     </div>
 
     <table class="table table-hover bg-light mt-4">
       <thead>
-        <th>Name</th>
-        <th>Email</th>
-        <th>Date</th>
-        <th>Started At</th>
-        <th>Ended At</th>
-        <th>Reason</th>
-        <th>Status</th>
+        <th>{{ $t('tableHeader.name') }}</th>
+        <th>{{ $t('tableHeader.email') }}</th>
+        <th>{{ $t('tableHeader.date') }}</th>
+        <th>{{ $t('tableHeader.startedAt') }}</th>
+        <th>{{ $t('tableHeader.endedAt') }}</th>
+        <th>{{ $t('tableHeader.reason') }}</th>
+        <th>{{ $t('tableHeader.status') }}</th>
       </thead>
       <tbody>
         <tr>
@@ -40,7 +40,7 @@
           <td>18:00</td>
           <td>I have personal issue, so I will be late for 10mins</td>
           <td>
-            <span class="label label-rounded label-success">Approved</span>
+            <span class="label label-rounded label-success">{{ $t('status.approved') }}</span>
           </td>
         </tr>
         <tr>
@@ -51,7 +51,7 @@
           <td>18:00</td>
           <td>I have personal issue, so I will be late for 10mins</td>
           <td>
-            <span class="label label-rounded label-warning">Pending</span>
+            <span class="label label-rounded label-warning">{{ $t('status.pending') }}</span>
           </td>
         </tr>
         <tr>
@@ -62,7 +62,7 @@
           <td>18:00</td>
           <td>I have personal issue, so I will be late for 10mins</td>
           <td>
-            <span class="label label-rounded label-error">Rejected</span>
+            <span class="label label-rounded label-error">{{ $t('status.rejected') }}</span>
           </td>
         </tr>
       </tbody>
