@@ -10,3 +10,6 @@ export const FETCH_USERS = 'FETCH_USERS'
 
 // announcements
 export const RECEIVE_ANNOUNCEMENTS = 'RECEIVE_ANNOUNCEMENTS'
+
+// announcement
+export const RECEIVE_ANNOUNCEMENT = 'RECEIVE_ANNOUNCEMENT'
