@@ -13,3 +13,7 @@ export const RECEIVE_ANNOUNCEMENTS = 'RECEIVE_ANNOUNCEMENTS'
 
 // announcement
 export const RECEIVE_ANNOUNCEMENT = 'RECEIVE_ANNOUNCEMENT'
+
+// user-sessions
+export const FETCH_SESSIONS = 'FETCH_SESSIONS'
+export const DELETE_SESSIONS = 'DELETE_SESSIONS'

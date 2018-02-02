@@ -10,32 +10,17 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
+        <tr v-for="session in sessions">
           <td>
             <svg height="48" version="1.1" viewBox="0 0 16 16" width="48"><path fill-rule="evenodd" d="M15 2H1c-.55 0-1 .45-1 1v9c0 .55.45 1 1 1h5.34c-.25.61-.86 1.39-2.34 2h8c-1.48-.61-2.09-1.39-2.34-2H15c.55 0 1-.45 1-1V3c0-.55-.45-1-1-1zm0 9H1V3h14v8z"></path></svg>
-            Chrome on Mac
+            {{ session.client }}
           </td>
-          <td>113.161.70.40</td>
-          <td>Current session</td>
-          <td><button type="button" class="btn btn-error">Revoke</button></td>
-        </tr>
-        <tr>
-          <td>
-            <svg height="48" version="1.1" viewBox="0 0 16 16" width="48"><path fill-rule="evenodd" d="M15 2H1c-.55 0-1 .45-1 1v9c0 .55.45 1 1 1h5.34c-.25.61-.86 1.39-2.34 2h8c-1.48-.61-2.09-1.39-2.34-2H15c.55 0 1-.45 1-1V3c0-.55-.45-1-1-1zm0 9H1V3h14v8z"></path></svg>
-            Chrome on Mac
-          </td>
-          <td>113.161.70.40</td>
-          <td>January 07, 2018</td>
-          <td><button type="button" class="btn btn-error">Revoke</button></td>
-        </tr>
-        <tr>
-          <td>
-            <svg height="48" version="1.1" viewBox="0 0 16 16" width="48"><path fill-rule="evenodd" d="M15 2H1c-.55 0-1 .45-1 1v9c0 .55.45 1 1 1h5.34c-.25.61-.86 1.39-2.34 2h8c-1.48-.61-2.09-1.39-2.34-2H15c.55 0 1-.45 1-1V3c0-.55-.45-1-1-1zm0 9H1V3h14v8z"></path></svg>
-            Chrome on Mac
-          </td>
-          <td>113.161.70.40</td>
-          <td>January 07, 2018</td>
-          <td><button type="button" class="btn btn-error">Revoke</button></td>
+          <td>{{ session.ip_address }}</td>
+          <td>{{ session.updated_at | datetime_normal }}</td>
+          <td><button
+                type="button"
+                class="btn btn-error"
+                @click="del(session.id)">Revoke</button></td>
         </tr>
       </tbody>
     </table>
@@ -44,6 +29,7 @@
 
 <script>
 import SettingLayout from '../layouts/Setting.vue'
+import { mapState, mapActions } from 'vuex'
 
 export default {
   data () {
@@ -54,11 +40,23 @@ export default {
   components: {
     SettingLayout
   },
-
   methods: {
-    toggleInfo () {
-      this.isInfoOpen = !this.isInfoOpen
+    ...mapActions('userSessions', [
+      'fetchSessions',
+      'deleteSessions'
+    ]),
+
+    del (id) {
+      this.deleteSessions({ id })
     }
+  },
+  computed: {
+    ...mapState('userSessions', [
+      'sessions'
+    ])
+  },
+  created () {
+    this.fetchSessions()
   }
 }
 </script>
