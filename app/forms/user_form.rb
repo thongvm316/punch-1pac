@@ -1,52 +1,32 @@
 # frozen_string_literal: true
 
 class UserForm < BaseForm
-  CREATE_PARAMS = %w[department_id name password password_confirmation email role avatar user_permissions_attributes].freeze
-
-  MEMBER_UPDATE_PARAM = %w[department_id name password password_confirmation email avatar].freeze
-
   attribute :user, User
   attribute :current_company, Company
   attribute :current_user, User
+  attribute :params
 
   validate :validate_group
   validate :validate_permissions
 
-  def initialize(attrs, params, user = nil)
+  def initialize(attrs, user = nil)
     super attrs
-    @params         = params
-    @group          = current_company.groups.find_by(id: params[:group_id])
-    @permission_ids = Permission.verify(params[:permission_ids])
+    @group          = current_company.groups.find_by(id: params[:group_id]) if params[:group_id].present?
+    @permission_ids = Permission.verify(params[:permission_ids]) if params[:permission_ids].present?
+
     @user           = user || current_company.users.build(user_params)
   end
 
   def save
-    return false unless valid?
-    if @user.save
-      true
-    else
-      false
-    end
-  end
-
-  def update
-    @current_user.manager? ? update_with_manager : update_with_member
-  end
-
-  def update_with_manager
-    return false unless valid?
+    return false unless valid? if @current_user.manager?
     ApplicationRecord.transaction do
-      @user.user_permissions.destroy_all if @current_user.manager?
-      @user.update_attributes!(user_params)
+      @user.user_permissions.destroy_all if @current_user.manager? && @user.persisted?
+      @user.assign_attributes(user_params) if @user.persisted?
+      @user.save!
     end
     true
   rescue ActiveRecord::RecordInvalid
     false
-  end
-
-  def update_with_member
-    user_params = @params.select { |k, v| MEMBER_UPDATE_PARAM.include?(k.to_s) && v }
-    @user.update(user_params)
   end
 
   def valid?
@@ -56,21 +36,26 @@ class UserForm < BaseForm
 
   def error_messages
     valid?
-    @user.present? ? errors.messages.merge(@user.errors.messages) : errors.messages
+    errors.messages.merge(@user.errors.messages)
   end
 
   private
 
   def user_params
-    @params[:user_permissions_attributes] = @permission_ids
-    @params.select { |k, v| CREATE_PARAMS.include?(k.to_s) && v }
+    user_params = if current_user.manager?
+               @params[:user_permissions_attributes] = @permission_ids
+               %w[department_id name password password_confirmation email role avatar user_permissions_attributes].freeze
+             else
+               %w[department_id name password password_confirmation email avatar].freeze
+             end
+    @params.select { |k, v| user_params.include?(k.to_s) && v }
   end
 
   def validate_group
-    errors.add(:group, I18n.t('errors.messages.invalid')) if @group.blank?
+    errors.add(:group, I18n.t('errors.messages.invalid')) if @group.blank? && @current_user.manager?
   end
 
   def validate_permissions
-    errors.add(:permissions, I18n.t('errors.messages.invalid')) if @permission_ids.blank?
+    errors.add(:permissions, I18n.t('errors.messages.invalid')) if @permission_ids.blank? && @current_user.manager?
   end
 end

@@ -7,14 +7,13 @@ ActiveAdmin.register Company do
       default_permissions = Permission.member_role.ids.map { |id| { permission_id: id } }
       params[:company][:groups_attributes] = [name: Group::DEFAULT_NAME, group_permissions_attributes: default_permissions]
     end
-    permitted = [
+    [
       :name, :namespace, :timezone,
       :country, :industry, :address,
       :phone_number, :postal_code,
       :tax_code, :logo,
       groups_attributes: [:name, group_permissions_attributes: [:permission_id]]
     ]
-    permitted
   end
 
   menu priority: 1
