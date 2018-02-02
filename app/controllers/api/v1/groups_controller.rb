@@ -44,7 +44,9 @@ class Api::V1::GroupsController < Api::V1::BaseController
 
   def group_params
     params.require(:group).permit(:name, group_permissions_attributes: []).tap do |p|
-      p[:group_permissions_attributes] = Permission.verify(params.require(:group)[:permission_ids])
+      p[:group_permissions_attributes] = Permission.select(:id)
+                                                   .where(id: params.require(:group)[:permission_ids])
+                                                   .map { |permission| { permission_id: permission.id } }
     end
   end
 

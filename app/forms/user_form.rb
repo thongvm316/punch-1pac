@@ -12,7 +12,7 @@ class UserForm < BaseForm
   def initialize(attrs, user = nil)
     super attrs
     @group          = current_company.groups.find_by(id: params[:group_id]) if params[:group_id].present?
-    @permission_ids = Permission.verify(params[:permission_ids]) if params[:permission_ids].present?
+    @permission_ids = verify_permissions(params[:permission_ids]) if params[:permission_ids].present?
 
     @user           = user || current_company.users.build(user_params)
   end
@@ -40,6 +40,10 @@ class UserForm < BaseForm
   end
 
   private
+
+  def verify_permissions(permission_ids)
+    Permission.select(:id).where(id: permission_ids).map { |permission| { permission_id: permission.id } }
+  end
 
   def user_params
     user_params = if current_user.manager?
