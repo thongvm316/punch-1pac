@@ -3,8 +3,10 @@ import App from './App'
 import router from './router'
 import i18n from './locale'
 import store from './store'
-
 import axios from 'axios'
+
+/* eslint-disable no-unused-vars */
+import filterDatetime from './filters/datetime'
 
 import './scss/main.scss'
 
