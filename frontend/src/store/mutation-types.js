@@ -26,3 +26,8 @@ export const DELETE_SESSION = 'DELETE_SESSION'
 
 // attendances
 export const RECEIVE_ATTENDANCES = 'RECEIVE_ATTENDANCES'
+// company-allowed_ips
+export const FETCH_IPS = 'FETCH_IPS'
+export const CREATE_IP = 'CREATE_IPS'
+export const UPDATE_IP = 'UPDATE_IPS'
+export const DELETE_IP = 'DELETE_IPS'

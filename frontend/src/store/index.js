@@ -4,6 +4,7 @@ import createLogger from 'vuex/dist/logger'
 
 import headerAnnouncements from './modules/header-announcements'
 import punch from './modules/punch'
+
 import companyUsers from './modules/company-users'
 import companyDepartments from './modules/company-departments'
 
@@ -11,6 +12,7 @@ import announcements from './modules/announcements'
 import announcement from './modules/announcement'
 import userSessions from './modules/user-sessions'
 import attendances from './modules/attendances'
+import companyAllowedIPs from './modules/company-allowed_ips'
 
 Vue.use(Vuex)
 
@@ -25,7 +27,8 @@ export default new Vuex.Store({
     announcements,
     announcement,
     userSessions,
-    attendances
+    attendances,
+    companyAllowedIPs
   },
   strict: debug,
   plugins: debug ? [createLogger()] : []
