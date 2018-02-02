@@ -1,14 +1,14 @@
 <template>
   <main-layout :title="$t('title.requests')">
     <ul class="tab mt-4">
-      <router-link tag="li" class="tab-item" to="/requests/my"><a href="#">{{ $t('request.myRequest') }}</a></router-link>
-      <router-link tag="li" class="tab-item" to="/requests/groups"><a href="#">{{ $t('request.groupRequest') }}</a></router-link>
+      <router-link tag="li" class="tab-item" to="/requests/my"><a href="#">{{ $t('request.myRequests') }}</a></router-link>
+      <router-link tag="li" class="tab-item" to="/requests/groups"><a href="#">{{ $t('request.groupRequests') }}</a></router-link>
     </ul>
 
     <div class="toolbar clearfix mt-5">
       <button type="button" class="btn float-right" @click="toggleAddModal">
         <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M24 10h-10v-10h-4v10h-10v4h10v10h4v-10h10z"></path></svg>
-        {{ $t('message.button.addGroup') }}
+        {{ $t('button.addGroup') }}
       </button>
     </div>
 

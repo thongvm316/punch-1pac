@@ -8,6 +8,8 @@ import companyUsers from './modules/company-users'
 import announcements from './modules/announcements'
 import announcement from './modules/announcement'
 
+import userSessions from './modules/user-sessions'
+
 Vue.use(Vuex)
 
 const debug = process.env.NODE_ENV !== 'production'
@@ -18,7 +20,8 @@ export default new Vuex.Store({
     punch,
     companyUsers,
     announcements,
-    announcement
+    announcement,
+    userSessions
   },
   strict: debug,
   plugins: debug ? [createLogger()] : []
