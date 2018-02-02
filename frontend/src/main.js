@@ -10,7 +10,7 @@ import './scss/main.scss'
 
 // axios.defaults.headers.common['X-CSRF-Token'] = document.querySelector('meta[name=csrf-token]').getAttribute('content')
 axios.defaults.baseURL = 'http://namespace_1.localhost:3000/api/v1'
-axios.defaults.headers.common['Authorization'] = 'Bear eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1MTk4OTUzOTgsImp0aSI6ImJmNmYyMDY1LTNhZTAtNGJhYS1iODhlLWI0YjUzMTc4YTQ1MyIsInN1YiI6MX0.2oPg2ApRG-fpVnMTDz3qCDVj-S45W6wCt-j9EO0ZVvo'
+axios.defaults.headers.common['Authorization'] = 'Bear eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1MjAxMjk1MTcsImp0aSI6IjE2NjM1MmI4LWJiZGQtNDcxZi05ZWJlLWY4NGRmNWUzMTYwMiIsInN1YiI6Mn0.h0cY5TECDMmfD0moAklDlDqsAPRePzJFa2sEV1eite4'
 axios.defaults.headers.common['Accept'] = 'application/json'
 
 router.beforeEach((to, from, next) => {
