@@ -15,7 +15,7 @@
           :to="`/announcements/${announcement.id}`"
           :key="announcement.id">
           <p>{{ announcement.title }}</p>
-          <span>{{ announcement.created_at | datetime }}</span>
+          <span>{{ announcement.created_at | datetime_short }}</span>
         </router-link>
       </ul>
       <router-link to="/announcements" tag="a">See All</router-link>
@@ -25,7 +25,6 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
-import moment from 'moment'
 
 export default {
   name: 'header-announcements',
@@ -44,12 +43,6 @@ export default {
     ...mapActions('headerAnnouncements', [
       'getAnnouncements'
     ])
-  },
-
-  filters: {
-    datetime (value) {
-      return moment(value).format('MMM D, hh:mm')
-    }
   },
 
   computed: {

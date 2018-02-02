@@ -17,7 +17,7 @@
           :key="announcement.id">
           <td>{{ announcement.title }}</td>
           <td>{{ announcement.status }}</td>
-          <td>{{ announcement.created_at | datetime }}</td>
+          <td>{{ announcement.created_at | datetime_normal }}</td>
         </router-link>
       </tbody>
     </table>
@@ -28,7 +28,6 @@
 <script>
 import MainLayout from '../layouts/Main.vue'
 import pagination from '../mixins/pagination'
-import moment from 'moment'
 import { mapState, mapActions } from 'vuex'
 
 export default {
@@ -36,12 +35,6 @@ export default {
 
   components: {
     MainLayout
-  },
-
-  filters: {
-    datetime (val) {
-      return moment(val).format('MMM DD YYYY, HH:mm')
-    }
   },
 
   computed: {
