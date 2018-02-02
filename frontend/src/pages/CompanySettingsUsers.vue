@@ -21,36 +21,9 @@
         <th></th>
       </thead>
       <tbody>
-        <tr>
-          <td>Minh Phan</td>
-          <td>wofi.minh@1pac.vn</td>
-          <td>Member</td>
-          <td>20-01-2018</td>
-          <td>
-            <button class="btn btn-error">Delete</button>
-          </td>
-        </tr>
-        <tr>
-          <td>Minh Phan</td>
-          <td>wofi.minh@1pac.vn</td>
-          <td>Member</td>
-          <td>20-01-2018</td>
-          <td>
-            <button class="btn btn-error">Delete</button>
-          </td>
-        </tr>
-        <tr>
-          <td>Minh Phan</td>
-          <td>wofi.minh@1pac.vn</td>
-          <td>Member</td>
-          <td>20-01-2018</td>
-          <td>
-            <button class="btn btn-error">Delete</button>
-          </td>
-        </tr>
-        <tr>
-          <td>Minh Phan</td>
-          <td>wofi.minh@1pac.vn</td>
+        <tr v-for="user in users">
+          <td>{{ user.name }}</td>
+          <td>{{ user.email }}</td>
           <td>Member</td>
           <td>20-01-2018</td>
           <td>
@@ -64,10 +37,27 @@
 
 <script>
 import SettingLayout from '../layouts/Setting.vue'
+import { mapState, mapActions } from 'vuex'
 
 export default {
   components: {
     SettingLayout
+  },
+
+  methods: {
+    ...mapActions('companyUsers', [
+      'fetchUsers'
+    ])
+  },
+
+  computed: {
+    ...mapState('companyUsers', [
+      'users'
+    ])
+  },
+
+  created () {
+    this.fetchUsers()
   }
 }
 </script>
