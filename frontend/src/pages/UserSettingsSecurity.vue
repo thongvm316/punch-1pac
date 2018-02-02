@@ -20,7 +20,7 @@
           <td><button
                 type="button"
                 class="btn btn-error"
-                @click="del(session.id)">Revoke</button></td>
+                @click="deleteSession(session.id)">Revoke</button></td>
         </tr>
       </tbody>
     </table>
@@ -43,12 +43,8 @@ export default {
   methods: {
     ...mapActions('userSessions', [
       'fetchSessions',
-      'deleteSessions'
-    ]),
-
-    del (id) {
-      this.deleteSessions({ id })
-    }
+      'deleteSession'
+    ])
   },
   computed: {
     ...mapState('userSessions', [

@@ -9,9 +9,8 @@ const mutations = {
   [types.FETCH_SESSIONS] (state, payload) {
     state.sessions = payload
   },
-  [types.DELETE_SESSIONS] (state, payload) {
-    const record = state.sessions.find(element => element.id === payload)
-    state.sessions.splice(state.sessions.indexOf(record), 1)
+  [types.DELETE_SESSION] (state, payload) {
+    state.sessions = state.sessions.filter(session => session.id !== payload)
   }
 }
 
@@ -20,9 +19,9 @@ const actions = {
     axios.get('/sessions')
          .then((response) => commit(types.FETCH_SESSIONS, response.data))
   },
-  deleteSessions ({ commit }, data) {
-    axios.delete(`/sessions/${data.id}`)
-         .then((response) => commit(types.DELETE_SESSIONS, data.id))
+  deleteSession ({ commit }, data) {
+    axios.delete(`/sessions/${data}`)
+         .then((response) => commit(types.DELETE_SESSION, data))
   }
 }
 
