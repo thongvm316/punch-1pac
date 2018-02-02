@@ -5,6 +5,7 @@ import createLogger from 'vuex/dist/logger'
 import headerAnnouncements from './modules/header-announcements'
 import punch from './modules/punch'
 import companyUsers from './modules/company-users'
+import announcements from './modules/announcements'
 
 Vue.use(Vuex)
 
@@ -14,7 +15,8 @@ export default new Vuex.Store({
   modules: {
     headerAnnouncements,
     punch,
-    companyUsers
+    companyUsers,
+    announcements
   },
   strict: debug,
   plugins: debug ? [createLogger()] : []

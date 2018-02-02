@@ -27,7 +27,7 @@ module JsonResponseHelper
       next_page: nullable_response(Integer),
       prev_page: nullable_response(Integer),
       per_page: Integer,
-      total_count: Integer
+      total_pages: Integer
     }
   end
 

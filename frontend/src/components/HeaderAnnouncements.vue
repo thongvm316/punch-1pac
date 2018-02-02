@@ -8,10 +8,7 @@
     </span>
     <div class="box announcement-dropdown">
       <h4>Announcements</h4>
-      <p v-if="announcements.length === 0">
-        You have no new announcements
-      </p>
-      <ul v-else>
+      <ul>
         <router-link
           tag="li"
           v-for="announcement in announcements"

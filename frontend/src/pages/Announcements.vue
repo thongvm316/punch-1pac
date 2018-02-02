@@ -9,52 +9,56 @@
         </tr>
       </thead>
       <tbody>
-        <router-link to="/announcements/1" tag="tr">
-          <td>Server maintanence</td>
-          <td>Normal</td>
-          <td>20-01-2018 23:22</td>
-        </router-link>
-        <router-link to="/announcements/1" tag="tr">
-          <td>Server maintanence</td>
-          <td>Normal</td>
-          <td>20-01-2018 23:22</td>
-        </router-link>
-        <router-link to="/announcements/1" tag="tr">
-          <td>Server maintanence</td>
-          <td>Normal</td>
-          <td>20-01-2018 23:22</td>
-        </router-link>
-        <router-link to="/announcements/1" tag="tr">
-          <td>Server maintanence</td>
-          <td>Normal</td>
-          <td>20-01-2018 23:22</td>
-        </router-link>
-        <router-link to="/announcements/1" tag="tr">
-          <td>Server maintanence</td>
-          <td>Normal</td>
-          <td>20-01-2018 23:22</td>
-        </router-link>
-        <router-link to="/announcements/1" tag="tr">
-          <td>Server maintanence</td>
-          <td>Normal</td>
-          <td>20-01-2018 23:22</td>
-        </router-link>
-        <router-link to="/announcements/1" tag="tr">
-          <td>Server maintanence</td>
-          <td>Normal</td>
-          <td>20-01-2018 23:22</td>
+        <router-link
+          tag="tr"
+          :class="{ unread: announcement.unread }"
+          :to="`/announcements/${announcement.id}`"
+          v-for="announcement in announcements"
+          :key="announcement.id">
+          <td>{{ announcement.title }}</td>
+          <td>{{ announcement.status }}</td>
+          <td>{{ announcement.created_at | datetime }}</td>
         </router-link>
       </tbody>
     </table>
+    <pagination action="announcements/getAnnouncements" :pager="pager" v-if="pager.total_pages > 1"/>
   </main-layout>
 </template>
 
 <script>
 import MainLayout from '../layouts/Main.vue'
+import pagination from '../mixins/pagination'
+import moment from 'moment'
+import { mapState, mapActions } from 'vuex'
 
 export default {
+  mixins: [pagination],
+
   components: {
     MainLayout
+  },
+
+  filters: {
+    datetime (val) {
+      return moment(val).format('MMM DD YYYY, HH:mm')
+    }
+  },
+
+  computed: {
+    ...mapState('announcements', [
+      'announcements'
+    ])
+  },
+
+  methods: {
+    ...mapActions('announcements', [
+      'getAnnouncements'
+    ])
+  },
+
+  created () {
+    this.getAnnouncements()
+        .then((response) => { this.pager = response.data.meta })
   }
 }
 </script>
