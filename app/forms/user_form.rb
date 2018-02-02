@@ -18,7 +18,7 @@ class UserForm < BaseForm
   end
 
   def save
-    return false unless valid? if @current_user.manager?
+    return false if @current_user.manager? && !valid?
     ApplicationRecord.transaction do
       @user.user_permissions.destroy_all if @current_user.manager? && @user.persisted?
       @user.assign_attributes(user_params) if @user.persisted?
@@ -43,11 +43,11 @@ class UserForm < BaseForm
 
   def user_params
     user_params = if current_user.manager?
-               @params[:user_permissions_attributes] = @permission_ids
-               %w[department_id name password password_confirmation email role avatar user_permissions_attributes].freeze
-             else
-               %w[department_id name password password_confirmation email avatar].freeze
-             end
+                    @params[:user_permissions_attributes] = @permission_ids
+                    %w[department_id name password password_confirmation email role avatar user_permissions_attributes].freeze
+                  else
+                    %w[department_id name password password_confirmation email avatar].freeze
+                  end
     @params.select { |k, v| user_params.include?(k.to_s) && v }
   end
 

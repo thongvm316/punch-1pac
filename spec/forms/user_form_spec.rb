@@ -5,6 +5,8 @@ require 'rails_helper'
 RSpec.describe UserForm, type: :model do
   describe 'validate' do
     let(:avatar) { fixture_file_upload('images/image.png', 'image/png') }
+    let(:company) { create :company, :with_default_group }
+    let(:current_user) { create :user, company: company, role: 'superadmin' }
 
     context 'group validate' do
       let(:user_params) do
@@ -14,13 +16,10 @@ RSpec.describe UserForm, type: :model do
         user_params[:avatar] = avatar
         user_params
       end
-      let(:company) { create :company, :with_default_group }
-      let(:current_user) { create :user, company: company }
-
-      let(:attrs) { { current_company: company, current_user: current_user } }
+      let(:attrs) { { current_company: company, current_user: current_user, params: user_params } }
 
       it do
-        form = UserForm.new(attrs, user_params)
+        form = UserForm.new(attrs)
         form.save
         expect(form.error_messages).to eq(group: [I18n.t('errors.messages.invalid')])
       end
@@ -33,12 +32,10 @@ RSpec.describe UserForm, type: :model do
         user_params[:group_id] = company.default_group.id
         user_params
       end
-      let(:company) { create :company, :with_default_group }
-      let(:current_user) { create :user, company: company }
-      let(:attrs) { { current_company: company, current_user: current_user } }
+      let(:attrs) { { current_company: company, current_user: current_user, params: user_params } }
 
       it do
-        form = UserForm.new(attrs, user_params)
+        form = UserForm.new(attrs)
         form.save
         expect(form.error_messages).to eq(permissions: [I18n.t('errors.messages.invalid')])
       end
