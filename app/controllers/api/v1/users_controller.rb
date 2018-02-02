@@ -21,8 +21,7 @@ class Api::V1::UsersController < Api::V1::BaseController
 
   def create
     authorize!
-    attrs = { current_company: current_company, current_user: @current_user, params: user_params }
-    user_form = UserForm.new(attrs)
+    user_form = UserForm.new(user_params, current_company, current_user)
     if user_form.save
       UserMailer.create(user_form.user.id, user_params[:password]).deliver_later
       render json: user_form.user, serializer: UserSerializer, status: 201
@@ -49,8 +48,7 @@ class Api::V1::UsersController < Api::V1::BaseController
 
   def update
     authorize! @user
-    attrs = { current_company: current_company, current_user: @current_user, params: user_params }
-    user_form = UserForm.new(attrs, @user)
+    user_form = UserForm.new(user_params, current_company, current_user, @user)
     if user_form.save
       render json: user_form.user, serializer: UserWithPermissionSerializer, status: 200
     else

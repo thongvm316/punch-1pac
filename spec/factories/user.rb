@@ -15,10 +15,5 @@ FactoryBot.define do
       permissions = create_list(:permission, 3).pluck(:id)
       permissions.map { |id| { permission_id: id } }
     end
-    trait :with_group do
-      after(:create) do |user|
-        user.groups << FactoryBot.create(:group, company: user.company)
-      end
-    end
   end
 end

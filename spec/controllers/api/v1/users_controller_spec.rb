@@ -225,7 +225,7 @@ RSpec.describe Api::V1::UsersController, type: :controller do
   end
 
   describe 'PATCH #update' do
-    let(:target_user) { create :user, :with_group, company: company, role: 'member' }
+    let(:target_user) { create :user, company: company, role: 'member' }
 
     context 'when login user is member' do
       context 'when update itself' do
@@ -295,7 +295,7 @@ RSpec.describe Api::V1::UsersController, type: :controller do
       context 'when params valid' do
         let(:permissions) { create_list(:permission, 5).pluck(:id) }
 
-        subject { patch :update, params: { id: target_user.id, user: { name: 'thoi', permission_ids: permissions, group_id: target_user.groups.last.id } } }
+        subject { patch :update, params: { id: target_user.id, user: { name: 'thoi', permission_ids: permissions, group_id: company.groups.last.id } } }
 
         its(:code) { is_expected.to eq '200' }
         its(:body) { is_expected.to be_json_as(response_user(permissions.size)) }
@@ -315,10 +315,10 @@ RSpec.describe Api::V1::UsersController, type: :controller do
       let(:login_user) { create :user, company: company, role: 'superadmin' }
 
       context 'when target user is admin' do
-        let(:target_user) { create :user, :with_group, company: company, role: 'admin' }
+        let(:target_user) { create :user, company: company, role: 'admin' }
         let(:permissions) { create_list(:permission, 3).pluck(:id) }
 
-        subject { patch :update, params: { id: target_user.id, user: { name: 'thoi', permission_ids: permissions, group_id: target_user.groups.last.id } } }
+        subject { patch :update, params: { id: target_user.id, user: { name: 'thoi', permission_ids: permissions, group_id: company.groups.last.id } } }
 
         its(:code) { is_expected.to eq '200' }
         its(:body) { is_expected.to be_json_as(response_user(permissions.size)) }
@@ -327,7 +327,7 @@ RSpec.describe Api::V1::UsersController, type: :controller do
       context 'when target user is member' do
         let(:permissions) { create_list(:permission, 3).pluck(:id) }
 
-        subject { patch :update, params: { id: target_user.id, user: { name: 'thoi', permission_ids: permissions, group_id: target_user.groups.last.id } } }
+        subject { patch :update, params: { id: target_user.id, user: { name: 'thoi', permission_ids: permissions, group_id: company.groups.last.id } } }
 
         its(:code) { is_expected.to eq '200' }
         its(:body) { is_expected.to be_json_as(response_user(permissions.size)) }

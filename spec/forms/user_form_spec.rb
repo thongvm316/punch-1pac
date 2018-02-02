@@ -16,10 +16,8 @@ RSpec.describe UserForm, type: :model do
         user_params[:avatar] = avatar
         user_params
       end
-      let(:attrs) { { current_company: company, current_user: current_user, params: user_params } }
-
       it do
-        form = UserForm.new(attrs)
+        form = UserForm.new(user_params, company, current_user)
         form.save
         expect(form.error_messages).to eq(group: [I18n.t('errors.messages.invalid')])
       end
@@ -32,10 +30,9 @@ RSpec.describe UserForm, type: :model do
         user_params[:group_id] = company.default_group.id
         user_params
       end
-      let(:attrs) { { current_company: company, current_user: current_user, params: user_params } }
 
       it do
-        form = UserForm.new(attrs)
+        form = UserForm.new(user_params, company, current_user)
         form.save
         expect(form.error_messages).to eq(permissions: [I18n.t('errors.messages.invalid')])
       end

@@ -4,24 +4,34 @@ class UserForm < BaseForm
   attribute :user, User
   attribute :current_company, Company
   attribute :current_user, User
-  attribute :params
+  attribute :department_id
+  attribute :name
+  attribute :password
+  attribute :password_confirmation
+  attribute :email
+  attribute :role
+  attribute :avatar
+  attribute :permission_ids
+  attribute :group_id
 
   validate :validate_group
   validate :validate_permissions
 
-  def initialize(attrs, user = nil)
+  def initialize(attrs, company, current_user, user = nil)
     super attrs
-    @group          = current_company.groups.find_by(id: params[:group_id]) if params[:group_id].present?
-    @permission_ids = verify_permissions(params[:permission_ids]) if params[:permission_ids].present?
-
-    @user           = user || current_company.users.build(user_params)
+    @current_user     = current_user
+    @current_company  = company
+    @user             = user || current_company.users.build(user_params)
+    @group            = verify_groups
+    @permissions      = verify_permissions
+    @user.assign_attributes(user_params) if @user.persisted?
   end
 
   def save
-    return false if @current_user.manager? && !valid?
+    return false unless valid?
     ApplicationRecord.transaction do
-      @user.user_permissions.destroy_all if @current_user.manager? && @user.persisted?
-      @user.assign_attributes(user_params) if @user.persisted?
+      @user.permissions = @permissions
+      @user.groups = @groups if @groups.present?
       @user.save!
     end
     true
@@ -41,18 +51,26 @@ class UserForm < BaseForm
 
   private
 
-  def verify_permissions(permission_ids)
-    Permission.select(:id).where(id: permission_ids).map { |permission| { permission_id: permission.id } }
+  def verify_permissions
+    if current_user.manager?
+      Permission.where(id: permission_ids)
+    else
+      @user.permissions
+    end
+  end
+
+  def verify_groups
+    if current_user.manager?
+      current_company.groups.where(id: group_id)
+    else
+      @user.groups
+    end
   end
 
   def user_params
-    user_params = if current_user.manager?
-                    @params[:user_permissions_attributes] = @permission_ids
-                    %w[department_id name password password_confirmation email role avatar user_permissions_attributes].freeze
-                  else
-                    %w[department_id name password password_confirmation email avatar].freeze
-                  end
-    @params.select { |k, v| user_params.include?(k.to_s) && v }
+    user_params = %w[department_id name password password_confirmation email avatar]
+    user_params << 'role' if current_user.manager?
+    attributes.select { |k, v| user_params.include?(k.to_s) && v }
   end
 
   def validate_group
@@ -60,6 +78,6 @@ class UserForm < BaseForm
   end
 
   def validate_permissions
-    errors.add(:permissions, I18n.t('errors.messages.invalid')) if @permission_ids.blank? && @current_user.manager?
+    errors.add(:permissions, I18n.t('errors.messages.invalid')) if @permissions.blank? && @current_user.manager?
   end
 end
