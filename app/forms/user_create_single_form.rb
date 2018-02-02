@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class UserForm < BaseForm
+class UserCreateSingleForm < BaseForm
   attribute :user, User
   attribute :current_company, Company
   attribute :current_user, User
