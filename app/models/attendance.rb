@@ -36,7 +36,7 @@ class Attendance < ApplicationRecord
   scope :search_by, ->(params) {
     q = all
     q = q.with_status(params[:status]) if params[:status].present?
-    q = q.between(params[:from_date], params[:to_date]) if params[:from_date].present? && params[:to_date].present?
+    q = q.between(Time.zone.parse(params[:from_date]), Time.zone.parse(params[:to_date])) if params[:from_date].present? && params[:to_date].present?
     q
   }
 end
