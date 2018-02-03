@@ -1,12 +1,12 @@
 <template>
   <ul class="pagination mt-4">
-    <li class="page-item" v-show="currentPage > 1">
+    <li class="page-item" v-show="pager.current_page > 1">
       <a @click="go(n - 1)"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M16.67 0l2.83 2.829-9.339 9.175 9.339 9.167-2.83 2.829-12.17-11.996z"/></svg></a>
     </li>
-    <li class="page-item" :class="{ active: n === currentPage }" v-for="n in items">
+    <li class="page-item" :class="{ active: n === pager.current_page }" v-for="n in items">
       <a href="#" @click.prevent="go(n)">{{ n }}</a>
     </li>
-    <li class="page-item" v-show="currentPage + 1 <= totalPages">
+    <li class="page-item" v-show="pager.current_page + 1 <= pager.total_pages">
       <a @click="go(n + 1)"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M7.33 24l-2.83-2.829 9.339-9.175-9.339-9.167 2.83-2.829 12.17 11.996z"/></svg></a>
     </li>
   </ul>
@@ -15,31 +15,35 @@
 <script>
 export default {
   name: 'pagination',
-  props: ['pager', 'action'],
+
+  props: ['action', 'namespace'],
 
   data () {
     return {
-      currentPage: 1,
-      totalPages: null,
-      perPage: 20,
       step: 2,
-      numItems: 5,
       items: []
+    }
+  },
+
+  computed: {
+    pager () {
+      return this.$store.state[this.namespace].pager
     }
   },
 
   methods: {
     go (n) {
-      this.currentPage = n
+      document.activeElement.blur()
+      this.$store.dispatch(`${this.namespace}/${this.action}`, { page: n, per_page: this.pager.per_page })
     },
 
     buildItems () {
       let items = []
       let first = 1
-      let last = this.totalPages
-      if (this.currentPage > this.step) {
-        first = this.currentPage - this.step
-        last = (this.currentPage + this.step <= this.totalPages) ? this.currentPage + this.step : this.totalPages
+      let last = this.pager.total_pages
+      if (this.pager.current_page > this.step) {
+        first = this.pager.current_page - this.step
+        last = (this.pager.current_page + this.step <= this.pager.total_pages) ? this.pager.current_page + this.step : this.pager.total_pages
       }
       for (let i = first; i <= last; i++) {
         items.push(i)
@@ -49,17 +53,15 @@ export default {
   },
 
   watch: {
-    currentPage () {
-      this.items = this.buildItems()
-      document.activeElement.blur()
-      this.$store.dispatch(this.action, { page: this.currentPage, per_page: this.perPage })
+    pager: {
+      handler: function () {
+        this.items = this.buildItems()
+      },
+      deep: true
     }
   },
 
   mounted () {
-    this.currentPage = this.pager.current_page
-    this.totalPages = this.pager.total_pages
-    this.perPage = this.pager.per_page
     this.items = this.buildItems()
   }
 }

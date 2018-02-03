@@ -14,7 +14,7 @@ class Api::V1::AttendancesController < Api::V1::BaseController
   end
 
   def index
-    attendances = Attendance.search_by(params).page(params[:page]).per(params[:per_page])
+    attendances = Attendance.preload(:user).search_by(params).page(params[:page]).per(params[:per_page]).order(day: :desc)
     render json: attendances,
            root: 'attendances',
            each_serializer: AttendanceSerializer,

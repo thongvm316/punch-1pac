@@ -26,29 +26,28 @@ RSpec.describe Attendance, type: :model do
     end
 
     context '#with_status' do
-      let!(:attend_ok) { create_list :attendance, 1, attending_status: 'attend_ok' }
-      let!(:attendances) { create_list :attendance, 3 }
+      let!(:attendance_ok) { create_list :attendance, 1, attending_status: 'attend_ok' }
+      let!(:attendance) { create :attendance, attending_status: 'attend_late' }
 
       it 'returns attendances with status attend_ok' do
-        expect(Attendance.with_status('attend_ok')).to eq(attend_ok)
+        expect(Attendance.with_status('attend_ok')).to eq(attendance_ok)
       end
     end
 
     context '#search_by' do
-      let!(:attend_ok) { create :attendance, attending_status: 'attend_ok', day: Date.current }
-      let!(:attendance_1) { create :attendance, day: Date.current }
-      let!(:attendance_2) { create :attendance, day: 1.day.from_now }
-      let!(:attendances) { create_list :attendance, 3, day: 5.days.ago }
+      let!(:attendance_ok) { create :attendance, attending_status: 'attend_ok', day: Date.current }
+      let!(:attendance_1) { create :attendance, attending_status: 'attend_late', day: Date.current }
+      let!(:attendance_2) { create :attendance, attending_status: 'attend_late', day: 1.day.ago }
       let(:params) do
         {
           status: 'attend_ok',
-          from_date: Date.current,
-          to_date: 2.days.from_now
+          from_date: Date.current.strftime('%Y-%m-%d'),
+          to_date: 2.days.from_now.strftime('%Y-%m-%d')
         }
       end
 
       it "returns attendances with status attend_ok and day in range #{Date.current} - #{2.days.from_now}" do
-        expect(Attendance.search_by(params)).to eq([attend_ok])
+        expect(Attendance.search_by(params)).to eq([attendance_ok])
       end
     end
   end

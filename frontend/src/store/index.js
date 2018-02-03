@@ -7,8 +7,8 @@ import punch from './modules/punch'
 import companyUsers from './modules/company-users'
 import announcements from './modules/announcements'
 import announcement from './modules/announcement'
-
 import userSessions from './modules/user-sessions'
+import attendances from './modules/attendances'
 
 Vue.use(Vuex)
 
@@ -21,7 +21,8 @@ export default new Vuex.Store({
     companyUsers,
     announcements,
     announcement,
-    userSessions
+    userSessions,
+    attendances
   },
   strict: debug,
   plugins: debug ? [createLogger()] : []

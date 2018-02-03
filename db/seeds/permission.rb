@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Permission on user controller
 Permission.create(name: 'List all user',                 controller: 'api/v1/users', action: 'index', role: User.roles[:admin])
 Permission.create(name: 'Show single user',              controller: 'api/v1/users', action: 'show', role: User.roles[:member])
@@ -20,7 +22,7 @@ Permission.create(name: 'Destroy ip',   controller: 'api/v1/allowed_ips', action
 
 # Permission on attendances controller
 Permission.create(name: 'Check in', controller: 'api/v1/attendances', action: 'create', role: User.roles[:member])
-Permission.create(name: 'Check out',    controller: 'api/v1/attendances', action: 'update', role: User.roles[:member])
+Permission.create(name: 'Check out', controller: 'api/v1/attendances', action: 'update', role: User.roles[:member])
 
 # Permission on business day controller
 Permission.create(name: 'List all days', controller: 'api/v1/business_days', action: 'index', role: User.roles[:admin])
@@ -54,7 +56,7 @@ Permission.create(name: 'Update group',    controller: 'api/v1/groups', action: 
 Permission.create(name: 'Destroy group',   controller: 'api/v1/groups', action: 'destroy', role: User.roles[:admin])
 
 # Permission on permission controller
-Permission.create(name: 'List all Permissions',   controller: 'api/v1/permissions', action: 'index', role: User.roles[:admin])
+Permission.create(name: 'List all Permissions', controller: 'api/v1/permissions', action: 'index', role: User.roles[:admin])
 
 # Permission on request controller
 Permission.create(name: 'List all requests', controller: 'api/v1/requests', action: 'index', role: User.roles[:admin])
@@ -64,4 +66,3 @@ Permission.create(name: 'Update request',    controller: 'api/v1/requests', acti
 Permission.create(name: 'Approve request',   controller: 'api/v1/requests', action: 'approve', role: User.roles[:admin])
 Permission.create(name: 'Reject request',    controller: 'api/v1/requests', action: 'reject', role: User.roles[:admin])
 Permission.create(name: 'Destroy request',   controller: 'api/v1/requests', action: 'destroy', role: User.roles[:admin])
-

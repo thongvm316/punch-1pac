@@ -21,24 +21,24 @@
         </router-link>
       </tbody>
     </table>
-    <pagination action="announcements/getAnnouncements" :pager="pager" v-if="pager.total_pages > 1"/>
+    <pagination action="getAnnouncements" namespace="announcements" v-if="pager.total_pages > 1"/>
   </main-layout>
 </template>
 
 <script>
 import MainLayout from '../layouts/Main.vue'
-import pagination from '../mixins/pagination'
+import Pagination from '../components/Pagination.vue'
 import { mapState, mapActions } from 'vuex'
 
 export default {
-  mixins: [pagination],
-
   components: {
-    MainLayout
+    MainLayout,
+    Pagination
   },
 
   computed: {
     ...mapState('announcements', [
+      'pager',
       'announcements'
     ])
   },
@@ -51,7 +51,6 @@ export default {
 
   created () {
     this.getAnnouncements()
-        .then((response) => { this.pager = response.data.meta })
   }
 }
 </script>
