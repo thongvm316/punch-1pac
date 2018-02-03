@@ -28,6 +28,6 @@ FactoryBot.create_list(:announcement, 11, admin: admin)
 prev_month = Time.current - 1.month
 next_month = Time.current + 1.month
 (prev_month.to_i..next_month.to_i).step(1.day) do |t|
-  day = Time.at(t)
+  day = Time.zone.at(t)
   FactoryBot.create(:attendance, day: day, user: user_sa)
 end
