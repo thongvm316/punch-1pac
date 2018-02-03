@@ -17,3 +17,6 @@ export const RECEIVE_ANNOUNCEMENT = 'RECEIVE_ANNOUNCEMENT'
 // user-sessions
 export const FETCH_SESSIONS = 'FETCH_SESSIONS'
 export const DELETE_SESSION = 'DELETE_SESSION'
+
+// attendances
+export const RECEIVE_ATTENDANCES = 'RECEIVE_ATTENDANCES'
