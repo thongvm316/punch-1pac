@@ -2,11 +2,13 @@ import * as types from '../mutation-types.js'
 import axios from 'axios'
 
 const state = {
+  pager: {},
   announcements: []
 }
 
 const mutations = {
   [types.RECEIVE_ANNOUNCEMENTS] (state, payload) {
+    state.pager = payload.meta
     state.announcements = payload.announcements
   }
 }
