@@ -36,14 +36,13 @@ RSpec.describe Attendance, type: :model do
 
     context '#search_by' do
       let!(:attend_ok) { create :attendance, attending_status: 'attend_ok', day: Date.current }
-      let!(:attendance_1) { create :attendance, day: Date.current }
-      let!(:attendance_2) { create :attendance, day: 1.day.from_now }
-      let!(:attendances) { create_list :attendance, 3, day: 5.days.ago }
+      let!(:attendance_1) { create :attendance, attending_status: 'attend_late', day: Date.current }
+      let!(:attendance_2) { create :attendance, attending_status: 'attend_late', day: 1.day.ago }
       let(:params) do
         {
           status: 'attend_ok',
-          from_date: Date.current,
-          to_date: 2.days.from_now
+          from_date: Date.current.strftime('%Y-%m-%d'),
+          to_date: 2.days.from_now.strftime('%Y-%m-%d')
         }
       end
 

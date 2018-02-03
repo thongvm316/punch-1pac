@@ -16,18 +16,18 @@ RSpec.describe Api::V1::AttendancesController, type: :controller do
       let(:params) do
         {
           status: 'attend_ok',
-          from_date: Date.current,
+          from_date: Time.current,
           to_date: 2.days.from_now
         }
       end
-      let!(:attend_ok) { create :attendance, attending_status: 'attend_ok', day: Date.current }
-      let!(:attendance_1) { create :attendance, day: Date.current }
-      let!(:attendance_2) { create :attendance, day: 1.day.from_now }
+      let!(:attend_ok) { create :attendance, attending_status: 'attend_ok', day: 1.day.ago }
+      let!(:attendance_1) { create :attendance, attending_status: 'attend_ok', day: Date.current }
+      let!(:attendance_2) { create :attendance, attending_status: 'attend_ok', day: 1.day.from_now }
 
       subject { get :index, params: params }
 
       its(:code) { is_expected.to eq '200' }
-      its(:body) { is_expected.to be_json_as(attendances: Array.new(1) { response_attendance }, meta: response_pagination) }
+      its(:body) { is_expected.to be_json_as(attendances: Array.new(2) { response_attendance }, meta: response_pagination) }
     end
 
     context 'when have no search params' do
