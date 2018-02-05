@@ -8,6 +8,12 @@ export const PUNCH_OUT = 'PUNCH_OUT'
 // company-users
 export const FETCH_USERS = 'FETCH_USERS'
 
+// company-deparments
+export const FETCH_DEPARTMENTS = 'FETCH_DEPARTMENTS'
+export const ADD_DEPARTMENT = 'ADD_DEPARTMENT'
+export const DELETE_DEPARTMENT = 'DELETE_DEPARTMENT'
+export const EDIT_DEPARTMENT = 'EDIT_DEPARTMENT'
+
 // announcements
 export const RECEIVE_ANNOUNCEMENTS = 'RECEIVE_ANNOUNCEMENTS'
 
