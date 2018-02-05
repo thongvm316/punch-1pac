@@ -28,8 +28,4 @@ class Permission < ApplicationRecord
     query = query.where(role: params[:role]) if params[:role].present?
     query
   }
-
-  def self.member_role
-    where(role: User.roles[:member])
-  end
 end
