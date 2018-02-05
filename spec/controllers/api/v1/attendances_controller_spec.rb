@@ -20,9 +20,9 @@ RSpec.describe Api::V1::AttendancesController, type: :controller do
           to_date: 2.days.from_now
         }
       end
-      let!(:attend_ok) { create :attendance, attending_status: 'attend_ok', day: 1.day.ago }
-      let!(:attendance_1) { create :attendance, attending_status: 'attend_ok', day: Date.current }
-      let!(:attendance_2) { create :attendance, attending_status: 'attend_ok', day: 1.day.from_now }
+      let!(:attend_ok) { create :attendance, user: login_user, attending_status: 'attend_ok', day: 1.day.ago }
+      let!(:attendance_1) { create :attendance, user: login_user, attending_status: 'attend_ok', day: Date.current }
+      let!(:attendance_2) { create :attendance, user: login_user, attending_status: 'attend_ok', day: 1.day.from_now }
 
       subject { get :index, params: params }
 
@@ -31,12 +31,13 @@ RSpec.describe Api::V1::AttendancesController, type: :controller do
     end
 
     context 'when have no search params' do
-      let!(:attendances) { create_list :attendance, 3, day: 5.days.ago }
+      let!(:attendance_1) { create :attendance, user: login_user, day: 4.days.ago }
+      let!(:attendance_2) { create :attendance, user: login_user, day: 5.days.ago }
 
       subject { get :index }
 
       its(:code) { is_expected.to eq '200' }
-      its(:body) { is_expected.to be_json_as(attendances: Array.new(3) { response_attendance }, meta: response_pagination) }
+      its(:body) { is_expected.to be_json_as(attendances: Array.new(2) { response_attendance }, meta: response_pagination) }
     end
   end
 
