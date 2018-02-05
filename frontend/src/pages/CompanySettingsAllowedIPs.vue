@@ -28,7 +28,7 @@
         <input class="form-input" type="text" v-model="newIp">
       </div>
       <div class="form-group">
-        <a class="btn" @click="createIP(newIp)">Submit</a>
+        <a class="btn" @click="createIP({ ip_address: newIp })">Submit</a>
       </div>
     </modal>
 
@@ -38,7 +38,7 @@
         <input class="form-input" type="text" v-model="editIp">
       </div>
       <div class="form-group">
-        <a class="btn" @click="updateIP({ id: currentID, ip_address: editIp })">Save</a>
+        <a class="btn" @click="updateIP({ id: currentId, ip_address: editIp })">Save</a>
       </div>
     </modal>
   </setting-layout>
@@ -54,7 +54,7 @@ export default {
 
   data () {
     return {
-      currentID: '',
+      currentId: '',
       newIp: '',
       editIp: ''
     }
@@ -73,7 +73,7 @@ export default {
     ]),
 
     toggleEditModal (id, ipAddress) {
-      this.currentID = id
+      this.currentId = id
       this.editIp = ipAddress
       this.isEditModalOpen = !this.isEditModalOpen
     }
