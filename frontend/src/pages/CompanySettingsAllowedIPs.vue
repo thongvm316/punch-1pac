@@ -14,30 +14,10 @@
         <th></th>
       </thead>
       <tbody>
-        <tr @click="toggleEditModal">
-          <td>112.244.12.0</td>
-          <td class="text-right">20-01-2018</td>
-          <td class="text-center"><button class="btn btn-error">Delete</button></td>
-        </tr>
-        <tr @click="toggleEditModal">
-          <td>112.244.12.1</td>
-          <td class="text-right">20-01-2018</td>
-          <td class="text-center"><button class="btn btn-error">Delete</button></td>
-        </tr>
-        <tr @click="toggleEditModal">
-          <td>112.244.12.2</td>
-          <td class="text-right">20-01-2018</td>
-          <td class="text-center"><button class="btn btn-error">Delete</button></td>
-        </tr>
-        <tr @click="toggleEditModal">
-          <td>112.244.12.3</td>
-          <td class="text-right">20-01-2018</td>
-          <td class="text-center"><button class="btn btn-error">Delete</button></td>
-        </tr>
-        <tr @click="toggleEditModal">
-          <td>112.244.12.4</td>
-          <td class="text-right">20-01-2018</td>
-          <td class="text-center"><button class="btn btn-error">Delete</button></td>
+        <tr v-for="ip in allowedIPs">
+          <td @click="toggleEditModal(ip.id, ip.ip_address)" >{{ ip.ip_address }}</td>
+          <td class="text-right"></td>
+          <td class="text-center"><button class="btn btn-error" @click="deleteIP(ip.id)">Delete</button></td>
         </tr>
       </tbody>
     </table>
@@ -45,34 +25,68 @@
     <modal title="Add IP" :modal-open.sync="isAddModalOpen">
       <div class="form-group">
         <label class="form-label">IP Address</label>
-        <input class="form-input" type="text">
+        <input class="form-input" type="text" v-model="newIp">
       </div>
       <div class="form-group">
-        <a class="btn">Submit</a>
+        <a class="btn" @click="createIP({ ip_address: newIp })">Submit</a>
       </div>
     </modal>
 
     <modal title="Edit IP" :modal-open.sync="isEditModalOpen">
       <div class="form-group">
         <label class="form-label">IP Address</label>
-        <input class="form-input" type="text">
+        <input class="form-input" type="text" v-model="editIp">
       </div>
       <div class="form-group">
-        <a class="btn">Save</a>
+        <a class="btn" @click="updateIP({ id: currentId, ip_address: editIp })">Save</a>
       </div>
     </modal>
   </setting-layout>
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex'
 import SettingLayout from '../layouts/Setting.vue'
 import modal from '../mixins/modal'
 
 export default {
   mixins: [modal],
 
+  data () {
+    return {
+      currentId: '',
+      newIp: '',
+      editIp: ''
+    }
+  },
+
   components: {
     SettingLayout
+  },
+
+  methods: {
+    ...mapActions('companyAllowedIPs', [
+      'fetchIPs',
+      'createIP',
+      'updateIP',
+      'deleteIP'
+    ]),
+
+    toggleEditModal (id, ipAddress) {
+      this.currentId = id
+      this.editIp = ipAddress
+      this.isEditModalOpen = !this.isEditModalOpen
+    }
+  },
+
+  computed: {
+    ...mapState('companyAllowedIPs', [
+      'allowedIPs'
+    ])
+  },
+
+  created () {
+    this.fetchIPs()
   }
 }
 </script>
