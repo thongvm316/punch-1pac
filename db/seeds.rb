@@ -12,8 +12,8 @@
 require_relative 'seeds/permission'
 
 company = FactoryBot.create(:company)
-FactoryBot.create(:user, email: 'wofi.minh@1pac.vn', password: 'password', password_confirmation: 'password', company: company)
-user_sa = FactoryBot.create(:user, email: 'example@1pac.vn', password: 'password', password_confirmation: 'password', company: company, role: 'superadmin')
+user = FactoryBot.create(:user, email: 'wofi.minh@1pac.vn', password: 'password', password_confirmation: 'password', company: company)
+superadmin = FactoryBot.create(:user, email: 'example@1pac.vn', password: 'password', password_confirmation: 'password', company: company, role: 'superadmin')
 
 5.times do
   company = FactoryBot.create(:company)
@@ -24,10 +24,14 @@ admin = FactoryBot.create(:admin, email: 'admin@example.com', password: 'passwor
 
 FactoryBot.create_list(:holiday, 3, admin: admin)
 FactoryBot.create_list(:announcement, 11, admin: admin)
+FactoryBot.create_list(:group, 5, company: company)
+FactoryBot.create(:user_group, user: user, group: Group.last)
+FactoryBot.create(:user_group, user: superadmin, group: Group.first)
+FactoryBot.create(:user_group, user: superadmin, group: Group.last)
 
 prev_month = Time.current - 1.month
 next_month = Time.current + 1.month
 (prev_month.to_i..next_month.to_i).step(1.day) do |t|
   day = Time.zone.at(t)
-  FactoryBot.create(:attendance, day: day, user: user_sa)
+  FactoryBot.create(:attendance, day: day, user: [user, superadmin][rand(2)])
 end
