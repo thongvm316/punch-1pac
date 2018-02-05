@@ -27,7 +27,7 @@ RSpec.describe UserCreateSingleForm, type: :model do
       let(:user_params) do
         user_params = attributes_for(:user)
         user_params[:avatar] = avatar
-        user_params[:group_id] = company.default_group.id
+        user_params[:group_ids] = company.default_group.id
         user_params
       end
 

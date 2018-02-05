@@ -48,11 +48,10 @@ class Api::V1::UsersController < Api::V1::BaseController
 
   def update
     authorize! @user
-    user_form = UserCreateSingleForm.new(user_params, current_company, current_user, @user)
-    if user_form.save
-      render json: user_form.user, serializer: UserWithPermissionSerializer, status: 200
+    if @user.update_attributes(user_params)
+      render json: @user, serializer: UserWithPermissionSerializer, status: 200
     else
-      render_422(user_form.error_messages)
+      render_422(@user.errors)
     end
   end
 

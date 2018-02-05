@@ -15,17 +15,15 @@ class Api::V1::UsersLoyalty < ApplicationLoyalty
   end
 
   def update?
-    return true if higher_role?
-    return true if @user == @record
-    false
+    @user == @record
   end
 
   def permitted_attributes
     if @user.manager?
       [:department_id, :name, :password, :password_confirmation, :email,
-       :role, :avatar, :group_id, permission_ids: []]
+       :role, :avatar, :group_ids, permission_ids: []]
     else
-      %i[department_id name password password_confirmation email avatar]
+      %i[gender name email avatar]
     end
   end
 
