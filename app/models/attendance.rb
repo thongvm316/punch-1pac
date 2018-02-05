@@ -33,10 +33,22 @@ class Attendance < ApplicationRecord
   scope :attended, -> { where.not(attended_at: nil) }
   scope :between, ->(from_date, to_date) { where(day: from_date..to_date) }
   scope :with_status, ->(status) { where(attending_status: status).or(where(leaving_status: status)).or(where(off_status: status)) }
-  scope :search_by, ->(params) {
+  scope :for_user, ->(user, group_id = nil) {
+    if user.manager?
+      if group_id.present?
+        where(user_id: user.groups.where(id: group_id).includes(:users).flat_map(&:users))
+      else
+        where(user_id: user.groups.includes(:users).flat_map(&:users))
+      end
+    else
+      where(user_id: user)
+    end
+  }
+
+  def self.search_by(params)
     q = all
     q = q.with_status(params[:status]) if params[:status].present?
     q = q.between(Time.zone.parse(params[:from_date]), Time.zone.parse(params[:to_date])) if params[:from_date].present? && params[:to_date].present?
     q
-  }
+  end
 end
