@@ -13,20 +13,10 @@
         <th></th>
       </thead>
       <tbody>
-        <tr @click="toggleEditModal">
-          <td>IT</td>
+        <tr v-for="department in departments">
+          <td @click="toggleEditModal(department.id)">{{ department.name }}</td>
           <td>5</td>
-          <td class="text-center"><button class="btn btn-error">Delete</button></td>
-        </tr>
-        <tr @click="toggleEditModal">
-          <td>Marketing</td>
-          <td>2</td>
-          <td class="text-center"><button class="btn btn-error">Delete</button></td>
-        </tr>
-        <tr @click="toggleEditModal">
-          <td>HR</td>
-          <td>3</td>
-          <td class="text-center"><button class="btn btn-error">Delete</button></td>
+          <td class="text-center"><button class="btn btn-error" @click="deleteDepartment(department.id)">Delete</button></td>
         </tr>
       </tbody>
     </table>
@@ -34,20 +24,20 @@
     <modal title="Add Department" :modal-open.sync="isAddModalOpen">
       <div class="form-group">
         <label class="form-label">Name</label>
-        <input class="form-input" type="text">
+        <input class="form-input" type="text" v-model="newName">
       </div>
       <div class="form-group">
-        <button type="button" class="btn">Submit</button>
+        <button type="button" class="btn" @click="addDepartment({ name: newName })">Submit</button>
       </div>
     </modal>
 
     <modal title="Edit Department" :modal-open.sync="isEditModalOpen">
       <div class="form-group">
         <label class="form-label">Name</label>
-        <input class="form-input" type="text">
+        <input class="form-input" type="text" v-model="editName">
       </div>
       <div class="form-group">
-        <button type="button" class="btn">Save</button>
+        <button type="button" class="btn" @click="editDepartment({ departmentId: currentId, name: editName })">Save</button>
       </div>
     </modal>
   </setting-layout>
@@ -56,26 +46,47 @@
 <script>
 import SettingLayout from '../layouts/Setting.vue'
 import modal from '../mixins/modal'
+import { mapState, mapActions, mapGetters } from 'vuex'
 
 export default {
   mixins: [modal],
   data () {
     return {
-      isAddModalOpen: false,
-      isEditModalOpen: false
+      newName: '',
+      editName: '',
+      currentId: ''
     }
   },
   components: {
     SettingLayout
   },
   methods: {
-    toggleAddModal () {
-      this.isAddModalOpen = !this.isAddModalOpen
-    },
+    ...mapActions('companyDepartments', [
+      'fetchDepartments',
+      'addDepartment',
+      'deleteDepartment',
+      'editDepartment'
+    ]),
 
-    toggleEditModal () {
+    toggleEditModal (id) {
+      this.currentId = id
       this.isEditModalOpen = !this.isEditModalOpen
+      this.editName = this.fetchDepartment(id).name
     }
+  },
+
+  computed: {
+    ...mapState('companyDepartments', [
+      'departments'
+    ]),
+
+    ...mapGetters('companyDepartments', [
+      'fetchDepartment'
+    ])
+  },
+
+  created () {
+    this.fetchDepartments()
   }
 }
 </script>
