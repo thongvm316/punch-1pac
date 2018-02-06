@@ -1,12 +1,14 @@
 # frozen_string_literal: true
 
-class UserCreateSingleForm < BaseForm
+class UserCreateForm < BaseForm
   attribute :user, User
   attribute :current_company, Company
   attribute :current_user, User
+  attribute :permission_ids
+  attribute :group_ids
+
   STRONG_PARAMS = %w[department_id name password password_confirmation email avatar role].freeze
-  USER_ATTRIBUTES = STRONG_PARAMS | %w[permission_ids group_ids].freeze
-  USER_ATTRIBUTES.each { |attr| attribute attr }
+  STRONG_PARAMS.each { |attr| attribute attr }
 
   validate :validate_group
   # validate :validate_permissions

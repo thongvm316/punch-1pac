@@ -21,7 +21,7 @@ class Api::V1::UsersController < Api::V1::BaseController
 
   def create
     authorize!
-    user_form = UserCreateSingleForm.new(user_create_params, current_user)
+    user_form = UserCreateForm.new(user_create_params, current_user)
     if user_form.save
       UserMailer.create(user_form.user.id, user_create_params[:password]).deliver_later
       render json: user_form.user, serializer: UserSerializer, status: 201

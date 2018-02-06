@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe UserCreateSingleForm, type: :model do
+RSpec.describe UserCreateForm, type: :model do
   describe 'validate' do
     let(:avatar) { fixture_file_upload('images/image.png', 'image/png') }
     let(:company) { create :company, :with_default_group }
@@ -17,7 +17,7 @@ RSpec.describe UserCreateSingleForm, type: :model do
         user_params
       end
       it do
-        form = UserCreateSingleForm.new(user_params, current_user)
+        form = UserCreateForm.new(user_params, current_user)
         form.save
         expect(form.error_messages).to eq(group: [I18n.t('errors.messages.invalid')])
       end
