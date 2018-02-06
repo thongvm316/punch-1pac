@@ -95,6 +95,7 @@ module JsonResponseHelper
       content: String,
       target: String,
       status: String,
+      is_read: boolean_response,
       created_at: time_iso8601_response
     }
   end
