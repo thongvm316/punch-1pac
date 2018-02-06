@@ -38,8 +38,8 @@
     <table class="table table-hover bg-light mt-5">
       <thead>
         <th>{{ $t('tableHeader.date') }}</th>
-        <th>{{ $t('tableHeader.startedAt') }}</th>
-        <th>{{ $t('tableHeader.endedAt') }}</th>
+        <th>{{ $t('tableHeader.attendedAt') }}</th>
+        <th>{{ $t('tableHeader.leftAt') }}</th>
         <th>{{ $t('tableHeader.status') }}</th>
       </thead>
       <tbody>
