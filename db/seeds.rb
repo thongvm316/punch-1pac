@@ -33,5 +33,6 @@ prev_month = Time.current - 1.month
 next_month = Time.current + 1.month
 (prev_month.to_i..next_month.to_i).step(1.day) do |t|
   day = Time.zone.at(t)
-  FactoryBot.create(:attendance, day: day, user: [user, superadmin][rand(2)])
+  attendance = FactoryBot.create(:attendance, day: day, user: [user, superadmin][rand(2)])
+  FactoryBot.create(:request, attendance: attendance, user: attendance.user, status: Request.statuses.keys[rand(3)])
 end
