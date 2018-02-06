@@ -32,5 +32,4 @@ class Permission < ApplicationRecord
   def self.of_member
     where(role: User.roles[:member])
   end
-
 end
