@@ -49,13 +49,13 @@ RSpec.describe Api::V1::GroupsController, type: :controller do
       let(:login_user) { create :user, company: company, role: 'admin' }
 
       context 'when params are valid ' do
-        let(:group) { create :group, company: company }
+        let(:group) { create :group, company: company, users: create_list(:user, 3, company: company) }
         let(:permissions_size) { group.permissions.size }
 
         subject { get :show, params: { id: group.id } }
 
         its(:code) { is_expected.to eq '200' }
-        its(:body) { is_expected.to be_json_as(response_group(permissions_size)) }
+        its(:body) { is_expected.to be_json_as(response_group(3)) }
       end
 
       context 'when invalid params' do
@@ -96,7 +96,7 @@ RSpec.describe Api::V1::GroupsController, type: :controller do
         subject { post :create, params: { group: group_params } }
 
         its(:code) { is_expected.to eq '201' }
-        its(:body) { is_expected.to be_json_as(response_group(group_params[:permission_ids].size)) }
+        its(:body) { is_expected.to be_json_as(response_group(0)) }
       end
 
       context 'when have no permissions' do
@@ -116,7 +116,7 @@ RSpec.describe Api::V1::GroupsController, type: :controller do
   end
 
   describe 'PATCH #update' do
-    let(:group) { create :group, company_id: company.id }
+    let(:group) { create :group, company: company, users: create_list(:user, 3, company: company) }
     let(:group_params) { { id: group.id, group: { name: 'kawasaki', permission_ids: [] } } }
 
     context 'when log in user is member' do
@@ -138,7 +138,7 @@ RSpec.describe Api::V1::GroupsController, type: :controller do
         subject { patch :update, params: group_params }
 
         its(:code) { is_expected.to eq '200' }
-        its(:body) { is_expected.to be_json_as(response_group(ids.size)) }
+        its(:body) { is_expected.to be_json_as(response_group(3)) }
       end
 
       context 'when permissions empty' do
@@ -148,7 +148,7 @@ RSpec.describe Api::V1::GroupsController, type: :controller do
         subject { put :update, params: group_params }
 
         its(:code) { is_expected.to eq '200' }
-        its(:body) { is_expected.to be_json_as(response_group(current_permissions_in_group)) }
+        its(:body) { is_expected.to be_json_as(response_group(3)) }
       end
 
       context 'when permissions invalid' do

@@ -2,5 +2,5 @@
 
 class GroupSerializer < ApplicationSerializer
   attributes :id, :name
-  has_many :permissions
+  has_many :users, serializer: UserSerializer
 end
