@@ -18,15 +18,6 @@ class Api::V1::UsersLoyalty < ApplicationLoyalty
     @user == @record
   end
 
-  def permitted_attributes
-    if @user.manager?
-      [:department_id, :name, :password, :password_confirmation, :email,
-       :role, :avatar, :group_ids, permission_ids: []]
-    else
-      %i[gender name email avatar]
-    end
-  end
-
   private
 
   def higher_role?

@@ -17,7 +17,7 @@ RSpec.describe UserCreateSingleForm, type: :model do
         user_params
       end
       it do
-        form = UserCreateSingleForm.new(user_params, company, current_user)
+        form = UserCreateSingleForm.new(user_params, current_user)
         form.save
         expect(form.error_messages).to eq(group: [I18n.t('errors.messages.invalid')])
       end
@@ -32,7 +32,7 @@ RSpec.describe UserCreateSingleForm, type: :model do
       end
 
       it do
-        form = UserCreateSingleForm.new(user_params, company, current_user)
+        form = UserCreateSingleForm.new(user_params, current_user)
         form.save
         expect(form.error_messages).to eq(permissions: [I18n.t('errors.messages.invalid')])
       end

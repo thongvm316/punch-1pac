@@ -11,12 +11,11 @@ class UserCreateSingleForm < BaseForm
   validate :validate_group
   validate :validate_permissions
 
-  def initialize(attrs, company, current_user)
+  def initialize(attrs, current_user)
     super attrs
     @current_user     = current_user
-    @current_company  = company
-    @user             = current_company.users.build(user_params)
-    @groups           = current_company.groups.where(id: group_ids)
+    @user             = current_user.company.users.build(user_params)
+    @groups           = current_user.company.groups.where(id: group_ids)
     @permissions      = Permission.where(id: permission_ids)
   end
 

@@ -62,11 +62,7 @@ RSpec.describe Api::V1::RequestsController, type: :controller do
     end
 
     context 'when login user is member' do
-      let(:login_user) do
-        user = create :user, company: company, role: 'member'
-        user.groups << company.groups.last
-        user
-      end
+      let(:login_user) { create :user, company: company, role: 'member', groups: [company.groups.last] }
       let!(:requests) { create_list :request, 3, user: login_user }
 
       subject { get :index }
@@ -92,11 +88,7 @@ RSpec.describe Api::V1::RequestsController, type: :controller do
     end
 
     context 'when login user is admin' do
-      let(:login_user) do
-        user = create :user, company: company, role: 'admin'
-        user.groups << company.groups.last
-        user
-      end
+      let(:login_user) { create :user, company: company, role: 'admin', groups: [company.groups.last] }
       let!(:requests) { create_list :request, 3, user: create(:user, groups: login_user.groups) }
 
       subject { get :index }
