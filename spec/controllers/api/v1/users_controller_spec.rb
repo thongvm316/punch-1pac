@@ -157,6 +157,73 @@ RSpec.describe Api::V1::UsersController, type: :controller do
     end
   end
 
+  describe 'PATCH #change_password' do
+    let(:login_user) { create :user, company: company, password: 'password', password_confirmation: 'password' }
+
+    context 'when current_password invalid' do
+      let(:params) do
+        {
+          current_password: 'invalid_password',
+          password: 'password1',
+          password_confirmation: 'password1'
+        }
+      end
+
+      subject { patch :change_password, params: params }
+      its(:code) { is_expected.to eq '422' }
+      its(:body) { is_expected.to be_json_as(response_422(current_password: [I18n.t('errors.messages.incorrect')])) }
+    end
+
+    context 'when missing current_password' do
+      let(:params) do
+        {
+          password: 'password1',
+          password_confirmation: 'password1'
+        }
+      end
+
+      subject { patch :change_password, params: params }
+
+      its(:body) { is_expected.to be_json_as(response_422(current_password: [I18n.t('errors.messages.incorrect')])) }
+      its(:code) { is_expected.to eq '422' }
+    end
+
+    context 'when password and password_confirmation missmatch' do
+      let(:params) do
+        {
+          current_password: 'password',
+          password: 'password2',
+          password_confirmation: 'password1'
+        }
+      end
+
+      subject { patch :change_password, params: params }
+
+      its(:body) { is_expected.to be_json_as(response_422(password_confirmation: Array)) }
+      its(:code) { is_expected.to eq '422' }
+    end
+
+    context 'when params valid' do
+      let(:params) do
+        {
+          current_password: 'password',
+          password: 'password_1',
+          password_confirmation: 'password_1'
+        }
+      end
+
+      context 'when request from mobile' do
+        subject { patch :change_password, params: params, format: :json }
+
+        its(:code) { is_expected.to eq '200' }
+        it 'should change password_digest' do
+          is_expected
+          expect { login_user.reload }.to change(login_user, :password_digest)
+        end
+      end
+    end
+  end
+
   describe 'PATCH #update' do
     let(:target_user) { create :user, company: company, role: 'member' }
 

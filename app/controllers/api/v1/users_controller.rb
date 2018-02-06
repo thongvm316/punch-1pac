@@ -30,6 +30,12 @@ class Api::V1::UsersController < Api::V1::BaseController
     end
   end
 
+  def change_password
+    render_422(current_password: [I18n.t('errors.messages.incorrect')]) && return unless current_user.authenticate(params[:current_password])
+    render_422(current_user.errors.messages) && return unless current_user.update_attributes(password_params)
+    head(200)
+  end
+
   def create_multi
     authorize!
     @users_form = UserCreateMultiForm.new(current_company, params[:csv_file])
@@ -64,6 +70,10 @@ class Api::V1::UsersController < Api::V1::BaseController
   def user_params
     params[:user][:user_permissions_attributes] = Permission.verify(params[:user][:permission_ids])
     params.require(:user).permit(loyalty(current_user).permitted_attributes)
+  end
+
+  def password_params
+    params.permit(:password, :password_confirmation)
   end
 
   def set_user
