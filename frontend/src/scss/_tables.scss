@@ -2,10 +2,14 @@
 .table {
   font-size: .7rem;
 
-  svg {
-    width: .7rem;
-    height: .7rem;
-    color: $gray-color-dark;
+  tbody > tr > td {
+    .btn {
+      border: 0;
+    }
+
+    svg {
+      margin-right: 0;
+    }
   }
 
   .form-checkbox {
