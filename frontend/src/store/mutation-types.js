@@ -1,10 +1,6 @@
 // header-announcements
 export const RECEIVE_HEADER_ANNOUNCEMENTS = 'RECEIVE_HEADER_ANNOUNCEMENTS'
 
-// punch
-export const PUNCH_IN = 'PUNCH_IN'
-export const PUNCH_OUT = 'PUNCH_OUT'
-
 // announcements
 export const RECEIVE_ANNOUNCEMENTS = 'RECEIVE_ANNOUNCEMENTS'
 
@@ -13,6 +9,10 @@ export const RECEIVE_ANNOUNCEMENT = 'RECEIVE_ANNOUNCEMENT'
 
 // attendances
 export const RECEIVE_ATTENDANCES = 'RECEIVE_ATTENDANCES'
+
+// punch
+export const PUNCH_IN = 'PUNCH_IN'
+export const PUNCH_OUT = 'PUNCH_OUT'
 
 // company-users
 export const FETCH_USERS = 'FETCH_USERS'
@@ -34,6 +34,14 @@ export const FETCH_IPS = 'FETCH_IPS'
 export const CREATE_IP = 'CREATE_IPS'
 export const UPDATE_IP = 'UPDATE_IPS'
 export const DELETE_IP = 'DELETE_IPS'
+
+// company-holidays
+export const FETCH_CUSTOM_HOLIDAYS = 'FETCH_CUSTOM_HOLIDAYS'
+export const CREATE_CUSTOM_HOLIDAY = 'CREATE_CUSTOM_HOLIDAY'
+export const UPDATE_CUSTOM_HOLIDAY = 'UPDATE_CUSTOM_HOLIDAY'
+export const DELETE_CUSTOM_HOLIDAY = 'DELETE_CUSTOM_HOLIDAY'
+export const UPDATE_CUSTOM_HOLIDAY_ERRORS = 'UPDATE_CUSTOM_HOLIDAY_ERRORS'
+export const CLEAR_CUSTOM_HOLIDAY_ERRORS = 'CLEAR_CUSTOM_HOLIDAY_ERRORS'
 
 // user-sessions
 export const FETCH_SESSIONS = 'FETCH_SESSIONS'
