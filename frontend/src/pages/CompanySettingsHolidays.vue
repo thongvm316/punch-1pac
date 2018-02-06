@@ -51,11 +51,12 @@
     </table>
 
     <modal title="Add Holiday" :modal-open.sync="isAddModalOpen">
-      <div class="form-group">
+      <div class="form-group" :class="{ 'has-error': errors.name }">
         <label class="form-label">Name</label>
         <input class="form-input" type="text" v-model="createParams.name">
+        <p class="form-input-hint" v-if="errors.name">{{ errors.name[0] }}</p>
       </div>
-      <div class="form-group">
+      <div class="form-group" :class="{ 'has-error': errors.started_at }">
         <label class="form-label">Start at</label>
         <datepicker
         :placeholder="$t('placeholder.fromDate')"
@@ -66,8 +67,9 @@
         :calendar-class="'datepicker-calendar'"
         :wrapper-class="'datepicker'"
         v-model="createParams.started_at"/>
+        <p class="form-input-hint" v-if="errors.started_at">{{ errors.started_at[0] }}</p>
       </div>
-      <div class="form-group">
+      <div class="form-group" :class="{ 'has-error': errors.ended_at }">
         <label class="form-label">End at</label>
         <datepicker
         :placeholder="$t('placeholder.toDate')"
@@ -78,6 +80,7 @@
         :calendar-class="'datepicker-calendar'"
         :wrapper-class="'datepicker'"
         v-model="createParams.ended_at"/>
+        <p class="form-input-hint" v-if="errors.ended_at">{{ errors.ended_at[0] }}</p>
       </div>
       <div class="form-group">
         <button type="button" class="btn" @click="createCustomHoliday(createParams)">Submit</button>
@@ -85,11 +88,12 @@
     </modal>
 
     <modal title="Edit Holiday" :modal-open.sync="isEditModalOpen">
-      <div class="form-group">
+      <div class="form-group" :class="{ 'has-error': errors.name }">
         <label class="form-label">Name</label>
         <input class="form-input" type="text" v-model="updateParams.name">
+        <p class="form-input-hint" v-if="errors.name">{{ errors.name[0] }}</p>
       </div>
-      <div class="form-group">
+      <div class="form-group" :class="{ 'has-error': errors.started_at }">
         <label class="form-label">Start at</label>
         <datepicker
         :placeholder="$t('placeholder.fromDate')"
@@ -100,8 +104,9 @@
         :calendar-class="'datepicker-calendar'"
         :wrapper-class="'datepicker'"
         v-model="updateParams.started_at"/>
+        <p class="form-input-hint" v-if="errors.started_at">{{ errors.started_at[0] }}</p>
       </div>
-      <div class="form-group">
+      <div class="form-group" :class="{ 'has-error': errors.ended_at }">
         <label class="form-label">End at</label>
         <datepicker
         :placeholder="$t('placeholder.toDate')"
@@ -112,6 +117,7 @@
         :calendar-class="'datepicker-calendar'"
         :wrapper-class="'datepicker'"
         v-model="updateParams.ended_at"/>
+        <p class="form-input-hint" v-if="errors.reason">{{ errors.ended_at[0] }}</p>
       </div>
       <div class="form-group">
         <button type="button" class="btn" @click="updateCustomHoliday({ customHolidayID: currentID, updateParams: updateParams })">Save</button>
@@ -155,10 +161,12 @@ export default {
       'fetchCustomHolidays',
       'createCustomHoliday',
       'updateCustomHoliday',
-      'deleteCustomHoliday'
+      'deleteCustomHoliday',
+      'clearCustomHolidayErrors'
     ]),
 
     toggleUpdateModal (customHoliday) {
+      this.clearCustomHolidayErrors()
       this.isEditModalOpen = !this.isEditModalOpen
       this.currentID = customHoliday.id
       Object.keys(this.updateParams).forEach(k => { this.updateParams[k] = customHoliday[k] })
@@ -167,7 +175,8 @@ export default {
 
   computed: {
     ...mapState('companyCustomHolidays', [
-      'customHolidays'
+      'customHolidays',
+      'errors'
     ])
   },
 

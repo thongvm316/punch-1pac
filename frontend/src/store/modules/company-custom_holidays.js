@@ -22,6 +22,7 @@ const mutations = {
   },
   [types.UPDATE_CUSTOM_HOLIDAY_ERRORS] (state, payload) {
     state.errors = payload.errors
+    console.log(state.errors)
   },
   [types.CLEAR_CUSTOM_HOLIDAY_ERRORS] (state) {
     state.errors = {}
@@ -30,9 +31,14 @@ const mutations = {
 
 const actions = {
   fetchCustomHolidays ({ commit }) {
-    axios.get('/custom_holidays')
-         .then((response) => commit(types.FETCH_CUSTOM_HOLIDAYS, response.data))
-         .catch((error) => reject(error))
+    return new Promise((resolve, reject) => {
+      axios.get('/custom_holidays')
+           .then((response) => {
+             commit(types.FETCH_CUSTOM_HOLIDAYS, response.data)
+             resolve(response)
+           })
+           .catch((error) => reject(error))
+    })
   },
   deleteCustomHoliday ({ commit }, customHolidayID) {
     axios.delete(`/custom_holidays/${customHolidayID}`)
@@ -45,6 +51,9 @@ const actions = {
       }
     })
          .then((response) => commit(types.CREATE_CUSTOM_HOLIDAY, response.data))
+         .catch((error) => {
+           if (error.response && error.response.status === 422) commit(types.UPDATE_CUSTOM_HOLIDAY_ERRORS, error.response.data)
+         })
   },
   updateCustomHoliday ({ commit }, data) {
     axios.put(`/custom_holidays/${data.customHolidayID}`, { holiday: data.updateParams }, {
@@ -54,8 +63,11 @@ const actions = {
     })
          .then((response) => commit(types.UPDATE_CUSTOM_HOLIDAY, response.data))
          .catch((error) => {
-            if (error.response && error.response.status === 422) commit(types.UPDATE_CUSTOM_HOLIDAY_ERRORS, error.response.data)
+           if (error.response && error.response.status === 422) commit(types.UPDATE_CUSTOM_HOLIDAY_ERRORS, error.response.data)
          })
+  },
+  clearCustomHolidayErrors ({ commit }) {
+    commit(types.CLEAR_CUSTOM_HOLIDAY_ERRORS)
   }
 }
 
