@@ -36,6 +36,7 @@
       <div class="form-group">
         <label class="form-label">Name</label>
         <input class="form-input" type="text" v-model="createParams.name">
+        <p class="form-input-hint" v-if="errors.name">{{ errors.name[0] }}</p>
       </div>
       <div class="form-group">
         <button type="button" class="btn" @click="addDepartment(createParams)">Submit</button>
@@ -46,6 +47,7 @@
       <div class="form-group">
         <label class="form-label">Name</label>
         <input class="form-input" type="text" v-model="editParams.name">
+        <p class="form-input-hint" v-if="errors.name">{{ errors.name[0] }}</p>
       </div>
       <div class="form-group">
         <button type="button" class="btn" @click="updateDepartment({ departmentId: currentId, editParams: editParams })">Save</button>
@@ -76,22 +78,25 @@ export default {
     SettingLayout
   },
   methods: {
+    toggleEditModal (department) {
+      this.clearDepartmentErrors()
+      this.isEditModalOpen = !this.isEditModalOpen
+      this.currentId = department.id
+      this.editParams.name = department.name
+    },
+
     ...mapActions('companyDepartments', [
+      'clearDepartmentErrors',
       'fetchDepartments',
       'addDepartment',
       'deleteDepartment',
       'updateDepartment'
-    ]),
-
-    toggleEditModal (department) {
-      this.isEditModalOpen = !this.isEditModalOpen
-      this.currentId = department.id
-      this.editParams.name = department.name
-    }
+    ])
   },
 
   computed: {
     ...mapState('companyDepartments', [
+      'errors',
       'departments'
     ])
   },

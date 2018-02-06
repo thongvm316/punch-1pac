@@ -46,6 +46,7 @@
           <option>saturday</option>
           <option>sunday</option>
         </select>
+        <p class="form-input-hint" v-if="errors.weekday">{{ errors.weekday[0] }}</p>
       </div>
       <div class="form-group">
         <label class="form-label">Start at</label>
@@ -56,6 +57,7 @@
           <option>09:00</option>
           <option>12:00</option>
         </select>
+        <p class="form-input-hint" v-if="errors.started_at">{{ errors.started_at[0] }}</p>
       </div>
       <div class="form-group">
         <label class="form-label">End at</label>
@@ -66,6 +68,7 @@
           <option>09:00</option>
           <option>12:00</option>
         </select>
+        <p class="form-input-hint" v-if="errors.ended_at">{{ errors.ended_at[0] }}</p>
       </div>
       <div class="form-group">
         <button type="button" class="btn" @click="addBusinessDay(createParams)">Submit</button>
@@ -84,6 +87,7 @@
           <option>saturday</option>
           <option>sunday</option>
         </select>
+        <p class="form-input-hint" v-if="errors.weekday">{{ errors.weekday[0] }}</p>
       </div>
       <div class="form-group">
         <label class="form-label">Start at</label>
@@ -94,6 +98,7 @@
           <option>09:00</option>
           <option>12:00</option>
         </select>
+        <p class="form-input-hint" v-if="errors.started_at">{{ errors.started_at[0] }}</p>
       </div>
       <div class="form-group">
         <label class="form-label">End at</label>
@@ -104,6 +109,7 @@
           <option>09:00</option>
           <option>12:00</option>
         </select>
+        <p class="form-input-hint" v-if="errors.ended_at">{{ errors.ended_at[0] }}</p>
       </div>
       <div class="form-group">
         <button type="button" class="btn" @click="updateBusinessDay({ updateParams: updateParams, businessDayId: currentId})">Save</button>
@@ -138,11 +144,13 @@ export default {
   methods: {
     ...mapActions('companyBusinessDays', [
       'fetchBusinessDays',
+      'clearBusinessDayErrors',
       'addBusinessDay',
       'deleteBusinessDay',
       'updateBusinessDay'
     ]),
     toggleEditModal (businessDay) {
+      this.clearBusinessDayErrors()
       this.isEditModalOpen = !this.isEditModalOpen
       this.currentId = businessDay.id
       Object.keys(this.updateParams).forEach(k => { this.updateParams[k] = businessDay[k] })
@@ -151,6 +159,7 @@ export default {
 
   computed: {
     ...mapState('companyBusinessDays', [
+      'errors',
       'businessDays'
     ])
   },
