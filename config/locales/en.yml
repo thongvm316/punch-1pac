@@ -48,5 +48,6 @@ en:
       password: Password
       password_confirmation: Password Confirmation
       reset_password: Reset Password
-  password:
-    current_password: 'incorrect current password'
+  errors:
+   messages:
+     incorrect: 'is incorrect'

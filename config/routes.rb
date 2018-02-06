@@ -15,7 +15,7 @@ Rails.application.routes.draw do
       namespace :v1 do
         resources :users do
           post 'create_multi', on: :collection
-          match 'update_password', via: %i[patch put], on: :collection
+          match 'change_password', via: %i[patch put], on: :collection
         end
 
         resources :custom_holidays, only: %i[index create update destroy]

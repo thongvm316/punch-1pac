@@ -30,25 +30,10 @@ class Api::V1::UsersController < Api::V1::BaseController
     end
   end
 
-  def update_password
-    unless current_user.authenticate(params[:current_password])
-      render_422(current_password: [I18n.t('password.current_password')])
-      return
-    end
-
-    unless current_user.update_attributes(password_params)
-      render_422(current_user.errors.messages)
-      return
-    end
-
-    data = payload(sub: current_user.id)
-    token = jwt_encode(data)
-    Session.track!(current_user, data, request)
-
-    respond_to do |f|
-      f.html { session[:access_token] = token }
-      f.json { render json: { access_token: token }, status: 200 }
-    end
+  def change_password
+    render_422(current_password: [I18n.t('errors.messages.incorrect')]) && return unless current_user.authenticate(params[:current_password])
+    render_422(current_user.errors.messages) && return unless current_user.update_attributes(password_params)
+    head(200)
   end
 
   def create_multi
