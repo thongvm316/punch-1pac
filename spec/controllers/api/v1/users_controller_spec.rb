@@ -157,7 +157,7 @@ RSpec.describe Api::V1::UsersController, type: :controller do
     end
   end
 
-  describe 'PATCH #update_password' do
+  describe 'PATCH #change_password' do
     let(:login_user) { create :user, company: company, password: 'password', password_confirmation: 'password' }
 
     context 'when current_password invalid' do
@@ -169,9 +169,9 @@ RSpec.describe Api::V1::UsersController, type: :controller do
         }
       end
 
-      subject { patch :update_password, params: params }
+      subject { patch :change_password, params: params }
       its(:code) { is_expected.to eq '422' }
-      its(:body) { is_expected.to be_json_as(response_422(current_password: Array)) }
+      its(:body) { is_expected.to be_json_as(response_422(current_password: [I18n.t('errors.messages.incorrect')])) }
     end
 
     context 'when missing current_password' do
@@ -182,9 +182,9 @@ RSpec.describe Api::V1::UsersController, type: :controller do
         }
       end
 
-      subject { patch :update_password, params: params }
+      subject { patch :change_password, params: params }
 
-      its(:body) { is_expected.to be_json_as(response_422(current_password: Array)) }
+      its(:body) { is_expected.to be_json_as(response_422(current_password: [I18n.t('errors.messages.incorrect')])) }
       its(:code) { is_expected.to eq '422' }
     end
 
@@ -197,7 +197,7 @@ RSpec.describe Api::V1::UsersController, type: :controller do
         }
       end
 
-      subject { patch :update_password, params: params }
+      subject { patch :change_password, params: params }
 
       its(:body) { is_expected.to be_json_as(response_422(password_confirmation: Array)) }
       its(:code) { is_expected.to eq '422' }
@@ -207,32 +207,18 @@ RSpec.describe Api::V1::UsersController, type: :controller do
       let(:params) do
         {
           current_password: 'password',
-          password: 'password1',
-          password_confirmation: 'password1'
+          password: 'password_1',
+          password_confirmation: 'password_1'
         }
       end
 
-      before do
-        request.headers['User-Agent'] = Faker::Internet.user_agent(:chrome)
-      end
-
       context 'when request from mobile' do
-        subject { patch :update_password, params: params, format: :json }
+        subject { patch :change_password, params: params, format: :json }
 
         its(:code) { is_expected.to eq '200' }
-        its(:body) { is_expected.to be_json_as(access_token: String) }
-        it 'session change' do
-          expect(session[:access_token]).not_to equal(session)
-        end
-      end
-
-      context 'when request from browser' do
-        subject { patch :update_password, params: params, format: :html }
-
-        its(:code) { is_expected.to eq '204' }
-        it do
-          expect(session[:access_token]).not_to be_nil
-          expect(session[:access_token]).not_to equal(session)
+        it 'should change password_digest' do
+          is_expected
+          expect { login_user.reload }.to change(login_user, :password_digest)
         end
       end
     end
