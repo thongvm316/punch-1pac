@@ -16,7 +16,7 @@ namespace :punch do
     ::STATS_DIRECTORIES << ['Workers', 'app/workers']
     ::STATS_DIRECTORIES << ['Services', 'app/services']
     ::STATS_DIRECTORIES << ['Forms', 'app/forms']
-    ::STATS_DIRECTORIES << ['Policies', 'app/policies']
+    ::STATS_DIRECTORIES << ['Policies', 'app/loyalties']
     ::STATS_DIRECTORIES << ['Uploaders', 'app/uploaders']
     ::STATS_DIRECTORIES << %w[Specs spec]
   end

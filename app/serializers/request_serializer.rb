@@ -1,8 +1,12 @@
 # frozen_string_literal: true
 
 class RequestSerializer < ApplicationSerializer
-  attributes :id, :reason, :attended_at, :left_at, :status, :updated_at
+  attributes :id, :reason, :day, :attended_at, :left_at, :status, :updated_at
   belongs_to :user, serializer: UserSerializer
+
+  def day
+    object.attendance.day
+  end
 
   def attended_at
     object&.attended_at&.strftime('%H:%M')

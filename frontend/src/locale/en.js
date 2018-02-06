@@ -24,7 +24,8 @@ export default {
     save: 'Save',
     submit: 'Submit',
     addGroup: 'Add Group',
-    editGroup: 'Edit Group'
+    editGroup: 'Edit Group',
+    addRequest: 'Add Request'
   },
   group: {
     accountant: 'Accountant',
@@ -45,12 +46,16 @@ export default {
   label: {
     name: 'Name',
     date: 'Date',
+    attendedAt: 'Attended At',
+    leftAt: 'Left At',
     startedAt: 'Started At',
     endedAt: 'Ended At',
     reason: 'Reason'
   },
   tableHeader: {
     date: 'Date',
+    attendedAt: 'Attended At',
+    leftAt: 'Left At',
     createdAt: 'Created At',
     startedAt: 'Started At',
     endedAt: 'Ended At',
@@ -58,7 +63,8 @@ export default {
     status: 'Status',
     department: 'Department',
     email: 'Email',
-    name: 'Name'
+    name: 'Name',
+    actions: 'Actions'
   },
   header: {
     dashboard: 'Dashboard',

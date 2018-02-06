@@ -5,65 +5,26 @@
       <router-link tag="li" class="tab-item" to="/requests/groups"><a href="#">{{ $t('request.groupRequests') }}</a></router-link>
     </ul>
 
-    <div class="toolbar clearfix mt-5">
-      <button type="button" class="btn float-right" @click="toggleAddModal">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M24 10h-10v-10h-4v10h-10v4h10v10h4v-10h10z"></path></svg>
-        {{ $t('button.addGroup') }}
-      </button>
-    </div>
-
     <table class="table table-hover bg-light mt-4">
       <thead>
-        <th>{{ $t('tableHeader.date') }}</th>
-        <th>{{ $t('tableHeader.startedAt') }}</th>
-        <th>{{ $t('tableHeader.endedAt') }}</th>
-        <th>{{ $t('tableHeader.reason') }}</th>
-        <th>{{ $t('tableHeader.status') }}</th>
-        <th></th>
+        <tr>
+          <th>{{ $t('tableHeader.date') }}</th>
+          <th>{{ $t('tableHeader.attendedAt') }}</th>
+          <th>{{ $t('tableHeader.leftAt') }}</th>
+          <th style="width: 600px">{{ $t('tableHeader.reason') }}</th>
+          <th>{{ $t('tableHeader.status') }}</th>
+          <th>{{ $t('tableHeader.actions') }}</th>
+        </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>Jan 20</td>
-          <td>08:30</td>
-          <td>18:00</td>
-          <td>I have personal issue, so I will be late for 10mins</td>
+        <tr v-for="request in requests">
+          <td>{{ request.day | datetime_mmdd }}</td>
+          <td>{{ request.attended_at }}</td>
+          <td>{{ request.left_at }}</td>
+          <td>{{ request.reason }}</td>
+          <td><span class="label label-rounded" :class="getStatusClass(request.status)">{{ request.status }}</span></td>
           <td>
-            <span class="label label-rounded label-success">{{ $t('status.approved') }}</span>
-          </td>
-          <td>
-            <button class="btn btn-action btn-link" @click="toggleEditModal">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 16" fill="currentColor">
-                <path fill-rule="evenodd" d="M0 12v3h3l8-8-3-3-8 8zm3 2H1v-2h1v1h1v1zm10.3-9.3L12 6 9 3l1.3-1.3a.996.996 0 0 1 1.41 0l1.59 1.59c.39.39.39 1.02 0 1.41z"/>
-              </svg>
-            </button>
-          </td>
-        </tr>
-        <tr>
-          <td>Jan 20</td>
-          <td>08:30</td>
-          <td>18:00</td>
-          <td>I have personal issue, so I will be late for 10mins</td>
-          <td>
-            <span class="label label-rounded label-warning">{{ $t('status.pending') }}</span>
-          </td>
-          <td>
-            <button class="btn btn-action btn-link" @click="toggleEditModal">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 16" fill="currentColor">
-                <path fill-rule="evenodd" d="M0 12v3h3l8-8-3-3-8 8zm3 2H1v-2h1v1h1v1zm10.3-9.3L12 6 9 3l1.3-1.3a.996.996 0 0 1 1.41 0l1.59 1.59c.39.39.39 1.02 0 1.41z"/>
-              </svg>
-            </button>
-          </td>
-        </tr>
-        <tr>
-          <td>Jan 20</td>
-          <td>08:30</td>
-          <td>18:00</td>
-          <td>I have personal issue, so I will be late for 10mins</td>
-          <td>
-            <span class="label label-rounded label-error">{{ $t('status.rejected') }}</span>
-          </td>
-          <td>
-            <button class="btn btn-action btn-link" @click="toggleEditModal">
+            <button class="btn btn-action btn-link" @click="toggleEditModal(request)" v-if="request.status === 'pending'">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 16" fill="currentColor">
                 <path fill-rule="evenodd" d="M0 12v3h3l8-8-3-3-8 8zm3 2H1v-2h1v1h1v1zm10.3-9.3L12 6 9 3l1.3-1.3a.996.996 0 0 1 1.41 0l1.59 1.59c.39.39.39 1.02 0 1.41z"/>
               </svg>
@@ -73,34 +34,7 @@
       </tbody>
     </table>
 
-    <pagination/>
-
-    <modal title="Add Request" :modal-open.sync="isAddModalOpen">
-      <div class="form-group">
-        <label class="form-label">{{ $t('label.date') }}</label>
-        <datepicker
-        :minimumView="'day'"
-        :maximumView="'day'"
-        :input-class="'datepicker-input form-input'"
-        :calendar-class="'datepicker-calendar'"
-        :wrapper-class="'datepicker datepicker-full-width'"/>
-      </div>
-      <div class="form-group">
-        <label class="form-label">{{ $t('label.startedAt') }}</label>
-        <input class="form-input" type="text">
-      </div>
-      <div class="form-group">
-        <label class="form-label">{{ $t('label.endedAt') }}</label>
-        <input class="form-input" type="text">
-      </div>
-      <div class="form-group">
-        <label class="form-label">{{ $t('label.reason') }}</label>
-        <textarea class="form-input"></textarea>
-      </div>
-      <div class="form-group">
-        <button type="button" class="btn">{{ $t('button.submit') }}</button>
-      </div>
-    </modal>
+    <pagination action="getRequests" namespace="requests" v-if="pager.total_pages > 1"/>
 
     <modal title="Edit Request" :modal-open.sync="isEditModalOpen">
       <div class="form-group">
@@ -110,22 +44,25 @@
         :maximumView="'day'"
         :input-class="'datepicker-input form-input'"
         :calendar-class="'datepicker-calendar'"
-        :wrapper-class="'datepicker datepicker-full-width'"/>
+        :wrapper-class="'datepicker datepicker-full-width'"
+        :disabled-picker="true"
+        :value="updateParams.day"/>
       </div>
       <div class="form-group">
-        <label class="form-label">{{ $t('label.startedAt') }}</label>
-        <input class="form-input" type="text">
+        <label class="form-label">{{ $t('label.attendedAt') }}</label>
+        <input class="form-input" v-model="updateParams.attended_at">
       </div>
       <div class="form-group">
-        <label class="form-label">{{ $t('label.endedAt') }}</label>
-        <input class="form-input" type="text">
+        <label class="form-label">{{ $t('label.leftAt') }}</label>
+        <input class="form-input" v-model="updateParams.left_at">
       </div>
-      <div class="form-group">
+      <div class="form-group" :class="{ 'has-error': errors.reason }">
         <label class="form-label">{{ $t('label.reason') }}</label>
-        <textarea class="form-input"></textarea>
+        <textarea class="form-input" v-model="updateParams.reason"></textarea>
+        <p class="form-input-hint" v-if="errors.reason">{{ errors.reason[0] }}</p>
       </div>
       <div class="form-group">
-        <button type="button" class="btn">{{ $t('button.save') }}</button>
+        <button type="button" class="btn" @click="updateRequest({id: currentId, params: updateParams})">{{ $t('button.save') }}</button>
       </div>
     </modal>
   </main-layout>
@@ -136,22 +73,68 @@ import Datepicker from 'vuejs-datepicker'
 import MainLayout from '../layouts/Main.vue'
 import modal from '../mixins/modal'
 import Pagination from '../components/Pagination.vue'
+import { mapState, mapActions } from 'vuex'
 
 export default {
   name: 'my-requests',
+
   mixins: [modal],
+
+  data () {
+    return {
+      currentId: '',
+      updateParams: {
+        day: '',
+        attended_at: '',
+        left_at: '',
+        reason: ''
+      }
+    }
+  },
+
   components: {
     MainLayout,
     Datepicker,
     Pagination
   },
+
+  computed: {
+    ...mapState('requests', [
+      'errors',
+      'pager',
+      'requests'
+    ])
+  },
+
   methods: {
-    toggleEditModal () {
+    toggleEditModal (request) {
+      this.clearRequestErrors()
       this.isEditModalOpen = !this.isEditModalOpen
+      this.currentId = request.id
+      const statuses = ['day', 'attended_at', 'left_at', 'reason']
+      statuses.forEach(v => { this.updateParams[v] = request[v] })
     },
-    toggleAddModal () {
-      this.isAddModalOpen = !this.isAddModalOpen
-    }
+
+    getStatusClass (status) {
+      switch (status) {
+        case 'pending':
+          return 'label-warning'
+        case 'approved':
+          return 'label-success'
+        case 'rejected':
+          return 'label-error'
+      }
+    },
+
+    ...mapActions('requests', [
+      'clearRequestErrors',
+      'updateRequest',
+      'getRequests'
+    ])
+  },
+
+  created () {
+    this.getRequests()
   }
 }
 </script>

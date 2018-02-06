@@ -14,6 +14,7 @@ import companyBusinessDays from './modules/company-businessdays'
 import companyAllowedIPs from './modules/company-allowed_ips'
 
 import userSessions from './modules/user-sessions'
+import requests from './modules/requests'
 
 Vue.use(Vuex)
 
@@ -30,7 +31,8 @@ export default new Vuex.Store({
     companyDepartments,
     companyBusinessDays,
     companyAllowedIPs,
-    userSessions
+    userSessions,
+    requests
   },
   strict: debug,
   plugins: debug ? [createLogger()] : []

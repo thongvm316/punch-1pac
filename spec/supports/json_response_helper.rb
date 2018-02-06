@@ -131,6 +131,7 @@ module JsonResponseHelper
     {
       id:          Integer,
       reason:      String,
+      day:         date_response,
       attended_at: hour_min_response,
       left_at:     hour_min_response,
       status:      String,
