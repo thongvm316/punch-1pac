@@ -18,7 +18,7 @@ const mutations = {
     state.departments = state.departments.filter(department => department.id !== departmentId)
   },
 
-  [types.EDIT_DEPARTMENT] (state, payload) {
+  [types.UPDATE_DEPARTMENT] (state, payload) {
     const index = state.departments.findIndex(department => department.id === payload.id)
     state.departments[index] = payload
   }
@@ -44,21 +44,13 @@ const actions = {
          .then(() => commit(types.DELETE_DEPARTMENT, departmentId))
   },
 
-  editDepartment ({ commit }, data) {
-    axios.put(`departments/${data.departmentId}`, data, {
+  updateDepartment ({ commit }, data) {
+    axios.put(`departments/${data.departmentId}`, data.editParams, {
       headers: {
         'Content-Type': 'application/json'
       }
     })
-         .then((response) => commit(types.EDIT_DEPARTMENT, response.data))
-  }
-}
-
-const getters = {
-  fetchDepartment (state) {
-    return function (departmentId) {
-      return state.departments.find(department => department.id === departmentId)
-    }
+         .then((response) => commit(types.UPDATE_DEPARTMENT, response.data))
   }
 }
 
@@ -66,6 +58,5 @@ export default {
   namespaced: true,
   state,
   mutations,
-  actions,
-  getters
+  actions
 }
