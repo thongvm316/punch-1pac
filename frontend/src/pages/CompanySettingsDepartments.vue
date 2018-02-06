@@ -14,7 +14,7 @@
       </thead>
       <tbody>
         <tr v-for="department in departments">
-          <td @click="toggleEditModal(department.id)">{{ department.name }}</td>
+          <td @click="toggleEditModal(department)">{{ department.name }}</td>
           <td>5</td>
           <td class="text-center"><button class="btn btn-error" @click="deleteDepartment(department.id)">Delete</button></td>
         </tr>
@@ -24,20 +24,20 @@
     <modal title="Add Department" :modal-open.sync="isAddModalOpen">
       <div class="form-group">
         <label class="form-label">Name</label>
-        <input class="form-input" type="text" v-model="newName">
+        <input class="form-input" type="text" v-model="createParams.name">
       </div>
       <div class="form-group">
-        <button type="button" class="btn" @click="addDepartment({ name: newName })">Submit</button>
+        <button type="button" class="btn" @click="addDepartment(createParams)">Submit</button>
       </div>
     </modal>
 
     <modal title="Edit Department" :modal-open.sync="isEditModalOpen">
       <div class="form-group">
         <label class="form-label">Name</label>
-        <input class="form-input" type="text" v-model="editName">
+        <input class="form-input" type="text" v-model="editParams.name">
       </div>
       <div class="form-group">
-        <button type="button" class="btn" @click="editDepartment({ departmentId: currentId, name: editName })">Save</button>
+        <button type="button" class="btn" @click="updateDepartment({ departmentId: currentId, editParams: editParams })">Save</button>
       </div>
     </modal>
   </setting-layout>
@@ -46,15 +46,19 @@
 <script>
 import SettingLayout from '../layouts/Setting.vue'
 import modal from '../mixins/modal'
-import { mapState, mapActions, mapGetters } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
 export default {
   mixins: [modal],
   data () {
     return {
-      newName: '',
-      editName: '',
-      currentId: ''
+      createParams: {
+        name: ''
+      },
+      currentId: '',
+      editParams: {
+        name: ''
+      }
     }
   },
   components: {
@@ -65,23 +69,19 @@ export default {
       'fetchDepartments',
       'addDepartment',
       'deleteDepartment',
-      'editDepartment'
+      'updateDepartment'
     ]),
 
-    toggleEditModal (id) {
-      this.currentId = id
+    toggleEditModal (department) {
       this.isEditModalOpen = !this.isEditModalOpen
-      this.editName = this.fetchDepartment(id).name
+      this.currentId = department.id
+      this.editParams.name = department.name
     }
   },
 
   computed: {
     ...mapState('companyDepartments', [
       'departments'
-    ]),
-
-    ...mapGetters('companyDepartments', [
-      'fetchDepartment'
     ])
   },
 
