@@ -2,7 +2,8 @@ import * as types from '../mutation-types.js'
 import axios from 'axios'
 
 const state = {
-  sessions: []
+  sessions: [],
+  errors: {}
 }
 
 const mutations = {
@@ -16,8 +17,14 @@ const mutations = {
 
 const actions = {
   fetchSessions ({ commit }) {
-    axios.get('/sessions')
-         .then((response) => commit(types.FETCH_SESSIONS, response.data))
+    return new Promise((resolve, reject) => {
+      axios.get('/sessions')
+         .then((response) => {
+           commit(types.FETCH_SESSIONS, response.data)
+           resolve(response)
+         })
+         .catch((error) => reject(error))
+    })
   },
   deleteSession ({ commit }, data) {
     axios.delete(`/sessions/${data}`)

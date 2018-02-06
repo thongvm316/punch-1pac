@@ -34,10 +34,14 @@ export const FETCH_IPS = 'FETCH_IPS'
 export const CREATE_IP = 'CREATE_IPS'
 export const UPDATE_IP = 'UPDATE_IPS'
 export const DELETE_IP = 'DELETE_IPS'
+export const UPDATE_IP_ERRORS = 'UPDATE_REQUEST_ERRORS'
+export const CLEAR_IP_ERRORS = 'CLEAR_REQUEST_ERRORS'
 
 // user-sessions
 export const FETCH_SESSIONS = 'FETCH_SESSIONS'
 export const DELETE_SESSION = 'DELETE_SESSION'
+export const UPDATE_SESSION_ERRORS = 'UPDATE_REQUEST_ERRORS'
+export const CLEAR_SESSION_ERRORS = 'CLEAR_REQUEST_ERRORS'
 
 // requests
 export const RECEIVE_REQUESTS = 'RECEIVE_REQUESTS'

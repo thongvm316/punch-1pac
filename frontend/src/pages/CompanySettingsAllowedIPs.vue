@@ -34,9 +34,10 @@
     </table>
 
     <modal title="Add IP" :modal-open.sync="isAddModalOpen">
-      <div class="form-group">
+      <div class="form-group":class="{ 'has-error': errors.ip_address}">
         <label class="form-label">IP Address</label>
         <input class="form-input" type="text" v-model="newIp">
+        <p class="form-input-hint" v-if="errors.ip_address">{{ errors.ip_address[0] }}</p>
       </div>
       <div class="form-group">
         <a class="btn" @click="createIP({ ip_address: newIp })">Submit</a>
@@ -44,9 +45,10 @@
     </modal>
 
     <modal title="Edit IP" :modal-open.sync="isEditModalOpen">
-      <div class="form-group">
+      <div class="form-group" :class="{ 'has-error': errors.ip_address}">
         <label class="form-label">IP Address</label>
         <input class="form-input" type="text" v-model="editIp">
+        <p class="form-input-hint" v-if="errors.ip_address">{{ errors.ip_address[0] }}</p>
       </div>
       <div class="form-group">
         <a class="btn" @click="updateIP({ id: currentId, ip_address: editIp })">Save</a>
@@ -80,10 +82,12 @@ export default {
       'fetchIPs',
       'createIP',
       'updateIP',
-      'deleteIP'
+      'deleteIP',
+      'clearIPErrors'
     ]),
 
     toggleEditModal (id, ipAddress) {
+      this.clearIPErrors()
       this.currentId = id
       this.editIp = ipAddress
       this.isEditModalOpen = !this.isEditModalOpen
@@ -92,7 +96,8 @@ export default {
 
   computed: {
     ...mapState('companyAllowedIPs', [
-      'allowedIPs'
+      'allowedIPs',
+      'errors'
     ])
   },
 
