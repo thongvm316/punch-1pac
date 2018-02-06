@@ -9,7 +9,7 @@ class UserCreateSingleForm < BaseForm
   USER_ATTRIBUTES.each { |attr| attribute attr }
 
   validate :validate_group
-  validate :validate_permissions
+  # validate :validate_permissions
 
   def initialize(attrs, current_user)
     super attrs
@@ -51,7 +51,7 @@ class UserCreateSingleForm < BaseForm
     errors.add(:group, I18n.t('errors.messages.invalid')) if @groups.blank?
   end
 
-  def validate_permissions
-    errors.add(:permissions, I18n.t('errors.messages.invalid')) if @permissions.blank?
-  end
+  # def validate_permissions
+  #   errors.add(:permissions, I18n.t('errors.messages.invalid')) if @permissions.blank?
+  # end
 end

@@ -22,5 +22,5 @@ class Group < ApplicationRecord
   accepts_nested_attributes_for :group_permissions
 
   validates :name, presence: true
-  validates :group_permissions, presence: true
+  # validates :group_permissions, presence: true
 end

@@ -420,17 +420,11 @@ RSpec.describe Api::V1::UsersController, type: :controller do
 
       context 'when params empty' do
         let(:params) { { username: '', permissions_ids: [] } }
-        let(:error) do
-          {
-            group:      Array,
-            permissions: Array
-          }
-        end
 
         subject { post :create, params: { user: params } }
 
         its(:code) { is_expected.to eq '422' }
-        its(:body) { is_expected.to be_json_as(response_422(error)) }
+        its(:body) { is_expected.to be_json_as(response_422(group: Array)) }
       end
 
       context 'when avatar wrong file format' do
@@ -478,8 +472,8 @@ RSpec.describe Api::V1::UsersController, type: :controller do
 
         subject { post :create, params: { user: user_params } }
 
-        its(:code) { is_expected.to eq '422' }
-        its(:body) { is_expected.to be_json_as(response_422(permissions: Array)) }
+        its(:code) { is_expected.to eq '201' }
+        its(:body) { is_expected.to be_json_as(response_user) }
       end
     end
   end

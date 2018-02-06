@@ -55,7 +55,7 @@ class User < ApplicationRecord
   validates :password, length: { minimum: 6, maximum: 32 }, allow_nil: true
   validates :password_confirmation, presence: true, if: -> { password.present? }
   validates :language, inclusion: { in: %w[vi en jp] }
-  validates :user_permissions, presence: true
+  # validates :user_permissions, presence: true
 
   include ImageUploader::Attachment.new(:avatar)
 

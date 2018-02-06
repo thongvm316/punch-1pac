@@ -106,8 +106,8 @@ RSpec.describe Api::V1::GroupsController, type: :controller do
 
         subject { post :create, params: { group: group_params } }
 
-        its(:code) { is_expected.to eq '422' }
-        its(:body) { is_expected.to be_json_as(response_422(group_permissions: Array)) }
+        its(:code) { is_expected.to eq '201' }
+        its(:body) { is_expected.to be_json_as(response_group(0)) }
       end
     end
   end

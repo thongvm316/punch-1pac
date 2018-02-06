@@ -22,20 +22,5 @@ RSpec.describe UserCreateSingleForm, type: :model do
         expect(form.error_messages).to eq(group: [I18n.t('errors.messages.invalid')])
       end
     end
-
-    context 'permission validate' do
-      let(:user_params) do
-        user_params = attributes_for(:user)
-        user_params[:avatar] = avatar
-        user_params[:group_ids] = company.default_group.id
-        user_params
-      end
-
-      it do
-        form = UserCreateSingleForm.new(user_params, current_user)
-        form.save
-        expect(form.error_messages).to eq(permissions: [I18n.t('errors.messages.invalid')])
-      end
-    end
   end
 end
