@@ -19,9 +19,10 @@
         <th>{{ $t('tableHeader.endedAt') }}</th>
         <th>{{ $t('tableHeader.reason') }}</th>
         <th>{{ $t('tableHeader.status') }}</th>
+        <th></th>
       </thead>
       <tbody>
-        <tr @click="toggleEditModal">
+        <tr>
           <td>Jan 20</td>
           <td>08:30</td>
           <td>18:00</td>
@@ -29,8 +30,15 @@
           <td>
             <span class="label label-rounded label-success">{{ $t('status.approved') }}</span>
           </td>
+          <td>
+            <button class="btn btn-action btn-link" @click="toggleEditModal">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 16" fill="currentColor">
+                <path fill-rule="evenodd" d="M0 12v3h3l8-8-3-3-8 8zm3 2H1v-2h1v1h1v1zm10.3-9.3L12 6 9 3l1.3-1.3a.996.996 0 0 1 1.41 0l1.59 1.59c.39.39.39 1.02 0 1.41z"/>
+              </svg>
+            </button>
+          </td>
         </tr>
-        <tr @click="toggleEditModal">
+        <tr>
           <td>Jan 20</td>
           <td>08:30</td>
           <td>18:00</td>
@@ -38,14 +46,28 @@
           <td>
             <span class="label label-rounded label-warning">{{ $t('status.pending') }}</span>
           </td>
+          <td>
+            <button class="btn btn-action btn-link" @click="toggleEditModal">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 16" fill="currentColor">
+                <path fill-rule="evenodd" d="M0 12v3h3l8-8-3-3-8 8zm3 2H1v-2h1v1h1v1zm10.3-9.3L12 6 9 3l1.3-1.3a.996.996 0 0 1 1.41 0l1.59 1.59c.39.39.39 1.02 0 1.41z"/>
+              </svg>
+            </button>
+          </td>
         </tr>
-        <tr @click="toggleEditModal">
+        <tr>
           <td>Jan 20</td>
           <td>08:30</td>
           <td>18:00</td>
           <td>I have personal issue, so I will be late for 10mins</td>
           <td>
             <span class="label label-rounded label-error">{{ $t('status.rejected') }}</span>
+          </td>
+          <td>
+            <button class="btn btn-action btn-link" @click="toggleEditModal">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 16" fill="currentColor">
+                <path fill-rule="evenodd" d="M0 12v3h3l8-8-3-3-8 8zm3 2H1v-2h1v1h1v1zm10.3-9.3L12 6 9 3l1.3-1.3a.996.996 0 0 1 1.41 0l1.59 1.59c.39.39.39 1.02 0 1.41z"/>
+              </svg>
+            </button>
           </td>
         </tr>
       </tbody>

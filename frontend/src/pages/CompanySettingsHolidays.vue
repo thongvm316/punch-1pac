@@ -29,12 +29,41 @@
         <th></th>
       </thead>
       <tbody>
-        <tr @click="toggleEditModal">
+        <tr>
           <td>New Year</td>
           <td>Vietname</td>
           <td>20-01-2018</td>
           <td>20-01-2018</td>
-          <td class="text-center"><button class="btn btn-error">Delete</button></td>
+          <td class="text-center">
+            <button class="btn btn-action btn-link" @click="toggleEditModal">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 16" fill="currentColor">
+                <path fill-rule="evenodd" d="M0 12v3h3l8-8-3-3-8 8zm3 2H1v-2h1v1h1v1zm10.3-9.3L12 6 9 3l1.3-1.3a.996.996 0 0 1 1.41 0l1.59 1.59c.39.39.39 1.02 0 1.41z"/>
+              </svg>
+            </button>
+            <button class="btn btn-action btn-link">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M24 20.188l-8.315-8.209 8.2-8.282-3.697-3.697-8.212 8.318-8.31-8.203-3.666 3.666 8.321 8.24-8.206 8.313 3.666 3.666 8.237-8.318 8.285 8.203z"/>
+              </svg>
+            </button>
+          </td>
+        </tr>
+        <tr>
+          <td>New Year</td>
+          <td>Vietname</td>
+          <td>20-01-2018</td>
+          <td>20-01-2018</td>
+          <td class="text-center">
+            <button class="btn btn-action btn-link" @click="toggleEditModal">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 16" fill="currentColor">
+                <path fill-rule="evenodd" d="M0 12v3h3l8-8-3-3-8 8zm3 2H1v-2h1v1h1v1zm10.3-9.3L12 6 9 3l1.3-1.3a.996.996 0 0 1 1.41 0l1.59 1.59c.39.39.39 1.02 0 1.41z"/>
+              </svg>
+            </button>
+            <button class="btn btn-action btn-link">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M24 20.188l-8.315-8.209 8.2-8.282-3.697-3.697-8.212 8.318-8.31-8.203-3.666 3.666 8.321 8.24-8.206 8.313 3.666 3.666 8.237-8.318 8.285 8.203z"/>
+              </svg>
+            </button>
+          </td>
         </tr>
       </tbody>
     </table>
