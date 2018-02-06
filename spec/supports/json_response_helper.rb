@@ -167,6 +167,15 @@ module JsonResponseHelper
     }
   end
 
+  def response_group_admins(_users, admins)
+    {
+      id:          Integer,
+      name:        String,
+      user_count:  Integer,
+      admins:      Array.new(admins) { response_user }
+    }
+  end
+
   private
 
   def nullable_response(expected_response)

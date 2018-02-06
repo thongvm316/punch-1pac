@@ -21,13 +21,16 @@ RSpec.describe Api::V1::GroupsController, type: :controller do
       let(:login_user) { create :user, company: company, role: 'admin' }
 
       context 'when valid params' do
-        let(:permission_ids) { create_list(:permission, 3).map { |p| { permission_id: p.id } } }
-        let!(:groups) { create_list :group, 3, company: company, group_permissions_attributes: permission_ids }
+        let!(:groups) do
+          admin_user = create(:user, role: 'admin', company: company)
+          member_user = create(:user, role: 'member', company: company)
+          create_list :group, 3, company: company, users: [admin_user, member_user]
+        end
 
         subject { get :index }
 
         its(:code) { is_expected.to eq '200' }
-        its(:body) { is_expected.to be_json_as(Array.new(groups.size) { response_group(permission_ids.size) }) }
+        its(:body) { is_expected.to be_json_as(Array.new(groups.size) { response_group_admins(2, 1) }) }
       end
     end
   end
