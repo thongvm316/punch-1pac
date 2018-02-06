@@ -21,12 +21,12 @@ class Api::V1::UsersController < Api::V1::BaseController
 
   def create
     authorize!
-    user = current_company.users.build(user_params)
-    if user.save
-      UserMailer.create(user.id, user_params[:password]).deliver_later
-      render json: user, serializer: UserSerializer, status: 201
+    user_form = UserCreateForm.new(user_create_params, current_user)
+    if user_form.save
+      UserMailer.create(user_form.user.id, user_create_params[:password]).deliver_later
+      render json: user_form.user, serializer: UserSerializer, status: 201
     else
-      render_422(user.errors.messages)
+      render_422(user_form.error_messages)
     end
   end
 
@@ -48,15 +48,11 @@ class Api::V1::UsersController < Api::V1::BaseController
 
   def update
     authorize! @user
-
-    ApplicationRecord.transaction do
-      @user.user_permissions.destroy_all if @current_user.manager?
-      @user.update_attributes!(user_params)
+    if @user.update_attributes(user_update_params)
+      render json: @user, serializer: UserWithPermissionSerializer, status: 200
+    else
+      render_422(@user.errors)
     end
-
-    render json: @user, serializer: UserWithPermissionSerializer, status: 200
-  rescue ActiveRecord::RecordInvalid
-    render_422(@user.errors.messages)
   end
 
   def destroy
@@ -67,9 +63,14 @@ class Api::V1::UsersController < Api::V1::BaseController
 
   private
 
-  def user_params
-    params[:user][:user_permissions_attributes] = Permission.verify(params[:user][:permission_ids])
-    params.require(:user).permit(loyalty(current_user).permitted_attributes)
+  def user_create_params
+    params.require(:user).permit(:department_id, :name, :password,
+                                 :password_confirmation, :email,
+                                 :role, :avatar, :group_ids, permission_ids: [])
+  end
+
+  def user_update_params
+    params.require(:user).permit(:gender, :name, :email, :avatar)
   end
 
   def password_params

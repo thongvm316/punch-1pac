@@ -46,9 +46,15 @@ class Company < ApplicationRecord
 
   include ImageUploader::Attachment.new(:logo)
 
+  accepts_nested_attributes_for :groups, allow_destroy: true
+
   def in_holiday(target_date)
     return true if custom_holidays.in_holiday(target_date).exists?
     return true if holidays.in_holiday(target_date).exists?
     false
+  end
+
+  def default_group
+    groups.find_by!(name: Group::DEFAULT_NAME)
   end
 end

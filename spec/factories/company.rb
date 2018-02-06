@@ -15,6 +15,12 @@ FactoryBot.define do
     breaktime 1.0
     breakdays { %w[sunday saturday] }
 
+    trait :with_default_group do
+      after(:create) do |company|
+        company.groups << create(:group, name: 'default')
+      end
+    end
+
     trait :with_business_days do
       after(:create) do |company|
         %w[monday tuesday wednesday thursday friday].each do |wday|

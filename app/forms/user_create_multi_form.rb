@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class UserCreateMultiForm < BaseForm
-  USER_PARAMS = %w[email password password_confirmation role name gender user_permissions_attributes].freeze
+  USER_PARAMS = %w[email password password_confirmation role name gender user_groups_attributes user_permissions_attributes].freeze
   VALID_MIME_TYPES = ['text/plain', 'text/csv'].freeze
 
   validate :validate_file_existed
@@ -31,7 +31,6 @@ class UserCreateMultiForm < BaseForm
         @lines << line
       end
     end
-
     true
   end
 
@@ -58,6 +57,7 @@ class UserCreateMultiForm < BaseForm
   def user_params(row)
     params = row.to_hash.merge(password_confirmation: row['password'])
     params[:user_permissions_attributes] = @permissions[params['role']]
+    params[:user_groups_attributes] = [group_id: @company.default_group.id]
     params.select { |k, v| USER_PARAMS.include?(k.to_s) && v }
   end
 

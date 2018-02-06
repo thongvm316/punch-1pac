@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Api::V1::UsersController, type: :controller do
-  let(:company) { create :company }
+  let(:company) { create :company, :with_default_group }
   let(:login_user) { create :user, company: company }
 
   before do
@@ -225,7 +225,7 @@ RSpec.describe Api::V1::UsersController, type: :controller do
   end
 
   describe 'PATCH #update' do
-    let(:target_user) { create :user, company: company, role: 'member' }
+    let(:target_user) { create :user, company: company, role: 'member', gender: 'female' }
 
     context 'when login user is member' do
       context 'when update itself' do
@@ -242,10 +242,24 @@ RSpec.describe Api::V1::UsersController, type: :controller do
         end
 
         context 'when update without permission' do
-          subject { patch :update, params: { id: target_user.id, user: { name: 'thoi' } } }
+          let(:params) do
+            {
+              gender: 'male',
+              email: 'kumbe@thebeast.com',
+              name: 'thoi'
+            }
+          end
+          subject { patch :update, params: { id: target_user.id, user: params } }
 
           its(:code) { is_expected.to eq '200' }
           its(:body) { is_expected.to be_json_as(response_user(permissions_number)) }
+          it 'should change user name attributes' do
+            is_expected
+            attendance = User.find(target_user.id)
+            expect(attendance.name).to eq params[:name]
+            expect(attendance.email).to eq params[:email]
+            expect(attendance.gender).to eq params[:gender]
+          end
         end
       end
 
@@ -279,36 +293,6 @@ RSpec.describe Api::V1::UsersController, type: :controller do
 
         its(:code) { is_expected.to eq '401' }
       end
-
-      context 'when target user not found' do
-        subject { patch :update, params: { id: 0 } }
-
-        its(:code) { is_expected.to eq '404' }
-      end
-
-      context 'when missing user permission ids params' do
-        subject { patch :update, params: { id: target_user.id, user: { email: 'thoi' } } }
-
-        its(:code) { is_expected.to eq '422' }
-      end
-
-      context 'when params valid' do
-        let(:permissions) { create_list(:permission, 5).pluck(:id) }
-
-        subject { patch :update, params: { id: target_user.id, user: { name: 'thoi', permission_ids: permissions } } }
-
-        its(:code) { is_expected.to eq '200' }
-        its(:body) { is_expected.to be_json_as(response_user(permissions.size)) }
-      end
-
-      context 'when permission invalid' do
-        let(:last_permission_id) { Permission.last.id }
-
-        subject { patch :update, params: { id: target_user.id, user: { name: 'thoi', permission_ids: [last_permission_id + 1, last_permission_id + 2] } } }
-
-        its(:code) { is_expected.to eq '422' }
-        its(:body) { is_expected.to be_json_as(response_422(user_permissions: Array)) }
-      end
     end
 
     context 'when login user is super admin' do
@@ -318,27 +302,7 @@ RSpec.describe Api::V1::UsersController, type: :controller do
         let(:target_user) { create :user, company: company, role: 'admin' }
         let(:permissions) { create_list(:permission, 3).pluck(:id) }
 
-        subject { patch :update, params: { id: target_user.id, user: { name: 'thoi', permission_ids: permissions } } }
-
-        its(:code) { is_expected.to eq '200' }
-        its(:body) { is_expected.to be_json_as(response_user(permissions.size)) }
-      end
-
-      context 'when target user is member' do
-        let(:target_user) { create :user, company: company, role: 'member' }
-        let(:permissions) { create_list(:permission, 3).pluck(:id) }
-
-        subject { patch :update, params: { id: target_user.id, user: { name: 'thoi', permission_ids: permissions } } }
-
-        its(:code) { is_expected.to eq '200' }
-        its(:body) { is_expected.to be_json_as(response_user(permissions.size)) }
-      end
-
-      context 'when target user is super admin' do
-        let(:target_user) { create :user, company: company, role: 'superadmin' }
-        let(:permissions) { create_list(:permission, 3).pluck(:id) }
-
-        subject { patch :update, params: { id: target_user.id, user: { name: 'thoi', permission_ids: permissions } } }
+        subject { patch :update, params: { id: target_user.id, user: { name: 'thoi', permission_ids: permissions, group_id: company.groups.last.id } } }
 
         its(:code) { is_expected.to eq '401' }
       end
@@ -427,6 +391,7 @@ RSpec.describe Api::V1::UsersController, type: :controller do
           user_params = attributes_for(:user)
           user_params[:permission_ids] = user_params[:user_permissions_attributes].map { |id| id[:permission_id] }
           user_params.delete(:user_permissions_attributes)
+          user_params[:group_ids] = company.default_group.id
           user_params[:avatar] = avatar
           user_params
         end
@@ -437,21 +402,29 @@ RSpec.describe Api::V1::UsersController, type: :controller do
         its(:body) { is_expected.to be_json_as(response_user) }
       end
 
+      context 'when group id missing' do
+        let(:avatar) { fixture_file_upload('images/image.png', 'image/png') }
+        let(:user_params) do
+          user_params = attributes_for(:user)
+          user_params[:permission_ids] = user_params[:user_permissions_attributes].map { |id| id[:permission_id] }
+          user_params.delete(:user_permissions_attributes)
+          user_params[:avatar] = avatar
+          user_params
+        end
+
+        subject { post :create, params: { user: user_params } }
+
+        its(:code) { is_expected.to eq '422' }
+        its(:body) { is_expected.to be_json_as(response_422(group: Array)) }
+      end
+
       context 'when params empty' do
         let(:params) { { username: '', permissions_ids: [] } }
-        let(:error) do
-          {
-            password:   Array,
-            name:       Array,
-            email:      Array,
-            user_permissions: Array
-          }
-        end
 
         subject { post :create, params: { user: params } }
 
         its(:code) { is_expected.to eq '422' }
-        its(:body) { is_expected.to be_json_as(response_422(error)) }
+        its(:body) { is_expected.to be_json_as(response_422(group: Array)) }
       end
 
       context 'when avatar wrong file format' do
@@ -461,6 +434,7 @@ RSpec.describe Api::V1::UsersController, type: :controller do
           user_params[:permission_ids] = user_params[:user_permissions_attributes].map { |id| id[:permission_id] }
           user_params.delete(:user_permissions_attributes)
           user_params[:avatar] = avatar
+          user_params[:group_ids] = company.default_group.id
           user_params
         end
 
@@ -477,6 +451,7 @@ RSpec.describe Api::V1::UsersController, type: :controller do
           user_params[:permission_ids] = user_params[:user_permissions_attributes].map { |id| id[:permission_id] }
           user_params.delete(:user_permissions_attributes)
           user_params[:avatar] = avatar
+          user_params[:group_ids] = company.default_group.id
           user_params
         end
 
@@ -491,13 +466,14 @@ RSpec.describe Api::V1::UsersController, type: :controller do
           user_params = attributes_for(:user).except(:user_permissions_attributes)
           max_permission_number = Permission.last.id
           user_params[:permission_ids] = [max_permission_number + 1, max_permission_number + 2]
+          user_params[:group_ids] = company.default_group.id
           user_params
         end
 
         subject { post :create, params: { user: user_params } }
 
-        its(:code) { is_expected.to eq '422' }
-        its(:body) { is_expected.to be_json_as(response_422(user_permissions: Array)) }
+        its(:code) { is_expected.to eq '201' }
+        its(:body) { is_expected.to be_json_as(response_user) }
       end
     end
   end

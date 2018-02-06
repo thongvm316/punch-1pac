@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Api::V1::RequestsController, type: :controller do
-  let(:company) { create :company }
+  let(:company) { create :company, :with_default_group }
 
   before do
     in_namespace(company)
@@ -62,7 +62,7 @@ RSpec.describe Api::V1::RequestsController, type: :controller do
     end
 
     context 'when login user is member' do
-      let(:login_user) { create :user, :with_group, company: company, role: 'member' }
+      let(:login_user) { create :user, company: company, role: 'member', groups: [company.groups.last] }
       let!(:requests) { create_list :request, 3, user: login_user }
 
       subject { get :index }
@@ -88,7 +88,7 @@ RSpec.describe Api::V1::RequestsController, type: :controller do
     end
 
     context 'when login user is admin' do
-      let(:login_user) { create :user, :with_group, company: company, role: 'admin' }
+      let(:login_user) { create :user, company: company, role: 'admin', groups: [company.groups.last] }
       let!(:requests) { create_list :request, 3, user: create(:user, groups: login_user.groups) }
 
       subject { get :index }

@@ -29,7 +29,7 @@ class Permission < ApplicationRecord
     query
   }
 
-  def self.verify(permission_ids)
-    Permission.select(:id).where(id: permission_ids).map { |permission| { permission_id: permission.id } }
+  def self.of_member
+    where(role: User.roles[:member])
   end
 end

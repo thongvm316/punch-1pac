@@ -12,6 +12,7 @@
 #
 
 class Group < ApplicationRecord
+  DEFAULT_NAME = 'default'
   belongs_to :company
   has_many :group_permissions, dependent: :destroy
   has_many :permissions, through: :group_permissions
@@ -21,5 +22,5 @@ class Group < ApplicationRecord
   accepts_nested_attributes_for :group_permissions
 
   validates :name, presence: true
-  validates :group_permissions, presence: true
+  # validates :group_permissions, presence: true
 end

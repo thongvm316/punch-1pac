@@ -21,6 +21,6 @@ RSpec.describe User, type: :model do
     it { should validate_length_of(:email).is_at_most(100) }
     it { should validate_uniqueness_of(:email).ignoring_case_sensitivity }
     it { should validate_inclusion_of(:language).in_array(%w[vi en jp]) }
-    it { should validate_presence_of(:user_permissions) }
+    # it { should validate_presence_of(:user_permissions) }
   end
 end

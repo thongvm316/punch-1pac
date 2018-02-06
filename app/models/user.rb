@@ -48,13 +48,14 @@ class User < ApplicationRecord
   has_many :groups, through: :user_groups
 
   accepts_nested_attributes_for :user_permissions
+  accepts_nested_attributes_for :user_groups
 
   validates :name, presence: true, length: { maximum: 100 }
   validates :email, presence: true, uniqueness: true, length: { maximum: 100 }, format: { with: REGEX_VALID_EMAIL }
   validates :password, length: { minimum: 6, maximum: 32 }, allow_nil: true
   validates :password_confirmation, presence: true, if: -> { password.present? }
   validates :language, inclusion: { in: %w[vi en jp] }
-  validates :user_permissions, presence: true
+  # validates :user_permissions, presence: true
 
   include ImageUploader::Attachment.new(:avatar)
 
