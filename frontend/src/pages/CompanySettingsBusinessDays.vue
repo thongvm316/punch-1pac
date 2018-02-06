@@ -14,35 +14,11 @@
         <th></th>
       </thead>
       <tbody>
-        <tr @click="toggleEditModal">
-          <td>Monday</td>
-          <td>08:00</td>
-          <td>17:30</td>
-          <td class="text-center"><button class="btn btn-error">Delete</button></td>
-        </tr>
-        <tr @click="toggleEditModal">
-          <td>Tuesday</td>
-          <td>08:00</td>
-          <td>17:30</td>
-          <td class="text-center"><button class="btn btn-error">Delete</button></td>
-        </tr>
-        <tr @click="toggleEditModal">
-          <td>Wednesday</td>
-          <td>08:00</td>
-          <td>17:30</td>
-          <td class="text-center"><button class="btn btn-error">Delete</button></td>
-        </tr>
-        <tr @click="toggleEditModal">
-          <td>Thursday</td>
-          <td>08:00</td>
-          <td>17:30</td>
-          <td class="text-center"><button class="btn btn-error">Delete</button></td>
-        </tr>
-        <tr @click="toggleEditModal">
-          <td>Friday</td>
-          <td>08:00</td>
-          <td>17:30</td>
-          <td class="text-center"><button class="btn btn-error">Delete</button></td>
+        <tr v-for="businessDay in businessDays">
+          <td @click="toggleEditModal(businessDay)">{{ businessDay.weekday }}</td>
+          <td>{{ businessDay.started_at }}</td>
+          <td>{{ businessDay.ended_at }}</td>
+          <td class="text-center"><button class="btn btn-error" @click="deleteBusinessDay(businessDay.id)">Delete</button></td>
         </tr>
       </tbody>
     </table>
@@ -50,36 +26,76 @@
     <modal title="Add Business Day" :modal-open.sync="isAddModalOpen">
       <div class="form-group">
         <label class="form-label">Weekday</label>
-        <input class="form-input" type="text">
+        <select class="form-select" v-model="createParams.weekday">
+          <option>monday</option>
+          <option>tuesday</option>
+          <option>wednesday</option>
+          <option>thursday</option>
+          <option>friday</option>
+          <option>saturday</option>
+          <option>sunday</option>
+        </select>
       </div>
       <div class="form-group">
         <label class="form-label">Start at</label>
-        <input class="form-input" type="text">
+        <select class="form-select" v-model="createParams.started_at">
+          <option>01:00</option>
+          <option>03:00</option>
+          <option>06:00</option>
+          <option>09:00</option>
+          <option>12:00</option>
+        </select>
       </div>
       <div class="form-group">
         <label class="form-label">End at</label>
-        <input class="form-input" type="text">
+        <select class="form-select" v-model="createParams.ended_at">
+          <option>01:00</option>
+          <option>03:00</option>
+          <option>06:00</option>
+          <option>09:00</option>
+          <option>12:00</option>
+        </select>
       </div>
       <div class="form-group">
-        <button type="button" class="btn">Submit</button>
+        <button type="button" class="btn" @click="addBusinessDay(createParams)">Submit</button>
       </div>
     </modal>
 
     <modal title="Edit Business Day" :modal-open.sync="isEditModalOpen">
       <div class="form-group">
         <label class="form-label">Weekday</label>
-        <input class="form-input" type="text">
+        <select class="form-select" v-model="updateParams.weekday">
+          <option>monday</option>
+          <option>tuesday</option>
+          <option>wednesday</option>
+          <option>thursday</option>
+          <option>friday</option>
+          <option>saturday</option>
+          <option>sunday</option>
+        </select>
       </div>
       <div class="form-group">
         <label class="form-label">Start at</label>
-        <input class="form-input" type="text">
+        <select class="form-select" v-model="updateParams.started_at">
+          <option>01:00</option>
+          <option>03:00</option>
+          <option>06:00</option>
+          <option>09:00</option>
+          <option>12:00</option>
+        </select>
       </div>
       <div class="form-group">
         <label class="form-label">End at</label>
-        <input class="form-input" type="text">
+        <select class="form-select" v-model="updateParams.ended_at">
+          <option>01:00</option>
+          <option>03:00</option>
+          <option>06:00</option>
+          <option>09:00</option>
+          <option>12:00</option>
+        </select>
       </div>
       <div class="form-group">
-        <button type="button" class="btn">Save</button>
+        <button type="button" class="btn" @click="updateBusinessDay({ updateParams: updateParams, businessDayId: currentId})">Save</button>
       </div>
     </modal>
   </setting-layout>
@@ -88,9 +104,49 @@
 <script>
 import SettingLayout from '../layouts/Setting.vue'
 import modal from '../mixins/modal'
+import { mapState, mapActions } from 'vuex'
 
 export default {
   mixins: [modal],
+  data () {
+    return {
+      createParams: {
+        weekday: 'monday',
+        started_at: '01:00',
+        ended_at: '01:00'
+      },
+      currentId: '',
+      updateParams: {
+        weekday: '',
+        started_at: '',
+        ended_at: ''
+      }
+    }
+  },
+
+  methods: {
+    ...mapActions('companyBusinessDays', [
+      'fetchBusinessDays',
+      'addBusinessDay',
+      'deleteBusinessDay',
+      'updateBusinessDay'
+    ]),
+    toggleEditModal (businessDay) {
+      this.isEditModalOpen = !this.isEditModalOpen
+      this.currentId = businessDay.id
+      Object.keys(this.updateParams).forEach(k => { this.updateParams[k] = businessDay[k] })
+    }
+  },
+
+  computed: {
+    ...mapState('companyBusinessDays', [
+      'businessDays'
+    ])
+  },
+
+  created () {
+    this.fetchBusinessDays()
+  },
 
   components: {
     SettingLayout
