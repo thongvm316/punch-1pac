@@ -30,14 +30,15 @@ class Request < ApplicationRecord
 
   scope :in_group, ->(user) { where(user_id: User.where(group_id: user.group_id)) }
 
-  scope :for_user, ->(user) {
+  scope :for_user, ->(user, pself = nil) {
+    return user.requests if pself
     case user.role
     when 'member'
       user.requests
     when 'superadmin'
-      Request.where(user_id: user.company.users)
+      where(user_id: user.company.users)
     when 'admin'
-      Request.where(user_id: UserGroup.select(:user_id).where(group_id: user.groups))
+      where(user_id: UserGroup.select(:user_id).where(group_id: user.groups))
     end
   }
 

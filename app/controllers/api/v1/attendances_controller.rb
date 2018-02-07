@@ -14,9 +14,8 @@ class Api::V1::AttendancesController < Api::V1::BaseController
   end
 
   def index
-    attendances = Attendance.for_user(current_user, params[:group_id])
+    attendances = Attendance.for_user(current_user, params['self'])
                             .search_by(params)
-                            .includes(:user)
                             .page(params[:page])
                             .per(params[:per_page])
                             .order(day: :desc)

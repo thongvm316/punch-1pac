@@ -7,7 +7,7 @@ class Api::V1::RequestsController < Api::V1::BaseController
 
   def index
     authorize!
-    requests = Request.for_user(current_user)
+    requests = Request.for_user(current_user, params['self'])
                       .search_by(params)
                       .includes(:user, :attendance)
                       .page(params[:page])
