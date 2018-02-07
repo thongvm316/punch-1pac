@@ -53,7 +53,14 @@
       </thead>
       <tbody>
         <tr v-for="attendance in attendances">
-          <td>{{ attendance.user.name }}</td>
+          <td>
+            <div class="tile tile-centered">
+              <div class="tile-icon">
+                <img :src="attendance.user.avatar_url" class="avatar avatar-md" :alt="attendance.user.name">
+              </div>
+              <div class="tile-content">{{ attendance.user.name }}</div>
+            </div>
+          </td>
           <td>{{ attendance.user.email }}</td>
           <td>{{ attendance.day | datetime_mmdd }}</td>
           <td>{{ attendance.attended_at }}</td>

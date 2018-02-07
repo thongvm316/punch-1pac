@@ -58,7 +58,7 @@ const actions = {
     })
   },
 
-  addRequest ({ commit }, params) {
+  addRequest ({ commit }, params = {}) {
     axios.post('/requests', { request: params }, { headers: { 'Content-Type': 'application/json' } })
          .then((response) => { commit(types.ADD_REQUEST, response.data) })
          .catch((error) => {
