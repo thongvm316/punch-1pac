@@ -44,7 +44,7 @@ const actions = {
          .then((response) => commit(types.DELETE_IP, ipID))
   },
   createIP ({ commit }, data) {
-    axios.post('/allowed_ips/', data, {
+    axios.post('/allowed_ips/', { allowed_ip: data }, {
       headers: {
         'Content-Type': 'application/json'
       }
@@ -55,7 +55,7 @@ const actions = {
          })
   },
   updateIP ({ commit }, data) {
-    axios.put(`/allowed_ips/${data.id}`, data, {
+    axios.put(`/allowed_ips/${data.id}`, { allowed_ip: data }, {
       headers: {
         'Content-Type': 'application/json'
       }
