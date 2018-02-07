@@ -70,6 +70,7 @@ export default {
   data () {
     return {
       params: {
+        self: true,
         from_date: moment().startOf('month').format('MMM DD YYYY'),
         to_date: moment().endOf('month').format('MMM DD YYYY'),
         status: ''

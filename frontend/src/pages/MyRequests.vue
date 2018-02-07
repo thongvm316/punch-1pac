@@ -134,7 +134,7 @@ export default {
   },
 
   created () {
-    this.getRequests()
+    this.getRequests({ self: true })
   }
 }
 </script>
