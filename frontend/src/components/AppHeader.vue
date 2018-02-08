@@ -14,7 +14,7 @@
         <section class="navbar-section">
           <punch/>
           <header-announcements/>
-          <div class="dropdown" :class="{ active: isDropdownActive }" @click="toggleDropdown">
+          <div class="dropdown" :class="{ active: isDropdownActive }" @click="toggleDropdown" ref="dropdownMenu">
             <a class="dropdown-toggle">
               <div class="tile tile-centered">
                 <div class="tile-icon">
@@ -37,16 +37,13 @@
 
 <script>
 import axios from 'axios'
+import dropdown from '../mixins/dropdown'
 import HeaderAnnouncements from '../components/HeaderAnnouncements.vue'
 import Punch from '../components/Punch.vue'
 
 export default {
   name: 'app-header',
-  data () {
-    return {
-      isDropdownActive: false
-    }
-  },
+  mixins: [dropdown],
 
   components: {
     HeaderAnnouncements,
