@@ -9,11 +9,7 @@ body {
   background-color: $gray-color-lightest;
   color: $dark-color;
   min-width: 64rem;
-  overflow-x: auto;
-}
-
-main {
-  padding-top: 48px;
+  overflow-x: visible;
 }
 
 .main {
