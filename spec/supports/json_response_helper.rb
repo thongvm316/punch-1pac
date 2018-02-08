@@ -167,6 +167,17 @@ module JsonResponseHelper
     }
   end
 
+  def response_calendar
+    {
+      day:              date_response,
+      attended_at:      nullable_response(hour_min_response),
+      left_at:          nullable_response(hour_min_response),
+      attending_status: nullable_response(String),
+      leaving_status:   nullable_response(String),
+      off_status:       nullable_response(String)
+    }
+  end
+
   def response_permission
     {
       id:          Integer,

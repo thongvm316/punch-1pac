@@ -130,6 +130,26 @@ RSpec.describe Api::V1::AttendancesController, type: :controller do
     end
   end
 
+  describe 'GET #calendar' do
+    context 'when params valid date formant' do
+      let!(:attendance_1) { create :attendance, user: login_user, day: 1.day.ago }
+
+      subject { get :calendar, params: { day: Date.current } }
+
+      its(:code) { is_expected.to eq '200' }
+      its(:body) { is_expected.to be_json_as(Array.new(1) { response_calendar }) }
+    end
+
+    context 'when params invalid date formant' do
+      let!(:attendance_1) { create :attendance, user: login_user, day: 1.day.ago }
+
+      subject { get :calendar, params: { day: 'invalid' } }
+
+      its(:code) { is_expected.to eq '200' }
+      its(:body) { is_expected.to be_json_as(Array.new(0) { response_calendar }) }
+    end
+  end
+
   describe 'POST #create' do
     context 'when attendance is created with off_status = holiday/weekend/annual_leave' do
       let!(:attendance) { create :attendance, user: login_user, off_status: 'holiday' }
