@@ -61,6 +61,9 @@ const actions = {
   addRequest ({ commit }, params = {}) {
     axios.post('/requests', { request: params }, { headers: { 'Content-Type': 'application/json' } })
          .then((response) => { commit(types.ADD_REQUEST, response.data) })
+         .catch((error) => {
+           if (error.response && error.response.status === 422) commit(types.UPDATE_REQUEST_ERRORS, error.response.data)
+         })
   },
 
   updateRequest ({ commit }, request) {
