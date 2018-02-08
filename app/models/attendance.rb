@@ -39,9 +39,9 @@ class Attendance < ApplicationRecord
     when 'member'
       user.attendances
     when 'superadmin'
-      where(user_id: user.company.users).includes(:user)
+      where(user_id: user.company.users).includes(user: :department)
     when 'admin'
-      where(user_id: UserGroup.select(:user_id).where(group_id: user.groups)).includes(:user)
+      where(user_id: UserGroup.select(:user_id).where(group_id: user.groups)).includes(user: :department)
     end
   }
 

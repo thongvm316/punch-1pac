@@ -64,7 +64,8 @@ export default {
     department: 'Department',
     email: 'Email',
     name: 'Name',
-    actions: 'Actions'
+    actions: 'Actions',
+    gender: 'Gender'
   },
   header: {
     dashboard: 'Dashboard',
