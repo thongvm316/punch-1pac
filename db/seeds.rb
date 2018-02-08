@@ -16,8 +16,7 @@ user = FactoryBot.create(:user, email: 'wofi.minh@1pac.vn', password: 'password'
 superadmin = FactoryBot.create(:user, email: 'example@1pac.vn', password: 'password', password_confirmation: 'password', company: company, role: 'superadmin')
 
 5.times do
-  company = FactoryBot.create(:company)
-  FactoryBot.create_list(:user, 3, company: company)
+  FactoryBot.create_list(:user, 3, company: FactoryBot.create(:company))
 end
 
 admin = FactoryBot.create(:admin, email: 'admin@example.com', password: 'password')
