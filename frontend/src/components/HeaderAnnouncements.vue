@@ -1,5 +1,5 @@
 <template>
-  <div class="dropdown mr-5" :class="{ active: isActive }" @click="toggle">
+  <div class="dropdown mr-5" :class="{ active: isActive }" @click="toggle" ref="toggle">
     <span class="announcement" :class="{ badge: numAnnouncement }" :data-badge="numAnnouncement">
       <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path
         d="M15.137 3.945c-.644-.374-1.042-1.07-1.041-1.82v-.003c.001-1.172-.938-2.122-2.096-2.122s-2.097.95-2.097
@@ -40,6 +40,14 @@ export default {
       this.isActive = !this.isActive
     },
 
+    documentClick (e) {
+      let el = this.$refs.toggle
+      let target = e.target
+      if ((el !== target) && (!el.contains(target))) {
+        this.isActive = false
+      }
+    },
+
     ...mapActions('headerAnnouncements', [
       'getAnnouncements'
     ])
@@ -53,9 +61,14 @@ export default {
   },
 
   created () {
+    document.addEventListener('click', this.documentClick)
     if (this.announcements.length === 0) {
       this.getAnnouncements()
     }
+  },
+
+  destroyed () {
+    document.removeEventListener('click', this.documentClick)
   }
 }
 </script>

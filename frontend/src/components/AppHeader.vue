@@ -14,7 +14,7 @@
         <section class="navbar-section">
           <punch/>
           <header-announcements/>
-          <div class="dropdown" :class="{ active: isDropdownActive }" @click="toggleDropdown">
+          <div class="dropdown" :class="{ active: isDropdownActive }" @click="toggleDropdown" ref="dropdownMenu">
             <a class="dropdown-toggle">
               <div class="tile tile-centered">
                 <div class="tile-icon">
@@ -60,6 +60,14 @@ export default {
 
     toggleDropdown () {
       this.isDropdownActive = !this.isDropdownActive
+    },
+
+    documentClick (e) {
+      let el = this.$refs.dropdownMenu
+      let target = e.target
+      if ((el !== target) && (!el.contains(target))) {
+        this.isDropdownActive = false
+      }
     }
   },
 
@@ -79,6 +87,14 @@ export default {
     userAvatarUrl () {
       return window.INITIAL_STATE.user.avatar_url
     }
+  },
+
+  created () {
+    document.addEventListener('click', this.documentClick)
+  },
+
+  destroyed () {
+    document.removeEventListener('click', this.documentClick)
   }
 }
 </script>
