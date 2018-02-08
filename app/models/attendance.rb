@@ -56,10 +56,11 @@ class Attendance < ApplicationRecord
   }
 
   scope :calendar, ->(params) {
-    begin
-      query_date = Date.parse(params)
+    query_date = Time.zone.parse(params)
+
+    if query_date
       where(day: query_date.beginning_of_month..query_date.end_of_month)
-    rescue ArgumentError
+    else
       none
     end
   }
