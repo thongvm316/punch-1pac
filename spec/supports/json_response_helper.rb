@@ -145,6 +145,15 @@ module JsonResponseHelper
     }
   end
 
+  def response_attendance_chart(number)
+    Array.new(number) do
+      {
+        month:        String,
+        status_count: Integer
+      }
+    end
+  end
+
   def response_attendance
     {
       id:               Integer,
