@@ -55,6 +55,15 @@ class Attendance < ApplicationRecord
       .group(:month)
   }
 
+  scope :calendar, ->(params) {
+    begin
+      query_date = Date.parse(params)
+      where(day: query_date.beginning_of_month..query_date.end_of_month)
+    rescue ArgumentError
+      none
+    end
+  }
+
   def self.search_by(params)
     q = all
     q = where(user_id: UserGroup.select(:user_id).where(group_id: params[:group_id])) if params[:group_id].present?
