@@ -47,7 +47,10 @@ Rails.application.routes.draw do
         end
 
         resources :attendances, only: %i[index create update] do
-          get 'chart' => 'attendances#chart', on: :collection
+          collection do
+            get 'chart' => 'attendances#chart'
+            get 'calendar' => 'attendances#calendar'
+          end
         end
 
         resources :requests, only: %i[index create update destroy] do

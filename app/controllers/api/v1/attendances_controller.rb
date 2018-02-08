@@ -31,6 +31,13 @@ class Api::V1::AttendancesController < Api::V1::BaseController
            meta: pager(attendances)
   end
 
+  def calendar
+    attendances = current_user.attendances.calendar(params[:day]).order(day: :asc)
+    render json: attendances,
+           each_serializer: AttendanceSerializer,
+           status: 200
+  end
+
   def update
     authorize!
     attendance = AttendanceService.new(current_user).leave
