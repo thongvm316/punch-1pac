@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
 class Api::V1::GroupsController < Api::V1::BaseController
-  before_action :set_group, only: %i[show update destroy]
+  before_action :set_group, only: %i[show update destroy add_user remove_user]
 
   def index
     authorize!
     groups = current_company.groups.order(name: :asc)
-    render json: groups, each_serializer: GroupWithAdminSerializer, status: 200
+    render json: groups, each_serializer: GroupSerializer, status: 200
   end
 
   def show
@@ -38,6 +38,21 @@ class Api::V1::GroupsController < Api::V1::BaseController
     authorize!
     @group.destroy
     head 200
+  end
+
+  def add_user
+    user = User.find(params[:user_id])
+    authorize!(user: user, group: @group)
+    UserGroup.create(group: @group, user: user)
+    head(200)
+  end
+
+  def remove_user
+    user = User.find(params[:user_id])
+    authorize! @group
+    user_group = UserGroup.find_by!(group: @group, user: user)
+    user_group.destroy
+    head(200)
   end
 
   private
