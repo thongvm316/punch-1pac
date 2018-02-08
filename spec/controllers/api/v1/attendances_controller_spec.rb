@@ -137,7 +137,7 @@ RSpec.describe Api::V1::AttendancesController, type: :controller do
       subject { get :calendar, params: { day: Time.current } }
 
       its(:code) { is_expected.to eq '200' }
-      its(:body) { is_expected.to be_json_as(Array.new(1) { response_calendar }) }
+      its(:body) { is_expected.to be_json_as(Array.new(1) { response_attendance }) }
     end
 
     context 'when params invalid date formant' do
@@ -146,7 +146,7 @@ RSpec.describe Api::V1::AttendancesController, type: :controller do
       subject { get :calendar, params: { day: 'invalid' } }
 
       its(:code) { is_expected.to eq '200' }
-      its(:body) { is_expected.to be_json_as(Array.new(0) { response_calendar }) }
+      its(:body) { is_expected.to be_json_as(Array.new(0) { response_attendance }) }
     end
   end
 

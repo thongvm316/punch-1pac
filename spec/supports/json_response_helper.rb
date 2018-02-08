@@ -95,7 +95,7 @@ module JsonResponseHelper
       content: String,
       target: String,
       status: String,
-      is_read: boolean_response,
+      readed: boolean_response,
       created_at: time_iso8601_response
     }
   end
@@ -164,17 +164,6 @@ module JsonResponseHelper
       leaving_status:   nullable_response(String),
       off_status:       nullable_response(String),
       user:             response_user
-    }
-  end
-
-  def response_calendar
-    {
-      day:              date_response,
-      attended_at:      nullable_response(hour_min_response),
-      left_at:          nullable_response(hour_min_response),
-      attending_status: nullable_response(String),
-      leaving_status:   nullable_response(String),
-      off_status:       nullable_response(String)
     }
   end
 

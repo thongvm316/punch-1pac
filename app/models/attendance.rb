@@ -56,10 +56,10 @@ class Attendance < ApplicationRecord
   }
 
   scope :calendar, ->(params) {
-    query_date = Time.zone.parse(params)
+    date = Time.zone.parse(params)
 
-    if query_date
-      where(day: query_date.beginning_of_month..query_date.end_of_month)
+    if date
+      where(day: date.beginning_of_month..date.end_of_month)
     else
       none
     end
