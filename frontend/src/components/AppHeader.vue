@@ -37,16 +37,13 @@
 
 <script>
 import axios from 'axios'
+import dropdown from '../mixins/dropdown'
 import HeaderAnnouncements from '../components/HeaderAnnouncements.vue'
 import Punch from '../components/Punch.vue'
 
 export default {
   name: 'app-header',
-  data () {
-    return {
-      isDropdownActive: false
-    }
-  },
+  mixins: [dropdown],
 
   components: {
     HeaderAnnouncements,
@@ -60,14 +57,6 @@ export default {
 
     toggleDropdown () {
       this.isDropdownActive = !this.isDropdownActive
-    },
-
-    documentClick (e) {
-      let el = this.$refs.dropdownMenu
-      let target = e.target
-      if ((el !== target) && (!el.contains(target))) {
-        this.isDropdownActive = false
-      }
     }
   },
 
@@ -87,14 +76,6 @@ export default {
     userAvatarUrl () {
       return window.INITIAL_STATE.user.avatar_url
     }
-  },
-
-  created () {
-    document.addEventListener('click', this.documentClick)
-  },
-
-  destroyed () {
-    document.removeEventListener('click', this.documentClick)
   }
 }
 </script>
