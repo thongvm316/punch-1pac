@@ -36,10 +36,11 @@
     <modal title="Edit Group" :modal-open.sync="isEditModalOpen">
       <div class="form-group">
         <label class="form-label">{{ $t('label.name') }}</label>
-        <input class="form-input" type="text" :value="group.name">
+        <input class="form-input" type="text" v-model="editParams.name">
+        <p class="form-input-hint" v-if="errors.name">{{ errors.name[0] }}</p>
       </div>
       <div class="form-group">
-        <button type="button" class="btn">{{ $t('button.save') }}</button>
+        <button type="button" class="btn" @click="updateGroup({ groupId: currentId, editParams: editParams })">{{ $t('button.save') }}</button>
       </div>
     </modal>
   </main-layout>
@@ -53,23 +54,41 @@ import modal from '../mixins/modal'
 export default {
   mixins: [modal],
 
+  data () {
+    return {
+      currentId: this.$route.params.id,
+      editParams: {
+        name: ''
+      }
+    }
+  },
+
   components: {
     MainLayout
   },
 
   computed: {
     ...mapState('group', [
+      'errors',
       'group'
     ])
   },
 
   methods: {
+    toggleEditModal () {
+      this.clearGroupErrors()
+      this.isEditModalOpen = !this.isEditModalOpen
+      this.editParams.name = this.group.name
+    },
+
     fetch () {
       this.getGroup(this.$route.params.id)
     },
 
     ...mapActions('group', [
-      'getGroup'
+      'getGroup',
+      'updateGroup',
+      'clearGroupErrors'
     ])
   },
 
