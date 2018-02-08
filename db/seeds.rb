@@ -36,3 +36,17 @@ next_month = Time.current + 1.month
   attendance = FactoryBot.create(:attendance, day: day, user: [user, superadmin][rand(2)])
   FactoryBot.create(:request, attendance: attendance, user: attendance.user, status: Request.statuses.keys[rand(3)])
 end
+
+(1..7).each do |month|
+  next if (prev_month.month..next_month.month).cover?(month)
+  (month % 3).times do |day|
+    FactoryBot.create(:attendance, user: superadmin, attending_status: 'attend_ok', day: Date.new(Date.current.year, month, day + 1))
+  end
+end
+
+(8..12).each do |month|
+  next if (prev_month.month..next_month.month).cover?(month)
+  (month % 3).times do |day|
+    FactoryBot.create(:attendance, user: superadmin, attending_status: 'attend_late', day: Date.new(Date.current.year, month, day + 1))
+  end
+end

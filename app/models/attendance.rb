@@ -32,7 +32,11 @@ class Attendance < ApplicationRecord
 
   scope :attended, -> { where.not(attended_at: nil) }
   scope :between, ->(from_date, to_date) { where(day: from_date..to_date) }
-  scope :with_status, ->(status) { where(attending_status: status).or(where(leaving_status: status)).or(where(off_status: status)) }
+  scope :with_status, ->(status) {
+    where(attending_status: status)
+      .or(where(leaving_status: status))
+      .or(where(off_status: status))
+  }
   scope :for_user, ->(user, pself = nil) {
     return user.attendances if pself
     case user.role
@@ -43,6 +47,12 @@ class Attendance < ApplicationRecord
     when 'admin'
       where(user_id: UserGroup.select(:user_id).where(group_id: user.groups)).includes(user: :department)
     end
+  }
+  scope :status_count_each_month, ->(status) {
+    select("DATE_TRUNC('month', day) as month, COUNT(id) as status_count")
+      .where('extract(year from day) = ?', Date.current.year)
+      .with_status(status)
+      .group(:month)
   }
 
   def self.search_by(params)

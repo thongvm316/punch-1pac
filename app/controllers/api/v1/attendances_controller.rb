@@ -13,6 +13,11 @@ class Api::V1::AttendancesController < Api::V1::BaseController
     end
   end
 
+  def chart
+    attendances = current_user.attendances.status_count_each_month(params[:status])
+    render json: attendances, each_serializer: AttendanceChartSerializer, status: 200
+  end
+
   def index
     attendances = Attendance.for_user(current_user, params['self'])
                             .search_by(params)
