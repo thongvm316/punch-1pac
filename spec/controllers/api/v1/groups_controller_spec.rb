@@ -28,7 +28,7 @@ RSpec.describe Api::V1::GroupsController, type: :controller do
       subject { get :index }
 
       its(:code) { is_expected.to eq '200' }
-      its(:body) { is_expected.to be_json_as(Array.new(groups.size) { response_group_admins(2, 1) }) }
+      its(:body) { is_expected.to be_json_as(Array.new(groups.size) { response_group(2, 1) }) }
     end
   end
 
@@ -178,6 +178,151 @@ RSpec.describe Api::V1::GroupsController, type: :controller do
         subject { delete :destroy, params: { id: group.id } }
 
         its(:code) { is_expected.to eq '200' }
+      end
+    end
+  end
+
+  shared_examples 'group_id or user_id is not found' do
+    let(:group) { create :group, company: company }
+
+    context 'when user_id is not found' do
+      let(:login_user) { create :user, company: company, role: 'admin' }
+
+      subject { post :add_user, params: { id: group.id, user_id: nil }, format: :json }
+
+      its(:code) { is_expected.to eq '404' }
+      its(:body) { is_expected.to be_json_as(response_404) }
+    end
+
+    context 'when group_id is not found' do
+      let(:login_user) { create :user, company: company, role: 'admin' }
+
+      subject { post :add_user, params: { id: group.id + 99, user_id: login_user.id }, format: :json }
+
+      its(:code) { is_expected.to eq '404' }
+      its(:body) { is_expected.to be_json_as(response_404) }
+    end
+  end
+
+  describe 'POST #add_user' do
+    it_behaves_like 'group_id or user_id is not found'
+
+    context 'when login_user = member' do
+      let(:login_user) { create :user, company: company, role: 'member' }
+      let(:target_user) { create :user, company: company, role: 'member' }
+      let(:group) { create :group, company: company, users: [login_user] }
+
+      subject { post :add_user, params: { id: group.id, user_id: target_user.id }, format: :json }
+
+      its(:code) { is_expected.to eq '401' }
+      its(:body) { is_expected.to be_json_as(response_401) }
+    end
+
+    context 'when login_user = admin' do
+      context 'when login_user not in target_group' do
+        let(:login_user) { create :user, company: company, role: 'admin' }
+        let(:target_user) { create :user, company: company, role: 'member' }
+        let(:group) { create :group, company: company, users: [login_user] }
+        let!(:other_group) { create :group, company: company }
+
+        subject { post :add_user, params: { id: other_group.id, user_id: target_user.id }, format: :json }
+
+        its(:code) { is_expected.to eq '401' }
+        its(:body) { is_expected.to be_json_as(response_401) }
+      end
+
+      context 'when target_user is member' do
+        let(:login_user) { create :user, company: company, role: 'admin' }
+        let(:target_user) { create :user, company: company, role: 'member' }
+        let(:group) { create :group, company: company, users: [login_user] }
+
+        context 'when user already in a group' do
+          let!(:other_group) { create :group, company: company, users: [target_user] }
+
+          subject { post :add_user, params: { id: group.id, user_id: target_user.id } }
+
+          its(:code) { is_expected.to eq '401' }
+          its(:body) { is_expected.to be_json_as(response_401) }
+        end
+
+        context 'when user is not in a group' do
+          subject { post :add_user, params: { id: group.id, user_id: target_user.id } }
+
+          its(:code) { is_expected.to eq '200' }
+          it 'should change user group' do
+            is_expected
+            expect(target_user.groups.first).to eq group
+          end
+        end
+      end
+
+      context 'when target_user is admin' do
+        let(:login_user) { create :user, company: company, role: 'admin' }
+        let(:target_user) { create :user, company: company, role: 'admin' }
+        let(:group) { create :group, company: company, users: [login_user] }
+
+        context 'when user already in a group' do
+          let!(:other_group) { create :group, company: company, users: [target_user] }
+
+          subject { post :add_user, params: { id: group.id, user_id: target_user.id } }
+
+          its(:code) { is_expected.to eq '200' }
+          it 'should add user new group' do
+            is_expected
+            expect(target_user.groups).to include(other_group, group)
+          end
+        end
+
+        context 'when user is not in a group' do
+          subject { post :add_user, params: { id: group.id, user_id: target_user.id } }
+
+          its(:code) { is_expected.to eq '200' }
+          it 'should add user new group' do
+            is_expected
+            expect(target_user.groups.first).to eq group
+          end
+        end
+      end
+    end
+  end
+
+  describe 'DELETE #remove_user' do
+    it_behaves_like 'group_id or user_id is not found'
+
+    context 'when login_user not in target_group' do
+      let(:login_user) { create :user, company: company, role: 'admin' }
+      let(:target_user) { create :user, company: company, role: 'member' }
+      let(:group) { create :group, company: company }
+
+      subject { post :remove_user, params: { id: group.id, user_id: target_user.id }, format: :json }
+
+      its(:code) { is_expected.to eq '401' }
+      its(:body) { is_expected.to be_json_as(response_401) }
+    end
+
+    context 'when login_user.groups includes target_group but target_user not in target_group' do
+      let(:login_user) { create :user, company: company, role: 'admin' }
+      let(:target_user) { create :user, company: company, role: 'member' }
+      let(:group) { create :group, company: company, users: [login_user] }
+
+      subject { post :remove_user, params: { id: group.id, user_id: target_user.id }, format: :json }
+
+      its(:code) { is_expected.to eq '404' }
+      its(:body) { is_expected.to be_json_as(response_404) }
+    end
+
+    context 'when params are valid' do
+      let(:login_user) { create :user, company: company, role: 'admin' }
+      let(:target_user) { create :user, company: company, role: 'member' }
+      let(:group) { create :group, company: company, users: [login_user, target_user] }
+
+      subject { delete :remove_user, params: { id: group.id, user_id: target_user.id } }
+
+      its(:code) { is_expected.to eq '200' }
+      it 'should remove user group' do
+        is_expected
+        target_user.reload
+        expect(target_user.groups).to eq []
       end
     end
   end

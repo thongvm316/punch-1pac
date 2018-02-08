@@ -13,6 +13,10 @@ module JsonResponseHelper
     { message: 'Token is invalid' }
   end
 
+  def response_401
+    { message: 'Unauthorized' }
+  end
+
   def response_404
     { message: 'Not Found' }
   end
@@ -174,19 +178,12 @@ module JsonResponseHelper
     }
   end
 
-  def response_group(users)
-    {
-      id:          Integer,
-      name:        String,
-      users: Array.new(users) { response_user }
-    }
-  end
-
-  def response_group_admins(_users, admins)
+  def response_group(users, admins = 0)
     {
       id:          Integer,
       name:        String,
       user_count:  Integer,
+      users:       Array.new(users) { response_user },
       admins:      Array.new(admins) { response_user }
     }
   end
