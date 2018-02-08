@@ -18,6 +18,8 @@ import userSessions from './modules/user-sessions'
 import userPassword from './modules/user-password'
 
 import requests from './modules/requests'
+import groups from './modules/groups'
+import group from './modules/group'
 
 Vue.use(Vuex)
 
@@ -37,7 +39,9 @@ export default new Vuex.Store({
     companyCustomHolidays,
     userSessions,
     userPassword,
-    requests
+    requests,
+    groups,
+    group
   },
   strict: debug,
   plugins: debug ? [createLogger()] : []
