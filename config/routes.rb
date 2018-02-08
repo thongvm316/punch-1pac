@@ -43,7 +43,10 @@ Rails.application.routes.draw do
           post 'read' => 'read_announcements#create', on: :member
         end
 
-        resources :attendances, only: %i[index create update]
+        resources :attendances, only: %i[index create update] do
+          get 'chart' => 'attendances#chart', on: :collection
+        end
+
         resources :requests, only: %i[index create update destroy] do
           member do
             post 'approve' => 'requests#approve'
