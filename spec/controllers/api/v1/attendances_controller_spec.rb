@@ -134,7 +134,7 @@ RSpec.describe Api::V1::AttendancesController, type: :controller do
     context 'when params valid date formant' do
       let!(:attendance_1) { create :attendance, user: login_user, day: 1.day.ago }
 
-      subject { get :calendar, params: { day: Date.current } }
+      subject { get :calendar, params: { day: Time.current } }
 
       its(:code) { is_expected.to eq '200' }
       its(:body) { is_expected.to be_json_as(Array.new(1) { response_calendar }) }
