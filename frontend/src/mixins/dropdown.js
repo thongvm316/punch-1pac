@@ -6,7 +6,7 @@ export default {
   },
 
   methods: {
-    documentClick (e) {
+    closeDropdown (e) {
       const el = this.$refs.dropdownMenu
       const target = e.target
       if ((el !== target) && (!el.contains(target))) {
@@ -16,10 +16,10 @@ export default {
   },
 
   created () {
-    document.addEventListener('click', this.documentClick)
+    document.addEventListener('click', this.closeDropdown)
   },
 
   destroyed () {
-    document.removeEventListener('click', this.documentClick)
+    document.removeEventListener('click', this.closeDropdown)
   }
 }
