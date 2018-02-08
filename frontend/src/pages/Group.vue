@@ -1,5 +1,5 @@
 <template>
-  <main-layout :title="$t('title.groups')">
+  <main-layout :title="group.name">
     <div class="input-group mt-5">
       <input type="text" class="form-input" :placeholder="$t('placeholder.searchUserByEmail')"></input>
       <button type="button" class="btn input-group-btn">{{ $t('button.add') }}</button>
@@ -12,68 +12,16 @@
       <thead>
         <th>{{ $t('tableHeader.name') }}</th>
         <th>{{ $t('tableHeader.email') }}</th>
+        <th>{{ $t('tableHeader.gender') }}</th>
         <th>{{ $t('tableHeader.department') }}</th>
-        <th>{{ $t('tableHeader.createdAt') }}</th>
-        <th></th>
+        <th>{{ $t('tableHeader.actions') }}</th>
       </thead>
       <tbody>
-        <tr>
-          <td>Minh Phan</td>
-          <td>wofi.minh@1pac.vn</td>
-          <td>Developer</td>
-          <td>20-01-2018</td>
-          <td class="text-center">
-            <button class="btn btn-action btn-link">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M24 20.188l-8.315-8.209 8.2-8.282-3.697-3.697-8.212 8.318-8.31-8.203-3.666 3.666 8.321 8.24-8.206 8.313 3.666 3.666 8.237-8.318 8.285 8.203z"/>
-              </svg>
-            </button>
-          </td>
-        </tr>
-        <tr>
-          <td>Minh Phan</td>
-          <td>wofi.minh@1pac.vn</td>
-          <td>Developer</td>
-          <td>20-01-2018</td>
-          <td class="text-center">
-            <button class="btn btn-action btn-link">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M24 20.188l-8.315-8.209 8.2-8.282-3.697-3.697-8.212 8.318-8.31-8.203-3.666 3.666 8.321 8.24-8.206 8.313 3.666 3.666 8.237-8.318 8.285 8.203z"/>
-              </svg>
-            </button>
-          </td>
-        </tr>
-        <tr>
-          <td>Minh Phan</td>
-          <td>wofi.minh@1pac.vn</td>
-          <td>Developer</td>
-          <td>20-01-2018</td>
-          <td class="text-center">
-            <button class="btn btn-action btn-link">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M24 20.188l-8.315-8.209 8.2-8.282-3.697-3.697-8.212 8.318-8.31-8.203-3.666 3.666 8.321 8.24-8.206 8.313 3.666 3.666 8.237-8.318 8.285 8.203z"/>
-              </svg>
-            </button>
-          </td>
-        </tr>
-        <tr>
-          <td>Minh Phan</td>
-          <td>wofi.minh@1pac.vn</td>
-          <td>Developer</td>
-          <td>20-01-2018</td>
-          <td class="text-center">
-            <button class="btn btn-action btn-link">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M24 20.188l-8.315-8.209 8.2-8.282-3.697-3.697-8.212 8.318-8.31-8.203-3.666 3.666 8.321 8.24-8.206 8.313 3.666 3.666 8.237-8.318 8.285 8.203z"/>
-              </svg>
-            </button>
-          </td>
-        </tr>
-        <tr>
-          <td>Minh Phan</td>
-          <td>wofi.minh@1pac.vn</td>
-          <td>Developer</td>
-          <td>20-01-2018</td>
+        <tr v-for="user in group.users">
+          <td>{{ user.name }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.gender }}</td>
+          <td>{{ user.department_name }}</td>
           <td class="text-center">
             <button class="btn btn-action btn-link">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
@@ -87,8 +35,8 @@
 
     <modal title="Edit Group" :modal-open.sync="isEditModalOpen">
       <div class="form-group">
-        <label class="form-label" for="input-example-1">{{ $t('label.name') }}</label>
-        <input class="form-input" type="text" id="input-example-1" :placeholder="$t('placeholder.name')">
+        <label class="form-label">{{ $t('label.name') }}</label>
+        <input class="form-input" type="text" :value="group.name">
       </div>
       <div class="form-group">
         <button type="button" class="btn">{{ $t('button.save') }}</button>
@@ -99,12 +47,38 @@
 
 <script>
 import MainLayout from '../layouts/Main.vue'
+import { mapState, mapActions } from 'vuex'
 import modal from '../mixins/modal'
 
 export default {
   mixins: [modal],
+
   components: {
     MainLayout
+  },
+
+  computed: {
+    ...mapState('group', [
+      'group'
+    ])
+  },
+
+  methods: {
+    fetch () {
+      this.getGroup(this.$route.params.id)
+    },
+
+    ...mapActions('group', [
+      'getGroup'
+    ])
+  },
+
+  created () {
+    this.fetch()
+  },
+
+  watch: {
+    '$route': 'fetch'
   }
 }
 </script>

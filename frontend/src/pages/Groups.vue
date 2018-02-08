@@ -8,156 +8,18 @@
     </div>
 
     <div class="columns mt-5">
-      <div class="column col-3">
+      <div class="column col-3" v-for="group in groups">
         <div class="box">
           <div class="box-header">
-            <router-link tag="h2" to="/groups/1" class="box-title">Quality Assurance</router-link>
-            <span>{{ $tc('group.member', 23, { count: 23 }) }}</span>
+            <router-link tag="h2" :to="`/groups/${group.id}`" class="box-title">{{ group.name }}</router-link>
+            <span>{{ $tc('group.member', group.user_count, { count: group.user_count }) }}</span>
           </div>
-          <div class="box-content box-content-flex">
+          <div class="box-content box-content-flex" v-if="group.admins.length > 0">
             <div class="box-content-img">
-              <img src="/static/avatar.png" alt="Troy Kozey" class="avatar avatar-md">
-              <img src="/static/avatar.png" alt="Troy Kozey" class="avatar avatar-md">
-              <img src="/static/avatar.png" alt="Troy Kozey" class="avatar avatar-md">
-              <span>+ 2</span>
+              <img src="/static/avatar.png" :alt="admin.name" class="avatar avatar-md" v-for="admin in group.admins.slice(0, 2)">
+              <span>{{ '+' + group.users.length - 3 }}</span>
             </div>
             <a @click.prevent="leave">{{ $t('group.leave') }}</a>
-          </div>
-        </div>
-      </div>
-      <div class="column col-3">
-        <div class="box">
-          <div class="box-header">
-            <router-link tag="h2" to="/groups/1" class="box-title">Quality Assurance</router-link>
-            <span>{{ $tc('group.member', 23, { count: 23 }) }}</span>
-          </div>
-          <div class="box-content box-content-flex">
-            <div class="box-content-img">
-              <img src="/static/avatar.png" alt="Troy Kozey" class="avatar avatar-md">
-              <img src="/static/avatar.png" alt="Troy Kozey" class="avatar avatar-md">
-              <img src="/static/avatar.png" alt="Troy Kozey" class="avatar avatar-md">
-              <span>+ 2</span>
-            </div>
-            <a @click.prevent="leave">{{ $t('group.leave') }}</a>
-          </div>
-        </div>
-      </div>
-      <div class="column col-3">
-        <div class="box">
-          <div class="box-header">
-            <router-link tag="h2" to="/groups/1" class="box-title">Quality Assurance</router-link>
-            <span>{{ $tc('group.member', 23, { count: 23 }) }}</span>
-          </div>
-          <div class="box-content box-content-flex">
-            <div class="box-content-img">
-              <img src="/static/avatar.png" alt="Troy Kozey" class="avatar avatar-md">
-              <img src="/static/avatar.png" alt="Troy Kozey" class="avatar avatar-md">
-              <img src="/static/avatar.png" alt="Troy Kozey" class="avatar avatar-md">
-              <span>+ 2</span>
-            </div>
-            <a @click.prevent="leave">{{ $t('group.leave') }}</a>
-          </div>
-        </div>
-      </div>
-      <div class="column col-3">
-        <div class="box">
-          <div class="box-header">
-            <router-link tag="h2" to="/groups/1" class="box-title">Quality Assurance</router-link>
-            <span>{{ $tc('group.member', 23, { count: 23 }) }}</span>
-          </div>
-          <div class="box-content box-content-flex">
-            <div class="box-content-img">
-              <img src="/static/avatar.png" alt="Troy Kozey" class="avatar avatar-md">
-              <img src="/static/avatar.png" alt="Troy Kozey" class="avatar avatar-md">
-              <img src="/static/avatar.png" alt="Troy Kozey" class="avatar avatar-md">
-              <span>+ 2</span>
-            </div>
-            <a @click.prevent="leave">{{ $t('group.leave') }}</a>
-          </div>
-        </div>
-      </div>
-      <div class="column col-3">
-        <div class="box">
-          <div class="box-header">
-            <router-link tag="h2" to="/groups/1" class="box-title">Quality Assurance</router-link>
-            <span>{{ $tc('group.member', 23, { count: 23 }) }}</span>
-          </div>
-          <div class="box-content box-content-flex">
-            <div class="box-content-img">
-              <img src="/static/avatar.png" alt="Troy Kozey" class="avatar avatar-md">
-              <img src="/static/avatar.png" alt="Troy Kozey" class="avatar avatar-md">
-              <img src="/static/avatar.png" alt="Troy Kozey" class="avatar avatar-md">
-              <span>+ 2</span>
-            </div>
-            <a @click.prevent="leave">{{ $t('group.leave') }}</a>
-          </div>
-        </div>
-      </div>
-      <div class="column col-3">
-        <div class="box">
-          <div class="box-header">
-            <router-link tag="h2" to="/groups/1" class="box-title">Quality Assurance</router-link>
-            <span>{{ $tc('group.member', 23, { count: 23 }) }}</span>
-          </div>
-          <div class="box-content box-content-flex">
-            <div class="box-content-img">
-              <img src="/static/avatar.png" alt="Troy Kozey" class="avatar avatar-md">
-              <img src="/static/avatar.png" alt="Troy Kozey" class="avatar avatar-md">
-              <img src="/static/avatar.png" alt="Troy Kozey" class="avatar avatar-md">
-              <span>+ 2</span>
-            </div>
-            <a @click.prevent="leave">Leave</a>
-          </div>
-        </div>
-      </div>
-      <div class="column col-3">
-        <div class="box">
-          <div class="box-header">
-            <router-link tag="h2" to="/groups/1" class="box-title">Quality Assurance</router-link>
-            <span>{{ $tc('group.member', 23, { count: 23 }) }}</span>
-          </div>
-          <div class="box-content box-content-flex">
-            <div class="box-content-img">
-              <img src="/static/avatar.png" alt="Troy Kozey" class="avatar avatar-md">
-              <img src="/static/avatar.png" alt="Troy Kozey" class="avatar avatar-md">
-              <img src="/static/avatar.png" alt="Troy Kozey" class="avatar avatar-md">
-              <span>+ 2</span>
-            </div>
-            <a @click.prevent="leave">Leave</a>
-          </div>
-        </div>
-      </div>
-      <div class="column col-3">
-        <div class="box">
-          <div class="box-header">
-            <router-link tag="h2" to="/groups/1" class="box-title">Quality Assurance</router-link>
-            <span>{{ $tc('group.member', 23, { count: 23 }) }}</span>
-          </div>
-          <div class="box-content box-content-flex">
-            <div class="box-content-img">
-              <img src="/static/avatar.png" alt="Troy Kozey" class="avatar avatar-md">
-              <img src="/static/avatar.png" alt="Troy Kozey" class="avatar avatar-md">
-              <img src="/static/avatar.png" alt="Troy Kozey" class="avatar avatar-md">
-              <span>+ 2</span>
-            </div>
-            <a @click.prevent="leave">Leave</a>
-          </div>
-        </div>
-      </div>
-      <div class="column col-3">
-        <div class="box">
-          <div class="box-header">
-            <router-link tag="h2" to="/groups/1" class="box-title">Quality Assurance</router-link>
-            <span>{{ $tc('group.member', 23, { count: 23 }) }}</span>
-          </div>
-          <div class="box-content box-content-flex">
-            <div class="box-content-img">
-              <img src="/static/avatar.png" alt="Troy Kozey" class="avatar avatar-md">
-              <img src="/static/avatar.png" alt="Troy Kozey" class="avatar avatar-md">
-              <img src="/static/avatar.png" alt="Troy Kozey" class="avatar avatar-md">
-              <span>+ 2</span>
-            </div>
-            <a @click.prevent="leave">Leave</a>
           </div>
         </div>
       </div>
@@ -169,7 +31,7 @@
         <input class="form-input" type="text" id="input-example-1" :placeholder="$t('placeholder.name')">
       </div>
       <div class="form-group">
-        <button type="button" class="btn">{{ $t('button.save') }}</button>
+        <button type="button" class="btn">{{ $t('button.submit') }}</button>
       </div>
     </modal>
   </main-layout>
@@ -177,17 +39,36 @@
 
 <script>
 import MainLayout from '../layouts/Main.vue'
+import Pagination from '../components/Pagination.vue'
 import modal from '../mixins/modal'
+import { mapState, mapActions } from 'vuex'
 
 export default {
   mixins: [modal],
+
   components: {
-    MainLayout
+    MainLayout,
+    Pagination
   },
+
+  computed: {
+    ...mapState('groups', [
+      'groups'
+    ])
+  },
+
   methods: {
     leave () {
       console.log('leave')
-    }
+    },
+
+    ...mapActions('groups', [
+      'getGroups'
+    ])
+  },
+
+  created () {
+    this.getGroups()
   }
 }
 </script>
