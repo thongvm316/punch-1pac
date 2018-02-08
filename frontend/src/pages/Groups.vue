@@ -28,10 +28,11 @@
     <modal title="Add Group" :modal-open.sync="isAddModalOpen">
       <div class="form-group">
         <label class="form-label" for="input-example-1">{{ $t('label.name') }}</label>
-        <input class="form-input" type="text" id="input-example-1" :placeholder="$t('placeholder.name')">
+        <input class="form-input" type="text" id="input-example-1" :placeholder="$t('placeholder.name')" v-model="createParams.name">
+        <p class="form-input-hint" v-if="errors.name">{{ errors.name[0] }}</p>
       </div>
       <div class="form-group">
-        <button type="button" class="btn">{{ $t('button.submit') }}</button>
+        <button type="button" class="btn" @click="addGroup(createParams)">{{ $t('button.submit') }}</button>
       </div>
     </modal>
   </main-layout>
@@ -46,6 +47,14 @@ import { mapState, mapActions } from 'vuex'
 export default {
   mixins: [modal],
 
+  data () {
+    return {
+      createParams: {
+        name: ''
+      }
+    }
+  },
+
   components: {
     MainLayout,
     Pagination
@@ -53,6 +62,7 @@ export default {
 
   computed: {
     ...mapState('groups', [
+      'errors',
       'groups'
     ])
   },
@@ -63,7 +73,8 @@ export default {
     },
 
     ...mapActions('groups', [
-      'getGroups'
+      'getGroups',
+      'addGroup'
     ])
   },
 
