@@ -32,7 +32,7 @@ class Api::V1::AttendancesController < Api::V1::BaseController
   end
 
   def calendar
-    attendances = current_user.attendances.calendar(params[:day]).order(day: :desc)
+    attendances = current_user.attendances.calendar(params[:day]).order(day: :asc)
     render json: attendances,
            each_serializer: AttendanceCalendarSerializer,
            status: 200
