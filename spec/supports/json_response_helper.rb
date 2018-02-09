@@ -113,6 +113,7 @@ module JsonResponseHelper
         avatar_url: String,
         gender: String,
         department_name: nullable_response(String),
+        role: String,
         permissions: Array.new(permissions_size) { response_permission }
       }
     else
@@ -122,7 +123,8 @@ module JsonResponseHelper
         name: String,
         avatar_url: String,
         gender: String,
-        department_name: nullable_response(String)
+        department_name: nullable_response(String),
+        role: String
       }
     end
   end
@@ -178,13 +180,11 @@ module JsonResponseHelper
     }
   end
 
-  def response_group(users, admins = 0)
+  def response_group(users)
     {
       id:          Integer,
       name:        String,
-      user_count:  Integer,
-      users:       Array.new(users) { response_user },
-      admins:      Array.new(admins) { response_user }
+      users:       Array.new(users) { response_user }
     }
   end
 
