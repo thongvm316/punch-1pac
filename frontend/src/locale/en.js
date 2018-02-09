@@ -33,7 +33,7 @@ export default {
     marketing: 'Marketing',
     hr: 'HR',
     leave: 'Leave',
-    member: '0 | 1 member | {count} members'
+    member: ' | 1 member | {count} members'
   },
   placeholder: {
     fromDate: 'From Date',
