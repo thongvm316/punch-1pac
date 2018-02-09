@@ -28,7 +28,7 @@ RSpec.describe Api::V1::GroupsController, type: :controller do
       subject { get :index }
 
       its(:code) { is_expected.to eq '200' }
-      its(:body) { is_expected.to be_json_as(Array.new(groups.size) { response_group(2, 1) }) }
+      its(:body) { is_expected.to be_json_as(Array.new(groups.size) { response_group(2) }) }
     end
   end
 

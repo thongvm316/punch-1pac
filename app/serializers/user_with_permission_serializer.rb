@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class UserWithPermissionSerializer < ApplicationSerializer
-  attributes :id, :email, :name, :avatar_url, :gender, :department_name
+  attributes :id, :email, :name, :avatar_url, :gender, :department_name, :role
 
   has_many :permissions
 
