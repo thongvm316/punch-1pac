@@ -2,8 +2,17 @@ import * as types from '../mutation-types'
 import axios from 'axios'
 
 const state = {
-  numAnnouncement: 3,
   announcements: []
+}
+
+const getters = {
+  countUnreadAnnouncements (state) {
+    return state.announcements.length
+  },
+
+  getFirstFive (state) {
+    return state.announcements.slice(0, 5)
+  }
 }
 
 const mutations = {
@@ -14,7 +23,7 @@ const mutations = {
 
 const actions = {
   getAnnouncements ({ commit }) {
-    axios.get('/announcements', { params: { per_page: 5 } })
+    axios.get('/announcements', { params: { per_page: 200, read_status: 'unread' } })
          .then((response) => {
            commit(types.RECEIVE_HEADER_ANNOUNCEMENTS, response.data)
          })
@@ -24,6 +33,7 @@ const actions = {
 export default {
   namespaced: true,
   state,
+  getters,
   mutations,
   actions
 }
