@@ -81,10 +81,6 @@ export default {
       this.editParams.name = this.group.name
     },
 
-    fetch () {
-      this.getGroup(this.$route.params.id)
-    },
-
     ...mapActions('group', [
       'getGroup',
       'updateGroup',
@@ -93,11 +89,13 @@ export default {
   },
 
   created () {
-    this.fetch()
+    this.getGroup(this.$route.params.id)
   },
 
   watch: {
-    '$route': 'fetch'
+    '$route': function (val) {
+      this.getGroup(this.$route.params.id)
+    }
   }
 }
 </script>

@@ -11,7 +11,7 @@
       <tbody>
         <router-link
           tag="tr"
-          :class="{ unread: announcement.unread }"
+          :class="{ 'text-bold-600': !announcement.readed }"
           :to="`/announcements/${announcement.id}`"
           v-for="announcement in announcements"
           :key="announcement.id">
