@@ -4,7 +4,6 @@ import createLogger from 'vuex/dist/logger'
 
 import headerAnnouncements from './modules/header-announcements'
 import announcements from './modules/announcements'
-import announcement from './modules/announcement'
 import attendances from './modules/attendances'
 import punch from './modules/punch'
 
@@ -30,7 +29,6 @@ export default new Vuex.Store({
     headerAnnouncements,
     punch,
     announcements,
-    announcement,
     attendances,
     companyUsers,
     companyDepartments,
