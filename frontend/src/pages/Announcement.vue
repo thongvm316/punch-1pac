@@ -15,27 +15,29 @@ export default {
   },
 
   computed: {
-    ...mapState('announcement', [
+    ...mapState('announcements', [
       'announcement'
     ])
   },
 
   methods: {
-    fetch () {
-      this.getAnnouncement(this.$route.params.id)
-    },
-
-    ...mapActions('announcement', [
+    ...mapActions('announcements', [
+      'readAnnouncement',
       'getAnnouncement'
     ])
   },
 
   created () {
-    this.fetch()
+    this.getAnnouncement(this.$route.params.id)
+        .then((response) => {
+          if (!response.data.readed) this.readAnnouncement(response.data.id)
+        })
   },
 
   watch: {
-    '$route': 'fetch'
+    '$route': function (val) {
+      this.getAnnouncement(this.$route.params.id)
+    }
   }
 }
 </script>
