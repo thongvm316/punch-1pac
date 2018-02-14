@@ -37,6 +37,9 @@ export default {
   watch: {
     '$route': function (val) {
       this.getAnnouncement(this.$route.params.id)
+          .then((response) => {
+            if (!response.data.readed) this.readAnnouncement(response.data.id)
+          })
     }
   }
 }

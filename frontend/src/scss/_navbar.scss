@@ -113,4 +113,9 @@
     display: block;
     text-align: center;
   }
+
+  .no-announcement-msg {
+    padding: .8rem;
+    border-bottom: 1px solid $border-color;
+  }
 }
