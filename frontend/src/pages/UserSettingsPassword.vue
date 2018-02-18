@@ -2,18 +2,18 @@
   <setting-layout sidebar-type="user" title="Settings for Troy Kozey" subtitle="Password">
     <form class="setting-form">
       <div class="form-group">
-        <label class="form-label" for="input-example-1">Current Password</label>
-        <input class="form-input" type="password" id="input-example-1" v-model="updateParams.current_password">
+        <label class="form-label">Current Password</label>
+        <input class="form-input" type="password" v-model="updateParams.current_password">
         <p class="form-input-hint" v-if="errors.current_password">{{ errors.current_password[0] }}</p>
       </div>
       <div class="form-group">
-        <label class="form-label" for="input-example-2">New Password</label>
-        <input class="form-input" type="password" id="input-example-2" v-model="updateParams.password">
+        <label class="form-label">New Password</label>
+        <input class="form-input" type="password" v-model="updateParams.password">
         <p class="form-input-hint" v-if="errors.password">{{ errors.password[0] }}</p>
       </div>
       <div class="form-group">
-        <label class="form-label" for="input-example-3">New Password Confirmation</label>
-        <input class="form-input" type="password" id="input-example-3" v-model="updateParams.password_confirmation">
+        <label class="form-label">New Password Confirmation</label>
+        <input class="form-input" type="password" v-model="updateParams.password_confirmation">
         <p class="form-input-hint" v-if="errors.password_confirmation">{{ errors.password_confirmation[0] }}</p>
       </div>
       <div class="form-group">

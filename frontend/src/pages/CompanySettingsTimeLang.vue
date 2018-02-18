@@ -2,8 +2,8 @@
   <setting-layout sidebar-type="company" title="Company Settings" subtitle="Timezone and Language">
     <form class="setting-form">
       <div class="form-group">
-        <label class="form-label" for="input-example-1">Timezone</label>
-        <select class="form-select" id="input-example-1">
+        <label class="form-label">Timezone</label>
+        <select class="form-select">
           <option selected>Asia/Bangkok</option>
           <option>HaNoi/Jakata/Bejing</option>
           <option>South Africa</option>
@@ -11,8 +11,8 @@
         </select>
       </div>
       <div class="form-group">
-        <label class="form-label" for="input-example-2">Language</label>
-        <select class="form-select" id="input-example-2">
+        <label class="form-label">Language</label>
+        <select class="form-select">
           <option selected>en</option>
           <option>fr</option>
           <option>jp</option>
