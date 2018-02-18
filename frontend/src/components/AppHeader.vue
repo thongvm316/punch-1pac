@@ -4,7 +4,7 @@
       <div class="navbar">
         <section class="navbar-section">
           <router-link to="/dashboard" class="navbar-brand mr-4">
-            <img :src="companyLogoUrl" :alt="companyName">
+            <img :src="currentCompany.logo_url" :alt="currentCompany.name">
           </router-link>
           <router-link class="mr-5" to="/dashboard">{{ $t('header.dashboard') }}</router-link>
           <router-link class="mr-5" to="/attendances">{{ $t('header.attendances') }}</router-link>
@@ -18,9 +18,9 @@
             <a class="dropdown-toggle">
               <div class="tile tile-centered">
                 <div class="tile-icon">
-                  <img :src="userAvatarUrl" class="avatar avatar-md" :alt="userName">
+                  <img :src="currentUser.avatar_url" class="avatar avatar-md" :alt="currentUser.name">
                 </div>
-                <div class="tile-content mr-2">{{ userName }}</div>
+                <div class="tile-content mr-2">{{ currentUser.name }}</div>
               </div>
             </a>
             <ul class="menu">
@@ -40,6 +40,7 @@ import axios from 'axios'
 import dropdown from '../mixins/dropdown'
 import HeaderAnnouncements from '../components/HeaderAnnouncements.vue'
 import Punch from '../components/Punch.vue'
+import { mapState } from 'vuex'
 
 export default {
   name: 'app-header',
@@ -61,21 +62,10 @@ export default {
   },
 
   computed: {
-    companyName () {
-      return window.INITIAL_STATE.company.name
-    },
-
-    companyLogoUrl () {
-      return window.INITIAL_STATE.company.logo_url
-    },
-
-    userName () {
-      return window.INITIAL_STATE.user.name
-    },
-
-    userAvatarUrl () {
-      return window.INITIAL_STATE.user.avatar_url
-    }
+    ...mapState('initialStates', [
+      'currentUser',
+      'currentCompany'
+    ])
   }
 }
 </script>

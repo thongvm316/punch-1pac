@@ -27,8 +27,8 @@
 
     <modal title="Add Group" :modal-open.sync="isAddModalOpen">
       <div class="form-group">
-        <label class="form-label" for="input-example-1">{{ $t('label.name') }}</label>
-        <input class="form-input" type="text" id="input-example-1" :placeholder="$t('placeholder.name')" v-model="createParams.name">
+        <label class="form-label">{{ $t('label.name') }}</label>
+        <input class="form-input" type="text" :placeholder="$t('placeholder.name')" v-model="createParams.name">
         <p class="form-input-hint" v-if="errors.name">{{ errors.name[0] }}</p>
       </div>
       <div class="form-group">
