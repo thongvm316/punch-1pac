@@ -11,10 +11,11 @@ export default {
   name: 'chart',
   data () {
     return {
-      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-      data: [13, 20, 25, 22, 12, 18, 13, 24, 10, 22, 12, 30]
+      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
     }
   },
+
+  props: ['chartData'],
 
   mounted () {
     const chart = this.$refs.chart
@@ -39,7 +40,7 @@ export default {
               pointHoverRadius: 5,
               pointHoverBorderColor: 'rgba(75, 192, 192, 1)',
               pointRadius: 1,
-              data: this.data
+              data: this.chartData
             }
           ]
         },

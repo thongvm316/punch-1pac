@@ -2,21 +2,20 @@
   <main-layout :title="$t('title.dashboard')">
     <div class="columns mt-5">
       <div class="column col-6">
-        <div class="box">
+        <div class="box chart">
           <div class="box-header box-header-flex border-bottom">
             <h2>{{ $t('dashboard.chartInMonth') }}</h2>
-            <select class="form-select">
-              <option>{{ $t('status.arriveOnTime') }}</option>
-              <option>{{ $t('status.leaveOnTime') }}</option>
-              <option>{{ $t('status.arriveLate') }}</option>
-              <option>{{ $t('status.leaveEarly') }}</option>
-              <option>{{ $t('status.annualLeave') }}</option>
-              <option>{{ $t('status.holiday') }}</option>
-              <option>{{ $t('status.unpaidLeave') }}</option>
+            <select class="form-select" v-model="status">
+              <option value="attend_ok">{{ $t('status.arriveOnTime') }}</option>
+              <option value="leave_ok">{{ $t('status.leaveOnTime') }}</option>
+              <option value="attend_late">{{ $t('status.arriveLate') }}</option>
+              <option value="leave_early">{{ $t('status.leaveEarly') }}</option>
+              <option value="annual_leave">{{ $t('status.annualLeave') }}</option>
+              <option value="holiday">{{ $t('status.holiday') }}</option>
             </select>
           </div>
           <div class="box-content">
-            <chart></chart>
+            <chart :chartData="chartData" v-if="loaded"></chart>
           </div>
         </div>
       </div>
@@ -50,22 +49,50 @@
 import MainLayout from '../layouts/Main.vue'
 import FullCalendar from '../components/FullCalendar.vue'
 import Chart from '../components/Chart.vue'
+import { mapState, mapActions } from 'vuex'
 
 export default {
   data () {
     return {
+      status: 'attend_ok',
       locale: 'en'
     }
+  },
+  methods: {
+    ...mapActions('chart', [
+      'getChart',
+      'resetChartState'
+    ])
   },
   components: {
     MainLayout,
     FullCalendar,
     Chart
   },
+
+  created () {
+    this.getChart(this.status)
+  },
+
   watch: {
     locale (val) {
       this.$i18n.locale = val
+    },
+
+    status: {
+      handler: function () {
+        this.resetChartState()
+        this.getChart(this.status)
+      },
+      deep: true
     }
+  },
+
+  computed: {
+    ...mapState('chart', [
+      'chartData',
+      'loaded'
+    ])
   }
 }
 </script>
