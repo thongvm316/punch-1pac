@@ -14,7 +14,7 @@ RSpec.describe Api::V1::HolidaysController, type: :controller do
     context 'when login user is member' do
       let(:login_user) { create :user, company: company, role: 'member' }
 
-      subject { get :index, params: { country: 'en' } }
+      subject { get :index }
 
       its(:code) { is_expected.to eq '401' }
     end
@@ -22,31 +22,72 @@ RSpec.describe Api::V1::HolidaysController, type: :controller do
     context 'when login user is admin' do
       let(:login_user) { create :user, company: company, role: 'admin' }
 
-      context 'when have holidays' do
-        let!(:system_holidays) { create_list :holiday, 3, country: 'en' }
+      context 'when valid param' do
+        let!(:holidays) { create_list :holiday, 2, company: company }
 
-        subject { get :index, params: { country: 'en' } }
-
-        its(:code) { is_expected.to eq '200' }
-        its(:body) { is_expected.to be_json_as(Array.new(system_holidays.size) { response_holiday }) }
-      end
-
-      context 'when dont have any holidays' do
-        subject { get :index, params: { country: 'en' } }
+        subject { get :index }
 
         its(:code) { is_expected.to eq '200' }
-        its(:body) { is_expected.to be_json_as([]) }
+        its(:body) { is_expected.to be_json_as(Array.new(holidays.size) { response_holiday }) }
       end
     end
   end
 
-  describe 'POST #import' do
+  describe 'POST #create' do
     context 'when login user is member' do
       let(:login_user) { create :user, company: company, role: 'member' }
+      let(:holiday) { attributes_for :holiday }
 
-      let(:system_holidays) { create_list(:holiday, 3, country: 'en').pluck(:id) }
+      subject { post :create, params: { holiday: holiday } }
 
-      subject { post :import, params: { system_holiday_ids: system_holidays } }
+      its(:code) { is_expected.to eq '401' }
+    end
+
+    context 'when login user is admin' do
+      let(:login_user) { create :user, company: company, role: 'admin' }
+
+      context 'when valid param' do
+        let(:holiday) { attributes_for :holiday }
+
+        subject { post :create, params: { holiday: holiday } }
+
+        its(:code) { is_expected.to eq '201' }
+        its(:body) { is_expected.to be_json_as(response_holiday) }
+      end
+
+      context 'when started_at > ended_at' do
+        let(:holiday) { attributes_for :holiday, started_at: '30/3/2017', ended_at: '1/3/2017' }
+
+        subject { post :create, params: { holiday: holiday } }
+
+        its(:code) { is_expected.to eq '422' }
+        its(:body) { is_expected.to be_json_as(response_422(ended_at: Array)) }
+      end
+
+      context 'when invalid date format' do
+        let(:holiday) { attributes_for :holiday, started_at: 'xxxxxx', ended_at: [1, 2, 1] }
+
+        subject { post :create, params: { holiday: holiday } }
+
+        its(:code) { is_expected.to eq '422' }
+        its(:body) { is_expected.to be_json_as(response_422(started_at: Array, ended_at: Array)) }
+      end
+
+      context 'when missing params' do
+        subject { post :create, params: { holiday: { started_at: '30/3/2017' } } }
+
+        its(:code) { is_expected.to eq '422' }
+        its(:body) { is_expected.to be_json_as(response_422(ended_at: Array, name: Array)) }
+      end
+    end
+  end
+
+  describe 'PATCH #update' do
+    context 'when login user is member' do
+      let(:login_user) { create :user, company: company, role: 'member' }
+      let(:holiday) { create(:holiday, company: company) }
+
+      subject { patch :update, params: { id: holiday.id, holiday: { started_at: '30/3/2017', ended_at: '1/4/2017' } } }
 
       its(:code) { is_expected.to eq '401' }
     end
@@ -55,56 +96,49 @@ RSpec.describe Api::V1::HolidaysController, type: :controller do
       let(:login_user) { create :user, company: company, role: 'admin' }
 
       context 'when valid params' do
-        let(:system_holidays) { create_list(:holiday, 3, country: 'en').pluck(:id) }
+        let(:holiday) { create(:holiday, company: company) }
 
-        subject { post :import, params: { system_holiday_ids: system_holidays } }
+        subject { patch :update, params: { id: holiday.id, holiday: { started_at: '30/3/2017', ended_at: '1/4/2017' } } }
 
-        its(:code) { is_expected.to eq '201' }
-        its(:body) { is_expected.to be_json_as(Array.new(system_holidays.size) { response_holiday }) }
+        its(:code) { is_expected.to eq '200' }
+        its(:body) { is_expected.to be_json_as(response_holiday) }
       end
 
-      context 'when a holiday already exist' do
-        let(:system_holidays) { create_list(:holiday, 3, country: 'en').pluck(:id) }
-        let!(:set_up) { CompanyHoliday.create(company_id: company.id, holiday_id: system_holidays.first) }
+      context 'when invalid date format' do
+        let(:holiday) { create(:holiday, company: company) }
 
-        subject { post :import, params: { system_holiday_ids: system_holidays } }
+        subject { post :update, params: { id: holiday.id, holiday: { started_at: 'xxxxxx', ended_at: [1, 2, 1] } } }
 
-        its(:code) { is_expected.to eq '201' }
-        its(:body) { is_expected.to be_json_as(Array.new(system_holidays.size - 1) { response_holiday }) }
-      end
-
-      context 'when invalid params' do
-        let!(:set_up) { create_list(:holiday, 3, country: 'en') }
-        let(:last_holiday) { Holiday.last.id }
-
-        subject { post :import, params: { system_holiday_ids: [last_holiday + 1, last_holiday + 2, last_holiday + 3] } }
-
-        its(:code) { is_expected.to eq '201' }
-        its(:body) { is_expected.to be_json_as([]) }
+        its(:code) { is_expected.to eq '422' }
+        its(:body) { is_expected.to be_json_as(response_422(started_at: Array)) }
       end
     end
   end
 
-  describe 'DELETE #company_destroy' do
+  describe 'DELETE #destroy' do
     context 'when login user is member' do
       let(:login_user) { create :user, company: company, role: 'member' }
-      let(:system_holidays) { create_list(:company_holiday, 10, company: company) }
+      let(:holiday) { create(:holiday, company: company) }
 
-      subject { delete :company_destroy, params: { holiday_ids: system_holidays.select { |i| i.id.even? }.map(&:holiday_id) } }
+      subject { post :destroy, params: { id: holiday.id } }
 
       its(:code) { is_expected.to eq '401' }
     end
-
     context 'when login user is admin' do
       let(:login_user) { create :user, company: company, role: 'admin' }
 
-      context 'when valid' do
-        let(:system_holidays) { create_list(:company_holiday, 10, company: company) }
+      context 'when holiday have exist' do
+        let(:holiday) { create(:holiday, company: company) }
 
-        subject { delete :company_destroy, params: { holiday_ids: system_holidays.select { |i| i.id.even? }.map(&:holiday_id) } }
+        subject { post :destroy, params: { id: holiday.id } }
 
         its(:code) { is_expected.to eq '200' }
-        its(:body) { is_expected.to be_json_as(Array.new(system_holidays.size / 2) { response_holiday }) }
+      end
+
+      context 'when holiday have exist' do
+        subject { post :destroy, params: { id: 0 } }
+
+        its(:code) { is_expected.to eq '404' }
       end
     end
   end
