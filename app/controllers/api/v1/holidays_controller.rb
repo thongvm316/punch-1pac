@@ -1,26 +1,46 @@
 # frozen_string_literal: true
 
 class Api::V1::HolidaysController < Api::V1::BaseController
+  before_action :set_holiday, only: %i[update destroy]
+
   def index
     authorize!
-    system_holidays = Holiday.where(country: params[:country])
-    render json: system_holidays, each_serializer: HolidaySerializer, status: 200
+    holidays = current_company.holidays
+    render json: holidays, each_serializer: HolidaySerializer, status: 200
   end
 
-  def import
+  def create
     authorize!
-    available_holidays = Holiday.available_for_company(current_company.id, params[:system_holiday_ids])
-    holidays = available_holidays.map do |holiday|
-      { company_id: current_company.id, holiday_id: holiday.id }
+    holiday = current_company.holidays.build(holiday_params)
+    if holiday.save
+      render json: holiday, serializer: HolidaySerializer, status: 201
+    else
+      render_422(holiday.errors.messages)
     end
-    CompanyHoliday.import(holidays)
-    render json: available_holidays, each_serializer: HolidaySerializer, status: 201
   end
 
-  def company_destroy
+  def update
     authorize!
-    CompanyHoliday.where(company_id: current_company.id).where(holiday_id: params[:holiday_ids]).delete_all
-    system_holidays = current_company.holidays
-    render json: system_holidays, each_serializer: HolidaySerializer, status: 200
+    if @holiday.update_attributes(holiday_params)
+      render json: @holiday, serializer: HolidaySerializer, status: 200
+    else
+      render_422(@holiday.errors.messages)
+    end
+  end
+
+  def destroy
+    authorize!
+    @holiday.destroy
+    head(200)
+  end
+
+  private
+
+  def holiday_params
+    params.require(:holiday).permit(:started_at, :ended_at, :name)
+  end
+
+  def set_holiday
+    @holiday = Holiday.find(params[:id])
   end
 end

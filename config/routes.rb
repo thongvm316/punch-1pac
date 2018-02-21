@@ -18,14 +18,9 @@ Rails.application.routes.draw do
           match 'change_password', via: %i[patch put], on: :collection
         end
 
-        resources :custom_holidays, only: %i[index create update destroy]
+        resources :holidays, only: %i[index create update destroy]
 
-        resources :holidays, only: %i[index] do
-          collection do
-            post 'import'
-            delete 'company_destroy'
-          end
-        end
+        resources :national_holidays, only: %i[index]
 
         resources :groups, only: %i[index show create update destroy] do
           post 'add_user',      on: :member
