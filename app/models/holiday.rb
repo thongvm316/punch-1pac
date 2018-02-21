@@ -28,6 +28,7 @@ class Holiday < ApplicationRecord
 
   scope :selected_attr, -> { select(:id, :name, :started_at, :ended_at) }
   scope :in_holiday, ->(target_date) { where('? BETWEEN started_at AND ended_at', target_date) }
+  scope :filter, ->(name) { where(name: name) }
 
   private
 
