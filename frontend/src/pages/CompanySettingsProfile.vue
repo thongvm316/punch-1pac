@@ -4,7 +4,7 @@
       <div class="form-group">
         <label class="form-label">Logo</label>
         <img class="img-profile" :src="currentCompany.logo_url" :alt="currentCompany.name">
-        <input class="form-input" type="file">
+        <input class="form-input" type="file" @change="setLogoFile">
       </div>
       <div class="form-group">
         <label class="form-label">Name</label>
@@ -33,18 +33,18 @@
       </div>
       <div class="form-group">
         <label class="form-label">Phone Number</label>
-        <input class="form-input" type="text" v-model="params.phoneNumber">
+        <input class="form-input" type="text" v-model="params.phone_number">
       </div>
       <div class="form-group">
         <label class="form-label">Postal Code</label>
-        <input class="form-input" type="text" v-model="params.postalCode">
+        <input class="form-input" type="text" v-model="params.postal_code">
       </div>
       <div class="form-group">
         <label class="form-label">Tax Code</label>
-        <input class="form-input" type="text" v-model="params.taxCode">
+        <input class="form-input" type="text" v-model="params.tax_code">
       </div>
       <div class="form-group">
-        <button type="button" class="btn">Save</button>
+        <button type="button" class="btn" @click="updateCompany(params)">Save</button>
       </div>
     </form>
   </setting-layout>
@@ -52,7 +52,7 @@
 
 <script>
 import SettingLayout from '../layouts/Setting.vue'
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
 export default {
   data () {
@@ -64,9 +64,9 @@ export default {
         industry: '',
         country: '',
         address: '',
-        phoneNumber: '',
-        postalCode: '',
-        taxCode: ''
+        phone_number: '',
+        postal_code: '',
+        tax_code: ''
       }
     }
   },
@@ -81,15 +81,20 @@ export default {
     ])
   },
 
+  methods: {
+    ...mapActions('initialStates', [
+      'updateCompany'
+    ]),
+
+    setLogoFile (e) {
+      const files = e.target.files || e.dataTransfer.files
+      if (!files.length) return
+      this.params.logo = files[0]
+    }
+  },
+
   created () {
-    this.params.name = this.currentCompany.name
-    this.params.namespace = this.currentCompany.namespace
-    this.params.industry = this.currentCompany.industry
-    this.params.country = this.currentCompany.country
-    this.params.address = this.currentCompany.address
-    this.params.phoneNumber = this.currentCompany.phone_number
-    this.params.postalCode = this.currentCompany.postal_code
-    this.params.taxCode = this.currentCompany.tax_code
+    Object.keys(this.params).forEach(key => { this.params[key] = this.currentCompany[key] })
   }
 }
 </script>

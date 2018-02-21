@@ -4,7 +4,7 @@
       <div class="form-group">
         <label class="form-label">Avatar</label>
         <img class="img-profile" :src="currentUser.avatar_url" :alt="currentUser.name">
-        <input class="form-input" type="file">
+        <input class="form-input" type="file" @change="setAvatarFile">
       </div>
       <div class="form-group">
         <label class="form-label">Name</label>
@@ -17,7 +17,7 @@
           <i class="form-icon"></i> Male
         </label>
         <label class="form-radio">
-          <input type="radio" value="gender" v-model="params.gender">
+          <input type="radio" value="female" v-model="params.gender">
           <i class="form-icon"></i> Female
         </label>
       </div>
@@ -26,7 +26,7 @@
         <input class="form-input" type="text" v-model="params.email">
       </div>
       <div class="form-group">
-        <button type="button" class="btn" @click="updateUser(params)">Save</button>
+        <button type="button" class="btn" @click="updateUser({ userId: currentUser.id, userParams: params })">Save</button>
       </div>
     </form>
   </setting-layout>
@@ -34,7 +34,7 @@
 
 <script>
 import SettingLayout from '../layouts/Setting.vue'
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
 export default {
   data () {
@@ -58,10 +58,20 @@ export default {
     ])
   },
 
+  methods: {
+    ...mapActions('initialStates', [
+      'updateUser'
+    ]),
+
+    setAvatarFile (e) {
+      const files = e.target.files || e.dataTransfer.files
+      if (!files.length) return
+      this.params.avatar = files[0]
+    }
+  },
+
   created () {
-    this.params.name = this.currentUser.name
-    this.params.email = this.currentUser.email
-    this.params.gender = this.currentUser.gender
+    Object.keys(this.params).forEach(key => { this.params[key] = this.currentUser[key] })
   }
 }
 </script>
