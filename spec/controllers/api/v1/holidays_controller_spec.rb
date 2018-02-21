@@ -23,12 +23,15 @@ RSpec.describe Api::V1::HolidaysController, type: :controller do
       let(:login_user) { create :user, company: company, role: 'admin' }
 
       context 'when valid param' do
-        let!(:holidays) { create_list :holiday, 2, company: company }
+        let!(:holidays) do
+          create_list :holiday, 2, company: company
+          create_list :holiday, 2, company: company, name: 'kata'
+        end
 
-        subject { get :index }
+        subject { get :index, params: { name: 'kata' } }
 
         its(:code) { is_expected.to eq '200' }
-        its(:body) { is_expected.to be_json_as(Array.new(holidays.size) { response_holiday }) }
+        its(:body) { is_expected.to be_json_as(Array.new(2) { response_holiday }) }
       end
     end
   end
