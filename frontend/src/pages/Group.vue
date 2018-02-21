@@ -1,8 +1,14 @@
 <template>
   <main-layout :title="group.name">
     <div class="input-group mt-5">
-      <input type="text" class="form-input" :placeholder="$t('placeholder.searchUserByEmail')"></input>
-      <button type="button" class="btn input-group-btn">{{ $t('button.add') }}</button>
+      <!-- <input type="text" class="form-input" :placeholder="$t('placeholder.searchUserByEmail')"></input> -->
+      <v-select
+        label="email"
+        @search="filterUsersByEmail"
+        @input="selectUser"
+        :options="filteredUsers"
+      ></v-select>
+      <button type="button" class="btn input-group-btn" @click="addGroupUser({ groupId: currentId, userId: selectedUser.id })">{{ $t('button.add') }}</button>
     </div>
     <p class="form-input-hint text-dark">Add a member to this group, then manager of this group can see the user's activities</p>
 
@@ -23,7 +29,7 @@
           <td>{{ user.gender }}</td>
           <td>{{ user.department_name }}</td>
           <td>
-            <button class="btn btn-action btn-link">
+            <button class="btn btn-action btn-link" @click="removeGroupUser({ groupId: currentId, userId: user.id })">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M24 20.188l-8.315-8.209 8.2-8.282-3.697-3.697-8.212 8.318-8.31-8.203-3.666 3.666 8.321 8.24-8.206 8.313 3.666 3.666 8.237-8.318 8.285 8.203z"/>
               </svg>
@@ -50,6 +56,7 @@
 import MainLayout from '../layouts/Main.vue'
 import { mapState, mapActions } from 'vuex'
 import modal from '../mixins/modal'
+import vSelect from 'vue-select'
 
 export default {
   mixins: [modal],
@@ -64,13 +71,19 @@ export default {
   },
 
   components: {
-    MainLayout
+    MainLayout,
+    vSelect
   },
 
   computed: {
     ...mapState('group', [
       'errors',
       'group'
+    ]),
+
+    ...mapState('userFilter', [
+      'filteredUsers',
+      'selectedUser'
     ])
   },
 
@@ -84,7 +97,14 @@ export default {
     ...mapActions('group', [
       'getGroup',
       'updateGroup',
+      'addGroupUser',
+      'removeGroupUser',
       'clearGroupErrors'
+    ]),
+
+    ...mapActions('userFilter', [
+      'filterUsersByEmail',
+      'selectUser'
     ])
   },
 
