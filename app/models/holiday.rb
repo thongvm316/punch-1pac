@@ -1,32 +1,37 @@
 # frozen_string_literal: true
-
 # == Schema Information
 #
 # Table name: holidays
 #
 #  id         :integer          not null, primary key
-#  admin_id   :integer          not null
-#  country    :string           not null
-#  name       :string           not null
+#  company_id :integer          not null
 #  started_at :date             not null
 #  ended_at   :date             not null
+#  name       :string           not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
 # Indexes
 #
-#  index_holidays_on_admin_id  (admin_id)
+#  index_holidays_on_company_id  (company_id)
 #
 
 class Holiday < ApplicationRecord
-  has_many :company_holidays, dependent: :destroy
-  has_many :companies, through: :company_holidays
+  belongs_to :company
 
-  belongs_to :admin
+  validates :started_at, presence: true
+  validates :ended_at, presence: true
+  validates :name, presence: true
 
-  scope :available_for_company, ->(company_id, ids) {
-    Holiday.where(id: ids).where.not(id: CompanyHoliday.select(:holiday_id).where(company_id: company_id))
-  }
+  validate :ended_at_and_started_at
+
   scope :selected_attr, -> { select(:id, :name, :started_at, :ended_at) }
   scope :in_holiday, ->(target_date) { where('? BETWEEN started_at AND ended_at', target_date) }
+
+  private
+
+  def ended_at_and_started_at
+    return if started_at.nil? || ended_at.nil?
+    errors.add(:ended_at, I18n.t('errors.messages.greater_than', count: started_at)) if started_at > ended_at
+  end
 end

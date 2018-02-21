@@ -97,26 +97,6 @@ ActiveRecord::Schema.define(version: 20180111065539) do
     t.index ["namespace"], name: "index_companies_on_namespace", unique: true
   end
 
-  create_table "company_holidays", force: :cascade do |t|
-    t.bigint "company_id", null: false
-    t.bigint "holiday_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["company_id", "holiday_id"], name: "index_company_holidays_on_company_id_and_holiday_id", unique: true
-    t.index ["company_id"], name: "index_company_holidays_on_company_id"
-    t.index ["holiday_id"], name: "index_company_holidays_on_holiday_id"
-  end
-
-  create_table "custom_holidays", force: :cascade do |t|
-    t.bigint "company_id", null: false
-    t.date "started_at", null: false
-    t.date "ended_at", null: false
-    t.string "name", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["company_id"], name: "index_custom_holidays_on_company_id"
-  end
-
   create_table "departments", force: :cascade do |t|
     t.bigint "company_id", null: false
     t.string "name", null: false
@@ -140,14 +120,13 @@ ActiveRecord::Schema.define(version: 20180111065539) do
   end
 
   create_table "holidays", force: :cascade do |t|
-    t.bigint "admin_id", null: false
-    t.string "country", null: false
-    t.string "name", null: false
+    t.bigint "company_id", null: false
     t.date "started_at", null: false
     t.date "ended_at", null: false
+    t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["admin_id"], name: "index_holidays_on_admin_id"
+    t.index ["company_id"], name: "index_holidays_on_company_id"
   end
 
   create_table "jwt_blacklist", force: :cascade do |t|
@@ -156,6 +135,17 @@ ActiveRecord::Schema.define(version: 20180111065539) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["jti"], name: "index_jwt_blacklist_on_jti", unique: true
+  end
+
+  create_table "national_holidays", force: :cascade do |t|
+    t.bigint "admin_id", null: false
+    t.string "country", null: false
+    t.string "name", null: false
+    t.date "started_at", null: false
+    t.date "ended_at", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["admin_id"], name: "index_national_holidays_on_admin_id"
   end
 
   create_table "permissions", force: :cascade do |t|

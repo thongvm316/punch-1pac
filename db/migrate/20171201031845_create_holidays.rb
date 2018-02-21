@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-class CreateCustomHolidays < ActiveRecord::Migration[5.1]
+class CreateHolidays < ActiveRecord::Migration[5.1]
   def change
-    create_table :custom_holidays do |t|
+    create_table :holidays do |t|
       t.bigint :company_id, null: false
       t.date :started_at, null: false
       t.date :ended_at, null: false
@@ -10,6 +10,6 @@ class CreateCustomHolidays < ActiveRecord::Migration[5.1]
 
       t.timestamps
     end
-    add_index :custom_holidays, :company_id
+    add_index :holidays, :company_id
   end
 end
