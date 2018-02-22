@@ -13,6 +13,7 @@ class CreateCompanies < ActiveRecord::Migration[5.1]
       t.string :tax_code
       t.boolean :activated, null: false, default: true
       t.string :timezone, null: false, default: 'Asia/Hanoi'
+      t.string :language, null: false, default: 'en'
       t.float :breaktime, null: false, default: 1
       t.string :breakdays, null: false, array: true, default: []
       t.text   :logo_data
