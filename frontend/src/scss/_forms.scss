@@ -5,3 +5,12 @@
 .form-input-hint {
   margin-bottom: 0;
 }
+
+.v-select {
+  width: 100%;
+
+  input[type=search],
+  input[type=search]:focus {
+    background: $light-color;
+  }
+}
