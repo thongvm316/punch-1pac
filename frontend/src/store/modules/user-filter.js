@@ -18,7 +18,7 @@ const mutations = {
 const actions = {
   filterUsersByEmail ({ commit }, userEmail) {
     return new Promise((resolve, reject) => {
-      axios.get(`/users?email=${userEmail}`)
+      axios.get(`/users?email=${userEmail}`, { timeout: 5000 })
            .then((response) => {
              commit(types.FILTERED_USERS, response.data)
              resolve(response)
