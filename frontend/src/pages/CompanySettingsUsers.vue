@@ -1,12 +1,12 @@
 <template>
   <setting-layout sidebar-type="company" title="Company Settings" subtitle="Users">
     <div class="toolbar mt-5 clearfix">
-      <input type="text" class="form-input" placeholder="Filter user by email">
+      <input type="text" class="form-input" placeholder="Filter user by email" @keyup="filterUsers">
       <router-link to="/company/settings/users/add" tag="button" class="btn float-right">
         <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M24 10h-10v-10h-4v10h-10v4h10v10h4v-10h10z"></path></svg>
         Add User
       </router-link>
-      <router-link to="/company/settings/users/add-multi" tag="button" class="btn float-right">
+      <router-link to="/company/settings/users/add-multi" tag="button" class="btn float-right mr-2">
         <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M24 10h-10v-10h-4v10h-10v4h10v10h4v-10h10z"></path></svg>
         Add Multiple Users
       </router-link>
@@ -21,7 +21,7 @@
         <th></th>
       </thead>
       <tbody>
-        <tr v-for="user in users">
+        <tr v-for="user in localUsers">
           <td>{{ user.name }}</td>
           <td>{{ user.email }}</td>
           <td>Member</td>
@@ -41,9 +41,15 @@
 
 <script>
 import SettingLayout from '../layouts/Setting.vue'
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapGetters, mapActions } from 'vuex'
 
 export default {
+  data () {
+    return {
+      localUsers: []
+    }
+  },
+
   components: {
     SettingLayout
   },
@@ -51,17 +57,25 @@ export default {
   methods: {
     ...mapActions('companyUsers', [
       'fetchUsers'
-    ])
+    ]),
+
+    filterUsers (e) {
+      this.localUsers = this.filterByEmail(e.target.value)
+    }
   },
 
   computed: {
     ...mapState('companyUsers', [
       'users'
+    ]),
+
+    ...mapGetters('companyUsers', [
+      'filterByEmail'
     ])
   },
 
   created () {
-    this.fetchUsers()
+    this.fetchUsers().then(response => { this.localUsers = response.users })
   }
 }
 </script>
