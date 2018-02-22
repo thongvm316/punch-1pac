@@ -4,10 +4,10 @@ class UserCreateForm < BaseForm
   attribute :user, User
   attribute :current_company, Company
   attribute :current_user, User
-  attribute :permission_ids
-  attribute :group_ids
+  attribute :permission_ids, Array
+  attribute :group_id, Integer
 
-  STRONG_PARAMS = %w[department_id name password password_confirmation email avatar role].freeze
+  STRONG_PARAMS = %w[name password password_confirmation email role].freeze
   STRONG_PARAMS.each { |attr| attribute attr }
 
   validate :validate_group
@@ -17,7 +17,7 @@ class UserCreateForm < BaseForm
     super attrs
     @current_user     = current_user
     @user             = current_user.company.users.build(user_params)
-    @groups           = current_user.company.groups.where(id: group_ids)
+    @groups           = current_user.company.groups.where(id: group_id)
     @permissions      = Permission.where(id: permission_ids)
   end
 

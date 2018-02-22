@@ -6,7 +6,7 @@ class Api::V1::UsersController < Api::V1::BaseController
 
   def index
     authorize!
-    users = current_company.users.search_by(params).page(params[:page]).per(params[:per_page])
+    users = current_company.users.includes(:department).search_by(params).page(params[:page]).per(params[:per_page])
     render json: users,
            root: 'users',
            each_serializer: UserSerializer,
@@ -64,9 +64,10 @@ class Api::V1::UsersController < Api::V1::BaseController
   private
 
   def user_create_params
-    params.require(:user).permit(:department_id, :name, :password,
-                                 :password_confirmation, :email,
-                                 :role, :avatar, :group_ids, permission_ids: [])
+    params.require(:user).permit(:name, :password, :password_confirmation, :email, :role, :group_id, permission_ids: []).tap do |p|
+      p[:password] = SecureRandom.hex(10)
+      p[:password_confirmation] = p[:password]
+    end
   end
 
   def user_update_params

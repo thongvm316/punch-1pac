@@ -22,7 +22,6 @@ const mutations = {
   },
   [types.UPDATE_CUSTOM_HOLIDAY_ERRORS] (state, payload) {
     state.errors = payload.errors
-    console.log(state.errors)
   },
   [types.CLEAR_CUSTOM_HOLIDAY_ERRORS] (state) {
     state.errors = {}

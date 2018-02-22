@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-
 # == Schema Information
 #
 # Table name: companies
@@ -15,6 +14,7 @@
 #  tax_code     :string
 #  activated    :boolean          default(TRUE), not null
 #  timezone     :string           default("Asia/Hanoi"), not null
+#  language     :string           default("en"), not null
 #  breaktime    :float            default(1.0), not null
 #  breakdays    :string           default([]), not null, is an Array
 #  logo_data    :text
@@ -42,7 +42,8 @@ class Company < ApplicationRecord
   validates :industry, presence: true
   validates :address, presence: true
   validates :phone_number, presence: true
-  validates :timezone, inclusion: { in: ActiveSupport::TimeZone.all.map { |tz| tz.tzinfo.name } }
+  validates :timezone, inclusion: { in: ActiveSupport::TimeZone.all.map { |tz| tz.tzinfo.name }.uniq }
+  validates :language, inclusion: { in: %w[en ja vi] }
 
   include ImageUploader::Attachment.new(:logo)
 

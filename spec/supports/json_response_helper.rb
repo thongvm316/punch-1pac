@@ -86,6 +86,7 @@ module JsonResponseHelper
       tax_code: nullable_response(String),
       activated: boolean_response,
       timezone: String,
+      language: String,
       breaktime: Float,
       breakdays: Array,
       logo_url: String
