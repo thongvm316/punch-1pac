@@ -8,7 +8,7 @@
     </span>
     <div class="box announcement-dropdown">
       <h4>Announcements</h4>
-      <ul v-if="getFirstFive > 0">
+      <ul v-if="getFirstFive.length > 0">
         <router-link
           tag="li"
           v-for="announcement in getFirstFive"
