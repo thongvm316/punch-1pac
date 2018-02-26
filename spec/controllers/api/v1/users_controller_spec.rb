@@ -310,8 +310,6 @@ RSpec.describe Api::V1::UsersController, type: :controller do
   end
 
   describe 'POST #create_multi' do
-    let!(:generates) { User.roles.each_value { |v| create_list :permission, 2, role: v } }
-
     context 'when login user is member' do
       let(:login_user) { create :user, company: company, role: 'member' }
       let(:csv_file) { fixture_file_upload('files/valid.csv', 'text/csv') }

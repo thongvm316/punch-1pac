@@ -24,6 +24,7 @@ admin = FactoryBot.create(:admin, email: 'admin@example.com', password: 'passwor
 FactoryBot.create_list(:holiday, 3, admin: admin)
 FactoryBot.create_list(:custom_holiday, 10, company: Company.first)
 FactoryBot.create_list(:announcement, 11, admin: admin)
+FactoryBot.create(:group, name: Group::DEFAULT_NAME, company: company)
 FactoryBot.create_list(:group, 5, company: company)
 FactoryBot.create(:user_group, user: user, group: Group.last)
 FactoryBot.create(:user_group, user: superadmin, group: Group.first)

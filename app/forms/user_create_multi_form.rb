@@ -20,12 +20,12 @@ class UserCreateMultiForm < BaseForm
 
     @users = []
     @lines = []
-    @permissions = load_permissions
+    # @permissions = load_permissions
     CSV.foreach(@file.path, headers: true).with_index(1) do |row, line|
-      row = row.to_hash
-      user = @company.users.build(user_params(row))
+      params = user_params(row.to_hash)
+      user = @company.users.build(params)
       if user.save
-        UserMailer.create(user.id, row['password'])
+        UserMailer.create(user.id, params['password'])
         @users << user
       else
         @lines << line
@@ -55,8 +55,10 @@ class UserCreateMultiForm < BaseForm
   end
 
   def user_params(row)
-    params = row.to_hash.merge(password_confirmation: row['password'])
-    params[:user_permissions_attributes] = @permissions[params['role']]
+    params = row.to_hash
+    params[:password] = SecureRandom.hex(10)
+    params[:password_confirmation] = params[:password]
+    # params[:user_permissions_attributes] = @permissions[params['role']]
     params[:user_groups_attributes] = [group_id: @company.default_group.id]
     params.select { |k, v| USER_PARAMS.include?(k.to_s) && v }
   end

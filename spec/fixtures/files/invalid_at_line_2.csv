@@ -1,4 +1,4 @@
-name,gender,email,password,role
-nhat,male,nhat@gg.com,password,member
-thoi,male,thoiggdotcom,password1,member
-duong,male,duong@gg.com,password,member
+name,gender,email,role
+nhat,male,nhat@gg.com,member
+thoi,male,thoiggdotcom,member
+duong,male,duong@gg.com,member
