@@ -9,6 +9,17 @@ class Api::V1::HolidaysController < Api::V1::BaseController
     render json: holidays, each_serializer: HolidaySerializer, status: 200
   end
 
+  def import
+    authorize!
+    holidays = current_company.holidays.build(holidays_params)
+    begin
+      Holiday.import(holidays)
+      render json: holidays, each_serializer: HolidaySerializer, status: 200
+    rescue ArgumentError => error
+      render json: { error: error }, status: 422
+    end
+  end
+
   def create
     authorize!
     holiday = current_company.holidays.build(holiday_params)
@@ -38,6 +49,10 @@ class Api::V1::HolidaysController < Api::V1::BaseController
 
   def holiday_params
     params.require(:holiday).permit(:started_at, :ended_at, :name)
+  end
+
+  def holidays_params
+    params.permit(holidays: %i[ended_at name started_at])[:holidays]
   end
 
   def set_holiday
