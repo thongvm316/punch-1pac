@@ -57,11 +57,29 @@ RSpec.describe Api::V1::HolidaysController, type: :controller do
         its(:body) { is_expected.to be_json_as(Array.new(3) { response_holiday }) }
       end
 
-      context 'when params invalid' do
+      context 'when got 1 fail import' do
+        before do
+          holidays << [fails: 'fails']
+        end
+
+        subject { post :import, params: { holidays: holidays } }
+
+        its(:code) { is_expected.to eq '200' }
+        its(:body) { is_expected.to be_json_as(Array.new(3) { response_holiday }) }
+      end
+
+      context 'when params empty' do
         subject { post :import, params: { holidays: [] } }
 
         its(:code) { is_expected.to eq '422' }
         its(:body) { is_expected.to be_json_as(error: 'Invalid arguments!') }
+      end
+
+      context 'when params invalid' do
+        subject { post :import, params: { holidays: [xx: 'xx'] } }
+
+        its(:code) { is_expected.to eq '200' }
+        its(:body) { is_expected.to be_json_as(Array.new(0)) }
       end
     end
   end
