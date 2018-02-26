@@ -6,6 +6,15 @@ const state = {
   errors: {}
 }
 
+const getters = {
+  filterByName (state) {
+    return function (query) {
+      const regex = new RegExp(`${query}`, 'g')
+      return query ? state.customHolidays.filter(customHoliday => customHoliday.name.match(regex)) : state.customHolidays
+    }
+  }
+}
+
 const mutations = {
   [types.FETCH_CUSTOM_HOLIDAYS] (state, payload) {
     state.customHolidays = payload
@@ -73,6 +82,7 @@ const actions = {
 export default {
   namespaced: true,
   state,
+  getters,
   mutations,
   actions
 }
