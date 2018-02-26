@@ -1,4 +1,4 @@
-name,gender,email,password,roling
-nhat,male,nhatggcom,password,1
-thoi,male,thoiggdotcom,password1,c
-duong,male,duongggcom,password,v
+name,gender,email,roling
+nhat,male,nhatggcom,1
+thoi,male,thoiggdotcom,c
+duong,male,duongggcom,v
