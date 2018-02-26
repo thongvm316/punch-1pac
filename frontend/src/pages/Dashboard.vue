@@ -54,16 +54,17 @@ import { mapState, mapActions } from 'vuex'
 export default {
   data () {
     return {
-      status: 'attend_ok',
-      locale: 'en'
+      status: 'attend_ok'
     }
   },
+
   methods: {
     ...mapActions('chart', [
       'getChart',
       'resetChartState'
     ])
   },
+
   components: {
     MainLayout,
     FullCalendar,
@@ -75,16 +76,9 @@ export default {
   },
 
   watch: {
-    locale (val) {
-      this.$i18n.locale = val
-    },
-
-    status: {
-      handler: function () {
-        this.resetChartState()
-        this.getChart(this.status)
-      },
-      deep: true
+    status: function () {
+      this.resetChartState()
+      this.getChart(this.status)
     }
   },
 

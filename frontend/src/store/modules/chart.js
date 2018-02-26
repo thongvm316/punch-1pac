@@ -1,5 +1,6 @@
 import * as types from '../mutation-types.js'
 import axios from 'axios'
+import moment from 'moment'
 
 const state = {
   chartData: [],
@@ -7,22 +8,17 @@ const state = {
 }
 
 const mutations = {
-  [types.FETCH_CHART_DATA] (state, payload) {
-    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+  [types.FETCH_CHART_DATA] (state, statuses) {
+    const months = moment.months()
+    const data = []
 
-    for (let i in months) {
-      let monthStatusCount = {
-        month: months[i],
-        status_count: 0
-      }
-      for (let k in payload) {
-        if (monthStatusCount.month === payload[k].month) {
-          monthStatusCount = payload[k]
-          break
-        }
-      }
-      state.chartData.push(monthStatusCount.status_count)
-    }
+    months.forEach(month => {
+      const status = statuses.find(status => status.month === month)
+      const count = status ? status.status_count : 0
+      data.push(count)
+    })
+
+    state.chartData = data
     state.loaded = true
   },
 
@@ -42,6 +38,7 @@ const actions = {
            .catch((error) => reject(error))
     })
   },
+
   resetChartState ({ commit }) {
     commit(types.RESET_CHART_DATA_STATE)
   }
