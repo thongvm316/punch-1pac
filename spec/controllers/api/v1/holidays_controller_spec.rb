@@ -71,8 +71,13 @@ RSpec.describe Api::V1::HolidaysController, type: :controller do
       context 'when params empty' do
         subject { post :import, params: { holidays: [] } }
 
-        its(:code) { is_expected.to eq '422' }
-        its(:body) { is_expected.to be_json_as(error: 'Invalid arguments!') }
+        its(:code) { is_expected.to eq '400' }
+      end
+
+      context 'when params empty' do
+        subject { post :import, params: {} }
+
+        its(:code) { is_expected.to eq '400' }
       end
 
       context 'when params invalid' do

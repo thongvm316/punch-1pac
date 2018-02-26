@@ -11,13 +11,12 @@ class Api::V1::HolidaysController < Api::V1::BaseController
 
   def import
     authorize!
-    holidays = current_company.holidays.build(holidays_params)
-    begin
-      imported = Holiday.import(holidays)
-      render json: Holiday.where(id: imported.ids), each_serializer: HolidaySerializer, status: 200
-    rescue ArgumentError => error
-      render json: { error: error }, status: 422
-    end
+    holidays = current_company.holidays.build(holidays_params[:holidays])
+
+    head(400) && return unless holidays.present? && holidays_params[:holidays].present?
+
+    imported = Holiday.import(holidays)
+    render json: Holiday.where(id: imported.ids), each_serializer: HolidaySerializer, status: 200
   end
 
   def create
@@ -52,7 +51,7 @@ class Api::V1::HolidaysController < Api::V1::BaseController
   end
 
   def holidays_params
-    params.permit(holidays: %i[ended_at name started_at])[:holidays]
+    params.permit(holidays: %i[ended_at name started_at])
   end
 
   def set_holiday
