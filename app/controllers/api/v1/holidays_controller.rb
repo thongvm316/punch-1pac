@@ -15,8 +15,8 @@ class Api::V1::HolidaysController < Api::V1::BaseController
 
     head(400) && return unless holidays.present? && holidays_params[:holidays].present?
 
-    imported = Holiday.import(holidays)
-    render json: Holiday.where(id: imported.ids), each_serializer: HolidaySerializer, status: 200
+    result = Holiday.import(holidays)
+    render json: Holiday.where(id: result.ids), each_serializer: HolidaySerializer, status: 200
   end
 
   def create
