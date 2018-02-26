@@ -10,7 +10,7 @@
       ></v-select>
       <button type="button" class="btn input-group-btn" @click="addGroupUser({ groupId: currentId, userId: selectedUser.id })">{{ $t('button.add') }}</button>
     </div>
-    <p class="form-input-hint text-dark">Add a member to this group, then manager of this group can see the user's activities</p>
+    <p class="form-input-hint text-dark">{{ $t('group.explain') }}</p>
 
     <div class="toolbar mt-5 text-right"> <button type="button" class="btn" @click="toggleEditModal">{{ $t('button.editGroup') }}</button>
     </div>

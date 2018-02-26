@@ -7,7 +7,7 @@
         0 1 .449 1 1 0 .552-.448 1-1 1s-1-.448-1-1c0-.551.448-1 1-1zm3 20c0 1.598-1.392 3-2.971 3s-3.029-1.402-3.029-3h6z"/></svg>
     </span>
     <div class="box announcement-dropdown">
-      <h4>Announcements</h4>
+      <h4>{{ $t('header.annoucements') }}</h4>
       <ul v-if="getFirstFive.length > 0">
         <router-link
           tag="li"
@@ -19,9 +19,9 @@
         </router-link>
       </ul>
       <p class="no-announcement-msg" v-else>
-        You have no new announcements
+        {{ $t('annoucements.message') }}
       </p>
-      <router-link to="/announcements" tag="a">See All</router-link>
+      <router-link to="/announcements" tag="a">{{ $t('header.seeAll') }}</router-link>
     </div>
   </div>
 </template>

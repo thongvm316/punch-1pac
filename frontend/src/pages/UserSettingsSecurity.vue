@@ -1,11 +1,11 @@
 <template>
-  <setting-layout sidebar-type="user" title="Settings for Troy Kozey" subtitle="Security">
+  <setting-layout sidebar-type="user" title="Settings for Troy Kozey" :subtitle="$t('subtitle.security')">
     <table class="table bg-light mt-5">
       <thead>
         <tr>
-          <th>Client</th>
-          <th>IP</th>
-          <th>Last signed in</th>
+          <th>{{ $t('tableHeader.client') }}</th>
+          <th>{{ $t('tableHeader.ip') }}</th>
+          <th>{{ $t('tableHeader.lastSignedIn') }}</th>
           <th></th>
         </tr>
       </thead>
@@ -20,7 +20,7 @@
           <td><button
                 type="button"
                 class="btn btn-error"
-                @click="deleteSession(session.id)">Revoke</button></td>
+                @click="deleteSession(session.id)">{{ $t('button.revoke') }}</button></td>
         </tr>
       </tbody>
     </table>

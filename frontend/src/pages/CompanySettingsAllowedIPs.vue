@@ -1,16 +1,16 @@
 <template>
-  <setting-layout sidebar-type="company" title="Company Settings" subtitle="Allowed IPs">
+  <setting-layout sidebar-type="company" :title="$t('title.companySettings')" :subtitle="$t('subtitle.allowedIPs')">
     <div class="toolbar clearfix mt-5">
       <button type="button" class="btn float-right" @click="toggleAddModal">
         <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M24 10h-10v-10h-4v10h-10v4h10v10h4v-10h10z"/></svg>
-        Add IP
+        {{ $t('button.addIP') }}
       </button>
     </div>
 
     <table class="table table-hover bg-light mt-5">
       <thead>
-        <th>IP Address</th>
-        <th class="text-right">Created at</th>
+        <th>{{ $t('tableHeader.ipAddress') }}</th>
+        <th class="text-right">{{ $t('tableHeader.createdAt') }}</th>
         <th></th>
       </thead>
       <tbody>
@@ -35,23 +35,23 @@
 
     <modal title="Add IP" :modal-open.sync="isAddModalOpen">
       <div class="form-group":class="{ 'has-error': errors.ip_address}">
-        <label class="form-label">IP Address</label>
+        <label class="form-label">{{ $t('tableHeader.ipAddress') }}</label>
         <input class="form-input" type="text" v-model="newIp">
         <p class="form-input-hint" v-if="errors.ip_address">{{ errors.ip_address[0] }}</p>
       </div>
       <div class="form-group">
-        <a class="btn" @click="createIP({ ip_address: newIp })">Submit</a>
+        <a class="btn" @click="createIP({ ip_address: newIp })">{{ $t('button.submit') }}</a>
       </div>
     </modal>
 
     <modal title="Edit IP" :modal-open.sync="isEditModalOpen">
       <div class="form-group" :class="{ 'has-error': errors.ip_address}">
-        <label class="form-label">IP Address</label>
+        <label class="form-label">{{ $t('tableHeader.ipAddress') }}</label>
         <input class="form-input" type="text" v-model="editIp">
         <p class="form-input-hint" v-if="errors.ip_address">{{ errors.ip_address[0] }}</p>
       </div>
       <div class="form-group">
-        <a class="btn" @click="updateIP({ id: currentId, ip_address: editIp })">Save</a>
+        <a class="btn" @click="updateIP({ id: currentId, ip_address: editIp })">{{ $t('button.save') }}</a>
       </div>
     </modal>
   </setting-layout>

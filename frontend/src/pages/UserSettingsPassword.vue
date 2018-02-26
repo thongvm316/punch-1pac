@@ -1,23 +1,23 @@
 <template>
-  <setting-layout sidebar-type="user" title="Settings for Troy Kozey" subtitle="Password">
+  <setting-layout sidebar-type="user" title="Settings for Troy Kozey" :subtitle="$t('subtitle.password')">
     <form class="setting-form">
       <div class="form-group">
-        <label class="form-label">Current Password</label>
+        <label class="form-label">{{ $t('label.currentPassword') }}</label>
         <input class="form-input" type="password" v-model="updateParams.current_password">
         <p class="form-input-hint" v-if="errors.current_password">{{ errors.current_password[0] }}</p>
       </div>
       <div class="form-group">
-        <label class="form-label">New Password</label>
+        <label class="form-label">{{ $t('label.newPassword') }}</label>
         <input class="form-input" type="password" v-model="updateParams.password">
         <p class="form-input-hint" v-if="errors.password">{{ errors.password[0] }}</p>
       </div>
       <div class="form-group">
-        <label class="form-label">New Password Confirmation</label>
+        <label class="form-label">{{ $t('label.newPasswordConfirm') }}</label>
         <input class="form-input" type="password" v-model="updateParams.password_confirmation">
         <p class="form-input-hint" v-if="errors.password_confirmation">{{ errors.password_confirmation[0] }}</p>
       </div>
       <div class="form-group">
-        <button type="button" class="btn" @click="updatePassword(updateParams)">Save</button>
+        <button type="button" class="btn" @click="updatePassword(updateParams)">{{ $t('button.save') }}</button>
       </div>
     </form>
   </setting-layout>

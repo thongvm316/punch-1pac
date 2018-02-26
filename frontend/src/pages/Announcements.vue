@@ -3,9 +3,9 @@
     <table class="table table-hover mt-5 bg-light">
       <thead>
         <tr>
-          <th>Title</th>
-          <th>Status</th>
-          <th>Sent at</th>
+          <th>{{ $t('tableHeader.title') }}</th>
+          <th>{{ $t('tableHeader.status') }}</th>
+          <th>{{ $t('tableHeader.sentAt') }}</th>
         </tr>
       </thead>
       <tbody>

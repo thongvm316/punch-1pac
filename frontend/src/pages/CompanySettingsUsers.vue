@@ -1,23 +1,23 @@
 <template>
-  <setting-layout sidebar-type="company" title="Company Settings" subtitle="Users">
+  <setting-layout sidebar-type="company" :title="$t('title.companySettings')" :subtitle="$t('subtitle.users')">
     <div class="toolbar mt-5 clearfix">
       <input type="text" class="form-input" placeholder="Filter user by email" @keyup="filterUsers">
       <router-link to="/company/settings/users/add" tag="button" class="btn float-right">
         <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M24 10h-10v-10h-4v10h-10v4h10v10h4v-10h10z"></path></svg>
-        Add User
+        {{ $t('button.addUsers') }}
       </router-link>
       <router-link to="/company/settings/users/add-multi" tag="button" class="btn float-right mr-2">
         <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M24 10h-10v-10h-4v10h-10v4h10v10h4v-10h10z"></path></svg>
-        Add Multiple Users
+        {{ $t('button.addMultiUsers') }}
       </router-link>
     </div>
 
     <table class="table table-hover bg-light mt-5">
       <thead>
-        <th>Name</th>
-        <th>Email</th>
-        <th>Role</th>
-        <th>Created At</th>
+        <th>{{ $t('tableHeader.name') }}</th>
+        <th>{{ $t('tableHeader.email') }}</th>
+        <th>{{ $t('tableHeader.role') }}</th>
+        <th>{{ $t('tableHeader.createdAt') }}</th>
         <th></th>
       </thead>
       <tbody>

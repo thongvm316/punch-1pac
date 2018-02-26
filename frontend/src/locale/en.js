@@ -4,9 +4,23 @@ export default {
     attendances: 'Attendances',
     requests: 'Requests',
     groups: 'Groups',
-    calendar: 'Calendar'
+    calendar: 'Calendar',
+    companySettings: 'Company Settings'
   },
-  status: {
+  subtitle: {
+    allowedIPs: 'Allowed IPs',
+    bussinessDays: 'Business Days',
+    departments: 'Departments',
+    holidays: 'Holidays',
+    profile: 'Profile',
+    timeLang: 'Timezone and Language',
+    users: 'Users',
+    addUsers: 'Add Users',
+    addMultiUsers: 'Add Multiple Users',
+    password: 'Password',
+    security: 'Security'
+  },
+  statuses: {
     arriveOnTime: 'Arrive on time',
     leaveOnTime: 'Leave on time',
     arriveLate: 'Arrive late',
@@ -25,7 +39,15 @@ export default {
     submit: 'Submit',
     addGroup: 'Add Group',
     editGroup: 'Edit Group',
-    addRequest: 'Add Request'
+    addRequest: 'Add Request',
+    addIP: 'Add IP',
+    addBussinessDays: 'Add Business Days',
+    addDepartment: 'Add Department',
+    addHoliday: 'Add Holiday',
+    addUsers: 'Add Users',
+    addMultiUsers: 'Add Multiple USers',
+    import: 'Import',
+    revoke: 'Revoke'
   },
   group: {
     accountant: 'Accountant',
@@ -33,6 +55,7 @@ export default {
     marketing: 'Marketing',
     hr: 'HR',
     leave: 'Leave',
+    explain: "Add a member to this group, then manager of this group can see the user's activities",
     member: ' | 1 member | {count} members'
   },
   placeholder: {
@@ -40,32 +63,62 @@ export default {
     toDate: 'To Date',
     filterByStatus: 'Filter by status',
     filterByGroup: 'Filter by group',
+    filterHolidayByName: 'Filter holiday by name',
     searchUserByEmail: 'Search user by email',
     name: 'Name'
   },
   label: {
+    logo: 'Logo',
     name: 'Name',
+    namespace: 'Namespace',
+    industry: 'Industry',
+    country: 'Country',
+    address: 'Address',
+    phoneNum: 'Phone Number',
+    postalCode: 'Postal Code',
+    taxCode: 'Tax Code',
+    timezone: 'Timezone',
+    language: 'Language',
     date: 'Date',
     attendedAt: 'Attended At',
     leftAt: 'Left At',
-    startedAt: 'Started At',
-    endedAt: 'Ended At',
-    reason: 'Reason'
+    startAt: 'Start At',
+    endAt: 'End At',
+    reason: 'Reason',
+    group: 'Group',
+    csvFile: 'CSV File',
+    currentPassword: 'Current Password',
+    newPassword: 'New Password',
+    newPasswordConfirm: 'New Password Confirmation',
+    avatar: 'Avatar',
+    gender: 'Gender'
   },
   tableHeader: {
     date: 'Date',
     attendedAt: 'Attended At',
+    title: 'Title',
+    status: 'Status',
+    sentAt: 'Sent At',
     leftAt: 'Left At',
     createdAt: 'Created At',
     startedAt: 'Started At',
     endedAt: 'Ended At',
+    startAt: 'Start At',
+    endAt: 'End At',
     reason: 'Reason',
-    status: 'Status',
     department: 'Department',
     email: 'Email',
     name: 'Name',
     actions: 'Actions',
-    gender: 'Gender'
+    gender: 'Gender',
+    ipAddress: 'IP Address',
+    weekday: 'Weekday',
+    members: 'Members',
+    country: 'Country',
+    role: 'Role',
+    client: 'Client',
+    ip: 'IP',
+    lastSignedIn: 'Last signed in'
   },
   header: {
     dashboard: 'Dashboard',
@@ -111,5 +164,24 @@ export default {
   request: {
     myRequests: 'My Requests',
     groupRequests: 'Group Requests'
+  },
+  annoucements: {
+    message: 'You have no new announcements'
+  },
+  punch: {
+    in: 'In',
+    out: 'Out'
+  },
+  holidays: {
+    explain: "Import country's holidays for your company, then 1Punch will not count a holiday as leaving day"
+  },
+  timeLang: {
+    successMsg: "Company's timezone and language are updated"
+  },
+  users: {
+    successMsg: "An user is created successfully",
+    successCSVMsg: "Users in csv file are created",
+    errorMsg: 'There are not_correct_information errors at rows',
+    note: 'An email contains login information is sent to user. Please ensure that email address is correct'
   }
 }
