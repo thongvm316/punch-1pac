@@ -20,6 +20,7 @@ import userPassword from './modules/user-password'
 import requests from './modules/requests'
 import groups from './modules/groups'
 import group from './modules/group'
+import chart from './modules/chart'
 
 Vue.use(Vuex)
 
@@ -40,7 +41,8 @@ export default new Vuex.Store({
     userPassword,
     requests,
     groups,
-    group
+    group,
+    chart
   },
   strict: debug,
   plugins: debug ? [createLogger()] : []
