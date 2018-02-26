@@ -3,7 +3,9 @@ import axios from 'axios'
 
 const state = {
   errors: {},
-  group: {}
+  group: {},
+  filteredUsers: [],
+  selectedUser: {}
 }
 
 const mutations = {
@@ -29,6 +31,14 @@ const mutations = {
 
   [types.CLEAR_GROUP_ERRORS] (state) {
     state.errors = {}
+  },
+
+  [types.FILTERED_USERS] (state, payload) {
+    state.filteredUsers = payload.users
+  },
+
+  [types.SELECTED_USER] (state, payload) {
+    state.selectedUser = payload
   }
 }
 
@@ -60,6 +70,21 @@ const actions = {
   removeGroupUser ({ commit }, params) {
     axios.delete(`/groups/${params.groupId}/remove_user?user_id=${params.userId}`)
          .then((response) => commit(types.REMOVE_GROUP_USER, params.userId))
+  },
+
+  filterUsersByEmail ({ commit }, userEmail) {
+    return new Promise((resolve, reject) => {
+      axios.get(`/users?email=${userEmail}`, { timeout: 5000 })
+           .then((response) => {
+             commit(types.FILTERED_USERS, response.data)
+             resolve(response)
+           })
+           .catch((error) => reject(error))
+    })
+  },
+
+  selectUser ({ commit }, user) {
+    commit(types.SELECTED_USER, user)
   },
 
   clearGroupErrors ({ commit }) {

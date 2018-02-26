@@ -16,7 +16,6 @@ import companyCustomHolidays from './modules/company-custom_holidays'
 
 import userSessions from './modules/user-sessions'
 import userPassword from './modules/user-password'
-import userFilter from './modules/user-filter'
 
 import requests from './modules/requests'
 import groups from './modules/groups'
@@ -40,7 +39,6 @@ export default new Vuex.Store({
     companyCustomHolidays,
     userSessions,
     userPassword,
-    userFilter,
     requests,
     groups,
     group,

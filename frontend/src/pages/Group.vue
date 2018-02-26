@@ -78,10 +78,7 @@ export default {
   computed: {
     ...mapState('group', [
       'errors',
-      'group'
-    ]),
-
-    ...mapState('userFilter', [
+      'group',
       'filteredUsers',
       'selectedUser'
     ])
@@ -99,10 +96,7 @@ export default {
       'updateGroup',
       'addGroupUser',
       'removeGroupUser',
-      'clearGroupErrors'
-    ]),
-
-    ...mapActions('userFilter', [
+      'clearGroupErrors',
       'filterUsersByEmail',
       'selectUser'
     ])
