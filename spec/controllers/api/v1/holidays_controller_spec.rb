@@ -36,6 +36,36 @@ RSpec.describe Api::V1::HolidaysController, type: :controller do
     end
   end
 
+  describe 'POST #import' do
+    let(:holidays) { FactoryBot.attributes_for_list(:holiday, 3) }
+
+    context 'when login user is member' do
+      let(:login_user) { create :user, company: company, role: 'member' }
+
+      subject { post :import, params: { holidays: holidays } }
+
+      its(:code) { is_expected.to eq '401' }
+    end
+
+    context 'when login user is admin' do
+      let(:login_user) { create :user, company: company, role: 'admin' }
+
+      context 'when params valid' do
+        subject { post :import, params: { holidays: holidays } }
+
+        its(:code) { is_expected.to eq '200' }
+        its(:body) { is_expected.to be_json_as(Array.new(3) { response_holiday }) }
+      end
+
+      context 'when params invalid' do
+        subject { post :import, params: { holidays: [] } }
+
+        its(:code) { is_expected.to eq '422' }
+        its(:body) { is_expected.to be_json_as(error: 'Invalid arguments!') }
+      end
+    end
+  end
+
   describe 'POST #create' do
     context 'when login user is member' do
       let(:login_user) { create :user, company: company, role: 'member' }
