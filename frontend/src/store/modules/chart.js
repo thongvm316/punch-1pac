@@ -10,7 +10,7 @@ const state = {
 const mutations = {
   [types.FETCH_CHART_DATA] (state, statuses) {
     const months = moment.months()
-    const data = []
+    let data = []
 
     months.forEach(month => {
       const status = statuses.find(status => status.month === month)
