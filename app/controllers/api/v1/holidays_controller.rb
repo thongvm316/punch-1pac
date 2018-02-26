@@ -13,8 +13,8 @@ class Api::V1::HolidaysController < Api::V1::BaseController
     authorize!
     holidays = current_company.holidays.build(holidays_params)
     begin
-      Holiday.import(holidays)
-      render json: holidays, each_serializer: HolidaySerializer, status: 200
+      imported = Holiday.import(holidays)
+      render json: Holiday.where(id: imported.ids), each_serializer: HolidaySerializer, status: 200
     rescue ArgumentError => error
       render json: { error: error }, status: 422
     end
