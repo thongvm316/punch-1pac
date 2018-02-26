@@ -38,6 +38,11 @@ next_month = Time.current + 1.month
   FactoryBot.create(:request, attendance: attendance, user: attendance.user, status: Request.statuses.keys[rand(3)])
 end
 
+10.times do
+  user = FactoryBot.create(:user, company: company)
+  FactoryBot.create(:user_group, user: user, group: Group.first)
+end
+
 (1..7).each do |month|
   next if (prev_month.month..next_month.month).cover?(month)
   (month % 3).times do |day|
