@@ -22,7 +22,7 @@ const mutations = {
     state.loaded = true
   },
 
-  [types.RESET_CHART_DATA_STATE] (state) {
+  [types.RESET_CHART_DATA] (state) {
     state.loaded = false
   }
 }
@@ -39,8 +39,8 @@ const actions = {
     })
   },
 
-  resetChartState ({ commit }) {
-    commit(types.RESET_CHART_DATA_STATE)
+  resetChart ({ commit }) {
+    commit(types.RESET_CHART_DATA)
   }
 }
 

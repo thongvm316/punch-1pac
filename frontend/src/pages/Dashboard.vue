@@ -61,7 +61,7 @@ export default {
   methods: {
     ...mapActions('chart', [
       'getChart',
-      'resetChartState'
+      'resetChart'
     ])
   },
 
@@ -77,7 +77,7 @@ export default {
 
   watch: {
     status: function () {
-      this.resetChartState()
+      this.resetChart()
       this.getChart(this.status)
     }
   },
