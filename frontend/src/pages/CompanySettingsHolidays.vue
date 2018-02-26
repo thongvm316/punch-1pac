@@ -13,7 +13,7 @@
     <p class="form-input-hint text-dark">Import country's holidays for your company, then 1Punch will not count a holiday as leaving day</p>
 
     <div class="toolbar clearfix mt-5">
-      <input type="text" class="form-input" placeholder="Filter holiday by name">
+      <input type="text" class="form-input" placeholder="Filter holiday by name" @keyup="filterCustomHolidays">
       <button type="button" class="btn float-right" @click="toggleAddModal">
         <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M24 10h-10v-10h-4v10h-10v4h10v10h4v-10h10z"/></svg>
         Add Holiday
@@ -29,7 +29,7 @@
         <th></th>
       </thead>
       <tbody>
-        <tr v-for="customHoliday in customHolidays">
+        <tr v-for="customHoliday in localCustomHolidays">
           <td>{{ customHoliday.name }}</td>
           <td></td>
           <td>{{ customHoliday.started_at | datetime_mmdd }}</td>
@@ -128,7 +128,7 @@
 
 <script>
 import Datepicker from 'vuejs-datepicker'
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapGetters, mapActions } from 'vuex'
 import SettingLayout from '../layouts/Setting.vue'
 import modal from '../mixins/modal'
 
@@ -137,6 +137,7 @@ export default {
 
   data () {
     return {
+      localCustomHolidays: [],
       createParams: {
         name: '',
         started_at: '',
@@ -170,6 +171,10 @@ export default {
       this.isEditModalOpen = !this.isEditModalOpen
       this.currentID = customHoliday.id
       Object.keys(this.updateParams).forEach(k => { this.updateParams[k] = customHoliday[k] })
+    },
+
+    filterCustomHolidays (e) {
+      this.localCustomHolidays = this.filterByName(e.target.value)
     }
   },
 
@@ -177,11 +182,15 @@ export default {
     ...mapState('companyCustomHolidays', [
       'customHolidays',
       'errors'
+    ]),
+
+    ...mapGetters('companyCustomHolidays', [
+      'filterByName'
     ])
   },
 
   created () {
-    this.fetchCustomHolidays()
+    this.fetchCustomHolidays().then(response => { this.localCustomHolidays = response.data })
   }
 }
 </script>
