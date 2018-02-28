@@ -30,5 +30,5 @@ class Admin < ApplicationRecord
   devise :database_authenticatable, :recoverable, :rememberable, :trackable, :validatable
 
   has_many :announcements
-  has_many :holidays
+  has_many :national_holidays
 end

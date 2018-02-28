@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-ActiveAdmin.register Holiday do
+ActiveAdmin.register NationalHoliday do
   permit_params do
     permitted = %i[name country started_at ended_at admin_id]
-    params[:holiday][:admin_id] = current_admin.id if params[:action] == 'create'
+    params[:national_holiday][:admin_id] = current_admin.id if params[:action] == 'create'
     permitted
   end
   menu priority: 3
@@ -13,22 +13,22 @@ ActiveAdmin.register Holiday do
   filter :ended_at
 
   collection_action :import_csv, method: :post do
-    return redirect_to import_csv_form_admin_holidays_path, flash: { error: 'CSV invalid file!' } unless params[:file]
+    return redirect_to import_csv_form_admin_national_holidays_path, flash: { error: 'CSV invalid file!' } unless params[:file]
 
     c_params = { country: params[:file].original_filename.split('.')[0], admin_id: current_admin.id }
     holidays = []
     CSV.foreach(params[:file].tempfile, headers: true) do |row|
       holidays << row.to_hash.merge(c_params)
     end
-    Holiday.import holidays
-    redirect_to admin_holidays_path, notice: 'CSV imported successfully!'
+    NationalHoliday.import holidays
+    redirect_to admin_national_holidays_path, notice: 'CSV imported successfully!'
   end
 
   collection_action :import_csv_form, method: :get do
   end
 
   action_item :view, only: :index do
-    link_to 'Import Csv', import_csv_form_admin_holidays_path
+    link_to 'Import Csv', import_csv_form_admin_national_holidays_path
   end
 
   index do
