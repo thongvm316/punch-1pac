@@ -1,8 +1,8 @@
 <template>
   <div class="punch">
-    <span v-show="attendedAt">In: {{ attendedAt }}</span>
+    <span v-show="attendedAt">{{ $t('punch.in') }}: {{ attendedAt }}</span>
     <span class="mx-2" v-show="attendedAt">-</span>
-    <span class="mr-5" v-if="leftAt">Out: {{ leftAt }}</span>
+    <span class="mr-5" v-if="leftAt">{{ $t('punch.out') }}: {{ leftAt }}</span>
     <span class="mr-5" v-else>{{ currentTime }}</span>
     <button class="btn btn-primary mr-5" @click="punchIn" v-show="!attendedAt">Punch In</button>
     <button class="btn btn-primary mr-5" @click="punchOut" v-show="attendedAt && !leftAt">Punch Out</button>

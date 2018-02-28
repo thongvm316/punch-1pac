@@ -1,5 +1,5 @@
 <template>
-  <setting-layout sidebar-type="company" title="Company Settings" subtitle="Holidays">
+  <setting-layout sidebar-type="company" :title="$t('title.companySettings')" :subtitle="$t('subtitle.holidays')">
     <div class="input-group mt-5">
       <select class="form-select">
         <option>Choose a country</option>
@@ -8,24 +8,24 @@
         <option>Quatar</option>
         <option>Uzbekistan</option>
       </select>
-      <button class="btn input-group-btn">Import</button>
+      <button class="btn input-group-btn">{{ $t('button.import') }}</button>
     </div>
-    <p class="form-input-hint text-dark">Import country's holidays for your company, then 1Punch will not count a holiday as leaving day</p>
+    <p class="form-input-hint text-dark">{{ $t('holidays.explain') }}</p>
 
     <div class="toolbar clearfix mt-5">
-      <input type="text" class="form-input" placeholder="Filter holiday by name" @keyup="filterCustomHolidays">
+      <input type="text" class="form-input" :placeholder="$t('placeholder.filterHolidayByName')" @keyup="filterCustomHolidays">
       <button type="button" class="btn float-right" @click="toggleAddModal">
         <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M24 10h-10v-10h-4v10h-10v4h10v10h4v-10h10z"/></svg>
-        Add Holiday
+        {{ $t('button.addHoliday') }}
       </button>
     </div>
 
     <table class="table table-hover bg-light mt-5">
       <thead>
-        <th>Name</th>
-        <th>Country</th>
-        <th>Start at</th>
-        <th>End at</th>
+        <th>{{ $t('tableHeader.name') }}</th>
+        <th>{{ $t('tableHeader.country') }}</th>
+        <th>{{ $t('tableHeader.startAt') }}</th>
+        <th>{{ $t('tableHeader.endAt') }}</th>
         <th></th>
       </thead>
       <tbody>
@@ -52,12 +52,12 @@
 
     <modal title="Add Holiday" :modal-open.sync="isAddModalOpen">
       <div class="form-group" :class="{ 'has-error': errors.name }">
-        <label class="form-label">Name</label>
+        <label class="form-label">{{ $t('label.name') }}</label>
         <input class="form-input" type="text" v-model="createParams.name">
         <p class="form-input-hint" v-if="errors.name">{{ errors.name[0] }}</p>
       </div>
       <div class="form-group" :class="{ 'has-error': errors.started_at }">
-        <label class="form-label">Start at</label>
+        <label class="form-label">{{ $t('label.startAt') }}</label>
         <datepicker
         :placeholder="$t('placeholder.fromDate')"
         :format="'MMM dd yyyy'"
@@ -70,7 +70,7 @@
         <p class="form-input-hint" v-if="errors.started_at">{{ errors.started_at[0] }}</p>
       </div>
       <div class="form-group" :class="{ 'has-error': errors.ended_at }">
-        <label class="form-label">End at</label>
+        <label class="form-label">{{ $t('label.endAt') }}</label>
         <datepicker
         :placeholder="$t('placeholder.toDate')"
         :format="'MMM dd yyyy'"
@@ -83,18 +83,18 @@
         <p class="form-input-hint" v-if="errors.ended_at">{{ errors.ended_at[0] }}</p>
       </div>
       <div class="form-group">
-        <button type="button" class="btn" @click="createCustomHoliday(createParams)">Submit</button>
+        <button type="button" class="btn" @click="createCustomHoliday(createParams)">{{ $t('button.submit') }}</button>
       </div>
     </modal>
 
     <modal title="Edit Holiday" :modal-open.sync="isEditModalOpen">
       <div class="form-group" :class="{ 'has-error': errors.name }">
-        <label class="form-label">Name</label>
+        <label class="form-label">{{ $t('label.name') }}</label>
         <input class="form-input" type="text" v-model="updateParams.name">
         <p class="form-input-hint" v-if="errors.name">{{ errors.name[0] }}</p>
       </div>
       <div class="form-group" :class="{ 'has-error': errors.started_at }">
-        <label class="form-label">Start at</label>
+        <label class="form-label">{{ $t('label.startAt') }}</label>
         <datepicker
         :placeholder="$t('placeholder.fromDate')"
         :format="'MMM dd'"
@@ -107,7 +107,7 @@
         <p class="form-input-hint" v-if="errors.started_at">{{ errors.started_at[0] }}</p>
       </div>
       <div class="form-group" :class="{ 'has-error': errors.ended_at }">
-        <label class="form-label">End at</label>
+        <label class="form-label">{{ $t('label.endAt') }}</label>
         <datepicker
         :placeholder="$t('placeholder.toDate')"
         :format="'MMM dd'"
@@ -120,7 +120,7 @@
         <p class="form-input-hint" v-if="errors.reason">{{ errors.ended_at[0] }}</p>
       </div>
       <div class="form-group">
-        <button type="button" class="btn" @click="updateCustomHoliday({ customHolidayID: currentID, updateParams: updateParams })">Save</button>
+        <button type="button" class="btn" @click="updateCustomHoliday({ customHolidayID: currentID, updateParams: updateParams })">{{ $t('button.save') }}</button>
       </div>
     </modal>
   </setting-layout>

@@ -1,21 +1,21 @@
 <template>
-  <setting-layout sidebar-type="company" title="Company Settings" subtitle="Profile">
+  <setting-layout sidebar-type="company" :title="$t('title.companySettings')" :subtitle="$t('subtitle.profile')">
     <form class="setting-form">
       <div class="form-group">
-        <label class="form-label">Logo</label>
+        <label class="form-label">{{ $t('label.logo') }}</label>
         <img class="img-profile" :src="currentCompany.logo_url" :alt="currentCompany.name">
         <input class="form-input" type="file" @change="setLogoFile">
       </div>
       <div class="form-group">
-        <label class="form-label">Name</label>
+        <label class="form-label">{{ $t('label.name') }}</label>
         <input class="form-input" type="text" v-model="params.name">
       </div>
       <div class="form-group">
-        <label class="form-label">Namespace</label>
+        <label class="form-label">{{ $t('label.namespace') }}</label>
         <input class="form-input" type="text" v-model="params.namespace">
       </div>
       <div class="form-group">
-        <label class="form-label">Industry</label>
+        <label class="form-label">{{ $t('label.industry') }}</label>
         <select class="form-select" v-model="params.industry">
           <option value="startup">Startup</option>
           <option value="ecomerce">Ecormerce</option>
@@ -24,27 +24,27 @@
         </select>
       </div>
       <div class="form-group">
-        <label class="form-label">Country</label>
+        <label class="form-label">{{ $t('label.country') }}</label>
         <input class="form-input" type="text" v-model="params.country">
       </div>
       <div class="form-group">
-        <label class="form-label">Address</label>
+        <label class="form-label">{{ $t('label.address') }}</label>
         <input class="form-input" type="text" v-model="params.address">
       </div>
       <div class="form-group">
-        <label class="form-label">Phone Number</label>
+        <label class="form-label">{{ $t('label.phoneNum') }}</label>
         <input class="form-input" type="text" v-model="params.phone_number">
       </div>
       <div class="form-group">
-        <label class="form-label">Postal Code</label>
+        <label class="form-label">{{ $t('label.postalCode') }}</label>
         <input class="form-input" type="text" v-model="params.postal_code">
       </div>
       <div class="form-group">
-        <label class="form-label">Tax Code</label>
+        <label class="form-label">{{ $t('label.taxCode') }}</label>
         <input class="form-input" type="text" v-model="params.tax_code">
       </div>
       <div class="form-group">
-        <button type="button" class="btn" @click="updateCompany(params)">Save</button>
+        <button type="button" class="btn" @click="updateCompany(params)">{{ $t('button.save') }}</button>
       </div>
     </form>
   </setting-layout>

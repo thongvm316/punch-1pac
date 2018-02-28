@@ -1,17 +1,17 @@
 <template>
-  <setting-layout sidebar-type="user" title="Settings for Troy Kozey" subtitle="Profile">
+  <setting-layout sidebar-type="user" title="Settings for Troy Kozey" :subtitle="$t('subtitle.profile')">
     <form class="setting-form">
       <div class="form-group">
-        <label class="form-label">Avatar</label>
+        <label class="form-label">{{ $t('label.avatar') }}</label>
         <img class="img-profile" :src="currentUser.avatar_url" :alt="currentUser.name">
         <input class="form-input" type="file" @change="setAvatarFile">
       </div>
       <div class="form-group">
-        <label class="form-label">Name</label>
+        <label class="form-label">{{ $t('label.name') }}</label>
         <input class="form-input" type="text" v-model="params.name">
       </div>
       <div class="form-group">
-        <label class="form-label">Gender</label>
+        <label class="form-label">{{ $t('label.gender') }}</label>
         <label class="form-radio">
           <input type="radio" value="male" v-model="params.gender">
           <i class="form-icon"></i> Male
@@ -22,7 +22,7 @@
         </label>
       </div>
       <div class="form-group">
-        <label class="form-label">Email</label>
+        <label class="form-label">{{ $t('label.email') }}</label>
         <input class="form-input" type="text" v-model="params.email">
       </div>
       <div class="form-group">

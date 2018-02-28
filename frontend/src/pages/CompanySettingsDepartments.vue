@@ -1,15 +1,15 @@
 <template>
-  <setting-layout sidebar-type="company" title="Company Settings" subtitle="Departments">
+  <setting-layout sidebar-type="company" :title="$t('title.companySettings')" :subtitle="$t('subtitle.departments')">
     <div class="toolbar text-right mt-5" @click="toggleAddModal">
       <button type="button" class="btn">
         <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M24 10h-10v-10h-4v10h-10v4h10v10h4v-10h10z"/></svg>
-        Add Department
+        {{ $t('button.addDepartment') }}
       </button>
     </div>
     <table class="table table-hover bg-light mt-5">
       <thead>
-        <th>Name</th>
-        <th>Members</th>
+        <th>{{ $t('tableHeader.name') }}</th>
+        <th>{{ $t('tableHeader.members') }}</th>
         <th></th>
       </thead>
       <tbody>
@@ -34,23 +34,23 @@
 
     <modal title="Add Department" :modal-open.sync="isAddModalOpen">
       <div class="form-group">
-        <label class="form-label">Name</label>
+        <label class="form-label">{{ $t('label.name') }}</label>
         <input class="form-input" type="text" v-model="createParams.name">
         <p class="form-input-hint" v-if="errors.name">{{ errors.name[0] }}</p>
       </div>
       <div class="form-group">
-        <button type="button" class="btn" @click="addDepartment(createParams)">Submit</button>
+        <button type="button" class="btn" @click="addDepartment(createParams)">{{ $t('button.submit') }}</button>
       </div>
     </modal>
 
     <modal title="Edit Department" :modal-open.sync="isEditModalOpen">
       <div class="form-group">
-        <label class="form-label">Name</label>
+        <label class="form-label">{{ $t('label.name') }}</label>
         <input class="form-input" type="text" v-model="editParams.name">
         <p class="form-input-hint" v-if="errors.name">{{ errors.name[0] }}</p>
       </div>
       <div class="form-group">
-        <button type="button" class="btn" @click="updateDepartment({ departmentId: currentId, editParams: editParams })">Save</button>
+        <button type="button" class="btn" @click="updateDepartment({ departmentId: currentId, editParams: editParams })">{{ $t('button.save') }}</button>
       </div>
     </modal>
   </setting-layout>
