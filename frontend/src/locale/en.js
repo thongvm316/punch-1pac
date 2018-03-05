@@ -9,7 +9,7 @@ export default {
   },
   subtitle: {
     allowedIPs: 'Allowed IPs',
-    bussinessDays: 'Business Days',
+    businessDays: 'Business Days',
     departments: 'Departments',
     holidays: 'Holidays',
     profile: 'Profile',
@@ -41,7 +41,7 @@ export default {
     editGroup: 'Edit Group',
     addRequest: 'Add Request',
     addIP: 'Add IP',
-    addBussinessDays: 'Add Business Days',
+    addBusinessDays: 'Add Business Days',
     addDepartment: 'Add Department',
     addHoliday: 'Add Holiday',
     addUsers: 'Add Users',
@@ -70,6 +70,7 @@ export default {
   label: {
     logo: 'Logo',
     name: 'Name',
+    email: 'Email',
     namespace: 'Namespace',
     industry: 'Industry',
     country: 'Country',
@@ -79,6 +80,8 @@ export default {
     taxCode: 'Tax Code',
     timezone: 'Timezone',
     language: 'Language',
+    breaktime: 'Break Time',
+    breakdays: 'Break Days',
     date: 'Date',
     attendedAt: 'Attended At',
     leftAt: 'Left At',
@@ -179,8 +182,8 @@ export default {
     successMsg: "Company's timezone and language are updated"
   },
   users: {
-    successMsg: "An user is created successfully",
-    successCSVMsg: "Users in csv file are created",
+    successMsg: 'An user is created successfully',
+    successCSVMsg: 'Users in csv file are created',
     errorMsg: 'There are not_correct_information errors at rows',
     note: 'An email contains login information is sent to user. Please ensure that email address is correct'
   }

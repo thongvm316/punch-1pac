@@ -40,7 +40,7 @@
     </table>
 
     <modal title="Edit Group" :modal-open.sync="isEditModalOpen">
-      <div class="form-group">
+      <div class="form-group" :class="{ 'has-error': errors.name }">
         <label class="form-label">{{ $t('label.name') }}</label>
         <input class="form-input" type="text" v-model="editParams.name">
         <p class="form-input-hint" v-if="errors.name">{{ errors.name[0] }}</p>

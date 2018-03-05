@@ -107,7 +107,7 @@ RSpec.describe Api::V1::CompaniesController, type: :controller do
       let(:company) { create :company, timezone: 'Asia/Tokyo', breakdays: ['sunday'], breaktime: 1.5 }
       let(:login_user) { create :user, company: company, role: 'admin' }
 
-      subject { patch :setup_rules, params: { company: { breakdays: 10, breaktime: {}, timezone: '' } } }
+      subject { patch :setup_rules, params: { company: { breakdays: ['sunday'], breaktime: 1, timezone: '' } } }
 
       its(:code) { is_expected.to eq '422' }
       its(:body) { is_expected.to be_json_as(response_422(timezone: Array)) }
