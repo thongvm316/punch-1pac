@@ -1,16 +1,18 @@
 <template>
   <setting-layout sidebar-type="user" title="Settings for Troy Kozey" :subtitle="$t('subtitle.profile')">
     <form class="setting-form">
-      <div class="form-group">
+      <div class="form-group" :class="{ 'has-error': userErrors.avatar }">
         <label class="form-label">{{ $t('label.avatar') }}</label>
         <img class="img-profile" :src="currentUser.avatar_url" :alt="currentUser.name">
         <input class="form-input" type="file" @change="setAvatarFile">
+        <p class="form-input-hint" v-if="userErrors.avatar">{{ userErrors.avatar[0] }}</p>
       </div>
-      <div class="form-group">
+      <div class="form-group" :class="{ 'has-error': userErrors.name }">
         <label class="form-label">{{ $t('label.name') }}</label>
         <input class="form-input" type="text" v-model="params.name">
+        <p class="form-input-hint" v-if="userErrors.name">{{ userErrors.name[0] }}</p>
       </div>
-      <div class="form-group">
+      <div class="form-group" :class="{ 'has-error': userErrors.gender }">
         <label class="form-label">{{ $t('label.gender') }}</label>
         <label class="form-radio">
           <input type="radio" value="male" v-model="params.gender">
@@ -20,10 +22,12 @@
           <input type="radio" value="female" v-model="params.gender">
           <i class="form-icon"></i> Female
         </label>
+        <p class="form-input-hint" v-if="userErrors.gender">{{ userErrors.gender[0] }}</p>
       </div>
-      <div class="form-group">
+      <div class="form-group" :class="{ 'has-error': userErrors.email }">
         <label class="form-label">{{ $t('label.email') }}</label>
         <input class="form-input" type="text" v-model="params.email">
+        <p class="form-input-hint" v-if="userErrors.email">{{ userErrors.email[0] }}</p>
       </div>
       <div class="form-group">
         <button type="button" class="btn" @click="updateUser({ userId: currentUser.id, userParams: params })">Save</button>
@@ -40,8 +44,8 @@ export default {
   data () {
     return {
       params: {
-        avatar: null,
-        gender: null,
+        avatar: '',
+        gender: '',
         name: '',
         email: ''
       }
@@ -54,12 +58,14 @@ export default {
 
   computed: {
     ...mapState('initialStates', [
+      'userErrors',
       'currentUser'
     ])
   },
 
   methods: {
     ...mapActions('initialStates', [
+      'clearUserErrors',
       'updateUser'
     ]),
 
@@ -71,6 +77,7 @@ export default {
   },
 
   created () {
+    this.clearUserErrors()
     Object.keys(this.params).forEach(key => { this.params[key] = this.currentUser[key] })
   }
 }
