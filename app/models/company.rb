@@ -40,6 +40,8 @@ class Company < ApplicationRecord
   validates :industry, presence: true
   validates :address, presence: true
   validates :phone_number, presence: true
+  validates :breaktime, presence: true
+  validates :breakdays, presence: true
   validates :timezone, inclusion: { in: ActiveSupport::TimeZone.all.map { |tz| tz.tzinfo.name }.uniq }
   validates :language, inclusion: { in: %w[en ja vi] }
 

@@ -20,6 +20,8 @@ RSpec.describe Company, type: :model do
     it { should validate_presence_of(:industry) }
     it { should validate_presence_of(:address) }
     it { should validate_presence_of(:phone_number) }
+    it { should validate_presence_of(:breaktime) }
+    it { should validate_presence_of(:breakdays) }
     it { should validate_inclusion_of(:language).in_array(%w[en ja vi]) }
   end
 
