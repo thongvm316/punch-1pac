@@ -13,7 +13,7 @@ Rails.application.routes.draw do
 
     namespace :api, defaults: { format: :json }, constraints: { id: /\d+/ } do
       namespace :v1 do
-        resources :users do
+        resources :users, except: %i[new edit] do
           post 'create_multi', on: :collection
           match 'change_password', via: %i[patch put], on: :collection
         end
@@ -21,8 +21,6 @@ Rails.application.routes.draw do
         resources :holidays, only: %i[index create update destroy] do
           post 'import', on: :collection
         end
-
-        resources :national_holidays, only: %i[index]
 
         resources :groups, only: %i[index show create update destroy] do
           post 'add_user',      on: :member

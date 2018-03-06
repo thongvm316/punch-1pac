@@ -12,7 +12,7 @@ import companyUsers from './modules/company-users'
 import companyDepartments from './modules/company-departments'
 import companyBusinessDays from './modules/company-businessdays'
 import companyAllowedIPs from './modules/company-allowed_ips'
-import companyCustomHolidays from './modules/company-custom_holidays'
+import companyHolidays from './modules/company-holidays'
 
 import userSessions from './modules/user-sessions'
 import userPassword from './modules/user-password'
@@ -38,7 +38,7 @@ export default new Vuex.Store({
     companyDepartments,
     companyBusinessDays,
     companyAllowedIPs,
-    companyCustomHolidays,
+    companyHolidays,
     userSessions,
     userPassword,
     requests,

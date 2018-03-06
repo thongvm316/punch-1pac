@@ -21,7 +21,7 @@ end
 
 admin = FactoryBot.create(:admin, email: 'admin@example.com', password: 'password')
 
-FactoryBot.create_list(:national_holiday, 3, admin: admin)
+FactoryBot.create_list(:national_holiday, 20, country: %w[vietnam japan][rand(2)], admin: admin)
 FactoryBot.create_list(:holiday, 10, company: Company.first)
 FactoryBot.create_list(:announcement, 11, admin: admin)
 FactoryBot.create(:group, name: Group::DEFAULT_NAME, company: company)

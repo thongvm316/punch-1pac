@@ -23,12 +23,9 @@ RSpec.describe Api::V1::HolidaysController, type: :controller do
       let(:login_user) { create :user, company: company, role: 'admin' }
 
       context 'when valid param' do
-        let!(:holidays) do
-          create_list :holiday, 2, company: company
-          create_list :holiday, 2, company: company, name: 'kata'
-        end
+        let!(:holidays) { create_list :holiday, 2, company: company }
 
-        subject { get :index, params: { name: 'kata' } }
+        subject { get :index }
 
         its(:code) { is_expected.to eq '200' }
         its(:body) { is_expected.to be_json_as(Array.new(2) { response_holiday }) }
@@ -37,54 +34,34 @@ RSpec.describe Api::V1::HolidaysController, type: :controller do
   end
 
   describe 'POST #import' do
-    let(:holidays) { FactoryBot.attributes_for_list(:holiday, 3) }
-
-    context 'when login user is member' do
+    context 'when user is member' do
       let(:login_user) { create :user, company: company, role: 'member' }
 
-      subject { post :import, params: { holidays: holidays } }
+      subject { post :import, params: { country: 'vietnam' } }
 
       its(:code) { is_expected.to eq '401' }
     end
 
-    context 'when login user is admin' do
+    context 'when national holidays are not found' do
       let(:login_user) { create :user, company: company, role: 'admin' }
+      let!(:national_holiday) { create :national_holiday, country: 'japan' }
 
-      context 'when params valid' do
-        subject { post :import, params: { holidays: holidays } }
+      subject { post :import, params: { country: 'vietnam' } }
 
-        its(:code) { is_expected.to eq '200' }
-        its(:body) { is_expected.to be_json_as(Array.new(3) { response_holiday }) }
-      end
+      its(:code) { is_expected.to eq '404' }
+    end
 
-      context 'when got 1 fail import' do
-        before do
-          holidays << [fails: 'fails']
-        end
+    context 'when national holidays are found' do
+      let(:login_user) { create :user, company: company, role: 'admin' }
+      let!(:holiday) { create :holiday, company: company }
+      let!(:national_holiday) { create_list :national_holiday, 2, country: 'japan' }
 
-        subject { post :import, params: { holidays: holidays } }
+      subject { post :import, params: { country: 'japan' } }
 
-        its(:code) { is_expected.to eq '200' }
-        its(:body) { is_expected.to be_json_as(Array.new(3) { response_holiday }) }
-      end
-
-      context 'when params empty' do
-        subject { post :import, params: { holidays: [] } }
-
-        its(:code) { is_expected.to eq '400' }
-      end
-
-      context 'when params empty' do
-        subject { post :import, params: {} }
-
-        its(:code) { is_expected.to eq '400' }
-      end
-
-      context 'when params invalid' do
-        subject { post :import, params: { holidays: [xx: 'xx'] } }
-
-        its(:code) { is_expected.to eq '200' }
-        its(:body) { is_expected.to be_json_as(Array.new(0)) }
+      its(:code) { is_expected.to eq '200' }
+      its(:body) { is_expected.to be_json_as(Array.new(2) { response_holiday }) }
+      it 'should change holiday count' do
+        expect { is_expected }.to change(company.holidays, :count)
       end
     end
   end
