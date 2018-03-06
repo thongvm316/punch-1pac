@@ -5,18 +5,17 @@ class Api::V1::HolidaysController < Api::V1::BaseController
 
   def index
     authorize!
-    holidays = current_company.holidays.filter(params[:name])
+    holidays = current_company.holidays.order(id: :asc)
     render json: holidays, each_serializer: HolidaySerializer, status: 200
   end
 
   def import
     authorize!
-    holidays = current_company.holidays.build(holidays_params[:holidays])
-
-    head(400) && return unless holidays.present? && holidays_params[:holidays].present?
-
-    result = Holiday.import(holidays)
-    render json: Holiday.where(id: result.ids), each_serializer: HolidaySerializer, status: 200
+    national_holidays = NationalHoliday.selected_attr.where(country: params[:country])
+    return head(404) if national_holidays.blank?
+    holidays = current_company.holidays.build(national_holidays.map(&:attributes))
+    Holiday.import(holidays)
+    render json: holidays, each_serializer: HolidaySerializer, status: 200
   end
 
   def create
@@ -48,10 +47,6 @@ class Api::V1::HolidaysController < Api::V1::BaseController
 
   def holiday_params
     params.require(:holiday).permit(:started_at, :ended_at, :name)
-  end
-
-  def holidays_params
-    params.permit(holidays: %i[ended_at name started_at])
   end
 
   def set_holiday
