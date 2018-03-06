@@ -1,19 +1,17 @@
 <template>
   <setting-layout sidebar-type="company" :title="$t('title.companySettings')" :subtitle="$t('subtitle.holidays')">
     <div class="input-group mt-5">
-      <select class="form-select">
-        <option>Choose a country</option>
-        <option>Vietnam</option>
-        <option>Korea</option>
-        <option>Quatar</option>
-        <option>Uzbekistan</option>
+      <select class="form-select" v-model="country">
+        <option value="">Choose a country</option>
+        <option value="vietnam">Vietnam</option>
+        <option value="japan">Japan</option>
       </select>
-      <button class="btn input-group-btn">{{ $t('button.import') }}</button>
+      <button class="btn input-group-btn" @click="importNationalHolidays(country)">{{ $t('button.import') }}</button>
     </div>
     <p class="form-input-hint text-dark">{{ $t('holidays.explain') }}</p>
 
     <div class="toolbar clearfix mt-5">
-      <input type="text" class="form-input" :placeholder="$t('placeholder.filterHolidayByName')" @keyup="filterCustomHolidays">
+      <input type="text" class="form-input" :placeholder="$t('placeholder.filterHolidayByName')" v-model="name">
       <button type="button" class="btn float-right" @click="toggleAddModal">
         <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M24 10h-10v-10h-4v10h-10v4h10v10h4v-10h10z"/></svg>
         {{ $t('button.addHoliday') }}
@@ -23,24 +21,22 @@
     <table class="table table-hover bg-light mt-5">
       <thead>
         <th>{{ $t('tableHeader.name') }}</th>
-        <th>{{ $t('tableHeader.country') }}</th>
         <th>{{ $t('tableHeader.startAt') }}</th>
         <th>{{ $t('tableHeader.endAt') }}</th>
         <th></th>
       </thead>
       <tbody>
-        <tr v-for="customHoliday in localCustomHolidays">
-          <td>{{ customHoliday.name }}</td>
-          <td></td>
-          <td>{{ customHoliday.started_at | datetime_mmdd }}</td>
-          <td>{{ customHoliday.ended_at | datetime_mmdd }}</td>
+        <tr v-for="holiday in filterHolidays(name)">
+          <td>{{ holiday.name }}</td>
+          <td>{{ holiday.started_at | datetime_mmdd }}</td>
+          <td>{{ holiday.ended_at | datetime_mmdd }}</td>
           <td class="text-center">
-            <button class="btn btn-action btn-link" @click="toggleUpdateModal(customHoliday)">
+            <button class="btn btn-action btn-link" @click="toggleUpdateModal(holiday)">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 16" fill="currentColor">
                 <path fill-rule="evenodd" d="M0 12v3h3l8-8-3-3-8 8zm3 2H1v-2h1v1h1v1zm10.3-9.3L12 6 9 3l1.3-1.3a.996.996 0 0 1 1.41 0l1.59 1.59c.39.39.39 1.02 0 1.41z"/>
               </svg>
             </button>
-            <button class="btn btn-action btn-link" @click="deleteCustomHoliday(customHoliday.id)">
+            <button class="btn btn-action btn-link" @click="deleteHoliday(holiday.id)">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M24 20.188l-8.315-8.209 8.2-8.282-3.697-3.697-8.212 8.318-8.31-8.203-3.666 3.666 8.321 8.24-8.206 8.313 3.666 3.666 8.237-8.318 8.285 8.203z"/>
               </svg>
@@ -83,7 +79,7 @@
         <p class="form-input-hint" v-if="errors.ended_at">{{ errors.ended_at[0] }}</p>
       </div>
       <div class="form-group">
-        <button type="button" class="btn" @click="createCustomHoliday(createParams)">{{ $t('button.submit') }}</button>
+        <button type="button" class="btn" @click="createHoliday(createParams)">{{ $t('button.submit') }}</button>
       </div>
     </modal>
 
@@ -120,7 +116,7 @@
         <p class="form-input-hint" v-if="errors.reason">{{ errors.ended_at[0] }}</p>
       </div>
       <div class="form-group">
-        <button type="button" class="btn" @click="updateCustomHoliday({ customHolidayID: currentID, updateParams: updateParams })">{{ $t('button.save') }}</button>
+        <button type="button" class="btn" @click="updateHoliday({ holidayID: currentID, updateParams: updateParams })">{{ $t('button.save') }}</button>
       </div>
     </modal>
   </setting-layout>
@@ -137,7 +133,7 @@ export default {
 
   data () {
     return {
-      localCustomHolidays: [],
+      name: '',
       createParams: {
         name: '',
         started_at: '',
@@ -148,7 +144,8 @@ export default {
         started_at: '',
         ended_at: ''
       },
-      currentID: ''
+      currentID: '',
+      country: ''
     }
   },
 
@@ -158,39 +155,36 @@ export default {
   },
 
   methods: {
-    ...mapActions('companyCustomHolidays', [
-      'fetchCustomHolidays',
-      'createCustomHoliday',
-      'updateCustomHoliday',
-      'deleteCustomHoliday',
-      'clearCustomHolidayErrors'
+    ...mapActions('companyHolidays', [
+      'fetchHolidays',
+      'createHoliday',
+      'updateHoliday',
+      'deleteHoliday',
+      'clearHolidayErrors',
+      'importNationalHolidays'
     ]),
 
-    toggleUpdateModal (customHoliday) {
-      this.clearCustomHolidayErrors()
+    toggleUpdateModal (holiday) {
+      this.clearHolidayErrors()
       this.isEditModalOpen = !this.isEditModalOpen
-      this.currentID = customHoliday.id
-      Object.keys(this.updateParams).forEach(k => { this.updateParams[k] = customHoliday[k] })
-    },
-
-    filterCustomHolidays (e) {
-      this.localCustomHolidays = this.filterByName(e.target.value)
+      this.currentID = holiday.id
+      Object.keys(this.updateParams).forEach(k => { this.updateParams[k] = holiday[k] })
     }
   },
 
   computed: {
-    ...mapState('companyCustomHolidays', [
-      'customHolidays',
+    ...mapState('companyHolidays', [
+      'holidays',
       'errors'
     ]),
 
-    ...mapGetters('companyCustomHolidays', [
-      'filterByName'
+    ...mapGetters('companyHolidays', [
+      'filterHolidays'
     ])
   },
 
   created () {
-    this.fetchCustomHolidays().then(response => { this.localCustomHolidays = response.data })
+    this.fetchHolidays()
   }
 }
 </script>
