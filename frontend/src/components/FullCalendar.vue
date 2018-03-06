@@ -18,10 +18,13 @@
           <div class="calendar-date prev-month disabled" v-for="date in lastDaysPreviousMonth">
             <button class="date-item">{{ date }}</button>
           </div>
-          <div class="calendar-date current-month" v-for="event in events">
-            <button class="date-item" :class="{'date-today': event.day == initialDate && month == initialMonth && year == initialYear}">{{ event.day }}</button>
-            <a href="#calendars" class="calendar-event bg-primary text-light">{{ event.attend_event }}</a>
-            <a href="#calendars" class="calendar-event bg-error text-light">{{ event.leave_event }}</a>
+          <div class="calendar-date current-month" v-for="attendance in getFormattedAttendances">
+            <button class="date-item" :class="{ 'date-today': attendance.day === today.format('YYYY-MM-DD') }">{{ attendance.day.split('-')[2] }}</button>
+            <div class="calendar-events">
+              <a href="#" class="calendar-event bg-primary text-light" v-if="attendance.attending_status">{{ attendance.attending_status }}</a>
+              <a href="#" class="calendar-event bg-error text-light" v-if="attendance.leaving_status">{{ attendance.leaving_status }}</a>
+              <a href="#" class="calendar-event bg-warning text-light" v-if="attendance.off_status">{{ attendance.off_status }}</a>
+            </div>
           </div>
           <div class="calendar-date next-month disabled" v-for="date in firstDaysNextMonth">
             <button class="date-item">{{ date }}</button>
@@ -34,6 +37,7 @@
 
 <script>
 import moment from 'moment'
+import { mapState, mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'full-calendar',
@@ -42,149 +46,7 @@ export default {
     return {
       today: moment(),
       dateContext: moment(),
-      days: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-      events: [
-        {
-          day: 1,
-          attend_event: 'Arrive on time',
-          leave_event: 'Leave early'
-        },
-        {
-          day: 2,
-          attend_event: 'Arrive late',
-          leave_event: 'Leave early'
-        },
-        {
-          day: 3,
-          attend_event: 'Arrive on time',
-          leave_event: 'Leave early'
-        },
-        {
-          day: 4,
-          attend_event: 'Arrive late',
-          leave_event: 'Leave on time'
-        },
-        {
-          day: 5,
-          attend_event: 'Arrive on time',
-          leave_event: 'Leave on time'
-        },
-        {
-          day: 6,
-          attend_event: 'Arrive on time',
-          leave_event: 'Leave early'
-        },
-        {
-          day: 7,
-          attend_event: 'Arrive on time',
-          leave_event: 'Leave on time'
-        },
-        {
-          day: 8,
-          attend_event: 'Arrive late',
-          leave_event: 'Leave early'
-        },
-        {
-          day: 9,
-          attend_event: 'Arrive on time',
-          leave_event: 'Leave on time'
-        },
-        {
-          day: 10,
-          attend_event: 'Arrive late',
-          leave_event: 'Leave early'
-        },
-        {
-          day: 11,
-          attend_event: 'Arrive on time',
-          leave_event: 'Leave early'
-        },
-        {
-          day: 12,
-          attend_event: 'Arrive late',
-          leave_event: 'Leave early'
-        },
-        {
-          day: 13,
-          attend_event: 'Arrive on time',
-          leave_event: 'Leave on time'
-        },
-        {
-          day: 14,
-          attend_event: 'Arrive on time',
-          leave_event: 'Leave on time'
-        },
-        {
-          day: 15,
-          attend_event: 'Arrive late',
-          leave_event: 'Leave on time'
-        },
-        {
-          day: 16,
-          attend_event: 'Arrive on time',
-          leave_event: 'Leave on time'
-        },
-        {
-          day: 17,
-          attend_event: 'Arrive on time',
-          leave_event: 'Leave early'
-        },
-        {
-          day: 18,
-          attend_event: 'Arrive on time',
-          leave_event: 'Leave on time'
-        },
-        {
-          day: 19,
-          attend_event: 'Arrive on time',
-          leave_event: 'Leave on time'
-        },
-        {
-          day: 20,
-          attend_event: 'Arrive on time',
-          leave_event: 'Leave on time'
-        },
-        {
-          day: 21,
-          attend_event: 'Arrive late',
-          leave_event: 'Leave on time'
-        },
-        {
-          day: 22,
-          attend_event: 'Arrive on time',
-          leave_event: 'Leave on time'
-        },
-        {
-          day: 23,
-          attend_event: 'Arrive on time',
-          leave_event: 'Leave on time'
-        },
-        {
-          day: 24,
-          attend_event: 'Arrive late',
-          leave_event: 'Leave on time'
-        },
-        {
-          day: 25,
-          attend_event: 'Arrive on time',
-          leave_event: 'Leave on time'
-        },
-        {
-          day: 26,
-          attend_event: 'Arrive late',
-          leave_event: 'Leave on time'
-        },
-        {
-          day: 27,
-          attend_event: 'Arrive on time',
-          leave_event: 'Leave on time'
-        },
-        {
-          day: 28,
-          attend_event: 'Arrive on time',
-          leave_event: 'Leave on time'
-        }
-      ]
+      days: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
     }
   },
 
@@ -259,17 +121,35 @@ export default {
       }
       nextDays.splice(daysNextMonth)
       return nextDays
-    }
+    },
+
+    ...mapState('calendar', [
+      'attendances'
+    ]),
+
+    ...mapGetters('calendar', [
+      'getFormattedAttendances'
+    ])
   },
 
   methods: {
     nextMonth () {
       this.dateContext = moment(this.dateContext).add(1, 'month')
+      this.getCalendarAttendances(this.dateContext.format('YYYY-MM-DD'))
     },
 
     lastMonth () {
       this.dateContext = moment(this.dateContext).subtract(1, 'month')
-    }
+      this.getCalendarAttendances(this.dateContext.format('YYYY-MM-DD'))
+    },
+
+    ...mapActions('calendar', [
+      'getCalendarAttendances'
+    ])
+  },
+
+  created () {
+    this.getCalendarAttendances()
   }
 }
 </script>
