@@ -28,8 +28,6 @@ class Request < ApplicationRecord
 
   validates :reason, presence: true, length: { maximum: 500 }
 
-  scope :in_group, ->(user) { where(user_id: User.where(group_id: user.group_id)) }
-
   scope :for_user, ->(user, pself = nil) {
     return user.requests if pself
     case user.role
