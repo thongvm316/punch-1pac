@@ -55,15 +55,13 @@ class Attendance < ApplicationRecord
       .group(:month)
   }
 
-  scope :calendar, ->(params) {
-    date = Time.zone.parse(params)
-
-    if date
-      where(day: date.beginning_of_month..date.end_of_month)
-    else
-      none
-    end
-  }
+  def self.calendar(str_date)
+    date = str_date.present? ? Time.zone.parse(str_date) : Time.current
+    raise ArgumentError if date.blank?
+    where(day: date.beginning_of_month..date.end_of_month)
+  rescue TypeError, ArgumentError
+    none
+  end
 
   def self.search_by(params)
     q = all
