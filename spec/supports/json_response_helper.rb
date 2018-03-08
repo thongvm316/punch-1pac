@@ -106,6 +106,7 @@ module JsonResponseHelper
         name: String,
         avatar_url: String,
         gender: String,
+        position: nullable_response(String),
         role: String,
         permissions: Array.new(permissions_size) { response_permission }
       }
@@ -116,6 +117,7 @@ module JsonResponseHelper
         name: String,
         avatar_url: String,
         gender: String,
+        position: nullable_response(String),
         role: String
       }
     end
