@@ -57,7 +57,6 @@ Rails.application.routes.draw do
         end
         resources :business_days, only: %i[index create update destroy]
         resources :allowed_ips, only: %i[index create update destroy]
-        resources :departments, only: %i[index show create update destroy]
       end
     end
 
