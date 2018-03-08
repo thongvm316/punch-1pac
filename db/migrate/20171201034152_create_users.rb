@@ -4,7 +4,6 @@ class CreateUsers < ActiveRecord::Migration[5.1]
   def change
     create_table :users do |t|
       t.bigint   :company_id, null: false
-      t.bigint   :department_id
       t.string   :email, null: false
       t.string   :password_digest, null: false
       t.integer  :role, null: false, default: 0
@@ -20,7 +19,6 @@ class CreateUsers < ActiveRecord::Migration[5.1]
     end
 
     add_index :users, :company_id
-    add_index :users, :department_id
     add_index :users, :email,                unique: true
     add_index :users, :reset_password_token, unique: true
   end

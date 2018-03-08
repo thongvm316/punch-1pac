@@ -35,13 +35,6 @@ module JsonResponseHelper
     }
   end
 
-  def response_department
-    {
-      id: Integer,
-      name: String
-    }
-  end
-
   def response_allowed_ip
     {
       id: Integer,
@@ -113,7 +106,6 @@ module JsonResponseHelper
         name: String,
         avatar_url: String,
         gender: String,
-        department_name: nullable_response(String),
         role: String,
         permissions: Array.new(permissions_size) { response_permission }
       }
@@ -124,7 +116,6 @@ module JsonResponseHelper
         name: String,
         avatar_url: String,
         gender: String,
-        department_name: nullable_response(String),
         role: String
       }
     end

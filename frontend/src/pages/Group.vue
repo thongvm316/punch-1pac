@@ -19,7 +19,6 @@
         <th>{{ $t('tableHeader.name') }}</th>
         <th>{{ $t('tableHeader.email') }}</th>
         <th>{{ $t('tableHeader.gender') }}</th>
-        <th>{{ $t('tableHeader.department') }}</th>
         <th>{{ $t('tableHeader.actions') }}</th>
       </thead>
       <tbody>
@@ -27,7 +26,6 @@
           <td>{{ user.name }}</td>
           <td>{{ user.email }}</td>
           <td>{{ user.gender }}</td>
-          <td>{{ user.department_name }}</td>
           <td>
             <button class="btn btn-action btn-link" @click="removeGroupUser({ groupId: currentId, userId: user.id })">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">

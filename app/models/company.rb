@@ -31,7 +31,6 @@ class Company < ApplicationRecord
   has_many :users, dependent: :destroy
   has_many :allowed_ips, dependent: :destroy
   has_many :business_days, dependent: :destroy
-  has_many :departments, dependent: :destroy
   has_many :holidays, dependent: :destroy
   has_many :groups, dependent: :destroy
 

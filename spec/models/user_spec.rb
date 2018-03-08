@@ -5,7 +5,6 @@ require 'rails_helper'
 RSpec.describe User, type: :model do
   describe 'associations' do
     it { should belong_to(:company) }
-    it { should belong_to(:department) }
     it { should have_many(:attendances).dependent(:destroy) }
     it { should have_many(:sessions).dependent(:destroy) }
     it { should have_many(:requests).dependent(:destroy) }

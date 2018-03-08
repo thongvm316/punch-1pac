@@ -98,14 +98,6 @@ ActiveRecord::Schema.define(version: 20180111065539) do
     t.index ["namespace"], name: "index_companies_on_namespace", unique: true
   end
 
-  create_table "departments", force: :cascade do |t|
-    t.bigint "company_id", null: false
-    t.string "name", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["company_id"], name: "index_departments_on_company_id"
-  end
-
   create_table "group_permissions", force: :cascade do |t|
     t.bigint "group_id", null: false
     t.bigint "permission_id", null: false
@@ -223,7 +215,6 @@ ActiveRecord::Schema.define(version: 20180111065539) do
 
   create_table "users", force: :cascade do |t|
     t.bigint "company_id", null: false
-    t.bigint "department_id"
     t.string "email", null: false
     t.string "password_digest", null: false
     t.integer "role", default: 0, null: false
@@ -237,7 +228,6 @@ ActiveRecord::Schema.define(version: 20180111065539) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["company_id"], name: "index_users_on_company_id"
-    t.index ["department_id"], name: "index_users_on_department_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
