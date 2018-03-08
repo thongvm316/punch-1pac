@@ -1,11 +1,11 @@
 <template>
   <div class="punch">
-    <span v-show="attendedAt">{{ $t('punch.in') }}: {{ attendedAt }}</span>
-    <span class="mx-2" v-show="attendedAt">-</span>
-    <span class="mr-5" v-if="leftAt">{{ $t('punch.out') }}: {{ leftAt }}</span>
+    <span v-show="attendance.attended_at">{{ $t('punch.in') }}: {{ attendance.attended_at }}</span>
+    <span class="mx-2" v-show="attendance.attended_at">-</span>
+    <span class="mr-5" v-if="attendance.left_at">{{ $t('punch.out') }}: {{ attendance.left_at }}</span>
     <span class="mr-5" v-else>{{ currentTime }}</span>
-    <button class="btn btn-primary mr-5" @click="punchIn" v-show="!attendedAt">Punch In</button>
-    <button class="btn btn-primary mr-5" @click="punchOut" v-show="attendedAt && !leftAt">Punch Out</button>
+    <button class="btn btn-primary mr-5" @click="punchIn" v-show="!attendance.attended_at">Punch In</button>
+    <button class="btn btn-primary mr-5" @click="punchOut" v-show="attendance.attended_at && !attendance.left_at">Punch Out</button>
   </div>
 </template>
 
@@ -29,26 +29,27 @@ export default {
 
     ...mapActions('punch', [
       'punchIn',
-      'punchOut'
+      'punchOut',
+      'initAttendance'
     ])
   },
 
   computed: {
     ...mapState('punch', [
-      'attendedAt',
-      'leftAt'
+      'attendance'
     ])
   },
 
   created () {
+    this.initAttendance(window.INITIAL_STATE.attendance)
     this.updateCurrentTime()
     setInterval(this.updateCurrentTime, 1 * 1000)
 
-    window.addEventListener('keyup', (e) => {
+    window.addEventListener('keypress', (e) => {
       if (e.keyCode === 13 && !this.attendedAt) this.punchIn()
     })
 
-    window.addEventListener('keyup', (e) => {
+    window.addEventListener('keypress', (e) => {
       if (e.keyCode === 13 && this.attendedAt && !this.leftAt) this.punchOut()
     })
   }
