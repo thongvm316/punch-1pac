@@ -10,6 +10,7 @@ class CreateUsers < ActiveRecord::Migration[5.1]
       t.boolean  :owner, null: false, default: false
       t.string   :name, null: false
       t.integer  :gender, null: false, default: 0
+      t.string   :position
       t.text     :avatar_data
       t.string   :language, null: false, default: 'en'
       t.string   :reset_password_token

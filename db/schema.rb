@@ -221,6 +221,7 @@ ActiveRecord::Schema.define(version: 20180111065539) do
     t.boolean "owner", default: false, null: false
     t.string "name", null: false
     t.integer "gender", default: 0, null: false
+    t.string "position"
     t.text "avatar_data"
     t.string "language", default: "en", null: false
     t.string "reset_password_token"
