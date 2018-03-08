@@ -7,6 +7,11 @@
         <input class="form-input" type="file" @change="setAvatarFile">
         <p class="form-input-hint" v-if="userErrors.avatar">{{ userErrors.avatar[0] }}</p>
       </div>
+      <div class="form-group" :class="{ 'has-error': userErrors.email }">
+        <label class="form-label">{{ $t('label.email') }}</label>
+        <input class="form-input" type="text" v-model="params.email">
+        <p class="form-input-hint" v-if="userErrors.email">{{ userErrors.email[0] }}</p>
+      </div>
       <div class="form-group" :class="{ 'has-error': userErrors.name }">
         <label class="form-label">{{ $t('label.name') }}</label>
         <input class="form-input" type="text" v-model="params.name">
@@ -24,10 +29,9 @@
         </label>
         <p class="form-input-hint" v-if="userErrors.gender">{{ userErrors.gender[0] }}</p>
       </div>
-      <div class="form-group" :class="{ 'has-error': userErrors.email }">
-        <label class="form-label">{{ $t('label.email') }}</label>
-        <input class="form-input" type="text" v-model="params.email">
-        <p class="form-input-hint" v-if="userErrors.email">{{ userErrors.email[0] }}</p>
+      <div class="form-group">
+        <label class="form-label">{{ $t('label.position') }}</label>
+        <input class="form-input" type="text" v-model="params.position">
       </div>
       <div class="form-group">
         <button type="button" class="btn" @click="updateUser({ userId: currentUser.id, userParams: params })">Save</button>
@@ -47,6 +51,7 @@ export default {
         avatar: '',
         gender: '',
         name: '',
+        position: '',
         email: ''
       }
     }
