@@ -2,19 +2,20 @@ import * as types from '../mutation-types.js'
 import axios from 'axios'
 
 const state = {
-  id: null,
-  attendedAt: null,
-  leftAt: null
+  attendance: {}
 }
 
 const mutations = {
-  [types.PUNCH_IN] (state, payload) {
-    state.id = payload.id
-    state.attendedAt = payload.attended_at
+  [types.PUNCH_INIT_ATTENDANCE] (state, attendance) {
+    state.attendance = attendance
   },
 
-  [types.PUNCH_OUT] (state, payload) {
-    state.leftAt = payload.left_at
+  [types.PUNCH_IN] (state, attendance) {
+    state.attendance = attendance
+  },
+
+  [types.PUNCH_OUT] (state, attendance) {
+    state.attendance = attendance
   }
 }
 
@@ -27,6 +28,10 @@ const actions = {
   punchOut ({ commit, state }) {
     axios.patch(`/attendances/${state.id}`)
          .then((response) => commit(types.PUNCH_OUT, response.data))
+  },
+
+  initAttendance ({ commit }, attendance) {
+    commit(types.PUNCH_INIT_ATTENDANCE, attendance)
   }
 }
 

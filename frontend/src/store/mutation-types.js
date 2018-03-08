@@ -20,6 +20,7 @@ export const RECEIVE_ATTENDANCES = 'RECEIVE_ATTENDANCES'
 // punch
 export const PUNCH_IN = 'PUNCH_IN'
 export const PUNCH_OUT = 'PUNCH_OUT'
+export const PUNCH_INIT_ATTENDANCE = 'PUNCH_INIT_ATTENDANCE'
 
 // company-users
 export const FETCH_USERS = 'FETCH_USERS'
