@@ -4,7 +4,7 @@
       <div class="column col-6">
         <div class="box chart">
           <div class="box-header box-header-flex border-bottom">
-            <h2>{{ $t('dashboard.chartInMonth') }}</h2>
+            <h2>{{ $t('dashboard.chart') }}</h2>
             <select class="form-select" v-model="status">
               <option value="attend_ok">{{ $t('status.arriveOnTime') }}</option>
               <option value="leave_ok">{{ $t('status.leaveOnTime') }}</option>

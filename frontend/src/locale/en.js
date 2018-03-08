@@ -92,7 +92,8 @@ export default {
     newPassword: 'New Password',
     newPasswordConfirm: 'New Password Confirmation',
     avatar: 'Avatar',
-    gender: 'Gender'
+    gender: 'Gender',
+    position: 'Position'
   },
   tableHeader: {
     date: 'Date',
@@ -111,6 +112,7 @@ export default {
     name: 'Name',
     actions: 'Actions',
     gender: 'Gender',
+    position: 'Position',
     ipAddress: 'IP Address',
     weekday: 'Weekday',
     members: 'Members',
@@ -154,7 +156,7 @@ export default {
     numberOfDays: 'Number of days',
     arriveOnTime: 'Arrive on time',
     day: '0 | 1 day | {count} days',
-    chartInMonth: 'Chart in month'
+    chart: 'Chart'
   },
   attendance: {
     myAttendances: 'My Attendances',

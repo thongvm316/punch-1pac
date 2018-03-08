@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: users
@@ -11,6 +12,7 @@
 #  owner                  :boolean          default(FALSE), not null
 #  name                   :string           not null
 #  gender                 :integer          default("male"), not null
+#  position               :string
 #  avatar_data            :text
 #  language               :string           default("en"), not null
 #  reset_password_token   :string

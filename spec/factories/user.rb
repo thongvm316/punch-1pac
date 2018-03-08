@@ -6,6 +6,7 @@ FactoryBot.define do
     role 'member'
     name { Faker::Name.name }
     gender 'male'
+    position 'Backend Developer'
     language 'en'
     email { Faker::Internet.email }
     password { Faker::Internet.password }
