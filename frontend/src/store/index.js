@@ -9,7 +9,6 @@ import attendances from './modules/attendances'
 import punch from './modules/punch'
 
 import companyUsers from './modules/company-users'
-import companyDepartments from './modules/company-departments'
 import companyBusinessDays from './modules/company-businessdays'
 import companyAllowedIPs from './modules/company-allowed_ips'
 import companyHolidays from './modules/company-holidays'
@@ -35,7 +34,6 @@ export default new Vuex.Store({
     announcements,
     attendances,
     companyUsers,
-    companyDepartments,
     companyBusinessDays,
     companyAllowedIPs,
     companyHolidays,

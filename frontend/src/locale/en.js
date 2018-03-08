@@ -10,7 +10,6 @@ export default {
   subtitle: {
     allowedIPs: 'Allowed IPs',
     businessDays: 'Business Days',
-    departments: 'Departments',
     holidays: 'Holidays',
     profile: 'Profile',
     timeLang: 'Timezone and Language',
@@ -42,7 +41,6 @@ export default {
     addRequest: 'Add Request',
     addIP: 'Add IP',
     addBusinessDays: 'Add Business Days',
-    addDepartment: 'Add Department',
     addHoliday: 'Add Holiday',
     addUsers: 'Add Users',
     addMultiUsers: 'Add Multiple USers',
@@ -109,7 +107,6 @@ export default {
     startAt: 'Start At',
     endAt: 'End At',
     reason: 'Reason',
-    department: 'Department',
     email: 'Email',
     name: 'Name',
     actions: 'Actions',
@@ -147,7 +144,6 @@ export default {
     users: 'Users',
     password: 'Password',
     security: 'Security',
-    departments: 'Departments',
     bussinessDays: 'Bussiness days',
     holidays: 'Holidays',
     allowedIPs: 'Allowed IPs'
