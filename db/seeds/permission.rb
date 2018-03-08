@@ -41,13 +41,6 @@ Permission.create(name: 'List all holidays',             controller: 'api/v1/hol
 Permission.create(name: 'Adds national holidays',        controller: 'api/v1/holidays', action: 'import', role: User.roles[:admin])
 Permission.create(name: 'Remove holiday from a company', controller: 'api/v1/holidays', action: 'company_destroy', role: User.roles[:admin])
 
-# Permission on department controller
-Permission.create(name: 'List all departments', controller: 'api/v1/departments', action: 'index', role: User.roles[:admin])
-Permission.create(name: 'Show department',      controller: 'api/v1/departments', action: 'show', role: User.roles[:admin])
-Permission.create(name: 'Create department',    controller: 'api/v1/departments', action: 'create', role: User.roles[:admin])
-Permission.create(name: 'Update department',    controller: 'api/v1/departments', action: 'update', role: User.roles[:admin])
-Permission.create(name: 'Destroy department',   controller: 'api/v1/departments', action: 'destroy', role: User.roles[:admin])
-
 # Permission on group controller
 Permission.create(name: 'List all groups', controller: 'api/v1/groups', action: 'index', role: User.roles[:admin])
 Permission.create(name: 'Show group',      controller: 'api/v1/groups', action: 'show', role: User.roles[:admin])
