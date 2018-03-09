@@ -1,7 +1,6 @@
 <template>
   <main-layout :title="group.name">
     <div class="input-group mt-5">
-      <!-- <input type="text" class="form-input" :placeholder="$t('placeholder.searchUserByEmail')"></input> -->
       <v-select
         label="email"
         @search="filterUsersByEmail"
