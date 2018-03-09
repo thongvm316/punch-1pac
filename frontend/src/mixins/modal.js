@@ -13,12 +13,22 @@ export default {
   },
 
   methods: {
-    toggleAddModal () {
+    toggleAddModal (callback) {
+      if (callback) callback()
       this.isAddModalOpen = !this.isAddModalOpen
     },
 
-    toggleEditModal () {
+    toggleEditModal (callback) {
+      if (callback) callback()
       this.isEditModalOpen = !this.isEditModalOpen
+    },
+
+    submitAddModal (params, callback) {
+      callback(params).then(response => { this.isAddModalOpen = false })
+    },
+
+    saveEditModal (params, callback) {
+      callback(params).then(response => { this.isEditModalOpen = false })
     }
   }
 }
