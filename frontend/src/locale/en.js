@@ -43,7 +43,7 @@ export default {
     addBusinessDays: 'Add Business Days',
     addHoliday: 'Add Holiday',
     addUsers: 'Add Users',
-    addMultiUsers: 'Add Multiple USers',
+    addMultiUsers: 'Add Multiple Users',
     import: 'Import',
     revoke: 'Revoke'
   },
