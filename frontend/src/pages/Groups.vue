@@ -1,7 +1,7 @@
 <template>
   <main-layout :title="$t('title.groups')">
     <div class="toolbar mt-5 text-right">
-      <button type="button" class="btn" @click="toggleAddModal">
+      <button type="button" class="btn" @click="toggleAddModal(clearGroupErrors)">
         <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M24 10h-10v-10h-4v10h-10v4h10v10h4v-10h10z"></path></svg>
         {{ $t('button.addGroup') }}
       </button>
@@ -32,7 +32,7 @@
         <p class="form-input-hint" v-if="errors.name">{{ errors.name[0] }}</p>
       </div>
       <div class="form-group">
-        <button type="button" class="btn" @click="addGroup(createParams)">{{ $t('button.submit') }}</button>
+        <button type="button" class="btn" @click="submitAddModal(createParams, addGroup)">{{ $t('button.submit') }}</button>
       </div>
     </modal>
   </main-layout>
@@ -79,6 +79,7 @@ export default {
     },
 
     ...mapActions('groups', [
+      'clearGroupsErrors',
       'getGroups',
       'addGroup'
     ]),

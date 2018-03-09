@@ -1,7 +1,7 @@
 <template>
   <setting-layout sidebar-type="company" :title="$t('title.companySettings')" :subtitle="$t('subtitle.allowedIPs')">
     <div class="toolbar clearfix mt-5">
-      <button type="button" class="btn float-right" @click="toggleAddModal">
+      <button type="button" class="btn float-right" @click="toggleAddModal(clearIPErrors)">
         <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M24 10h-10v-10h-4v10h-10v4h10v10h4v-10h10z"/></svg>
         {{ $t('button.addIP') }}
       </button>
@@ -40,7 +40,7 @@
         <p class="form-input-hint" v-if="errors.ip_address">{{ errors.ip_address[0] }}</p>
       </div>
       <div class="form-group">
-        <a class="btn" @click="createIP({ ip_address: newIp })">{{ $t('button.submit') }}</a>
+        <a class="btn" @click="submitAddModal({ ip_address: newIp }, createIP)">{{ $t('button.submit') }}</a>
       </div>
     </modal>
 
@@ -51,7 +51,7 @@
         <p class="form-input-hint" v-if="errors.ip_address">{{ errors.ip_address[0] }}</p>
       </div>
       <div class="form-group">
-        <a class="btn" @click="updateIP({ id: currentId, ip_address: editIp })">{{ $t('button.save') }}</a>
+        <a class="btn" @click="saveEditModal({ id: currentId, ip_address: editIp }, updateIP)">{{ $t('button.save') }}</a>
       </div>
     </modal>
   </setting-layout>
