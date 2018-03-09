@@ -1,7 +1,7 @@
 <template>
   <setting-layout sidebar-type="company" :title="$t('title.companySettings')" :subtitle="$t('subtitle.businessDays')">
     <div class="toolbar text-right mt-5">
-      <button type="button" class="btn" @click="toggleAddModal">
+      <button type="button" class="btn" @click="toggleAddModal(clearBusinessDayErrors)">
         <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M24 10h-10v-10h-4v10h-10v4h10v10h4v-10h10z"/></svg>
         {{ $t('button.addBusinessDays') }}
       </button>
@@ -35,7 +35,7 @@
     </table>
 
     <modal title="Add Business Day" :modal-open.sync="isAddModalOpen">
-      <div class="form-group">
+      <div class="form-group" :class="{ 'has-error': errors.weekday }">
         <label class="form-label">{{ $t('tableHeader.weekday') }}</label>
         <select class="form-select" v-model="createParams.weekday">
           <option>monday</option>
@@ -48,35 +48,23 @@
         </select>
         <p class="form-input-hint" v-if="errors.weekday">{{ errors.weekday[0] }}</p>
       </div>
-      <div class="form-group">
+      <div class="form-group" :class="{ 'has-error': errors.started_at }">
         <label class="form-label">{{ $t('label.startAt') }}</label>
-        <select class="form-select" v-model="createParams.started_at">
-          <option>01:00</option>
-          <option>03:00</option>
-          <option>06:00</option>
-          <option>09:00</option>
-          <option>12:00</option>
-        </select>
+        <input class="form-input" type="time" step="300" v-model="createParams.started_at">
         <p class="form-input-hint" v-if="errors.started_at">{{ errors.started_at[0] }}</p>
       </div>
-      <div class="form-group">
+      <div class="form-group" :class="{ 'has-error': errors.ended_at }">
         <label class="form-label">{{ $t('label.endAt') }}</label>
-        <select class="form-select" v-model="createParams.ended_at">
-          <option>01:00</option>
-          <option>03:00</option>
-          <option>06:00</option>
-          <option>09:00</option>
-          <option>12:00</option>
-        </select>
+        <input class="form-input" type="time" step="300" v-model="createParams.ended_at">
         <p class="form-input-hint" v-if="errors.ended_at">{{ errors.ended_at[0] }}</p>
       </div>
       <div class="form-group">
-        <button type="button" class="btn" @click="addBusinessDay(createParams)">{{ $t('button.submit') }}</button>
+        <button type="button" class="btn" @click="submitAddModal(createParams, addBusinessDay)">{{ $t('button.submit') }}</button>
       </div>
     </modal>
 
     <modal title="Edit Business Day" :modal-open.sync="isEditModalOpen">
-      <div class="form-group">
+      <div class="form-group" :class="{ 'has-error': errors.weekday }">
         <label class="form-label">{{ $t('tableHeader.weekday') }}</label>
         <select class="form-select" v-model="updateParams.weekday">
           <option>monday</option>
@@ -89,30 +77,18 @@
         </select>
         <p class="form-input-hint" v-if="errors.weekday">{{ errors.weekday[0] }}</p>
       </div>
-      <div class="form-group">
+      <div class="form-group" :class="{ 'has-error': errors.started_at }">
         <label class="form-label">{{ $t('label.startAt') }}</label>
-        <select class="form-select" v-model="updateParams.started_at">
-          <option>01:00</option>
-          <option>03:00</option>
-          <option>06:00</option>
-          <option>09:00</option>
-          <option>12:00</option>
-        </select>
+        <input class="form-input" type="time" step="300" v-model="updateParams.started_at">
         <p class="form-input-hint" v-if="errors.started_at">{{ errors.started_at[0] }}</p>
       </div>
-      <div class="form-group">
+      <div class="form-group" :class="{ 'has-error': errors.ended_at }">
         <label class="form-label">{{ $t('label.endAt') }}</label>
-        <select class="form-select" v-model="updateParams.ended_at">
-          <option>01:00</option>
-          <option>03:00</option>
-          <option>06:00</option>
-          <option>09:00</option>
-          <option>12:00</option>
-        </select>
+        <input class="form-input" type="time" step="300" v-model="updateParams.ended_at">
         <p class="form-input-hint" v-if="errors.ended_at">{{ errors.ended_at[0] }}</p>
       </div>
       <div class="form-group">
-        <button type="button" class="btn" @click="updateBusinessDay({ updateParams: updateParams, businessDayId: currentId})">{{ $t('button.save') }}</button>
+        <button type="button" class="btn" @click="saveEditModal({ updateParams: updateParams, businessDayId: currentId }, updateBusinessDay)">{{ $t('button.save') }}</button>
       </div>
     </modal>
   </setting-layout>
@@ -129,8 +105,8 @@ export default {
     return {
       createParams: {
         weekday: 'monday',
-        started_at: '01:00',
-        ended_at: '01:00'
+        started_at: '',
+        ended_at: ''
       },
       currentId: '',
       updateParams: {

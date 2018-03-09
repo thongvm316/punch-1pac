@@ -48,13 +48,15 @@
         :disabled-picker="true"
         :value="updateParams.day"/>
       </div>
-      <div class="form-group">
+      <div class="form-group" :class="{ 'has-error': errors.attended_at }">
         <label class="form-label">{{ $t('label.attendedAt') }}</label>
         <input class="form-input" v-model="updateParams.attended_at">
+        <p class="form-input-hint" v-if="errors.attended_at">{{ errors.attended_at[0] }}</p>
       </div>
-      <div class="form-group">
+      <div class="form-group" :class="{ 'has-error': errors.left_at }">
         <label class="form-label">{{ $t('label.leftAt') }}</label>
         <input class="form-input" v-model="updateParams.left_at">
+        <p class="form-input-hint" v-if="errors.left_at">{{ errors.left_at[0] }}</p>
       </div>
       <div class="form-group" :class="{ 'has-error': errors.reason }">
         <label class="form-label">{{ $t('label.reason') }}</label>
@@ -62,7 +64,7 @@
         <p class="form-input-hint" v-if="errors.reason">{{ errors.reason[0] }}</p>
       </div>
       <div class="form-group">
-        <button type="button" class="btn" @click="updateRequest({id: currentId, params: updateParams})">{{ $t('button.save') }}</button>
+        <button type="button" class="btn" @click="saveEditModal({id: currentId, params: updateParams}, updateRequest)">{{ $t('button.save') }}</button>
       </div>
     </modal>
   </main-layout>
