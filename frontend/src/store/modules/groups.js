@@ -26,22 +26,24 @@ const mutations = {
 
 const actions = {
   getGroups ({ commit, state }) {
-    return new Promise((resolve, reject) => {
-      axios.get('/groups')
-           .then((response) => {
-             commit(types.RECEIVE_GROUPS, response.data)
-             resolve(response)
-           })
-           .catch((error) => reject(error))
-    })
+    return axios.get('/groups')
+                .then(response => {
+                  commit(types.RECEIVE_GROUPS, response.data)
+                  return response
+                })
+                .catch(error => { throw error })
   },
 
   addGroup ({ commit }, params) {
-    axios.post('/groups', { group: params }, { headers: { 'Content-Type': 'application/json' } })
-         .then((response) => commit(types.ADD_GROUP, response.data))
-         .catch((error) => {
-           if (error.response && error.response.status === 422) commit(types.UPDATE_GROUPS_ERRORS, error.response.data)
-         })
+    return axios.post('/groups', { group: params }, { headers: { 'Content-Type': 'application/json' } })
+                .then(response => {
+                  commit(types.ADD_GROUP, response.data)
+                  return response
+                })
+                .catch((error) => {
+                  if (error.response && error.response.status === 422) commit(types.UPDATE_GROUPS_ERRORS, error.response.data)
+                  throw error
+                })
   },
 
   clearGroupsErrors ({ commit }) {

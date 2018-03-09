@@ -29,14 +29,12 @@ const mutations = {
 
 const actions = {
   getChart ({ commit }, params) {
-    return new Promise((resolve, reject) => {
-      axios.get(`/attendances/chart?status=${params}`)
-           .then((response) => {
-             commit(types.FETCH_CHART_DATA, response.data)
-             resolve(response)
-           })
-           .catch((error) => reject(error))
-    })
+    return axios.get(`/attendances/chart?status=${params}`)
+                .then(response => {
+                  commit(types.FETCH_CHART_DATA, response.data)
+                  return response
+                })
+                .catch(error => { throw error })
   },
 
   resetChart ({ commit }) {

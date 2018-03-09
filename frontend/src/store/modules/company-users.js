@@ -22,13 +22,12 @@ const mutations = {
 
 const actions = {
   fetchUsers ({ commit }) {
-    return new Promise((resolve, reject) => {
-      axios.get('/users', { params: { per_page: 1000 } })
-           .then((response) => {
-             commit(types.FETCH_USERS, response.data)
-             resolve(response.data)
-           })
-    })
+    return axios.get('/users', { params: { per_page: 1000 } })
+                .then(response => {
+                  commit(types.FETCH_USERS, response.data)
+                  return response
+                })
+                .catch(error => { throw error })
   }
 }
 

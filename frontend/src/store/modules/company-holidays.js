@@ -48,35 +48,45 @@ const mutations = {
 
 const actions = {
   fetchHolidays ({ commit }) {
-    return new Promise((resolve, reject) => {
-      axios.get('/holidays')
-           .then((response) => {
-             commit(types.FETCH_HOLIDAYS, response.data)
-             resolve(response)
-           })
-           .catch((error) => reject(error))
-    })
+    return axios.get('/holidays')
+                .then(response => {
+                  commit(types.FETCH_HOLIDAYS, response.data)
+                  return response
+                })
+                .catch(error => { throw error })
   },
 
   deleteHoliday ({ commit }, holidayID) {
-    axios.delete(`/holidays/${holidayID}`)
-         .then((response) => commit(types.DELETE_HOLIDAY, holidayID))
+    return axios.delete(`/holidays/${holidayID}`)
+                .then((response) => {
+                  commit(types.DELETE_HOLIDAY, holidayID)
+                  return response
+                })
+                .catch(error => { throw error })
   },
 
   createHoliday ({ commit }, data) {
-    axios.post(`/holidays`, { holiday: data }, { headers: { 'Content-Type': 'application/json' } })
-         .then((response) => commit(types.CREATE_HOLIDAY, response.data))
-         .catch((error) => {
-           if (error.response && error.response.status === 422) commit(types.UPDATE_HOLIDAY_ERRORS, error.response.data)
-         })
+    return axios.post(`/holidays`, { holiday: data }, { headers: { 'Content-Type': 'application/json' } })
+                .then(response => {
+                  commit(types.CREATE_HOLIDAY, response.data)
+                  return response
+                })
+                .catch(error => {
+                  if (error.response && error.response.status === 422) commit(types.UPDATE_HOLIDAY_ERRORS, error.response.data)
+                  else throw error
+                })
   },
 
   updateHoliday ({ commit }, data) {
-    axios.put(`/holidays/${data.holidayID}`, { holiday: data.updateParams }, { headers: { 'Content-Type': 'application/json' } })
-         .then((response) => commit(types.UPDATE_HOLIDAY, response.data))
-         .catch((error) => {
-           if (error.response && error.response.status === 422) commit(types.UPDATE_HOLIDAY_ERRORS, error.response.data)
-         })
+    return axios.put(`/holidays/${data.holidayID}`, { holiday: data.updateParams }, { headers: { 'Content-Type': 'application/json' } })
+                .then(response => {
+                  commit(types.UPDATE_HOLIDAY, response.data)
+                  return response
+                })
+                .catch(error => {
+                  if (error.response && error.response.status === 422) commit(types.UPDATE_HOLIDAY_ERRORS, error.response.data)
+                  else throw error
+                })
   },
 
   clearHolidayErrors ({ commit }) {
@@ -85,9 +95,12 @@ const actions = {
 
   importNationalHolidays ({ commit }, country) {
     if (!country) return
-    axios.post('/holidays/import', { country: country }, { headers: { 'Content-Type': 'application/json' } })
-         .then(response => commit(types.IMPORT_NATIONAL_HOLIDAYS, response.data))
-         .catch(error => { throw error })
+    return axios.post('/holidays/import', { country: country }, { headers: { 'Content-Type': 'application/json' } })
+                .then(response => {
+                  commit(types.IMPORT_NATIONAL_HOLIDAYS, response.data)
+                  return response
+                })
+                .catch(error => { throw error })
   }
 }
 

@@ -48,45 +48,63 @@ const mutations = {
 
 const actions = {
   getRequests ({ commit, state }, params = {}) {
-    return new Promise((resolve, reject) => {
-      axios.get('/requests', { params: Object.assign(state.params, params) })
-           .then((response) => {
-             commit(types.RECEIVE_REQUESTS, response.data)
-             resolve(response)
-           })
-           .catch((error) => reject(error))
-    })
+    return axios.get('/requests', { params: Object.assign(state.params, params) })
+                .then(response => {
+                  commit(types.RECEIVE_REQUESTS, response.data)
+                  return response
+                })
+                .catch(error => { throw error })
   },
 
   addRequest ({ commit }, params = {}) {
-    axios.post('/requests', { request: params }, { headers: { 'Content-Type': 'application/json' } })
-         .then((response) => { commit(types.ADD_REQUEST, response.data) })
-         .catch((error) => {
-           if (error.response && error.response.status === 422) commit(types.UPDATE_REQUEST_ERRORS, error.response.data)
-         })
+    return axios.post('/requests', { request: params }, { headers: { 'Content-Type': 'application/json' } })
+                .then(response => {
+                  commit(types.ADD_REQUEST, response.data)
+                  return response
+                })
+                .catch(error => {
+                  if (error.response && error.response.status === 422) commit(types.UPDATE_REQUEST_ERRORS, error.response.data)
+                  else throw error
+                })
   },
 
   updateRequest ({ commit }, request) {
-    axios.patch(`/requests/${request.id}`, { request: request.params }, { headers: { 'Content-Type': 'application/json' } })
-         .then((response) => { commit(types.UPDATE_REQUEST, response.data) })
-         .catch((error) => {
-           if (error.response && error.response.status === 422) commit(types.UPDATE_REQUEST_ERRORS, error.response.data)
-         })
+    return axios.patch(`/requests/${request.id}`, { request: request.params }, { headers: { 'Content-Type': 'application/json' } })
+                .then(response => {
+                  commit(types.UPDATE_REQUEST, response.data)
+                  return response
+                })
+                .catch(error => {
+                  if (error.response && error.response.status === 422) commit(types.UPDATE_REQUEST_ERRORS, error.response.data)
+                  else throw error
+                })
   },
 
   deleteRequest ({ commit }, id) {
-    axios.delete(`/requests/${id}`)
-         .then(response => { commit(types.DELETE_REQUEST, response.data) })
+    return axios.delete(`/requests/${id}`)
+                .then(response => {
+                  commit(types.DELETE_REQUEST, response.data)
+                  return response
+                })
+                .catch(error => { throw error })
   },
 
   approveRequest ({ commit }, requestId) {
-    axios.post(`/requests/${requestId}/approve`)
-         .then(response => { commit(types.APPROVE_REQUEST, requestId) })
+    return axios.post(`/requests/${requestId}/approve`)
+                .then(response => {
+                  commit(types.APPROVE_REQUEST, requestId)
+                  return response
+                })
+                .catch(error => { throw error })
   },
 
   rejectRequest ({ commit }, requestId) {
-    axios.post(`/requests/${requestId}/reject`)
-         .then(response => { commit(types.REJECT_REQUEST, requestId) })
+    return axios.post(`/requests/${requestId}/reject`)
+                .then(response => {
+                  commit(types.REJECT_REQUEST, requestId)
+                  return response
+                })
+                .catch(error => { throw error })
   },
 
   clearRequestErrors ({ commit }) {

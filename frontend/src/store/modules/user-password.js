@@ -17,10 +17,12 @@ const mutations = {
 
 const actions = {
   updatePassword ({ commit }, params) {
-    axios.put('/users/change_password', params)
-         .catch((error) => {
-           if (error.response && error.response.status === 422) commit(types.UPDATE_USER_PASSWORD_ERRORS, error.response.data)
-         })
+    return axios.put('/users/change_password', params)
+                .then(response => response)
+                .catch((error) => {
+                  if (error.response && error.response.status === 422) commit(types.UPDATE_USER_PASSWORD_ERRORS, error.response.data)
+                  else throw error
+                })
   },
 
   clearUserPasswordErrors ({ commit }) {
