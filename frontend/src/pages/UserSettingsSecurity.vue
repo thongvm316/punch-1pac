@@ -17,10 +17,7 @@
           </td>
           <td>{{ session.ip_address }}</td>
           <td>{{ session.updated_at | datetime_normal }}</td>
-          <td><button
-                type="button"
-                class="btn btn-error"
-                @click="deleteSession(session.id)">{{ $t('button.revoke') }}</button></td>
+          <td><button type="button" class="btn btn-error" @click="deleteSession(session.id)">{{ $t('button.revoke') }}</button></td>
         </tr>
       </tbody>
     </table>

@@ -9,8 +9,8 @@ import attendances from './modules/attendances'
 import punch from './modules/punch'
 
 import companyUsers from './modules/company-users'
-import companyBusinessDays from './modules/company-businessdays'
-import companyAllowedIPs from './modules/company-allowed_ips'
+import companyBusinessDays from './modules/company-business-days'
+import companyAllowedIPs from './modules/company-allowed-ips'
 import companyHolidays from './modules/company-holidays'
 
 import userSessions from './modules/user-sessions'

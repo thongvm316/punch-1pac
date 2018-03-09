@@ -10,6 +10,7 @@ const mutations = {
   [types.FETCH_SESSIONS] (state, payload) {
     state.sessions = payload
   },
+
   [types.DELETE_SESSION] (state, payload) {
     state.sessions = state.sessions.filter(session => session.id !== payload)
   }
@@ -17,18 +18,21 @@ const mutations = {
 
 const actions = {
   fetchSessions ({ commit }) {
-    return new Promise((resolve, reject) => {
-      axios.get('/sessions')
-         .then((response) => {
-           commit(types.FETCH_SESSIONS, response.data)
-           resolve(response)
-         })
-         .catch((error) => reject(error))
-    })
+    return axios.get('/sessions')
+                .then(response => {
+                  commit(types.FETCH_SESSIONS, response.data)
+                  return response
+                })
+                .catch(error => { throw error })
   },
+
   deleteSession ({ commit }, data) {
-    axios.delete(`/sessions/${data}`)
-         .then((response) => commit(types.DELETE_SESSION, data))
+    return axios.delete(`/sessions/${data}`)
+                .then(response => {
+                  commit(types.DELETE_SESSION, data)
+                  return response
+                })
+                .catch(error => { throw error })
   }
 }
 

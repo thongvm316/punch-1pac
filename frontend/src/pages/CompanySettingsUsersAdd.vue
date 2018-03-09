@@ -66,6 +66,7 @@ export default {
            .then(response => { this.msgSuccess = true })
            .catch(error => {
              if (error.response && error.response.status === 422) this.errors = error.response.data.errors
+             else throw error
            })
     }
   }

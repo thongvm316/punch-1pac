@@ -21,13 +21,21 @@ const mutations = {
 
 const actions = {
   punchIn ({ commit }) {
-    axios.post('/attendances')
-         .then((response) => commit(types.PUNCH_IN, response.data))
+    return axios.post('/attendances')
+                .then(response => {
+                  commit(types.PUNCH_IN, response.data)
+                  return response
+                })
+                .catch(error => { throw error })
   },
 
   punchOut ({ commit, state }) {
-    axios.patch(`/attendances/${state.id}`)
-         .then((response) => commit(types.PUNCH_OUT, response.data))
+    return axios.patch(`/attendances/${state.id}`)
+                .then(response => {
+                  commit(types.PUNCH_OUT, response.data)
+                  return response
+                })
+                .catch(error => { throw error })
   },
 
   initAttendance ({ commit }, attendance) {

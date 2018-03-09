@@ -44,43 +44,51 @@ const mutations = {
 
 const actions = {
   getGroup ({ commit, state }, id) {
-    return new Promise((resolve, reject) => {
-      axios.get(`/groups/${id}`)
-           .then((response) => {
-             commit(types.RECEIVE_GROUP, response.data)
-             resolve(response)
-           })
-           .catch((error) => reject(error))
-    })
+    return axios.get(`/groups/${id}`)
+                .then(response => {
+                  commit(types.RECEIVE_GROUP, response.data)
+                  return response
+                })
+                .catch(error => { throw error })
   },
 
   updateGroup ({ commit }, params) {
-    axios.put(`/groups/${params.groupId}`, { group: params.editParams }, { headers: { 'Content-Type': 'application/json' } })
-         .then((response) => commit(types.UPDATE_GROUP, response.data))
-         .catch((error) => {
-           if (error.response && error.response.status === 422) commit(types.UPDATE_GROUP_ERRORS, error.response.data)
-         })
+    return axios.put(`/groups/${params.groupId}`, { group: params.editParams }, { headers: { 'Content-Type': 'application/json' } })
+                .then(response => {
+                  commit(types.UPDATE_GROUP, response.data)
+                  return response
+                })
+                .catch(error => {
+                  if (error.response && error.response.status === 422) commit(types.UPDATE_GROUP_ERRORS, error.response.data)
+                  else throw error
+                })
   },
 
   addGroupUser ({ commit }, params) {
-    axios.post(`/groups/${params.groupId}/add_user?user_id=${params.userId}`, { headers: { 'Content-Type': 'application/json' } })
-         .then((response) => commit(types.ADD_GROUP_USER, response.data))
+    return axios.post(`/groups/${params.groupId}/add_user?user_id=${params.userId}`, { headers: { 'Content-Type': 'application/json' } })
+                .then(response => {
+                  commit(types.ADD_GROUP_USER, response.data)
+                  return response
+                })
+                .catch(error => { throw error })
   },
 
   removeGroupUser ({ commit }, params) {
-    axios.delete(`/groups/${params.groupId}/remove_user?user_id=${params.userId}`)
-         .then((response) => commit(types.REMOVE_GROUP_USER, params.userId))
+    return axios.delete(`/groups/${params.groupId}/remove_user?user_id=${params.userId}`)
+                .then(response => {
+                  commit(types.REMOVE_GROUP_USER, params.userId)
+                  return response
+                })
+                .catch(error => { throw error })
   },
 
   filterUsersByEmail ({ commit }, userEmail) {
-    return new Promise((resolve, reject) => {
-      axios.get(`/users?email=${userEmail}`, { timeout: 5000 })
-           .then((response) => {
-             commit(types.FILTERED_USERS, response.data)
-             resolve(response)
-           })
-           .catch((error) => reject(error))
-    })
+    return axios.get(`/users?email=${userEmail}`, { timeout: 5000 })
+                .then(response => {
+                  commit(types.FILTERED_USERS, response.data)
+                  return response
+                })
+                .catch(error => { throw error })
   },
 
   selectUser ({ commit }, user) {

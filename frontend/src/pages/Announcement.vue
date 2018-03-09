@@ -29,17 +29,13 @@ export default {
 
   created () {
     this.getAnnouncement(this.$route.params.id)
-        .then((response) => {
-          if (!response.data.readed) this.readAnnouncement(response.data.id)
-        })
+        .then(response => { if (!response.data.readed) this.readAnnouncement(response.data.id) })
   },
 
   watch: {
     '$route': function (val) {
       this.getAnnouncement(this.$route.params.id)
-          .then((response) => {
-            if (!response.data.readed) this.readAnnouncement(response.data.id)
-          })
+          .then(response => { if (!response.data.readed) this.readAnnouncement(response.data.id) })
     }
   }
 }

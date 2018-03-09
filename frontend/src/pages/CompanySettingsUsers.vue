@@ -1,7 +1,7 @@
 <template>
   <setting-layout sidebar-type="company" :title="$t('title.companySettings')" :subtitle="$t('subtitle.users')">
     <div class="toolbar mt-5 clearfix">
-      <input type="text" class="form-input" placeholder="Filter user by email" @keyup="filterUsers">
+      <input type="text" class="form-input" placeholder="Filter user by email" v-model="email">
       <router-link to="/company/settings/users/add" tag="button" class="btn float-right">
         <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M24 10h-10v-10h-4v10h-10v4h10v10h4v-10h10z"></path></svg>
         {{ $t('button.addUsers') }}
@@ -16,11 +16,10 @@
         <th>{{ $t('tableHeader.name') }}</th>
         <th>{{ $t('tableHeader.email') }}</th>
         <th>{{ $t('tableHeader.role') }}</th>
-        <th>{{ $t('tableHeader.createdAt') }}</th>
-        <th></th>
+        <th>{{ $t('tableHeader.createdAt') }}</th> <th></th>
       </thead>
       <tbody>
-        <tr v-for="user in localUsers">
+        <tr v-for="user in filterByEmail(email)">
           <td>{{ user.name }}</td>
           <td>{{ user.email }}</td>
           <td>Member</td>
@@ -45,7 +44,7 @@ import { mapState, mapGetters, mapActions } from 'vuex'
 export default {
   data () {
     return {
-      localUsers: []
+      email: ''
     }
   },
 
@@ -56,11 +55,7 @@ export default {
   methods: {
     ...mapActions('companyUsers', [
       'fetchUsers'
-    ]),
-
-    filterUsers (e) {
-      this.localUsers = this.filterByEmail(e.target.value)
-    }
+    ])
   },
 
   computed: {
@@ -74,7 +69,7 @@ export default {
   },
 
   created () {
-    this.fetchUsers().then(response => { this.localUsers = response.users })
+    this.fetchUsers()
   }
 }
 </script>

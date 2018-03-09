@@ -43,37 +43,39 @@ const mutations = {
 
 const actions = {
   readAnnouncement ({ commit }, id) {
-    axios.post(`/announcements/${id}/read`)
-         .then(response => commit(types.READ_ANNOUNCEMENT, id))
+    return axios.post(`/announcements/${id}/read`)
+                .then(response => {
+                  commit(types.READ_ANNOUNCEMENT, id)
+                  return response
+                })
+                .catch(error => { throw error })
   },
 
   getAnnouncement ({ commit }, id) {
-    return new Promise((resolve, reject) => {
-      axios.get(`/announcements/${id}`)
-           .then((response) => {
-             commit(types.RECEIVE_ANNOUNCEMENT, response.data)
-             resolve(response)
-           })
-           .catch((error) => reject(error))
-    })
+    return axios.get(`/announcements/${id}`)
+                .then(response => {
+                  commit(types.RECEIVE_ANNOUNCEMENT, response.data)
+                  return response
+                })
+                .catch(error => { throw error })
   },
 
   getAnnouncements ({ commit }, params = {}) {
-    return new Promise((resolve, reject) => {
-      axios.get('/announcements', { params: params })
-           .then((response) => {
-             commit(types.RECEIVE_ANNOUNCEMENTS, response.data)
-             resolve(response)
-           })
-           .catch((error) => reject(error))
-    })
+    return axios.get('/announcements', { params: params })
+                .then(response => {
+                  commit(types.RECEIVE_ANNOUNCEMENTS, response.data)
+                  return response
+                })
+                .catch(error => { throw error })
   },
 
   getHeaderAnnouncements ({ commit }) {
-    axios.get('/announcements', { params: { per_page: 200, read_status: 'unread' } })
-         .then((response) => {
-           commit(types.RECEIVE_HEADER_ANNOUNCEMENTS, response.data)
-         })
+    return axios.get('/announcements', { params: { per_page: 200, read_status: 'unread' } })
+                .then(response => {
+                  commit(types.RECEIVE_HEADER_ANNOUNCEMENTS, response.data)
+                  return response
+                })
+                .catch(error => { throw error })
   }
 }
 

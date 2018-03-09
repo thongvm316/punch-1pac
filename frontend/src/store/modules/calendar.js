@@ -45,11 +45,11 @@ const mutations = {
 const actions = {
   getCalendarAttendances ({ commit }, day) {
     return axios.get('/attendances/calendar', { params: { day: day } })
-         .then(response => {
-           commit(types.FETCH_CALENDAR_ATTENDANCES, response.data)
-           return response
-         })
-         .catch(error => { throw error })
+                .then(response => {
+                  commit(types.FETCH_CALENDAR_ATTENDANCES, response.data)
+                  return response
+                })
+                .catch(error => { throw error })
   }
 }
 

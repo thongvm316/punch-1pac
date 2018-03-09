@@ -55,13 +55,15 @@ const actions = {
     let formData = new FormData()
     Object.keys(data.userParams).forEach(key => formData.set(`user[${key}]`, data.userParams[key] || ''))
 
-    axios.put(`/users/${data.userId}`, formData, { headers: { 'Content-Type': 'multipart/form-data' } })
-          .then(response => {
-            commit(types.INITIAL_STATES_UPDATE_USER, response.data)
-          })
-          .catch(error => {
-            if (error.response && error.response.status === 422) commit(types.INITIAL_STATES_SET_USER_ERRORS, error.response.data)
-          })
+    return axios.put(`/users/${data.userId}`, formData, { headers: { 'Content-Type': 'multipart/form-data' } })
+                .then(response => {
+                  commit(types.INITIAL_STATES_UPDATE_USER, response.data)
+                  return response
+                })
+                .catch(error => {
+                  if (error.response && error.response.status === 422) commit(types.INITIAL_STATES_SET_USER_ERRORS, error.response.data)
+                  else throw error
+                })
   },
 
   updateCompany ({ commit }, companyParams) {
@@ -74,13 +76,14 @@ const actions = {
       }
     })
 
-    axios.put('/company', formData, { headers: { 'Content-Type': 'multipart/form-data' } })
-          .then(response => {
-            commit(types.INITIAL_STATES_UPDATE_COMPANY, response.data)
-          })
-          .catch(error => {
-            if (error.response && error.response.status === 422) commit(types.INITIAL_STATES_SET_COMPANY_ERRORS, error.response.data)
-          })
+    return axios.put('/company', formData, { headers: { 'Content-Type': 'multipart/form-data' } })
+                .then(response => {
+                  commit(types.INITIAL_STATES_UPDATE_COMPANY, response.data)
+                })
+                .catch(error => {
+                  if (error.response && error.response.status === 422) commit(types.INITIAL_STATES_SET_COMPANY_ERRORS, error.response.data)
+                  else throw error
+                })
   },
 
   clearUserErrors ({ commit }) {

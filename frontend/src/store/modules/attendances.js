@@ -16,14 +16,12 @@ const mutations = {
 
 const actions = {
   getAttendances ({ commit, state }, params = {}) {
-    return new Promise((resolve, reject) => {
-      axios.get('/attendances', { params: Object.assign(state.params, params) })
-           .then((response) => {
-             commit(types.RECEIVE_ATTENDANCES, response.data)
-             resolve(response)
-           })
-           .catch((error) => reject(error))
-    })
+    return axios.get('/attendances', { params: Object.assign(state.params, params) })
+                .then(response => {
+                  commit(types.RECEIVE_ATTENDANCES, response.data)
+                  return response
+                })
+                .catch(error => { throw error })
   }
 }
 
