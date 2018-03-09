@@ -73,7 +73,7 @@ const actions = {
                 })
                 .catch(error => {
                   if (error.response && error.response.status === 422) commit(types.UPDATE_HOLIDAY_ERRORS, error.response.data)
-                  else throw error
+                  throw error
                 })
   },
 
@@ -85,7 +85,7 @@ const actions = {
                 })
                 .catch(error => {
                   if (error.response && error.response.status === 422) commit(types.UPDATE_HOLIDAY_ERRORS, error.response.data)
-                  else throw error
+                  throw error
                 })
   },
 

@@ -62,7 +62,7 @@ const actions = {
                 })
                 .catch(error => {
                   if (error.response && error.response.status === 422) commit(types.INITIAL_STATES_SET_USER_ERRORS, error.response.data)
-                  else throw error
+                  throw error
                 })
   },
 
@@ -82,7 +82,7 @@ const actions = {
                 })
                 .catch(error => {
                   if (error.response && error.response.status === 422) commit(types.INITIAL_STATES_SET_COMPANY_ERRORS, error.response.data)
-                  else throw error
+                  throw error
                 })
   },
 
