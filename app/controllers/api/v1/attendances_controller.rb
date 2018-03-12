@@ -5,7 +5,7 @@ class Api::V1::AttendancesController < Api::V1::BaseController
 
   def create
     authorize!
-    attendance = AttendanceService.new(current_user).attend
+    attendance = AttendanceService.new(current_user, request.remote_ip).attend
     if attendance
       render json: attendance, serializer: AttendanceSerializer, status: 201
     else
@@ -40,7 +40,7 @@ class Api::V1::AttendancesController < Api::V1::BaseController
 
   def update
     authorize!
-    attendance = AttendanceService.new(current_user).leave
+    attendance = AttendanceService.new(current_user, request.remote_ip).leave
     render json: attendance, serializer: AttendanceSerializer, status: 200
   end
 end
