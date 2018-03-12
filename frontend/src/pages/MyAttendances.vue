@@ -93,7 +93,7 @@
         <p class="form-input-hint" v-if="errors.reason">{{ errors.reason[0] }}</p>
       </div>
       <div class="form-group">
-        <button type="button" class="btn" @click="saveEditModal(createRequestParams, addRequest)">{{ $t('button.save') }}</button>
+        <button type="button" class="btn" @click="submitAddModal(createRequestParams, addRequest)">{{ $t('button.save') }}</button>
       </div>
     </modal>
   </main-layout>
