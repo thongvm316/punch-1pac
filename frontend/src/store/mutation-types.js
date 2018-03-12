@@ -24,6 +24,7 @@ export const PUNCH_INIT_ATTENDANCE = 'PUNCH_INIT_ATTENDANCE'
 
 // company-users
 export const FETCH_USERS = 'FETCH_USERS'
+export const DELETE_USER = 'DELETE_USER'
 
 // company-business-days
 export const FETCH_BUSINESS_DAYS = 'FETCH_BUSINESS_DAYS'

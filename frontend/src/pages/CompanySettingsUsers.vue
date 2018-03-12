@@ -15,17 +15,17 @@
       <thead>
         <th>{{ $t('tableHeader.name') }}</th>
         <th>{{ $t('tableHeader.email') }}</th>
-        <th>{{ $t('tableHeader.role') }}</th>
-        <th>{{ $t('tableHeader.createdAt') }}</th> <th></th>
+        <th>{{ $t('tableHeader.position') }}</th>
+        <th>{{ $t('tableHeader.role') }}</th> <th></th>
       </thead>
       <tbody>
         <tr v-for="user in filterByEmail(email)">
           <td>{{ user.name }}</td>
           <td>{{ user.email }}</td>
-          <td>Member</td>
-          <td>20-01-2018</td>
+          <td>{{ user.position }}</td>
+          <td>{{ user.role }}</td>
           <td class="text-center">
-            <button class="btn btn-action btn-link">
+            <button class="btn btn-action btn-link" @click="openConfirmDialog(user)">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M24 20.188l-8.315-8.209 8.2-8.282-3.697-3.697-8.212 8.318-8.31-8.203-3.666 3.666 8.321 8.24-8.206 8.313 3.666 3.666 8.237-8.318 8.285 8.203z"/>
               </svg>
@@ -34,10 +34,15 @@
         </tr>
       </tbody>
     </table>
+
+    <confirm-dialog title="Delete user" :deleteObject="deleteUser" :objectId="selectedObject.id" :modal-open.sync="isOpenConfirmDialog">
+      <p>Are you sure to delete <strong>{{ selectedObject.name }}</strong> user permanently ?</p>
+    </confirm-dialog>
   </setting-layout>
 </template>
 
 <script>
+import confirmDialog from '../mixins/confirm-dialog.js'
 import SettingLayout from '../layouts/Setting.vue'
 import { mapState, mapGetters, mapActions } from 'vuex'
 
@@ -48,12 +53,15 @@ export default {
     }
   },
 
+  mixins: [confirmDialog],
+
   components: {
     SettingLayout
   },
 
   methods: {
     ...mapActions('companyUsers', [
+      'deleteUser',
       'fetchUsers'
     ])
   },

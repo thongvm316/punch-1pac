@@ -11,15 +11,19 @@
           <slot></slot>
         </div>
       </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-error" @click="confirm">Yes</button>
+        <button type="button" class="btn" @click="toggle">No</button>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'modal',
+  name: 'confirm-dialog',
 
-  props: ['title', 'modalOpen'],
+  props: ['title', 'modalOpen', 'deleteObject', 'objectId'],
 
   data () {
     return {
@@ -31,6 +35,10 @@ export default {
     toggle () {
       this.open = !this.open
       this.$emit('update:modalOpen', this.open)
+    },
+
+    confirm () {
+      this.deleteObject(this.objectId).then(() => { this.open = false })
     }
   },
 

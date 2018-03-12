@@ -15,6 +15,10 @@ const getters = {
 }
 
 const mutations = {
+  [types.DELETE_USER] (state, id) {
+    state.users = state.users.filter(user => user.id !== id)
+  },
+
   [types.FETCH_USERS] (state, payload) {
     state.users = payload.users
   }
@@ -25,6 +29,15 @@ const actions = {
     return axios.get('/users', { params: { per_page: 1000 } })
                 .then(response => {
                   commit(types.FETCH_USERS, response.data)
+                  return response
+                })
+                .catch(error => { throw error })
+  },
+
+  deleteUser ({ commit }, id) {
+    return axios.delete(`/users/${id}`)
+                .then(response => {
+                  commit(types.DELETE_USER, id)
                   return response
                 })
                 .catch(error => { throw error })
