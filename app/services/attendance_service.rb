@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
 class AttendanceService
-  def initialize(current_user)
+  def initialize(current_user, remote_ip)
     @user = current_user
     @now = Time.current
+    @remote_ip = remote_ip
   end
 
   class << self
@@ -68,7 +69,7 @@ class AttendanceService
   def verify_ip_address!
     ips = @user.company.allowed_ips.pluck(:ip_address)
     return if ips.blank?
-    return if ips.include?(request.remote_ip)
+    return if ips.include?(@remote_ip)
     raise AppErrors::Error403
   end
 end
