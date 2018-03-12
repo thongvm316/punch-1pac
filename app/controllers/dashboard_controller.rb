@@ -5,7 +5,10 @@ class DashboardController < ApplicationController
   before_action :current_company
 
   def index
+    attendance = current_user.attendances.find_by(day: Time.current)
+
     @initial_state = {
+      attendance: attendance ? ActiveModelSerializers::SerializableResource.new(attendance, serializer: AttendanceSerializer).as_json : {},
       user: current_user.as_json(only: %i[id email role owner name gender language]).merge(avatar_url: current_user.avatar_url),
       company: current_company.as_json(except: %i[created_at updated_at logo_data]).merge(logo_url: current_company.logo_url)
     }
