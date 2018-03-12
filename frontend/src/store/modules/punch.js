@@ -30,7 +30,7 @@ const actions = {
   },
 
   punchOut ({ commit, state }) {
-    return axios.patch(`/attendances/${state.id}`)
+    return axios.patch(`/attendances/${state.attendance.id}`)
                 .then(response => {
                   commit(types.PUNCH_OUT, response.data)
                   return response
