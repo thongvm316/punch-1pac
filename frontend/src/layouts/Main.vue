@@ -13,14 +13,12 @@
 
 <script>
 import AppHeader from '../components/AppHeader.vue'
-import AppSidebar from '../components/AppSidebar.vue'
 import AppFooter from '../components/AppFooter.vue'
 
 export default {
   name: 'main-layout',
   props: ['title'],
   components: {
-    appSidebar: AppSidebar,
     appHeader: AppHeader,
     appFooter: AppFooter
   }
