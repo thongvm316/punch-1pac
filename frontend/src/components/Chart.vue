@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="height: 300px;">
     <canvas ref="chart"></canvas>
   </div>
 </template>
@@ -18,15 +18,15 @@ export default {
   props: ['chartData'],
 
   mounted () {
-    const chart = this.$refs.chart
-    const ctx = chart.getContext('2d')
+    const $chart = this.$refs.chart
+    const ctx = $chart.getContext('2d')
     this.createChart(ctx, 'line')
   },
 
   methods: {
     createChart (canvas, type) {
       /* eslint-disable no-new */
-      new Chart(canvas, {
+      return new Chart(canvas, {
         type: type,
         data: {
           labels: this.labels,
@@ -45,6 +45,15 @@ export default {
           ]
         },
         options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            yAxes: [{
+              ticks: {
+                beginAtZero:true
+              }
+            }]
+          },
           animation: {
             animateScale: true
           },
@@ -57,9 +66,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-  canvas {
-    width: 100%;
-  }
-</style>
