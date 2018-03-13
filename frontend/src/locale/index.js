@@ -7,8 +7,10 @@ import ja from './ja.js'
 
 Vue.use(VueI18n)
 
+const locale = window.INITIAL_STATE.user.language || window.INITIAL_STATE.company.language || ''
+
 export default new VueI18n({
-  locale: 'en',
+  locale: locale,
   fallbackLocale: 'en',
   messages: {
     en: en,
