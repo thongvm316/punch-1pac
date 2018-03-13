@@ -37,11 +37,13 @@
 
     <table class="table table-hover bg-light mt-5">
       <thead>
-        <th>{{ $t('tableHeader.date') }}</th>
-        <th>{{ $t('tableHeader.attendedAt') }}</th>
-        <th>{{ $t('tableHeader.leftAt') }}</th>
-        <th>{{ $t('tableHeader.status') }}</th>
-        <th>{{ $t('tableHeader.actions') }}</th>
+        <tr>
+          <th>{{ $t('tableHeader.date') }}</th>
+          <th>{{ $t('tableHeader.attendedAt') }}</th>
+          <th>{{ $t('tableHeader.leftAt') }}</th>
+          <th>{{ $t('tableHeader.status') }}</th>
+          <th>{{ $t('tableHeader.actions') }}</th>
+        </tr>
       </thead>
       <tbody>
         <tr v-for="attendance in attendances">

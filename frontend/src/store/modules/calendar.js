@@ -15,7 +15,17 @@ const getters = {
     for (let day = 1; day <= date.daysInMonth(); day++) {
       const currentDay = moment(`${date.year()}-${date.format('MM')}-${day}`, 'YYYY-MM-D')
       let attendance = null
-      if (state.attendances[index] && currentDay.format('YYYY-MM-DD') === state.attendances[index].day) {
+      if (moment().isBefore(currentDay)) {
+        attendance = {
+          id: null,
+          day: currentDay.format('YYYY-MM-DD'),
+          attended_at: '',
+          left_at: '',
+          attending_status: '',
+          leaving_status: '',
+          off_status: ''
+        }
+      } else if (state.attendances[index] && currentDay.format('YYYY-MM-DD') === state.attendances[index].day) {
         attendance = state.attendances[index]
         index++
       } else {
