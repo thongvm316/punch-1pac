@@ -1,37 +1,29 @@
 <template>
-  <main-layout :title="$t('title.requests')">
-    <ul class="tab mt-4">
-      <router-link tag="li" class="tab-item" to="/requests/my"><a href="#">{{ $t('request.myRequests') }}</a></router-link>
-      <router-link tag="li" class="tab-item" to="/requests/groups"><a href="#">{{ $t('request.groupRequests') }}</a></router-link>
-    </ul>
+  <main-layout :title="$t('requests.title')">
+    <requests-tab/>
 
     <div class="toolbar mt-5">
       <select class="form-select" v-model="params.group_id">
-        <option value="">{{ $t('placeholder.filterByGroup') }}</option>
-        <option value="1">{{ $t('group.accountant') }}</option>
-        <option value="2">{{ $t('group.developers') }}</option>
-        <option value="3">{{ $t('group.marketing') }}</option>
-        <option value="5">{{ $t('group.hr') }}</option>
+        <option value="">{{ $t('requests.placeholder.filterByGroup') }}</option>
+        <option :value="group.id" v-for="group in meta.groups">{{ group.name }}</option>
       </select>
       <select class="form-select" v-model="params.status">
-        <option value="">{{ $t('placeholder.filterByStatus') }}</option>
-        <option value="approved">{{ $t('status.approved') }}</option>
-        <option value="pending">{{ $t('status.pending') }}</option>
-        <option value="rejected">{{ $t('status.rejected') }}</option>
+        <option value="">{{ $t('requests.placeholder.filterByStatus') }}</option>
+        <option :value="status" v-for="status in meta.requestStatuses">{{ $t(`meta.requestStatuses.${status}`) }}</option>
       </select>
     </div>
 
     <table class="table table-hover bg-light mt-4">
       <thead>
         <tr>
-          <th>{{ $t('tableHeader.name') }}</th>
-          <th>{{ $t('tableHeader.email') }}</th>
-          <th>{{ $t('tableHeader.date') }}</th>
-          <th>{{ $t('tableHeader.attendedAt') }}</th>
-          <th>{{ $t('tableHeader.leftAt') }}</th>
-          <th style="width: 500px">{{ $t('tableHeader.reason') }}</th>
-          <th>{{ $t('tableHeader.status') }}</th>
-          <th>{{ $t('tableHeader.actions') }}</th>
+          <th>{{ $t('requests.tableHeader.name') }}</th>
+          <th>{{ $t('requests.tableHeader.email') }}</th>
+          <th>{{ $t('requests.tableHeader.date') }}</th>
+          <th>{{ $t('requests.tableHeader.attendedAt') }}</th>
+          <th>{{ $t('requests.tableHeader.leftAt') }}</th>
+          <th style="width: 500px">{{ $t('requests.tableHeader.reason') }}</th>
+          <th>{{ $t('requests.tableHeader.status') }}</th>
+          <th>{{ $t('requests.tableHeader.actions') }}</th>
         </tr>
       </thead>
       <tbody>
@@ -77,6 +69,7 @@
 <script>
 import MainLayout from '../layouts/Main.vue'
 import Pagination from '../components/Pagination.vue'
+import RequestsTab from '../components/RequestsTab.vue'
 import { mapState, mapActions } from 'vuex'
 
 export default {
@@ -94,10 +87,15 @@ export default {
 
   components: {
     MainLayout,
-    Pagination
+    Pagination,
+    RequestsTab
   },
 
   computed: {
+    ...mapState('initialStates', [
+      'meta'
+    ]),
+
     ...mapState('requests', [
       'pager',
       'requests'

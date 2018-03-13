@@ -1,13 +1,10 @@
 <template>
-  <main-layout :title="$t('title.attendances')">
-    <ul class="tab mt-4">
-      <router-link tag="li" class="tab-item" to="/attendances/my"><a href="#">{{ $t('attendance.myAttendances') }}</a></router-link>
-      <router-link tag="li" class="tab-item" to="/attendances/groups"><a href="#">{{ $t('attendance.groupAttendances') }}</a></router-link>
-    </ul>
+  <main-layout :title="$t('attendances.title')">
+    <attendances-tab/>
 
     <div class="toolbar mt-5">
       <datepicker
-        :placeholder="$t('placeholder.fromDate')"
+        :placeholder="$t('attendances.placeholder.fromDate')"
         :format="'MMM dd yyyy'"
         :minimumView="'day'"
         :maximumView="'day'"
@@ -16,7 +13,7 @@
         :wrapper-class="'datepicker'"
         v-model="params.from_date"/>
       <datepicker
-        :placeholder="$t('placeholder.toDate')"
+        :placeholder="$t('attendances.placeholder.toDate')"
         :format="'MMM dd yyyy'"
         :minimumView="'day'"
         :maximumView="'day'"
@@ -24,32 +21,25 @@
         :calendar-class="'datepicker-calendar'"
         :wrapper-class="'datepicker'"
         v-model="params.to_date"/>
+
       <select class="form-select" v-model="params.status">
-        <option value="">{{ $t('placeholder.filterByStatus') }}</option>
-        <option value="attend_ok">{{ $t('status.arriveOnTime') }}</option>
-        <option value="leave_ok">{{ $t('status.leaveOnTime') }}</option>
-        <option value="attend_late">{{ $t('status.arriveLate') }}</option>
-        <option value="leave_early">{{ $t('status.leaveEarly') }}</option>
-        <option value="holiday">{{ $t('status.holiday') }}</option>
-        <option value="annual_leave">{{ $t('status.annualLeave') }}</option>
+        <option value="">{{ $t('attendances.placeholder.filterByStatus') }}</option>
+        <option :value="status" v-for="status in meta.attendanceStatuses">{{ $t(`meta.attendanceStatuses.${status}`) }}</option>
       </select>
       <select class="form-select" v-model="params.group_id">
-        <option value="">{{ $t('placeholder.filterByGroup') }}</option>
-        <option value="1">{{ $t('group.accountant') }}</option>
-        <option value="2">{{ $t('group.developers') }}</option>
-        <option value="3">{{ $t('group.marketing') }}</option>
-        <option value="5">{{ $t('group.hr') }}</option>
+        <option value="">{{ $t('attendances.placeholder.filterByGroup') }}</option>
+        <option :value="group.id" v-for="group in meta.groups">{{ group.name }}</option>
       </select>
     </div>
 
     <table class="table table-hover bg-light mt-5">
       <thead>
-        <th>{{ $t('tableHeader.name') }}</th>
-        <th>{{ $t('tableHeader.email') }}</th>
-        <th>{{ $t('tableHeader.date') }}</th>
-        <th>{{ $t('tableHeader.attendedAt') }}</th>
-        <th>{{ $t('tableHeader.leftAt') }}</th>
-        <th>{{ $t('tableHeader.status') }}</th>
+        <th>{{ $t('attendances.tableHeader.name') }}</th>
+        <th>{{ $t('attendances.tableHeader.email') }}</th>
+        <th>{{ $t('attendances.tableHeader.date') }}</th>
+        <th>{{ $t('attendances.tableHeader.attendedAt') }}</th>
+        <th>{{ $t('attendances.tableHeader.leftAt') }}</th>
+        <th>{{ $t('attendances.tableHeader.status') }}</th>
       </thead>
       <tbody>
         <tr v-for="attendance in attendances">
@@ -81,6 +71,7 @@
 import Datepicker from 'vuejs-datepicker'
 import MainLayout from '../layouts/Main.vue'
 import Pagination from '../components/Pagination.vue'
+import AttendancesTab from '../components/AttendancesTab.vue'
 import moment from 'moment'
 import { mapState, mapActions } from 'vuex'
 
@@ -100,10 +91,15 @@ export default {
   components: {
     Datepicker,
     MainLayout,
+    AttendancesTab,
     Pagination
   },
 
   computed: {
+    ...mapState('initialStates', [
+      'meta'
+    ]),
+
     ...mapState('attendances', [
       'pager',
       'attendances'

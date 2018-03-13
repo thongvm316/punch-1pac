@@ -1,11 +1,11 @@
 <template>
-  <main-layout title="Announcements">
+  <main-layout :title="$t('announcements.title')">
     <table class="table table-hover mt-5 bg-light">
       <thead>
         <tr>
-          <th>{{ $t('tableHeader.title') }}</th>
-          <th>{{ $t('tableHeader.status') }}</th>
-          <th>{{ $t('tableHeader.sentAt') }}</th>
+          <th>{{ $t('announcements.tableHeader.title') }}</th>
+          <th>{{ $t('announcements.tableHeader.status') }}</th>
+          <th>{{ $t('announcements.tableHeader.sentAt') }}</th>
         </tr>
       </thead>
       <tbody>

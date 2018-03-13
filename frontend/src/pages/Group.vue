@@ -7,19 +7,19 @@
         @input="selectUser"
         :options="filteredUsers"
       ></v-select>
-      <button type="button" class="btn input-group-btn" @click="addGroupUser({ groupId: currentId, userId: selectedUser.id })">{{ $t('button.add') }}</button>
+      <button type="button" class="btn input-group-btn" @click="addGroupUser({ groupId: currentId, userId: selectedUser.id })">{{ $t('group.btn.addUser') }}</button>
     </div>
     <p class="form-input-hint text-dark">{{ $t('group.explain') }}</p>
 
-    <div class="toolbar mt-5 text-right"> <button type="button" class="btn" @click="toggleEditModal">{{ $t('button.editGroup') }}</button>
+    <div class="toolbar mt-5 text-right"> <button type="button" class="btn" @click="toggleEditModal">{{ $t('group.btn.edit') }}</button>
     </div>
     <table class="table table-hover bg-light mt-5">
       <thead>
-        <th>{{ $t('tableHeader.name') }}</th>
-        <th>{{ $t('tableHeader.email') }}</th>
-        <th>{{ $t('tableHeader.gender') }}</th>
-        <th>{{ $t('tableHeader.position') }}</th>
-        <th>{{ $t('tableHeader.actions') }}</th>
+        <th>{{ $t('group.tableHeader.name') }}</th>
+        <th>{{ $t('group.tableHeader.email') }}</th>
+        <th>{{ $t('group.tableHeader.gender') }}</th>
+        <th>{{ $t('group.tableHeader.position') }}</th>
+        <th>{{ $t('group.tableHeader.actions') }}</th>
       </thead>
       <tbody>
         <tr v-for="user in group.users">
@@ -38,14 +38,14 @@
       </tbody>
     </table>
 
-    <modal title="Edit Group" :modal-open.sync="isEditModalOpen">
+    <modal :title="$t('group.modal.editTitle')" :modal-open.sync="isEditModalOpen">
       <div class="form-group" :class="{ 'has-error': errors.name }">
-        <label class="form-label">{{ $t('label.name') }}</label>
+        <label class="form-label">{{ $t('group.labels.name') }}</label>
         <input class="form-input" type="text" v-model="editParams.name">
         <p class="form-input-hint" v-if="errors.name">{{ errors.name[0] }}</p>
       </div>
       <div class="form-group">
-        <button type="button" class="btn" @click="saveEditModal({ groupId: currentId, editParams: editParams }, updateGroup)">{{ $t('button.save') }}</button>
+        <button type="button" class="btn" @click="saveEditModal({ groupId: currentId, editParams: editParams }, updateGroup)">{{ $t('group.btn.save') }}</button>
       </div>
     </modal>
   </main-layout>

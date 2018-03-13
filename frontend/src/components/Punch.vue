@@ -1,11 +1,11 @@
 <template>
   <div class="punch">
-    <span v-show="attendance.attended_at">{{ $t('punch.in') }}: {{ attendance.attended_at }}</span>
+    <span v-show="attendance.attended_at">{{ $t('header.in') }}: {{ attendance.attended_at }}</span>
     <span class="mx-2" v-show="attendance.attended_at">-</span>
-    <span class="mr-5" v-if="attendance.left_at">{{ $t('punch.out') }}: {{ attendance.left_at }}</span>
+    <span class="mr-5" v-if="attendance.left_at">{{ $t('header.out') }}: {{ attendance.left_at }}</span>
     <span class="mr-5" v-else>{{ currentTime }}</span>
-    <button class="btn btn-primary mr-5" @click="punchIn" v-show="!attendance.attended_at">Punch In</button>
-    <button class="btn btn-primary mr-5" @click="punchOut" v-show="attendance.attended_at && !attendance.left_at">Punch Out</button>
+    <button class="btn btn-primary mr-5" @click="punchIn" v-show="!attendance.attended_at">{{ $t('header.punchIn') }}</button>
+    <button class="btn btn-primary mr-5" @click="punchOut" v-show="attendance.attended_at && !attendance.left_at">{{ $t('header.punchOut') }}</button>
   </div>
 </template>
 

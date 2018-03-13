@@ -1,23 +1,23 @@
 <template>
-  <setting-layout sidebar-type="user" title="Settings for Troy Kozey" :subtitle="$t('subtitle.password')">
+  <setting-layout sidebar-type="user" :title="$t('user.title', { name: currentUser.name })" :subtitle="$t('user.password.title')">
     <form class="setting-form">
       <div class="form-group" :class="{ 'has-error': errors.current_password }">
-        <label class="form-label">{{ $t('label.currentPassword') }}</label>
+        <label class="form-label">{{ $t('user.password.labels.currentPassword') }}</label>
         <input class="form-input" type="password" v-model="updateParams.current_password">
         <p class="form-input-hint" v-if="errors.current_password">{{ errors.current_password[0] }}</p>
       </div>
       <div class="form-group" :class="{ 'has-error': errors.password }">
-        <label class="form-label">{{ $t('label.newPassword') }}</label>
+        <label class="form-label">{{ $t('user.password.labels.newPassword') }}</label>
         <input class="form-input" type="password" v-model="updateParams.password">
         <p class="form-input-hint" v-if="errors.password">{{ errors.password[0] }}</p>
       </div>
       <div class="form-group" :class="{ 'has-error': errors.password_confirmation }">
-        <label class="form-label">{{ $t('label.newPasswordConfirm') }}</label>
+        <label class="form-label">{{ $t('user.password.labels.confirmNewPassword') }}</label>
         <input class="form-input" type="password" v-model="updateParams.password_confirmation">
         <p class="form-input-hint" v-if="errors.password_confirmation">{{ errors.password_confirmation[0] }}</p>
       </div>
       <div class="form-group">
-        <button type="button" class="btn" @click="updatePassword(updateParams)">{{ $t('button.save') }}</button>
+        <button type="button" class="btn" @click="updatePassword(updateParams)">{{ $t('user.password.btn.save') }}</button>
       </div>
     </form>
   </setting-layout>
@@ -45,6 +45,10 @@ export default {
   },
 
   computed: {
+    ...mapState('initialStates', [
+      'currentUser'
+    ]),
+
     ...mapState('userPassword', [
       'errors'
     ])

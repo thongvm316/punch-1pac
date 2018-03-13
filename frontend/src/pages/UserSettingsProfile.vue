@@ -1,40 +1,40 @@
 <template>
-  <setting-layout sidebar-type="user" title="Settings for Troy Kozey" :subtitle="$t('subtitle.profile')">
+  <setting-layout sidebar-type="user" :title="$t('user.title', { name: currentUser.name })" :subtitle="$t('user.profile.title')">
     <form class="setting-form">
       <div class="form-group" :class="{ 'has-error': userErrors.avatar }">
-        <label class="form-label">{{ $t('label.avatar') }}</label>
+        <label class="form-label">{{ $t('user.profile.labels.avatar') }}</label>
         <img class="img-profile" :src="currentUser.avatar_url" :alt="currentUser.name">
         <input class="form-input" type="file" @change="setAvatarFile">
         <p class="form-input-hint" v-if="userErrors.avatar">{{ userErrors.avatar[0] }}</p>
       </div>
       <div class="form-group" :class="{ 'has-error': userErrors.email }">
-        <label class="form-label">{{ $t('label.email') }}</label>
+        <label class="form-label">{{ $t('user.profile.labels.email') }}</label>
         <input class="form-input" type="text" v-model="params.email">
         <p class="form-input-hint" v-if="userErrors.email">{{ userErrors.email[0] }}</p>
       </div>
       <div class="form-group" :class="{ 'has-error': userErrors.name }">
-        <label class="form-label">{{ $t('label.name') }}</label>
+        <label class="form-label">{{ $t('user.profile.labels.name') }}</label>
         <input class="form-input" type="text" v-model="params.name">
         <p class="form-input-hint" v-if="userErrors.name">{{ userErrors.name[0] }}</p>
       </div>
       <div class="form-group" :class="{ 'has-error': userErrors.gender }">
-        <label class="form-label">{{ $t('label.gender') }}</label>
+        <label class="form-label">{{ $t('user.profile.labels.gender') }}</label>
         <label class="form-radio">
           <input type="radio" value="male" v-model="params.gender">
-          <i class="form-icon"></i> Male
+          <i class="form-icon"></i> {{ $t('meta.gender.male') }}
         </label>
         <label class="form-radio">
           <input type="radio" value="female" v-model="params.gender">
-          <i class="form-icon"></i> Female
+          <i class="form-icon"></i> {{ $t('meta.gender.female') }}
         </label>
         <p class="form-input-hint" v-if="userErrors.gender">{{ userErrors.gender[0] }}</p>
       </div>
       <div class="form-group">
-        <label class="form-label">{{ $t('label.position') }}</label>
+        <label class="form-label">{{ $t('user.profile.labels.position') }}</label>
         <input class="form-input" type="text" v-model="params.position">
       </div>
       <div class="form-group">
-        <button type="button" class="btn" @click="updateUser({ userId: currentUser.id, userParams: params })">Save</button>
+        <button type="button" class="btn" @click="updateUser({ userId: currentUser.id, userParams: params })">{{ $t('user.profile.btn.save') }}</button>
       </div>
     </form>
   </setting-layout>

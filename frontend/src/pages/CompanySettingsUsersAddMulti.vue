@@ -1,18 +1,18 @@
 <template>
-  <setting-layout sidebar-type="company" :title="$t('title.companySettings')" :subtitle="$t('subtitle.addMultiUsers')">
-    <p class="text-success mb-2" v-if="msgSuccess">{{ $t('users.successCSVMsg') }}</p>
-    <p class="mb-2">{{ $t('users.note') }}</p>
+  <setting-layout sidebar-type="company" :title="$t('company.title')" :subtitle="$t('company.users.addMulti.title')">
+    <p class="text-success mb-2" v-if="msgSuccess">{{ $t('company.users.addMulti.successCSVMsg') }}</p>
+    <p class="mb-2">{{ $t('company.users.addMulti.note') }}</p>
     <form class="setting-form">
       <div class="form-group" :class="{ 'has-error': errors.csv_file }">
-        <label class="form-label">{{ $t('label.csvFile') }}</label>
+        <label class="form-label">{{ $t('company.users.addMulti.labels.csvFile') }}</label>
         <input class="form-input" type="file" @change="setCsvFile">
         <p class="form-input-hint" v-if="errors.csv_file">{{ errors.csv_file[0] }}</p>
       </div>
       <div class="form-group" v-if="errors.lines">
-        <p class="form-input-hint text-error">{{ $t('users.errorMsg') }} {{ errors.lines.join(', ') }}</p>
+        <p class="form-input-hint text-error">{{ $t('company.users.addMulti.errorMsg', { lines: errors.lines.join(', ') }) }}</p>
       </div>
       <div class="form-group">
-        <button type="button" class="btn" @click="upload(params)">{{ $t('button.submit') }}</button>
+        <button type="button" class="btn" @click="upload(params)">{{ $t('company.users.addMulti.btn.submit') }}</button>
       </div>
     </form>
   </setting-layout>

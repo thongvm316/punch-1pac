@@ -1,9 +1,9 @@
 <template>
-  <main-layout :title="$t('title.groups')">
+  <main-layout :title="$t('groups.title')">
     <div class="toolbar mt-5 text-right">
       <button type="button" class="btn" @click="toggleAddModal(clearGroupErrors)">
         <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M24 10h-10v-10h-4v10h-10v4h10v10h4v-10h10z"></path></svg>
-        {{ $t('button.addGroup') }}
+        {{ $t('groups.btn.add') }}
       </button>
     </div>
 
@@ -12,27 +12,27 @@
         <div class="box">
           <div class="box-header">
             <router-link tag="h2" :to="`/groups/${group.id}`" class="box-title">{{ group.name }}</router-link>
-            <span>{{ $tc('group.member', group.users.length, { count: group.users.length }) }}</span>
+            <span>{{ $tc('groups.member', group.users.length, { count: group.users.length }) }}</span>
           </div>
           <div class="box-content box-content-flex" v-if="getGroupAdmins(group).length > 0">
             <div class="box-content-img">
               <img src="/static/avatar.png" :alt="admin.name" class="avatar avatar-md" v-for="admin in getGroupAdmins(group).slice(0, 2)">
               <span>{{ getGroupAdmins(group).length | filterGroupNumAdmins }}</span>
             </div>
-            <a @click.prevent="leave">{{ $t('group.leave') }}</a>
+            <a @click.prevent="leave">{{ $t('groups.btn.leave') }}</a>
           </div>
         </div>
       </div>
     </div>
 
-    <modal title="Add Group" :modal-open.sync="isAddModalOpen">
+    <modal :title="$t('groups.modal.addTitle')" :modal-open.sync="isAddModalOpen">
       <div class="form-group" :class="{ 'has-error': errors.name }">
-        <label class="form-label">{{ $t('label.name') }}</label>
-        <input class="form-input" type="text" :placeholder="$t('placeholder.name')" v-model="createParams.name">
+        <label class="form-label">{{ $t('groups.labels.name') }}</label>
+        <input class="form-input" type="text" :placeholder="$t('groups.placeholder.name')" v-model="createParams.name">
         <p class="form-input-hint" v-if="errors.name">{{ errors.name[0] }}</p>
       </div>
       <div class="form-group">
-        <button type="button" class="btn" @click="submitAddModal(createParams, addGroup)">{{ $t('button.submit') }}</button>
+        <button type="button" class="btn" @click="submitAddModal(createParams, addGroup)">{{ $t('groups.btn.submit') }}</button>
       </div>
     </modal>
   </main-layout>
