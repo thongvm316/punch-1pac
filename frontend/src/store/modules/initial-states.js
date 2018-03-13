@@ -5,7 +5,8 @@ const state = {
   userErrors: {},
   companyErrors: {},
   currentUser: {},
-  currentCompany: {}
+  currentCompany: {},
+  meta: {}
 }
 
 const mutations = {
@@ -39,6 +40,10 @@ const mutations = {
 
   [types.INITIAL_STATES_CLEAR_COMPANY_ERRORS] (state, payload) {
     state.companyErrors = {}
+  },
+
+  [types.INITIAL_STATES_SET_META] (state, payload) {
+    state.meta = payload
   }
 }
 
@@ -84,6 +89,10 @@ const actions = {
                   if (error.response && error.response.status === 422) commit(types.INITIAL_STATES_SET_COMPANY_ERRORS, error.response.data)
                   throw error
                 })
+  },
+
+  setMeta ({ commit }, initialStates) {
+    commit(types.INITIAL_STATES_SET_META, initialStates.meta)
   },
 
   clearUserErrors ({ commit }) {
