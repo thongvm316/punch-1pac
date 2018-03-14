@@ -23,7 +23,6 @@
 
 <script>
 import AppHeader from '../components/AppHeader.vue'
-import AppSidebar from '../components/AppSidebar.vue'
 import AppFooter from '../components/AppFooter.vue'
 import CompanySettingsSidebar from '../components/CompanySettingsSidebar.vue'
 import UserSettingsSidebar from '../components/UserSettingsSidebar.vue'
@@ -32,7 +31,6 @@ export default {
   name: 'setting-layout',
   props: ['sidebarType', 'title', 'subtitle'],
   components: {
-    AppSidebar,
     AppHeader,
     AppFooter,
     UserSettingsSidebar,

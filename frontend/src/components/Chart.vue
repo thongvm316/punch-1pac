@@ -25,7 +25,6 @@ export default {
 
   methods: {
     createChart (canvas, type) {
-      /* eslint-disable no-new */
       return new Chart(canvas, {
         type: type,
         data: {
@@ -50,7 +49,7 @@ export default {
           scales: {
             yAxes: [{
               ticks: {
-                beginAtZero:true
+                beginAtZero: true
               }
             }]
           },

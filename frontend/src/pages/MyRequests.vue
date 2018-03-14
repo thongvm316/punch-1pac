@@ -1,19 +1,16 @@
 <template>
-  <main-layout :title="$t('title.requests')">
-    <ul class="tab mt-4">
-      <router-link tag="li" class="tab-item" to="/requests/my"><a href="#">{{ $t('request.myRequests') }}</a></router-link>
-      <router-link tag="li" class="tab-item" to="/requests/groups"><a href="#">{{ $t('request.groupRequests') }}</a></router-link>
-    </ul>
+  <main-layout :title="$t('requests.title')">
+    <requests-tab/>
 
     <table class="table table-hover bg-light mt-4">
       <thead>
         <tr>
-          <th>{{ $t('tableHeader.date') }}</th>
-          <th>{{ $t('tableHeader.attendedAt') }}</th>
-          <th>{{ $t('tableHeader.leftAt') }}</th>
-          <th style="width: 600px">{{ $t('tableHeader.reason') }}</th>
-          <th>{{ $t('tableHeader.status') }}</th>
-          <th>{{ $t('tableHeader.actions') }}</th>
+          <th>{{ $t('requests.tableHeader.date') }}</th>
+          <th>{{ $t('requests.tableHeader.attendedAt') }}</th>
+          <th>{{ $t('requests.tableHeader.leftAt') }}</th>
+          <th style="width: 600px">{{ $t('requests.tableHeader.reason') }}</th>
+          <th>{{ $t('requests.tableHeader.status') }}</th>
+          <th>{{ $t('requests.tableHeader.actions') }}</th>
         </tr>
       </thead>
       <tbody>
@@ -36,9 +33,9 @@
 
     <pagination action="getRequests" namespace="requests" v-if="pager.total_pages > 1"/>
 
-    <modal title="Edit Request" :modal-open.sync="isEditModalOpen">
+    <modal :title="$t('requests.modal.editTitle')" :modal-open.sync="isEditModalOpen">
       <div class="form-group">
-        <label class="form-label">{{ $t('label.date') }}</label>
+        <label class="form-label">{{ $t('requests.labels.date') }}</label>
         <datepicker
         :minimumView="'day'"
         :maximumView="'day'"
@@ -49,22 +46,22 @@
         :value="updateParams.day"/>
       </div>
       <div class="form-group" :class="{ 'has-error': errors.attended_at }">
-        <label class="form-label">{{ $t('label.attendedAt') }}</label>
+        <label class="form-label">{{ $t('requests.labels.attendedAt') }}</label>
         <input class="form-input" v-model="updateParams.attended_at">
         <p class="form-input-hint" v-if="errors.attended_at">{{ errors.attended_at[0] }}</p>
       </div>
       <div class="form-group" :class="{ 'has-error': errors.left_at }">
-        <label class="form-label">{{ $t('label.leftAt') }}</label>
+        <label class="form-label">{{ $t('requests.labels.leftAt') }}</label>
         <input class="form-input" v-model="updateParams.left_at">
         <p class="form-input-hint" v-if="errors.left_at">{{ errors.left_at[0] }}</p>
       </div>
       <div class="form-group" :class="{ 'has-error': errors.reason }">
-        <label class="form-label">{{ $t('label.reason') }}</label>
+        <label class="form-label">{{ $t('requests.labels.reason') }}</label>
         <textarea class="form-input" v-model="updateParams.reason"></textarea>
         <p class="form-input-hint" v-if="errors.reason">{{ errors.reason[0] }}</p>
       </div>
       <div class="form-group">
-        <button type="button" class="btn" @click="saveEditModal({id: currentId, params: updateParams}, updateRequest)">{{ $t('button.save') }}</button>
+        <button type="button" class="btn" @click="saveEditModal({id: currentId, params: updateParams}, updateRequest)">{{ $t('requests.btn.save') }}</button>
       </div>
     </modal>
   </main-layout>
@@ -75,6 +72,7 @@ import Datepicker from 'vuejs-datepicker'
 import MainLayout from '../layouts/Main.vue'
 import modal from '../mixins/modal'
 import Pagination from '../components/Pagination.vue'
+import RequestsTab from '../components/RequestsTab.vue'
 import { mapState, mapActions } from 'vuex'
 
 export default {
@@ -97,7 +95,8 @@ export default {
   components: {
     MainLayout,
     Datepicker,
-    Pagination
+    Pagination,
+    RequestsTab
   },
 
   computed: {

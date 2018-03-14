@@ -1,38 +1,34 @@
 <template>
-  <setting-layout sidebar-type="company" :title="$t('title.companySettings')" :subtitle="$t('subtitle.addUsers')">
-    <p class="text-success mb-2" v-if="msgSuccess">{{ $t('users.successMsg') }}</p>
-    <p class="mb-2">{{ $t('users.note') }}</p>
+  <setting-layout sidebar-type="company" :title="$t('company.title')" :subtitle="$t('company.users.add.title')">
+    <p class="text-success mb-2" v-if="msgSuccess">{{ $t('company.users.add.successMsg') }}</p>
+    <p class="mb-2">{{ $t('company.users.add.note') }}</p>
     <form class="setting-form">
       <div class="form-group" :class="{ 'has-error': errors.name }">
-        <label class="form-label">{{ $t('label.name') }}</label>
-        <input class="form-input" type="text" placeholder="Name" v-model="params.name">
+        <label class="form-label">{{ $t('company.users.add.labels.name') }}</label>
+        <input class="form-input" type="text" :placeholder="$t('company.users.add.placeholder.name')" v-model="params.name">
         <p class="form-input-hint" v-if="errors.name">{{ errors.name[0] }}</p>
       </div>
       <div class="form-group" :class="{ 'has-error': errors.email }">
-        <label class="form-label">{{ $t('label.email') }}</label>
-        <input class="form-input" type="text" placeholder="Email" v-model="params.email">
+        <label class="form-label">{{ $t('company.users.add.labels.email') }}</label>
+        <input class="form-input" type="text" :placeholder="$t('company.users.add.placeholder.email')" v-model="params.email">
         <p class="form-input-hint" v-if="errors.email">{{ errors.email[0] }}</p>
       </div>
       <div class="form-group" :class="{ 'has-error': errors.role }">
-        <label class="form-label">{{ $t('label.role') }}</label>
+        <label class="form-label">{{ $t('company.users.add.labels.role') }}</label>
         <select class="form-select" v-model="params.role">
-          <option value="0">Member</option>
-          <option value="1">Admin</option>
-          <option value="2">SuperAdmin</option>
+          <option :value="role" v-for="role in meta.roles">{{ $t(`meta.roles.${role}`) }}</option>
         </select>
         <p class="form-input-hint" v-if="errors.role">{{ errors.role[0] }}</p>
       </div>
       <div class="form-group" :class="{ 'has-error': errors.group }">
-        <label class="form-label">{{ $t('label.group') }}</label>
+        <label class="form-label">{{ $t('company.users.add.labels.group') }}</label>
         <select class="form-select" v-model="params.group_id">
-          <option value="1">Default</option>
-          <option value="2">IT</option>
-          <option value="3">HR</option>
+          <option :value="group.id" v-for="group in meta.groups">{{ group.name }}</option>
         </select>
         <p class="form-input-hint" v-if="errors.group">{{ errors.group[0] }}</p>
       </div>
       <div class="form-group">
-        <button type="button" class="btn" @click="create(params)">Submit</button>
+        <button type="button" class="btn" @click="create(params)">{{ $t('company.users.add.btn.submit') }}</button>
       </div>
     </form>
   </setting-layout>
@@ -41,6 +37,7 @@
 <script>
 import SettingLayout from '../layouts/Setting.vue'
 import axios from 'axios'
+import { mapState } from 'vuex'
 
 export default {
   data () {
@@ -50,10 +47,16 @@ export default {
       params: {
         name: '',
         email: '',
-        role: 0,
+        role: 'member',
         group_id: 1
       }
     }
+  },
+
+  computed: {
+    ...mapState('initialStates', [
+      'meta'
+    ])
   },
 
   components: {

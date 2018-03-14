@@ -52,7 +52,7 @@ class User < ApplicationRecord
   validates :email, presence: true, uniqueness: true, length: { maximum: 100 }, format: { with: REGEX_VALID_EMAIL }
   validates :password, length: { minimum: 6, maximum: 32 }, allow_nil: true
   validates :password_confirmation, presence: true, if: -> { password.present? }
-  validates :language, inclusion: { in: %w[vi en jp] }
+  validates :language, presence: true, inclusion: { in: %w[vi en jp] }
   # validates :user_permissions, presence: true
 
   include ImageUploader::Attachment.new(:avatar)

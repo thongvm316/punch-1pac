@@ -1,137 +1,40 @@
 export default {
-  title: {
-    dashboard: 'Dashboard',
-    attendances: 'Attendances',
-    requests: 'Requests',
-    groups: 'Groups',
-    calendar: 'Calendar',
-    companySettings: 'Company Settings'
-  },
-  subtitle: {
-    allowedIPs: 'Allowed IPs',
-    businessDays: 'Business Days',
-    holidays: 'Holidays',
-    profile: 'Profile',
-    timeLang: 'Timezone and Language',
-    users: 'Users',
-    addUsers: 'Add Users',
-    addMultiUsers: 'Add Multiple Users',
-    password: 'Password',
-    security: 'Security'
-  },
-  statuses: {
-    arriveOnTime: 'Arrive on time',
-    leaveOnTime: 'Leave on time',
-    arriveLate: 'Arrive late',
-    leaveEarly: 'Leave early',
-    annualLeave: 'Annual leave',
-    holiday: 'Holiday',
-    unpaidLeave: 'Unpaid leave',
-    approved: 'Approved',
-    pending: 'Pending',
-    rejected: 'Rejected'
-  },
-  button: {
-    add: 'Add',
-    remove: 'Remove',
-    save: 'Save',
-    submit: 'Submit',
-    addGroup: 'Add Group',
-    editGroup: 'Edit Group',
-    addRequest: 'Add Request',
-    addIP: 'Add IP',
-    addBusinessDays: 'Add Business Days',
-    addHoliday: 'Add Holiday',
-    addUsers: 'Add Users',
-    addMultiUsers: 'Add Multiple Users',
-    import: 'Import',
-    revoke: 'Revoke'
-  },
   group: {
-    accountant: 'Accountant',
-    developers: 'Developers',
-    marketing: 'Marketing',
-    hr: 'HR',
-    leave: 'Leave',
+    btn: {
+      addUser: 'Add',
+      edit: 'Edit Group',
+      save: 'Save'
+    },
     explain: "Add a member to this group, then manager of this group can see the user's activities",
-    member: ' | 1 member | {count} members'
-  },
-  placeholder: {
-    fromDate: 'From Date',
-    toDate: 'To Date',
-    filterByStatus: 'Filter by status',
-    filterByGroup: 'Filter by group',
-    filterHolidayByName: 'Filter holiday by name',
-    searchUserByEmail: 'Search user by email',
-    name: 'Name'
-  },
-  label: {
-    logo: 'Logo',
-    name: 'Name',
-    email: 'Email',
-    namespace: 'Namespace',
-    industry: 'Industry',
-    country: 'Country',
-    address: 'Address',
-    phoneNum: 'Phone Number',
-    postalCode: 'Postal Code',
-    taxCode: 'Tax Code',
-    timezone: 'Timezone',
-    language: 'Language',
-    breaktime: 'Break Time',
-    breakdays: 'Break Days',
-    date: 'Date',
-    attendedAt: 'Attended At',
-    leftAt: 'Left At',
-    startAt: 'Start At',
-    endAt: 'End At',
-    reason: 'Reason',
-    group: 'Group',
-    csvFile: 'CSV File',
-    currentPassword: 'Current Password',
-    newPassword: 'New Password',
-    newPasswordConfirm: 'New Password Confirmation',
-    avatar: 'Avatar',
-    gender: 'Gender',
-    position: 'Position'
-  },
-  tableHeader: {
-    date: 'Date',
-    attendedAt: 'Attended At',
-    title: 'Title',
-    status: 'Status',
-    sentAt: 'Sent At',
-    leftAt: 'Left At',
-    createdAt: 'Created At',
-    startedAt: 'Started At',
-    endedAt: 'Ended At',
-    startAt: 'Start At',
-    endAt: 'End At',
-    reason: 'Reason',
-    email: 'Email',
-    name: 'Name',
-    actions: 'Actions',
-    gender: 'Gender',
-    position: 'Position',
-    ipAddress: 'IP Address',
-    weekday: 'Weekday',
-    members: 'Members',
-    country: 'Country',
-    role: 'Role',
-    client: 'Client',
-    ip: 'IP',
-    lastSignedIn: 'Last signed in'
+    tableHeader: {
+      email: 'Email',
+      name: 'Name',
+      actions: 'Actions',
+      gender: 'Gender',
+      position: 'Position'
+    },
+    labels: {
+      name: 'Name'
+    },
+    modal: {
+      editTitle: 'Edit Group'
+    }
   },
   header: {
     dashboard: 'Dashboard',
     attendances: 'Attendances',
     requests: 'Requests',
     groups: 'Groups',
-    annoucements: 'Annoucements',
+    announcements: 'Annoucements',
+    noAnnouncementMsg: 'You have no new announcements',
     settings: 'Settings',
     companySettings: 'Company Settings',
     seeAll: 'See All',
-    logout: 'Logout'
+    logout: 'Logout',
+    in: 'In',
+    out: 'Out',
+    punchIn: 'Punch In',
+    punchOut: 'Punch Out'
   },
   footer: {
     terms: 'Terms',
@@ -140,17 +43,64 @@ export default {
     contact: 'Contact',
     about: 'About'
   },
+  meta: {
+    attendanceStatuses: {
+      attend_ok: 'Attend OK',
+      attend_late: 'Attend Late',
+      leave_early: 'Leave Early',
+      leave_ok: 'Leave OK'
+    },
+    requestStatuses: {
+      pending: 'Pending',
+      approved: 'Approved',
+      rejected: 'Rejected'
+    },
+    gender: {
+      male: 'Male',
+      female: 'Female'
+    },
+    languages: {
+      en: 'English',
+      vi: 'Vietnamese',
+      jp: 'Japanese'
+    },
+    weekdays: {
+      monday: 'Monday',
+      tuesday: 'Tuesday',
+      wednesday: 'Wednesday',
+      thursday: 'Thursday',
+      friday: 'Friday',
+      saturday: 'Saturday',
+      sunday: 'Sunday'
+    },
+    roles: {
+      member: 'Member',
+      admin: 'Admin',
+      superadmin: 'Superadmin'
+    },
+    holidayCountries: {
+      vietnam: 'Vietnam',
+      japan: 'Japan'
+    }
+  },
   sidebar: {
-    profile: 'Profile',
-    timezoneAndLanguage: 'Timezone and Language',
-    users: 'Users',
-    password: 'Password',
-    security: 'Security',
-    bussinessDays: 'Bussiness days',
-    holidays: 'Holidays',
-    allowedIPs: 'Allowed IPs'
+    user: {
+      profile: 'Profile',
+      password: 'Password',
+      security: 'Security'
+    },
+    company: {
+      profile: 'Profile',
+      users: 'Users',
+      timezoneAndLanguage: 'Timezone and Language',
+      bussinessDays: 'Bussiness Days',
+      holidays: 'Holidays',
+      allowedIPs: 'Allowed IPs'
+    }
   },
   dashboard: {
+    title: 'Dashboard',
+    calendar: 'Calendar',
     statusInMonth: 'Status In Month',
     status: 'Status',
     numberOfDays: 'Number of days',
@@ -158,31 +108,293 @@ export default {
     day: '0 | 1 day | {count} days',
     chart: 'Chart'
   },
-  attendance: {
-    myAttendances: 'My Attendances',
-    groupAttendances: 'Group Attendances'
+  announcements: {
+    title: 'Announcements',
+    tableHeader: {
+      title: 'Title',
+      status: 'Status',
+      sentAt: 'Sent At'
+    }
   },
-  request: {
-    myRequests: 'My Requests',
-    groupRequests: 'Group Requests'
+  groups: {
+    title: 'Groups',
+    btn: {
+      add: 'Add Group',
+      leave: 'Leave',
+      submit: 'Submit'
+    },
+    member: ' | 1 member | {count} members',
+    labels: {
+      name: 'Name'
+    },
+    placeholder: {
+      name: 'Name'
+    },
+    modal: {
+      addTitle: 'Add group'
+    }
   },
-  annoucements: {
-    message: 'You have no new announcements'
+  requests: {
+    title: 'Requests',
+    placeholder: {
+      filterByGroup: 'Filter by group',
+      filterByStatus: 'Filter by status'
+    },
+    tab: {
+      my: 'My Requests',
+      group: 'Group Requests'
+    },
+    labels: {
+      date: 'Date',
+      attendedAt: 'Attended At',
+      leftAt: 'Left At',
+      reason: 'Reason'
+    },
+    tableHeader: {
+      name: 'Name',
+      email: 'Email',
+      date: 'Date',
+      attendedAt: 'Attended At',
+      status: 'Status',
+      leftAt: 'Left At',
+      reason: 'Reason',
+      actions: 'Actions'
+    },
+    btn: {
+      save: 'Save'
+    },
+    modal: {
+      editTitle: 'Edit Title'
+    }
   },
-  punch: {
-    in: 'In',
-    out: 'Out'
+  attendances: {
+    title: 'Attendances',
+    placeholder: {
+      fromDate: 'From date',
+      toDate: 'To date',
+      filterByStatus: 'Filter by status',
+      filterByGroup: 'Filter by group'
+    },
+    tableHeader: {
+      name: 'Name',
+      email: 'Email',
+      date: 'Date',
+      attendedAt: 'Attended at',
+      leftAt: 'Left at',
+      status: 'Status',
+      actions: 'Actions'
+    },
+    tab: {
+      my: 'My Attendances',
+      group: 'Group Attendances'
+    },
+    labels: {
+      date: 'Date',
+      attendedAt: 'Attended At',
+      leftAt: 'Left At',
+      reason: 'Reason'
+    },
+    btn: {
+      save: 'Save'
+    },
+    modal: {
+      addTitle: 'Add request'
+    }
   },
-  holidays: {
-    explain: "Import country's holidays for your company, then 1Punch will not count a holiday as leaving day"
+  user: {
+    title: 'Settings for {name}',
+    profile: {
+      title: 'Profile',
+      labels: {
+        avatar: 'Avatar',
+        email: 'Email',
+        name: 'Name',
+        gender: 'Gender',
+        position: 'Position'
+      },
+      btn: {
+        save: 'Save'
+      }
+    },
+    password: {
+      title: 'Password',
+      labels: {
+        currentPassword: 'Current password',
+        newPassword: 'New password',
+        confirmNewPassword: 'Confirm new password'
+      },
+      btn: {
+        save: 'Save'
+      }
+    },
+    security: {
+      title: 'Security',
+      tableHeader: {
+        client: 'Client',
+        ip: 'IP address',
+        lastSignedIn: 'Last signed in'
+      },
+      btn: {
+        revoke: 'Revoke'
+      }
+    }
   },
-  timeLang: {
-    successMsg: "Company's timezone and language are updated"
-  },
-  users: {
-    successMsg: 'An user is created successfully',
-    successCSVMsg: 'Users in csv file are created',
-    errorMsg: 'There are not_correct_information errors at rows',
-    note: 'An email contains login information is sent to user. Please ensure that email address is correct'
+  company: {
+    title: 'Company settings',
+    profile: {
+      title: 'Profile',
+      labels: {
+        logo: 'Logo',
+        name: 'Name',
+        industry: 'Industry',
+        country: 'Country',
+        address: 'Address',
+        phoneNum: 'Phone number',
+        postalCode: 'Postal code',
+        taxCode: 'Tax code'
+      },
+      btn: {
+        save: 'Save'
+      }
+    },
+    businessDays: {
+      title: 'Business days',
+      tableHeader: {
+        weekday: 'Weekday',
+        startedAt: 'Started at',
+        endedAt: 'Ended at'
+      },
+      labels: {
+        weekday: 'Weekday',
+        startedAt: 'Started at',
+        endedAt: 'Ended at'
+      },
+      btn: {
+        add: 'Add Business day',
+        submit: 'Submit',
+        save: 'Save'
+      },
+      modal: {
+        addTitle: 'Add business day',
+        editTitle: 'Edit business day'
+      },
+      placeholder: {
+        chooseWeekday: 'Choose a weekday'
+      }
+    },
+    allowedIPs: {
+      title: 'Allowed IPs',
+      tableHeader: {
+        ipAddress: 'IP address',
+        createdAt: 'Created at'
+      },
+      labels: {
+        ipAddress: 'IP address'
+      },
+      btn: {
+        add: 'Add IP address',
+        submit: 'Submit',
+        save: 'Save'
+      },
+      modal: {
+        addTitle: 'Add IP address',
+        editTitle: 'Edit IP address'
+      }
+    },
+    timezoneAndLanguage: {
+      title: 'Timezone and Language',
+      labels: {
+        timezone: 'Timezone',
+        language: 'Language',
+        breakdays: 'Break days',
+        breaktime: 'Break time'
+      },
+      btn: {
+        save: 'Save'
+      },
+      msg: {
+        success: "Company's timezone and language are updated"
+      }
+    },
+    holidays: {
+      title: 'Holidays',
+      explain: "Import country's holidays for your company, then 1Punch will not count a holiday as leaving day",
+      tableHeader: {
+        name: 'Name',
+        startAt: 'Start at',
+        endAt: 'End at'
+      },
+      labels: {
+        name: 'Name',
+        startAt: 'Start at',
+        endAt: 'End at'
+      },
+      placeholder: {
+        chooseCountry: 'Choose a country',
+        filterByName: 'Filter by name',
+        fromDate: 'From date',
+        toDate: 'To date'
+      },
+      btn: {
+        import: 'Import',
+        add: 'Add holiday',
+        submit: 'Submit',
+        save: 'Save'
+      },
+      modal: {
+        addTitle: 'Add holiday',
+        editTitle: 'Edit holiday'
+      }
+    },
+    users: {
+      title: 'Users',
+      add: {
+        title: 'Add user',
+        successMsg: 'An user is created successfully',
+        note: 'An email contains login information is sent to user. Please ensure that email address is correct',
+        labels: {
+          name: 'Name',
+          email: 'Email',
+          role: 'Role',
+          group: 'Group'
+        },
+        placeholder: {
+          name: 'Name',
+          email: 'Email'
+        },
+        btn: {
+          submit: 'Submit'
+        }
+      },
+      addMulti: {
+        title: 'Add multi users',
+        successCSVMsg: 'Users in csv file are created',
+        note: 'An email contains login information is sent to user. Please ensure that email address is correct',
+        errorMsg: 'There are incorrect information at rows {rows}',
+        labels: {
+          csvFile: 'CSV file'
+        },
+        btn: {
+          submit: 'Submit'
+        }
+      },
+      placeholder: {
+        filterByEmail: 'Filter by email'
+      },
+      tableHeader: {
+        name: 'Name',
+        email: 'Email',
+        position: 'Position',
+        role: 'Role'
+      },
+      btn: {
+        add: 'Add user',
+        addMulti: 'Add multi users'
+      },
+      confirmDialog: {
+        deleteUserTitle: 'Delete user',
+        deleteUserMsg: 'Are you sure to delete <strong>{name}</strong> user permanently ?'
+      }
+    }
   }
 }

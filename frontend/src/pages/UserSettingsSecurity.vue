@@ -1,11 +1,11 @@
 <template>
-  <setting-layout sidebar-type="user" title="Settings for Troy Kozey" :subtitle="$t('subtitle.security')">
+  <setting-layout sidebar-type="user" :title="$t('user.title', { name: currentUser.name })" :subtitle="$t('user.security.title')">
     <table class="table bg-light mt-5">
       <thead>
         <tr>
-          <th>{{ $t('tableHeader.client') }}</th>
-          <th>{{ $t('tableHeader.ip') }}</th>
-          <th>{{ $t('tableHeader.lastSignedIn') }}</th>
+          <th>{{ $t('user.security.tableHeader.client') }}</th>
+          <th>{{ $t('user.security.tableHeader.ip') }}</th>
+          <th>{{ $t('user.security.tableHeader.lastSignedIn') }}</th>
           <th></th>
         </tr>
       </thead>
@@ -17,7 +17,7 @@
           </td>
           <td>{{ session.ip_address }}</td>
           <td>{{ session.updated_at | datetime_normal }}</td>
-          <td><button type="button" class="btn btn-error" @click="deleteSession(session.id)">{{ $t('button.revoke') }}</button></td>
+          <td><button type="button" class="btn btn-error" @click="deleteSession(session.id)">{{ $t('user.security.btn.revoke') }}</button></td>
         </tr>
       </tbody>
     </table>
@@ -44,6 +44,10 @@ export default {
     ])
   },
   computed: {
+    ...mapState('initialStates', [
+      'currentUser'
+    ]),
+
     ...mapState('userSessions', [
       'sessions'
     ])

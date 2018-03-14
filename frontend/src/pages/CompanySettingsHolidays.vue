@@ -1,28 +1,27 @@
 <template>
-  <setting-layout sidebar-type="company" :title="$t('title.companySettings')" :subtitle="$t('subtitle.holidays')">
+  <setting-layout sidebar-type="company" :title="$t('company.title')" :subtitle="$t('company.holidays.title')">
     <div class="input-group mt-5">
       <select class="form-select" v-model="country">
-        <option value="">Choose a country</option>
-        <option value="vietnam">Vietnam</option>
-        <option value="japan">Japan</option>
+        <option value="">{{ $t('company.holidays.placeholder.chooseCountry') }}</option>
+        <option value="country" v-for="country in meta.holidayCountries">{{ $t(`meta.holidayCountries.${country}`) }}</option>
       </select>
-      <button class="btn input-group-btn" @click="importNationalHolidays(country)">{{ $t('button.import') }}</button>
+      <button class="btn input-group-btn" @click="importNationalHolidays(country)">{{ $t('company.holidays.btn.import') }}</button>
     </div>
-    <p class="form-input-hint text-dark">{{ $t('holidays.explain') }}</p>
+    <p class="form-input-hint text-dark">{{ $t('company.holidays.explain') }}</p>
 
     <div class="toolbar clearfix mt-5">
-      <input type="text" class="form-input" :placeholder="$t('placeholder.filterHolidayByName')" v-model="name">
+      <input type="text" class="form-input" :placeholder="$t('company.holidays.placeholder.filterByName')" v-model="name">
       <button type="button" class="btn float-right" @click="toggleAddModal(clearHolidayErrors)">
         <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M24 10h-10v-10h-4v10h-10v4h10v10h4v-10h10z"/></svg>
-        {{ $t('button.addHoliday') }}
+        {{ $t('company.holidays.btn.add') }}
       </button>
     </div>
 
     <table class="table table-hover bg-light mt-5">
       <thead>
-        <th>{{ $t('tableHeader.name') }}</th>
-        <th>{{ $t('tableHeader.startAt') }}</th>
-        <th>{{ $t('tableHeader.endAt') }}</th>
+        <th>{{ $t('company.holidays.tableHeader.name') }}</th>
+        <th>{{ $t('company.holidays.tableHeader.startAt') }}</th>
+        <th>{{ $t('company.holidays.tableHeader.endAt') }}</th>
         <th></th>
       </thead>
       <tbody>
@@ -46,16 +45,16 @@
       </tbody>
     </table>
 
-    <modal title="Add Holiday" :modal-open.sync="isAddModalOpen">
+    <modal :title="$t('company.holidays.modal.addTitle')" :modal-open.sync="isAddModalOpen">
       <div class="form-group" :class="{ 'has-error': errors.name }">
-        <label class="form-label">{{ $t('label.name') }}</label>
+        <label class="form-label">{{ $t('company.holidays.labels.name') }}</label>
         <input class="form-input" type="text" v-model="createParams.name">
         <p class="form-input-hint" v-if="errors.name">{{ errors.name[0] }}</p>
       </div>
       <div class="form-group" :class="{ 'has-error': errors.started_at }">
-        <label class="form-label">{{ $t('label.startAt') }}</label>
+        <label class="form-label">{{ $t('company.holidays.labels.startAt') }}</label>
         <datepicker
-        :placeholder="$t('placeholder.fromDate')"
+        :placeholder="$t('company.holidays.placeholder.fromDate')"
         :format="'MMM dd yyyy'"
         :minimumView="'day'"
         :maximumView="'day'"
@@ -66,9 +65,9 @@
         <p class="form-input-hint" v-if="errors.started_at">{{ errors.started_at[0] }}</p>
       </div>
       <div class="form-group" :class="{ 'has-error': errors.ended_at }">
-        <label class="form-label">{{ $t('label.endAt') }}</label>
+        <label class="form-label">{{ $t('company.holidays.labels.endAt') }}</label>
         <datepicker
-        :placeholder="$t('placeholder.toDate')"
+        :placeholder="$t('company.holidays.placeholder.toDate')"
         :format="'MMM dd yyyy'"
         :minimumView="'day'"
         :maximumView="'day'"
@@ -79,20 +78,20 @@
         <p class="form-input-hint" v-if="errors.ended_at">{{ errors.ended_at[0] }}</p>
       </div>
       <div class="form-group">
-        <button type="button" class="btn" @click="submitAddModal(createParams, createHoliday)">{{ $t('button.submit') }}</button>
+        <button type="button" class="btn" @click="submitAddModal(createParams, createHoliday)">{{ $t('company.holidays.btn.submit') }}</button>
       </div>
     </modal>
 
-    <modal title="Edit Holiday" :modal-open.sync="isEditModalOpen">
+    <modal :title="$t('company.holidays.modal.editTitle')" :modal-open.sync="isEditModalOpen">
       <div class="form-group" :class="{ 'has-error': errors.name }">
-        <label class="form-label">{{ $t('label.name') }}</label>
+        <label class="form-label">{{ $t('company.holidays.labels.name') }}</label>
         <input class="form-input" type="text" v-model="updateParams.name">
         <p class="form-input-hint" v-if="errors.name">{{ errors.name[0] }}</p>
       </div>
       <div class="form-group" :class="{ 'has-error': errors.started_at }">
-        <label class="form-label">{{ $t('label.startAt') }}</label>
+        <label class="form-label">{{ $t('company.holidays.labels.startAt') }}</label>
         <datepicker
-        :placeholder="$t('placeholder.fromDate')"
+        :placeholder="$t('company.holidays.placeholder.fromDate')"
         :format="'MMM dd'"
         :minimumView="'day'"
         :maximumView="'day'"
@@ -103,9 +102,9 @@
         <p class="form-input-hint" v-if="errors.started_at">{{ errors.started_at[0] }}</p>
       </div>
       <div class="form-group" :class="{ 'has-error': errors.ended_at }">
-        <label class="form-label">{{ $t('label.endAt') }}</label>
+        <label class="form-label">{{ $t('company.holidays.labels.endAt') }}</label>
         <datepicker
-        :placeholder="$t('placeholder.toDate')"
+        :placeholder="$t('company.holidays.placeholder.toDate')"
         :format="'MMM dd'"
         :minimumView="'day'"
         :maximumView="'day'"
@@ -116,7 +115,7 @@
         <p class="form-input-hint" v-if="errors.reason">{{ errors.ended_at[0] }}</p>
       </div>
       <div class="form-group">
-        <button type="button" class="btn" @click="saveEditModal({ holidayID: currentID, updateParams: updateParams }, updateHoliday)">{{ $t('button.save') }}</button>
+        <button type="button" class="btn" @click="saveEditModal({ holidayID: currentID, updateParams: updateParams }, updateHoliday)">{{ $t('company.holidays.btn.save') }}</button>
       </div>
     </modal>
   </setting-layout>
@@ -173,6 +172,10 @@ export default {
   },
 
   computed: {
+    ...mapState('initialStates', [
+      'meta'
+    ]),
+
     ...mapState('companyHolidays', [
       'holidays',
       'errors'

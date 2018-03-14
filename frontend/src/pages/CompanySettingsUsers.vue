@@ -1,22 +1,22 @@
 <template>
-  <setting-layout sidebar-type="company" :title="$t('title.companySettings')" :subtitle="$t('subtitle.users')">
+  <setting-layout sidebar-type="company" :title="$t('company.title')" :subtitle="$t('company.users.title')">
     <div class="toolbar mt-5 clearfix">
-      <input type="text" class="form-input" placeholder="Filter user by email" v-model="email">
+      <input type="text" class="form-input" :placeholder="$t('company.users.placeholder.filterByEmail')" v-model="email">
       <router-link to="/company/settings/users/add" tag="button" class="btn float-right">
         <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M24 10h-10v-10h-4v10h-10v4h10v10h4v-10h10z"></path></svg>
-        {{ $t('button.addUsers') }}
+        {{ $t('company.users.btn.add') }}
       </router-link> <router-link to="/company/settings/users/add-multi" tag="button" class="btn float-right mr-2">
         <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M24 10h-10v-10h-4v10h-10v4h10v10h4v-10h10z"></path></svg>
-        {{ $t('button.addMultiUsers') }}
+        {{ $t('company.users.btn.addMulti') }}
       </router-link>
     </div>
 
     <table class="table table-hover bg-light mt-5">
       <thead>
-        <th>{{ $t('tableHeader.name') }}</th>
-        <th>{{ $t('tableHeader.email') }}</th>
-        <th>{{ $t('tableHeader.position') }}</th>
-        <th>{{ $t('tableHeader.role') }}</th> <th></th>
+        <th>{{ $t('company.users.tableHeader.name') }}</th>
+        <th>{{ $t('company.users.tableHeader.email') }}</th>
+        <th>{{ $t('company.users.tableHeader.position') }}</th>
+        <th>{{ $t('company.users.tableHeader.role') }}</th> <th></th>
       </thead>
       <tbody>
         <tr v-for="user in filterByEmail(email)">
@@ -35,8 +35,8 @@
       </tbody>
     </table>
 
-    <confirm-dialog title="Delete user" :deleteObject="deleteUser" :objectId="selectedObject.id" :modal-open.sync="isOpenConfirmDialog">
-      <p>Are you sure to delete <strong>{{ selectedObject.name }}</strong> user permanently ?</p>
+    <confirm-dialog :title="$t('company.users.confirmDialog.deleteUserTitle')" :deleteObject="deleteUser" :objectId="selectedObject.id" :modal-open.sync="isOpenConfirmDialog">
+      <p v-html="$t('company.users.confirmDialog.deleteUserMsg', { name: selectedObject.name })"></p>
     </confirm-dialog>
   </setting-layout>
 </template>

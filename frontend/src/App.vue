@@ -13,13 +13,15 @@ export default {
   methods: {
     ...mapActions('initialStates', [
       'setCurrentUser',
-      'setCurrentCompany'
+      'setCurrentCompany',
+      'setMeta'
     ])
   },
 
   created () {
     this.setCurrentUser(window.INITIAL_STATE)
     this.setCurrentCompany(window.INITIAL_STATE)
+    this.setMeta(window.INITIAL_STATE)
   }
 }
 </script>

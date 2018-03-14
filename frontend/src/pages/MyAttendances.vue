@@ -1,13 +1,10 @@
 <template>
-  <main-layout :title="$t('title.attendances')">
-    <ul class="tab mt-4">
-      <router-link tag="li" class="tab-item" to="/attendances/my"><a href="#">{{ $t('attendance.myAttendances') }}</a></router-link>
-      <router-link tag="li" class="tab-item" to="/attendances/groups"><a href="#">{{ $t('attendance.groupAttendances') }}</a></router-link>
-    </ul>
+  <main-layout :title="$t('attendances.title')">
+    <attendances-tab/>
 
     <div class="toolbar mt-5">
       <datepicker
-        :placeholder="$t('placeholder.fromDate')"
+        :placeholder="$t('attendances.placeholder.fromDate')"
         :format="'MMM dd yyyy'"
         :minimumView="'day'"
         :maximumView="'day'"
@@ -16,7 +13,7 @@
         :wrapper-class="'datepicker'"
         v-model="params.from_date"/>
       <datepicker
-        :placeholder="$t('placeholder.toDate')"
+        :placeholder="$t('attendances.placeholder.toDate')"
         :format="'MMM dd yyyy'"
         :minimumView="'day'"
         :maximumView="'day'"
@@ -24,25 +21,21 @@
         :calendar-class="'datepicker-calendar'"
         :wrapper-class="'datepicker'"
         v-model="params.to_date"/>
+
       <select class="form-select" v-model="params.status">
-        <option value="">{{ $t('placeholder.filterByStatus') }}</option>
-        <option value="arrive_ok">{{ $t('status.arriveOnTime') }}</option>
-        <option value="leave_ok">{{ $t('status.leaveOnTime') }}</option>
-        <option value="arrive_late">{{ $t('status.arriveLate') }}</option>
-        <option value="leave_early">{{ $t('status.leaveEarly') }}</option>
-        <option value="holiday">{{ $t('status.holiday') }}</option>
-        <option value="annual_leave">{{ $t('status.annualLeave') }}</option>
+        <option value="">{{ $t('attendances.placeholder.filterByStatus') }}</option>
+        <option :value="status" v-for="status in meta.attendanceStatuses">{{ $t(`meta.attendanceStatuses.${status}`) }}</option>
       </select>
     </div>
 
     <table class="table table-hover bg-light mt-5">
       <thead>
         <tr>
-          <th>{{ $t('tableHeader.date') }}</th>
-          <th>{{ $t('tableHeader.attendedAt') }}</th>
-          <th>{{ $t('tableHeader.leftAt') }}</th>
-          <th>{{ $t('tableHeader.status') }}</th>
-          <th>{{ $t('tableHeader.actions') }}</th>
+          <th>{{ $t('attendances.tableHeader.date') }}</th>
+          <th>{{ $t('attendances.tableHeader.attendedAt') }}</th>
+          <th>{{ $t('attendances.tableHeader.leftAt') }}</th>
+          <th>{{ $t('attendances.tableHeader.status') }}</th>
+          <th>{{ $t('attendances.tableHeader.actions') }}</th>
         </tr>
       </thead>
       <tbody>
@@ -67,9 +60,9 @@
 
     <pagination action="getAttendances" namespace="attendances" v-if="pager.total_pages > 1"/>
 
-    <modal title="Add Request" :modal-open.sync="isAddModalOpen">
+    <modal :title="$t('attendances.modal.addTitle')" :modal-open.sync="isAddModalOpen">
       <div class="form-group">
-        <label class="form-label">{{ $t('label.date') }}</label>
+        <label class="form-label">{{ $t('attendances.labels.date') }}</label>
         <datepicker
         :minimumView="'day'"
         :maximumView="'day'"
@@ -80,22 +73,22 @@
         :value="day"/>
       </div>
       <div class="form-group" :class="{ 'has-error': errors.attended_at }">
-        <label class="form-label">{{ $t('label.attendedAt') }}</label>
+        <label class="form-label">{{ $t('attendances.labels.attendedAt') }}</label>
         <input class="form-input" v-model="createRequestParams.attended_at">
         <p class="form-input-hint" v-if="errors.attended_at">{{ errors.attended_at[0] }}</p>
       </div>
       <div class="form-group" :class="{ 'has-error': errors.left_at }">
-        <label class="form-label">{{ $t('label.leftAt') }}</label>
+        <label class="form-label">{{ $t('attendances.labels.leftAt') }}</label>
         <input class="form-input" v-model="createRequestParams.left_at">
         <p class="form-input-hint" v-if="errors.left_at">{{ errors.left_at[0] }}</p>
       </div>
       <div class="form-group" :class="{ 'has-error': errors.reason }">
-        <label class="form-label">{{ $t('label.reason') }}</label>
+        <label class="form-label">{{ $t('attendances.labels.reason') }}</label>
         <textarea class="form-input" v-model="createRequestParams.reason"></textarea>
         <p class="form-input-hint" v-if="errors.reason">{{ errors.reason[0] }}</p>
       </div>
       <div class="form-group">
-        <button type="button" class="btn" @click="submitAddModal(createRequestParams, addRequest)">{{ $t('button.save') }}</button>
+        <button type="button" class="btn" @click="submitAddModal(createRequestParams, addRequest)">{{ $t('attendances.btn.save') }}</button>
       </div>
     </modal>
   </main-layout>
@@ -105,6 +98,7 @@
 import Datepicker from 'vuejs-datepicker'
 import MainLayout from '../layouts/Main.vue'
 import Pagination from '../components/Pagination.vue'
+import AttendancesTab from '../components/AttendancesTab.vue'
 import modal from '../mixins/modal'
 import moment from 'moment'
 import { mapState, mapActions } from 'vuex'
@@ -133,10 +127,15 @@ export default {
   components: {
     Datepicker,
     MainLayout,
+    AttendancesTab,
     Pagination
   },
 
   computed: {
+    ...mapState('initialStates', [
+      'meta'
+    ]),
+
     ...mapState('attendances', [
       'pager',
       'attendances'

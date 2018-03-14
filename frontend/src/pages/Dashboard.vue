@@ -1,17 +1,12 @@
 <template>
-  <main-layout :title="$t('title.dashboard')">
+  <main-layout :title="$t('dashboard.title')">
     <div class="columns mt-5">
       <div class="column">
         <div class="box chart">
           <div class="box-header box-header-flex border-bottom">
             <h2>{{ $t('dashboard.chart') }}</h2>
             <select class="form-select" v-model="status">
-              <option value="attend_ok">{{ $t('status.arriveOnTime') }}</option>
-              <option value="leave_ok">{{ $t('status.leaveOnTime') }}</option>
-              <option value="attend_late">{{ $t('status.arriveLate') }}</option>
-              <option value="leave_early">{{ $t('status.leaveEarly') }}</option>
-              <option value="annual_leave">{{ $t('status.annualLeave') }}</option>
-              <option value="holiday">{{ $t('status.holiday') }}</option>
+              <option :value="status" v-for="status in meta.attendanceStatuses">{{ $t(`meta.attendanceStatuses.${status}`) }}</option>
             </select>
           </div>
           <div class="box-content">
@@ -22,7 +17,7 @@
     </div>
 
     <div class="box mt-5">
-      <h2 class="subtitle">{{ $t('title.calendar') }}</h2>
+      <h2 class="subtitle">{{ $t('dashboard.calendar') }}</h2>
       <full-calendar></full-calendar>
     </div>
   </main-layout>
@@ -66,6 +61,10 @@ export default {
   },
 
   computed: {
+    ...mapState('initialStates', [
+      'meta'
+    ]),
+
     ...mapState('chart', [
       'chartData',
       'loaded'
