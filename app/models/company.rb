@@ -28,6 +28,8 @@
 #
 
 class Company < ApplicationRecord
+  INDUSTRIES = %w[hr_agency cafe_shop restaurant software_company startup].freeze
+
   has_many :users, dependent: :destroy
   has_many :allowed_ips, dependent: :destroy
   has_many :business_days, dependent: :destroy
@@ -37,7 +39,7 @@ class Company < ApplicationRecord
   validates :namespace, presence: true, uniqueness: true
   validates :name, presence: true
   validates :country, presence: true
-  validates :industry, presence: true
+  validates :industry, presence: true, inclusion: { in: INDUSTRIES }
   validates :address, presence: true
   validates :phone_number, presence: true
   validates :breaktime, presence: true
