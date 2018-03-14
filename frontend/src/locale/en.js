@@ -81,6 +81,13 @@ export default {
     holidayCountries: {
       vietnam: 'Vietnam',
       japan: 'Japan'
+    },
+    industries: {
+      hr_agency: 'Human Resource Agency',
+      restaurant: 'Restaurant',
+      cafe_shop: 'Cafe shop',
+      software_company: 'Software Company',
+      startup: 'Startup'
     }
   },
   sidebar: {
@@ -360,7 +367,8 @@ export default {
         },
         placeholder: {
           name: 'Name',
-          email: 'Email'
+          email: 'Email',
+          chooseGroup: 'Choose a group'
         },
         btn: {
           submit: 'Submit'
