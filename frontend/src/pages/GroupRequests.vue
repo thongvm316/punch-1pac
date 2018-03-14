@@ -3,10 +3,9 @@
     <requests-tab/>
 
     <div class="toolbar mt-5">
-      <select class="form-select" v-model="params.group_id">
-        <option value="">{{ $t('requests.placeholder.filterByGroup') }}</option>
-        <option :value="group.id" v-for="group in meta.groups">{{ group.name }}</option>
-      </select>
+      <group-select v-model="params.group_id">
+        <option slot="placeholder" value="">{{ $t('requests.placeholder.filterByGroup') }}</option>
+      </group-select>
       <select class="form-select" v-model="params.status">
         <option value="">{{ $t('requests.placeholder.filterByStatus') }}</option>
         <option :value="status" v-for="status in meta.requestStatuses">{{ $t(`meta.requestStatuses.${status}`) }}</option>
@@ -70,6 +69,7 @@
 import MainLayout from '../layouts/Main.vue'
 import Pagination from '../components/Pagination.vue'
 import RequestsTab from '../components/RequestsTab.vue'
+import GroupSelect from '../components/GroupSelect.vue'
 import { mapState, mapActions } from 'vuex'
 
 export default {
@@ -88,7 +88,8 @@ export default {
   components: {
     MainLayout,
     Pagination,
-    RequestsTab
+    RequestsTab,
+    GroupSelect
   },
 
   computed: {

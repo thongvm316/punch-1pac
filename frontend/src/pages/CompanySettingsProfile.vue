@@ -15,10 +15,7 @@
       <div class="form-group" :class="{ 'has-error': companyErrors.industry }">
         <label class="form-label">{{ $t('company.profile.labels.industry') }}</label>
         <select class="form-select" v-model="params.industry">
-          <option value="startup">Startup</option>
-          <option value="ecomerce">Ecormerce</option>
-          <option value="marketing">Marketing</option>
-          <option value="banking">Banking</option>
+          <option :value="industry" v-for="industry in meta.industries">{{ $t(`meta.industries.${industry}`) }}</option>
         </select>
         <p class="form-input-hint" v-if="companyErrors.industry">{{ companyErrors.industry[0] }}</p>
       </div>
@@ -81,6 +78,7 @@ export default {
 
   computed: {
     ...mapState('initialStates', [
+      'meta',
       'currentCompany',
       'companyErrors'
     ])

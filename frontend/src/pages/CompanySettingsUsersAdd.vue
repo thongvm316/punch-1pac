@@ -22,9 +22,9 @@
       </div>
       <div class="form-group" :class="{ 'has-error': errors.group }">
         <label class="form-label">{{ $t('company.users.add.labels.group') }}</label>
-        <select class="form-select" v-model="params.group_id">
-          <option :value="group.id" v-for="group in meta.groups">{{ group.name }}</option>
-        </select>
+        <group-select v-model="params.group_id">
+          <option slot="placeholder" value="">{{ $t('company.users.add.placeholder.chooseGroup') }}</option>
+        </group-select>
         <p class="form-input-hint" v-if="errors.group">{{ errors.group[0] }}</p>
       </div>
       <div class="form-group">
@@ -36,6 +36,7 @@
 
 <script>
 import SettingLayout from '../layouts/Setting.vue'
+import GroupSelect from '../components/GroupSelect.vue'
 import axios from 'axios'
 import { mapState } from 'vuex'
 
@@ -48,7 +49,7 @@ export default {
         name: '',
         email: '',
         role: 'member',
-        group_id: 1
+        group_id: ''
       }
     }
   },
@@ -60,6 +61,7 @@ export default {
   },
 
   components: {
+    GroupSelect,
     SettingLayout
   },
 
