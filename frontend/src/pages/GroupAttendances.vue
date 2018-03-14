@@ -22,14 +22,12 @@
         :wrapper-class="'datepicker'"
         v-model="params.to_date"/>
 
-      <select class="form-select" v-model="params.status">
-        <option value="">{{ $t('attendances.placeholder.filterByStatus') }}</option>
-        <option :value="status" v-for="status in meta.attendanceStatuses">{{ $t(`meta.attendanceStatuses.${status}`) }}</option>
-      </select>
-      <select class="form-select" v-model="params.group_id">
-        <option value="">{{ $t('attendances.placeholder.filterByGroup') }}</option>
-        <option :value="group.id" v-for="group in meta.groups">{{ group.name }}</option>
-      </select>
+      <attendance-status-select v-model="params.status">
+        <option slot="placeholder" value="">{{ $t('attendances.placeholder.filterByStatus') }}</option>
+      </attendance-status-select>
+      <group-select v-model="params.group_id">
+        <option slot="placeholder" value="">{{ $t('attendances.placeholder.filterByGroup') }}</option>
+      </group-select>
     </div>
 
     <table class="table table-hover bg-light mt-5">
@@ -72,6 +70,8 @@ import Datepicker from 'vuejs-datepicker'
 import MainLayout from '../layouts/Main.vue'
 import Pagination from '../components/Pagination.vue'
 import AttendancesTab from '../components/AttendancesTab.vue'
+import GroupSelect from '../components/GroupSelect.vue'
+import AttendanceStatusSelect from '../components/AttendanceStatusSelect.vue'
 import moment from 'moment'
 import { mapState, mapActions } from 'vuex'
 
@@ -92,14 +92,12 @@ export default {
     Datepicker,
     MainLayout,
     AttendancesTab,
+    GroupSelect,
+    AttendanceStatusSelect,
     Pagination
   },
 
   computed: {
-    ...mapState('initialStates', [
-      'meta'
-    ]),
-
     ...mapState('attendances', [
       'pager',
       'attendances'

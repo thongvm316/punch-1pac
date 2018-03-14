@@ -5,9 +5,7 @@
         <div class="box chart">
           <div class="box-header box-header-flex border-bottom">
             <h2>{{ $t('dashboard.chart') }}</h2>
-            <select class="form-select" v-model="status">
-              <option :value="status" v-for="status in meta.attendanceStatuses">{{ $t(`meta.attendanceStatuses.${status}`) }}</option>
-            </select>
+            <attendance-status-select v-model="status"/>
           </div>
           <div class="box-content">
             <chart :chartData="chartData" v-if="loaded"></chart>
@@ -26,6 +24,7 @@
 <script>
 import MainLayout from '../layouts/Main.vue'
 import FullCalendar from '../components/FullCalendar.vue'
+import AttendanceStatusSelect from '../components/AttendanceStatusSelect.vue'
 import Chart from '../components/Chart.vue'
 import { mapState, mapActions } from 'vuex'
 
@@ -46,7 +45,8 @@ export default {
   components: {
     MainLayout,
     FullCalendar,
-    Chart
+    Chart,
+    AttendanceStatusSelect
   },
 
   created () {
@@ -61,10 +61,6 @@ export default {
   },
 
   computed: {
-    ...mapState('initialStates', [
-      'meta'
-    ]),
-
     ...mapState('chart', [
       'chartData',
       'loaded'
