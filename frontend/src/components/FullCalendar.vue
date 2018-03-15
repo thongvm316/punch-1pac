@@ -36,7 +36,6 @@
 </template>
 
 <script>
-import moment from 'moment'
 import { mapState, mapGetters, mapActions } from 'vuex'
 
 export default {
@@ -44,9 +43,9 @@ export default {
 
   data () {
     return {
-      today: moment(),
-      dateContext: moment(),
-      days: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+      today: this.$moment(),
+      dateContext: this.$moment(),
+      days: this.$moment.weekdaysShort()
     }
   },
 
@@ -76,12 +75,12 @@ export default {
     },
 
     daysInNextMonth () {
-      const previousMonth = moment(this.dateContext).add(1, 'month')
+      const previousMonth = this.$moment(this.dateContext).add(1, 'month')
       return previousMonth.daysInMonth()
     },
 
     daysInPreviousMonth () {
-      const nextMonth = moment(this.dateContext).subtract(1, 'month')
+      const nextMonth = this.$moment(this.dateContext).subtract(1, 'month')
       return nextMonth.daysInMonth()
     },
 
@@ -134,12 +133,12 @@ export default {
 
   methods: {
     nextMonth () {
-      this.dateContext = moment(this.dateContext).add(1, 'month')
+      this.dateContext = this.$moment(this.dateContext).add(1, 'month')
       this.getCalendarAttendances(this.dateContext.format('YYYY-MM-DD'))
     },
 
     lastMonth () {
-      this.dateContext = moment(this.dateContext).subtract(1, 'month')
+      this.dateContext = this.$moment(this.dateContext).subtract(1, 'month')
       this.getCalendarAttendances(this.dateContext.format('YYYY-MM-DD'))
     },
 
