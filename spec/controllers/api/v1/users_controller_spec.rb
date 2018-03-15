@@ -418,7 +418,7 @@ RSpec.describe Api::V1::UsersController, type: :controller do
         subject { post :create, params: { user: params } }
 
         its(:code) { is_expected.to eq '422' }
-        its(:body) { is_expected.to be_json_as(response_422(group: Array)) }
+        its(:body) { is_expected.to be_json_as(response_422(group: Array, name: Array, email: Array)) }
       end
 
       context 'when permissions invalid' do
