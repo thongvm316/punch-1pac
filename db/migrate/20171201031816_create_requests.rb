@@ -6,8 +6,8 @@ class CreateRequests < ActiveRecord::Migration[5.1]
       t.bigint :attendance_id, null: false
       t.bigint :user_id, null: false
       t.string :reason, null: false, limit: 500
-      t.time :attended_at
-      t.time :left_at
+      t.time :attended_at, null: false
+      t.time :left_at, null: false
       t.integer :status, null: false, default: 0
 
       t.timestamps null: false

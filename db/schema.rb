@@ -174,8 +174,8 @@ ActiveRecord::Schema.define(version: 20180111065539) do
     t.bigint "attendance_id", null: false
     t.bigint "user_id", null: false
     t.string "reason", limit: 500, null: false
-    t.time "attended_at"
-    t.time "left_at"
+    t.time "attended_at", null: false
+    t.time "left_at", null: false
     t.integer "status", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
