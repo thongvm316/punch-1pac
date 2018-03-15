@@ -49,7 +49,7 @@
       <div class="form-group" :class="{ 'has-error': errors.name }">
         <label class="form-label">{{ $t('company.holidays.labels.name') }}</label>
         <input class="form-input" type="text" v-model="createParams.name">
-        <p class="form-input-hint" v-if="errors.name">{{ errors.name[0] }}</p>
+        <p class="form-input-hint" v-if="errors.name">{{ $t('company.holidays.labels.name') }} {{ errors.name[0] }}</p>
       </div>
       <div class="form-group" :class="{ 'has-error': errors.started_at }">
         <label class="form-label">{{ $t('company.holidays.labels.startAt') }}</label>
@@ -62,7 +62,7 @@
         :calendar-class="'datepicker-calendar'"
         :wrapper-class="'datepicker'"
         v-model="createParams.started_at"/>
-        <p class="form-input-hint" v-if="errors.started_at">{{ errors.started_at[0] }}</p>
+        <p class="form-input-hint" v-if="errors.started_at">{{ $t('company.holidays.labels.startAt') }} {{ errors.started_at[0] }}</p>
       </div>
       <div class="form-group" :class="{ 'has-error': errors.ended_at }">
         <label class="form-label">{{ $t('company.holidays.labels.endAt') }}</label>
@@ -75,7 +75,7 @@
         :calendar-class="'datepicker-calendar'"
         :wrapper-class="'datepicker'"
         v-model="createParams.ended_at"/>
-        <p class="form-input-hint" v-if="errors.ended_at">{{ errors.ended_at[0] }}</p>
+        <p class="form-input-hint" v-if="errors.ended_at">{{ $t('company.holidays.labels.endAt') }} {{ errors.ended_at[0] }}</p>
       </div>
       <div class="form-group">
         <button type="button" class="btn" @click="submitAddModal(createParams, createHoliday)">{{ $t('company.holidays.btn.submit') }}</button>
@@ -86,7 +86,7 @@
       <div class="form-group" :class="{ 'has-error': errors.name }">
         <label class="form-label">{{ $t('company.holidays.labels.name') }}</label>
         <input class="form-input" type="text" v-model="updateParams.name">
-        <p class="form-input-hint" v-if="errors.name">{{ errors.name[0] }}</p>
+        <p class="form-input-hint" v-if="errors.name">{{ $t('company.holidays.labels.name') }} {{ errors.name[0] }}</p>
       </div>
       <div class="form-group" :class="{ 'has-error': errors.started_at }">
         <label class="form-label">{{ $t('company.holidays.labels.startAt') }}</label>
@@ -99,7 +99,7 @@
         :calendar-class="'datepicker-calendar'"
         :wrapper-class="'datepicker'"
         v-model="updateParams.started_at"/>
-        <p class="form-input-hint" v-if="errors.started_at">{{ errors.started_at[0] }}</p>
+        <p class="form-input-hint" v-if="errors.started_at">{{ $t('company.holidays.labels.startAt') }} {{ errors.started_at[0] }}</p>
       </div>
       <div class="form-group" :class="{ 'has-error': errors.ended_at }">
         <label class="form-label">{{ $t('company.holidays.labels.endAt') }}</label>
@@ -112,7 +112,7 @@
         :calendar-class="'datepicker-calendar'"
         :wrapper-class="'datepicker'"
         v-model="updateParams.ended_at"/>
-        <p class="form-input-hint" v-if="errors.reason">{{ errors.ended_at[0] }}</p>
+        <p class="form-input-hint" v-if="errors.reason">{{ $t('company.holidays.labels.endAt') }} {{ errors.ended_at[0] }}</p>
       </div>
       <div class="form-group">
         <button type="button" class="btn" @click="saveEditModal({ holidayID: currentID, updateParams: updateParams }, updateHoliday)">{{ $t('company.holidays.btn.save') }}</button>
