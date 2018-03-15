@@ -6,26 +6,26 @@
       <div class="form-group" :class="{ 'has-error': errors.name }">
         <label class="form-label">{{ $t('company.users.add.labels.name') }}</label>
         <input class="form-input" type="text" :placeholder="$t('company.users.add.placeholder.name')" v-model="params.name">
-        <p class="form-input-hint" v-if="errors.name">{{ errors.name[0] }}</p>
+        <p class="form-input-hint" v-if="errors.name">{{ $t('company.users.add.labels.name') }} {{ errors.name[0] }}</p>
       </div>
       <div class="form-group" :class="{ 'has-error': errors.email }">
         <label class="form-label">{{ $t('company.users.add.labels.email') }}</label>
         <input class="form-input" type="text" :placeholder="$t('company.users.add.placeholder.email')" v-model="params.email">
-        <p class="form-input-hint" v-if="errors.email">{{ errors.email[0] }}</p>
+        <p class="form-input-hint" v-if="errors.email">{{ $t('company.users.add.labels.email') }} {{ errors.email[0] }}</p>
       </div>
       <div class="form-group" :class="{ 'has-error': errors.role }">
         <label class="form-label">{{ $t('company.users.add.labels.role') }}</label>
         <select class="form-select" v-model="params.role">
           <option :value="role" v-for="role in meta.roles">{{ $t(`meta.roles.${role}`) }}</option>
         </select>
-        <p class="form-input-hint" v-if="errors.role">{{ errors.role[0] }}</p>
+        <p class="form-input-hint" v-if="errors.role">{{ $t('company.users.add.labels.role') }} {{ errors.role[0] }}</p>
       </div>
       <div class="form-group" :class="{ 'has-error': errors.group }">
         <label class="form-label">{{ $t('company.users.add.labels.group') }}</label>
         <group-select v-model="params.group_id">
           <option slot="placeholder" value="">{{ $t('company.users.add.placeholder.chooseGroup') }}</option>
         </group-select>
-        <p class="form-input-hint" v-if="errors.group">{{ errors.group[0] }}</p>
+        <p class="form-input-hint" v-if="errors.group">{{ $t('company.users.add.labels.group') }} {{ errors.group[0] }}</p>
       </div>
       <div class="form-group">
         <button type="button" class="btn" @click="create(params)">{{ $t('company.users.add.btn.submit') }}</button>
