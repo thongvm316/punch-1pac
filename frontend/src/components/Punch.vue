@@ -10,7 +10,6 @@
 </template>
 
 <script>
-import moment from 'moment'
 import { mapState, mapActions } from 'vuex'
 
 export default {
@@ -24,7 +23,7 @@ export default {
 
   methods: {
     updateCurrentTime () {
-      this.currentTime = moment().format('HH:mm:ss')
+      this.currentTime = this.$moment().format('HH:mm:ss')
     },
 
     ...mapActions('punch', [

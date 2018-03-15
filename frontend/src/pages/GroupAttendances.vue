@@ -72,7 +72,6 @@ import Pagination from '../components/Pagination.vue'
 import AttendancesTab from '../components/AttendancesTab.vue'
 import GroupSelect from '../components/GroupSelect.vue'
 import AttendanceStatusSelect from '../components/AttendanceStatusSelect.vue'
-import moment from 'moment'
 import { mapState, mapActions } from 'vuex'
 
 export default {
@@ -80,8 +79,8 @@ export default {
     return {
       params: {
         self: null,
-        from_date: moment().startOf('month').format('MMM DD YYYY'),
-        to_date: moment().endOf('month').format('MMM DD YYYY'),
+        from_date: this.$moment().startOf('month').format('MMM DD YYYY'),
+        to_date: this.$moment().endOf('month').format('MMM DD YYYY'),
         status: '',
         group_id: ''
       }

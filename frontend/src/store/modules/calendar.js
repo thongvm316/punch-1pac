@@ -1,6 +1,6 @@
 import * as types from '../mutation-types'
 import axios from 'axios'
-import moment from 'moment'
+import moment from '../../moment'
 
 const state = {
   attendances: []
