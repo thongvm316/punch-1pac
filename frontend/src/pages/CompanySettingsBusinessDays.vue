@@ -41,17 +41,17 @@
           <option value="">{{ $t('company.businessDays.placeholder.chooseWeekday') }}</option>
           <option :value="weekday" v-for="weekday in meta.weekdays">{{ $t(`meta.weekdays.${weekday}`) }}</option>
         </select>
-        <p class="form-input-hint" v-if="errors.weekday">{{ errors.weekday[0] }}</p>
+        <p class="form-input-hint" v-if="errors.weekday">{{ $t('company.businessDays.labels.weekday') }} {{ errors.weekday[0] }}</p>
       </div>
       <div class="form-group" :class="{ 'has-error': errors.started_at }">
         <label class="form-label">{{ $t('company.businessDays.labels.startedAt') }}</label>
         <input class="form-input" type="time" step="300" v-model="createParams.started_at">
-        <p class="form-input-hint" v-if="errors.started_at">{{ errors.started_at[0] }}</p>
+        <p class="form-input-hint" v-if="errors.started_at">{{ $t('company.businessDays.labels.startedAt') }} {{ errors.started_at[0] }}</p>
       </div>
       <div class="form-group" :class="{ 'has-error': errors.ended_at }">
         <label class="form-label">{{ $t('company.businessDays.labels.endedAt') }}</label>
         <input class="form-input" type="time" step="300" v-model="createParams.ended_at">
-        <p class="form-input-hint" v-if="errors.ended_at">{{ errors.ended_at[0] }}</p>
+        <p class="form-input-hint" v-if="errors.ended_at">{{ $t('company.businessDays.labels.endedAt') }} {{ errors.ended_at[0] }}</p>
       </div>
       <div class="form-group">
         <button type="button" class="btn" @click="submitAddModal(createParams, addBusinessDay)">
@@ -66,17 +66,17 @@
         <select class="form-select" v-model="updateParams.weekday">
           <option :value="weekday" v-for="weekday in meta.weekdays">{{ $t(`meta.weekdays.${weekday}`) }}</option>
         </select>
-        <p class="form-input-hint" v-if="errors.weekday">{{ errors.weekday[0] }}</p>
+        <p class="form-input-hint" v-if="errors.weekday">{{ $t('company.businessDays.labels.weekday') }} {{ errors.weekday[0] }}</p>
       </div>
       <div class="form-group" :class="{ 'has-error': errors.started_at }">
         <label class="form-label">{{ $t('company.businessDays.labels.startedAt') }}</label>
         <input class="form-input" type="time" step="300" v-model="updateParams.started_at">
-        <p class="form-input-hint" v-if="errors.started_at">{{ errors.started_at[0] }}</p>
+        <p class="form-input-hint" v-if="errors.started_at">{{ $t('company.businessDays.labels.startedAt') }} {{ errors.started_at[0] }}</p>
       </div>
       <div class="form-group" :class="{ 'has-error': errors.ended_at }">
         <label class="form-label">{{ $t('company.businessDays.labels.endedAt') }}</label>
         <input class="form-input" type="time" step="300" v-model="updateParams.ended_at">
-        <p class="form-input-hint" v-if="errors.ended_at">{{ errors.ended_at[0] }}</p>
+        <p class="form-input-hint" v-if="errors.ended_at">{{ $t('company.businessDays.labels.endedAt') }} {{ errors.ended_at[0] }}</p>
       </div>
       <div class="form-group">
         <button type="button" class="btn" @click="saveEditModal({ updateParams: updateParams, businessDayId: currentId }, updateBusinessDay)">
