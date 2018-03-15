@@ -1,7 +1,7 @@
 <template>
   <main-layout :title="$t('groups.title')">
     <div class="toolbar mt-5 text-right">
-      <button type="button" class="btn" @click="toggleAddModal(clearGroupErrors)">
+      <button type="button" class="btn" @click="toggleAddModal(clearGroupsErrors)">
         <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M24 10h-10v-10h-4v10h-10v4h10v10h4v-10h10z"></path></svg>
         {{ $t('groups.btn.add') }}
       </button>
@@ -29,7 +29,7 @@
       <div class="form-group" :class="{ 'has-error': errors.name }">
         <label class="form-label">{{ $t('groups.labels.name') }}</label>
         <input class="form-input" type="text" :placeholder="$t('groups.placeholder.name')" v-model="createParams.name">
-        <p class="form-input-hint" v-if="errors.name">{{ errors.name[0] }}</p>
+        <p class="form-input-hint" v-if="errors.name">{{ $t('groups.labels.name') }} {{ errors.name[0] }}</p>
       </div>
       <div class="form-group">
         <button type="button" class="btn" @click="submitAddModal(createParams, addGroup)">{{ $t('groups.btn.submit') }}</button>
