@@ -52,7 +52,7 @@ RSpec.describe Api::V1::UsersController, type: :controller do
         subject { get :show, params: { id: login_user.id } }
 
         its(:code) { is_expected.to eq '200' }
-        its(:body) { is_expected.to be_json_as(response_user.merge(permissions: Array.new(permissions_number) { response_permission })) }
+        its(:body) { is_expected.to be_json_as(response_user_with_permissions(permissions_number)) }
       end
 
       context 'when show the other one' do
@@ -70,7 +70,7 @@ RSpec.describe Api::V1::UsersController, type: :controller do
       subject { get :show, params: { id: user.id } }
 
       its(:code) { is_expected.to eq '200' }
-      its(:body) { is_expected.to be_json_as(response_user.merge(permissions: Array.new(permissions_number) { response_permission })) }
+      its(:body) { is_expected.to be_json_as(response_user_with_permissions(permissions_number)) }
     end
   end
 
@@ -273,7 +273,7 @@ RSpec.describe Api::V1::UsersController, type: :controller do
           subject { patch :update, params: { id: target_user.id, user: { name: 'thoi', permission_ids: permissions } } }
 
           its(:code) { is_expected.to eq '200' }
-          its(:body) { is_expected.to be_json_as(response_user.merge(permissions: Array.new(permissions_number) { response_permission })) }
+          its(:body) { is_expected.to be_json_as(response_user_with_permissions(permissions_number)) }
         end
 
         context 'when update without permission' do
@@ -287,7 +287,7 @@ RSpec.describe Api::V1::UsersController, type: :controller do
           subject { patch :update, params: { id: target_user.id, user: params } }
 
           its(:code) { is_expected.to eq '200' }
-          its(:body) { is_expected.to be_json_as(response_user.merge(permissions: Array.new(permissions_number) { response_permission })) }
+          its(:body) { is_expected.to be_json_as(response_user_with_permissions(permissions_number)) }
           it 'should change user name attributes' do
             is_expected
             attendance = User.find(target_user.id)
@@ -459,8 +459,8 @@ RSpec.describe Api::V1::UsersController, type: :controller do
       context 'when permissions invalid' do
         let(:user_params) do
           user_params = attributes_for(:user).except(:user_permissions_attributes)
-          max_permission_number = Permission.last.id
-          user_params[:permission_ids] = [max_permission_number + 1, max_permission_number + 2]
+          max_permissions_number = Permission.last.id
+          user_params[:permission_ids] = [max_permissions_number + 1, max_permissions_number + 2]
           user_params[:group_id] = company.default_group.id
           user_params
         end
