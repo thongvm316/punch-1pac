@@ -137,7 +137,17 @@ RSpec.describe Api::V1::AttendancesController, type: :controller do
       subject { get :calendar, params: { day: Time.current } }
 
       its(:code) { is_expected.to eq '200' }
-      its(:body) { is_expected.to be_json_as(Array.new(1) { response_attendance }) }
+      its(:body) { is_expected.to be_json_as(attendances: Array.new(1) { response_attendance }) }
+    end
+
+    context 'when there are holidays in month' do
+      let!(:attendance_1) { create :attendance, user: login_user, day: 1.day.ago }
+      let!(:holidays) { create_list :holiday, 2, company: company, started_at: Date.current, ended_at: Date.current + 1.day }
+
+      subject { get :calendar, params: { day: Date.current } }
+
+      its(:code) { is_expected.to eq '200' }
+      its(:body) { is_expected.to be_json_as(attendances: Array.new(1) { response_attendance }, holidays: Array.new(2) { response_holiday }) }
     end
 
     context 'when params invalid date formant' do
@@ -146,20 +156,11 @@ RSpec.describe Api::V1::AttendancesController, type: :controller do
       subject { get :calendar, params: { day: 'invalid' } }
 
       its(:code) { is_expected.to eq '200' }
-      its(:body) { is_expected.to be_json_as(Array.new(0) { response_attendance }) }
+      its(:body) { is_expected.to be_json_as(attendances: Array.new(0) { response_attendance }) }
     end
   end
 
   describe 'POST #create' do
-    context 'when attendance is created with off_status = holiday/weekend/annual_leave' do
-      let!(:attendance) { create :attendance, user: login_user, off_status: 'holiday' }
-
-      subject { post :create }
-
-      its(:code) { is_expected.to eq '201' }
-      its(:body) { is_expected.to be_json_as(response_attendance) }
-    end
-
     context 'when attendance is created and already checked in and checked out' do
       let!(:attendance) { create :attendance, user: login_user, off_status: nil }
 

@@ -34,7 +34,11 @@ class Api::V1::AttendancesController < Api::V1::BaseController
   def calendar
     attendances = current_user.attendances.calendar(params[:day]).order(day: :asc)
     render json: attendances,
+           root: 'attendances',
+           meta: ActiveModelSerializers::SerializableResource.new(current_company.holidays.in_month(params[:day]), each_serializer: HolidaySerializer).as_json,
+           meta_key: 'holidays',
            each_serializer: AttendanceSerializer,
+           adapter: :json,
            status: 200
   end
 

@@ -37,21 +37,13 @@ class AttendanceService
 
   def attend
     verify_ip_address!
-    attendance = @user.attendances.find_by(day: @now)
-    if attendance&.off_status
-      attendance.update_attributes(
-        attended_at: @now,
-        attending_status: self.class.attending_status(@user.company, @now, attendance),
-        off_status: nil
-      )
-      attendance
-    elsif attendance.nil?
-      @user.attendances.create(
-        day: @now,
-        attended_at: @now,
-        attending_status: self.class.attending_status(@user.company, @now, nil)
-      )
-    end
+    return false if @user.attendances.find_by(day: @now)
+    attendance = @user.attendances.build(
+      day: @now,
+      attended_at: @now,
+      attending_status: self.class.attending_status(@user.company, @now, nil)
+    )
+    attendance.save ? attendance : false
   end
 
   def leave

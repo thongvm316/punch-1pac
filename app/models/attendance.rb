@@ -56,7 +56,7 @@ class Attendance < ApplicationRecord
   }
 
   def self.calendar(str_date)
-    date = str_date.present? ? Time.zone.parse(str_date) : Time.current
+    date = str_date.present? ? Date.parse(str_date) : Date.current
     raise ArgumentError if date.blank?
     where(day: date.beginning_of_month..date.end_of_month)
   rescue TypeError, ArgumentError
