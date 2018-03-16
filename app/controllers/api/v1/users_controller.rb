@@ -31,9 +31,18 @@ class Api::V1::UsersController < Api::V1::BaseController
   end
 
   def change_password
-    render_422(current_password: [I18n.t('errors.messages.incorrect')]) && return unless current_user.authenticate(params[:current_password])
-    render_422(current_user.errors.messages) && return unless current_user.update_attributes(password_params)
-    head(200)
+    errors =  {}
+    errors.merge!(current_password: [I18n.t('errors.messages.incorrect')]) unless current_user.authenticate(params[:current_password])
+    errors.merge!(password: [I18n.t('errors.messages.blank')]) unless params[:password].present?
+    errors.merge!(password_confirmation: [I18n.t('errors.messages.blank')]) unless params[:password_confirmation].present?
+
+    render_422(errors) && return if errors.present?
+    
+    if current_user.update_attributes(password_params)
+      head(200)
+    else
+      render_422(current_user.errors.messages)
+    end
   end
 
   def create_multi
