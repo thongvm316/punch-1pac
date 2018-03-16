@@ -98,31 +98,17 @@ module JsonResponseHelper
     }
   end
 
-  def response_user(permissions_size = nil)
-    if permissions_size
-      {
-        id: Integer,
-        email: String,
-        name: String,
-        avatar_url: String,
-        gender: String,
-        position: nullable_response(String),
-        role: String,
-        created_at: time_iso8601_response,
-        permissions: Array.new(permissions_size) { response_permission }
-      }
-    else
-      {
-        id: Integer,
-        email: String,
-        name: String,
-        avatar_url: String,
-        gender: String,
-        position: nullable_response(String),
-        role: String,
-        created_at: time_iso8601_response
-      }
-    end
+  def response_user
+    {
+      id: Integer,
+      email: String,
+      name: String,
+      avatar_url: String,
+      gender: String,
+      position: nullable_response(String),
+      created_at: time_iso8601_response,
+      role: String
+    }
   end
 
   def response_holiday
