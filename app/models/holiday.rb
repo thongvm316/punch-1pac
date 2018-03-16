@@ -34,6 +34,14 @@ class Holiday < ApplicationRecord
     q
   }
 
+  def self.in_month(str_time)
+    time = str_time ? Date.parse(str_time) : Date.current
+    raise ArgumentError if time.blank?
+    where("date_trunc('month', started_at) = ? OR date_trunc('month', ended_at) = ?", time.beginning_of_month, time.beginning_of_month)
+  rescue TypeError, ArgumentError
+    none
+  end
+
   private
 
   def ended_at_and_started_at
