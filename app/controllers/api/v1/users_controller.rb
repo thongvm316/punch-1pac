@@ -31,13 +31,13 @@ class Api::V1::UsersController < Api::V1::BaseController
   end
 
   def change_password
-    errors =  {}
-    errors.merge!(current_password: [I18n.t('errors.messages.incorrect')]) unless current_user.authenticate(params[:current_password])
-    errors.merge!(password: [I18n.t('errors.messages.blank')]) unless params[:password].present?
-    errors.merge!(password_confirmation: [I18n.t('errors.messages.blank')]) unless params[:password_confirmation].present?
+    errors = {}
+    errors[:current_password] = [I18n.t('errors.messages.incorrect')] unless current_user.authenticate(params[:current_password])
+    errors[:password] = [I18n.t('errors.messages.blank')] if params[:password].blank?
+    errors[:password_confirmation] = [I18n.t('errors.messages.blank')] if params[:password_confirmation].blank?
 
     render_422(errors) && return if errors.present?
-    
+
     if current_user.update_attributes(password_params)
       head(200)
     else
