@@ -9,8 +9,18 @@ class DashboardController < ApplicationController
 
     @initial_state = {
       attendance: attendance ? ActiveModelSerializers::SerializableResource.new(attendance, serializer: AttendanceSerializer).as_json : {},
-      user: current_user.as_json(only: %i[id email role owner name gender language]).merge(avatar_url: current_user.avatar_url),
-      company: current_company.as_json(except: %i[created_at updated_at logo_data]).merge(logo_url: current_company.logo_url)
+      user: ActiveModelSerializers::SerializableResource.new(current_user, serializer: CompanySerializer).as_json,
+      company: ActiveModelSerializers::SerializableResource.new(current_company, serializer: CompanySerializer).as_json,
+      meta: {
+        attendanceStatuses: [].concat(Attendance::ATTENDING_STATUSES).concat(Attendance::LEAVING_STATUSES).concat(Attendance::OFF_STATUSES),
+        requestStatuses: Request.statuses.keys,
+        languages: I18n.available_locales.map(&:to_s),
+        weekdays: BusinessDay::WEEKDAYS,
+        holiday_countries: Holiday::COUNTRIES,
+        timezones: ActiveSupport::TimeZone.all.map { |tz| tz.tzinfo.name }.uniq,
+        roles: User.roles.keys,
+        industries: Company::INDUSTRIES
+      }
     }
     @webpack_assets = Oj.load_file(Rails.root.join('public', 'app', '_webpack-assets-nxu54TIPbpRWzks8.json').to_s)
   end
