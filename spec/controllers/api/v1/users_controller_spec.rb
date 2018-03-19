@@ -52,7 +52,7 @@ RSpec.describe Api::V1::UsersController, type: :controller do
         subject { get :show, params: { id: login_user.id } }
 
         its(:code) { is_expected.to eq '200' }
-        its(:body) { is_expected.to be_json_as(response_user(permissions_number)) }
+        its(:body) { is_expected.to be_json_as(response_user_with_permissions(permissions_number)) }
       end
 
       context 'when show the other one' do
@@ -70,7 +70,7 @@ RSpec.describe Api::V1::UsersController, type: :controller do
       subject { get :show, params: { id: user.id } }
 
       its(:code) { is_expected.to eq '200' }
-      its(:body) { is_expected.to be_json_as(response_user(permissions_number)) }
+      its(:body) { is_expected.to be_json_as(response_user_with_permissions(permissions_number)) }
     end
   end
 
@@ -164,14 +164,49 @@ RSpec.describe Api::V1::UsersController, type: :controller do
       let(:params) do
         {
           current_password: 'invalid_password',
-          password: 'password1',
-          password_confirmation: 'password1'
+          password: '',
+          password_confirmation: ''
         }
       end
 
       subject { patch :change_password, params: params }
       its(:code) { is_expected.to eq '422' }
-      its(:body) { is_expected.to be_json_as(response_422(current_password: [I18n.t('errors.messages.incorrect')])) }
+      its(:body) do
+        is_expected.to be_json_as(response_422(current_password: [I18n.t('errors.messages.incorrect')],
+                                               password: [I18n.t('errors.messages.blank')],
+                                               password_confirmation: [I18n.t('errors.messages.blank')]))
+      end
+    end
+
+    context 'when password and password_confirmation empty invalid' do
+      let(:params) do
+        {
+          current_password: 'password',
+          password: '',
+          password_confirmation: ''
+        }
+      end
+
+      subject { patch :change_password, params: params }
+      its(:code) { is_expected.to eq '422' }
+      its(:body) do
+        is_expected.to be_json_as(response_422(password: [I18n.t('errors.messages.blank')],
+                                               password_confirmation: [I18n.t('errors.messages.blank')]))
+      end
+    end
+
+    context 'when password and password_confirmation too short invalid' do
+      let(:params) do
+        {
+          current_password: 'password',
+          password: '1111',
+          password_confirmation: '1111'
+        }
+      end
+
+      subject { patch :change_password, params: params }
+      its(:code) { is_expected.to eq '422' }
+      its(:body) { is_expected.to be_json_as(response_422(password: [I18n.t('errors.messages.too_short', count: 6)])) }
     end
 
     context 'when missing current_password' do
@@ -238,7 +273,7 @@ RSpec.describe Api::V1::UsersController, type: :controller do
           subject { patch :update, params: { id: target_user.id, user: { name: 'thoi', permission_ids: permissions } } }
 
           its(:code) { is_expected.to eq '200' }
-          its(:body) { is_expected.to be_json_as(response_user(permissions_number)) }
+          its(:body) { is_expected.to be_json_as(response_user_with_permissions(permissions_number)) }
         end
 
         context 'when update without permission' do
@@ -252,7 +287,7 @@ RSpec.describe Api::V1::UsersController, type: :controller do
           subject { patch :update, params: { id: target_user.id, user: params } }
 
           its(:code) { is_expected.to eq '200' }
-          its(:body) { is_expected.to be_json_as(response_user(permissions_number)) }
+          its(:body) { is_expected.to be_json_as(response_user_with_permissions(permissions_number)) }
           it 'should change user name attributes' do
             is_expected
             attendance = User.find(target_user.id)
@@ -418,14 +453,14 @@ RSpec.describe Api::V1::UsersController, type: :controller do
         subject { post :create, params: { user: params } }
 
         its(:code) { is_expected.to eq '422' }
-        its(:body) { is_expected.to be_json_as(response_422(group: Array)) }
+        its(:body) { is_expected.to be_json_as(response_422(group: Array, name: Array, email: Array)) }
       end
 
       context 'when permissions invalid' do
         let(:user_params) do
           user_params = attributes_for(:user).except(:user_permissions_attributes)
-          max_permission_number = Permission.last.id
-          user_params[:permission_ids] = [max_permission_number + 1, max_permission_number + 2]
+          max_permissions_number = Permission.last.id
+          user_params[:permission_ids] = [max_permissions_number + 1, max_permissions_number + 2]
           user_params[:group_id] = company.default_group.id
           user_params
         end

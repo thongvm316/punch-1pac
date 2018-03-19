@@ -74,17 +74,17 @@
       <div class="form-group" :class="{ 'has-error': errors.attended_at }">
         <label class="form-label">{{ $t('attendances.labels.attendedAt') }}</label>
         <input class="form-input" v-model="createRequestParams.attended_at">
-        <p class="form-input-hint" v-if="errors.attended_at">{{ errors.attended_at[0] }}</p>
+        <p class="form-input-hint" v-if="errors.attended_at">{{ $t('attendances.labels.attendedAt') }} {{ errors.attended_at[0] }}</p>
       </div>
       <div class="form-group" :class="{ 'has-error': errors.left_at }">
         <label class="form-label">{{ $t('attendances.labels.leftAt') }}</label>
         <input class="form-input" v-model="createRequestParams.left_at">
-        <p class="form-input-hint" v-if="errors.left_at">{{ errors.left_at[0] }}</p>
+        <p class="form-input-hint" v-if="errors.left_at">{{ $t('attendances.labels.leftAt') }} {{ errors.left_at[0] }}</p>
       </div>
       <div class="form-group" :class="{ 'has-error': errors.reason }">
         <label class="form-label">{{ $t('attendances.labels.reason') }}</label>
         <textarea class="form-input" v-model="createRequestParams.reason"></textarea>
-        <p class="form-input-hint" v-if="errors.reason">{{ errors.reason[0] }}</p>
+        <p class="form-input-hint" v-if="errors.reason">{{ $t('attendances.labels.reason') }} {{ errors.reason[0] }}</p>
       </div>
       <div class="form-group">
         <button type="button" class="btn" @click="submitAddModal(createRequestParams, addRequest)">{{ $t('attendances.btn.save') }}</button>

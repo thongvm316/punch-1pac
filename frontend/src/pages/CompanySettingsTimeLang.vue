@@ -7,19 +7,19 @@
         <select class="form-select" v-model="params.timezone">
           <option :value="timezone" v-for="timezone in meta.timezones">{{ timezone }}</option>
         </select>
-        <p class="form-input-hint" v-if="companyErrors.timezone">{{ companyErrors.timezone[0] }}</p>
+        <p class="form-input-hint" v-if="companyErrors.timezone">{{ $t('company.timezoneAndLanguage.labels.timezone') }} {{ companyErrors.timezone[0] }}</p>
       </div>
       <div class="form-group" :class="{ 'has-error': companyErrors.language }">
         <label class="form-label">{{ $t('company.timezoneAndLanguage.labels.language') }}</label>
         <select class="form-select" v-model="params.language">
           <option :value="language" v-for="language in meta.languages">{{ $t(`meta.languages.${language}`) }}</option>
         </select>
-        <p class="form-input-hint" v-if="companyErrors.language">{{ companyErrors.language[0] }}</p>
+        <p class="form-input-hint" v-if="companyErrors.language">{{ $t('company.timezoneAndLanguage.labels.language') }} {{ companyErrors.language[0] }}</p>
       </div>
       <div class="form-group" :class="{ 'has-error': companyErrors.breaktime }">
         <label class="form-label">{{ $t('company.timezoneAndLanguage.labels.breaktime') }}</label>
         <input type="number" step="0.5" class="form-input" v-model="params.breaktime">
-        <p class="form-input-hint" v-if="companyErrors.breaktime">{{ companyErrors.breaktime[0] }}</p>
+        <p class="form-input-hint" v-if="companyErrors.breaktime">{{ $t('company.timezoneAndLanguage.labels.breaktime') }} {{ companyErrors.breaktime[0] }}</p>
       </div>
       <div class="form-group" :class="{ 'has-error': companyErrors.breakdays }">
         <label class="form-label">{{ $t('company.timezoneAndLanguage.labels.breakdays') }}</label>
@@ -29,7 +29,7 @@
             <i class="form-icon"></i> {{ $t(`meta.weekdays.${weekday}`) }}
           </label>
         </div>
-        <p class="form-input-hint" v-if="companyErrors.breakdays">{{ companyErrors.breakdays[0] }}</p>
+        <p class="form-input-hint" v-if="companyErrors.breakdays">{{ $t('company.timezoneAndLanguage.labels.breakdays') }} {{ companyErrors.breakdays[0] }}</p>
       </div>
       <div class="form-group">
         <button type="button" class="btn" @click="updateCompany(params)">{{ $t('company.timezoneAndLanguage.btn.save') }}</button>

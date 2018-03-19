@@ -32,10 +32,10 @@
     </table>
 
     <modal :title="$t('company.allowedIPs.modal.addTitle')" :modal-open.sync="isAddModalOpen">
-      <div class="form-group":class="{ 'has-error': errors.ip_address}">
+      <div class="form-group" :class="{ 'has-error': errors.ip_address}">
         <label class="form-label">{{ $t('company.allowedIPs.labels.ipAddress') }}</label>
         <input class="form-input" type="text" v-model="newIp">
-        <p class="form-input-hint" v-if="errors.ip_address">{{ errors.ip_address[0] }}</p>
+        <p class="form-input-hint" v-if="errors.ip_address">{{ $t('company.allowedIPs.labels.ipAddress') }} {{ errors.ip_address[0] }}</p>
       </div>
       <div class="form-group">
         <a class="btn" @click="submitAddModal({ ip_address: newIp }, createIP)">{{ $t('company.allowedIPs.btn.submit') }}</a>
@@ -46,7 +46,7 @@
       <div class="form-group" :class="{ 'has-error': errors.ip_address}">
         <label class="form-label">{{ $t('company.allowedIPs.labels.ipAddress') }}</label>
         <input class="form-input" type="text" v-model="editIp">
-        <p class="form-input-hint" v-if="errors.ip_address">{{ errors.ip_address[0] }}</p>
+        <p class="form-input-hint" v-if="errors.ip_address">{{ $t('company.allowedIPs.labels.ipAddress') }} {{ errors.ip_address[0] }}</p>
       </div>
       <div class="form-group">
         <a class="btn" @click="saveEditModal({ id: currentId, ip_address: editIp }, updateIP)">{{ $t('company.allowedIPs.btn.save') }}</a>

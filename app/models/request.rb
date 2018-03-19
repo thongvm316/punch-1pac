@@ -8,8 +8,8 @@
 #  attendance_id :integer          not null
 #  user_id       :integer          not null
 #  reason        :string(500)      not null
-#  attended_at   :time
-#  left_at       :time
+#  attended_at   :time             not null
+#  left_at       :time             not null
 #  status        :integer          default("pending"), not null
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
@@ -27,6 +27,8 @@ class Request < ApplicationRecord
   enum status: { pending: 0, approved: 1, rejected: 2 }
 
   validates :reason, presence: true, length: { maximum: 500 }
+  validates :attended_at, presence: true
+  validates :left_at, presence: true
 
   scope :for_user, ->(user, pself = nil) {
     return user.requests if pself

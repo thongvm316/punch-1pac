@@ -42,7 +42,7 @@
       <div class="form-group" :class="{ 'has-error': errors.name }">
         <label class="form-label">{{ $t('group.labels.name') }}</label>
         <input class="form-input" type="text" v-model="editParams.name">
-        <p class="form-input-hint" v-if="errors.name">{{ errors.name[0] }}</p>
+        <p class="form-input-hint" v-if="errors.name">{{ $t('group.labels.name') }} {{ errors.name[0] }}</p>
       </div>
       <div class="form-group">
         <button type="button" class="btn" @click="saveEditModal({ groupId: currentId, editParams: editParams }, updateGroup)">{{ $t('group.btn.save') }}</button>

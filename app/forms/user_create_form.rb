@@ -35,6 +35,7 @@ class UserCreateForm < BaseForm
 
   def valid?
     super
+    @user.valid?
     errors.empty?
   end
 
