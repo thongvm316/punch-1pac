@@ -52,14 +52,16 @@ class User < ApplicationRecord
   validates :email, presence: true, uniqueness: true, length: { maximum: 100 }, format: { with: REGEX_VALID_EMAIL }
   validates :password, length: { minimum: 6, maximum: 32 }, allow_nil: true
   validates :password_confirmation, presence: true, if: -> { password.present? }
-  validates :language, presence: true, inclusion: { in: %w[vi en jp] }
+  validates :language, presence: true, inclusion: { in: I18n.available_locales.map(&:to_s) }
   # validates :user_permissions, presence: true
 
   include ImageUploader::Attachment.new(:avatar)
 
+  scope :not_in_group, ->(group_id) { joins(:user_groups).merge(UserGroup.not_in_group(group_id)) }
   scope :search_by, ->(params) {
     q = all
     q = q.where('email LIKE ?', "%#{params[:email]}%") if params[:email].present?
+    q = q.not_in_group(params[:not_in_group_id]) if params[:not_in_group_id].present?
     q
   }
 
