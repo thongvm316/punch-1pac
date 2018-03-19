@@ -3,7 +3,7 @@
     <div class="input-group mt-5">
       <select class="form-select" v-model="country">
         <option value="">{{ $t('company.holidays.placeholder.chooseCountry') }}</option>
-        <option value="country" v-for="country in meta.holidayCountries">{{ $t(`meta.holidayCountries.${country}`) }}</option>
+        <option value="country" v-for="country in meta.holiday_countries">{{ $t(`meta.holiday_countries.${country}`) }}</option>
       </select>
       <button class="btn input-group-btn" @click="importNationalHolidays(country)">{{ $t('company.holidays.btn.import') }}</button>
     </div>

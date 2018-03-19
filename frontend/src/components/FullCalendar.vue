@@ -21,9 +21,9 @@
           <div class="calendar-date current-month" v-for="attendance in attendances">
             <button class="date-item" :class="{ 'date-today': attendance.day === today.format('YYYY-MM-DD') }">{{ attendance.day.split('-')[2] }}</button>
             <div class="calendar-events">
-              <a href="#" class="calendar-event bg-primary text-light" v-if="attendance.attending_status">{{ attendance.attending_status }}</a>
-              <a href="#" class="calendar-event bg-error text-light" v-if="attendance.leaving_status">{{ attendance.leaving_status }}</a>
-              <a href="#" class="calendar-event bg-warning text-light" v-if="attendance.off_status">{{ attendance.off_status }}</a>
+              <a href="#" class="calendar-event bg-primary text-light" v-if="attendance.attending_status">{{ $t(`meta.attendance_statuses.${attendance.attending_status}`) }}</a>
+              <a href="#" class="calendar-event bg-error text-light" v-if="attendance.leaving_status">{{ $t(`meta.attendance_statuses.${attendance.leaving_status}`) }}</a>
+              <a href="#" class="calendar-event bg-warning text-light" v-if="attendance.off_status">{{ $t(`meta.attendance_statuses.${attendance.off_status}`) }}</a>
               <a href="#" class="calendar-event bg-success text-light" v-if="attendance.holiday">{{ attendance.holiday.name }}</a>
             </div>
           </div>
