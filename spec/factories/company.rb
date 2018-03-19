@@ -13,7 +13,6 @@ FactoryBot.define do
     activated 1
     timezone 'Asia/Bangkok'
     breaktime 1.0
-    breakdays { %w[sunday saturday] }
 
     trait :with_default_group do
       after(:create) do |company|

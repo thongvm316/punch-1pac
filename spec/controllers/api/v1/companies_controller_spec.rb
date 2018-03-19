@@ -80,40 +80,6 @@ RSpec.describe Api::V1::CompaniesController, type: :controller do
     end
   end
 
-  describe 'POST #setup_rules' do
-    context 'when params are valid' do
-      let(:params) { { company: { breakdays: %w[saturday sunday] } } }
-      context 'when login user is admin' do
-        let(:login_user) { create :user, company: company, role: 'admin' }
-        subject { patch :setup_rules, params: params }
-
-        its(:code) { is_expected.to eq '200' }
-        its(:body) { is_expected.to be_json_as(response_company) }
-        it 'changes company.name' do
-          is_expected
-          expect(Company.find(company.id).breakdays).to eq %w[sunday saturday]
-        end
-      end
-
-      context 'when login user is member' do
-        let(:login_user) { create :user, company: company, role: 'member' }
-        subject { patch :setup_rules, params: params }
-
-        its(:code) { is_expected.to eq '401' }
-      end
-    end
-
-    context 'when params are invalid' do
-      let(:company) { create :company, timezone: 'Asia/Tokyo', breakdays: ['sunday'], breaktime: 1.5 }
-      let(:login_user) { create :user, company: company, role: 'admin' }
-
-      subject { patch :setup_rules, params: { company: { breakdays: ['sunday'], breaktime: 1, timezone: '' } } }
-
-      its(:code) { is_expected.to eq '422' }
-      its(:body) { is_expected.to be_json_as(response_422(timezone: Array)) }
-    end
-  end
-
   describe 'PATCH #deactivate' do
     context 'when superadmin do' do
       let(:login_user) { create :user, company: company, role: 'superadmin' }

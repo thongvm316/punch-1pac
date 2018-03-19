@@ -8,7 +8,7 @@
       </group-select>
       <select class="form-select" v-model="params.status">
         <option value="">{{ $t('requests.placeholder.filterByStatus') }}</option>
-        <option :value="status" v-for="status in meta.requestStatuses">{{ $t(`meta.requestStatuses.${status}`) }}</option>
+        <option :value="status" v-for="status in meta.request_statuses">{{ $t(`meta.request_statuses.${status}`) }}</option>
       </select>
     </div>
 
@@ -42,7 +42,7 @@
           <td>{{ request.attended_at }}</td>
           <td>{{ request.left_at }}</td>
           <td>{{ request.reason }}</td>
-          <td><span class="label label-rounded" :class="getStatusClass(request.status)">{{ request.status }}</span></td>
+          <td><span class="label label-rounded" :class="getStatusClass(request.status)">{{ $t(`meta.request_statuses.${request.status}`) }}</span></td>
           <td>
             <span v-if="request.status === 'pending'">
               <button class="btn btn-action btn-link" @click="approveRequest(request.id)">

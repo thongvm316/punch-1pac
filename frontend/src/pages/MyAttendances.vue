@@ -43,8 +43,8 @@
           <td>{{ attendance.attended_at }}</td>
           <td>{{ attendance.left_at }}</td>
           <td>
-            <span class="label label-rounded">{{ attendance.attending_status }}</span>
-            <span class="label label-rounded">{{ attendance.leaving_status }}</span>
+            <span class="label label-rounded">{{ $t(`meta.attendance_statuses.${attendance.attending_status}`) }}</span>
+            <span class="label label-rounded">{{ $t(`meta.attendance_statuses.${attendance.leaving_status}`) }}</span>
           </td>
           <td>
             <button class="btn btn-action btn-link" @click="toggleAddModal(attendance)">

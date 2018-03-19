@@ -4,8 +4,7 @@ import axios from 'axios'
 const state = {
   errors: {},
   group: {},
-  filteredUsers: [],
-  selectedUser: {}
+  usersNotInGroup: []
 }
 
 const mutations = {
@@ -17,8 +16,8 @@ const mutations = {
     state.group.name = payload.name
   },
 
-  [types.ADD_GROUP_USER] (state, payload) {
-    state.group.users.push(payload)
+  [types.ADD_GROUP_USER] (state, user) {
+    state.group.users.push(user)
   },
 
   [types.REMOVE_GROUP_USER] (state, payload) {
@@ -33,12 +32,8 @@ const mutations = {
     state.errors = {}
   },
 
-  [types.FILTERED_USERS] (state, payload) {
-    state.filteredUsers = payload.users
-  },
-
-  [types.SELECTED_USER] (state, payload) {
-    state.selectedUser = payload
+  [types.FETCH_USERS_NOT_IN_GROUP] (state, payload) {
+    state.usersNotInGroup = payload.users
   }
 }
 
@@ -65,9 +60,9 @@ const actions = {
   },
 
   addGroupUser ({ commit }, params) {
-    return axios.post(`/groups/${params.groupId}/add_user?user_id=${params.userId}`, { headers: { 'Content-Type': 'application/json' } })
+    return axios.post(`/groups/${params.groupId}/add_user`, { user_id: params.user.id }, { headers: { 'Content-Type': 'application/json' } })
                 .then(response => {
-                  commit(types.ADD_GROUP_USER, response.data)
+                  commit(types.ADD_GROUP_USER, params.user)
                   return response
                 })
                 .catch(error => { throw error })
@@ -82,17 +77,13 @@ const actions = {
                 .catch(error => { throw error })
   },
 
-  filterUsersByEmail ({ commit }, userEmail) {
-    return axios.get(`/users?email=${userEmail}`, { timeout: 5000 })
+  getUsersNotInGroup ({ commit }, groupId) {
+    return axios.get(`/users`, { params: { not_in_group_id: groupId, per_page: 1000 } })
                 .then(response => {
-                  commit(types.FILTERED_USERS, response.data)
+                  commit(types.FETCH_USERS_NOT_IN_GROUP, response.data)
                   return response
                 })
                 .catch(error => { throw error })
-  },
-
-  selectUser ({ commit }, user) {
-    commit(types.SELECTED_USER, user)
   },
 
   clearGroupErrors ({ commit }) {

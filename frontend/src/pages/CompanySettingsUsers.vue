@@ -20,7 +20,14 @@
       </thead>
       <tbody>
         <tr v-for="user in filterByEmail(email)">
-          <td>{{ user.name }}</td>
+          <td>
+            <div class="tile tile-centered">
+              <div class="tile-icon">
+                <img :src="user.avatar_url" class="avatar avatar-md" :alt="user.name">
+              </div>
+              <div class="tile-content">{{ user.name }}</div>
+            </div>
+          </td>
           <td>{{ user.email }}</td>
           <td>{{ user.position }}</td>
           <td>{{ user.role }}</td>

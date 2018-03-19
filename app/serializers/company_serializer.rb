@@ -2,5 +2,9 @@
 
 class CompanySerializer < ApplicationSerializer
   attributes :id, :namespace, :name, :country, :industry, :address, :phone_number, :postal_code, :tax_code, :activated,
-             :timezone, :language, :breaktime, :breakdays, :logo_url
+             :timezone, :breaktime, :breakdays, :logo_url
+
+  def breakdays
+    BusinessDay::WEEKDAYS - object.business_days.pluck(:weekday)
+  end
 end

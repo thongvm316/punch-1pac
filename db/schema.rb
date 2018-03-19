@@ -89,9 +89,7 @@ ActiveRecord::Schema.define(version: 20180111065539) do
     t.string "tax_code"
     t.boolean "activated", default: true, null: false
     t.string "timezone", default: "Asia/Hanoi", null: false
-    t.string "language", default: "en", null: false
     t.float "breaktime", default: 1.0, null: false
-    t.string "breakdays", default: [], null: false, array: true
     t.text "logo_data"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

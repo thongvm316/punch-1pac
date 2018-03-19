@@ -19,7 +19,7 @@
           <td>{{ request.attended_at }}</td>
           <td>{{ request.left_at }}</td>
           <td>{{ request.reason }}</td>
-          <td><span class="label label-rounded" :class="getStatusClass(request.status)">{{ request.status }}</span></td>
+          <td><span class="label label-rounded" :class="getStatusClass(request.status)">{{ $t(`meta.request_statuses.${request.status}`) }}</span></td>
           <td>
             <button class="btn btn-action btn-link" @click="toggleEditModal(request)" v-if="request.status === 'pending'">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 16" fill="currentColor">

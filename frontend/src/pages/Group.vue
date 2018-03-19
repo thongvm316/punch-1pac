@@ -1,13 +1,17 @@
 <template>
   <main-layout :title="group.name">
     <div class="input-group mt-5">
-      <v-select
-        label="email"
-        @search="filterUsersByEmail"
-        @input="selectUser"
-        :options="filteredUsers"
-      ></v-select>
-      <button type="button" class="btn input-group-btn" @click="addGroupUser({ groupId: currentId, userId: selectedUser.id })">{{ $t('group.btn.addUser') }}</button>
+      <v-select label="email" :placeholder="$t('group.placeholder.filterByEmail')" v-model="selectedUser" :options="usersNotInGroup">
+        <template slot="option" slot-scope="option">
+          <div class="tile tile-centered">
+            <div class="tile-icon">
+              <img :src="option.avatar_url" class="avatar avatar-md">
+            </div>
+            <div class="tile-content">{{ option.name }} ( {{ option.email }} )</div>
+          </div>
+        </template>
+      </v-select>
+      <button type="button" class="btn input-group-btn" @click="addGroupUser({ groupId: currentId, user: selectedUser })">{{ $t('group.btn.addUser') }}</button>
     </div>
     <p class="form-input-hint text-dark">{{ $t('group.explain') }}</p>
 
@@ -23,7 +27,14 @@
       </thead>
       <tbody>
         <tr v-for="user in group.users">
-          <td>{{ user.name }}</td>
+          <td>
+            <div class="tile tile-centered">
+              <div class="tile-icon">
+                <img :src="user.avatar_url" class="avatar avatar-md" :alt="user.name">
+              </div>
+              <div class="tile-content">{{ user.name }}</div>
+            </div>
+          </td>
           <td>{{ user.email }}</td>
           <td>{{ user.gender }}</td>
           <td>{{ user.position }}</td>
@@ -62,6 +73,7 @@ export default {
 
   data () {
     return {
+      selectedUser: null,
       currentId: this.$route.params.id,
       editParams: {
         name: ''
@@ -78,8 +90,7 @@ export default {
     ...mapState('group', [
       'errors',
       'group',
-      'filteredUsers',
-      'selectedUser'
+      'usersNotInGroup'
     ])
   },
 
@@ -96,13 +107,13 @@ export default {
       'addGroupUser',
       'removeGroupUser',
       'clearGroupErrors',
-      'filterUsersByEmail',
-      'selectUser'
+      'getUsersNotInGroup'
     ])
   },
 
   created () {
     this.getGroup(this.$route.params.id)
+    this.getUsersNotInGroup(this.$route.params.id)
   },
 
   watch: {

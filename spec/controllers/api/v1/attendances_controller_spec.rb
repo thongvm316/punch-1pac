@@ -72,30 +72,14 @@ RSpec.describe Api::V1::AttendancesController, type: :controller do
     context 'when filter by off_status' do
       before do
         12.times do |i|
-          create :attendance, user: login_user, off_status: 'holiday', day: Date.new(Date.current.year, i + 1, 1)
-          if i.even?
-            create :attendance, user: login_user, off_status: 'weekend', day: Date.new(Date.current.year, i + 1, 2)
-          else
-            create :attendance, user: login_user, off_status: 'annual_leave', day: Date.new(Date.current.year, i + 1, 2)
-          end
+          create :attendance, user: login_user, off_status: 'annual_leave', day: Date.new(Date.current.year, i + 1, 2)
         end
       end
 
       context 'when status is holiday' do
-        subject { get :chart, params: { status: 'holiday' } }
-        its(:code) { is_expected.to eq '200' }
-        its(:body) { is_expected.to be_json_as(response_attendance_chart(12)) }
-      end
-
-      context 'when status is weekend' do
-        subject { get :chart, params: { status: 'weekend' } }
-        its(:code) { is_expected.to eq '200' }
-        its(:body) { is_expected.to be_json_as(response_attendance_chart(6)) }
-      end
-      context 'when status is annual_leave' do
         subject { get :chart, params: { status: 'annual_leave' } }
         its(:code) { is_expected.to eq '200' }
-        its(:body) { is_expected.to be_json_as(response_attendance_chart(6)) }
+        its(:body) { is_expected.to be_json_as(response_attendance_chart(12)) }
       end
     end
   end

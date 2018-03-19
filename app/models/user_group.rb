@@ -14,4 +14,6 @@
 class UserGroup < ApplicationRecord
   belongs_to :user
   belongs_to :group
+
+  scope :not_in_group, ->(group_id) { where.not(group_id: group_id) }
 end
