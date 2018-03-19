@@ -31,10 +31,7 @@ Rails.application.routes.draw do
         resources :sessions, only: %i[index destroy]
 
         resource :company, only: %i[update destroy] do
-          collection do
-            match 'setup_rules', via: %i[patch put]
-            match 'deactivate', via: %i[patch put]
-          end
+          match 'deactivate', via: %i[patch put], on: :collection
         end
 
         resources :announcements, only: %i[index show] do

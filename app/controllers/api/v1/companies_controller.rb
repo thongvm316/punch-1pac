@@ -10,15 +10,6 @@ class Api::V1::CompaniesController < Api::V1::BaseController
     end
   end
 
-  def setup_rules
-    authorize!
-    if current_company.update_attributes(company_rule_params)
-      render json: current_company, serializer: CompanySerializer, status: 200
-    else
-      render_422(current_company.errors.messages)
-    end
-  end
-
   def deactivate
     authorize!
     current_company.update_attributes(activated: false)
@@ -34,11 +25,6 @@ class Api::V1::CompaniesController < Api::V1::BaseController
   private
 
   def company_params
-    params.require(:company).permit(:name, :country, :industry, :address, :phone_number, :postal_code,
-                                    :tax_code, :logo, :timezone, :language, :breaktime, breakdays: [])
-  end
-
-  def company_rule_params
-    params.require(:company).permit(:timezone, :breaktime, :breakdays)
+    params.require(:company).permit(:name, :country, :industry, :address, :phone_number, :postal_code, :tax_code, :logo, :timezone, :breaktime)
   end
 end
