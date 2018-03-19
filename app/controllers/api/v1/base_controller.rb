@@ -8,10 +8,15 @@ class Api::V1::BaseController < ApplicationController
   before_action :current_company
   before_action :authenticate_user!
   before_action :set_timezone
+  before_action :set_locale
 
   private
 
   def set_timezone
     Time.zone = current_company.timezone
+  end
+
+  def set_locale
+    I18n.locale = current_user.language
   end
 end
