@@ -18,9 +18,11 @@
 #
 
 class BusinessDay < ApplicationRecord
+  WEEKDAYS = %w[monday tuesday wednesday thursday friday saturday sunday].freeze
+
   belongs_to :company
 
   validates :started_at, presence: true
   validates :ended_at, presence: true
-  validates :weekday, presence: true, inclusion: { in: %w[monday tuesday wednesday thursday friday saturday sunday] }
+  validates :weekday, presence: true, inclusion: { in: WEEKDAYS }
 end

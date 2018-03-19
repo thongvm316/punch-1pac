@@ -22,13 +22,17 @@
 #
 
 class Attendance < ApplicationRecord
+  ATTENDING_STATUSES = %w[attend_ok attend_late].freeze
+  LEAVING_STATUSES = %w[leave_ok leave_early].freeze
+  OFF_STATUSES = %w[annual_leave].freeze
+
   belongs_to :user
   has_many :requests, dependent: :destroy
 
   validates :day, presence: true
-  validates :attending_status, inclusion: %w[attend_ok attend_late], allow_nil: true
-  validates :leaving_status, inclusion: %w[leave_ok leave_early], allow_nil: true
-  validates :off_status, inclusion: %w[holiday weekend annual_leave], allow_nil: true
+  validates :attending_status, inclusion: { in: ATTENDING_STATUSES }, allow_nil: true
+  validates :leaving_status, inclusion: { in: LEAVING_STATUSES }, allow_nil: true
+  validates :off_status, inclusion: { in: OFF_STATUSES }, allow_nil: true
 
   scope :attended, -> { where.not(attended_at: nil) }
   scope :between, ->(from_date, to_date) { where(day: from_date..to_date) }

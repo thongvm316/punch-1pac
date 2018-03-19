@@ -19,7 +19,9 @@
 #
 
 class NationalHoliday < ApplicationRecord
-  validates :country, presence: true, inclusion: { in: %w[vietnam japan] }
+  COUNTRIES = %w[vietnam japan].freeze
+
+  validates :country, presence: true, inclusion: { in: COUNTRIES }
   validates :name, presence: true
   validates :started_at, presence: true
   validates :ended_at, presence: true
@@ -27,5 +29,4 @@ class NationalHoliday < ApplicationRecord
   belongs_to :admin
 
   scope :selected_attr, -> { select(:name, :started_at, :ended_at) }
-  scope :in_holiday, ->(target_date) { where('? BETWEEN started_at AND ended_at', target_date) }
 end
