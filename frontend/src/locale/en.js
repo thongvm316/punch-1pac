@@ -16,6 +16,9 @@ export default {
     labels: {
       name: 'Name'
     },
+    placeholder: {
+      filterByEmail: 'Filter by email'
+    },
     modal: {
       editTitle: 'Edit Group'
     }
@@ -44,13 +47,13 @@ export default {
     about: 'About'
   },
   meta: {
-    attendanceStatuses: {
+    attendance_statuses: {
       attend_ok: 'Attend OK',
       attend_late: 'Attend Late',
       leave_early: 'Leave Early',
       leave_ok: 'Leave OK'
     },
-    requestStatuses: {
+    request_statuses: {
       pending: 'Pending',
       approved: 'Approved',
       rejected: 'Rejected'
@@ -78,7 +81,7 @@ export default {
       admin: 'Admin',
       superadmin: 'Superadmin'
     },
-    holidayCountries: {
+    holiday_countries: {
       vietnam: 'Vietnam',
       japan: 'Japan'
     },
