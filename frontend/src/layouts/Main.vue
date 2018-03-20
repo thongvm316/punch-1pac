@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="relative">
     <app-header></app-header>
     <main>
       <div class="container grid-xl">
@@ -8,19 +8,22 @@
       </div>
     </main>
     <app-footer></app-footer>
+    <flash/>
   </div>
 </template>
 
 <script>
 import AppHeader from '../components/AppHeader.vue'
 import AppFooter from '../components/AppFooter.vue'
+import Flash from '../components/Flash.vue'
 
 export default {
   name: 'main-layout',
   props: ['title'],
   components: {
-    appHeader: AppHeader,
-    appFooter: AppFooter
+    AppHeader,
+    AppFooter,
+    Flash
   }
 }
 </script>
