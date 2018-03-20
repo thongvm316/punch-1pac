@@ -1,0 +1,4 @@
+@mixin toast-variant($color: $dark-color) {
+  background: $color;
+  border-color: $color;
+}

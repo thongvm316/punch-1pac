@@ -1,0 +1,4 @@
+.modal:target .modal-overlay,
+.modal.active .modal-overlay {
+  background: rgba($dark-color, .65);
+}

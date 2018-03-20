@@ -11,4 +11,11 @@
     color: $light-color;
     cursor: pointer;
   }
+
+  &.toast-flash {
+    position: fixed;
+    z-index: $zindex-1;
+    top: 80px;
+    border-radius: 0;
+  }
 }

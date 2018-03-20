@@ -1,6 +1,7 @@
 // Variables and mixins
 @import '../../node_modules/spectre.css/src/variables';
 @import '../../node_modules/spectre.css/src/mixins';
+@import 'mixins';
 
 // Override spectre.css variables
 @import 'variables';
@@ -14,57 +15,49 @@
 
 // Elements
 @import '../../node_modules/spectre.css/src/typography';
+@import 'typography';
 @import '../../node_modules/spectre.css/src/asian';
 @import '../../node_modules/spectre.css/src/tables';
+@import 'tables';
 @import '../../node_modules/spectre.css/src/buttons';
+@import 'buttons';
 @import '../../node_modules/spectre.css/src/forms';
+@import 'forms';
 @import '../../node_modules/spectre.css/src/labels';
+@import 'labels';
 @import '../../node_modules/spectre.css/src/codes';
 @import '../../node_modules/spectre.css/src/media';
-
-// Override spectre.css elements
-@import 'typography';
-@import 'tables';
-@import 'buttons';
-@import 'forms';
-@import 'labels';
 
 // Layout
 @import '../../node_modules/spectre.css/src/layout';
 @import '../../node_modules/spectre.css/src/navbar';
-
-// Override spectre.css layout
 @import 'navbar';
 
 // Components
 @import '../../node_modules/spectre.css/src/accordions';
+@import 'accordions';
 @import '../../node_modules/spectre.css/src/autocomplete';
 @import '../../node_modules/spectre.css/src/avatars';
 @import '../../node_modules/spectre.css/src/badges';
 @import '../../node_modules/spectre.css/src/breadcrumbs';
-@import '../../node_modules/spectre.css/src/bars';
 @import '../../node_modules/spectre.css/src/cards';
 @import '../../node_modules/spectre.css/src/chips';
 @import '../../node_modules/spectre.css/src/dropdowns';
-@import '../../node_modules/spectre.css/src/empty';
 @import '../../node_modules/spectre.css/src/menus';
 @import '../../node_modules/spectre.css/src/modals';
+@import 'modals';
 @import '../../node_modules/spectre.css/src/navs';
+@import 'navs';
 @import '../../node_modules/spectre.css/src/pagination';
+@import 'pagination';
 @import '../../node_modules/spectre.css/src/panels';
 @import '../../node_modules/spectre.css/src/popovers';
-@import '../../node_modules/spectre.css/src/steps';
 @import '../../node_modules/spectre.css/src/tabs';
+@import 'tabs';
 @import '../../node_modules/spectre.css/src/tiles';
 @import '../../node_modules/spectre.css/src/toasts';
-@import '../../node_modules/spectre.css/src/tooltips';
-
-// Override spectre.css Components
-@import 'navs';
-@import 'pagination';
 @import 'toast';
-@import 'accordions';
-@import 'tabs';
+@import '../../node_modules/spectre.css/src/tooltips';
 
 // Experimentals
 @import '../../node_modules/spectre.css/src/calendars';
@@ -77,6 +70,7 @@
 @import 'toolbar';
 @import 'title';
 @import 'punch';
+@import 'transition';
 
 // Utility classes
 @import '../../node_modules/spectre.css/src/animations';
