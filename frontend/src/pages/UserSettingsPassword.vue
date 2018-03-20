@@ -17,7 +17,7 @@
         <p class="form-input-hint" v-if="errors.password_confirmation">{{ $t('user.password.labels.confirmNewPassword') }} {{ errors.password_confirmation[0] }}</p>
       </div>
       <div class="form-group">
-        <button type="button" class="btn" @click="updatePassword(updateParams)">{{ $t('user.password.btn.save') }}</button>
+        <button type="button" class="btn" @click="localUpdatePassword">{{ $t('user.password.btn.save') }}</button>
       </div>
     </form>
   </setting-layout>
@@ -40,8 +40,25 @@ export default {
 
   methods: {
     ...mapActions('userPassword', [
-      'updatePassword'
-    ])
+      'updatePassword',
+      'clearUserPasswordErrors'
+    ]),
+
+    ...mapActions('flash', [
+      'setFlashMsg'
+    ]),
+
+    localUpdatePassword () {
+      this.updatePassword(this.updateParams)
+          .then(response => {
+            this.setFlashMsg(this.$t('messages.user.updatePwdSuccess'))
+            this.updateParams = {
+              current_password: '',
+              password: '',
+              password_confirmation: ''
+            }
+          })
+    }
   },
 
   computed: {
@@ -56,6 +73,10 @@ export default {
 
   components: {
     SettingLayout
+  },
+
+  created () {
+    this.clearUserPasswordErrors()
   }
 }
 </script>

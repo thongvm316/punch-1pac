@@ -16,7 +16,7 @@
           </div>
           <div class="box-content box-content-flex" v-if="getGroupAdmins(group).length > 0">
             <div class="box-content-img">
-              <img src="/static/avatar.png" :alt="admin.name" class="avatar avatar-md" v-for="admin in getGroupAdmins(group).slice(0, 2)">
+              <img :src="admin.avatar_url" :alt="admin.name" class="avatar avatar-md" v-for="admin in getGroupAdmins(group).slice(0, 2)">
               <span>{{ getGroupAdmins(group).length | filterGroupNumAdmins }}</span>
             </div>
             <a @click.prevent="leave">{{ $t('groups.btn.leave') }}</a>
@@ -32,7 +32,7 @@
         <p class="form-input-hint" v-if="errors.name">{{ $t('groups.labels.name') }} {{ errors.name[0] }}</p>
       </div>
       <div class="form-group">
-        <button type="button" class="btn" @click="submitAddModal(createParams, addGroup)">{{ $t('groups.btn.submit') }}</button>
+        <button type="button" class="btn" @click="submitAddModal(createParams, addGroup, $t('messages.group.createSuccess'))">{{ $t('groups.btn.submit') }}</button>
       </div>
     </modal>
   </main-layout>
@@ -74,15 +74,13 @@ export default {
   },
 
   methods: {
-    leave () {
-      console.log('leave')
-    },
-
     ...mapActions('groups', [
       'clearGroupsErrors',
       'getGroups',
       'addGroup'
     ]),
+
+    leave () { },
 
     getGroupAdmins (group) {
       return group.users.filter(user => user.role === 'admin' || user.role === 'superadmin')

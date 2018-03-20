@@ -1,6 +1,5 @@
 <template>
   <setting-layout sidebar-type="company" :title="$t('company.title')" :subtitle="$t('company.users.add.title')">
-    <p class="text-success mb-2" v-if="msgSuccess">{{ $t('company.users.add.successMsg') }}</p>
     <p class="mb-2">{{ $t('company.users.add.note') }}</p>
     <form class="setting-form">
       <div class="form-group" :class="{ 'has-error': errors.name }">
@@ -38,12 +37,11 @@
 import SettingLayout from '../layouts/Setting.vue'
 import GroupSelect from '../components/GroupSelect.vue'
 import axios from 'axios'
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
 export default {
   data () {
     return {
-      msgSuccess: false,
       errors: {},
       params: {
         name: '',
@@ -66,9 +64,13 @@ export default {
   },
 
   methods: {
+    ...mapActions('flash', [
+      'setFlashMsg'
+    ]),
+
     create (params) {
       axios.post('/users', { user: params }, { headers: { 'Content-Type': 'application/json' } })
-           .then(response => { this.msgSuccess = true })
+           .then(response => this.setFlashMsg(this.$t('messages.user.addSuccess')))
            .catch(error => {
              if (error.response && error.response.status === 422) this.errors = error.response.data.errors
              else throw error

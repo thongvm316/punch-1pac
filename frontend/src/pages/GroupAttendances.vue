@@ -79,8 +79,8 @@ export default {
     return {
       params: {
         self: null,
-        from_date: this.$moment().startOf('month').format('MMM DD YYYY'),
-        to_date: this.$moment().endOf('month').format('MMM DD YYYY'),
+        from_date: this.$moment().locale('en').startOf('month').format('LL'),
+        to_date: this.$moment().locale('en').endOf('month').format('LL'),
         status: '',
         group_id: ''
       }

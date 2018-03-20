@@ -18,6 +18,7 @@
       </div>
     </main>
     <app-footer></app-footer>
+    <flash/>
   </div>
 </template>
 
@@ -26,6 +27,7 @@ import AppHeader from '../components/AppHeader.vue'
 import AppFooter from '../components/AppFooter.vue'
 import CompanySettingsSidebar from '../components/CompanySettingsSidebar.vue'
 import UserSettingsSidebar from '../components/UserSettingsSidebar.vue'
+import Flash from '../components/Flash.vue'
 
 export default {
   name: 'setting-layout',
@@ -34,7 +36,8 @@ export default {
     AppHeader,
     AppFooter,
     UserSettingsSidebar,
-    CompanySettingsSidebar
+    CompanySettingsSidebar,
+    Flash
   }
 }
 </script>

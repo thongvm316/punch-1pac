@@ -51,7 +51,9 @@ export default {
       attend_ok: 'Attend OK',
       attend_late: 'Attend Late',
       leave_early: 'Leave Early',
-      leave_ok: 'Leave OK'
+      leave_ok: 'Leave OK',
+      unpaid_leave: 'Unpaid leave',
+      annual_leave: 'Annual leave'
     },
     request_statuses: {
       pending: 'Pending',
@@ -102,7 +104,7 @@ export default {
     company: {
       profile: 'Profile',
       users: 'Users',
-      timezoneAndLanguage: 'Timezone and Language',
+      timezoneAndLanguage: 'Time',
       bussinessDays: 'Bussiness Days',
       holidays: 'Holidays',
       allowedIPs: 'Allowed IPs'
@@ -111,11 +113,6 @@ export default {
   dashboard: {
     title: 'Dashboard',
     calendar: 'Calendar',
-    statusInMonth: 'Status In Month',
-    status: 'Status',
-    numberOfDays: 'Number of days',
-    arriveOnTime: 'Arrive on time',
-    day: '0 | 1 day | {count} days',
     chart: 'Chart'
   },
   announcements: {
@@ -205,7 +202,8 @@ export default {
       reason: 'Reason'
     },
     btn: {
-      save: 'Save'
+      save: 'Save',
+      add: 'Add'
     },
     modal: {
       addTitle: 'Add request'
@@ -220,7 +218,8 @@ export default {
         email: 'Email',
         name: 'Name',
         gender: 'Gender',
-        position: 'Position'
+        position: 'Position',
+        language: 'Language'
       },
       btn: {
         save: 'Save'
@@ -312,11 +311,9 @@ export default {
       }
     },
     timezoneAndLanguage: {
-      title: 'Timezone and Language',
+      title: 'Time',
       labels: {
         timezone: 'Timezone',
-        language: 'Language',
-        breakdays: 'Break days',
         breaktime: 'Break time'
       },
       btn: {
@@ -396,6 +393,7 @@ export default {
         name: 'Name',
         email: 'Email',
         position: 'Position',
+        group: 'Group',
         role: 'Role'
       },
       btn: {
@@ -406,6 +404,38 @@ export default {
         deleteUserTitle: 'Delete user',
         deleteUserMsg: 'Are you sure to delete <strong>{name}</strong> user permanently ?'
       }
+    }
+  },
+  messages: {
+    company: {
+      updateSuccess: "Company's information is updated",
+      updateTimeSuccess: "Company's timezone and breaktime are updated"
+    },
+    user: {
+      addSuccess: 'An user is created. Email contains login information is sent to user',
+      updatePwdSuccess: 'Your password is updated',
+      addMultiSuccess: 'Multi users are created. Email contains login information is sent to them',
+      updateProfileSuccess: 'Your profile is updated'
+    },
+    ip: {
+      createSuccess: 'Allowed IP address is created',
+      updateSuccess: 'Allowed IP address is updated'
+    },
+    group: {
+      createSuccess: 'Group is created',
+      updateSuccess: 'Group is updated'
+    },
+    request: {
+      createSuccess: 'Request is created',
+      updateSuccess: 'Request is updated'
+    },
+    holiday: {
+      createSuccess: 'Holiday is created',
+      updateSuccess: 'Holiday is updated'
+    },
+    businessDay: {
+      createSuccess: 'Business day is created',
+      updateSuccess: 'Business day is updated'
     }
   }
 }

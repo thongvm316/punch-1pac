@@ -105,8 +105,9 @@ module JsonResponseHelper
       avatar_url: String,
       gender: String,
       position: nullable_response(String),
-      created_at: time_iso8601_response,
-      role: String
+      role: String,
+      language: String,
+      created_at: date_response,
     }
   end
 

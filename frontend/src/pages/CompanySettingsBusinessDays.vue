@@ -54,7 +54,7 @@
         <p class="form-input-hint" v-if="errors.ended_at">{{ $t('company.businessDays.labels.endedAt') }} {{ errors.ended_at[0] }}</p>
       </div>
       <div class="form-group">
-        <button type="button" class="btn" @click="submitAddModal(createParams, addBusinessDay)">
+        <button type="button" class="btn" @click="submitAddModal(createParams, addBusinessDay, $t('messages.businessDay.createSuccess'))">
           {{ $t('company.businessDays.btn.submit') }}
         </button>
       </div>
@@ -79,7 +79,10 @@
         <p class="form-input-hint" v-if="errors.ended_at">{{ $t('company.businessDays.labels.endedAt') }} {{ errors.ended_at[0] }}</p>
       </div>
       <div class="form-group">
-        <button type="button" class="btn" @click="saveEditModal({ updateParams: updateParams, businessDayId: currentId }, updateBusinessDay)">
+        <button
+          type="button"
+          class="btn"
+          @click="saveEditModal({ updateParams: updateParams, businessDayId: currentId }, updateBusinessDay, $t('messages.businessDay.updateSuccess'))">
           {{ $t('company.businessDays.btn.save') }}
         </button>
       </div>
@@ -118,6 +121,7 @@ export default {
       'deleteBusinessDay',
       'updateBusinessDay'
     ]),
+
     toggleEditModal (businessDay) {
       this.clearBusinessDayErrors()
       this.isEditModalOpen = !this.isEditModalOpen

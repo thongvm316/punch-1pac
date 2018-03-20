@@ -73,12 +73,12 @@
       </div>
       <div class="form-group" :class="{ 'has-error': errors.attended_at }">
         <label class="form-label">{{ $t('attendances.labels.attendedAt') }}</label>
-        <input class="form-input" v-model="createRequestParams.attended_at">
+        <input type="time" step="60" class="form-input" v-model="createRequestParams.attended_at">
         <p class="form-input-hint" v-if="errors.attended_at">{{ $t('attendances.labels.attendedAt') }} {{ errors.attended_at[0] }}</p>
       </div>
       <div class="form-group" :class="{ 'has-error': errors.left_at }">
         <label class="form-label">{{ $t('attendances.labels.leftAt') }}</label>
-        <input class="form-input" v-model="createRequestParams.left_at">
+        <input type="time" step="60" class="form-input" v-model="createRequestParams.left_at">
         <p class="form-input-hint" v-if="errors.left_at">{{ $t('attendances.labels.leftAt') }} {{ errors.left_at[0] }}</p>
       </div>
       <div class="form-group" :class="{ 'has-error': errors.reason }">
@@ -87,7 +87,7 @@
         <p class="form-input-hint" v-if="errors.reason">{{ $t('attendances.labels.reason') }} {{ errors.reason[0] }}</p>
       </div>
       <div class="form-group">
-        <button type="button" class="btn" @click="submitAddModal(createRequestParams, addRequest)">{{ $t('attendances.btn.save') }}</button>
+        <button type="button" class="btn" @click="submitAddModal(createRequestParams, addRequest, $t('messages.request.createSuccess'))">{{ $t('attendances.btn.add') }}</button>
       </div>
     </modal>
   </main-layout>
@@ -110,8 +110,8 @@ export default {
       day: '',
       params: {
         self: true,
-        from_date: this.$moment().startOf('month').format('MMM DD YYYY'),
-        to_date: this.$moment().endOf('month').format('MMM DD YYYY'),
+        from_date: this.$moment().locale('en').startOf('month').format('LL'),
+        to_date: this.$moment().locale('en').endOf('month').format('LL'),
         status: ''
       },
       createRequestParams: {

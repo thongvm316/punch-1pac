@@ -78,7 +78,12 @@
         <p class="form-input-hint" v-if="errors.ended_at">{{ $t('company.holidays.labels.endAt') }} {{ errors.ended_at[0] }}</p>
       </div>
       <div class="form-group">
-        <button type="button" class="btn" @click="submitAddModal(createParams, createHoliday)">{{ $t('company.holidays.btn.submit') }}</button>
+        <button
+          type="button"
+          class="btn"
+          @click="submitAddModal(createParams, createHoliday, $t('messages.holiday.createSuccess'))">
+          {{ $t('company.holidays.btn.submit') }}
+        </button>
       </div>
     </modal>
 
@@ -115,7 +120,12 @@
         <p class="form-input-hint" v-if="errors.reason">{{ $t('company.holidays.labels.endAt') }} {{ errors.ended_at[0] }}</p>
       </div>
       <div class="form-group">
-        <button type="button" class="btn" @click="saveEditModal({ holidayID: currentID, updateParams: updateParams }, updateHoliday)">{{ $t('company.holidays.btn.save') }}</button>
+        <button
+          type="button"
+          class="btn"
+          @click="saveEditModal({ holidayID: currentID, updateParams: updateParams }, updateHoliday, $t('messages.holiday.updateSuccess'))">
+          {{ $t('company.holidays.btn.save') }}
+        </button>
       </div>
     </modal>
   </setting-layout>

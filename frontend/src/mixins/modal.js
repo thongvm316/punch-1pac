@@ -1,4 +1,5 @@
 import Modal from '../components/Modal.vue'
+import { mapActions } from 'vuex'
 
 export default {
   data () {
@@ -13,6 +14,10 @@ export default {
   },
 
   methods: {
+    ...mapActions('flash', [
+      'setFlashMsg'
+    ]),
+
     toggleAddModal (callback) {
       if (callback) callback()
       this.isAddModalOpen = !this.isAddModalOpen
@@ -23,12 +28,18 @@ export default {
       this.isEditModalOpen = !this.isEditModalOpen
     },
 
-    submitAddModal (params, callback) {
-      callback(params).then(response => { this.isAddModalOpen = false })
+    submitAddModal (params, callback, msg = '') {
+      callback(params).then(response => {
+        this.isAddModalOpen = false
+        if (msg) this.setFlashMsg(msg)
+      })
     },
 
-    saveEditModal (params, callback) {
-      callback(params).then(response => { this.isEditModalOpen = false })
+    saveEditModal (params, callback, msg = '') {
+      callback(params).then(response => {
+        this.isEditModalOpen = false
+        if (msg) this.setFlashMsg(msg)
+      })
     }
   }
 }

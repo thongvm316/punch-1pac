@@ -38,7 +38,7 @@
         <p class="form-input-hint" v-if="errors.ip_address">{{ $t('company.allowedIPs.labels.ipAddress') }} {{ errors.ip_address[0] }}</p>
       </div>
       <div class="form-group">
-        <a class="btn" @click="submitAddModal({ ip_address: newIp }, createIP)">{{ $t('company.allowedIPs.btn.submit') }}</a>
+        <a class="btn" @click="submitAddModal({ ip_address: newIp }, createIP, $t('messages.ip.createSuccess'))">{{ $t('company.allowedIPs.btn.submit') }}</a>
       </div>
     </modal>
 
@@ -49,7 +49,7 @@
         <p class="form-input-hint" v-if="errors.ip_address">{{ $t('company.allowedIPs.labels.ipAddress') }} {{ errors.ip_address[0] }}</p>
       </div>
       <div class="form-group">
-        <a class="btn" @click="saveEditModal({ id: currentId, ip_address: editIp }, updateIP)">{{ $t('company.allowedIPs.btn.save') }}</a>
+        <a class="btn" @click="saveEditModal({ id: currentId, ip_address: editIp }, updateIP, $t('messages.ip.updateSuccess'))">{{ $t('company.allowedIPs.btn.save') }}</a>
       </div>
     </modal>
   </setting-layout>

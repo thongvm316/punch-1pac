@@ -54,7 +54,7 @@ export default {
 
   methods: {
     logout () {
-      axios.post('/logout').then(() => { window.location.href = '/' })
+      axios.post('/logout', {}, { baseURL: '' }).then(() => { window.location.href = '/' })
     },
 
     toggleDropdown () {
