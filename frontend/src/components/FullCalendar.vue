@@ -144,7 +144,7 @@ export default {
     formatAttendances (response) {
       this.attendances = []
       let attendances = []
-      const date = response.data.attendances[0] ? this.$moment(response.data.attendances[0].day) : this.$moment()
+      const date = response.data.attendances[0] ? this.$moment(response.data.attendances[0].day) : this.dateContext
       const userJoinDate = this.$moment(this.currentUser.created_at)
       const findHolidayByDay = function (currentDay) {
         return response.data.holidays.find(holiday => {

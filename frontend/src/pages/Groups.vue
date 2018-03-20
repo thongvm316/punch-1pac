@@ -16,7 +16,7 @@
           </div>
           <div class="box-content box-content-flex" v-if="getGroupAdmins(group).length > 0">
             <div class="box-content-img">
-              <img src="/static/avatar.png" :alt="admin.name" class="avatar avatar-md" v-for="admin in getGroupAdmins(group).slice(0, 2)">
+              <img :src="admin.avatar_url" :alt="admin.name" class="avatar avatar-md" v-for="admin in getGroupAdmins(group).slice(0, 2)">
               <span>{{ getGroupAdmins(group).length | filterGroupNumAdmins }}</span>
             </div>
             <a @click.prevent="leave">{{ $t('groups.btn.leave') }}</a>
