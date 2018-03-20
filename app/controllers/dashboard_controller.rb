@@ -9,14 +9,14 @@ class DashboardController < ApplicationController
 
     @initial_state = {
       attendance: attendance ? ActiveModelSerializers::SerializableResource.new(attendance, serializer: AttendanceSerializer).as_json : {},
-      user: ActiveModelSerializers::SerializableResource.new(current_user, serializer: CompanySerializer).as_json,
+      user: ActiveModelSerializers::SerializableResource.new(current_user, serializer: UserSerializer).as_json,
       company: ActiveModelSerializers::SerializableResource.new(current_company, serializer: CompanySerializer).as_json,
       meta: {
-        attendanceStatuses: [].concat(Attendance::ATTENDING_STATUSES).concat(Attendance::LEAVING_STATUSES).concat(Attendance::OFF_STATUSES),
-        requestStatuses: Request.statuses.keys,
+        attendance_statuses: [].concat(Attendance::ATTENDING_STATUSES).concat(Attendance::LEAVING_STATUSES).concat(Attendance::OFF_STATUSES),
+        request_statuses: Request.statuses.keys,
         languages: I18n.available_locales.map(&:to_s),
         weekdays: BusinessDay::WEEKDAYS,
-        holiday_countries: Holiday::COUNTRIES,
+        holiday_countries: NationalHoliday::COUNTRIES,
         timezones: ActiveSupport::TimeZone.all.map { |tz| tz.tzinfo.name }.uniq,
         roles: User.roles.keys,
         industries: Company::INDUSTRIES
