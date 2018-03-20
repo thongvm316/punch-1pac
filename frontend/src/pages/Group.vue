@@ -56,7 +56,7 @@
         <p class="form-input-hint" v-if="errors.name">{{ $t('group.labels.name') }} {{ errors.name[0] }}</p>
       </div>
       <div class="form-group">
-        <button type="button" class="btn" @click="saveEditModal({ groupId: currentId, editParams: editParams }, updateGroup)">{{ $t('group.btn.save') }}</button>
+        <button type="button" class="btn" @click="saveEditModal({ groupId: currentId, editParams: editParams }, updateGroup, $t('messages.group.createSuccess'))">{{ $t('group.btn.save') }}</button>
       </div>
     </modal>
   </main-layout>

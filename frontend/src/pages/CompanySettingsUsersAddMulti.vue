@@ -1,6 +1,5 @@
 <template>
   <setting-layout sidebar-type="company" :title="$t('company.title')" :subtitle="$t('company.users.addMulti.title')">
-    <p class="text-success mb-2" v-if="msgSuccess">{{ $t('company.users.addMulti.successCSVMsg') }}</p>
     <p class="mb-2">{{ $t('company.users.addMulti.note') }}</p>
     <form class="setting-form">
       <div class="form-group" :class="{ 'has-error': errors.csv_file }">
@@ -21,11 +20,11 @@
 <script>
 import SettingLayout from '../layouts/Setting.vue'
 import axios from 'axios'
+import { mapActions } from 'vuex'
 
 export default {
   data () {
     return {
-      msgSuccess: false,
       errors: {},
       params: {
         csv_file: null
@@ -38,13 +37,17 @@ export default {
   },
 
   methods: {
+    ...mapActions('flash', [
+      'setFlashMsg'
+    ]),
+
     upload (params) {
       if (!params.csv_file) return
       let formData = new FormData()
       formData.append('csv_file', params.csv_file)
       axios.post('/users/create_multi', formData, { headers: { 'Content-Type': 'multipart/form-data' } })
            .then(response => {
-             this.msgSuccess = true
+             this.setFlashMsg(this.$t('messages.user.addMultiSuccess'))
              this.errors = response.data.errors
            })
            .catch(error => {

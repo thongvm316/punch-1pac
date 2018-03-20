@@ -47,12 +47,12 @@
       </div>
       <div class="form-group" :class="{ 'has-error': errors.attended_at }">
         <label class="form-label">{{ $t('requests.labels.attendedAt') }}</label>
-        <input class="form-input" v-model="updateParams.attended_at">
+        <input type="time" step="60" class="form-input" v-model="updateParams.attended_at">
         <p class="form-input-hint" v-if="errors.attended_at">{{ errors.attended_at[0] }}</p>
       </div>
       <div class="form-group" :class="{ 'has-error': errors.left_at }">
         <label class="form-label">{{ $t('requests.labels.leftAt') }}</label>
-        <input class="form-input" v-model="updateParams.left_at">
+        <input type="time" step="60" class="form-input" v-model="updateParams.left_at">
         <p class="form-input-hint" v-if="errors.left_at">{{ errors.left_at[0] }}</p>
       </div>
       <div class="form-group" :class="{ 'has-error': errors.reason }">
@@ -61,7 +61,7 @@
         <p class="form-input-hint" v-if="errors.reason">{{ errors.reason[0] }}</p>
       </div>
       <div class="form-group">
-        <button type="button" class="btn" @click="saveEditModal({id: currentId, params: updateParams}, updateRequest)">{{ $t('requests.btn.save') }}</button>
+        <button type="button" class="btn" @click="saveEditModal({id: currentId, params: updateParams}, updateRequest, $t('messages.request.updateSuccess'))">{{ $t('requests.btn.save') }}</button>
       </div>
     </modal>
   </main-layout>

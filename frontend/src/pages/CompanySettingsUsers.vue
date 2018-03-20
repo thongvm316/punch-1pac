@@ -30,7 +30,7 @@
           </td>
           <td>{{ user.email }}</td>
           <td>{{ user.position }}</td>
-          <td>{{ user.role }}</td>
+          <td>{{ $t(`meta.roles.${user.role}`) }}</td>
           <td class="text-center">
             <button class="btn btn-action btn-link" @click="openConfirmDialog(user)">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">

@@ -33,6 +33,13 @@
         <label class="form-label">{{ $t('user.profile.labels.position') }}</label>
         <input class="form-input" type="text" v-model="params.position">
       </div>
+      <div class="form-group" :class="{ 'has-error': userErrors.name }">
+        <label class="form-label">{{ $t('user.profile.labels.language') }}</label>
+        <select class="form-select" v-model="params.language">
+          <option :value="language" v-for="language in meta.languages">{{ $t(`meta.languages.${language}`) }}</option>
+        </select>
+        <p class="form-input-hint" v-if="userErrors.language">{{ $t('user.profile.labels.language') }} {{ userErrors.language[0] }}</p>
+      </div>
       <div class="form-group">
         <button type="button" class="btn" @click="updateUser({ userId: currentUser.id, userParams: params })">{{ $t('user.profile.btn.save') }}</button>
       </div>
@@ -52,7 +59,8 @@ export default {
         gender: '',
         name: '',
         position: '',
-        email: ''
+        email: '',
+        language: ''
       }
     }
   },
@@ -63,16 +71,26 @@ export default {
 
   computed: {
     ...mapState('initialStates', [
+      'meta',
       'userErrors',
       'currentUser'
     ])
   },
 
   methods: {
+    ...mapActions('flash', [
+      'setFlashMsg'
+    ]),
+
     ...mapActions('initialStates', [
       'clearUserErrors',
       'updateUser'
     ]),
+
+    localUpdateUser () {
+      this.updateUser()
+          .then(response => this.setFlashMsg(this.$t('messages.user.updateProfileSuccess')))
+    },
 
     setAvatarFile (e) {
       const files = e.target.files || e.dataTransfer.files

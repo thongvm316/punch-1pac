@@ -45,7 +45,7 @@
         <p class="form-input-hint" v-if="companyErrors.tax_code">{{ $t('company.profile.labels.taxCode') }} {{ companyErrors.tax_code[0] }}</p>
       </div>
       <div class="form-group">
-        <button type="button" class="btn" @click="updateCompany(params)">{{ $t('company.profile.btn.save') }}</button>
+        <button type="button" class="btn" @click="localUpdateCompany">{{ $t('company.profile.btn.save') }}</button>
       </div>
     </form>
   </setting-layout>
@@ -85,6 +85,10 @@ export default {
   },
 
   methods: {
+    ...mapActions('flash', [
+      'setFlashMsg'
+    ]),
+
     ...mapActions('initialStates', [
       'clearCompanyErrors',
       'updateCompany'
@@ -94,6 +98,11 @@ export default {
       const files = e.target.files || e.dataTransfer.files
       if (!files.length) return
       this.params.logo = files[0]
+    },
+
+    localUpdateCompany () {
+      this.updateCompany(this.params)
+          .then(response => this.setFlashMsg(this.$t('messages.company.updateSuccess')))
     }
   },
 
