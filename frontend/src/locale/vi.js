@@ -67,7 +67,7 @@ export default {
     languages: {
       en: 'Tiếng Anh',
       vi: 'Tiếng Việt',
-      jp: 'Tiếng Nhật'
+      ja: 'Tiếng Nhật'
     },
     weekdays: {
       monday: 'Thứ 2',

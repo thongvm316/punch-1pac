@@ -80,7 +80,7 @@ class Api::V1::UsersController < Api::V1::BaseController
   end
 
   def user_update_params
-    params.require(:user).permit(:gender, :name, :email, :avatar)
+    params.require(:user).permit(:gender, :name, :email, :avatar, :language, :position)
   end
 
   def password_params

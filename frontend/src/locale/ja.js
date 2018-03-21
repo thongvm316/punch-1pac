@@ -67,7 +67,7 @@ export default {
     languages: {
       en: 'English',
       vi: 'Vietnamese',
-      jp: 'Japanese'
+      ja: 'Japanese'
     },
     weekdays: {
       monday: 'Monday',
