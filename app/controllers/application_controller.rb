@@ -13,28 +13,28 @@ class ApplicationController < ActionController::Base
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
 
   def forbidden
-    render json: { message: 'Forbidden' }, status: 403
+    render json: { message: 'Forbidden' }, status: :forbidden
   end
 
   def not_found
     respond_to do |f|
       f.html { render file: 'errors/404.html', status: 404, layout: 'static' }
-      f.json { render json: { message: 'Not Found' }, status: 404 }
+      f.json { render json: { message: 'Not Found' }, status: :not_found }
     end
   end
 
   def unauthorized
-    render json: { message: 'Unauthorized' }, status: 401
+    render json: { message: 'Unauthorized' }, status: :unauthorized
   end
 
   def internal_server_error
     respond_to do |f|
       f.html { render file: 'errors/500.html', status: 500, layout: 'static' }
-      f.json { render json: { message: 'Internal Server Error' }, status: 500 }
+      f.json { render json: { message: 'Internal Server Error' }, status: :internal_server_error }
     end
   end
 
   def render_422(error_messages)
-    render json: { message: 'Unprocessable Entity', errors: error_messages }, status: 422
+    render json: { message: 'Unprocessable Entity', errors: error_messages }, status: :unprocessable_entity
   end
 end

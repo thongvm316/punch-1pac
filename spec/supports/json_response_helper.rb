@@ -107,7 +107,7 @@ module JsonResponseHelper
       position: nullable_response(String),
       role: String,
       language: String,
-      created_at: date_response,
+      created_at: date_response
     }
   end
 

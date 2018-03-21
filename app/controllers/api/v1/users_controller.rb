@@ -38,7 +38,7 @@ class Api::V1::UsersController < Api::V1::BaseController
 
     render_422(errors) && return if errors.present?
 
-    if current_user.update_attributes(password_params)
+    if current_user.update(password_params)
       head(200)
     else
       render_422(current_user.errors.messages)
@@ -49,7 +49,7 @@ class Api::V1::UsersController < Api::V1::BaseController
     authorize!
     @users_form = UserCreateMultiForm.new(current_company, params[:csv_file])
     if @users_form.save
-      render json: @users_form.result, status: 201
+      render json: @users_form.result, status: :created
     else
       render_422(@users_form.errors.messages)
     end
@@ -57,7 +57,7 @@ class Api::V1::UsersController < Api::V1::BaseController
 
   def update
     authorize! @user
-    if @user.update_attributes(user_update_params)
+    if @user.update(user_update_params)
       render json: @user, serializer: UserWithPermissionSerializer, status: 200
     else
       render_422(@user.errors)

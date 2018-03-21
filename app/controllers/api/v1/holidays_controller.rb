@@ -30,7 +30,7 @@ class Api::V1::HolidaysController < Api::V1::BaseController
 
   def update
     authorize!
-    if @holiday.update_attributes(holiday_params)
+    if @holiday.update(holiday_params)
       render json: @holiday, serializer: HolidaySerializer, status: 200
     else
       render_422(@holiday.errors.messages)
