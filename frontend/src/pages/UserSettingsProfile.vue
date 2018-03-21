@@ -41,7 +41,7 @@
         <p class="form-input-hint" v-if="userErrors.language">{{ $t('user.profile.labels.language') }} {{ userErrors.language[0] }}</p>
       </div>
       <div class="form-group">
-        <button type="button" class="btn" @click="updateUser({ userId: currentUser.id, userParams: params })">{{ $t('user.profile.btn.save') }}</button>
+        <button type="button" class="btn" @click="localUpdateUser">{{ $t('user.profile.btn.save') }}</button>
       </div>
     </form>
   </setting-layout>
@@ -88,8 +88,11 @@ export default {
     ]),
 
     localUpdateUser () {
-      this.updateUser()
-          .then(response => this.setFlashMsg(this.$t('messages.user.updateProfileSuccess')))
+      this.updateUser({ userId: this.currentUser.id, userParams: this.params })
+          .then(response => {
+            this.setFlashMsg(this.$t('messages.user.updateProfileSuccess'))
+            this.$i18n.locale = this.params.language
+          })
     },
 
     setAvatarFile (e) {
