@@ -24,7 +24,7 @@ class AuthController < ApplicationController
           session[:access_token] = token
           redirect_to(url_for(subdomain: request.subdomain, controller: 'dashboard', action: 'index', path: 'dashboard'))
         end
-        f.json { render json: { access_token: token }, status: 200 }
+        f.json { render json: { access_token: token }, status: :ok }
       else
         f.html do
           @user = User.new(email: auth_params[:email])
@@ -39,7 +39,7 @@ class AuthController < ApplicationController
   def destroy
     revoke_jwt!
     session.delete(:access_token)
-    render json: { access_token: token }, status: 200
+    render json: { access_token: token }, status: :ok
   end
 
   private

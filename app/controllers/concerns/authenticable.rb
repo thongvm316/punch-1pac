@@ -8,22 +8,20 @@ module Authenticable
 
   def authenticate_user!
     respond_to do |f|
-      begin
-        @current_user ||= current_company.users.find(jwt_decode['sub'])
-        return
-      rescue ActiveRecord::RecordNotFound
-        f.html { redirect_to login_url }
-        f.json { head(401) }
-      rescue JWT::InvalidJtiError
-        f.html { redirect_to login_url }
-        f.json { render json: { message: 'Token is revoked' }, status: 401 }
-      rescue JWT::ExpiredSignature
-        f.html { redirect_to login_url }
-        f.json { render json: { message: 'Token is expired' }, status: 401 }
-      rescue JWT::DecodeError
-        f.html { redirect_to login_url }
-        f.json { render json: { message: 'Token is invalid' }, status: 401 }
-      end
+      @current_user ||= current_company.users.find(jwt_decode['sub'])
+      return
+    rescue ActiveRecord::RecordNotFound
+      f.html { redirect_to login_url }
+      f.json { head(401) }
+    rescue JWT::InvalidJtiError
+      f.html { redirect_to login_url }
+      f.json { render json: { message: 'Token is revoked' }, status: :unauthorized }
+    rescue JWT::ExpiredSignature
+      f.html { redirect_to login_url }
+      f.json { render json: { message: 'Token is expired' }, status: :unauthorized }
+    rescue JWT::DecodeError
+      f.html { redirect_to login_url }
+      f.json { render json: { message: 'Token is invalid' }, status: :unauthorized }
     end
   end
 
@@ -58,7 +56,7 @@ module Authenticable
   end
 
   def jwt_decode
-    @payload ||= JWT.decode(token, ENV['JWT_KEY'], true, algorithm: ALGORITHM, verify_jti: ->(jti) { jwt_revoked?(jti) }).first
+    @jwt_decode ||= JWT.decode(token, ENV['JWT_KEY'], true, algorithm: ALGORITHM, verify_jti: ->(jti) { jwt_revoked?(jti) }).first
   end
 
   def revoke_jwt!(usession = nil)

@@ -21,7 +21,7 @@ class Api::V1::AllowedIpsController < Api::V1::BaseController
 
   def update
     authorize!
-    if @allowed_ip.update_attributes(allowed_ip_params)
+    if @allowed_ip.update(allowed_ip_params)
       render json: @allowed_ip, serializer: AllowedIpSerializer, status: 200
     else
       render_422(@allowed_ip.errors.messages)

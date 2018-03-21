@@ -47,6 +47,6 @@ class Session < ApplicationRecord
       os: "#{client.os_name}_#{client.os_full_version}",
       user_agent: request.user_agent
     }
-    session ? session.update_attributes(data) : create(data)
+    session ? session.update(data) : create(data)
   end
 end

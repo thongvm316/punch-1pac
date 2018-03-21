@@ -9,8 +9,8 @@ class RequestService
 
   def approve
     ApplicationRecord.transaction do
-      @req.update_attributes!(status: 'approved')
-      @attendance.update_attributes!(
+      @req.update!(status: 'approved')
+      @attendance.update!(
         attended_at: @req.attended_at,
         attending_status: AttendanceService.attending_status(@user.company, @req.attended_at, @attendance),
         left_at: @req.left_at,
@@ -20,6 +20,6 @@ class RequestService
   end
 
   def reject
-    @req.update_attributes(status: 'rejected')
+    @req.update(status: 'rejected')
   end
 end

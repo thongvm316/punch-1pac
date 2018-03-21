@@ -27,7 +27,7 @@ class Api::V1::GroupsController < Api::V1::BaseController
   def update
     authorize!
     @group.group_permissions.destroy_all if group_params[:group_permissions_attributes].present?
-    if @group.update_attributes(group_params)
+    if @group.update(group_params)
       render json: @group, serializer: GroupSerializer, status: 200
     else
       render_422(@group.errors.messages)

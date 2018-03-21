@@ -25,7 +25,7 @@ class PasswordResetController < ApplicationController
           flash.now[:alert] = msg
           render :new
         end
-        f.json { render json: { message: msg }, status: 422 }
+        f.json { render json: { message: msg }, status: :unprocessable_entity }
       end
     end
   end
@@ -42,7 +42,7 @@ class PasswordResetController < ApplicationController
 
   def update
     @user = User.reset_password_token_valid?(params[:token])
-    if @user.update_attributes(user_params)
+    if @user.update(user_params)
       flash[:notice] = 'Password has been reset'
       redirect_to login_url
     else

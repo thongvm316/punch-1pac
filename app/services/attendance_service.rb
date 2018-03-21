@@ -49,7 +49,7 @@ class AttendanceService
   def leave
     verify_ip_address!
     attendance = @user.attendances.attended.find_by!(day: @now, left_at: nil)
-    attendance.update_attributes(
+    attendance.update(
       left_at: @now,
       leaving_status: self.class.leaving_status(@user.company, @now, attendance)
     )

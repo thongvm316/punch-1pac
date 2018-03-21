@@ -33,7 +33,7 @@ class Api::V1::RequestsController < Api::V1::BaseController
 
   def update
     authorize! @req
-    if @req.update_attributes(request_params)
+    if @req.update(request_params)
       render json: @req, serializer: RequestSerializer, status: 200
     else
       render_422(@req.errors.messages)

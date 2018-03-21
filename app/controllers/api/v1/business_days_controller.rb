@@ -21,7 +21,7 @@ class Api::V1::BusinessDaysController < Api::V1::BaseController
 
   def update
     authorize!
-    if @business_day.update_attributes(business_day_params)
+    if @business_day.update(business_day_params)
       render json: @business_day, serializer: BusinessDaySerializer, status: 200
     else
       render_422(@business_day.errors.messages)

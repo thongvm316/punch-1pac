@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-#
 ActiveAdmin.register Company do
   permit_params do
     if params[:action] == 'create'
