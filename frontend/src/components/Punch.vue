@@ -45,11 +45,11 @@ export default {
     setInterval(this.updateCurrentTime, 1 * 1000)
 
     window.addEventListener('keypress', (e) => {
-      if (e.keyCode === 13 && !this.attendedAt) this.punchIn()
+      if (e.keyCode === 13 && !this.attendance.attended_at) this.punchIn()
     })
 
     window.addEventListener('keypress', (e) => {
-      if (e.keyCode === 13 && this.attendedAt && !this.leftAt) this.punchOut()
+      if (e.keyCode === 13 && this.attendance.attended_at && !this.attendance.left_at) this.punchOut()
     })
   }
 }
