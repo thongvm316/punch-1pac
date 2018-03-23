@@ -52,7 +52,6 @@ ActiveAdmin.register Company do
       row :activated
       row :timezone
       row :breaktime
-      row :breakdays
       row :created_at
       row :updated_at
     end
