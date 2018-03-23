@@ -7,7 +7,7 @@ RSpec.describe UserMailer, type: :mailer do
     let(:company) { create :company }
     let(:password) { Faker::Internet.password }
     let(:user) { create :user, company: company, password: password, password_confirmation: password }
-    let(:mail) { UserMailer.create(user.id, password) }
+    let(:mail) { UserMailer.create(user.id, company.id, password) }
 
     it 'render the headers' do
       expect(mail.subject).to eq("[1Punch] Invitation from #{company.name}")
