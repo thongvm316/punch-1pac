@@ -70,7 +70,6 @@ ActiveAdmin.register Company do
       f.input :tax_code
       f.input :timezone, as: :select, collection: timezones
       f.input :breaktime
-      f.input :breakdays
     end
     f.actions
   end
