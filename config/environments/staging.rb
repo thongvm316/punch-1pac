@@ -94,12 +94,11 @@ Rails.application.configure do
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.default_url_options = { host: '1punch.io', protocol: 'https' }
   config.action_mailer.smtp_settings = {
-    address:              ENV['MAILGUN_HOST'],
-    domain:               ENV['MAILGUN_DOMAIN'],
+    address:              ENV['AWS_SES_HOST'],
     port:                 587,
-    user_name:            ENV['MAILGUN_USERNAME'],
-    password:             ENV['MAILGUN_PASSWORD'],
-    authentication:       'plain',
+    user_name:            ENV['AWS_SES_USERNAME'],
+    password:             ENV['AWS_SES_PASSWORD'],
+    authentication:       :login,
     enable_starttls_auto: true
   }
 
