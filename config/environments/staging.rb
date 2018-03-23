@@ -95,6 +95,7 @@ Rails.application.configure do
   config.action_mailer.default_url_options = { host: '1punch.io', protocol: 'https' }
   config.action_mailer.smtp_settings = {
     address:              ENV['MAILGUN_HOST'],
+    domain:               ENV['MAILGUN_DOMAIN'],
     port:                 587,
     user_name:            ENV['MAILGUN_USERNAME'],
     password:             ENV['MAILGUN_PASSWORD'],
