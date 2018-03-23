@@ -7,7 +7,7 @@
         <input class="form-input" type="file" @change="setCsvFile">
         <p class="form-input-hint" v-if="errors.csv_file">{{ $t('company.users.addMulti.labels.csvFile') }} {{ errors.csv_file[0] }}</p>
       </div>
-      <div class="form-group" v-if="errors.lines">
+      <div class="form-group" v-if="errors.lines && errors.lines.length > 0">
         <p class="form-input-hint text-error">{{ $t('company.users.addMulti.errorMsg', { lines: errors.lines.join(', ') }) }}</p>
       </div>
       <div class="form-group">
