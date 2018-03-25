@@ -12,7 +12,7 @@ class AttendanceService
       weekday = attendance ? attendance.day.strftime('%A') : attended_at.strftime('%A')
       business_day = company.business_days.find_by(weekday: weekday.downcase)
 
-      return unless business_day
+      return 'attend_ok' unless business_day
 
       if attended_at.strftime('%H:%M') > business_day.started_at.strftime('%H:%M')
         'attend_late'
@@ -25,7 +25,7 @@ class AttendanceService
       weekday = attendance.day.strftime('%A')
       business_day = company.business_days.find_by(weekday: weekday.downcase)
 
-      return unless business_day
+      return 'leave_ok' unless business_day
 
       if left_at.strftime('%H:%M') < business_day.ended_at.strftime('%H:%M')
         'leave_early'
