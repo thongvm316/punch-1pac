@@ -7,7 +7,7 @@ class ImageUploader < Shrine
   plugin :activerecord
 
   Attacher.validate do
-    validate_max_size 2.megabytes, message: 'is too large (max is 5 MB)'
+    validate_max_size 2.megabytes, message: I18n.t('errors.messages.less_than', count: '2MB')
     validate_mime_type_inclusion ['image/jpeg', 'image/png', 'image/jpg']
   end
 

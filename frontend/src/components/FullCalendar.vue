@@ -145,7 +145,7 @@ export default {
       const userJoinDate = this.$moment(this.currentUser.created_at)
       const findHolidayByDay = function (currentDay) {
         return response.holidays.find(holiday => {
-          return this.$moment(currentDay).isBetween(holiday.started_at, holiday.ended_at)
+          return currentDay.isBetween(holiday.started_at, holiday.ended_at)
         })
       }
 
@@ -162,7 +162,7 @@ export default {
         if (holiday) attendance = Object.assign({}, attendance, { holiday: holiday })
 
         // A valid day is a day before today and after current user's join date
-        if (this.$moment().isAfter(currentDay) && this.$moment(currentDay).isAfter(userJoinDate)) {
+        if (this.today.isSameOrAfter(currentDay, 'day') && currentDay.isSameOrAfter(userJoinDate, 'day')) {
           const tmpAttendance = response.attendances.find(item => currentDay.format('YYYY-MM-DD') === item.day)
 
           // If current user already attended on current day then set attendance information

@@ -8,22 +8,20 @@ module Authenticable
 
   def authenticate_user!
     respond_to do |f|
-      begin
-        @current_user ||= current_company.users.find(jwt_decode['sub'])
-        return
-      rescue ActiveRecord::RecordNotFound
-        f.html { redirect_to login_url }
-        f.json { head(401) }
-      rescue JWT::InvalidJtiError
-        f.html { redirect_to login_url }
-        f.json { render json: { message: 'Token is revoked' }, status: :unauthorized }
-      rescue JWT::ExpiredSignature
-        f.html { redirect_to login_url }
-        f.json { render json: { message: 'Token is expired' }, status: :unauthorized }
-      rescue JWT::DecodeError
-        f.html { redirect_to login_url }
-        f.json { render json: { message: 'Token is invalid' }, status: :unauthorized }
-      end
+      @current_user ||= current_company.users.find(jwt_decode['sub'])
+      return
+    rescue ActiveRecord::RecordNotFound
+      f.html { redirect_to login_url }
+      f.json { head(401) }
+    rescue JWT::InvalidJtiError
+      f.html { redirect_to login_url }
+      f.json { render json: { message: 'Token is revoked' }, status: :unauthorized }
+    rescue JWT::ExpiredSignature
+      f.html { redirect_to login_url }
+      f.json { render json: { message: 'Token is expired' }, status: :unauthorized }
+    rescue JWT::DecodeError
+      f.html { redirect_to login_url }
+      f.json { render json: { message: 'Token is invalid' }, status: :unauthorized }
     end
   end
 
