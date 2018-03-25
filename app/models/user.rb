@@ -57,7 +57,7 @@ class User < ApplicationRecord
 
   include ImageUploader::Attachment.new(:avatar)
 
-  scope :not_in_group, ->(group_id) { joins(:user_groups).merge(UserGroup.not_in_group(group_id)) }
+  scope :not_in_group, ->(group_id) { left_outer_joins(:user_groups).merge(UserGroup.not_in_group(group_id)) }
   scope :search_by, ->(params) {
     q = all
     q = q.where('email LIKE ?', "%#{params[:email]}%") if params[:email].present?
