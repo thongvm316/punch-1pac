@@ -13,7 +13,7 @@ RSpec.describe PasswordResetMailer, type: :mailer do
     it 'render the headers' do
       expect(mail.subject).to eq('[1Punch] Please reset your password')
       expect(mail.to).to eq([user.email])
-      expect(mail.from).to eq(['no-reply@1punch.io'])
+      expect(mail.from).to eq(['no-reply@buildcauhinh.com'])
     end
 
     it 'render the body' do
