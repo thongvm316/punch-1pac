@@ -310,7 +310,6 @@ RSpec.describe Api::V1::RequestsController, type: :controller do
     context 'when fails authorize' do
       subject { delete :destroy, params: { id: req.id } }
 
-      it_behaves_like 'request status is not pending'
       it_behaves_like 'request not belongs to current user'
     end
   end

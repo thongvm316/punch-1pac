@@ -1,5 +1,6 @@
 AllCops:
   Exclude:
+    - 'db/seeds.rb'
     - 'db/schema.rb'
     - 'doc/**/*'
     - 'frontend/**/*'

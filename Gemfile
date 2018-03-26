@@ -64,8 +64,6 @@ group :development do
   gem 'annotate'
   gem 'letter_opener'
 
-  gem 'strong_migrations'
-
   gem 'rubocop', require: false
   gem 'rails_best_practices', require: false
   gem 'brakeman', require: false

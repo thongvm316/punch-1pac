@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180111065539) do
+ActiveRecord::Schema.define(version: 20180326050217) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -172,8 +172,8 @@ ActiveRecord::Schema.define(version: 20180111065539) do
     t.bigint "attendance_id", null: false
     t.bigint "user_id", null: false
     t.string "reason", limit: 500, null: false
-    t.time "attended_at", null: false
-    t.time "left_at", null: false
+    t.time "attended_at"
+    t.time "left_at"
     t.integer "status", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

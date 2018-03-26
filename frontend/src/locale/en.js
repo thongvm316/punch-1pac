@@ -172,6 +172,13 @@ export default {
     },
     modal: {
       editTitle: 'Edit Title'
+    },
+    errors: {
+      bothAttendedLeft: 'Both attended at and left at {msg}'
+    },
+    confirmDialog: {
+      deleteTitle: 'Delete request',
+      deleteMsg: 'Are you sure to delete this request permanently ?'
     }
   },
   attendances: {

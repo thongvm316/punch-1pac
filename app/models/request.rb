@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-
 # == Schema Information
 #
 # Table name: requests
@@ -8,8 +7,8 @@
 #  attendance_id :integer          not null
 #  user_id       :integer          not null
 #  reason        :string(500)      not null
-#  attended_at   :time             not null
-#  left_at       :time             not null
+#  attended_at   :time
+#  left_at       :time
 #  status        :integer          default("pending"), not null
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
@@ -27,8 +26,7 @@ class Request < ApplicationRecord
   enum status: { pending: 0, approved: 1, rejected: 2 }
 
   validates :reason, presence: true, length: { maximum: 500 }
-  validates :attended_at, presence: true
-  validates :left_at, presence: true
+  validate :both_attended_at_left_at_cannot_be_blank
 
   scope :for_user, ->(user, pself = nil) {
     return user.requests if pself
@@ -48,4 +46,13 @@ class Request < ApplicationRecord
     q = where(status: params[:status]) if params[:status].present?
     q
   }
+
+  private
+
+  def both_attended_at_left_at_cannot_be_blank
+    if attended_at.blank? && left_at.blank?
+      errors.add(:attended_at, I18n.t('errors.messages.blank'))
+      errors.add(:left_at, I18n.t('errors.messages.blank'))
+    end
+  end
 end

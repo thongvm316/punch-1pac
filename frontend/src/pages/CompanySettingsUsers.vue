@@ -49,7 +49,7 @@
 </template>
 
 <script>
-import confirmDialog from '../mixins/confirm-dialog.js'
+import confirmDialog from '../mixins/confirm-dialog'
 import SettingLayout from '../layouts/Setting.vue'
 import { mapState, mapGetters, mapActions } from 'vuex'
 
