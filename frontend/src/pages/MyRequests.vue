@@ -26,6 +26,11 @@
                 <path fill-rule="evenodd" d="M0 12v3h3l8-8-3-3-8 8zm3 2H1v-2h1v1h1v1zm10.3-9.3L12 6 9 3l1.3-1.3a.996.996 0 0 1 1.41 0l1.59 1.59c.39.39.39 1.02 0 1.41z"/>
               </svg>
             </button>
+            <button class="btn btn-action btn-link" @click="openConfirmDialog(request)">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 27 24" fill="currentColor">
+                <path d="M24 20.188l-8.315-8.209 8.2-8.282-3.697-3.697-8.212 8.318-8.31-8.203-3.666 3.666 8.321 8.24-8.206 8.313 3.666 3.666 8.237-8.318 8.285 8.203z"/>
+              </svg>
+            </button>
           </td>
         </tr>
       </tbody>
@@ -48,12 +53,12 @@
       <div class="form-group" :class="{ 'has-error': errors.attended_at }">
         <label class="form-label">{{ $t('requests.labels.attendedAt') }}</label>
         <input type="time" step="60" class="form-input" v-model="updateParams.attended_at">
-        <p class="form-input-hint" v-if="errors.attended_at">{{ errors.attended_at[0] }}</p>
+        <p class="form-input-hint" v-if="errors.attended_at">{{ $t('requests.errors.bothAttendedLeft', { msg: errors.attended_at[0] }) }}</p>
       </div>
       <div class="form-group" :class="{ 'has-error': errors.left_at }">
         <label class="form-label">{{ $t('requests.labels.leftAt') }}</label>
         <input type="time" step="60" class="form-input" v-model="updateParams.left_at">
-        <p class="form-input-hint" v-if="errors.left_at">{{ errors.left_at[0] }}</p>
+        <p class="form-input-hint" v-if="errors.left_at">{{ $t('requests.errors.bothAttendedLeft', { msg: errors.left_at[0] }) }}</p>
       </div>
       <div class="form-group" :class="{ 'has-error': errors.reason }">
         <label class="form-label">{{ $t('requests.labels.reason') }}</label>
@@ -64,12 +69,17 @@
         <button type="button" class="btn" @click="saveEditModal({id: currentId, params: updateParams}, updateRequest, $t('messages.request.updateSuccess'))">{{ $t('requests.btn.save') }}</button>
       </div>
     </modal>
+
+    <confirm-dialog :title="$t('requests.confirmDialog.deleteTitle')" :deleteObject="deleteRequest" :objectId="selectedObject.id" :modal-open.sync="isOpenConfirmDialog">
+      <p>{{ $t('requests.confirmDialog.deleteMsg') }}</p>
+    </confirm-dialog>
   </main-layout>
 </template>
 
 <script>
 import Datepicker from 'vuejs-datepicker'
 import MainLayout from '../layouts/Main.vue'
+import confirmDialog from '../mixins/confirm-dialog'
 import modal from '../mixins/modal'
 import Pagination from '../components/Pagination.vue'
 import RequestsTab from '../components/RequestsTab.vue'
@@ -78,7 +88,7 @@ import { mapState, mapActions } from 'vuex'
 export default {
   name: 'my-requests',
 
-  mixins: [modal],
+  mixins: [modal, confirmDialog],
 
   data () {
     return {
@@ -129,6 +139,7 @@ export default {
 
     ...mapActions('requests', [
       'clearRequestErrors',
+      'deleteRequest',
       'updateRequest',
       'getRequests'
     ])

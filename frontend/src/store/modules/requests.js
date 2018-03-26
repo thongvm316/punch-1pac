@@ -23,8 +23,8 @@ const mutations = {
     state.requests = payload.requests
   },
 
-  [types.DELETE_REQUEST] (state, payload) {
-    state.requests = state.requests.filter(req => req.id !== payload.id)
+  [types.DELETE_REQUEST] (state, requestId) {
+    state.requests = state.requests.filter(req => req.id !== requestId)
   },
 
   [types.UPDATE_REQUEST_ERRORS] (state, payload) {
@@ -83,7 +83,7 @@ const actions = {
   deleteRequest ({ commit }, id) {
     return axios.delete(`/requests/${id}`)
                 .then(response => {
-                  commit(types.DELETE_REQUEST, response.data)
+                  commit(types.DELETE_REQUEST, id)
                   return response
                 })
                 .catch(error => { throw error })
