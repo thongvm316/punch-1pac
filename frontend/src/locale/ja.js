@@ -187,7 +187,8 @@ export default {
       fromDate: 'From date',
       toDate: 'To date',
       filterByStatus: 'Filter by status',
-      filterByGroup: 'Filter by group'
+      filterByGroup: 'Filter by group',
+      filterByUser: 'Filter by user'
     },
     tableHeader: {
       name: 'Name',

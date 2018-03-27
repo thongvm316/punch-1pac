@@ -187,7 +187,8 @@ export default {
       fromDate: 'Từ ngày',
       toDate: 'Đến ngày',
       filterByStatus: 'Lọc theo trạng thái',
-      filterByGroup: 'Lọc theo nhóm'
+      filterByGroup: 'Lọc theo nhóm',
+      filterByUser: 'Lọc theo thành viên'
     },
     tableHeader: {
       name: 'Tên',
