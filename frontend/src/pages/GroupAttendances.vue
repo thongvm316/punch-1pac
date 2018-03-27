@@ -95,8 +95,8 @@ export default {
       params: {
         self: null,
         user_id: '',
-        from_date: this.$moment().locale('en').startOf('month').format('LL'),
-        to_date: this.$moment().locale('en').endOf('month').format('LL'),
+        from_date: this.$moment().locale('en').format('LL'),
+        to_date: this.$moment().locale('en').format('LL'),
         status: '',
         group_id: ''
       }
