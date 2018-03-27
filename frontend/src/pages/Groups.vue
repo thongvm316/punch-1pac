@@ -8,18 +8,17 @@
     </div>
 
     <div class="columns mt-5">
-      <div class="column col-3" v-for="group in groups">
-        <div class="box">
+      <div class="column col-3 mb-4" v-for="group in groups">
+        <div class="box box-group">
           <div class="box-header">
             <router-link tag="h2" :to="`/groups/${group.id}`" class="box-title">{{ group.name }}</router-link>
             <span>{{ $tc('groups.member', group.users.length, { count: group.users.length }) }}</span>
           </div>
-          <div class="box-content box-content-flex" v-if="getGroupAdmins(group).length > 0">
+          <div class="box-content box-content-flex" v-if="group.users.length > 0">
             <div class="box-content-img">
-              <img :src="admin.avatar_url" :alt="admin.name" class="avatar avatar-md" v-for="admin in getGroupAdmins(group).slice(0, 2)">
-              <span>{{ getGroupAdmins(group).length | filterGroupNumAdmins }}</span>
+              <img :src="user.avatar_url" :alt="user.name" class="avatar avatar-md" v-for="user in group.users.slice(0, 5)">
+              <span>{{ group.users.length | filterUserNum }}</span>
             </div>
-            <a @click.prevent="leave">{{ $t('groups.btn.leave') }}</a>
           </div>
         </div>
       </div>
@@ -56,8 +55,8 @@ export default {
   },
 
   filters: {
-    filterGroupNumAdmins (numAdmins) {
-      return numAdmins > 3 ? `+ ${numAdmins - 3}` : ''
+    filterUserNum (userNum) {
+      return userNum > 5 ? `+ ${userNum - 5}` : ''
     }
   },
 
@@ -80,8 +79,6 @@ export default {
       'addGroup'
     ]),
 
-    leave () { },
-
     getGroupAdmins (group) {
       return group.users.filter(user => user.role === 'admin' || user.role === 'superadmin')
     }
@@ -92,9 +89,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-  .column {
-    margin-bottom: .8rem;
-  }
-</style>

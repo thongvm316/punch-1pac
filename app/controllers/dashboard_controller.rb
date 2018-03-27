@@ -19,7 +19,8 @@ class DashboardController < ApplicationController
         holiday_countries: NationalHoliday::COUNTRIES,
         timezones: Company::TIMEZONES,
         roles: User.roles.keys,
-        industries: Company::INDUSTRIES
+        industries: Company::INDUSTRIES,
+        csv_template_url: ActionController::Base.helpers.asset_url('template.csv')
       }
     }
     @webpack_assets = Oj.load_file(Rails.root.join('public', 'app', '_webpack-assets-nxu54TIPbpRWzks8.json').to_s)

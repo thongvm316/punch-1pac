@@ -1,0 +1,4 @@
+name,email,role
+EmployeeA,employee_a@gmail.com,member
+EmployeeB,employee_b@gmail.com,admin
+EmployeeC,employee_c@gmail.com,superadmin

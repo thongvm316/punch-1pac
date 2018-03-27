@@ -37,13 +37,13 @@ class Request < ApplicationRecord
     when 'superadmin'
       where(user_id: user.company.users).includes(:user)
     when 'admin'
-      where(user_id: UserGroup.select(:user_id).where(group_id: user.groups)).includes(:user)
+      where(user_id: UserGroup.with_group(user.groups)).includes(:user)
     end
   }
 
   scope :search_by, ->(params) {
     q = all
-    q = where(user_id: UserGroup.select(:user_id).where(group_id: params[:group_id])) if params[:group_id].present?
+    q = where(user_id: UserGroup.with_group(params[:group_id])) if params[:group_id].present?
     q = where(status: params[:status]) if params[:status].present?
     q
   }

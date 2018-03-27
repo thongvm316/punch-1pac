@@ -187,7 +187,8 @@ export default {
       fromDate: 'From date',
       toDate: 'To date',
       filterByStatus: 'Filter by status',
-      filterByGroup: 'Filter by group'
+      filterByGroup: 'Filter by group',
+      filterByUser: 'Filter by user'
     },
     tableHeader: {
       name: 'Name',
@@ -386,6 +387,8 @@ export default {
         successCSVMsg: 'Users in csv file are created',
         note: 'An email contains login information is sent to user. Please ensure that email address is correct',
         errorMsg: 'There are incorrect information at rows {rows}',
+        download: 'Download template',
+        templateGuide: 'Please download the CSV file above. Fill out the cells and upload the file',
         labels: {
           csvFile: 'CSV file'
         },

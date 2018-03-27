@@ -23,4 +23,12 @@ class Group < ApplicationRecord
 
   validates :name, presence: true
   # validates :group_permissions, presence: true
+
+  def self.for_user(user)
+    if %w[member admin].include?(user.role)
+      where(id: UserGroup.select(:group_id).where(user: user))
+    else
+      all
+    end
+  end
 end
