@@ -42,9 +42,13 @@ class Api::V1::GroupsController < Api::V1::BaseController
 
   def add_user
     user = User.find(params[:user_id])
-    authorize!(user: user, group: @group)
-    UserGroup.find_or_create_by!(group: @group, user: user)
-    head(200)
+    authorize! @group
+    user_group = UserGroup.new(group: @group, user: user)
+    if user_group.save
+      head(200)
+    else
+      render_422(user_group.errors.messages)
+    end
   end
 
   def remove_user

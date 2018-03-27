@@ -43,11 +43,10 @@ ActiveAdmin.register NationalHoliday do
   form do |f|
     f.inputs 'Holiday' do
       f.input :name
-      f.input :country, as: :select, collection: countries
+      f.input :country, as: :select, collection: NationalHoliday::COUNTRIES
       f.input :started_at, as: :datepicker
       f.input :ended_at, as: :datepicker
     end
     f.actions
   end
-  controller { helper ActiveAdminHelper }
 end

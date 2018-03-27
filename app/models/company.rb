@@ -27,6 +27,7 @@
 
 class Company < ApplicationRecord
   INDUSTRIES = %w[hr_agency cafe_shop restaurant software_company startup].freeze
+  TIMEZONES = ActiveSupport::TimeZone.all.map { |tz| tz.tzinfo.name }.uniq
 
   has_many :users, dependent: :destroy
   has_many :allowed_ips, dependent: :destroy
@@ -41,7 +42,7 @@ class Company < ApplicationRecord
   validates :address, presence: true
   validates :phone_number, presence: true
   validates :breaktime, presence: true
-  validates :timezone, inclusion: { in: ActiveSupport::TimeZone.all.map { |tz| tz.tzinfo.name }.uniq }
+  validates :timezone, inclusion: { in: TIMEZONES }
 
   include ImageUploader::Attachment.new(:logo)
 

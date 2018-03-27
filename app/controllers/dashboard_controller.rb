@@ -17,7 +17,7 @@ class DashboardController < ApplicationController
         languages: I18n.available_locales.map(&:to_s),
         weekdays: BusinessDay::WEEKDAYS,
         holiday_countries: NationalHoliday::COUNTRIES,
-        timezones: ActiveSupport::TimeZone.all.map { |tz| tz.tzinfo.name }.uniq,
+        timezones: Company::TIMEZONES,
         roles: User.roles.keys,
         industries: Company::INDUSTRIES
       }

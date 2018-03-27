@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: requests
@@ -51,8 +52,8 @@ class Request < ApplicationRecord
 
   def both_attended_at_left_at_cannot_be_blank
     if attended_at.blank? && left_at.blank?
-      errors.add(:attended_at, I18n.t('errors.messages.blank'))
-      errors.add(:left_at, I18n.t('errors.messages.blank'))
+      errors.add(:attended_at, :blank)
+      errors.add(:left_at, :blank)
     end
   end
 end

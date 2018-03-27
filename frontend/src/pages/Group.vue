@@ -11,7 +11,7 @@
           </div>
         </template>
       </v-select>
-      <button type="button" class="btn input-group-btn" @click="addGroupUser({ groupId: currentId, user: selectedUser })">{{ $t('group.btn.addUser') }}</button>
+      <button type="button" class="btn input-group-btn" @click="localAddGroupUser">{{ $t('group.btn.addUser') }}</button>
     </div>
     <p class="form-input-hint text-dark">{{ $t('group.explain') }}</p>
 
@@ -108,7 +108,12 @@ export default {
       'removeGroupUser',
       'clearGroupErrors',
       'getUsersNotInGroup'
-    ])
+    ]),
+
+    localAddGroupUser () {
+      this.addGroupUser({ groupId: this.currentId, user: this.selectedUser })
+          .then(() => { this.selectedUser = null })
+    }
   },
 
   created () {

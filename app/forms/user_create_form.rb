@@ -2,8 +2,6 @@
 
 class UserCreateForm < BaseForm
   attribute :user, User
-  attribute :current_company, Company
-  attribute :current_user, User
   attribute :permission_ids, Array
   attribute :group_id, Integer
 
