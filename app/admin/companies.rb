@@ -62,17 +62,15 @@ ActiveAdmin.register Company do
       f.input :logo, as: :file, hint: image_tag(f.object.try(:logo_url), id: 'company-logo-image', class: 'image-uploader')
       f.input :namespace
       f.input :name
-      f.input :country, as: :select, collection: countries
+      f.input :country, as: :select, collection: NationalHoliday::COUNTRIES
       f.input :industry
       f.input :address
       f.input :phone_number
       f.input :postal_code
       f.input :tax_code
-      f.input :timezone, as: :select, collection: timezones
+      f.input :timezone, as: :select, collection: Company::TIMEZONES
       f.input :breaktime
     end
     f.actions
   end
-
-  controller { helper ActiveAdminHelper }
 end

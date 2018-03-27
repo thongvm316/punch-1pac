@@ -37,6 +37,9 @@ ActiveAdmin.register User do
       row :name
       row :email
       row :company
+      row :groups do |user|
+        user.groups.pluck(:name).join(', ')
+      end
       row :role
       row :gender
       row :owner
@@ -47,24 +50,23 @@ ActiveAdmin.register User do
   end
 
   form do |f|
-    f.inputs 'Company' do
+    f.inputs 'User' do
       f.input :avatar, as: :file, hint: image_tag(f.object.try(:avatar_url), id: 'user-avatar-image', class: 'image-uploader')
       f.input :name
       f.input :email
       f.input :password
       f.input :password_confirmation
       f.input :company
+      f.input :groups
       f.input :role
       f.input :gender
       f.input :owner
-      f.input :language, as: :select, collection: languages
+      f.input :language, as: :select, collection: I18n.available_locales
     end
     f.actions
   end
 
   controller do
-    helper ActiveAdminHelper
-
     around_action :skip_bullet, if: -> { Rails.env.development? }
 
     private
