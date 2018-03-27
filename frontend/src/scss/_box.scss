@@ -4,6 +4,10 @@
   background-color: $light-color;
   border-radius: $border-radius;
 
+  &.box-group {
+    height: 172px;
+  }
+
   .box-header-flex,
   .box-content-flex {
     display: flex;

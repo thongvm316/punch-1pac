@@ -9,4 +9,8 @@
 .v-select {
   width: 100%;
   background-color: $light-color;
+
+  .tile-content {
+    font-size: $font-size-sm;
+  }
 }
