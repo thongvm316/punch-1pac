@@ -64,11 +64,11 @@
           </td>
           <td>{{ attendance.user.email }}</td>
           <td>{{ attendance.day | datetime_mmdd }}</td>
-          <td>{{ attendance.attended_at }}</td>
-          <td>{{ attendance.left_at }}</td>
+          <td :class="{ 'text-error': attendance.attending_status === 'attend_late'}">{{ attendance.attended_at }}</td>
+          <td :class="{ 'text-warning': attendance.leaving_status === 'leave_early'}">{{ attendance.left_at }}</td>
           <td>
-            <span class="label label-rounded" v-if="attendance.attending_status">{{ $t(`meta.attendance_statuses.${attendance.attending_status}`) }}</span>
-            <span class="label label-rounded" v-if="attendance.leaving_status">{{ $t(`meta.attendance_statuses.${attendance.leaving_status}`) }}</span>
+            <span class="label label-rounded" :class="{ 'label-error': attendance.attending_status === 'attend_late'}" v-if="attendance.attending_status">{{ $t(`meta.attendance_statuses.${attendance.attending_status}`) }}</span>
+            <span class="label label-rounded" :class="{ 'label-warning': attendance.leaving_status === 'leave_early'}" v-if="attendance.leaving_status">{{ $t(`meta.attendance_statuses.${attendance.leaving_status}`) }}</span>
           </td>
         </tr>
       </tbody>
