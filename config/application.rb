@@ -41,6 +41,7 @@ module Punch
 
     config.active_job.queue_adapter = :sidekiq
 
+    config.assets.paths << Rails.root.join('app', 'assets', 'files')
     config.assets.enabled = true
     config.assets.gzip = false
     config.assets.css_compressor = :sass
