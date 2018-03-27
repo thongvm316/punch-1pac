@@ -34,14 +34,11 @@ class Api::V1::UsersController < Api::V1::BaseController
     errors = {}
     errors[:current_password] = [I18n.t('errors.messages.incorrect')] unless current_user.authenticate(params[:current_password])
     errors[:password] = [I18n.t('errors.messages.blank')] if params[:password].blank?
-    errors[:password_confirmation] = [I18n.t('errors.messages.blank')] if params[:password_confirmation].blank?
 
-    render_422(errors) && return if errors.present?
-
-    if current_user.update(password_params)
+    if current_user.update(password_params) && errors.blank?
       head(200)
     else
-      render_422(current_user.errors.messages)
+      render_422(current_user.errors.messages.merge(errors))
     end
   end
 

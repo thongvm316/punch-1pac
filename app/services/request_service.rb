@@ -10,16 +10,12 @@ class RequestService
   def approve
     attendance_params = {}
     if @req.attended_at.present?
-      attendance_params.merge!(
-        attended_at: @req.attended_at,
-        attending_status: AttendanceService.attending_status(@user.company, @req.attended_at, @attendance)
-      )
+      attendance_params[:attended_at] = @req.attended_at
+      attendance_params[:attending_status] = AttendanceService.attending_status(@user.company, @req.attended_at, @attendance)
     end
     if @req.left_at.present?
-      attendance_params.merge!(
-        left_at: @req.left_at,
-        leaving_status: AttendanceService.leaving_status(@user.company, @req.left_at, @attendance)
-      )
+      attendance_params[:left_at] = @req.left_at
+      attendance_params[:leaving_status] = AttendanceService.leaving_status(@user.company, @req.left_at, @attendance)
     end
     ApplicationRecord.transaction do
       @req.update!(status: 'approved')
