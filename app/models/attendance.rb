@@ -49,7 +49,7 @@ class Attendance < ApplicationRecord
     when 'superadmin'
       where(user_id: user.company.users).includes(:user)
     when 'admin'
-      where(user_id: UserGroup.select(:user_id).where(group_id: user.groups)).includes(:user)
+      where(user_id: UserGroup.with_group(user.groups)).includes(:user)
     end
   }
   scope :status_count_each_month, ->(status) {
@@ -69,9 +69,10 @@ class Attendance < ApplicationRecord
 
   def self.search_by(params)
     q = all
-    q = where(user_id: UserGroup.select(:user_id).where(group_id: params[:group_id])) if params[:group_id].present?
+    q = where(user_id: UserGroup.with_group(params[:group_id])) if params[:group_id].present?
     q = q.with_status(params[:status]) if params[:status].present?
     q = q.between(Time.zone.parse(params[:from_date]), Time.zone.parse(params[:to_date])) if params[:from_date].present? && params[:to_date].present?
+    q = q.where(user_id: params[:user_id]) if params[:user_id].present?
     q
   end
 end

@@ -61,10 +61,21 @@ class User < ApplicationRecord
       .merge(UserGroup.not_in_group(group_id))
       .merge(User.where('users.role != ? OR users.role = ? AND user_groups.group_id IS NULL', User.roles[:member], User.roles[:member]))
   }
-  scope :search_by, ->(params) {
+  scope :by_group, ->(current_user, group_id = nil) {
+    q = all
+    if current_user.role == 'superadmin'
+      q = q.where(id: current_user.company.users)
+    elsif %w[member admin].include?(current_user.role)
+      q = q.where(id: UserGroup.with_group(user.groups))
+    end
+    q = q.where(id: UserGroup.with_group(group_id)) if group_id.present?
+    q
+  }
+  scope :search_by, ->(params, current_user) {
     q = all
     q = q.where('email LIKE ?', "%#{params[:email]}%") if params[:email].present?
     q = q.not_in_group(params[:not_in_group_id]) if params[:not_in_group_id].present?
+    q = q.by_group(current_user, params[:group_id]) if params[:type] && params[:type] == 'users_in_group'
     q
   }
 

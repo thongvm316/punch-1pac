@@ -20,6 +20,8 @@ class UserGroup < ApplicationRecord
   validates :user_id, uniqueness: { scope: :group_id }
   validate :member_cannot_have_more_than_one_group
 
+  scope :with_group, ->(group_ids) { select(:user_id).where(group_id: group_ids) }
+
   private
 
   def member_cannot_have_more_than_one_group
