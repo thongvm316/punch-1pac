@@ -21,14 +21,13 @@ RSpec.describe Api::V1::GroupsController, type: :controller do
       let(:login_user) { create :user, company: company, role: 'admin' }
       let!(:groups) do
         admin_user = create(:user, role: 'admin', company: company)
-        member_user = create(:user, role: 'member', company: company)
-        create_list :group, 3, company: company, users: [admin_user, member_user]
+        create_list(:group, 3, company: company, users: [admin_user])
       end
 
       subject { get :index }
 
       its(:code) { is_expected.to eq '200' }
-      its(:body) { is_expected.to be_json_as(Array.new(groups.size) { response_group(2) }) }
+      its(:body) { is_expected.to be_json_as(Array.new(groups.size) { response_group(1) }) }
     end
   end
 
@@ -241,8 +240,8 @@ RSpec.describe Api::V1::GroupsController, type: :controller do
 
           subject { post :add_user, params: { id: group.id, user_id: target_user.id } }
 
-          its(:code) { is_expected.to eq '401' }
-          its(:body) { is_expected.to be_json_as(response_401) }
+          its(:code) { is_expected.to eq '422' }
+          its(:body) { is_expected.to be_json_as(response_422(group: Array)) }
         end
 
         context 'when user is not in a group' do
