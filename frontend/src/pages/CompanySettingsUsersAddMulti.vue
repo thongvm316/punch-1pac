@@ -1,6 +1,8 @@
 <template>
   <setting-layout sidebar-type="company" :title="$t('company.title')" :subtitle="$t('company.users.addMulti.title')">
     <p class="mb-2">{{ $t('company.users.addMulti.note') }}</p>
+    <a :href="meta.csv_template_url" class="btn btn-success mb-2">{{ $t('company.users.addMulti.download') }}</a>
+    <p class="mb-2">{{ $t('company.users.addMulti.templateGuide') }}</p>
     <form class="setting-form">
       <div class="form-group" :class="{ 'has-error': errors.csv_file }">
         <label class="form-label">{{ $t('company.users.addMulti.labels.csvFile') }}</label>
@@ -20,7 +22,7 @@
 <script>
 import SettingLayout from '../layouts/Setting.vue'
 import axios from 'axios'
-import { mapActions } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
 export default {
   data () {
@@ -34,6 +36,12 @@ export default {
 
   components: {
     SettingLayout
+  },
+
+  computed: {
+    ...mapState('initialStates', [
+      'meta'
+    ])
   },
 
   methods: {
