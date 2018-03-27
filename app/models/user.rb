@@ -66,7 +66,7 @@ class User < ApplicationRecord
     if current_user.role == 'superadmin'
       q = q.where(id: current_user.company.users)
     elsif %w[member admin].include?(current_user.role)
-      q = q.where(id: UserGroup.with_group(user.groups))
+      q = q.where(id: UserGroup.with_group(current_user.groups))
     end
     q = q.where(id: UserGroup.with_group(group_id)) if group_id.present?
     q
