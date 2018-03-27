@@ -18,6 +18,7 @@ const mutations = {
 
   [types.ADD_GROUP_USER] (state, user) {
     state.group.users.push(user)
+    state.usersNotInGroup = state.usersNotInGroup.filter(u => u.id !== user.id)
   },
 
   [types.REMOVE_GROUP_USER] (state, payload) {
