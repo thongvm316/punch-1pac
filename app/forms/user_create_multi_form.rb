@@ -4,14 +4,14 @@ class UserCreateMultiForm < BaseForm
   USER_PARAMS = %w[email password password_confirmation role name gender user_groups_attributes user_permissions_attributes].freeze
   VALID_MIME_TYPES = ['text/plain', 'text/csv'].freeze
 
+  attribute :csv_file
+
   validate :validate_file_existed
   validate :validate_mine_types
   validate :validate_extensions
 
-  attr_reader :file
-
   def initialize(company, csv_file)
-    @file = csv_file.tempfile
+    @csv_file = csv_file.tempfile
     @company = company
   end
 
@@ -21,7 +21,7 @@ class UserCreateMultiForm < BaseForm
     @users = []
     @lines = []
     # @permissions = load_permissions
-    CSV.foreach(@file.path, headers: true).with_index(1) do |row, line|
+    CSV.foreach(csv_file.path, headers: true).with_index(1) do |row, line|
       params = user_params(row.to_hash)
       user = @company.users.build(params)
       if user.save
@@ -64,15 +64,15 @@ class UserCreateMultiForm < BaseForm
   end
 
   def validate_file_existed
-    return errors.add(:csv_file, I18n.t('errors.messages.blank')) unless file&.present?
+    return errors.add(:csv_file, :blank) unless csv_file&.present?
   end
 
   def validate_mine_types
-    cmd = `file --brief --mime-type #{file.path}`
-    return errors.add(:csv_file, I18n.t('errors.messages.invalid')) unless VALID_MIME_TYPES.include?(cmd.strip)
+    cmd = `file --brief --mime-type #{csv_file.path}`
+    return errors.add(:csv_file, :blank) unless VALID_MIME_TYPES.include?(cmd.strip)
   end
 
   def validate_extensions
-    return errors.add(:csv_file, I18n.t('errors.messages.invalid')) unless File.extname(file) == '.csv'
+    return errors.add(:csv_file, :blank) unless File.extname(csv_file) == '.csv'
   end
 end
