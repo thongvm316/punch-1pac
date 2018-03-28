@@ -88,8 +88,8 @@ module JsonResponseHelper
   def response_announcement
     {
       id: Integer,
-      title: String,
       content: String,
+      due_date: date_response,
       target: String,
       status: String,
       readed: boolean_response,

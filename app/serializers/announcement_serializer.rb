@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class AnnouncementSerializer < ApplicationSerializer
-  attributes :id, :title, :content, :target, :status, :readed, :created_at
+  attributes :id, :content, :due_date, :target, :status, :readed, :created_at
 
   def created_at
     object.created_at.iso8601

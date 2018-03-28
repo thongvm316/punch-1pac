@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-
 # == Schema Information
 #
 # Table name: announcements
@@ -9,10 +8,10 @@
 #  target     :integer          default("everyone"), not null
 #  sent       :boolean          default(FALSE), not null
 #  status     :integer          default("normal"), not null
-#  title      :string           not null
-#  content    :string(2000)     not null
+#  content    :string(500)      not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  due_date   :date             not null
 #
 # Indexes
 #
@@ -23,12 +22,12 @@ class Announcement < ApplicationRecord
   enum target: { everyone: 0, owners: 1 }
   enum status: { normal: 0, urgent: 1 }
 
-  validates :title, presence: true
+  validates :due_date, presence: true
   validates :content, presence: true
 
   belongs_to :admin
 
-  default_scope -> { order(updated_at: :desc) }
+  default_scope -> { where('? < due_date', Date.current).order(updated_at: :desc) }
 
   scope :unread, ->(user_id) { where.not(id: ReadAnnouncement.select(:announcement_id).where(user_id: user_id)) }
   scope :read, ->(user_id) { where(id: ReadAnnouncement.select(:announcement_id).where(user_id: user_id)) }

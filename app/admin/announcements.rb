@@ -8,18 +8,18 @@ ActiveAdmin.register Announcement do
   filter :sent
 
   permit_params do
-    permitted = %i[title target sent content status admin_id]
+    permitted = %i[due_date target sent content status admin_id]
     params[:announcement][:admin_id] = current_admin.id if params[:action] == 'create'
     permitted
   end
 
   index do
     selectable_column
-    column :title
     column :status
     column :target
     column :sent
     column :content
+    column :due_date
     actions
   end
 end
