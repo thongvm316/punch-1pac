@@ -51,8 +51,4 @@ class Company < ApplicationRecord
   def in_holiday(target_date)
     holidays.in_holiday(target_date).exists?
   end
-
-  def default_group
-    groups.find_by!(name: Group::DEFAULT_NAME)
-  end
 end

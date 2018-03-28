@@ -9,21 +9,18 @@ class UserCreateForm < BaseForm
   STRONG_PARAMS.each { |attr| attribute attr }
 
   validate :validate_group
-  # validate :validate_permissions
 
   def initialize(attrs, current_user)
     super attrs
-    @current_user     = current_user
-    @user             = current_user.company.users.build(user_params)
-    @groups           = current_user.company.groups.where(id: group_id)
-    @permissions      = Permission.where(id: permission_ids)
+    @current_user = current_user
+    @user         = current_user.company.users.build(user_params)
+    @group        = current_user.company.groups.find_by(id: group_id)
   end
 
   def save
     return false unless valid?
     ApplicationRecord.transaction do
-      @user.permissions = @permissions
-      @user.groups = @groups
+      @user.groups = [@group]
       @user.save!
     end
     true
@@ -49,10 +46,6 @@ class UserCreateForm < BaseForm
   end
 
   def validate_group
-    errors.add(:group, I18n.t('errors.messages.invalid')) if @groups.blank?
+    errors.add(:group, I18n.t('errors.messages.blank')) if @group.blank?
   end
-
-  # def validate_permissions
-  #   errors.add(:permissions, I18n.t('errors.messages.invalid')) if @permissions.blank?
-  # end
 end

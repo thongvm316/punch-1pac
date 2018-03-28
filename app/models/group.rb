@@ -19,10 +19,7 @@ class Group < ApplicationRecord
   has_many :user_groups, dependent: :destroy
   has_many :users, through: :user_groups
 
-  accepts_nested_attributes_for :group_permissions
-
   validates :name, presence: true
-  # validates :group_permissions, presence: true
 
   def self.for_user(user)
     if %w[member admin].include?(user.role)
