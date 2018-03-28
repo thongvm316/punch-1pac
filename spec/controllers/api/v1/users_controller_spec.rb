@@ -164,7 +164,10 @@ RSpec.describe Api::V1::UsersController, type: :controller do
       subject { patch :change_password, params: { current_password: 'invalid_password', password: '', password_confirmation: '' } }
 
       its(:code) { is_expected.to eq '422' }
-      its(:body) { is_expected.to be_json_as(response_422(current_password: [I18n.t('errors.messages.incorrect')], password: [I18n.t('errors.messages.blank')])) }
+      its(:body) do
+        is_expected.to be_json_as(response_422(current_password: [I18n.t('errors.messages.incorrect')],
+                                               password: [I18n.t('errors.messages.blank')]))
+      end
     end
 
     context 'when password and password_confirmation empty invalid' do
@@ -398,13 +401,7 @@ RSpec.describe Api::V1::UsersController, type: :controller do
       let(:login_user) { create :user, company: company, role: 'admin' }
 
       context 'when params validate' do
-        let(:user_params) do
-          user_params = attributes_for(:user)
-          user_params[:permission_ids] = user_params[:user_permissions_attributes].map { |id| id[:permission_id] }
-          user_params.delete(:user_permissions_attributes)
-          user_params[:group_id] = company.default_group.id
-          user_params
-        end
+        let(:user_params) { attributes_for(:user).merge(group_id: create(:group, company: company)) }
 
         subject { post :create, params: { user: user_params } }
 
@@ -413,12 +410,7 @@ RSpec.describe Api::V1::UsersController, type: :controller do
       end
 
       context 'when group id missing' do
-        let(:user_params) do
-          user_params = attributes_for(:user)
-          user_params[:permission_ids] = user_params[:user_permissions_attributes].map { |id| id[:permission_id] }
-          user_params.delete(:user_permissions_attributes)
-          user_params
-        end
+        let(:user_params) { attributes_for(:user) }
 
         subject { post :create, params: { user: user_params } }
 
@@ -433,21 +425,6 @@ RSpec.describe Api::V1::UsersController, type: :controller do
 
         its(:code) { is_expected.to eq '422' }
         its(:body) { is_expected.to be_json_as(response_422(group: Array, name: Array, email: Array)) }
-      end
-
-      context 'when permissions invalid' do
-        let(:user_params) do
-          user_params = attributes_for(:user).except(:user_permissions_attributes)
-          max_permissions_number = Permission.last.id
-          user_params[:permission_ids] = [max_permissions_number + 1, max_permissions_number + 2]
-          user_params[:group_id] = company.default_group.id
-          user_params
-        end
-
-        subject { post :create, params: { user: user_params } }
-
-        its(:code) { is_expected.to eq '201' }
-        its(:body) { is_expected.to be_json_as(response_user) }
       end
     end
   end

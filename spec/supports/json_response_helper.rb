@@ -166,7 +166,7 @@ module JsonResponseHelper
     }
   end
 
-  def response_group(users)
+  def response_group(users = 0)
     {
       id:          Integer,
       name:        String,

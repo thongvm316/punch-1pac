@@ -25,8 +25,7 @@ class Api::V1::GroupsController < Api::V1::BaseController
   end
 
   def update
-    authorize!
-    @group.group_permissions.destroy_all if group_params[:group_permissions_attributes].present?
+    authorize! @group
     if @group.update(group_params)
       render json: @group, serializer: GroupSerializer, status: 200
     else
@@ -62,11 +61,7 @@ class Api::V1::GroupsController < Api::V1::BaseController
   private
 
   def group_params
-    params.require(:group).permit(:name, group_permissions_attributes: []).tap do |p|
-      p[:group_permissions_attributes] = Permission.select(:id)
-                                                   .where(id: params.require(:group)[:permission_ids])
-                                                   .map { |permission| { permission_id: permission.id } }
-    end
+    params.require(:group).permit(:name)
   end
 
   def set_group
