@@ -4,17 +4,18 @@
       {{ localAttendance.day.split('-')[2] }}
     </button>
     <div class="calendar-events">
-      <a href="#" class="calendar-event bg-primary text-light" v-if="localAttendance.attending_status">
+      <span class="calendar-event bg-primary text-light" v-if="localAttendance.attending_status">
         {{ $t(`meta.attendance_statuses.${localAttendance.attending_status}`) }}
-      </a>
-      <a href="#" class="calendar-event bg-error text-light" v-if="localAttendance.leaving_status">
+      </span>
+      <span href="#" class="calendar-event bg-error text-light" v-if="localAttendance.leaving_status">
         {{ $t(`meta.attendance_statuses.${localAttendance.leaving_status}`) }}
-      </a>
-      <a href="#" class="calendar-event bg-warning text-light" v-if="localAttendance.off_status">
-        {{ $t(`meta.attendance_statuses.${localAttendance.off_status}`) }}</a>
-      <a href="#" class="calendar-event bg-success text-light" v-if="localAttendance.holiday">
+      </span>
+      <span href="#" class="calendar-event bg-warning text-light" v-if="localAttendance.off_status">
+        {{ $t(`meta.attendance_statuses.${localAttendance.off_status}`) }}
+      </span>
+      <span href="#" class="calendar-event bg-success text-light" v-if="localAttendance.holiday">
         {{ localAttendance.holiday.name }}
-      </a>
+      </span>
     </div>
   </div>
 </template>
