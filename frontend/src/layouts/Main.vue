@@ -1,6 +1,7 @@
 <template>
   <div class="relative">
     <app-header></app-header>
+    <announcements v-if="isOpenAnnouncement"/>
     <main>
       <div class="container grid-xl">
         <h1 class="title">{{ title }}</h1>
@@ -16,14 +17,16 @@
 import AppHeader from '../components/AppHeader.vue'
 import AppFooter from '../components/AppFooter.vue'
 import Flash from '../components/Flash.vue'
+import Announcements from '../components/Announcements.vue'
 
 export default {
   name: 'main-layout',
-  props: ['title'],
+  props: ['title', 'isOpenAnnouncement'],
   components: {
     AppHeader,
     AppFooter,
-    Flash
+    Flash,
+    Announcements
   }
 }
 </script>

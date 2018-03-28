@@ -13,7 +13,7 @@
         </section>
         <section class="navbar-section">
           <punch/>
-          <header-announcements/>
+          <notifications/>
           <div class="dropdown" :class="{ active: isDropdownActive }" @click="toggleDropdown" ref="dropdownMenu">
             <a class="dropdown-toggle">
               <div class="tile tile-centered">
@@ -39,7 +39,7 @@
 import axios from 'axios'
 import dropdown from '../mixins/dropdown'
 import authorization from '../mixins/authorization'
-import HeaderAnnouncements from '../components/HeaderAnnouncements.vue'
+import Notifications from '../components/Notifications.vue'
 import Punch from '../components/Punch.vue'
 import { mapState } from 'vuex'
 
@@ -48,7 +48,7 @@ export default {
   mixins: [dropdown, authorization],
 
   components: {
-    HeaderAnnouncements,
+    Notifications,
     Punch
   },
 
