@@ -35,12 +35,13 @@ export default {
 
   computed: {
     ...mapState('punch', [
+      'isInited',
       'attendance'
     ])
   },
 
   created () {
-    this.initAttendance(window.INITIAL_STATE.attendance)
+    if (!this.isInited) this.initAttendance(window.INITIAL_STATE.attendance)
     this.updateCurrentTime()
     setInterval(this.updateCurrentTime, 1 * 1000)
 

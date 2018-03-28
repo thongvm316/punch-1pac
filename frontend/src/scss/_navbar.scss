@@ -18,12 +18,12 @@
 
   .dropdown {
     padding: .4rem 0;
-    &.active .announcement-dropdown {
+    &.active .notification-dropdown {
       display: block;
     }
   }
 
-  .announcement {
+  .notification {
     cursor: pointer;
     svg {
       color: $dark-color;
@@ -68,9 +68,10 @@
 }
 
 
-.announcement-dropdown {
+.notification-dropdown {
   display: none;
   position: absolute;
+  z-index: $zindex-1;
   top: 48px;
   right: -72px;
   width: 300px;
@@ -114,7 +115,7 @@
     text-align: center;
   }
 
-  .no-announcement-msg {
+  .no-notification-msg {
     padding: .8rem;
     border-bottom: 1px solid $border-color;
   }

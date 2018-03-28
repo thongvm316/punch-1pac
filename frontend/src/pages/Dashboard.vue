@@ -1,5 +1,5 @@
 <template>
-  <main-layout :title="$t('dashboard.title')">
+  <main-layout :title="$t('dashboard.title')" :is-open-announcement="true">
     <div class="columns mt-5">
       <div class="column">
         <div class="box chart">
