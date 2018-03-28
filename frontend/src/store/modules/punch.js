@@ -2,12 +2,14 @@ import * as types from '../mutation-types.js'
 import axios from 'axios'
 
 const state = {
-  attendance: {}
+  attendance: {},
+  isInited: false
 }
 
 const mutations = {
   [types.PUNCH_INIT_ATTENDANCE] (state, attendance) {
     state.attendance = attendance
+    state.isInited = true
   },
 
   [types.PUNCH_IN] (state, attendance) {
