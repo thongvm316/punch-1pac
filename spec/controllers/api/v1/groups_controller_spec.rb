@@ -63,95 +63,80 @@ RSpec.describe Api::V1::GroupsController, type: :controller do
   describe 'POST #create' do
     context 'when log in user is member' do
       let(:login_user) { create :user, company: company, role: 'member' }
-      let(:group_params) do
-        group_params = attributes_for(:group)
-        group_params[:permission_ids] = group_params[:group_permissions_attributes].map { |id| id[:permission_id] }
-        group_params.delete(:group_permissions_attributes)
-        group_params
-      end
 
-      subject { post :create, params: { group: group_params } }
+      subject { post :create, params: { group: { name: '' } } }
 
       its(:code) { is_expected.to eq '401' }
+      its(:body) { is_expected.to be_json_as(response_401) }
     end
 
     context 'when log in user is admin' do
       let(:login_user) { create :user, company: company, role: 'admin' }
 
       context 'when params are valid' do
-        let(:group_params) do
-          group_params = attributes_for(:group)
-          group_params[:permission_ids] = group_params[:group_permissions_attributes].map { |id| id[:permission_id] }
-          group_params.delete(:group_permissions_attributes)
-          group_params
-        end
-
-        subject { post :create, params: { group: group_params } }
+        subject { post :create, params: { group: { name: 'group hehe' } } }
 
         its(:code) { is_expected.to eq '201' }
-        its(:body) { is_expected.to be_json_as(response_group(0)) }
+        its(:body) { is_expected.to be_json_as(response_group) }
       end
 
-      context 'when have no permissions' do
-        let(:group_params) do
-          group_params = attributes_for(:group).except(:group_permissions_attributes)
-          last_permission = Permission.last.id
-          group_params[:permission_ids] = [last_permission + 1, last_permission + 2]
-          group_params
-        end
+      context 'when params are invalid' do
+        subject { post :create, params: { group: { name: '' } } }
 
-        subject { post :create, params: { group: group_params } }
-
-        its(:code) { is_expected.to eq '201' }
-        its(:body) { is_expected.to be_json_as(response_group(0)) }
+        its(:code) { is_expected.to eq '422' }
+        its(:body) { is_expected.to be_json_as(response_422(name: Array)) }
       end
     end
   end
 
   describe 'PATCH #update' do
-    let(:group) { create :group, company: company, users: create_list(:user, 3, company: company) }
-    let(:group_params) { { id: group.id, group: { name: 'kawasaki', permission_ids: [] } } }
+    context 'when group is not existed' do
+      let(:login_user) { create :user, company: company, role: 'member' }
+      let(:group) { create :group, company: company }
+
+      subject { patch :update, params: { id: group.id + 1, group: { name: 'kekeke' } }, format: :json }
+
+      its(:code) { is_expected.to eq '404' }
+      its(:body) { is_expected.to be_json_as(response_404) }
+    end
 
     context 'when log in user is member' do
       let(:login_user) { create :user, company: company, role: 'member' }
+      let(:group) { create :group, company: company }
 
-      subject { patch :update, params: group_params }
+      subject { patch :update, params: { id: group.id, group: { name: 'kekeke' } } }
 
       its(:code) { is_expected.to eq '401' }
+      its(:body) { is_expected.to be_json_as(response_401) }
     end
 
     context 'when log in user is admin' do
       let(:login_user) { create :user, company: company, role: 'admin' }
 
-      context 'when add new permissions' do
-        let(:permissions_adding) { create_list :permission, 3 }
-        let(:ids) { group.permissions.pluck(:id).concat(permissions_adding.pluck(:id)) }
-        let!(:set_up) { group_params[:group][:permission_ids] = ids }
+      context 'when login_user is in group' do
+        let(:group) { create :group, company: company, users: [login_user] }
 
-        subject { patch :update, params: group_params }
+        context 'when params is invalid' do
+          subject { patch :update, params: { id: group.id, group: { name: '' } } }
 
-        its(:code) { is_expected.to eq '200' }
-        its(:body) { is_expected.to be_json_as(response_group(3)) }
+          its(:code) { is_expected.to eq '422' }
+          its(:body) { is_expected.to be_json_as(response_422(name: Array)) }
+        end
+
+        context 'when params is valid' do
+          subject { patch :update, params: { id: group.id, group: { name: 'Kekeke' } } }
+
+          its(:code) { is_expected.to eq '200' }
+          its(:body) { is_expected.to be_json_as(response_group(1)) }
+        end
       end
 
-      context 'when permissions empty' do
-        let!(:set_up) { group_params[:group][:permission_ids] = [] }
-        let(:current_permissions_in_group) { group.permissions.count }
+      context 'when login_user is not in group' do
+        let(:group) { create :group, company: company }
 
-        subject { put :update, params: group_params }
+        subject { patch :update, params: { id: group.id, group: { name: 'kekeke' } } }
 
-        its(:code) { is_expected.to eq '200' }
-        its(:body) { is_expected.to be_json_as(response_group(3)) }
-      end
-
-      context 'when permissions invalid' do
-        let!(:set_up) { group_params[:group][:permission_ids] = [0] }
-        let(:current_permissions_in_group) { group.permissions.count }
-
-        subject { put :update, params: group_params }
-
-        its(:code) { is_expected.to eq '200' }
-        its(:body) { is_expected.to be_json_as(response_group(current_permissions_in_group)) }
+        its(:code) { is_expected.to eq '401' }
       end
     end
   end
