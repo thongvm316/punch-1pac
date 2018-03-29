@@ -113,7 +113,8 @@ export default {
   dashboard: {
     title: 'Bảng thông tin',
     calendar: 'Lịch',
-    chart: 'Biểu đồ'
+    chart: 'Biểu đồ',
+    chartNoData: 'Bạn không có dữ liệu nào trong tháng này'
   },
   announcements: {
     title: 'Thông báo',

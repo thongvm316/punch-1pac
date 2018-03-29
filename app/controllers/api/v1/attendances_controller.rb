@@ -7,15 +7,14 @@ class Api::V1::AttendancesController < Api::V1::BaseController
     authorize!
     attendance = AttendanceService.new(current_user, request.remote_ip).attend
     if attendance
-      render json: attendance, serializer: AttendanceSerializer, status: 201
+      render json: attendance, serializer: AttendanceSerializer, status: :created
     else
       head(200)
     end
   end
 
   def chart
-    attendances = current_user.attendances.status_count_each_month(params[:status])
-    render json: attendances, each_serializer: AttendanceChartSerializer, status: 200
+    render json: current_user.attendances.chart(params[:date]).first.as_json(except: %i[id]), status: :ok
   end
 
   def index
@@ -28,7 +27,8 @@ class Api::V1::AttendancesController < Api::V1::BaseController
            root: 'attendances',
            each_serializer: AttendanceSerializer,
            adapter: :json,
-           meta: pager(attendances)
+           meta: pager(attendances),
+           status: :ok
   end
 
   def calendar
@@ -39,12 +39,12 @@ class Api::V1::AttendancesController < Api::V1::BaseController
            meta_key: 'holidays',
            each_serializer: AttendanceSerializer,
            adapter: :json,
-           status: 200
+           status: :ok
   end
 
   def update
     authorize!
     attendance = AttendanceService.new(current_user, request.remote_ip).leave
-    render json: attendance, serializer: AttendanceSerializer, status: 200
+    render json: attendance, serializer: AttendanceSerializer, status: :ok
   end
 end

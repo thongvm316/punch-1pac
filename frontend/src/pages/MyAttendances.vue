@@ -169,7 +169,10 @@ export default {
   watch: {
     params: {
       handler: function () {
-        this.getAttendances(Object.assign({ page: 1 }, this.params))
+        this.getAttendances(Object.assign({ page: 1 }, this.params, {
+          to_date: this.$moment(this.params.to_date).locale('en').format('LL'),
+          from_date: this.$moment(this.params.from_date).locale('en').format('LL')
+        }))
       },
       deep: true
     }

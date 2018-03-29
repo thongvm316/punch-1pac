@@ -35,7 +35,7 @@ class Attendance < ApplicationRecord
   validates :off_status, inclusion: { in: OFF_STATUSES }, allow_nil: true
 
   scope :attended, -> { where.not(attended_at: nil) }
-  scope :between, ->(from_date, to_date) { where(day: from_date..to_date) }
+  scope :day_between, ->(from_date, to_date) { where(day: from_date..to_date) }
   scope :with_status, ->(status) {
     where(attending_status: status)
       .or(where(leaving_status: status))
@@ -59,10 +59,32 @@ class Attendance < ApplicationRecord
       .group(:month)
   }
 
+  def self.status_count_on_month_sql(status_value, status_type, date)
+    select("count(id) as #{status_value}")
+      .day_between(date.beginning_of_month, date.end_of_month)
+      .where("#{status_type}": status_value)
+      .group(status_type)
+      .to_sql
+  end
+
+  def self.chart(str_date = nil)
+    date = str_date.present? ? Date.parse(str_date) : Date.current
+    raise ArgumentError if date.blank?
+    select(
+      "(#{status_count_on_month_sql('attend_ok', 'attending_status', date)})",
+      "(#{status_count_on_month_sql('attend_late', 'attending_status', date)})",
+      "(#{status_count_on_month_sql('leave_ok', 'leaving_status', date)})",
+      "(#{status_count_on_month_sql('leave_early', 'leaving_status', date)})",
+      "(#{status_count_on_month_sql('annual_leave', 'off_status', date)})"
+    ).limit(1)
+  rescue TypeError, ArgumentError
+    none
+  end
+
   def self.calendar(str_date)
     date = str_date.present? ? Date.parse(str_date) : Date.current
     raise ArgumentError if date.blank?
-    where(day: date.beginning_of_month..date.end_of_month)
+    day_between(date.beginning_of_month, date.end_of_month)
   rescue TypeError, ArgumentError
     none
   end
@@ -71,8 +93,10 @@ class Attendance < ApplicationRecord
     q = all
     q = where(user_id: UserGroup.with_group(params[:group_id])) if params[:group_id].present?
     q = q.with_status(params[:status]) if params[:status].present?
-    q = q.between(Time.zone.parse(params[:from_date]), Time.zone.parse(params[:to_date])) if params[:from_date].present? && params[:to_date].present?
+    q = q.day_between(Date.parse(params[:from_date]), Date.parse(params[:to_date])) if params[:from_date].present? && params[:to_date].present?
     q = q.where(user_id: params[:user_id]) if params[:user_id].present?
     q
+  rescue TypeError, ArgumentError
+    none
   end
 end

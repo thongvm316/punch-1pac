@@ -137,13 +137,14 @@ module JsonResponseHelper
     }
   end
 
-  def response_attendance_chart(number)
-    Array.new(number) do
-      {
-        month:        Integer,
-        status_count: Integer
-      }
-    end
+  def response_attendance_chart
+    {
+      attend_ok: nullable_response(Integer),
+      attend_late: nullable_response(Integer),
+      leave_ok: nullable_response(Integer),
+      leave_early: nullable_response(Integer),
+      annual_leave: nullable_response(Integer)
+    }
   end
 
   def response_attendance
