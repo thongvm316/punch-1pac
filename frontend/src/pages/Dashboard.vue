@@ -1,11 +1,22 @@
 <template>
   <main-layout :title="$t('dashboard.title')" :is-open-announcement="true">
+    <div class="box mt-5">
+      <h2 class="subtitle">{{ $t('dashboard.calendar') }}</h2>
+      <full-calendar></full-calendar>
+    </div>
     <div class="columns mt-5">
-      <div class="column">
+      <div class="column col-7">
         <div class="box chart">
           <div class="box-header box-header-flex border-bottom">
             <h2>{{ $t('dashboard.chart') }}</h2>
-            <attendance-status-select v-model="status"/>
+            <datepicker
+              :format="'MMM yyyy'"
+              :minimumView="'month'"
+              :maximumView="'month'"
+              :input-class="'datepicker-input form-input'"
+              :calendar-class="'datepicker-calendar'"
+              :wrapper-class="'datepicker'"
+              v-model="chartDate"/>
           </div>
           <div class="box-content">
             <chart :chartData="chartData" v-if="loaded"></chart>
@@ -13,15 +24,11 @@
         </div>
       </div>
     </div>
-
-    <div class="box mt-5">
-      <h2 class="subtitle">{{ $t('dashboard.calendar') }}</h2>
-      <full-calendar></full-calendar>
-    </div>
   </main-layout>
 </template>
 
 <script>
+import Datepicker from 'vuejs-datepicker'
 import MainLayout from '../layouts/Main.vue'
 import FullCalendar from '../components/FullCalendar.vue'
 import AttendanceStatusSelect from '../components/AttendanceStatusSelect.vue'
@@ -31,7 +38,8 @@ import { mapState, mapActions } from 'vuex'
 export default {
   data () {
     return {
-      status: 'attend_ok'
+      status: 'attend_ok',
+      chartDate: this.$moment().locale('en').format('MMM YYYY')
     }
   },
 
@@ -43,6 +51,7 @@ export default {
   },
 
   components: {
+    Datepicker,
     MainLayout,
     FullCalendar,
     Chart,
@@ -50,13 +59,13 @@ export default {
   },
 
   created () {
-    this.getChart(this.status)
+    this.getChart(this.chartDate)
   },
 
   watch: {
-    status: function () {
+    chartDate: function () {
       this.resetChart()
-      this.getChart(this.status)
+      this.getChart(this.$moment(this.chartDate).locale('en').format('MMM YYYY'))
     }
   },
 

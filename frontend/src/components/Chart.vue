@@ -1,26 +1,33 @@
 <template>
-  <div style="height: 300px;">
-    <canvas ref="chart"></canvas>
+  <div>
+    <canvas ref="chart" v-if="hasData"></canvas>
+    <p v-else>{{ $t('dashboard.chartNoData') }}</p>
   </div>
 </template>
 
 <script>
 import Chart from 'chart.js'
+import { mapState } from 'vuex'
 
 export default {
   name: 'chart',
-  data () {
-    return {
-      labels: this.$moment.monthsShort()
-    }
-  },
 
   props: ['chartData'],
+
+  computed: {
+    ...mapState('initialStates', [
+      'meta'
+    ]),
+
+    hasData () {
+      return Object.values(this.chartData).find(val => val)
+    }
+  },
 
   mounted () {
     const $chart = this.$refs.chart
     const ctx = $chart.getContext('2d')
-    this.createChart(ctx, 'line')
+    this.createChart(ctx, 'doughnut')
   },
 
   methods: {
@@ -28,36 +35,19 @@ export default {
       return new Chart(canvas, {
         type: type,
         data: {
-          labels: this.labels,
-          datasets: [
-            {
-              fill: false,
-              backgroundColor: 'rgba(75, 192, 192, 0.4)',
-              borderColor: 'rgba(75, 192, 192, 1)',
-              lineTension: 0,
-              pointBorderWidth: 5,
-              pointHoverRadius: 5,
-              pointHoverBorderColor: 'rgba(75, 192, 192, 1)',
-              pointRadius: 1,
-              data: this.chartData
-            }
-          ]
+          labels: Object.keys(this.chartData).filter(status => this.chartData[status]).map(status => this.$t(`meta.attendance_statuses.${status}`)),
+          datasets: [{
+            data: Object.values(this.chartData),
+            backgroundColor: ['#2d91ff', '#ff3b30', '#4cd964', '#ffb200', '#f0f1f4']
+          }]
         },
         options: {
           responsive: true,
-          maintainAspectRatio: false,
-          scales: {
-            yAxes: [{
-              ticks: {
-                beginAtZero: true
-              }
-            }]
-          },
           animation: {
             animateScale: true
           },
           legend: {
-            display: false
+            position: 'right'
           }
         }
       })

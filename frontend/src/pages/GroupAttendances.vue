@@ -136,7 +136,10 @@ export default {
   watch: {
     params: {
       handler: function (after, before) {
-        this.getAttendances(Object.assign({ page: 1 }, this.params))
+        this.getAttendances(Object.assign({ page: 1 }, this.params, {
+          to_date: this.$moment(this.params.to_date).locale('en').format('LL'),
+          from_date: this.$moment(this.params.from_date).locale('en').format('LL')
+        }))
         if (after.group_id !== before.group_id) {
           this.getUsersInGroup(this.params.group_id)
         }
