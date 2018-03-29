@@ -16,12 +16,12 @@ RSpec.describe Attendance, type: :model do
   end
 
   describe '#scope' do
-    context '#between' do
+    context '#day_between' do
       let!(:attendance_1) { create :attendance, day: Date.current }
       let!(:attendance_2) { create :attendance, day: 1.day.from_now }
       let!(:attendances) { create_list :attendance, 3, day: 5.days.ago }
       it "returns attendances with day in range #{Date.current} - #{2.days.from_now}" do
-        expect(Attendance.between(Date.current, 2.days.from_now)).to eq([attendance_1, attendance_2])
+        expect(Attendance.day_between(Date.current, 2.days.from_now)).to eq([attendance_1, attendance_2])
       end
     end
 

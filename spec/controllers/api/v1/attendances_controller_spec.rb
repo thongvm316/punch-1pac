@@ -12,75 +12,35 @@ RSpec.describe Api::V1::AttendancesController, type: :controller do
   end
 
   describe 'GET #chart' do
-    context 'when status invalid' do
-      subject { get :chart, params: { status: 'invalid' } }
+    context 'when params is invalid' do
+      subject { get :chart, params: { date: 'invalid' } }
       its(:code) { is_expected.to eq '200' }
-      its(:body) { is_expected.to be_json_as(response_attendance_chart(0)) }
+      its(:body) { is_expected.to be_json_as(nil) }
     end
 
-    context 'when current year has no attendance' do
-      before do
-        create :attendance, user: login_user, attending_status: 'attend_ok', day: 1.year.ago
-      end
-      subject { get :chart, params: { status: 'attend_ok' } }
+    context 'when chart absolutely has no data' do
+      subject { get :chart, params: { date: Date.current } }
+
       its(:code) { is_expected.to eq '200' }
-      its(:body) { is_expected.to be_json_as(response_attendance_chart(0)) }
+      its(:body) { is_expected.to be_json_as(nil) }
     end
 
-    context 'when filter by attending_status' do
-      before do
-        12.times do |i|
-          create :attendance, user: login_user, attending_status: 'attend_ok', day: Date.new(Date.current.year, i + 1, 1)
-          create :attendance, user: login_user, attending_status: 'attend_late', day: Date.new(Date.current.year, i + 1, 2) if i.even?
-        end
-      end
+    context 'when chart has no data in month' do
+      let!(:attendance) { create :attendance, user: login_user, attending_status: 'attend_ok', leaving_status: 'leave_ok', day: Date.current - 1.month }
 
-      context 'when status is attend_ok' do
-        subject { get :chart, params: { status: 'attend_ok' } }
-        its(:code) { is_expected.to eq '200' }
-        its(:body) { is_expected.to be_json_as(response_attendance_chart(12)) }
-      end
+      subject { get :chart, params: { date: Date.current } }
 
-      context 'when status is attend_late' do
-        subject { get :chart, params: { status: 'attend_late' } }
-        its(:code) { is_expected.to eq '200' }
-        its(:body) { is_expected.to be_json_as(response_attendance_chart(6)) }
-      end
+      its(:code) { is_expected.to eq '200' }
+      its(:body) { is_expected.to be_json_as(response_attendance_chart) }
     end
 
-    context 'when filter by leaving_status' do
-      before do
-        12.times do |i|
-          create :attendance, user: login_user, leaving_status: 'leave_ok', day: Date.new(Date.current.year, i + 1, 1)
-          create :attendance, user: login_user, leaving_status: 'leave_early', day: Date.new(Date.current.year, i + 1, 2) if i.even?
-        end
-      end
+    context 'when chart has data' do
+      let!(:attendance) { create :attendance, user: login_user, attending_status: 'attend_ok', leaving_status: 'leave_ok', day: Date.current }
 
-      context 'when status is leave_ok' do
-        subject { get :chart, params: { status: 'leave_ok' } }
-        its(:code) { is_expected.to eq '200' }
-        its(:body) { is_expected.to be_json_as(response_attendance_chart(12)) }
-      end
+      subject { get :chart, params: { date: Date.current } }
 
-      context 'when status is leave_early' do
-        subject { get :chart, params: { status: 'leave_early' } }
-        its(:code) { is_expected.to eq '200' }
-        its(:body) { is_expected.to be_json_as(response_attendance_chart(6)) }
-      end
-    end
-
-    context 'when filter by off_status' do
-      before do
-        12.times do |i|
-          create :attendance, user: login_user, off_status: 'annual_leave', day: Date.new(Date.current.year, i + 1, 2)
-        end
-      end
-
-      context 'when status is holiday' do
-        subject { get :chart, params: { status: 'annual_leave' } }
-        its(:code) { is_expected.to eq '200' }
-        its(:body) { is_expected.to be_json_as(response_attendance_chart(12)) }
-      end
+      its(:code) { is_expected.to eq '200' }
+      its(:body) { is_expected.to be_json_as(response_attendance_chart) }
     end
   end
 
