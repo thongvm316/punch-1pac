@@ -1,3 +1,8 @@
+.modal:target .modal-container,
+.modal.active .modal-container {
+  height: 80%;
+}
+
 .modal:target .modal-overlay,
 .modal.active .modal-overlay {
   background: rgba($dark-color, .65);
