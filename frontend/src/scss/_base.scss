@@ -8,8 +8,10 @@
 body {
   background-color: $gray-color-lightest;
   color: $dark-color;
-  min-width: 64rem;
   overflow-x: visible;
+  @media (max-width: $size-xl) {
+    width: 1200px;
+  }
 }
 
 .main {

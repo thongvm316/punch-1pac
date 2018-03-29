@@ -1,5 +1,5 @@
 <template>
-  <div class="relative">
+  <div>
     <app-header></app-header>
     <announcements v-if="isOpenAnnouncement"/>
     <main>
