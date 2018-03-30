@@ -13,7 +13,7 @@
 import { mapState, mapActions } from 'vuex'
 import debounce from 'lodash.debounce'
 
-const DEBOUNCE_TIME = 1500
+const DEBOUNCE_TIME = 360
 
 export default {
   name: 'punch',
