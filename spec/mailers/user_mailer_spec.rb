@@ -16,7 +16,7 @@ RSpec.describe UserMailer, type: :mailer do
     end
 
     it 'render the body' do
-      expect(mail.body.encoded).to match("https://#{company.namespace}.1punch.io")
+      expect(mail.body.encoded).to match(url_for(subdomain: company.namespace, action: 'new', controller: 'auth'))
       expect(mail.body.encoded).to match(user.email)
       expect(mail.body.encoded).to match(password)
     end

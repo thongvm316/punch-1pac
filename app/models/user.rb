@@ -97,4 +97,9 @@ class User < ApplicationRecord
   def manager?
     superadmin? || admin?
   end
+
+  def current_session(request)
+    client = DeviceDetector.new(request.user_agent)
+    sessions.find_by(client: client.name, device_type: client.device_type, ip_address: request.remote_ip, os: "#{client.os_name}_#{client.os_full_version}")
+  end
 end

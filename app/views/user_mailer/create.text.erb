@@ -4,7 +4,7 @@ Hi <%= @user.name %>,
 
 Please login with following information:
 
-Company URL: https://<%= @company.namespace %>.1punch.io
+Company URL: <%= url_for(subdomain: @company.namespace, action: 'new', controller: 'auth') %>
 Email: <%= @user.email %>
 Password: <%= @password %>
 

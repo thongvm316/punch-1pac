@@ -10,18 +10,12 @@ class Api::V1::UsersLoyalty < ApplicationLoyalty
   end
 
   def destroy?
-    return true if higher_role?
+    return true if @user.superadmin? && !@record.superadmin?
+    return true if @user.admin? && @record.member?
     false
   end
 
   def update?
     @user == @record
-  end
-
-  private
-
-  def higher_role?
-    return true if @user.superadmin? && !@record.superadmin?
-    return true if @user.admin? && @record.member?
   end
 end

@@ -9,6 +9,7 @@ module Authenticable
   def authenticate_user!
     respond_to do |f|
       @current_user ||= current_company.users.find(jwt_decode['sub'])
+      Session.track!(@current_user, payload(sub: @current_user.id), request) unless @current_user.current_session(request)
       return
     rescue ActiveRecord::RecordNotFound
       f.html { redirect_to login_url }

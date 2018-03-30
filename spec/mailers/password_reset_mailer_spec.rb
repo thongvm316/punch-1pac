@@ -17,7 +17,7 @@ RSpec.describe PasswordResetMailer, type: :mailer do
     end
 
     it 'render the body' do
-      expect(mail.body.encoded).to match("https://#{company.namespace}.1punch.io/password_reset/#{user.reset_password_token}")
+      expect(mail.body.encoded).to match(url_for(subdomain: company.namespace, action: 'edit', controller: 'password_reset', token: user.reset_password_token))
     end
   end
 end

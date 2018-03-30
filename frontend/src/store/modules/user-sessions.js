@@ -3,12 +3,14 @@ import axios from 'axios'
 
 const state = {
   sessions: [],
-  errors: {}
+  errors: {},
+  currentSession: {}
 }
 
 const mutations = {
   [types.FETCH_SESSIONS] (state, payload) {
-    state.sessions = payload
+    state.sessions = payload.sessions
+    state.currentSession = payload.meta
   },
 
   [types.DELETE_SESSION] (state, payload) {

@@ -4,7 +4,7 @@ We heard that you lost your 1Punch password. Sorry about that!
 
 You can use the following link to reset your password:
 
-https://<%= @company.namespace %>.1punch.io/password_reset/<%= @token %>
+<%= url_for(subdomain: @company.namespace, action: 'edit', controller: 'password_reset', token: @token) %>
 
 Thanks,
 1Punch team
