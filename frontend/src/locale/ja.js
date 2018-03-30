@@ -247,8 +247,10 @@ export default {
     },
     security: {
       title: 'Security',
+      currentSession: 'Current session',
       tableHeader: {
         client: 'Client',
+        os: 'OS',
         ip: 'IP address',
         lastSignedIn: 'Last signed in'
       },

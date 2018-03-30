@@ -247,8 +247,10 @@ export default {
     },
     security: {
       title: 'Bảo mật',
+      currentSession: 'Phiên truy cập hiện tại',
       tableHeader: {
         client: 'Thiết bị',
+        os: 'Hệ điều hành',
         ip: 'Địa chỉ IP',
         lastSignedIn: 'Lần cuối đăng nhập'
       },
