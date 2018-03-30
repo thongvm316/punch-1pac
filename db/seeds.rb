@@ -7,7 +7,7 @@ superadmin = FactoryBot.create(:user, email: 'example@1pac.vn', password: 'passw
 %w[monday tuesday wednesday thursday friday].each { |day| FactoryBot.create(:business_day, weekday: day, started_at: '01:00', ended_at: '10:30', company: company) }
 FactoryBot.create(:allowed_ip, ip_address: '127.0.0.1', company: company)
 FactoryBot.create_list(:allowed_ip, 3, company: company)
-FactoryBot.create_list(:session, 4, user: superadmin)
+FactoryBot.create_list(:session, 4, user: superadmin, device_type: %w[desktop smartphone tablet][rand(3)])
 
 5.times do
   FactoryBot.create_list(:user, 3, company: FactoryBot.create(:company))
