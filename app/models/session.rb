@@ -35,7 +35,7 @@ class Session < ApplicationRecord
 
   def self.track!(user, payload, request)
     client = DeviceDetector.new(request.user_agent)
-    session = find_by(jti: payload['jti'])
+    session = find_by(client: client.name, device_type: client.device_type, ip_address: request.remote_ip, os: "#{client.os_name}_#{client.os_full_version}")
     data = {
       user_id: user.id,
       jti: payload[:jti],

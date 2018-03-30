@@ -15,17 +15,29 @@ RSpec.describe Api::V1::SessionsController, type: :controller do
     context 'when user.sessions are existed' do
       let!(:sessions) { create_list :session, 2, user: user }
 
-      subject { get :index }
+      context 'when login_user has current_session' do
+        let!(:session) { create :session, user: user, ip_address: '0.0.0.0', client: 'Chrome', 'device_type': 'desktop', 'os': 'Windows_7' }
 
-      its(:code) { is_expected.to eq '200' }
-      its(:body) { is_expected.to be_json_as(Array.new(2) { response_session }) }
+        subject { get :index }
+        before { request.user_agent = Faker::Internet.user_agent(:chrome) }
+
+        its(:code) { is_expected.to eq '200' }
+        its(:body) { is_expected.to be_json_as(sessions: Array.new(2) { response_session }, meta: response_session) }
+      end
+
+      context 'when login_user has not current_session' do
+        subject { get :index }
+
+        its(:code) { is_expected.to eq '200' }
+        its(:body) { is_expected.to be_json_as(sessions: Array.new(2) { response_session }) }
+      end
     end
 
     context 'when user.sessions are not existed' do
       subject { get :index }
 
       its(:code) { is_expected.to eq '200' }
-      its(:body) { is_expected.to be_json_as([]) }
+      its(:body) { is_expected.to be_json_as(sessions: []) }
     end
   end
 
@@ -35,6 +47,16 @@ RSpec.describe Api::V1::SessionsController, type: :controller do
 
       its(:code) { is_expected.to eq '404' }
       its(:body) { is_expected.to be_json_as(response_404) }
+    end
+
+    context 'when delete current session' do
+      let!(:session) { create :session, user: user, ip_address: '0.0.0.0', client: 'Chrome', 'device_type': 'desktop', 'os': 'Windows_7' }
+
+      subject { delete :destroy, params: { id: session.id }, format: :json }
+      before { request.user_agent = Faker::Internet.user_agent(:chrome) }
+
+      its(:code) { is_expected.to eq '401' }
+      its(:body) { is_expected.to be_json_as(response_401) }
     end
 
     context 'when session is exists' do
