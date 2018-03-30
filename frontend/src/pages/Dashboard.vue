@@ -39,7 +39,7 @@ export default {
   data () {
     return {
       status: 'attend_ok',
-      chartDate: this.$moment().locale('en').format('MMM YYYY')
+      chartDate: this.$moment().locale('en').format('LL')
     }
   },
 
@@ -65,7 +65,7 @@ export default {
   watch: {
     chartDate: function () {
       this.resetChart()
-      this.getChart(this.$moment(this.chartDate).locale('en').format('MMM YYYY'))
+      this.getChart(this.$moment(this.chartDate).locale('en').format('LL'))
     }
   },
 
