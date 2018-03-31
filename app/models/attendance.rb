@@ -28,6 +28,7 @@ class Attendance < ApplicationRecord
 
   belongs_to :user
   has_many :requests, dependent: :destroy
+  has_one :activity, as: :activitable, dependent: :destroy
 
   validates :day, presence: true
   validates :attending_status, inclusion: { in: ATTENDING_STATUSES }, allow_nil: true

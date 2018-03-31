@@ -44,6 +44,9 @@ class User < ApplicationRecord
   has_many :permissions, through: :user_permissions
   has_many :user_groups, dependent: :destroy
   has_many :groups, through: :user_groups
+  has_many :activities, dependent: :destroy
+  has_many :user_notifications, dependent: :destroy
+  has_many :notifications, through: :user_notifications, source: :activity
 
   validates :name, presence: true, length: { maximum: 100 }
   validates :email, presence: true, uniqueness: true, length: { maximum: 100 }, format: { with: REGEX_VALID_EMAIL }

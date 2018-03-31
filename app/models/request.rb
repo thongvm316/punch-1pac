@@ -23,6 +23,7 @@
 class Request < ApplicationRecord
   belongs_to :attendance
   belongs_to :user
+  has_one :activity, as: :activitable, dependent: :destroy
 
   enum status: { pending: 0, approved: 1, rejected: 2 }
 
