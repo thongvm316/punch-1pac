@@ -10,10 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180328025811) do
+ActiveRecord::Schema.define(version: 20180331154751) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "activities", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "activitable_id", null: false
+    t.string "activitable_type", null: false
+    t.string "kind", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["activitable_id", "activitable_type"], name: "index_activities_on_activitable_id_and_activitable_type"
+    t.index ["user_id"], name: "index_activities_on_user_id"
+  end
 
   create_table "admins", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -202,6 +213,16 @@ ActiveRecord::Schema.define(version: 20180328025811) do
     t.bigint "group_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "user_notifications", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "activity_id", null: false
+    t.boolean "read", default: false, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id", "activity_id"], name: "index_user_notifications_on_user_id_and_activity_id", unique: true
+    t.index ["user_id"], name: "index_user_notifications_on_user_id"
   end
 
   create_table "user_permissions", force: :cascade do |t|

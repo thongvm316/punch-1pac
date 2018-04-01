@@ -10,6 +10,9 @@ RSpec.describe User, type: :model do
     it { should have_many(:requests).dependent(:destroy) }
     it { should have_many(:user_groups).dependent(:destroy) }
     it { should have_many(:groups).through(:user_groups) }
+    it { should have_many(:activities).dependent(:destroy) }
+    it { should have_many(:user_notifications).dependent(:destroy) }
+    it { should have_many(:notifications).through(:user_notifications).source(:activity) }
   end
 
   describe 'validations' do

@@ -12,6 +12,11 @@ AllCops:
 Rails:
   Enabled: true
 
+Rails/InverseOf:
+  Exclude:
+    - 'app/models/attendance.rb'
+    - 'app/models/request.rb'
+
 Rails/NotNullColumn:
   Enabled: false
 
