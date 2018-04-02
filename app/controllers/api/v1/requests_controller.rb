@@ -25,6 +25,7 @@ class Api::V1::RequestsController < Api::V1::BaseController
     authorize!
     req = current_user.requests.build(request_params)
     if req.save
+      TrackAndNotifyActivityWorker.perform_async(current_user.id, req.id, req.class.to_s, 'create')
       render json: req, serializer: RequestSerializer, status: 201
     else
       render_422(req.errors.messages)
@@ -34,6 +35,7 @@ class Api::V1::RequestsController < Api::V1::BaseController
   def update
     authorize! @req
     if @req.update(request_params)
+      TrackAndNotifyActivityWorker.perform_async(current_user.id, @req.id, @req.class.to_s, 'update')
       render json: @req, serializer: RequestSerializer, status: 200
     else
       render_422(@req.errors.messages)
@@ -43,12 +45,14 @@ class Api::V1::RequestsController < Api::V1::BaseController
   def approve
     authorize! @req
     RequestService.new(current_user, @req).approve
+    TrackAndNotifyActivityWorker.perform_async(current_user.id, @req.id, @req.class.to_s, 'approve')
     head(200)
   end
 
   def reject
     authorize! @req
     RequestService.new(current_user, @req).reject
+    TrackAndNotifyActivityWorker.perform_async(current_user.id, @req.id, @req.class.to_s, 'reject')
     head(200)
   end
 
