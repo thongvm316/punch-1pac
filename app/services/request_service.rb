@@ -20,10 +20,12 @@ class RequestService
     ApplicationRecord.transaction do
       @req.update!(status: 'approved')
       @attendance.update!(attendance_params)
+      Activity.track(@user, @req, 'approve')
     end
   end
 
   def reject
     @req.update(status: 'rejected')
+    Activity.track(@user, @req, 'reject')
   end
 end

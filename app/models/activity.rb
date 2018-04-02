@@ -20,7 +20,7 @@
 
 class Activity < ApplicationRecord
   ACTION_KINDS = {
-    request: %w[create edit approve reject],
+    request: %w[create update approve reject],
     attendance: %w[punch_in punch_out]
   }.freeze
 
@@ -29,4 +29,21 @@ class Activity < ApplicationRecord
   has_many :user_notifications, dependent: :destroy
 
   validates :kind, presence: true, inclusion: { in: ACTION_KINDS.values.flatten.uniq }
+
+  def self.track(current_user, activitable, kind)
+    activity = new(user: current_user, activitable: activitable, kind: kind)
+    ApplicationRecord.transaction do
+      activity.save!
+      UserNotification.import(user_notifications(current_user, activity, activitable, kind))
+    end
+  end
+
+  def self.user_notifications(current_user, activity, activitable, kind)
+    notified_users = if activitable.is_a?(Request) && %w[approve reject].include?(kind)
+                       [activitable.attendance.user]
+                     else
+                       User.where(id: UserGroup.with_group(current_user.groups)).where.not(role: :member)
+                     end
+    notified_users.map { |user| UserNotification.new(user: user, activity: activity) }
+  end
 end
