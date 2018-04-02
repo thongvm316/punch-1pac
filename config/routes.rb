@@ -54,6 +54,11 @@ Rails.application.routes.draw do
         end
         resources :business_days, only: %i[index create update destroy]
         resources :allowed_ips, only: %i[index create update destroy]
+
+        resources :activities, only: %i[index]
+        resources :notifications, only: %(index) do
+          post 'read', on: :member
+        end
       end
     end
 
