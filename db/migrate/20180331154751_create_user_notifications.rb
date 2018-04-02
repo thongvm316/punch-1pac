@@ -5,7 +5,6 @@ class CreateUserNotifications < ActiveRecord::Migration[5.1]
     create_table :user_notifications do |t|
       t.bigint :user_id, null: false
       t.bigint :activity_id, null: false
-      t.boolean :read, null: false, default: false
 
       t.timestamps null: false
     end
