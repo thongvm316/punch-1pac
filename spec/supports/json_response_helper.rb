@@ -175,6 +175,26 @@ module JsonResponseHelper
     }
   end
 
+  def response_activity
+    {
+      id: Integer,
+      user_id: Integer,
+      activitable_id: Integer,
+      activitable_type: String,
+      kind: String
+    }
+  end
+
+  def response_notification
+    {
+      id: Integer,
+      user_id: Integer,
+      activitable_id: Integer,
+      activitable_type: String,
+      kind: String
+    }
+  end
+
   private
 
   def nullable_response(expected_response)
