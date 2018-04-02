@@ -1,0 +1,21 @@
+# frozen_string_literal: true
+
+class Api::V1::NotificationsController < Api::V1::BaseController
+  include Pagination
+
+  def index
+    notifications = current_user.notifications.page(params[:page]).per(params[:per_page])
+    render json: notifications,
+           root: 'notifications',
+           each_serializer: NotificationSerializer,
+           adapter: :json,
+           meta: pager(notifications),
+           status: :ok
+  end
+
+  def read
+    current_user.user_notifications.find_by!(activity_id: params[:id])
+    current_user.update!(last_read_noti_id: params[:id])
+    head(200)
+  end
+end
