@@ -19,6 +19,7 @@
 #  reset_password_sent_at :datetime
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
+#  last_read_noti_id      :integer          default(0), not null
 #
 # Indexes
 #
