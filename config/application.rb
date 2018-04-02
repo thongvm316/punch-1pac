@@ -35,6 +35,9 @@ module Punch
     config.autoload_paths += Dir[Rails.root.join('lib')]
 
     config.generators do |g|
+      g.assets false
+      g.helper false
+      g.template_engine nil
       g.test_framework :rspec
       g.fixture_replacement :factory_bot, dir: 'spec/factories'
     end
