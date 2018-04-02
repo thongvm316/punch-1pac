@@ -37,7 +37,7 @@ export default {
         data: {
           labels: Object.keys(this.chartData).filter(status => this.chartData[status]).map(status => this.$t(`meta.attendance_statuses.${status}`)),
           datasets: [{
-            data: Object.values(this.chartData),
+            data: Object.values(this.chartData).filter(count => count),
             backgroundColor: ['#2d91ff', '#ff3b30', '#4cd964', '#ffb200', '#f0f1f4']
           }]
         },
