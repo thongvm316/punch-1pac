@@ -23,6 +23,8 @@ import group from './modules/group'
 import chart from './modules/chart'
 import calendar from './modules/calendar'
 import flash from './modules/flash'
+import notifications from './modules/notifications'
+import activities from './modules/activities'
 
 Vue.use(Vuex)
 
@@ -45,7 +47,9 @@ export default new Vuex.Store({
     group,
     chart,
     calendar,
-    flash
+    flash,
+    notifications,
+    activities
   },
   strict: debug,
   plugins: debug ? [createLogger()] : []

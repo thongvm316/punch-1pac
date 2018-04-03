@@ -114,7 +114,8 @@ export default {
     title: 'Dashboard',
     calendar: 'Calendar',
     chart: 'Chart',
-    chartNoData: "You don't have any data on this month"
+    chartNoData: "You don't have any data on this month",
+    recentActivities: 'Recent activities'
   },
   announcements: {
     title: 'Announcements',

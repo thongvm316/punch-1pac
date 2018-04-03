@@ -15,7 +15,7 @@
       </thead>
       <tbody>
         <tr v-for="request in requests">
-          <td>{{ request.day | datetime_mmdd }}</td>
+          <td>{{ request.day | moment_l }}</td>
           <td>{{ request.attended_at }}</td>
           <td>{{ request.left_at }}</td>
           <td>{{ request.reason }}</td>

@@ -4,12 +4,12 @@ class Api::V1::NotificationsController < Api::V1::BaseController
   include Pagination
 
   def index
-    notifications = current_user.notifications.page(params[:page]).per(params[:per_page])
+    notifications = current_user.notifications.includes(:user).page(params[:page]).per(params[:per_page])
     render json: notifications,
            root: 'notifications',
            each_serializer: NotificationSerializer,
            adapter: :json,
-           meta: pager(notifications),
+           meta: pager(notifications).merge(unread_notifications_count: notifications.unread_count(current_user.last_read_noti_id)),
            status: :ok
   end
 

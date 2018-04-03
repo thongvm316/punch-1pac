@@ -30,6 +30,9 @@ class Activity < ApplicationRecord
 
   validates :kind, presence: true, inclusion: { in: ACTION_KINDS.values.flatten.uniq }
 
+  default_scope -> { order(updated_at: :desc) }
+  scope :unread_count, ->(last_read_noti_id) { where('activities.id > ?', last_read_noti_id).count }
+
   def self.track(current_user, activitable, kind)
     activity = new(user: current_user, activitable: activitable, kind: kind)
     ApplicationRecord.transaction do

@@ -27,8 +27,8 @@
       <tbody>
         <tr v-for="holiday in filterHolidays(name)">
           <td>{{ holiday.name }}</td>
-          <td>{{ holiday.started_at | datetime_mmdd }}</td>
-          <td>{{ holiday.ended_at | datetime_mmdd }}</td>
+          <td>{{ holiday.started_at | moment_l }}</td>
+          <td>{{ holiday.ended_at | moment_l }}</td>
           <td class="text-center">
             <button class="btn btn-action btn-link" @click="toggleUpdateModal(holiday)">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 16" fill="currentColor">

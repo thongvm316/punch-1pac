@@ -19,7 +19,7 @@ RSpec.describe Api::V1::NotificationsController, type: :controller do
       subject { get :index }
 
       its(:code) { is_expected.to eq '200' }
-      its(:body) { is_expected.to be_json_as(notifications: [], meta: response_pagination) }
+      its(:body) { is_expected.to be_json_as(notifications: [], meta: response_pagination.merge(unread_notifications_count: Integer)) }
     end
 
     context 'when login_user has notifications' do
@@ -31,7 +31,7 @@ RSpec.describe Api::V1::NotificationsController, type: :controller do
       subject { get :index }
 
       its(:code) { is_expected.to eq '200' }
-      its(:body) { is_expected.to be_json_as(notifications: Array.new(2) { response_notification }, meta: response_pagination) }
+      its(:body) { is_expected.to be_json_as(notifications: Array.new(2) { response_notification }, meta: response_pagination.merge(unread_notifications_count: Integer)) }
     end
   end
 

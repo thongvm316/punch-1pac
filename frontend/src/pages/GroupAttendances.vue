@@ -63,7 +63,7 @@
             </div>
           </td>
           <td>{{ attendance.user.email }}</td>
-          <td>{{ attendance.day | datetime_mmdd }}</td>
+          <td>{{ attendance.day | moment_l }}</td>
           <td :class="{ 'text-error': attendance.attending_status === 'attend_late'}">{{ attendance.attended_at }}</td>
           <td :class="{ 'text-warning': attendance.leaving_status === 'leave_early'}">{{ attendance.left_at }}</td>
           <td>
