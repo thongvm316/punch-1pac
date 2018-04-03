@@ -114,7 +114,8 @@ export default {
     title: 'Bảng thông tin',
     calendar: 'Lịch',
     chart: 'Biểu đồ',
-    chartNoData: 'Bạn không có dữ liệu nào trong tháng này'
+    chartNoData: 'Bạn không có dữ liệu nào trong tháng này',
+    recentActivities: 'Hoạt động gần đây'
   },
   announcements: {
     title: 'Thông báo',
