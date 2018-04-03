@@ -32,7 +32,7 @@
           </td>
           <td>{{ session.os }}</td>
           <td>{{ session.ip_address }}</td>
-          <td>{{ session.updated_at | datetime_normal }}</td>
+          <td>{{ session.updated_at | moment_llll }}</td>
           <td><button type="button" class="btn btn-error" @click="deleteSession(session.id)">{{ $t('user.security.btn.revoke') }}</button></td>
         </tr>
       </tbody>

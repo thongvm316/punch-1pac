@@ -17,7 +17,7 @@
           :key="announcement.id">
           <td>{{ announcement.title }}</td>
           <td>{{ announcement.status }}</td>
-          <td>{{ announcement.created_at | datetime_normal }}</td>
+          <td>{{ announcement.created_at | moment_llll }}</td>
         </router-link>
       </tbody>
     </table>

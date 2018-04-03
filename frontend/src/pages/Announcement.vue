@@ -1,6 +1,6 @@
 <template>
   <main-layout :title="announcement.title">
-    <p>{{ announcement.created_at | datetime_normal }} - {{ announcement.status }}</p>
+    <p>{{ announcement.created_at | moment_llll }} - {{ announcement.status }}</p>
     <p>{{ announcement.content }}</p>
   </main-layout>
 </template>

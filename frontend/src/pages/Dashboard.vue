@@ -23,6 +23,20 @@
           </div>
         </div>
       </div>
+      <div class="column col-5">
+        <div class="box">
+          <h2 class="subtitle">{{ $t('dashboard.recentActivities') }}</h2>
+          <div class="tile tile-centered tile-activity" v-for="activity in activities">
+            <div class="tile-icon">
+              <img :src="activity.user.avatar_url" class="avatar avatar-md" :alt="activity.user.name">
+            </div>
+            <div class="tile-content">
+              <p class="tile-title">{{ activity.user.name }} did something to you. Are you ok ?</p>
+              <p class="tile-subtitle">{{ activity.created_at | moment_ll }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </main-layout>
 </template>
@@ -47,6 +61,10 @@ export default {
     ...mapActions('chart', [
       'getChart',
       'resetChart'
+    ]),
+
+    ...mapActions('activities', [
+      'getActivities'
     ])
   },
 
@@ -60,6 +78,7 @@ export default {
 
   created () {
     this.getChart(this.chartDate)
+    this.getActivities()
   },
 
   watch: {
@@ -73,6 +92,10 @@ export default {
     ...mapState('chart', [
       'chartData',
       'loaded'
+    ]),
+
+    ...mapState('activities', [
+      'activities'
     ])
   }
 }
