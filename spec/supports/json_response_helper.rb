@@ -178,7 +178,7 @@ module JsonResponseHelper
   def response_activity
     {
       id: Integer,
-      user_id: Integer,
+      user: response_user,
       activitable_id: Integer,
       activitable_type: String,
       kind: String
@@ -188,7 +188,7 @@ module JsonResponseHelper
   def response_notification
     {
       id: Integer,
-      user_id: Integer,
+      user: response_user,
       activitable_id: Integer,
       activitable_type: String,
       kind: String
