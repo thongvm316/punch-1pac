@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Api::V1::AttendancesController, type: :controller do
-  let(:company) { create :company, :with_business_days }
+  let(:company) { create :company, :with_business_days, timezone: 'Etc/UTC' }
   let(:login_user) { create :user, company: company }
 
   before do
@@ -138,7 +138,7 @@ RSpec.describe Api::V1::AttendancesController, type: :controller do
       its(:body) { is_expected.to be_json_as(response_404) }
     end
 
-    context 'when attendance is created and checked out' do
+    context 'when attendance is checked in and out' do
       let(:attendance) { create :attendance, user: login_user }
 
       subject { patch :update, params: { id: attendance.id }, format: :json }
@@ -147,10 +147,11 @@ RSpec.describe Api::V1::AttendancesController, type: :controller do
       its(:body) { is_expected.to be_json_as(response_404) }
     end
 
-    context 'when attendance is created and checked in and not checked out' do
-      let(:atd) { create :attendance, user: login_user, left_at: nil, leaving_status: nil }
+    context 'when attendance is checked in and not checked out yet' do
+      let(:local_time) { Time.zone.local(2017, 12, 20, 10) }
+      let(:atd) { create :attendance, user: login_user, left_at: nil, leaving_status: nil, updated_at: local_time }
 
-      before { Timecop.freeze(Time.zone.local(2017, 12, 20, 16)) }
+      before { Timecop.freeze(local_time + 1.hour) }
 
       after { Timecop.return }
 
@@ -164,6 +165,20 @@ RSpec.describe Api::V1::AttendancesController, type: :controller do
         expect(attendance.left_at.strftime('%H:%M')).to eq Time.current.strftime('%H:%M')
         expect(attendance.leaving_status).to eq 'leave_early'
       end
+    end
+
+    context 'when attendance is checked out in block time' do
+      let(:local_time) { Time.zone.local(2017, 12, 20, 16, 5) }
+      let(:atd) { create :attendance, user: login_user, left_at: nil, leaving_status: nil, updated_at: local_time }
+
+      before { Timecop.freeze(local_time + 4.minutes) }
+
+      after { Timecop.return }
+
+      subject { patch :update, params: { id: atd.id } }
+
+      its(:code) { is_expected.to eq '403' }
+      its(:body) { is_expected.to be_json_as(response_403) }
     end
   end
 end
