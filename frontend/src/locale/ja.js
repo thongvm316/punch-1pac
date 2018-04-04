@@ -449,5 +449,17 @@ export default {
       createSuccess: 'Business day is created',
       updateSuccess: 'Business day is updated'
     }
+  },
+  activity: {
+    attendance: {
+      punch_in: '<strong>{name}</strong> punched in',
+      punch_out: '<strong>{name}</strong> punched out'
+    },
+    request: {
+      create: '<strong>{name}</strong> created a request',
+      update: '<strong>{name}</strong> updated a request',
+      approve: '<strong>{name}</strong> approved your request',
+      reject: '<strong>{name}</strong> rejected your request'
+    }
   }
 }
