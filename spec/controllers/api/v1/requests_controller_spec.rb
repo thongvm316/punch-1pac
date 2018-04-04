@@ -221,7 +221,7 @@ RSpec.describe Api::V1::RequestsController, type: :controller do
         let(:company) { create :company, :with_business_days }
         let(:login_user) { create :user, company: company, role: 'admin' }
         let(:attendance) { create :attendance, user: login_user, attended_at: '08:30', attending_status: 'attend_late' }
-        let(:req) { create :request, attended_at: '07:55', attendance: attendance }
+        let(:req) { create :request, attended_at: '07:55', left_at: '18:00', attendance: attendance }
 
         before { Timecop.freeze(Time.zone.local(2018, 1, 3)) }
 
