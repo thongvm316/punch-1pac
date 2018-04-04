@@ -30,7 +30,7 @@ class AuthController < ApplicationController
           redirect_to(url_for(subdomain: request.subdomain, controller: 'dashboard', action: 'index', path: 'dashboard'))
         end
         user_json = ActiveModelSerializers::SerializableResource.new(@user, serializer: UserSerializer).as_json
-        
+
         f.json { render json: user_json.merge(access_token: token), status: :ok }
       else
         f.html do
