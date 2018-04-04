@@ -8,8 +8,15 @@ class AuthController < ApplicationController
   helper_method :current_company
 
   def new
-    redirect_to(url_for(subdomain: request.subdomain, controller: 'dashboard', action: 'index', path: 'dashboard')) && return if signed_in?
-    @user = User.new
+    respond_to do |f|
+      f.html do
+        redirect_to(url_for(subdomain: request.subdomain, controller: 'dashboard', action: 'index', path: 'dashboard')) && return if signed_in?
+        @user = User.new
+      end
+      f.json do
+        render json: current_company, serializer: CompanySerializer, status: 200
+      end
+    end
   end
 
   def create
@@ -24,7 +31,9 @@ class AuthController < ApplicationController
           session[:access_token] = token
           redirect_to(url_for(subdomain: request.subdomain, controller: 'dashboard', action: 'index', path: 'dashboard'))
         end
-        f.json { render json: { access_token: token }, status: :ok }
+        user_json = ActiveModelSerializers::SerializableResource.new(@user, serializer: UserSerializer).as_json
+        user_json.merge!(access_token: token)
+        f.json { render json: user_json, status: :ok }
       else
         f.html do
           @user = User.new(email: auth_params[:email])
