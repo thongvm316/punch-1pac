@@ -2,18 +2,20 @@ import * as types from '../mutation-types.js'
 import axios from 'axios'
 
 const state = {
-  activities: []
+  activities: [],
+  pager: {}
 }
 
 const mutations = {
   [types.FETCH_ACTIVITIES] (state, payload) {
-    state.activities = payload.activities
+    payload.activities.forEach(activity => state.activities.push(activity))
+    state.pager = payload.meta
   }
 }
 
 const actions = {
-  getActivities ({ commit }) {
-    return axios.get('/activities')
+  getActivities ({ commit }, params = {}) {
+    return axios.get('/activities', { params: Object.assign({ per_page: 10 }, params) })
                 .then(response => commit(types.FETCH_ACTIVITIES, response.data))
                 .catch(error => { throw error })
   }
