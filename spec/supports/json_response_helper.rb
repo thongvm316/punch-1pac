@@ -17,6 +17,10 @@ module JsonResponseHelper
     { message: 'Unauthorized' }
   end
 
+  def response_403
+    { message: 'Forbidden' }
+  end
+
   def response_404
     { message: 'Not Found' }
   end

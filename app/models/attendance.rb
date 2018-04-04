@@ -22,6 +22,7 @@
 #
 
 class Attendance < ApplicationRecord
+  BLOCK_TIME = 5.minutes
   ATTENDING_STATUSES = %w[attend_ok attend_late].freeze
   LEAVING_STATUSES = %w[leave_ok leave_early].freeze
   OFF_STATUSES = %w[annual_leave].freeze

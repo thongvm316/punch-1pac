@@ -49,6 +49,7 @@ class AttendanceService
   def leave
     verify_ip_address!
     attendance = @user.attendances.attended.find_by!(day: @now, left_at: nil)
+    block_time_expired!(attendance)
     attendance.assign_attributes(
       left_at: @now,
       leaving_status: self.class.leaving_status(@user.company, @now, attendance)
@@ -63,5 +64,9 @@ class AttendanceService
     return if ips.blank?
     return if ips.include?(@remote_ip)
     raise AppErrors::Error403
+  end
+
+  def block_time_expired!(attendance)
+    raise AppErrors::Error403 unless (@now - Attendance::BLOCK_TIME) > attendance.updated_at
   end
 end
