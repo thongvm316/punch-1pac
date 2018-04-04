@@ -16,8 +16,7 @@ class Api::V1::AttendancesController < Api::V1::BaseController
 
   def today
     attendance = current_user.attendances.find_by(day: Time.current)
-    json = attendance ? ActiveModelSerializers::SerializableResource.new(attendance, serializer: AttendanceSerializer).as_json : {}
-    render json: json, status: 200
+    attendance ? render(json: attendance, serializer: AttendanceSerializer, status: 200) : head(200)
   end
 
   def chart

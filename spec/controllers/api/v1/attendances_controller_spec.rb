@@ -12,15 +12,14 @@ RSpec.describe Api::V1::AttendancesController, type: :controller do
   end
 
   describe 'GET #today' do
-    context 'when had not today attendane' do
+    context 'when have not today attendance' do
       subject { get :today }
-      
+
       its(:code) { is_expected.to eq '200' }
-      its(:body) { is_expected.to be_json_as({}) }
     end
 
-    context 'when had today attendane' do
-      let!(:attend_ok) { create :attendance, user: login_user, attending_status: 'attend_ok', day: Date.today }
+    context 'when have today attendance' do
+      let!(:attend_ok) { create :attendance, user: login_user, attending_status: 'attend_ok', day: Time.zone.today }
       subject { get :today }
 
       its(:code) { is_expected.to eq '200' }
