@@ -11,6 +11,23 @@ RSpec.describe Api::V1::AttendancesController, type: :controller do
     authenticate_user(login_user)
   end
 
+  describe 'GET #today' do
+    context 'when had not today attendane' do
+      subject { get :today }
+      
+      its(:code) { is_expected.to eq '200' }
+      its(:body) { is_expected.to be_json_as({}) }
+    end
+
+    context 'when had today attendane' do
+      let!(:attend_ok) { create :attendance, user: login_user, attending_status: 'attend_ok', day: Date.today }
+      subject { get :today }
+
+      its(:code) { is_expected.to eq '200' }
+      its(:body) { is_expected.to be_json_as(response_attendance) }
+    end
+  end
+
   describe 'GET #chart' do
     context 'when params is invalid' do
       subject { get :chart, params: { date: 'invalid' } }
