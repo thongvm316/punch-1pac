@@ -449,5 +449,17 @@ export default {
       createSuccess: 'Ngày đi làm đã được tạo',
       updateSuccess: 'Thông tin ngày đi làm đã được cập nhật'
     }
+  },
+  activity: {
+    attendance: {
+      punch_in: '<strong>{name}</strong> đã đến văn phòng',
+      punch_out: '<strong>{name}</strong> đã rời khỏi văng phòng'
+    },
+    request: {
+      create: '<strong>{name}</strong> đã gửi yêu cầu thay đổi',
+      update: '<strong>{name}</strong> đã chỉnh sửa yêu cầu',
+      approve: '<strong>{name}</strong> đã duyệt yêu cầu của bạn',
+      reject: '<strong>{name}</strong> đã từ chối yêu cầu của bạn'
+    }
   }
 }

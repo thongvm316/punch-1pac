@@ -31,9 +31,12 @@
               <img :src="activity.user.avatar_url" class="avatar avatar-md" :alt="activity.user.name">
             </div>
             <div class="tile-content">
-              <p class="tile-title">{{ activity.user.name }} did something to you. Are you ok ?</p>
+              <p class="tile-title" v-html="$t(`activity.${activity.activitable_type.toLowerCase()}.${activity.kind}`, { name: activity.user.name })"></p>
               <p class="tile-subtitle">{{ activity.created_at | moment_ll }}</p>
             </div>
+          </div>
+          <div class="text-center" v-if="pager.next_page">
+            <button type="button" class="btn" @click="getActivities({ page: pager.next_page })">View more activities</button>
           </div>
         </div>
       </div>
@@ -95,6 +98,7 @@ export default {
     ]),
 
     ...mapState('activities', [
+      'pager',
       'activities'
     ])
   }
