@@ -33,7 +33,7 @@ RSpec.describe AuthController, type: :controller do
         subject { post :create, params: { user: { email: user.email, password: user.password } }, format: :json }
 
         its(:code) { is_expected.to eq '200' }
-        its(:body) { is_expected.to be_json_as(access_token: String) }
+        its(:body) { is_expected.to be_json_as(response_user.merge(access_token: String)) }
         it 'track user session after login success' do
           expect { subject }.to change(Session, :count).by(1)
         end

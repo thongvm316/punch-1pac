@@ -42,6 +42,7 @@ Rails.application.routes.draw do
           collection do
             get 'chart' => 'attendances#chart'
             get 'calendar' => 'attendances#calendar'
+            get 'today' => 'attendances#today'
           end
         end
 

@@ -14,6 +14,11 @@ class Api::V1::AttendancesController < Api::V1::BaseController
     end
   end
 
+  def today
+    attendance = current_user.attendances.find_by(day: Time.current)
+    attendance ? render(json: attendance, serializer: AttendanceSerializer, status: :ok) : head(:ok)
+  end
+
   def chart
     render json: current_user.attendances.chart(params[:date]).first.as_json(except: %i[id]), status: :ok
   end
