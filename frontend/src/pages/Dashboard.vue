@@ -36,7 +36,7 @@
             </div>
           </div>
           <div class="text-center" v-if="pager.next_page">
-            <button type="button" class="btn" @click="getActivities({ page: pager.next_page })">View more activities</button>
+            <button type="button" class="btn" @click="getMoreActivities({ page: pager.next_page })">View more activities</button>
           </div>
         </div>
       </div>
@@ -67,7 +67,8 @@ export default {
     ]),
 
     ...mapActions('activities', [
-      'getActivities'
+      'getActivities',
+      'getMoreActivities'
     ])
   },
 

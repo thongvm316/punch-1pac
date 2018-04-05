@@ -9,7 +9,7 @@
           <router-link class="mr-5" to="/dashboard">{{ $t('header.dashboard') }}</router-link>
           <router-link class="mr-5" to="/attendances">{{ $t('header.attendances') }}</router-link>
           <router-link class="mr-5" to="/requests">{{ $t('header.requests') }}</router-link>
-          <router-link class="mr-5" to="/groups" v-if="isManagers()">{{ $t('header.groups') }}</router-link>
+          <router-link class="mr-5" to="/groups" v-if="$auth('Page', currentUser).canViewGroups()">{{ $t('header.groups') }}</router-link>
         </section>
         <section class="navbar-section">
           <punch/>
@@ -25,7 +25,7 @@
             </a>
             <ul class="menu">
               <li class="menu-item"><router-link to="/settings">{{ $t('header.settings') }}</router-link></li>
-              <li class="menu-item"><router-link to="/company/settings" v-if="isManagers()">{{ $t('header.companySettings') }}</router-link></li>
+              <li class="menu-item"><router-link to="/company/settings" v-if="$auth('Page', currentUser).canViewCompanySettings()">{{ $t('header.companySettings') }}</router-link></li>
               <li class="menu-item"><a href="#" @click="logout($event)">{{ $t('header.logout') }}</a></li>
             </ul>
           </div>
@@ -38,14 +38,13 @@
 <script>
 import axios from 'axios'
 import dropdown from '../mixins/dropdown'
-import authorization from '../mixins/authorization'
 import Notifications from '../components/Notifications.vue'
 import Punch from '../components/Punch.vue'
 import { mapState } from 'vuex'
 
 export default {
   name: 'app-header',
-  mixins: [dropdown, authorization],
+  mixins: [dropdown],
 
   components: {
     Notifications,

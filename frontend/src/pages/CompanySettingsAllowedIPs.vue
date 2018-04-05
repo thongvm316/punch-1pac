@@ -1,7 +1,7 @@
 <template>
   <setting-layout sidebar-type="company" :title="$t('company.title')" :subtitle="$t('company.allowedIPs.title')">
     <div class="toolbar clearfix mt-5">
-      <button type="button" class="btn float-right" @click="toggleAddModal(clearIPErrors)">
+      <button type="button" class="btn float-right" @click="toggleAddModal()">
         <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M24 10h-10v-10h-4v10h-10v4h10v10h4v-10h10z"/></svg>
         {{ $t('company.allowedIPs.btn.add') }}
       </button>
@@ -83,6 +83,12 @@ export default {
       'deleteIP',
       'clearIPErrors'
     ]),
+
+    toggleAddModal () {
+      this.newIp = ''
+      this.clearIPErrors()
+      this.isAddModalOpen = !this.isAddModalOpen
+    },
 
     toggleEditModal (id, ipAddress) {
       this.clearIPErrors()

@@ -11,7 +11,7 @@
 
     <div class="toolbar clearfix mt-5">
       <input type="text" class="form-input" :placeholder="$t('company.holidays.placeholder.filterByName')" v-model="name">
-      <button type="button" class="btn float-right" @click="toggleAddModal(clearHolidayErrors)">
+      <button type="button" class="btn float-right" @click="toggleAddModal()">
         <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M24 10h-10v-10h-4v10h-10v4h10v10h4v-10h10z"/></svg>
         {{ $t('company.holidays.btn.add') }}
       </button>
@@ -172,6 +172,12 @@ export default {
       'clearHolidayErrors',
       'importNationalHolidays'
     ]),
+
+    toggleAddModal () {
+      Object.keys(this.createParams).forEach(key => { this.createParams[key] = '' })
+      this.clearHolidayErrors()
+      this.isAddModalOpen = !this.isAddModalOpen
+    },
 
     toggleUpdateModal (holiday) {
       this.clearHolidayErrors()

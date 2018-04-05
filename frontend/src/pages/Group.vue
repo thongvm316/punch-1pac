@@ -39,6 +39,11 @@
           <td>{{ user.gender }}</td>
           <td>{{ user.position }}</td>
           <td>
+            <button class="btn btn-action btn-link" @click="toggleAddModal(user)" v-if="$auth('User', currentUser, user).canEdit()">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 16" fill="currentColor">
+                <path fill-rule="evenodd" d="M0 12v3h3l8-8-3-3-8 8zm3 2H1v-2h1v1h1v1zm10.3-9.3L12 6 9 3l1.3-1.3a.996.996 0 0 1 1.41 0l1.59 1.59c.39.39.39 1.02 0 1.41z"/>
+              </svg>
+            </button>
             <button class="btn btn-action btn-link" @click="removeGroupUser({ groupId: currentId, userId: user.id })">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M24 20.188l-8.315-8.209 8.2-8.282-3.697-3.697-8.212 8.318-8.31-8.203-3.666 3.666 8.321 8.24-8.206 8.313 3.666 3.666 8.237-8.318 8.285 8.203z"/>
@@ -48,6 +53,10 @@
         </tr>
       </tbody>
     </table>
+
+    <modal :title="$t('group.modal.editUserTitle')" :modal-open.sync="isAddModalOpen">
+      <user-profile :target-user="editUser" :self="false" v-if="editUser"/>
+    </modal>
 
     <modal :title="$t('group.modal.editTitle')" :modal-open.sync="isEditModalOpen">
       <div class="form-group" :class="{ 'has-error': errors.name }">
@@ -64,8 +73,9 @@
 
 <script>
 import MainLayout from '../layouts/Main.vue'
-import { mapState, mapActions } from 'vuex'
 import modal from '../mixins/modal'
+import UserProfile from '../components/UserProfile'
+import { mapState, mapActions } from 'vuex'
 import vSelect from 'vue-select'
 
 export default {
@@ -74,6 +84,7 @@ export default {
   data () {
     return {
       selectedUser: null,
+      editUser: null,
       currentId: this.$route.params.id,
       editParams: {
         name: ''
@@ -83,6 +94,7 @@ export default {
 
   components: {
     MainLayout,
+    UserProfile,
     vSelect
   },
 
@@ -95,6 +107,11 @@ export default {
   },
 
   methods: {
+    toggleAddModal (user) {
+      this.editUser = user
+      this.isAddModalOpen = !this.isAddModalOpen
+    },
+
     toggleEditModal () {
       this.clearGroupErrors()
       this.isEditModalOpen = !this.isEditModalOpen

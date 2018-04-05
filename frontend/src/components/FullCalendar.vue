@@ -122,7 +122,6 @@ export default {
     },
 
     ...mapState('initialStates', [
-      'currentUser',
       'currentCompany'
     ])
   },
