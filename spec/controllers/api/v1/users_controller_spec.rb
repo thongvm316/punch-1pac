@@ -238,6 +238,21 @@ RSpec.describe Api::V1::UsersController, type: :controller do
           expect { login_user.reload }.to change(login_user, :password_digest)
         end
       end
+
+      context 'when update column password_changed' do
+        subject { patch :change_password, params: params}
+
+        it 'update passsword_changed = true when password_changed = false' do
+          is_expected
+          expect { login_user.reload }.to change(login_user, :password_changed).from(false).to(true)
+        end
+
+        it 'does not update password_changed when password_changed = true' do
+          is_expected
+          login_user.password_changed = true
+          expect { login_user.reload }.not_to change(login_user, :password_changed)
+        end
+      end
     end
   end
 

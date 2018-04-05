@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-
 # == Schema Information
 #
 # Table name: users
@@ -20,6 +19,7 @@
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #  last_read_noti_id      :integer          default(0), not null
+#  password_changed       :boolean          default(FALSE), not null
 #
 # Indexes
 #
