@@ -15,6 +15,7 @@ class Api::V1::AttendancesController < Api::V1::BaseController
   end
 
   def today
+    authorize!
     attendance = current_user.attendances.find_by(day: Time.current)
     attendance ? render(json: attendance, serializer: AttendanceSerializer, status: :ok) : head(:ok)
   end
