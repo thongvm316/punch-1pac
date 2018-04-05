@@ -5,6 +5,10 @@ class Api::V1::AttendancesLoyalty < ApplicationLoyalty
     true
   end
 
+  def today?
+    true
+  end
+
   def create?
     true
   end
