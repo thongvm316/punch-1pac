@@ -133,6 +133,7 @@ RSpec.describe PasswordResetController, type: :controller do
         is_expected
         expect(subject).to redirect_to(login_url)
         expect(flash[:notice]).to be_truthy
+        expect(assigns(:user).reset_password_token).to be_nil
       end
     end
 
@@ -145,6 +146,7 @@ RSpec.describe PasswordResetController, type: :controller do
         is_expected
         expect(subject).to render_template(:edit)
         expect(assigns(:user).errors.messages[:password_confirmation].first).to be_truthy
+        expect{ user.reload }.not_to change(user, :reset_password_token)
       end
     end
   end
