@@ -228,8 +228,6 @@ RSpec.describe Api::V1::UsersController, type: :controller do
           password_confirmation: 'password_1'
         }
       end
-      
-      subject { patch :change_password, params: params}
 
       context 'when request from mobile' do
         subject { patch :change_password, params: params, format: :json }
@@ -241,15 +239,19 @@ RSpec.describe Api::V1::UsersController, type: :controller do
         end
       end
 
-      it 'update passsword_changed = true when password_changed = false' do
-        is_expected
-        expect { login_user.reload }.to change(login_user, :password_changed)
-      end
+      context 'when update column password_changed' do
+        subject { patch :change_password, params: params}
 
-      it 'does not update password_changed when password_changed = true' do
-        login_user.password_changed = true
-        is_expected
-        expect { login_user.reload }.to_not change(login_user, :password_changed)
+        it 'update passsword_changed = true when password_changed = false' do
+          is_expected
+          expect { login_user.reload }.to change(login_user, :password_changed).from(false).to(true)
+        end
+
+        it 'does not update password_changed when password_changed = true' do
+          is_expected
+          login_user.password_changed = true
+          expect { login_user.reload }.not_to change(login_user, :password_changed)
+        end
       end
     end
   end
