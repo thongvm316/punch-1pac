@@ -9,6 +9,7 @@ RSpec.describe Api::V1::BaseController, type: :controller do
     before_action :authenticate_user!
     before_action :set_timezone
     before_action :set_locale
+    skip_after_action :verify_authorized
 
     def index
       head(200)
