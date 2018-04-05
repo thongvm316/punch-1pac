@@ -31,6 +31,7 @@ class Api::V1::UsersController < Api::V1::BaseController
   end
 
   def change_password
+    authorize!
     errors = {}
     errors[:current_password] = [I18n.t('errors.messages.incorrect')] unless current_user.authenticate(params[:current_password])
     errors[:password] = [I18n.t('errors.messages.blank')] if params[:password].blank?
@@ -77,7 +78,7 @@ class Api::V1::UsersController < Api::V1::BaseController
   end
 
   def user_update_params
-    params.require(:user).permit(:gender, :name, :email, :avatar, :language, :position)
+    params.require(:user).permit(loyalty(@user).permitted_attributes)
   end
 
   def password_params
@@ -85,6 +86,6 @@ class Api::V1::UsersController < Api::V1::BaseController
   end
 
   def set_user
-    @user = User.find(params[:id])
+    @user = current_company.users.find(params[:id])
   end
 end

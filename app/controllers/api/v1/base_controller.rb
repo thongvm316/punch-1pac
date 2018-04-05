@@ -10,6 +10,8 @@ class Api::V1::BaseController < ApplicationController
   before_action :set_timezone
   before_action :set_locale
 
+  after_action :verify_authorized
+
   private
 
   def set_timezone

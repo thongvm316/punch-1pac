@@ -15,10 +15,12 @@ class Api::V1::AttendancesController < Api::V1::BaseController
   end
 
   def chart
+    authorize!
     render json: current_user.attendances.chart(params[:date]).first.as_json(except: %i[id]), status: :ok
   end
 
   def index
+    authorize!
     attendances = Attendance.for_user(current_user, params['self'])
                             .search_by(params)
                             .page(params[:page])
@@ -33,6 +35,7 @@ class Api::V1::AttendancesController < Api::V1::BaseController
   end
 
   def calendar
+    authorize!
     attendances = current_user.attendances.calendar(params[:day]).order(day: :asc)
     render json: attendances,
            root: 'attendances',

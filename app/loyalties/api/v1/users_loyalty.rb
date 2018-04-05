@@ -9,13 +9,32 @@ class Api::V1::UsersLoyalty < ApplicationLoyalty
     @user.manager?
   end
 
+  def change_password?
+    true
+  end
+
   def destroy?
-    return true if @user.superadmin? && !@record.superadmin?
+    return false if @record.owner?
+    return true if @user.owner?
+    return true if @user.superadmin? && !@record.owner?
     return true if @user.admin? && @record.member?
+    return true if @user == @record
     false
   end
 
   def update?
-    @user == @record
+    return true if @user.owner?
+    return true if @user.superadmin? && !@record.owner?
+    return true if @user.admin? && @record.member?
+    return true if @user == @record
+    false
+  end
+
+  def permitted_attributes
+    if @user.owner? || (@user.superadmin? && !@record.owner?)
+      %w[gender name email avatar language position role]
+    elsif (@user.admin? && @record.member?) || (@user == @record)
+      %w[gender name email avatar language position]
+    end
   end
 end
