@@ -36,6 +36,7 @@ class Api::V1::UsersController < Api::V1::BaseController
     errors[:password] = [I18n.t('errors.messages.blank')] if params[:password].blank?
 
     if current_user.update(password_params) && errors.blank?
+      current_user.update(password_changed: true) unless current_user.password_changed
       head(200)
     else
       render_422(current_user.errors.messages.merge(errors))
