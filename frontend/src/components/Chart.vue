@@ -20,14 +20,16 @@ export default {
     ]),
 
     hasData () {
-      return Object.values(this.chartData).find(val => val)
+      return this.chartData && Object.values(this.chartData).find(val => val)
     }
   },
 
   mounted () {
-    const $chart = this.$refs.chart
-    const ctx = $chart.getContext('2d')
-    this.createChart(ctx, 'doughnut')
+    if (this.hasData) {
+      const $chart = this.$refs.chart
+      const ctx = $chart.getContext('2d')
+      this.createChart(ctx, 'doughnut')
+    }
   },
 
   methods: {

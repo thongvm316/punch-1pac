@@ -4,6 +4,7 @@ class Api::V1::NotificationsController < Api::V1::BaseController
   include Pagination
 
   def index
+    authorize!
     notifications = current_user.notifications.includes(:user).page(params[:page]).per(params[:per_page])
     render json: notifications,
            root: 'notifications',
@@ -14,6 +15,7 @@ class Api::V1::NotificationsController < Api::V1::BaseController
   end
 
   def read
+    authorize!
     current_user.user_notifications.find_by!(activity_id: params[:id])
     current_user.update!(last_read_noti_id: params[:id])
     head(200)

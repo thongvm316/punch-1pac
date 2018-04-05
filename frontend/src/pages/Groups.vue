@@ -1,7 +1,7 @@
 <template>
   <main-layout :title="$t('groups.title')">
     <div class="toolbar mt-5 text-right">
-      <button type="button" class="btn" @click="toggleAddModal(clearGroupsErrors)">
+      <button type="button" class="btn" @click="toggleAddModal()">
         <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M24 10h-10v-10h-4v10h-10v4h10v10h4v-10h10z"></path></svg>
         {{ $t('groups.btn.add') }}
       </button>
@@ -78,6 +78,12 @@ export default {
       'getGroups',
       'addGroup'
     ]),
+
+    toggleAddModal () {
+      Object.keys(this.createParams).forEach(key => { this.createParams[key] = '' })
+      this.clearGroupsErrors()
+      this.isAddModalOpen = !this.isAddModalOpen
+    },
 
     getGroupAdmins (group) {
       return group.users.filter(user => user.role === 'admin' || user.role === 'superadmin')

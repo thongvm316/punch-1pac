@@ -31,8 +31,13 @@
           <td>{{ user.email }}</td>
           <td>{{ user.position }}</td>
           <td>{{ $t(`meta.roles.${user.role}`) }}</td>
-          <td class="text-center">
-            <button class="btn btn-action btn-link" @click="openConfirmDialog(user)" v-if="canDeleteUser(user)">
+          <td>
+            <button class="btn btn-action btn-link" @click="toggleEditModal(user)" v-if="$auth('User', currentUser, user).canEdit()">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 16" fill="currentColor">
+                <path fill-rule="evenodd" d="M0 12v3h3l8-8-3-3-8 8zm3 2H1v-2h1v1h1v1zm10.3-9.3L12 6 9 3l1.3-1.3a.996.996 0 0 1 1.41 0l1.59 1.59c.39.39.39 1.02 0 1.41z"/>
+              </svg>
+            </button>
+            <button class="btn btn-action btn-link" @click="openConfirmDialog(user)" v-if="$auth('User', currentUser, user).canDelete()">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M24 20.188l-8.315-8.209 8.2-8.282-3.697-3.697-8.212 8.318-8.31-8.203-3.666 3.666 8.321 8.24-8.206 8.313 3.666 3.666 8.237-8.318 8.285 8.203z"/>
               </svg>
@@ -45,25 +50,33 @@
     <confirm-dialog :title="$t('company.users.confirmDialog.deleteUserTitle')" :deleteObject="deleteUser" :objectId="selectedObject.id" :modal-open.sync="isOpenConfirmDialog">
       <p v-html="$t('company.users.confirmDialog.deleteUserMsg', { name: selectedObject.name })"></p>
     </confirm-dialog>
+
+    <modal :title="$t('company.users.modal.editTitle')" :modal-open.sync="isEditModalOpen">
+      <user-profile :target-user="selectedUser" :self="false" v-if="selectedUser"/>
+    </modal>
   </setting-layout>
 </template>
 
 <script>
 import confirmDialog from '../mixins/confirm-dialog'
-import SettingLayout from '../layouts/Setting.vue'
+import SettingLayout from '../layouts/Setting'
+import UserProfile from '../components/UserProfile'
+import modal from '../mixins/modal'
 import { mapState, mapGetters, mapActions } from 'vuex'
 
 export default {
   data () {
     return {
-      email: ''
+      email: '',
+      selectedUser: null
     }
   },
 
-  mixins: [confirmDialog],
+  mixins: [confirmDialog, modal],
 
   components: {
-    SettingLayout
+    SettingLayout,
+    UserProfile
   },
 
   methods: {
@@ -72,18 +85,13 @@ export default {
       'fetchUsers'
     ]),
 
-    canDeleteUser (user) {
-      if (this.currentUser.role === 'superadmin' && user.role !== 'superadmin') return true
-      if (this.currentUser.role === 'admin' && user.role === 'member') return true
-      return false
+    toggleAddModal (user) {
+      this.selectedUser = user
+      this.isEditModalOpen = !this.isEditModalOpen
     }
   },
 
   computed: {
-    ...mapState('initialStates', [
-      'currentUser'
-    ]),
-
     ...mapState('companyUsers', [
       'users'
     ]),

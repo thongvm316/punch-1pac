@@ -1,11 +1,5 @@
 .modal-container .modal-body {
-  max-height: initial;
-  overflow-y: initial;
-}
-
-.modal:target .modal-container,
-.modal.active .modal-container {
-  height: 80%;
+  max-height: 80vh;
 }
 
 .modal:target .modal-overlay,

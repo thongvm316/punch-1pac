@@ -18,13 +18,11 @@ export default {
       'setFlashMsg'
     ]),
 
-    toggleAddModal (callback) {
-      if (callback) callback()
+    toggleAddModal () {
       this.isAddModalOpen = !this.isAddModalOpen
     },
 
-    toggleEditModal (callback) {
-      if (callback) callback()
+    toggleEditModal () {
       this.isEditModalOpen = !this.isEditModalOpen
     },
 

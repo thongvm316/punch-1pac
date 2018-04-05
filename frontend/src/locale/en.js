@@ -20,6 +20,7 @@ export default {
       filterByEmail: 'Filter by email'
     },
     modal: {
+      editUserTitle: 'Edit User',
       editTitle: 'Edit Group'
     }
   },
@@ -229,7 +230,8 @@ export default {
         name: 'Name',
         gender: 'Gender',
         position: 'Position',
-        language: 'Language'
+        language: 'Language',
+        role: 'Role'
       },
       btn: {
         save: 'Save'
@@ -417,6 +419,9 @@ export default {
       confirmDialog: {
         deleteUserTitle: 'Delete user',
         deleteUserMsg: 'Are you sure to delete <strong>{name}</strong> user permanently ?'
+      },
+      modal: {
+        editTitle: 'Edit User'
       }
     }
   },

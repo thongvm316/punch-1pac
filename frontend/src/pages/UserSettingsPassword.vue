@@ -62,10 +62,6 @@ export default {
   },
 
   computed: {
-    ...mapState('initialStates', [
-      'currentUser'
-    ]),
-
     ...mapState('userPassword', [
       'errors'
     ])

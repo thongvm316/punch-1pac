@@ -146,7 +146,11 @@ RSpec.describe Api::V1::UsersController, type: :controller do
 
         subject { delete :destroy, params: { id: target_user.id } }
 
-        its(:code) { is_expected.to eq '401' }
+        it 'should deleted target user' do
+          is_expected
+          expect(response.status).to eq 200
+          expect(User.find_by(id: target_user.id)).to be_nil
+        end
       end
 
       context 'when target user not found' do
@@ -332,11 +336,15 @@ RSpec.describe Api::V1::UsersController, type: :controller do
 
       context 'when target user is admin' do
         let(:target_user) { create :user, company: company, role: 'admin' }
-        let(:permissions) { create_list(:permission, 3).pluck(:id) }
 
-        subject { patch :update, params: { id: target_user.id, user: { name: 'thoi', permission_ids: permissions, group_id: company.groups.last.id } } }
+        subject { patch :update, params: { id: target_user.id, user: { name: 'thoi' } } }
 
-        its(:code) { is_expected.to eq '401' }
+        its(:code) { is_expected.to eq '200' }
+        its(:body) { is_expected.to be_json_as(response_user_with_permissions(0)) }
+        it 'should update target_user name' do
+          is_expected
+          expect { target_user.reload }.to change(target_user, :name).to('thoi')
+        end
       end
     end
   end

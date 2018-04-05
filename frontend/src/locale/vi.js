@@ -20,7 +20,8 @@ export default {
       filterByEmail: 'Lọc theo email'
     },
     modal: {
-      editTitle: 'Chỉnh sửa Nhóm'
+      editUserTitle: 'Sửa thông tin thành viên',
+      editTitle: 'Sửa thông tin nhóm'
     }
   },
   header: {
@@ -229,7 +230,8 @@ export default {
         name: 'Tên',
         gender: 'Giới tính',
         position: 'Chức vụ',
-        language: 'Ngôn ngữ'
+        language: 'Ngôn ngữ',
+        role: 'Quyền hạn'
       },
       btn: {
         save: 'Lưu'
@@ -391,6 +393,8 @@ export default {
         successCSVMsg: 'Thành viên trong tập tin CSV đã được tạo',
         note: 'Một email chưa thông tin đăng nhập của thành viên sẽ được gửi đến địa chỉ email. Vui lòng đảm bảo địa chỉ email chính xác',
         errorMsg: 'Thông tin sai lêch ở một số dòng sau {rows}',
+        download: 'Tải tập tin mẫu',
+        templateGuide: 'Vui lòng tải tập tin mẫu, điền thông tin thành viên vào ô trống sau đó đẩy tập tin lên',
         labels: {
           csvFile: 'Tập tin CSV'
         },
@@ -415,6 +419,9 @@ export default {
       confirmDialog: {
         deleteUserTitle: 'Xoá thành viên',
         deleteUserMsg: 'Bạn có chắc muốn xoá thành viên <strong>{name}</strong> vĩnh viễn ?'
+      },
+      modal: {
+        editTitle: 'Sửa thông tin thành viên'
       }
     }
   },

@@ -21,6 +21,11 @@ const mutations = {
 
   [types.FETCH_USERS] (state, payload) {
     state.users = payload.users
+  },
+
+  [types.UPDATE_USER] (state, payload) {
+    const index = state.users.findIndex(user => user.id === payload.id)
+    state.users[index] = payload
   }
 }
 

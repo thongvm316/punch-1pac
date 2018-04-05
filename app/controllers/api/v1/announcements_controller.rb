@@ -4,6 +4,7 @@ class Api::V1::AnnouncementsController < Api::V1::BaseController
   include Pagination
 
   def index
+    authorize!
     announcements = Announcement.for_user(current_user).search_by(params, current_user.id).page(params[:page]).per(params[:per_page])
 
     render json: announcements,
@@ -15,6 +16,7 @@ class Api::V1::AnnouncementsController < Api::V1::BaseController
   end
 
   def show
+    authorize!
     announcement = Announcement.for_user(current_user).find(params[:id])
     render json: announcement, serializer: AnnouncementSerializer, status: 200
   end

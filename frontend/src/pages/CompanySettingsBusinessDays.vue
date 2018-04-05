@@ -1,7 +1,7 @@
 <template>
   <setting-layout sidebar-type="company" :title="$t('company.title')" :subtitle="$t('company.businessDays.title')">
     <div class="toolbar text-right mt-5">
-      <button type="button" class="btn" @click="toggleAddModal(clearBusinessDayErrors)">
+      <button type="button" class="btn" @click="toggleAddModal()">
         <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M24 10h-10v-10h-4v10h-10v4h10v10h4v-10h10z"/></svg>
         {{ $t('company.businessDays.btn.add') }}
       </button>
@@ -121,6 +121,12 @@ export default {
       'deleteBusinessDay',
       'updateBusinessDay'
     ]),
+
+    toggleAddModal () {
+      Object.keys(this.createParams).forEach(key => { this.createParams[key] = '' })
+      this.clearBusinessDayErrors()
+      this.isAddModalOpen = !this.isAddModalOpen
+    },
 
     toggleEditModal (businessDay) {
       this.clearBusinessDayErrors()
