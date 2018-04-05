@@ -20,6 +20,7 @@ export default {
       filterByEmail: 'Filter by email'
     },
     modal: {
+      editUserTitle: 'Edit User',
       editTitle: 'Edit Group'
     }
   },
@@ -229,7 +230,8 @@ export default {
         name: 'Name',
         gender: 'Gender',
         position: 'Position',
-        language: 'Language'
+        language: 'Language',
+        role: 'Role'
       },
       btn: {
         save: 'Save'
@@ -391,6 +393,8 @@ export default {
         successCSVMsg: 'Users in csv file are created',
         note: 'An email contains login information is sent to user. Please ensure that email address is correct',
         errorMsg: 'There are incorrect information at rows {rows}',
+        download: 'Download template',
+        templateGuide: 'Please download the CSV file above. Fill out the cells and upload the file',
         labels: {
           csvFile: 'CSV file'
         },
@@ -415,6 +419,9 @@ export default {
       confirmDialog: {
         deleteUserTitle: 'Delete user',
         deleteUserMsg: 'Are you sure to delete <strong>{name}</strong> user permanently ?'
+      },
+      modal: {
+        editTitle: 'Edit User'
       }
     }
   },
