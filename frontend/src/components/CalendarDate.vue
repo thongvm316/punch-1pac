@@ -4,16 +4,22 @@
       {{ localAttendance.day.split('-')[2] }}
     </button>
     <div class="calendar-events">
-      <span class="calendar-event bg-primary text-light" v-if="localAttendance.attending_status">
+      <span class="calendar-event bg-success text-success text-center" v-if="localAttendance.attending_status === 'attend_ok'">
         {{ $t(`meta.attendance_statuses.${localAttendance.attending_status}`) }}
       </span>
-      <span href="#" class="calendar-event bg-error text-light" v-if="localAttendance.leaving_status">
+      <span class="calendar-event bg-warning text-warning text-center" v-if="localAttendance.attending_status === 'attend_late'">
+        {{ $t(`meta.attendance_statuses.${localAttendance.attending_status}`) }}
+      </span>
+      <span href="#" class="calendar-event bg-success text-success text-center" v-if="localAttendance.leaving_status === 'leave_ok'">
         {{ $t(`meta.attendance_statuses.${localAttendance.leaving_status}`) }}
       </span>
-      <span href="#" class="calendar-event bg-warning text-light" v-if="localAttendance.off_status">
+      <span href="#" class="calendar-event bg-error text-error text-center" v-if="localAttendance.leaving_status === 'leave_early'">
+        {{ $t(`meta.attendance_statuses.${localAttendance.leaving_status}`) }}
+      </span>
+      <span href="#" class="calendar-event bg-error text-error text-center" v-if="localAttendance.off_status">
         {{ $t(`meta.attendance_statuses.${localAttendance.off_status}`) }}
       </span>
-      <span href="#" class="calendar-event bg-success text-light" v-if="localAttendance.holiday">
+      <span href="#" class="calendar-event bg-primary text-primary text-center" v-if="localAttendance.holiday">
         {{ localAttendance.holiday.name }}
       </span>
     </div>
