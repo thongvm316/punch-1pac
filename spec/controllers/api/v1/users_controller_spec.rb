@@ -244,7 +244,7 @@ RSpec.describe Api::V1::UsersController, type: :controller do
       end
 
       context 'when update column password_changed' do
-        subject { patch :change_password, params: params}
+        subject { patch :change_password, params: params }
 
         it 'update passsword_changed = true when password_changed = false' do
           is_expected

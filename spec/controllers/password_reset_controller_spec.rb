@@ -8,9 +8,7 @@ RSpec.describe PasswordResetController, type: :controller do
 
   before { in_namespace(company) }
 
-  describe 'GET #new' do
-    subject { get :new }
-
+  describe 'GET #new' do subject { get :new }
     its(:code) { is_expected.to eq '200' }
     it { is_expected.to render_template(:new) }
   end
@@ -146,7 +144,7 @@ RSpec.describe PasswordResetController, type: :controller do
         is_expected
         expect(subject).to render_template(:edit)
         expect(assigns(:user).errors.messages[:password_confirmation].first).to be_truthy
-        expect{ user.reload }.not_to change(user, :reset_password_token)
+        expect { user.reload }.not_to change(user, :reset_password_token)
       end
     end
   end
