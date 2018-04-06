@@ -1,19 +1,19 @@
 // Core colors
-$primary-color: #439AFF; // pri
+$primary-color: #439aff; // primary
 $primary-color-dark: darken($primary-color, 3%);
 $primary-color-darkest: #0052ac;
 $primary-color-light: lighten($primary-color, 3%);
-$secondary-color: #DCECFF; //pri-light
+$secondary-color: #dcecff; //primary-light
 $secondary-color-dark: darken($secondary-color, 3%);
 $secondary-color-light: lighten($secondary-color, 3%);
 
 // Gray colors
-$light-color: #FFFFFF; // gs-0
-$gray-color-lightest: #F0F3F7; // gs-1
-$gray-color-light: #E3E3E7; // gs-2
-$gray-color: #ABB2B6; // gs-3
-$gray-color-dark: #6C777E; // gs-4
-$dark-color: #2E3E48; // gs-5
+$dark-color: #2e3e48; // grayscale-5
+$light-color: #ffffff; // grayscale-0
+$gray-color: #abb2b6; // grayscale-3
+$gray-color-dark: #6c777e; // grayscale-4
+$gray-color-light: #e3e3e7; // grayscale-2
+$gray-color-lightest: #f0f3f7; // grayscale-1
 
 $border-color: $gray-color-light;
 $border-color-dark: $gray-color;
@@ -22,14 +22,14 @@ $bg-color-dark: darken($bg-color, 3%);
 $bg-color-light: $light-color;
 
 // Control colors
-$success-color: #10B742;  // sec-1
-$error-color: #FC4E5C;  // sec-2
-$warning-color: #FC9F00;  //sec-3
-$info-color: #AC68FF; //sec-4
-$success-color-light: #D3F1DC; // sec-1-light
-$error-color-light: #FEDEE1;  //sec-2-light
-$warning-color-light: #FEEDD0;  //sec-3-light
-$info-color-light: #ECDDFF; //sec-4-light
+$success-color: #10b742;  // secondary-1
+$warning-color: #fc9f00;  //seondary-3
+$error-color: #fc4e5c;  // secondary-2
+$info-color: #ac68ff; //secondary-4
+$success-color-light: #d3f1dc; // secondary-1-light
+$error-color-light: #fedee1;  //secondary-2-light
+$warning-color-light: #feedd0;  //secondary-3-light
+$info-color-light: #ecddff; //secondary-4-light
 
 
 // Other colors
