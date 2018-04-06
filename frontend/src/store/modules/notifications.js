@@ -2,7 +2,7 @@ import * as types from '../mutation-types.js'
 import axios from 'axios'
 
 const state = {
-  unreadNotificationsCount: 33,
+  unreadNotificationsCount: 0,
   notifications: []
 }
 
@@ -15,7 +15,7 @@ const getters = {
 const mutations = {
   [types.FETCH_NOTIFICATIONS] (state, payload) {
     state.notifications = payload.notifications
-    //state.unreadNotificationsCount = payload.meta.unread_notifications_count
+    state.unreadNotificationsCount = payload.meta.unread_notifications_count
   },
 
   [types.READ_NOTIFICATIONS] (state, payload) {
