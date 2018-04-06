@@ -16,7 +16,7 @@
             </div>
             <div class="tile-content">
               <p class="tile-title" v-html="$t(`activity.${notification.activitable_type.toLowerCase()}.${notification.kind}`, { name: notification.user.name })"></p>
-              <p class="tile-subtitle">{{ notification.created_at | moment_ll }}</p>
+              <p class="tile-subtitle">{{ notification.created_at | moment_activity }}</p>
             </div>
           </div>
         </li>
