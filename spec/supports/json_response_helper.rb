@@ -185,7 +185,8 @@ module JsonResponseHelper
       user: response_user,
       activitable_id: Integer,
       activitable_type: String,
-      kind: String
+      kind: String,
+      created_at: time_iso8601_response
     }
   end
 
@@ -195,7 +196,8 @@ module JsonResponseHelper
       user: response_user,
       activitable_id: Integer,
       activitable_type: String,
-      kind: String
+      kind: String,
+      created_at: time_iso8601_response
     }
   end
 

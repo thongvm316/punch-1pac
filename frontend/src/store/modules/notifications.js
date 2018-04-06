@@ -6,6 +6,12 @@ const state = {
   notifications: []
 }
 
+const getters = {
+  displayNotificationsCount (state) {
+    return state.unreadNotificationsCount > 99 ? 99 : state.unreadNotificationsCount
+  }
+}
+
 const mutations = {
   [types.FETCH_NOTIFICATIONS] (state, payload) {
     state.notifications = payload.notifications
@@ -34,6 +40,7 @@ const actions = {
 export default {
   namespaced: true,
   state,
+  getters,
   mutations,
   actions
 }
