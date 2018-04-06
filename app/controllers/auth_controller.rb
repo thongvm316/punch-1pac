@@ -24,7 +24,7 @@ class AuthController < ApplicationController
       if @user&.authenticate(auth_params[:password])
         data = payload(sub: @user.id)
         token = jwt_encode(data)
-        Session.track!(@user, data, request)
+        @user.current_session(request) ? @user.touch(:updated_at) : Session.track!(@user, data, request)
         f.html do
           session[:access_token] = token
           redirect_to(url_for(subdomain: request.subdomain, controller: 'dashboard', action: 'index', path: 'dashboard'))
