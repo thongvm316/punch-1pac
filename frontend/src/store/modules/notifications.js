@@ -2,14 +2,20 @@ import * as types from '../mutation-types.js'
 import axios from 'axios'
 
 const state = {
-  unreadNotificationsCount: 0,
+  unreadNotificationsCount: 33,
   notifications: []
+}
+
+const getters = {
+  displayNotificationsCount (state) {
+    return state.unreadNotificationsCount > 99 ? 99 : state.unreadNotificationsCount
+  }
 }
 
 const mutations = {
   [types.FETCH_NOTIFICATIONS] (state, payload) {
     state.notifications = payload.notifications
-    state.unreadNotificationsCount = payload.meta.unread_notifications_count
+    //state.unreadNotificationsCount = payload.meta.unread_notifications_count
   },
 
   [types.READ_NOTIFICATIONS] (state, payload) {
@@ -34,6 +40,7 @@ const actions = {
 export default {
   namespaced: true,
   state,
+  getters,
   mutations,
   actions
 }
