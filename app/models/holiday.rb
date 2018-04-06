@@ -4,17 +4,19 @@
 #
 # Table name: holidays
 #
-#  id         :integer          not null, primary key
-#  company_id :integer          not null
-#  started_at :date             not null
-#  ended_at   :date             not null
-#  name       :string           not null
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
+#  id                  :integer          not null, primary key
+#  company_id          :integer          not null
+#  started_at          :date             not null
+#  ended_at            :date             not null
+#  name                :string           not null
+#  created_at          :datetime         not null
+#  updated_at          :datetime         not null
+#  national_holiday_id :integer
 #
 # Indexes
 #
-#  index_holidays_on_company_id  (company_id)
+#  index_holidays_on_company_id                          (company_id)
+#  index_holidays_on_company_id_and_national_holiday_id  (company_id,national_holiday_id) UNIQUE
 #
 
 class Holiday < ApplicationRecord
@@ -32,6 +34,7 @@ class Holiday < ApplicationRecord
     q = q.where('name LIKE ?', "%#{name}%") if params[:name].present?
     q
   }
+  scope :national_holiday_ids, ->(company_id) { select(:national_holiday_id).where(company_id: company_id).where.not(national_holiday_id: nil) }
 
   def self.in_month(str_time)
     time = str_time ? Date.parse(str_time) : Date.current

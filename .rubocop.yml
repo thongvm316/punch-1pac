@@ -20,6 +20,10 @@ Rails/InverseOf:
 Rails/NotNullColumn:
   Enabled: false
 
+Rails/SkipsModelValidations:
+  Exclude:
+    - 'app/controllers/auth_controller.rb'
+
 Lint/ScriptPermission:
   Enabled: false
 

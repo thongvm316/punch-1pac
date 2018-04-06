@@ -5,7 +5,7 @@ class Api::V1::SessionsController < Api::V1::BaseController
 
   def index
     authorize!
-    sessions = current_user.sessions.where.not(id: current_session)
+    sessions = current_user.sessions.where.not(id: current_session).order(updated_at: :desc)
     render json: sessions,
            root: 'sessions',
            each_serializer: SessionSerializer,

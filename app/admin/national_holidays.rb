@@ -12,23 +12,29 @@ ActiveAdmin.register NationalHoliday do
   filter :started_at
   filter :ended_at
 
-  collection_action :import_csv, method: :post do
-    return redirect_to import_csv_form_admin_national_holidays_path, flash: { error: 'CSV invalid file!' } unless params[:file]
+  collection_action :import_csv, method: %i[get post] do
+    @national_holiday = NationalHoliday.new
+    if request.post?
+      @national_holiday.errors.messages[:file] = 'File cannot be blank' if params[:national_holiday][:file].blank?
+      @national_holiday.errors.messages[:country] = 'Country cannot be blank' if params[:national_holiday][:country].blank?
 
-    c_params = { country: params[:file].original_filename.split('.')[0], admin_id: current_admin.id }
-    holidays = []
-    CSV.foreach(params[:file].tempfile, headers: true) do |row|
-      holidays << row.to_hash.merge(c_params)
+      if @national_holiday.errors.messages.blank?
+        holidays = []
+        CSV.foreach(params[:national_holiday][:file].tempfile, headers: true) do |row|
+          holidays << row.to_hash.merge(country: params[:national_holiday][:country], admin_id: current_admin.id)
+        end
+        NationalHoliday.import holidays
+        redirect_to admin_national_holidays_path, notice: 'CSV imported successfully!'
+      else
+        render :import_csv
+      end
+    else
+      render :import_csv
     end
-    NationalHoliday.import holidays
-    redirect_to admin_national_holidays_path, notice: 'CSV imported successfully!'
-  end
-
-  collection_action :import_csv_form, method: :get do
   end
 
   action_item :view, only: :index do
-    link_to 'Import Csv', import_csv_form_admin_national_holidays_path
+    link_to 'Import CSV', import_csv_admin_national_holidays_path
   end
 
   index do
