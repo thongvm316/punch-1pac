@@ -8,7 +8,8 @@ RSpec.describe PasswordResetController, type: :controller do
 
   before { in_namespace(company) }
 
-  describe 'GET #new' do subject { get :new }
+  describe 'GET #new' do
+    subject { get :new }
     its(:code) { is_expected.to eq '200' }
     it { is_expected.to render_template(:new) }
   end

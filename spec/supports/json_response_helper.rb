@@ -111,6 +111,7 @@ module JsonResponseHelper
       position: nullable_response(String),
       role: String,
       language: String,
+      password_changed: boolean_response,
       created_at: date_response
     }
   end

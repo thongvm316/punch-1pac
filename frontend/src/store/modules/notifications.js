@@ -2,6 +2,7 @@ import * as types from '../mutation-types.js'
 import axios from 'axios'
 
 const state = {
+  pager: {},
   unreadNotificationsCount: 0,
   notifications: []
 }
@@ -15,6 +16,7 @@ const getters = {
 const mutations = {
   [types.FETCH_NOTIFICATIONS] (state, payload) {
     state.notifications = payload.notifications
+    state.pager = payload.meta
     state.unreadNotificationsCount = payload.meta.unread_notifications_count
   },
 
@@ -24,8 +26,8 @@ const mutations = {
 }
 
 const actions = {
-  getNotifications ({ commit }) {
-    return axios.get('/notifications', { params: { per_page: 10 } })
+  getNotifications ({ commit }, params = {}) {
+    return axios.get('/notifications', { params: Object.assign({ per_page: 10 }, params) })
                 .then(response => commit(types.FETCH_NOTIFICATIONS, response.data))
                 .catch(error => { throw error })
   },

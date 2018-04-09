@@ -44,6 +44,10 @@ const mutations = {
 
   [types.INITIAL_STATES_SET_META] (state, payload) {
     state.meta = payload
+  },
+
+  [types.INITIAL_STATES_UPDATE_PASSWORD_CHANGED] (state, value) {
+    state.currentUser.password_changed = value
   }
 }
 

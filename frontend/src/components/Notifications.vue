@@ -6,8 +6,11 @@
         2.122v.003c.001.751-.396 1.446-1.041 1.82-4.667 2.712-1.985 11.715-6.862 13.306v1.749h20v-1.749c-4.877-1.591-2.195-10.594-6.863-13.306zm-3.137-2.945c.552
         0 1 .449 1 1 0 .552-.448 1-1 1s-1-.448-1-1c0-.551.448-1 1-1zm3 20c0 1.598-1.392 3-2.971 3s-3.029-1.402-3.029-3h6z"/></svg>
     </span>
-    <div class="box notification-dropdown">
-      <h4>{{ $t('header.notifications') }}</h4>
+    <div class="box notifications notification-dropdown">
+      <div class="notification-header">
+        <h4>{{ $t('header.notifications') }}</h4>
+        <router-link to="/notifications">{{ $t('header.seeAll') }}</router-link>
+      </div>
       <ul v-if="notifications.length > 0">
         <li v-for="notification in notifications" :key="notification.id">
           <div class="tile tile-centered tile-activity">

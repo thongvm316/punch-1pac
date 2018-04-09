@@ -13,7 +13,7 @@ export default {
   },
 
   methods: {
-    openConfirmDialog (object) {
+    openConfirmDialog (object = {}) {
       this.selectedObject = object
       this.isOpenConfirmDialog = !this.isOpenConfirmDialog
     }
