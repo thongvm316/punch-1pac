@@ -1,7 +1,6 @@
 <template>
   <main-layout :title="$t('dashboard.title')" :is-open-announcement="true">
-    <div class="box mt-5">
-      <h2 class="subtitle">{{ $t('dashboard.calendar') }}</h2>
+    <div class="box mt-5 p-0">
       <full-calendar></full-calendar>
     </div>
     <div class="columns mt-5">
