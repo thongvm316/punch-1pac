@@ -10,14 +10,16 @@
     </main>
     <app-footer></app-footer>
     <flash/>
+    <popup-change-password/>
   </div>
 </template>
 
 <script>
-import AppHeader from '../components/AppHeader.vue'
-import AppFooter from '../components/AppFooter.vue'
-import Flash from '../components/Flash.vue'
-import Announcements from '../components/Announcements.vue'
+import AppHeader from '../components/AppHeader'
+import AppFooter from '../components/AppFooter'
+import Flash from '../components/Flash'
+import Announcements from '../components/Announcements'
+import PopupChangePassword from '../components/PopupChangePassword'
 
 export default {
   name: 'main-layout',
@@ -26,7 +28,8 @@ export default {
     AppHeader,
     AppFooter,
     Flash,
-    Announcements
+    Announcements,
+    PopupChangePassword
   }
 }
 </script>
