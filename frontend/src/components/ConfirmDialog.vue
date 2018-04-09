@@ -38,7 +38,10 @@ export default {
     },
 
     confirm () {
-      this.deleteObject(this.objectId).then(() => { this.open = false })
+      this.deleteObject(this.objectId).then(() => {
+        this.open = false
+        this.$emit('update:modalOpen', this.open)
+      })
     }
   },
 
