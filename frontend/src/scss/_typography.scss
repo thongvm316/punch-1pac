@@ -2,18 +2,18 @@
 // Headings
 h1,
 .h1 {
-  font-size: 1.5rem;
-  line-height: 1.35;
+  font-size: 2rem;
+  line-height: 1.2;
 }
 h2,
 .h2 {
-  font-size: 1.2rem;
-  line-height: 1.35;
+  font-size: 1.6rem;
+  line-height: 1.25;
 }
 h3,
 .h3 {
-  font-size: 1rem;
-  line-height: 1.2;
+  font-size: 1.2rem;
+  line-height: 1.3334;
 }
 h4,
 .h4 {
@@ -22,10 +22,15 @@ h4,
 }
 h5,
 .h5 {
-  font-size: .7rem;
-  line-height: 1.2;
+  font-size: .8rem;
+  line-height: 1.5;
 }
 h6,
 .h6 {
   font-size: .8rem;
+}
+
+p, .paragraph {
+  font-size: 0.7rem;
+  line-height: 1.58;
 }
