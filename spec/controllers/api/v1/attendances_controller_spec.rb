@@ -182,19 +182,5 @@ RSpec.describe Api::V1::AttendancesController, type: :controller do
         expect(attendance.leaving_status).to eq 'leave_early'
       end
     end
-
-    context 'when attendance is checked out in block time' do
-      let(:local_time) { Time.zone.local(2017, 12, 20, 16, 5) }
-      let(:atd) { create :attendance, user: login_user, left_at: nil, leaving_status: nil, updated_at: local_time }
-
-      before { Timecop.freeze(local_time + 4.minutes) }
-
-      after { Timecop.return }
-
-      subject { patch :update, params: { id: atd.id } }
-
-      its(:code) { is_expected.to eq '403' }
-      its(:body) { is_expected.to be_json_as(response_403) }
-    end
   end
 end
