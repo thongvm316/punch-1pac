@@ -19,6 +19,7 @@
     </main>
     <app-footer></app-footer>
     <flash/>
+    <popup-change-password/>
   </div>
 </template>
 
@@ -28,6 +29,7 @@ import AppFooter from '../components/AppFooter.vue'
 import CompanySettingsSidebar from '../components/CompanySettingsSidebar.vue'
 import UserSettingsSidebar from '../components/UserSettingsSidebar.vue'
 import Flash from '../components/Flash.vue'
+import PopupChangePassword from '../components/PopupChangePassword'
 
 export default {
   name: 'setting-layout',
@@ -37,7 +39,8 @@ export default {
     AppFooter,
     UserSettingsSidebar,
     CompanySettingsSidebar,
-    Flash
+    Flash,
+    PopupChangePassword
   }
 }
 </script>
