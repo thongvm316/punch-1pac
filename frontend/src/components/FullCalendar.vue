@@ -1,18 +1,31 @@
 <template>
   <div>
-    <div class="calendar calendar-lg mt-4 bg-light">
-      <div class="calendar-nav navbar">
-        <button class="btn btn-action btn-link btn-lg" @click="lastMonth">
-          <
-        </button>
-        <div class="navbar-primary">{{ month }} {{ year }}</div>
-        <button class="btn btn-action btn-link btn-lg" @click="nextMonth">
-          >
-        </button>
+    <div class="calendar calendar-lg">
+      <div class="calendar-nav">
+        <div class="calendar-nav-section">
+          <h3 class="m-0">{{ month }} {{ year }}</h3>
+        </div>
+        <div class="calendar-nav-section">
+          <button class="btn btn-secondary btn-action" @click="lastMonth">
+            <svg width="14px" height="24px" viewBox="0 0 14 24" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="currentColor" fill-rule="evenodd">
+              <path d="M.72223,12.85657l10.8297,10.78914a1.22274,1.22274,0,0,0,1.7215,0,1.2062,1.2062,0,0,0,0-1.712L3.30272,
+              12.0006l9.9695-9.93308a1.20763,1.20763,0,0,0,0-1.71323,1.22274,1.22274,0,0,0-1.7215,0L.721,11.14343A1.21956,1.21956,0,0,0,.72223,12.85657Z"/>
+            </svg>
+          </button>
+          <button class="btn btn-secondary" @click="currentMonth">
+            Today
+          </button>
+          <button class="btn btn-secondary btn-action" @click="nextMonth">
+            <svg width="14px" height="24px" viewBox="0 0 14 24" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="currentColor" fill-rule="evenodd">
+              <path d="M18.2777749,11.1434337 L7.44807493,0.354286569 C6.97287493,-0.118095523 6.20297493,-0.118095523 5.72657493,0.354286569 C5.25137493,0.82666866 5.25137493,1.59394075 5.72657493,2.06632284 L15.6972749,11.999402 L5.72777493,21.9324813 C5.25257493,22.4048633 5.25257493,23.1721354 5.72777493,23.6457134 C6.20297493,24.1180955 6.97407493,24.1180955 7.44927493,23.6457134 L18.2789749,12.8565663 C18.7469749,12.3890674 18.7469749,11.6097367 18.2777749,11.1434337 Z"></path>
+            </svg>
+          </button>
+        </div>
       </div>
+
       <div class="calendar-container">
         <div class="calendar-header">
-          <div class="calendar-date" v-for="day in days">{{ day }}</div>
+          <div class="calendar-date h5 text-dark" v-for="day in days">{{ day }}</div>
         </div>
         <div class="calendar-body">
           <div class="calendar-date prev-month disabled" v-for="date in lastDaysPreviousMonth">
@@ -134,6 +147,11 @@ export default {
 
     lastMonth () {
       this.dateContext = this.$moment(this.dateContext).subtract(1, 'month')
+      this.getCalendarAttendances(this.dateContext.format('YYYY-MM-DD')).then(response => this.formatAttendances(response.data))
+    },
+
+    currentMonth () {
+      this.dateContext = this.$moment(this.today)
       this.getCalendarAttendances(this.dateContext.format('YYYY-MM-DD')).then(response => this.formatAttendances(response.data))
     },
 
