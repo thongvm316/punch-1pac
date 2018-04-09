@@ -44,8 +44,10 @@ class Activity < ApplicationRecord
   def self.user_notifications(current_user, activity, activitable, kind)
     notified_users = if activitable.is_a?(Request) && %w[approve reject].include?(kind)
                        [activitable.attendance.user].reject { |user| user == current_user }
-                     else
+                     elsif activitable.is_a?(Request) && %w[create update].include?(kind)
                        User.where(id: UserGroup.with_group(current_user.groups)).where.not(role: :member, id: current_user.id)
+                     else
+                       []
                      end
     notified_users.map { |user| UserNotification.new(user: user, activity: activity) }
   end

@@ -1,11 +1,5 @@
 .tile {
   &.tile-activity {
-    margin-bottom: 10px;
-
-    &:last-child {
-      margin-bottom: 0;
-    }
-
     .tile-title {
       text-overflow: initial;
       white-space: nowrap;

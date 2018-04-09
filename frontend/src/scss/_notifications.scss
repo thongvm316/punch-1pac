@@ -1,0 +1,70 @@
+.notifications {
+  &.notification-dropdown {
+    display: none;
+    position: absolute;
+    z-index: $zindex-1;
+    top: 48px;
+    right: -72px;
+    width: 400px;
+    font-size: .6rem;
+    animation: slide-down .15s ease 1;
+  }
+
+  .notification-header {
+    padding: .4rem .8rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid $border-color;
+  }
+
+  &.box {
+    padding: 0;
+  }
+
+  h4 {
+    margin: 0;
+    font-size: $font-size-sm;
+  }
+
+  ul {
+    margin: 0;
+    list-style: none;
+  }
+
+  p {
+    margin: 0;
+  }
+
+  li {
+    margin: 0;
+    padding: .4rem .8rem;
+    border-bottom: 1px solid $border-color;
+    cursor: pointer;
+
+    &.px-0 {
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+    &:last-child {
+      border-bottom: 0;
+    }
+
+    &:hover {
+      background-color: $bg-color;
+    }
+  }
+
+  > a {
+    font-size: .7rem;
+    padding: .4rem .8rem;
+    display: block;
+    text-align: center;
+  }
+
+  .no-notification-msg {
+    padding: .8rem;
+    border-bottom: 1px solid $border-color;
+  }
+}

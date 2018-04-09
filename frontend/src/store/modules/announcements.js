@@ -3,7 +3,6 @@ import axios from 'axios'
 
 const state = {
   pager: {},
-  announcements: [],
   headerAnnouncements: []
 }
 

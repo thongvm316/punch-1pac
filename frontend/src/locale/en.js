@@ -118,13 +118,8 @@ export default {
     chartNoData: "You don't have any data on this month",
     recentActivities: 'Recent activities'
   },
-  announcements: {
-    title: 'Announcements',
-    tableHeader: {
-      title: 'Title',
-      status: 'Status',
-      sentAt: 'Sent At'
-    }
+  notifications: {
+    title: 'Notifications'
   },
   groups: {
     title: 'Groups',
