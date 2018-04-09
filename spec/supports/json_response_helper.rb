@@ -175,6 +175,8 @@ module JsonResponseHelper
     {
       id:          Integer,
       name:        String,
+      image_url:   String,
+      description: String,
       users:       Array.new(users) { response_user }
     }
   end

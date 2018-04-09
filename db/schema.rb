@@ -119,6 +119,8 @@ ActiveRecord::Schema.define(version: 20180406090751) do
     t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "description"
+    t.text "image_data"
   end
 
   create_table "holidays", force: :cascade do |t|
@@ -169,16 +171,6 @@ ActiveRecord::Schema.define(version: 20180406090751) do
     t.index ["announcement_id", "user_id"], name: "index_read_announcements_on_announcement_id_and_user_id", unique: true
     t.index ["announcement_id"], name: "index_read_announcements_on_announcement_id"
     t.index ["user_id"], name: "index_read_announcements_on_user_id"
-  end
-
-  create_table "read_requests", force: :cascade do |t|
-    t.bigint "request_id", null: false
-    t.bigint "user_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["request_id", "user_id"], name: "index_read_requests_on_request_id_and_user_id", unique: true
-    t.index ["request_id"], name: "index_read_requests_on_request_id"
-    t.index ["user_id"], name: "index_read_requests_on_user_id"
   end
 
   create_table "requests", force: :cascade do |t|
