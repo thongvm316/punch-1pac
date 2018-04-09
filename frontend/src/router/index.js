@@ -39,7 +39,7 @@ const router = new Router({
     { path: '/requests', redirect: '/requests/my' },
     { path: '/groups/:id', name: 'group', component: Group, meta: { title: 'Group - 1Punch' } },
     { path: '/groups', name: 'groups', component: Groups, meta: { title: 'Groups - 1Punch' } },
-    { path: '/notifications', name: 'groups', component: Notifications, meta: { title: 'Notifications - 1Punch' } },
+    { path: '/notifications', name: 'notifications', component: Notifications, meta: { title: 'Notifications - 1Punch' } },
     { path: '/settings/profile', name: 'user-settings-profile', component: UserSettingsProfile, meta: { title: 'User Settings Profile - 1Punch' } },
     { path: '/settings/password', name: 'user-settings-password', component: UserSettingsPassword, meta: { title: 'User Settings Password - 1Punch' } },
     { path: '/settings/security', name: 'user-settings-security', component: UserSettingsSecurity, meta: { title: 'User Settings Security - 1Punch' } },

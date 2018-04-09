@@ -1,9 +1,8 @@
 const MEMBER_ACCESSABLE_PAGES = [
   'dashboard',
+  'notifications',
   'my-attendances',
   'my-requests',
-  'announcement',
-  'announcements',
   'user-settings-profile',
   'user-settings-password',
   'user-settings-security'
