@@ -74,10 +74,17 @@ RSpec.describe Api::V1::GroupsController, type: :controller do
       let(:login_user) { create :user, company: company, role: 'admin' }
 
       context 'when params are valid' do
-        subject { post :create, params: { group: { name: 'group hehe' } } }
+        let(:image) { fixture_file_upload('images/image.png', 'image/png') }
+
+        subject { post :create, params: { group: { name: 'group here', description: 'nothing', image: image } } }
 
         its(:code) { is_expected.to eq '201' }
         its(:body) { is_expected.to be_json_as(response_group) }
+
+        it 'should have image' do
+          is_expected
+          expect(Group.last.image_url).to be_truthy
+        end
       end
 
       context 'when params are invalid' do
@@ -124,10 +131,17 @@ RSpec.describe Api::V1::GroupsController, type: :controller do
         end
 
         context 'when params is valid' do
-          subject { patch :update, params: { id: group.id, group: { name: 'Kekeke' } } }
+          let(:image) { fixture_file_upload('images/image.png', 'image/png') }
+
+          subject { patch :update, params: { id: group.id, group: { name: 'Kekeke', description: 'nothing', image: image } } }
 
           its(:code) { is_expected.to eq '200' }
           its(:body) { is_expected.to be_json_as(response_group(1)) }
+
+          it "can upload a image" do
+            is_expected
+            expect(group.image_url).not_to be_nil
+          end
         end
       end
 

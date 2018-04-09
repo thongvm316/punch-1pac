@@ -61,7 +61,7 @@ class Api::V1::GroupsController < Api::V1::BaseController
   private
 
   def group_params
-    params.require(:group).permit(:name)
+    params.require(:group).permit(:name, :image, :description)
   end
 
   def set_group

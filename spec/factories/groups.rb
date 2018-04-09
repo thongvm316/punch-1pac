@@ -3,6 +3,7 @@
 FactoryBot.define do
   factory :group do
     name { Faker::Lorem.word }
+    description { Faker::Lorem.word }
     association(:company, factory: :company, strategy: :build)
   end
 end
