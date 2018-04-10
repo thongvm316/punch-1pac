@@ -24,4 +24,12 @@ class Api::V1::AttendancesLoyalty < ApplicationLoyalty
   def chart?
     true
   end
+
+  def create_for_user?
+    @user.superadmin?
+  end
+
+  def update_for_user?
+    @user.superadmin?
+  end
 end

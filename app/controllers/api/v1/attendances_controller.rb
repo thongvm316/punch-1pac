@@ -2,6 +2,7 @@
 
 class Api::V1::AttendancesController < Api::V1::BaseController
   include Pagination
+  before_action :set_user, only: %i[create_for_user update_for_user]
 
   def create
     authorize!
@@ -12,6 +13,23 @@ class Api::V1::AttendancesController < Api::V1::BaseController
     else
       head(200)
     end
+  end
+
+  def create_for_user
+    authorize!
+    attendance = AttendanceService.new(@user, request.remote_ip).attend
+    TrackAndNotifyActivityWorker.perform_async(@user.id, attendance.id, attendance.class.to_s, 'punch_in') if attendance
+    users = current_company.users
+    render json: users, each_serializer: UserTodayAttendanceSerializer, status: :ok
+  end
+
+  def update_for_user
+    authorize!
+
+    attendance = AttendanceService.new(@user, request.remote_ip).leave
+    TrackAndNotifyActivityWorker.perform_async(@user.id, attendance.id, attendance.class.to_s, 'punch_out') if attendance
+    users = current_company.users
+    render json: users, each_serializer: UserTodayAttendanceSerializer, status: :ok
   end
 
   def today
@@ -57,5 +75,11 @@ class Api::V1::AttendancesController < Api::V1::BaseController
     attendance = AttendanceService.new(current_user, request.remote_ip).leave
     TrackAndNotifyActivityWorker.perform_async(current_user.id, attendance.id, attendance.class.to_s, 'punch_out') if attendance
     render json: attendance, serializer: AttendanceSerializer, status: :ok
+  end
+
+  private
+
+  def set_user
+    @user = User.find(params[:user_id])
   end
 end
