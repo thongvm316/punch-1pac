@@ -16,6 +16,7 @@ Rails.application.routes.draw do
         resources :users, except: %i[new edit] do
           post 'create_multi', on: :collection
           match 'change_password', via: %i[patch put], on: :collection
+          get 'index_with_attendance', on: :collection
         end
 
         resources :holidays, only: %i[index create update destroy] do
@@ -46,6 +47,8 @@ Rails.application.routes.draw do
             get 'chart' => 'attendances#chart'
             get 'calendar' => 'attendances#calendar'
             get 'today' => 'attendances#today'
+            post 'create_for_user'
+            match 'update_for_user', via: %i[patch put]
           end
         end
 
