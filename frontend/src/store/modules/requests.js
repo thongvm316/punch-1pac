@@ -31,16 +31,6 @@ const mutations = {
     state.errors = payload.errors
   },
 
-  [types.APPROVE_REQUEST] (state, requestId) {
-    const index = state.requests.findIndex(request => request.id === requestId)
-    state.requests[index].status = 'approved'
-  },
-
-  [types.REJECT_REQUEST] (state, requestId) {
-    const index = state.requests.findIndex(request => request.id === requestId)
-    state.requests[index].status = 'rejected'
-  },
-
   [types.CLEAR_REQUEST_ERRORS] (state) {
     state.errors = {}
   }
@@ -84,24 +74,6 @@ const actions = {
     return axios.delete(`/requests/${id}`)
                 .then(response => {
                   commit(types.DELETE_REQUEST, id)
-                  return response
-                })
-                .catch(error => { throw error })
-  },
-
-  approveRequest ({ commit }, requestId) {
-    return axios.post(`/requests/${requestId}/approve`)
-                .then(response => {
-                  commit(types.APPROVE_REQUEST, requestId)
-                  return response
-                })
-                .catch(error => { throw error })
-  },
-
-  rejectRequest ({ commit }, requestId) {
-    return axios.post(`/requests/${requestId}/reject`)
-                .then(response => {
-                  commit(types.REJECT_REQUEST, requestId)
                   return response
                 })
                 .catch(error => { throw error })
