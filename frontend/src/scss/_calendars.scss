@@ -1,49 +1,14 @@
 .calendar {
+  border: 0;
+
   .calendar-header {
-    padding: 4px 0px;
     background-color: $light-color;
   }
 
   .calendar-nav {
-    padding: 1.2rem;
+    padding: .8rem;
     background-color: $light-color;
     display: flex;
     justify-content: space-between;
-  }
-
-  &.calendar-lg .calendar-body .calendar-date {
-    height: 100px;
-  }
-
-  &.calendar-lg .calendar-events {
-    padding: 8px;
-  }
-
-  &.calendar-lg .calendar-event {
-    height: 24px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0;
-
-    &:first-child {
-      margin: 0 0 4px;
-    }
-  }
-
-  & .calendar-date {
-    .date-item {
-      height: 1.2rem;
-      width: 1.2rem;
-      align-self: flex-start;
-      margin: 8px 0 0 8px;
-    }
-
-    .date-item.date-today {
-      padding: 0;
-      background-color: $primary-color;
-      color: $light-color;
-      border: 0;
-    }
   }
 }
