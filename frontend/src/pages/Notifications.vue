@@ -44,7 +44,7 @@ export default {
   },
 
   created () {
-    this.getNotifications({ per_page: 20 })
+    this.getNotifications()
   }
 }
 </script>

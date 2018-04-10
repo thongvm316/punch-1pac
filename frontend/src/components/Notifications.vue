@@ -11,8 +11,8 @@
         <h4>{{ $t('header.notifications') }}</h4>
         <router-link to="/notifications">{{ $t('header.seeAll') }}</router-link>
       </div>
-      <ul v-if="notifications.length > 0">
-        <li v-for="notification in notifications" :key="notification.id">
+      <ul v-if="headerNotifications.length > 0">
+        <li v-for="notification in headerNotifications" :key="notification.id">
           <div class="tile tile-centered tile-activity">
             <div class="tile-icon">
               <img :src="notification.user.avatar_url" class="avatar avatar-md" :alt="notification.user.name">
@@ -44,7 +44,7 @@ export default {
     ...mapState('notifications', [
       'hasIntervalFetchNotifications',
       'unreadNotificationsCount',
-      'notifications'
+      'headerNotifications'
     ]),
 
     ...mapGetters('notifications', [
@@ -55,12 +55,12 @@ export default {
   methods: {
     toggleDropdown () {
       this.isDropdownActive = !this.isDropdownActive
-      this.readNotifications(this.notifications[0].id)
+      if (this.headerNotifications[0]) this.readNotifications(this.headerNotifications[0].id)
     },
 
     ...mapActions('notifications', [
       'readNotifications',
-      'getNotifications'
+      'getHeaderNotifications'
     ]),
 
     ...mapMutations('notifications', [
@@ -69,10 +69,12 @@ export default {
   },
 
   created () {
-    this.getNotifications()
-        .then(() => {
-          if (!this.hasIntervalFetchNotifications) this[SET_INTERVAL_FETCH_NOTIFICATIONS](setInterval(this.getNotifications, 10000))
-        })
+    if (!this.hasIntervalFetchNotifications) {
+      this.getHeaderNotifications()
+          .then(() => {
+            this[SET_INTERVAL_FETCH_NOTIFICATIONS](setInterval(this.getHeaderNotifications, 10000))
+          })
+    }
   }
 }
 </script>
