@@ -10,17 +10,17 @@ import Groups from '../pages/Groups'
 import Group from '../pages/Group'
 import Notifications from '../pages/Notifications'
 
-import UserSettingsProfile from '../pages/UserSettingsProfile.vue'
-import UserSettingsPassword from '../pages/UserSettingsPassword.vue'
-import UserSettingsSecurity from '../pages/UserSettingsSecurity.vue'
-import CompanySettingsProfile from '../pages/CompanySettingsProfile.vue'
-import CompanySettingsTimeLang from '../pages/CompanySettingsTimeLang.vue'
-import CompanySettingsUsers from '../pages/CompanySettingsUsers.vue'
-import CompanySettingsUsersAdd from '../pages/CompanySettingsUsersAdd.vue'
-import CompanySettingsUsersAddMulti from '../pages/CompanySettingsUsersAddMulti.vue'
-import CompanySettingsBusinessDays from '../pages/CompanySettingsBusinessDays.vue'
-import CompanySettingsHolidays from '../pages/CompanySettingsHolidays.vue'
-import CompanySettingsAllowedIPs from '../pages/CompanySettingsAllowedIPs.vue'
+import UserSettingsProfile from '../pages/UserSettingsProfile'
+import UserSettingsPassword from '../pages/UserSettingsPassword'
+import UserSettingsSecurity from '../pages/UserSettingsSecurity'
+import CompanySettingsProfile from '../pages/CompanySettingsProfile'
+import CompanySettingsTimeLang from '../pages/CompanySettingsTimeLang'
+import CompanySettingsUsers from '../pages/CompanySettingsUsers'
+import CompanySettingsUsersAdd from '../pages/CompanySettingsUsersAdd'
+import CompanySettingsUsersAddMulti from '../pages/CompanySettingsUsersAddMulti'
+import CompanySettingsBusinessDays from '../pages/CompanySettingsBusinessDays'
+import CompanySettingsHolidays from '../pages/CompanySettingsHolidays'
+import CompanySettingsAllowedIPs from '../pages/CompanySettingsAllowedIPs'
 
 import Error404 from '../pages/Error404'
 
@@ -31,13 +31,12 @@ const router = new Router({
   linkActiveClass: 'active',
   routes: [
     { path: '/dashboard', name: 'dashboard', component: Dashboard, meta: { title: 'Dashboard - 1Punch' } },
-    { path: '/attendances/groups', name: 'group-attendances', component: GroupAttendances, meta: { title: 'Group Attendances - 1Punch' } },
-    { path: '/attendances/my', name: 'my-attendances', component: MyAttendances, meta: { title: 'My Attendances - 1Punch' } },
-    { path: '/attendances', redirect: '/attendances/my' },
-    { path: '/requests/groups', name: 'group-requests', component: GroupRequests, meta: { title: 'Group Requests - 1Punch' } },
-    { path: '/requests/my', name: 'my-requests', component: MyRequests, meta: { title: 'My Requests - 1Punch' } },
-    { path: '/requests', redirect: '/requests/my' },
-    { path: '/groups/:id', name: 'group', component: Group, meta: { title: 'Group - 1Punch' } },
+    { path: '/attendances', name: 'attendances', component: MyAttendances, meta: { title: 'My Attendances - 1Punch' } },
+    { path: '/requests', name: 'requests', component: MyRequests, meta: { title: 'My Requests - 1Punch' } },
+    { path: '/groups/:id/requests', name: 'group-requests', component: GroupRequests, meta: { title: 'Group Requests - 1Punch' } },
+    { path: '/groups/:id/attendances', name: 'group-attendances', component: GroupAttendances, meta: { title: 'Group Attendances - 1Punch' } },
+    { path: '/groups/:id/users', name: 'group', component: Group, meta: { title: 'Group - 1Punch' } },
+    { path: '/groups/:id', redirect: '/groups/:id/users' },
     { path: '/groups', name: 'groups', component: Groups, meta: { title: 'Groups - 1Punch' } },
     { path: '/notifications', name: 'notifications', component: Notifications, meta: { title: 'Notifications - 1Punch' } },
     { path: '/settings/profile', name: 'user-settings-profile', component: UserSettingsProfile, meta: { title: 'User Settings Profile - 1Punch' } },
