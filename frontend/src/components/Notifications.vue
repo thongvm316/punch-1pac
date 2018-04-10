@@ -33,7 +33,8 @@
 
 <script>
 import dropdown from '../mixins/dropdown'
-import { mapState, mapActions, mapGetters } from 'vuex'
+import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
+import { SET_INTERVAL_FETCH_NOTIFICATIONS } from '../store/mutation-types'
 
 export default {
   name: 'notifications',
@@ -41,6 +42,7 @@ export default {
 
   computed: {
     ...mapState('notifications', [
+      'hasIntervalFetchNotifications',
       'unreadNotificationsCount',
       'notifications'
     ]),
@@ -59,12 +61,18 @@ export default {
     ...mapActions('notifications', [
       'readNotifications',
       'getNotifications'
+    ]),
+
+    ...mapMutations('notifications', [
+      SET_INTERVAL_FETCH_NOTIFICATIONS
     ])
   },
 
   created () {
     this.getNotifications()
-        .then(() => setInterval(this.getNotifications, 10000))
+        .then(() => {
+          if (!this.hasIntervalFetchNotifications) this[SET_INTERVAL_FETCH_NOTIFICATIONS](setInterval(this.getNotifications, 10000))
+        })
   }
 }
 </script>
