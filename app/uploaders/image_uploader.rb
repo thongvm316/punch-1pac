@@ -12,6 +12,6 @@ class ImageUploader < Shrine
   end
 
   Attacher.default_url do |_options|
-    ActionController::Base.helpers.image_url("default/#{name}.png")
+    ActionController::Base.helpers.image_url("default/#{record.class.to_s.downcase}_#{name}.png")
   end
 end
