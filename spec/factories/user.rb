@@ -11,5 +11,10 @@ FactoryBot.define do
     email { Faker::Internet.email }
     password { Faker::Internet.password }
     password_confirmation { password }
+    trait :with_attendance do
+      after(:create) do |user|
+        user.attendances << create(:attendance)
+      end
+    end
   end
 end
