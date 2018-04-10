@@ -3,9 +3,9 @@ import Router from 'vue-router'
 
 import Dashboard from '../pages/Dashboard'
 import GroupAttendances from '../pages/GroupAttendances'
-import MyAttendances from '../pages/MyAttendances'
+import Attendances from '../pages/Attendances'
 import GroupRequests from '../pages/GroupRequests'
-import MyRequests from '../pages/MyRequests'
+import Requests from '../pages/Requests'
 import Groups from '../pages/Groups'
 import Group from '../pages/Group'
 import Notifications from '../pages/Notifications'
@@ -31,8 +31,8 @@ const router = new Router({
   linkActiveClass: 'active',
   routes: [
     { path: '/dashboard', name: 'dashboard', component: Dashboard, meta: { title: 'Dashboard - 1Punch' } },
-    { path: '/attendances', name: 'attendances', component: MyAttendances, meta: { title: 'My Attendances - 1Punch' } },
-    { path: '/requests', name: 'requests', component: MyRequests, meta: { title: 'My Requests - 1Punch' } },
+    { path: '/attendances', name: 'attendances', component: Attendances, meta: { title: 'Attendances - 1Punch' } },
+    { path: '/requests', name: 'requests', component: Requests, meta: { title: 'Requests - 1Punch' } },
     { path: '/groups/:id/requests', name: 'group-requests', component: GroupRequests, meta: { title: 'Group Requests - 1Punch' } },
     { path: '/groups/:id/attendances', name: 'group-attendances', component: GroupAttendances, meta: { title: 'Group Attendances - 1Punch' } },
     { path: '/groups/:id/users', name: 'group', component: Group, meta: { title: 'Group - 1Punch' } },

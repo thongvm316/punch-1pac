@@ -1,6 +1,11 @@
 <template>
   <main-layout :title="$t('requests.title')">
-    <requests-tab/>
+    <div class="toolbar mt-5">
+      <select class="form-select" v-model="params.status">
+        <option value="">{{ $t('requests.placeholder.filterByStatus') }}</option>
+        <option :value="status" v-for="status in meta.request_statuses">{{ $t(`meta.request_statuses.${status}`) }}</option>
+      </select>
+    </div>
 
     <table class="table table-hover bg-light mt-4">
       <thead>
@@ -41,14 +46,10 @@
     <modal :title="$t('requests.modal.editTitle')" :modal-open.sync="isEditModalOpen">
       <div class="form-group">
         <label class="form-label">{{ $t('requests.labels.date') }}</label>
-        <datepicker
-        :minimumView="'day'"
-        :maximumView="'day'"
-        :input-class="'datepicker-input form-input'"
-        :calendar-class="'datepicker-calendar'"
-        :wrapper-class="'datepicker datepicker-full-width'"
-        :disabled-picker="true"
-        :value="updateParams.day"/>
+      <flat-pickr
+        :config="{enable: [updateParams.day], locale: flatpickrLocaleMapper[currentUser.language]}"
+        class="form-input daterange-picker"
+        v-model="updateParams.day"/>
       </div>
       <div class="form-group" :class="{ 'has-error': errors.attended_at }">
         <label class="form-label">{{ $t('requests.labels.attendedAt') }}</label>
@@ -77,22 +78,26 @@
 </template>
 
 <script>
-import Datepicker from 'vuejs-datepicker'
-import MainLayout from '../layouts/Main.vue'
+import flatPickr from 'vue-flatpickr-component'
+import MainLayout from '../layouts/Main'
 import confirmDialog from '../mixins/confirm-dialog'
 import modal from '../mixins/modal'
-import Pagination from '../components/Pagination.vue'
-import RequestsTab from '../components/RequestsTab.vue'
+import flatpickrLocale from '../mixins/flatpickr-locale'
+import Pagination from '../components/Pagination'
 import { mapState, mapActions } from 'vuex'
 
 export default {
-  name: 'my-requests',
+  name: 'requests',
 
-  mixins: [modal, confirmDialog],
+  mixins: [modal, confirmDialog, flatpickrLocale],
 
   data () {
     return {
       currentId: '',
+      params: {
+        self: true,
+        status: ''
+      },
       updateParams: {
         day: '',
         attended_at: '',
@@ -104,9 +109,8 @@ export default {
 
   components: {
     MainLayout,
-    Datepicker,
-    Pagination,
-    RequestsTab
+    flatPickr,
+    Pagination
   },
 
   computed: {
@@ -114,6 +118,10 @@ export default {
       'errors',
       'pager',
       'requests'
+    ]),
+
+    ...mapState('initialStates', [
+      'meta'
     ])
   },
 
@@ -146,7 +154,16 @@ export default {
   },
 
   created () {
-    this.getRequests({ self: true })
+    this.getRequests(this.params)
+  },
+
+  watch: {
+    params: {
+      handler: function () {
+        this.getRequests(Object.assign({ page: 1 }, this.params))
+      },
+      deep: true
+    }
   }
 }
 </script>
