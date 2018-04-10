@@ -69,10 +69,12 @@ export default {
   },
 
   created () {
-    this.getHeaderNotifications()
-        .then(() => {
-          if (!this.hasIntervalFetchNotifications) this[SET_INTERVAL_FETCH_NOTIFICATIONS](setInterval(this.getHeaderNotifications, 10000))
-        })
+    if (!this.hasIntervalFetchNotifications) {
+      this.getHeaderNotifications()
+          .then(() => {
+            this[SET_INTERVAL_FETCH_NOTIFICATIONS](setInterval(this.getHeaderNotifications, 10000))
+          })
+    }
   }
 }
 </script>
