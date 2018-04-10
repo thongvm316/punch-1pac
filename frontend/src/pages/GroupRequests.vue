@@ -1,11 +1,8 @@
 <template>
-  <main-layout :title="$t('requests.title')">
-    <requests-tab/>
+  <main-layout :title="$t('requests.groupTitle', { name: group.name })">
+    <group-tab :group-id="$route.params.id"/>
 
     <div class="toolbar mt-5">
-      <group-select v-model="params.group_id">
-        <option slot="placeholder" value="">{{ $t('requests.placeholder.filterByGroup') }}</option>
-      </group-select>
       <select class="form-select" v-model="params.status">
         <option value="">{{ $t('requests.placeholder.filterByStatus') }}</option>
         <option :value="status" v-for="status in meta.request_statuses">{{ $t(`meta.request_statuses.${status}`) }}</option>
@@ -66,10 +63,9 @@
 </template>
 
 <script>
-import MainLayout from '../layouts/Main.vue'
-import Pagination from '../components/Pagination.vue'
-import RequestsTab from '../components/RequestsTab.vue'
-import GroupSelect from '../components/GroupSelect.vue'
+import MainLayout from '../layouts/Main'
+import Pagination from '../components/Pagination'
+import GroupTab from '../components/GroupTab'
 import { mapState, mapActions } from 'vuex'
 
 export default {
@@ -80,7 +76,7 @@ export default {
       params: {
         self: null,
         status: '',
-        group_id: ''
+        group_id: this.$route.params.id
       }
     }
   },
@@ -88,8 +84,7 @@ export default {
   components: {
     MainLayout,
     Pagination,
-    RequestsTab,
-    GroupSelect
+    GroupTab
   },
 
   computed: {
@@ -97,9 +92,13 @@ export default {
       'meta'
     ]),
 
-    ...mapState('requests', [
+    ...mapState('groupRequests', [
       'pager',
       'requests'
+    ]),
+
+    ...mapState('group', [
+      'group'
     ])
   },
 
@@ -115,14 +114,19 @@ export default {
       }
     },
 
-    ...mapActions('requests', [
+    ...mapActions('groupRequests', [
       'getRequests',
       'approveRequest',
       'rejectRequest'
+    ]),
+
+    ...mapActions('group', [
+      'getGroup'
     ])
   },
 
   created () {
+    this.getGroup(this.$route.params.id)
     this.getRequests(this.params)
   },
 

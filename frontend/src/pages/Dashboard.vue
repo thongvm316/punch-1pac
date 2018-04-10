@@ -10,6 +10,7 @@
           <div class="box-header box-header-flex border-bottom">
             <h2>{{ $t('dashboard.chart') }}</h2>
             <datepicker
+              :language="currentUser.language"
               :format="'MMM yyyy'"
               :minimumView="'month'"
               :maximumView="'month'"

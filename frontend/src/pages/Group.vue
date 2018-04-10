@@ -1,5 +1,7 @@
 <template>
   <main-layout :title="group.name">
+    <group-tab :group-id="$route.params.id"/>
+
     <div class="input-group mt-5">
       <v-select label="email" :placeholder="$t('group.placeholder.filterByEmail')" v-model="selectedUser" :options="usersNotInGroup">
         <template slot="option" slot-scope="option">
@@ -72,9 +74,10 @@
 </template>
 
 <script>
-import MainLayout from '../layouts/Main.vue'
+import MainLayout from '../layouts/Main'
 import modal from '../mixins/modal'
 import UserProfile from '../components/UserProfile'
+import GroupTab from '../components/GroupTab'
 import { mapState, mapActions } from 'vuex'
 import vSelect from 'vue-select'
 
@@ -95,6 +98,7 @@ export default {
   components: {
     MainLayout,
     UserProfile,
+    GroupTab,
     vSelect
   },
 
