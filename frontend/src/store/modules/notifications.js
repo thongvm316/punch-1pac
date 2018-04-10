@@ -4,6 +4,7 @@ import axios from 'axios'
 const state = {
   pager: {},
   unreadNotificationsCount: 0,
+  hasIntervalFetchNotifications: null,
   notifications: []
 }
 
@@ -22,6 +23,10 @@ const mutations = {
 
   [types.READ_NOTIFICATIONS] (state, payload) {
     state.unreadNotificationsCount = 0
+  },
+
+  [types.SET_INTERVAL_FETCH_NOTIFICATIONS] (state, payload) {
+    state.hasIntervalFetchNotifications = payload
   }
 }
 

@@ -53,28 +53,18 @@
       </div>
       <div class="form-group" :class="{ 'has-error': errors.started_at }">
         <label class="form-label">{{ $t('company.holidays.labels.startAt') }}</label>
-        <datepicker
-        :placeholder="$t('company.holidays.placeholder.fromDate')"
-        :format="'MMM dd yyyy'"
-        :minimumView="'day'"
-        :maximumView="'day'"
-        :input-class="'datepicker-input form-input'"
-        :calendar-class="'datepicker-calendar'"
-        :wrapper-class="'datepicker'"
-        v-model="createParams.started_at"/>
+        <flat-pickr
+          :config="{ locale: flatpickrLocaleMapper[currentUser.language] }"
+          class="form-input daterange-picker"
+          v-model="createParams.started_at"/>
         <p class="form-input-hint" v-if="errors.started_at">{{ $t('company.holidays.labels.startAt') }} {{ errors.started_at[0] }}</p>
       </div>
       <div class="form-group" :class="{ 'has-error': errors.ended_at }">
         <label class="form-label">{{ $t('company.holidays.labels.endAt') }}</label>
-        <datepicker
-        :placeholder="$t('company.holidays.placeholder.toDate')"
-        :format="'MMM dd yyyy'"
-        :minimumView="'day'"
-        :maximumView="'day'"
-        :input-class="'datepicker-input form-input'"
-        :calendar-class="'datepicker-calendar'"
-        :wrapper-class="'datepicker'"
-        v-model="createParams.ended_at"/>
+        <flat-pickr
+          :config="{ locale: flatpickrLocaleMapper[currentUser.language] }"
+          class="form-input daterange-picker"
+          v-model="createParams.ended_at"/>
         <p class="form-input-hint" v-if="errors.ended_at">{{ $t('company.holidays.labels.endAt') }} {{ errors.ended_at[0] }}</p>
       </div>
       <div class="form-group">
@@ -95,28 +85,18 @@
       </div>
       <div class="form-group" :class="{ 'has-error': errors.started_at }">
         <label class="form-label">{{ $t('company.holidays.labels.startAt') }}</label>
-        <datepicker
-        :placeholder="$t('company.holidays.placeholder.fromDate')"
-        :format="'MMM dd'"
-        :minimumView="'day'"
-        :maximumView="'day'"
-        :input-class="'datepicker-input form-input'"
-        :calendar-class="'datepicker-calendar'"
-        :wrapper-class="'datepicker'"
-        v-model="updateParams.started_at"/>
+        <flat-pickr
+          :config="{ locale: flatpickrLocaleMapper[currentUser.language] }"
+          class="form-input daterange-picker"
+          v-model="updateParams.started_at"/>
         <p class="form-input-hint" v-if="errors.started_at">{{ $t('company.holidays.labels.startAt') }} {{ errors.started_at[0] }}</p>
       </div>
       <div class="form-group" :class="{ 'has-error': errors.ended_at }">
         <label class="form-label">{{ $t('company.holidays.labels.endAt') }}</label>
-        <datepicker
-        :placeholder="$t('company.holidays.placeholder.toDate')"
-        :format="'MMM dd'"
-        :minimumView="'day'"
-        :maximumView="'day'"
-        :input-class="'datepicker-input form-input'"
-        :calendar-class="'datepicker-calendar'"
-        :wrapper-class="'datepicker'"
-        v-model="updateParams.ended_at"/>
+        <flat-pickr
+          :config="{ locale: flatpickrLocaleMapper[currentUser.language] }"
+          class="form-input daterange-picker"
+          v-model="updateParams.ended_at"/>
         <p class="form-input-hint" v-if="errors.reason">{{ $t('company.holidays.labels.endAt') }} {{ errors.ended_at[0] }}</p>
       </div>
       <div class="form-group">
@@ -132,13 +112,14 @@
 </template>
 
 <script>
-import Datepicker from 'vuejs-datepicker'
+import flatPickr from 'vue-flatpickr-component'
 import { mapState, mapGetters, mapActions } from 'vuex'
-import SettingLayout from '../layouts/Setting.vue'
+import SettingLayout from '../layouts/Setting'
 import modal from '../mixins/modal'
+import flatpickrLocale from '../mixins/flatpickr-locale'
 
 export default {
-  mixins: [modal],
+  mixins: [modal, flatpickrLocale],
 
   data () {
     return {
@@ -160,7 +141,7 @@ export default {
 
   components: {
     SettingLayout,
-    Datepicker
+    flatPickr
   },
 
   methods: {

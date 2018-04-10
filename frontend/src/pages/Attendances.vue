@@ -1,26 +1,10 @@
 <template>
   <main-layout :title="$t('attendances.title')">
-    <attendances-tab/>
-
     <div class="toolbar mt-5">
-      <datepicker
-        :placeholder="$t('attendances.placeholder.fromDate')"
-        :format="'MMM dd yyyy'"
-        :minimumView="'day'"
-        :maximumView="'day'"
-        :input-class="'datepicker-input form-input'"
-        :calendar-class="'datepicker-calendar'"
-        :wrapper-class="'datepicker'"
-        v-model="params.from_date"/>
-      <datepicker
-        :placeholder="$t('attendances.placeholder.toDate')"
-        :format="'MMM dd yyyy'"
-        :minimumView="'day'"
-        :maximumView="'day'"
-        :input-class="'datepicker-input form-input'"
-        :calendar-class="'datepicker-calendar'"
-        :wrapper-class="'datepicker'"
-        v-model="params.to_date"/>
+      <flat-pickr
+        :config="{mode: 'range', locale: flatpickrLocaleMapper[currentUser.language]}"
+        class="form-input daterange-picker"
+        v-model="dateRange"/>
 
       <attendance-status-select v-model="params.status">
         <option slot="placeholder" value="">{{ $t('attendances.placeholder.filterByStatus') }}</option>
@@ -40,11 +24,11 @@
       <tbody>
         <tr v-for="attendance in attendances">
           <td>{{ attendance.day | moment_l }}</td>
-          <td :class="{ 'text-error': attendance.attending_status === 'attend_late'}">{{ attendance.attended_at }}</td>
-          <td :class="{ 'text-warning': attendance.leaving_status === 'leave_early'}">{{ attendance.left_at }}</td>
+          <td :class="{ 'text-error': attendance.attending_status === 'attend_late', 'text-success': attendance.attending_status === 'attend_ok'}">{{ attendance.attended_at }}</td>
+          <td :class="{ 'text-warning': attendance.leaving_status === 'leave_early', 'text-success': attendance.leaving_status === 'leave_ok'}">{{ attendance.left_at }}</td>
           <td>
-            <span class="label label-rounded" :class="{ 'label-error': attendance.attending_status === 'attend_late'}" v-if="attendance.attending_status">{{ $t(`meta.attendance_statuses.${attendance.attending_status}`) }}</span>
-            <span class="label label-rounded" :class="{ 'label-warning': attendance.leaving_status === 'leave_early'}" v-if="attendance.leaving_status">{{ $t(`meta.attendance_statuses.${attendance.leaving_status}`) }}</span>
+            <span class="label label-rounded" :class="{ 'label-error': attendance.attending_status === 'attend_late', 'label-success': attendance.attending_status === 'attend_ok'}" v-if="attendance.attending_status">{{ $t(`meta.attendance_statuses.${attendance.attending_status}`) }}</span>
+            <span class="label label-rounded" :class="{ 'label-warning': attendance.leaving_status === 'leave_early', 'label-success': attendance.leaving_status === 'leave_ok'}" v-if="attendance.leaving_status">{{ $t(`meta.attendance_statuses.${attendance.leaving_status}`) }}</span>
           </td>
           <td>
             <button class="btn btn-action btn-link" @click="toggleAddModal(attendance)">
@@ -62,14 +46,10 @@
     <modal :title="$t('attendances.modal.addTitle')" :modal-open.sync="isAddModalOpen">
       <div class="form-group">
         <label class="form-label">{{ $t('attendances.labels.date') }}</label>
-        <datepicker
-        :minimumView="'day'"
-        :maximumView="'day'"
-        :input-class="'datepicker-input form-input'"
-        :calendar-class="'datepicker-calendar'"
-        :wrapper-class="'datepicker datepicker-full-width'"
-        :disabled-picker="true"
-        :value="day"/>
+        <flat-pickr
+          :config="{ enable: [day], locale: flatpickrLocaleMapper[currentUser.language] }"
+          class="form-input daterange-picker"
+          v-model="day"/>
       </div>
       <div class="form-group" :class="{ 'has-error': errors.attended_at }">
         <label class="form-label">{{ $t('attendances.labels.attendedAt') }}</label>
@@ -94,24 +74,25 @@
 </template>
 
 <script>
-import Datepicker from 'vuejs-datepicker'
-import MainLayout from '../layouts/Main.vue'
-import Pagination from '../components/Pagination.vue'
-import AttendancesTab from '../components/AttendancesTab.vue'
-import AttendanceStatusSelect from '../components/AttendanceStatusSelect.vue'
+import flatPickr from 'vue-flatpickr-component'
+import MainLayout from '../layouts/Main'
+import Pagination from '../components/Pagination'
+import AttendanceStatusSelect from '../components/AttendanceStatusSelect'
 import modal from '../mixins/modal'
+import flatpickrLocale from '../mixins/flatpickr-locale'
 import { mapState, mapActions } from 'vuex'
 
 export default {
-  mixins: [modal],
+  mixins: [modal, flatpickrLocale],
 
   data () {
     return {
       day: '',
+      dateRange: [this.$moment().locale('en').startOf('month').format('YYYY-MM-DD'), this.$moment().locale('en').endOf('month').format('YYYY-MM-DD')],
       params: {
         self: true,
-        from_date: this.$moment().locale('en').startOf('month').format('LL'),
-        to_date: this.$moment().locale('en').endOf('month').format('LL'),
+        from_date: null,
+        to_date: null,
         status: ''
       },
       createRequestParams: {
@@ -124,11 +105,10 @@ export default {
   },
 
   components: {
-    Datepicker,
     MainLayout,
-    AttendancesTab,
     Pagination,
-    AttendanceStatusSelect
+    AttendanceStatusSelect,
+    flatPickr
   },
 
   computed: {
@@ -163,18 +143,23 @@ export default {
   },
 
   created () {
+    this.params.from_date = this.dateRange[0]
+    this.params.to_date = this.dateRange[1]
     this.getAttendances(this.params)
   },
 
   watch: {
     params: {
       handler: function () {
-        this.getAttendances(Object.assign({ page: 1 }, this.params, {
-          to_date: this.$moment(this.params.to_date).locale('en').format('LL'),
-          from_date: this.$moment(this.params.from_date).locale('en').format('LL')
-        }))
+        this.getAttendances(Object.assign({ page: 1 }, this.params))
       },
       deep: true
+    },
+
+    dateRange: function () {
+      const dates = this.dateRange.split(' to ')
+      this.params.from_date = dates[0]
+      this.params.to_date = dates[1]
     }
   }
 }

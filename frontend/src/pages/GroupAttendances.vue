@@ -1,46 +1,25 @@
 <template>
-  <main-layout :title="$t('attendances.title')">
-    <attendances-tab/>
+  <main-layout :title="$t('attendances.groupTitle', { name: group.name })">
+    <group-tab :group-id="$route.params.id"/>
 
     <div class="toolbar mt-5">
-      <v-select multiple label="email" :placeholder="$t('attendances.placeholder.filterByUser')" v-model="selectedUsers" :options="usersInGroup">
+      <flat-pickr
+        :config="{mode: 'range', locale: flatpickrLocaleMapper[currentUser.language]}"
+        class="form-input daterange-picker"
+        v-model="dateRange"/>
+      <attendance-status-select v-model="params.status">
+        <option slot="placeholder" value="">{{ $t('attendances.placeholder.filterByStatus') }}</option>
+      </attendance-status-select>
+      <v-select label="email" :placeholder="$t('attendances.placeholder.filterByUser')" v-model="selectedUsers" :options="usersInGroup">
         <template slot="option" slot-scope="option">
           <div class="tile tile-centered">
             <div class="tile-icon">
               <img :src="option.avatar_url" class="avatar avatar-md">
             </div>
-            <div class="tile-content">{{ option.name }} ( {{ option.email }} )</div>
+            <div class="tile-content">{{ option.email }} ({{ option.name }})</div>
           </div>
         </template>
       </v-select>
-    </div>
-
-    <div class="toolbar mt-5">
-      <datepicker
-        :placeholder="$t('attendances.placeholder.fromDate')"
-        :format="'MMM dd yyyy'"
-        :minimumView="'day'"
-        :maximumView="'day'"
-        :input-class="'datepicker-input form-input'"
-        :calendar-class="'datepicker-calendar'"
-        :wrapper-class="'datepicker'"
-        v-model="params.from_date"/>
-      <datepicker
-        :placeholder="$t('attendances.placeholder.toDate')"
-        :format="'MMM dd yyyy'"
-        :minimumView="'day'"
-        :maximumView="'day'"
-        :input-class="'datepicker-input form-input'"
-        :calendar-class="'datepicker-calendar'"
-        :wrapper-class="'datepicker'"
-        v-model="params.to_date"/>
-
-      <attendance-status-select v-model="params.status">
-        <option slot="placeholder" value="">{{ $t('attendances.placeholder.filterByStatus') }}</option>
-      </attendance-status-select>
-      <group-select v-model="params.group_id">
-        <option slot="placeholder" value="">{{ $t('attendances.placeholder.filterByGroup') }}</option>
-      </group-select>
     </div>
 
     <table class="table table-hover bg-light mt-5">
@@ -64,11 +43,11 @@
           </td>
           <td>{{ attendance.user.email }}</td>
           <td>{{ attendance.day | moment_l }}</td>
-          <td :class="{ 'text-error': attendance.attending_status === 'attend_late'}">{{ attendance.attended_at }}</td>
-          <td :class="{ 'text-warning': attendance.leaving_status === 'leave_early'}">{{ attendance.left_at }}</td>
+          <td :class="{ 'text-error': attendance.attending_status === 'attend_late', 'text-success': attendance.attending_status === 'attend_ok'}">{{ attendance.attended_at }}</td>
+          <td :class="{ 'text-warning': attendance.leaving_status === 'leave_early', 'text-success': attendance.leaving_status === 'leave_ok'}">{{ attendance.left_at }}</td>
           <td>
-            <span class="label label-rounded" :class="{ 'label-error': attendance.attending_status === 'attend_late'}" v-if="attendance.attending_status">{{ $t(`meta.attendance_statuses.${attendance.attending_status}`) }}</span>
-            <span class="label label-rounded" :class="{ 'label-warning': attendance.leaving_status === 'leave_early'}" v-if="attendance.leaving_status">{{ $t(`meta.attendance_statuses.${attendance.leaving_status}`) }}</span>
+            <span class="label label-rounded" :class="{ 'label-error': attendance.attending_status === 'attend_late', 'label-success': attendance.attending_status === 'attend_ok'}" v-if="attendance.attending_status">{{ $t(`meta.attendance_statuses.${attendance.attending_status}`) }}</span>
+            <span class="label label-rounded" :class="{ 'label-warning': attendance.leaving_status === 'leave_early', 'label-success': attendance.leaving_status === 'leave_ok'}" v-if="attendance.leaving_status">{{ $t(`meta.attendance_statuses.${attendance.leaving_status}`) }}</span>
           </td>
         </tr>
       </tbody>
@@ -79,56 +58,69 @@
 </template>
 
 <script>
-import Datepicker from 'vuejs-datepicker'
-import MainLayout from '../layouts/Main.vue'
-import Pagination from '../components/Pagination.vue'
-import AttendancesTab from '../components/AttendancesTab.vue'
-import GroupSelect from '../components/GroupSelect.vue'
-import AttendanceStatusSelect from '../components/AttendanceStatusSelect.vue'
+import MainLayout from '../layouts/Main'
+import Pagination from '../components/Pagination'
+import GroupTab from '../components/GroupTab'
+import AttendanceStatusSelect from '../components/AttendanceStatusSelect'
+import flatPickr from 'vue-flatpickr-component'
 import vSelect from 'vue-select'
+import flatpickrLocale from '../mixins/flatpickr-locale'
 import { mapState, mapActions } from 'vuex'
 
 export default {
+  mixins: [flatpickrLocale],
+
   data () {
     return {
       selectedUsers: null,
+      dateRange: [this.$moment().format('YYYY-MM-DD'), this.$moment().format('YYYY-MM-DD')],
       params: {
         self: null,
         user_id: '',
-        from_date: this.$moment().locale('en').format('LL'),
-        to_date: this.$moment().locale('en').format('LL'),
+        from_date: null,
+        to_date: null,
         status: '',
-        group_id: ''
+        group_id: this.$route.params.id
       }
     }
   },
 
   components: {
     vSelect,
-    Datepicker,
     MainLayout,
-    AttendancesTab,
-    GroupSelect,
+    GroupTab,
     AttendanceStatusSelect,
-    Pagination
+    Pagination,
+    flatPickr
   },
 
   computed: {
-    ...mapState('attendances', [
+    ...mapState('groupAttendances', [
       'pager',
       'attendances',
       'usersInGroup'
+    ]),
+
+    ...mapState('group', [
+      'group'
     ])
   },
 
   methods: {
-    ...mapActions('attendances', [
+    ...mapActions('groupAttendances', [
       'getAttendances',
       'getUsersInGroup'
+    ]),
+
+    ...mapActions('group', [
+      'getGroup'
     ])
   },
 
   created () {
+    this.params.from_date = this.dateRange[0]
+    this.params.to_date = this.dateRange[1]
+    this.getGroup(this.$route.params.id)
     this.getAttendances(this.params)
     this.getUsersInGroup(this.params.group_id)
   },
@@ -136,15 +128,18 @@ export default {
   watch: {
     params: {
       handler: function (after, before) {
-        this.getAttendances(Object.assign({ page: 1 }, this.params, {
-          to_date: this.$moment(this.params.to_date).locale('en').format('LL'),
-          from_date: this.$moment(this.params.from_date).locale('en').format('LL')
-        }))
+        this.getAttendances(Object.assign({ page: 1 }, this.params))
         if (after.group_id !== before.group_id) {
           this.getUsersInGroup(this.params.group_id)
         }
       },
       deep: true
+    },
+
+    dateRange: function () {
+      const dates = this.dateRange.split(' to ')
+      this.params.from_date = dates[0]
+      this.params.to_date = dates[1]
     },
 
     selectedUsers: function () {

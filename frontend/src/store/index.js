@@ -19,6 +19,8 @@ import userPassword from './modules/user-password'
 import requests from './modules/requests'
 import groups from './modules/groups'
 import group from './modules/group'
+import groupAttendances from './modules/group-attendances'
+import groupRequests from './modules/group-requests'
 
 import chart from './modules/chart'
 import calendar from './modules/calendar'
@@ -45,6 +47,8 @@ export default new Vuex.Store({
     requests,
     groups,
     group,
+    groupAttendances,
+    groupRequests,
     chart,
     calendar,
     flash,

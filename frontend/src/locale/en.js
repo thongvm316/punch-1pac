@@ -1,5 +1,8 @@
 export default {
   group: {
+    users: 'Users',
+    attendances: 'Attendances',
+    requests: 'Requests',
     btn: {
       addUser: 'Add',
       edit: 'Edit Group',
@@ -145,6 +148,7 @@ export default {
   },
   requests: {
     title: 'Requests',
+    groupTitle: 'Requests of {name} group',
     placeholder: {
       filterByGroup: 'Filter by group',
       filterByStatus: 'Filter by status'
@@ -185,6 +189,7 @@ export default {
   },
   attendances: {
     title: 'Attendances',
+    groupTitle: 'Attendances of {name} group',
     placeholder: {
       fromDate: 'From date',
       toDate: 'To date',
@@ -475,5 +480,9 @@ export default {
       btnChange: 'Change password',
       btnRemind: 'Remind me later'
     }
+  },
+  confirmDialog: {
+    yes: 'Yes',
+    no: 'No'
   }
 }
