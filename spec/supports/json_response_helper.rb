@@ -116,6 +116,29 @@ module JsonResponseHelper
     }
   end
 
+  def response_user_with_attendance
+    {
+      id: Integer,
+      email: String,
+      name: String,
+      avatar_url: String,
+      gender: String,
+      position: nullable_response(String),
+      role: String,
+      language: String,
+      created_at: date_response,
+      attendance: nullable_response(
+        id:               Integer,
+        day:              date_response,
+        attended_at:      nullable_response(hour_min_response),
+        left_at:          nullable_response(hour_min_response),
+        attending_status: nullable_response(String),
+        leaving_status:   nullable_response(String),
+        off_status:       nullable_response(String)
+      )
+    }
+  end
+
   def response_user_with_permissions(size)
     response_user.merge(permissions: Array.new(size) { response_permission })
   end
@@ -224,6 +247,7 @@ module JsonResponseHelper
   def nullable_response(expected_response)
     ->(actual) do
       return true if actual.is_a? NilClass
+      return true if actual == {}
       return actual.match?(expected_response) if actual.is_a? Regexp
       return actual.is_a?(expected_response) if actual.is_a? Class
       be_json_as(expected_response)
