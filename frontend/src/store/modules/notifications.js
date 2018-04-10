@@ -17,12 +17,12 @@ const getters = {
 
 const mutations = {
   [types.FETCH_NOTIFICATIONS] (state, payload) {
-    state.headerNotifications = payload.notifications
+    state.notifications = payload.notifications
     state.pager = payload.meta
   },
 
   [types.FETCH_HEADER_NOTIFICATIONS] (state, payload) {
-    state.notifications = payload.notifications
+    state.headerNotifications = payload.notifications
     state.unreadNotificationsCount = payload.meta.unread_notifications_count
   },
 
@@ -36,15 +36,15 @@ const mutations = {
 }
 
 const actions = {
-  getHeaderNotifications ({ commit }, params = {}) {
-    return axios.get('/notifications', { params: Object.assign({ per_page: 10 }, params) })
-                .then(response => commit(types.FETCH_HEADER_NOTIFICATIONS, response.data))
-                .catch(error => { throw error })
-  },
-
   getNotifications ({ commit }, params = {}) {
     return axios.get('/notifications', { params: Object.assign({ per_page: 20 }, params) })
                 .then(response => commit(types.FETCH_NOTIFICATIONS, response.data))
+                .catch(error => { throw error })
+  },
+
+  getHeaderNotifications ({ commit }, params = {}) {
+    return axios.get('/notifications', { params: Object.assign({ per_page: 10 }, params) })
+                .then(response => commit(types.FETCH_HEADER_NOTIFICATIONS, response.data))
                 .catch(error => { throw error })
   },
 
