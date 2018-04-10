@@ -6,11 +6,37 @@
   margin-bottom: 0;
 }
 
+.form-input {
+  &.daterange-picker {
+    background-color: $light-color;
+    background-image: url('../assets/ico-calendar.svg');
+    background-repeat: no-repeat;
+    background-position: 98% 50%;
+  }
+}
+
 .v-select {
   width: 100%;
   background-color: $light-color;
+  color: $dark-color;
 
   .tile-content {
     font-size: $font-size-sm;
+  }
+
+  .dropdown-toggle {
+    border-color: $gray-color;
+  }
+
+  input[type=search] {
+    width: 1px;
+  }
+
+  .open-indicator:before {
+    border-color: $body-font-color;
+  }
+
+  input[type=search]::placeholder {
+    color: $body-font-color;
   }
 }

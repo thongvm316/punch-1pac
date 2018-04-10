@@ -4,5 +4,12 @@
     display: inline-block;
     vertical-align: top;
     width: 10rem;
+
+    &.daterange-picker {
+      width: 13rem;
+    }
+  }
+  .v-select {
+    width: 20rem;
   }
 }
