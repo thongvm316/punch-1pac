@@ -2,6 +2,7 @@
 .btn {
   border: $border-width solid $gray-color;
   color: $gray-color-dark;
+  height: 2rem;
 
   svg {
     color: $gray-color-dark;
@@ -43,10 +44,6 @@
         color: $gray-color;
       }
     }
-  }
-
-  &.input-group-btn {
-    height: 2rem;
   }
 }
 
