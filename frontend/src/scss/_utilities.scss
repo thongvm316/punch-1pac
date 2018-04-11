@@ -39,6 +39,10 @@
   }
 }
 
+.mt-10 {
+  margin-top: $unit-10;
+}
+
 @include margin-variant(4, $unit-4); //Margin variant .8rem
 @include padding-variant(4, $unit-4); //Padding variation .8rem
 @include margin-variant(5, $unit-5); //Margin variant 1rem
