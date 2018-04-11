@@ -23,6 +23,7 @@ import groupAttendances from './modules/group-attendances'
 import groupRequests from './modules/group-requests'
 
 import chart from './modules/chart'
+import statusCards from './modules/status-cards'
 import calendar from './modules/calendar'
 import flash from './modules/flash'
 import notifications from './modules/notifications'
@@ -50,6 +51,7 @@ export default new Vuex.Store({
     groupAttendances,
     groupRequests,
     chart,
+    statusCards,
     calendar,
     flash,
     notifications,
