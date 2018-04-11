@@ -75,14 +75,6 @@ export default {
     if (!this.isInited) this.initAttendance(window.INITIAL_STATE.attendance)
     this.updateCurrentTime()
     setInterval(this.updateCurrentTime, 1 * 1000)
-
-    window.addEventListener('keypress', e => {
-      if (e.keyCode === 13 && !this.attendance.attended_at) this.debouncePunchIn()
-    })
-
-    window.addEventListener('keypress', e => {
-      if (e.keyCode === 13 && this.attendance.attended_at && !this.attendance.left_at) this.debouncePunchOut()
-    })
   }
 }
 </script>
