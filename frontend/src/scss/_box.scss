@@ -4,6 +4,10 @@
   background-color: $light-color;
   border-radius: $border-radius;
 
+  &.setting {
+    padding: 1.6rem 2rem;
+  }
+
   &.box-group {
     height: 172px;
   }

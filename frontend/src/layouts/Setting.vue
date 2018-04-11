@@ -2,8 +2,7 @@
   <div>
     <app-header></app-header>
     <main>
-      <div class="container grid-xl">
-        <h1 class="title">{{ title }}</h1>
+      <div class="container grid-xl mt-4">
         <div class="columns">
           <div class="column col-3">
             <company-settings-sidebar v-if="sidebarType === 'company'"/>
@@ -11,8 +10,11 @@
           </div>
 
           <div class="column col-9">
-            <h2 class="subtitle">{{ subtitle }}</h2>
-            <slot></slot>
+            <div class="box setting">
+              <h1 class="m-0">{{ subtitle }}</h1>
+              <p>This is a description line for this setting panels.</p>
+              <slot></slot>
+            </div>
           </div>
         </div>
       </div>
