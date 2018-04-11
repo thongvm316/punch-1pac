@@ -23,13 +23,8 @@ export default {
 
   methods: {
     ...mapActions('announcements', [
-      'readAnnouncement',
-      'getHeaderAnnouncements'
+      'readAnnouncement'
     ])
-  },
-
-  created () {
-    this.getHeaderAnnouncements()
   }
 }
 </script>
