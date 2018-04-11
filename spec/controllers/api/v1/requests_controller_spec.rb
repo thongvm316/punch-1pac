@@ -232,10 +232,12 @@ RSpec.describe Api::V1::RequestsController, type: :controller do
         its(:code) { is_expected.to eq '200' }
         it do
           is_expected
+          req.reload
           attendance = Attendance.find(req.attendance.id)
-          expect(Request.find(req.id).status).to eq 'approved'
+          expect(req.status).to eq 'approved'
           expect(attendance.attended_at.strftime('%H:%M')).to eq '07:55'
           expect(attendance.attending_status).to eq 'attend_ok'
+          expect(req.admin_id).not_to be_nil
         end
       end
 
@@ -274,7 +276,9 @@ RSpec.describe Api::V1::RequestsController, type: :controller do
         its(:code) { is_expected.to eq '200' }
         it 'should change status to rejected' do
           is_expected
-          expect(Request.find(req.id).status).to eq 'rejected'
+          req.reload
+          expect(req.status).to eq 'rejected'
+          expect(req.admin_id).not_to be_nil
         end
       end
 

@@ -65,7 +65,7 @@ class Api::V1::RequestsController < Api::V1::BaseController
   private
 
   def request_params
-    params.require(:request).permit(:attendance_id, :reason, :attended_at, :left_at, :status)
+    params.require(:request).permit(:attendance_id, :reason, :attended_at, :left_at, :status, :admin_reason, :admin_id)
   end
 
   def set_request
