@@ -73,7 +73,3 @@
 .form-select:not([multiple]):not([size]) {
   background: $light-color url('../assets/ico-down.svg') calc(100% - 0.4rem) center/0.8rem 0.8rem  no-repeat;
 }
-
-.input-group-btn {
-  height: 2rem;
-}
