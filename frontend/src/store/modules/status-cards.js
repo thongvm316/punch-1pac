@@ -2,20 +2,20 @@ import * as types from '../mutation-types.js'
 import axios from 'axios'
 
 const state = {
-  chartData: []
+  statuses: {}
 }
 
 const mutations = {
-  [types.FETCH_CHART_DATA] (state, data) {
-    state.chartData = data
+  [types.FETCH_STATUS_CARDS] (state, data) {
+    state.statuses = data
   }
 }
 
 const actions = {
-  getChart ({ commit }, month) {
+  getStatuses ({ commit }, month) {
     return axios.get('/attendances/chart', { params: { date: month } })
                 .then(response => {
-                  commit(types.FETCH_CHART_DATA, response.data)
+                  commit(types.FETCH_STATUS_CARDS, response.data)
                   return response
                 })
                 .catch(error => { throw error })

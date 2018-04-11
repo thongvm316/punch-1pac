@@ -1,0 +1,66 @@
+<template>
+  <div class="status-cards">
+    <datepicker
+      :language="currentUser.language"
+      :format="function (date) { return $moment(date).format('MMM YYYY') }"
+      :minimumView="'month'"
+      :maximumView="'month'"
+      :input-class="'datepicker-input form-input'"
+      :calendar-class="'datepicker-calendar'"
+      :wrapper-class="'datepicker'"
+      @input="onInputDatepicker"
+      v-model="month"/>
+    <div class="columns">
+      <div class="column col-4" v-for="status in Object.keys(statuses)">
+        <div class="box mt-5">
+          <p>{{ $t(`meta.attendance_statuses.${status}`) }}</p>
+          <h3>{{ $tc('statusCards.dayNum', statuses[status], { num: statuses[status] }) }}</h3>
+        </div>
+      </div>
+    </div>
+  </div> </template>
+
+<script>
+import Datepicker from 'vuejs-datepicker'
+import { mapState, mapActions } from 'vuex'
+
+export default {
+  name: 'status-cards',
+
+  data () {
+    return {
+      month: this.$moment().format('LL')
+    }
+  },
+
+  components: {
+    Datepicker
+  },
+
+  computed: {
+    ...mapState('statusCards', [
+      'statuses'
+    ])
+  },
+
+  methods: {
+    ...mapActions('statusCards', [
+      'getStatuses'
+    ]),
+
+    onInputDatepicker () {
+      this.month = this.$moment(this.month).format('YYYY-MM-DD')
+    }
+  },
+
+  created () {
+    this.getStatuses(this.month)
+  },
+
+  watch: {
+    month: function () {
+      this.getStatuses(this.month)
+    }
+  }
+}
+</script>

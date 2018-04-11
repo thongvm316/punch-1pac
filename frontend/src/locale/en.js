@@ -484,5 +484,8 @@ export default {
   confirmDialog: {
     yes: 'Yes',
     no: 'No'
+  },
+  statusCards: {
+    dayNum: '0 day | 1 day | {num} days'
   }
 }

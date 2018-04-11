@@ -153,6 +153,10 @@ export default {
       filterByGroup: 'Filter by group',
       filterByStatus: 'Filter by status'
     },
+    tab: {
+      my: 'My Requests',
+      group: 'Group Requests'
+    },
     labels: {
       date: 'Date',
       attendedAt: 'Attended At',
@@ -201,6 +205,10 @@ export default {
       leftAt: 'Left at',
       status: 'Status',
       actions: 'Actions'
+    },
+    tab: {
+      my: 'My Attendances',
+      group: 'Group Attendances'
     },
     labels: {
       date: 'Date',
@@ -476,5 +484,8 @@ export default {
   confirmDialog: {
     yes: 'Yes',
     no: 'No'
+  },
+  statusCards: {
+    dayNum: '0 day | 1 day | {num} days'
   }
 }

@@ -476,5 +476,8 @@ export default {
   confirmDialog: {
     yes: 'Có',
     no: 'Không'
+  },
+  statusCards: {
+    dayNum: '0 ngày | 1 ngày | {num} ngày'
   }
 }

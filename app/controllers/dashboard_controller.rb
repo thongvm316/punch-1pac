@@ -6,11 +6,13 @@ class DashboardController < ApplicationController
 
   def index
     attendance = current_user.attendances.find_by(day: Time.current)
+    announcements = Announcement.for_user(current_user).search_by({ read_status: 'unread'  }, current_user.id)
 
     @initial_state = {
       attendance: attendance ? ActiveModelSerializers::SerializableResource.new(attendance, serializer: AttendanceSerializer).as_json : {},
       user: ActiveModelSerializers::SerializableResource.new(current_user, serializer: UserSerializer).as_json,
       company: ActiveModelSerializers::SerializableResource.new(current_company, serializer: CompanySerializer).as_json,
+      announcements: ActiveModelSerializers::SerializableResource.new(announcements, each_serializer: AnnouncementSerializer).as_json,
       meta: {
         attendance_statuses: [].concat(Attendance::ATTENDING_STATUSES).concat(Attendance::LEAVING_STATUSES).concat(Attendance::OFF_STATUSES),
         request_statuses: Request.statuses.keys,
