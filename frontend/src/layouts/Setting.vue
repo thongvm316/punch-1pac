@@ -12,7 +12,6 @@
           <div class="column col-9">
             <div class="box-setting">
               <h1 class="m-0">{{ subtitle }}</h1>
-              <p>This is a description line for this setting panels.</p>
               <slot></slot>
             </div>
           </div>
