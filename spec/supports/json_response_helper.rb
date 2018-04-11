@@ -122,20 +122,8 @@ module JsonResponseHelper
       email: String,
       name: String,
       avatar_url: String,
-      gender: String,
-      position: nullable_response(String),
-      role: String,
-      language: String,
-      created_at: date_response,
-      attendance: nullable_response(
-        id:               Integer,
-        day:              date_response,
-        attended_at:      nullable_response(hour_min_response),
-        left_at:          nullable_response(hour_min_response),
-        attending_status: nullable_response(String),
-        leaving_status:   nullable_response(String),
-        off_status:       nullable_response(String)
-      )
+      left_at: nullable_response(hour_min_response),
+      attended_at: nullable_response(hour_min_response)
     }
   end
 

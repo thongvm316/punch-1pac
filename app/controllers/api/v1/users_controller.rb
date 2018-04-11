@@ -16,7 +16,7 @@ class Api::V1::UsersController < Api::V1::BaseController
 
   def index_with_attendance
     authorize!
-    users = current_company.users
+    users = current_company.users.with_today_attendance
     render json: users, each_serializer: UserTodayAttendanceSerializer, status: :ok
   end
 

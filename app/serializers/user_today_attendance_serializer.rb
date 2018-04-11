@@ -1,18 +1,17 @@
 # frozen_string_literal: true
 
 class UserTodayAttendanceSerializer < ActiveModel::Serializer
-  attributes :id, :email, :name, :avatar_url, :gender, :position, :role, :language, :created_at, :attendance
+  attributes :id, :name, :email, :avatar_url, :left_at, :attended_at
 
   def avatar_url
     ActionController::Base.helpers.asset_url(object.avatar_url)
   end
 
-  def created_at
-    object.created_at.strftime('%Y-%m-%d')
+  def left_at
+    object.left_at&.strftime('%H:%M')
   end
 
-  def attendance
-    attendance = object.attendances.find_by(day: Time.current)
-    attendance ? ActiveModelSerializers::SerializableResource.new(attendance, serializer: ShortAttendanceSerializer).as_json : {}
+  def attended_at
+    object.attended_at&.strftime('%H:%M')
   end
 end

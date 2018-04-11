@@ -19,7 +19,7 @@ class Api::V1::AttendancesController < Api::V1::BaseController
     authorize!
     attendance = AttendanceService.new(@user, request.remote_ip).attend
     TrackAndNotifyActivityWorker.perform_async(@user.id, attendance.id, attendance.class.to_s, 'punch_in') if attendance
-    users = current_company.users
+    users = current_company.users.with_today_attendance
     render json: users, each_serializer: UserTodayAttendanceSerializer, status: :ok
   end
 
@@ -28,7 +28,7 @@ class Api::V1::AttendancesController < Api::V1::BaseController
 
     attendance = AttendanceService.new(@user, request.remote_ip).leave
     TrackAndNotifyActivityWorker.perform_async(@user.id, attendance.id, attendance.class.to_s, 'punch_out') if attendance
-    users = current_company.users
+    users = current_company.users.with_today_attendance
     render json: users, each_serializer: UserTodayAttendanceSerializer, status: :ok
   end
 
