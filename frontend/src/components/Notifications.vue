@@ -55,7 +55,7 @@ export default {
   methods: {
     toggleDropdown () {
       this.isDropdownActive = !this.isDropdownActive
-      if (this.headerNotifications[0]) this.readNotifications(this.headerNotifications[0].id)
+      if (this.isDropdownActive && this.headerNotifications[0]) this.readNotifications(this.headerNotifications[0].id)
     },
 
     ...mapActions('notifications', [

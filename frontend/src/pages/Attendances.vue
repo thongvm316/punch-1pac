@@ -91,8 +91,8 @@ export default {
       dateRange: [this.$moment().locale('en').startOf('month').format('YYYY-MM-DD'), this.$moment().locale('en').endOf('month').format('YYYY-MM-DD')],
       params: {
         self: true,
-        from_date: null,
-        to_date: null,
+        from_date: this.$moment().locale('en').startOf('month').format('YYYY-MM-DD'),
+        to_date: this.$moment().locale('en').endOf('month').format('YYYY-MM-DD'),
         status: ''
       },
       createRequestParams: {
@@ -143,14 +143,13 @@ export default {
   },
 
   created () {
-    this.params.from_date = this.dateRange[0]
-    this.params.to_date = this.dateRange[1]
     this.getAttendances(this.params)
   },
 
   watch: {
     params: {
       handler: function () {
+        console.log('ccc')
         this.getAttendances(Object.assign({ page: 1 }, this.params))
       },
       deep: true
