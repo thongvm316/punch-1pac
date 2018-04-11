@@ -52,7 +52,11 @@
   }
 }
 
-.form-input, .form-select, .form-control, .v-select input[type=search], .dropdown-toggle {
+.form-input,
+.form-select,
+.form-control,
+.v-select input[type=search],
+.dropdown-toggle {
   border-color: $border-color;
   height: 2rem;
 
@@ -68,4 +72,8 @@
 
 .form-select:not([multiple]):not([size]) {
   background: $light-color url('../assets/ico-down.svg') calc(100% - 0.4rem) center/0.8rem 0.8rem  no-repeat;
+}
+
+.input-group-btn {
+  height: 2rem;
 }
