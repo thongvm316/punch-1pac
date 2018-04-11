@@ -2,18 +2,12 @@ import * as types from '../mutation-types.js'
 import axios from 'axios'
 
 const state = {
-  chartData: [],
-  loaded: false
+  chartData: []
 }
 
 const mutations = {
   [types.FETCH_CHART_DATA] (state, data) {
     state.chartData = data
-    state.loaded = true
-  },
-
-  [types.RESET_CHART_DATA] (state) {
-    state.loaded = false
   }
 }
 
@@ -25,10 +19,6 @@ const actions = {
                   return response
                 })
                 .catch(error => { throw error })
-  },
-
-  resetChart ({ commit }) {
-    commit(types.RESET_CHART_DATA)
   }
 }
 

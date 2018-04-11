@@ -1,22 +1,49 @@
 <template>
-  <div>
-    <canvas ref="chart" v-if="hasData"></canvas>
-    <p v-else>{{ $t('dashboard.chartNoData') }}</p>
+  <div class="box chart">
+    <div class="box-header box-header-flex border-bottom">
+      <h2>{{ $t('dashboard.chart') }}</h2>
+      <datepicker
+        :language="currentUser.language"
+        :format="'MMM yyyy'"
+        :minimumView="'month'"
+        :maximumView="'month'"
+        :input-class="'datepicker-input form-input'"
+        :calendar-class="'datepicker-calendar'"
+        :wrapper-class="'datepicker'"
+        v-model="chartDate"/>
+    </div>
+    <p v-if="!hasData">{{ $t('dashboard.chartNoData') }}</p>
+    <div class="box-content">
+      <canvas ref="chart"></canvas>
+    </div>
   </div>
 </template>
 
 <script>
+import Datepicker from 'vuejs-datepicker'
 import Chart from 'chart.js'
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
 export default {
   name: 'chart',
 
-  props: ['chartData'],
+  components: {
+    Datepicker
+  },
+
+  data () {
+    return {
+      chartDate: this.$moment().locale('en').format('LL')
+    }
+  },
 
   computed: {
     ...mapState('initialStates', [
       'meta'
+    ]),
+
+    ...mapState('chart', [
+      'chartData'
     ]),
 
     hasData () {
@@ -24,11 +51,29 @@ export default {
     }
   },
 
+  created () {
+    this.getChart(this.chartDate)
+  },
+
   mounted () {
     if (this.hasData) {
       const $chart = this.$refs.chart
       const ctx = $chart.getContext('2d')
       this.createChart(ctx, 'doughnut')
+    }
+  },
+
+  watch: {
+    chartDate: function () {
+      this.getChart(this.$moment(this.chartDate).locale('en').format('LL'))
+    },
+
+    chartData: function () {
+      if (this.hasData) {
+        const $chart = this.$refs.chart
+        const ctx = $chart.getContext('2d')
+        this.createChart(ctx, 'doughnut')
+      }
     }
   },
 
@@ -53,7 +98,11 @@ export default {
           }
         }
       })
-    }
+    },
+
+    ...mapActions('chart', [
+      'getChart'
+    ])
   }
 }
 </script>

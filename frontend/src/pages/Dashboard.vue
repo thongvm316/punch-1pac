@@ -5,23 +5,6 @@
     </div>
     <div class="columns mt-5">
       <div class="column col-6">
-        <div class="box chart">
-          <div class="box-header box-header-flex border-bottom">
-            <h2>{{ $t('dashboard.chart') }}</h2>
-            <datepicker
-              :language="currentUser.language"
-              :format="'MMM yyyy'"
-              :minimumView="'month'"
-              :maximumView="'month'"
-              :input-class="'datepicker-input form-input'"
-              :calendar-class="'datepicker-calendar'"
-              :wrapper-class="'datepicker'"
-              v-model="chartDate"/>
-          </div>
-          <div class="box-content">
-            <chart :chartData="chartData" v-if="loaded"></chart>
-          </div>
-        </div>
       </div>
       <div class="column col-6">
         <div class="box">
@@ -54,24 +37,10 @@
 import Datepicker from 'vuejs-datepicker'
 import MainLayout from '../layouts/Main.vue'
 import FullCalendar from '../components/FullCalendar.vue'
-import AttendanceStatusSelect from '../components/AttendanceStatusSelect.vue'
-import Chart from '../components/Chart.vue'
 import { mapState, mapActions } from 'vuex'
 
 export default {
-  data () {
-    return {
-      status: 'attend_ok',
-      chartDate: this.$moment().locale('en').format('LL')
-    }
-  },
-
   methods: {
-    ...mapActions('chart', [
-      'getChart',
-      'resetChart'
-    ]),
-
     ...mapActions('activities', [
       'getActivities',
       'getMoreActivities'
@@ -81,29 +50,14 @@ export default {
   components: {
     Datepicker,
     MainLayout,
-    FullCalendar,
-    Chart,
-    AttendanceStatusSelect
+    FullCalendar
   },
 
   created () {
-    this.getChart(this.chartDate)
     this.getActivities()
   },
 
-  watch: {
-    chartDate: function () {
-      this.resetChart()
-      this.getChart(this.$moment(this.chartDate).locale('en').format('LL'))
-    }
-  },
-
   computed: {
-    ...mapState('chart', [
-      'chartData',
-      'loaded'
-    ]),
-
     ...mapState('activities', [
       'pager',
       'activities'
