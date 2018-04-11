@@ -1,12 +1,13 @@
 <template>
   <main-layout :title="$t('dashboard.title')" :is-open-announcement="true">
-    <div class="box mt-5 p-0">
-      <full-calendar></full-calendar>
-    </div>
     <div class="columns mt-5">
-      <div class="column col-6">
+      <div class="column col-8">
+        <status-cards/>
+        <div class="box mt-5 p-0">
+          <full-calendar></full-calendar>
+        </div>
       </div>
-      <div class="column col-6">
+      <div class="column col-4">
         <div class="box">
           <h2 class="subtitle">{{ $t('dashboard.recentActivities') }}</h2>
           <div class="notifications">
@@ -34,9 +35,9 @@
 </template>
 
 <script>
-import Datepicker from 'vuejs-datepicker'
 import MainLayout from '../layouts/Main.vue'
 import FullCalendar from '../components/FullCalendar.vue'
+import StatusCards from '../components/StatusCards.vue'
 import { mapState, mapActions } from 'vuex'
 
 export default {
@@ -48,9 +49,9 @@ export default {
   },
 
   components: {
-    Datepicker,
     MainLayout,
-    FullCalendar
+    FullCalendar,
+    StatusCards
   },
 
   created () {
