@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class RequestSerializer < ApplicationSerializer
-  attributes :id, :reason, :day, :attended_at, :left_at, :status, :updated_at
-  belongs_to :user, serializer: UserSerializer
+  attributes :id, :reason, :day, :attended_at, :left_at, :status, :updated_at, :admin_reason
+  belongs_to :admin, serializer: UserSerializer
 
   def day
     object.attendance.day

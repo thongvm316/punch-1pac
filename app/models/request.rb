@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-
 # == Schema Information
 #
 # Table name: requests
@@ -13,6 +12,8 @@
 #  status        :integer          default("pending"), not null
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
+#  admin_reason  :string(500)      default(""), not null
+#  admin_id      :integer
 #
 # Indexes
 #
@@ -23,10 +24,12 @@
 class Request < ApplicationRecord
   belongs_to :attendance
   belongs_to :user
+  belongs_to :admin, class_name: 'User', foreign_key: :admin_id, optional: :true
   has_one :activity, as: :activitable, dependent: :destroy
 
   enum status: { pending: 0, approved: 1, rejected: 2 }
 
+  validates :admin_reason, length: { maximum: 500 }
   validates :reason, presence: true, length: { maximum: 500 }
   validate :both_attended_at_left_at_cannot_be_blank
   validate :attended_at_cannot_be_greater_than_left_at

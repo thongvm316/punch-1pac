@@ -18,14 +18,14 @@ class RequestService
       attendance_params[:leaving_status] = AttendanceService.leaving_status(@user.company, @req.left_at, @attendance)
     end
     ApplicationRecord.transaction do
-      @req.update!(status: 'approved')
+      @req.update!(status: 'approved', admin_id: @user.id)
       @attendance.update!(attendance_params)
       Activity.track(@user, @req, 'approve')
     end
   end
 
   def reject
-    @req.update(status: 'rejected')
+    @req.update(status: 'rejected', admin_id: @user.id)
     Activity.track(@user, @req, 'reject')
   end
 end

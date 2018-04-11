@@ -131,14 +131,15 @@ module JsonResponseHelper
 
   def response_request
     {
-      id:          Integer,
-      reason:      String,
-      day:         date_response,
-      attended_at: hour_min_response,
-      left_at:     hour_min_response,
-      status:      String,
-      updated_at:  time_iso8601_response,
-      user:        response_user
+      id:           Integer,
+      reason:       String,
+      day:          date_response,
+      attended_at:  hour_min_response,
+      left_at:      hour_min_response,
+      status:       String,
+      updated_at:   time_iso8601_response,
+      admin_reason: String,
+      admin:        nullable_response(response_user)
     }
   end
 
