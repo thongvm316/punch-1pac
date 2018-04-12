@@ -5,7 +5,7 @@ class Api::V1::AttendancesController < Api::V1::BaseController
   before_action :set_user, only: %i[create update]
 
   def create
-    authorize!
+    authorize! @user
     attendance = AttendanceService.new(@user, request.remote_ip).attend
     if attendance
       TrackAndNotifyActivityWorker.perform_async(current_user.id, attendance.id, attendance.class.to_s, 'punch_in')
@@ -54,7 +54,7 @@ class Api::V1::AttendancesController < Api::V1::BaseController
   end
 
   def update
-    authorize!
+    authorize! @user
     attendance = AttendanceService.new(@user, request.remote_ip).leave
     TrackAndNotifyActivityWorker.perform_async(current_user.id, attendance.id, attendance.class.to_s, 'punch_out') if attendance
     render json: attendance, serializer: AttendanceSerializer, status: :ok
@@ -63,6 +63,6 @@ class Api::V1::AttendancesController < Api::V1::BaseController
   private
 
   def set_user
-    @user = User.find(params[:user_id])
+    @user = current_company.users.find(params[:user_id])
   end
 end
