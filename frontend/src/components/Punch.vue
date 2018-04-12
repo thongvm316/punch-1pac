@@ -50,7 +50,7 @@ export default {
       this.isPunching = true
       this.punchIn().then((response) => {
         this.isPunching = false
-        this.setFlashMsg(this.$t('header.punchInSuccess', { at: response.data.attended_at }))
+        if (response.data) this.setFlashMsg(this.$t('header.punchInSuccess', { at: response.data.attended_at }))
       })
     },
 
@@ -59,6 +59,7 @@ export default {
       this.isPunching = true
       this.punchOut().then((response) => {
         this.isPunching = false
+        this.isOpenConfirmDialog = false
         this.setFlashMsg(this.$t('header.punchOutSuccess', { at: response.data.left_at }))
       })
     }
