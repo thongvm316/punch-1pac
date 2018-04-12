@@ -138,7 +138,7 @@ RSpec.describe Api::V1::GroupsController, type: :controller do
           its(:code) { is_expected.to eq '200' }
           its(:body) { is_expected.to be_json_as(response_group(1)) }
 
-          it "can upload a image" do
+          it 'can upload a image' do
             is_expected
             expect(group.image_url).not_to be_nil
           end
@@ -319,6 +319,51 @@ RSpec.describe Api::V1::GroupsController, type: :controller do
         target_user.reload
         expect(target_user.groups).to eq []
       end
+    end
+  end
+
+  describe 'GET #report' do
+    context 'when login_user.role = member' do
+      let(:group) { create :group, company: company }
+      let(:login_user) { create :user, company: company, role: 'member', groups: [group] }
+
+      subject { get :report, params: { id: group.id } }
+
+      its(:code) { is_expected.to eq '401' }
+      its(:body) { is_expected.to be_json_as(response_401) }
+    end
+
+    context 'when login_user.role = admin' do
+      let(:groups) { create_list :group, 2, company: company }
+      let(:login_user) { create :user, company: company, role: 'admin', groups: groups }
+      let!(:users) { create_list :user, 2, company: company, role: 'member', groups: [groups.first] }
+
+      context 'when group in login_user.groups' do
+        subject { get :report, params: { id: groups.first.id } }
+
+        its(:code) { is_expected.to eq '200' }
+        its(:body) { is_expected.to be_json_as(Array.new(3) { response_group_report }) }
+      end
+
+      context 'when group not in login_user.groups' do
+        let(:group) { create :group, company: company }
+
+        subject { get :report, params: { id: group.id } }
+
+        its(:code) { is_expected.to eq '401' }
+        its(:body) { is_expected.to be_json_as(response_401) }
+      end
+    end
+
+    context 'when login_user.role = superadmin' do
+      let(:groups) { create_list :group, 2, company: company }
+      let(:login_user) { create :user, company: company, role: 'superadmin', groups: groups }
+      let!(:users) { create_list :user, 2, company: company, role: 'member', groups: [groups.first] }
+
+      subject { get :report, params: { id: groups.first.id } }
+
+      its(:code) { is_expected.to eq '200' }
+      its(:body) { is_expected.to be_json_as(Array.new(3) { response_group_report }) }
     end
   end
 end

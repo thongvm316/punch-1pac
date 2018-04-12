@@ -21,6 +21,7 @@ import groups from './modules/groups'
 import group from './modules/group'
 import groupAttendances from './modules/group-attendances'
 import groupRequests from './modules/group-requests'
+import groupReport from './modules/group-report'
 
 import chart from './modules/chart'
 import statusCards from './modules/status-cards'
@@ -50,6 +51,7 @@ export default new Vuex.Store({
     group,
     groupAttendances,
     groupRequests,
+    groupReport,
     chart,
     statusCards,
     calendar,

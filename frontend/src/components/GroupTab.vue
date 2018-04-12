@@ -17,6 +17,12 @@
       v-if="$auth('Page', currentUser).canViewGroups()">
       <a href="#">{{ $t('group.requests') }}</a>
     </router-link>
+    <router-link tag="li"
+      class="tab-item"
+      :to="`/groups/${groupId}/report`"
+      v-if="$auth('Page', currentUser).canViewGroups()">
+      <a href="#">{{ $t('group.report') }}</a>
+    </router-link>
   </ul>
 </template>
 

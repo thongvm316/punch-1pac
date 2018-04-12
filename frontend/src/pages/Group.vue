@@ -17,8 +17,10 @@
     </div>
     <p class="form-input-hint text-dark">{{ $t('group.explain') }}</p>
 
-    <div class="toolbar mt-5 text-right"> <button type="button" class="btn" @click="toggleEditModal">{{ $t('group.btn.edit') }}</button>
+    <div class="toolbar mt-5 text-right">
+      <button type="button" class="btn" @click="toggleEditModal">{{ $t('group.btn.edit') }}</button>
     </div>
+
     <table class="table table-hover bg-light mt-5">
       <thead>
         <th>{{ $t('group.tableHeader.name') }}</th>

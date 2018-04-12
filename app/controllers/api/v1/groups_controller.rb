@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Api::V1::GroupsController < Api::V1::BaseController
-  before_action :set_group, only: %i[show update destroy add_user remove_user]
+  before_action :set_group, only: %i[show update destroy add_user remove_user report]
 
   def index
     authorize!
@@ -58,6 +58,12 @@ class Api::V1::GroupsController < Api::V1::BaseController
     head(200)
   end
 
+  def report
+    authorize! @group
+    results = current_company.users.report(params.merge(group_id: params[:id]))
+    render json: results, each_serializer: GroupReportSerializer, status: :ok
+  end
+
   private
 
   def group_params
@@ -65,6 +71,6 @@ class Api::V1::GroupsController < Api::V1::BaseController
   end
 
   def set_group
-    @group = Group.find(params[:id])
+    @group = current_company.groups.find(params[:id])
   end
 end

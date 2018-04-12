@@ -20,4 +20,10 @@ class Api::V1::GroupsLoyalty < ApplicationLoyalty
   def remove_user?
     add_user?
   end
+
+  def report?
+    return true if user.superadmin?
+    return true if user.admin? && user.groups.include?(record)
+    false
+  end
 end

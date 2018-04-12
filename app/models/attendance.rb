@@ -61,23 +61,22 @@ class Attendance < ApplicationRecord
       .group(:month)
   }
 
-  def self.status_count_on_month_sql(status_value, status_type, date)
+  def self.status_count_on_month(status_value, status_type, date)
     select("count(id) as #{status_value}")
       .day_between(date.beginning_of_month, date.end_of_month)
       .where("#{status_type}": status_value)
       .group(status_type)
-      .to_sql
   end
 
   def self.chart(str_date = nil)
     date = str_date.present? ? Date.parse(str_date) : Date.current
     raise ArgumentError if date.blank?
     select(
-      "(#{status_count_on_month_sql('attend_ok', 'attending_status', date)})",
-      "(#{status_count_on_month_sql('attend_late', 'attending_status', date)})",
-      "(#{status_count_on_month_sql('leave_ok', 'leaving_status', date)})",
-      "(#{status_count_on_month_sql('leave_early', 'leaving_status', date)})",
-      "(#{status_count_on_month_sql('annual_leave', 'off_status', date)})"
+      "(#{status_count_on_month('attend_ok', 'attending_status', date).to_sql})",
+      "(#{status_count_on_month('attend_late', 'attending_status', date).to_sql})",
+      "(#{status_count_on_month('leave_ok', 'leaving_status', date).to_sql})",
+      "(#{status_count_on_month('leave_early', 'leaving_status', date).to_sql})",
+      "(#{status_count_on_month('annual_leave', 'off_status', date).to_sql})"
     ).limit(1)
   rescue TypeError, ArgumentError
     none
