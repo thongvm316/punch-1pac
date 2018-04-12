@@ -116,6 +116,18 @@ module JsonResponseHelper
     }
   end
 
+  def response_user_with_attendance
+    {
+      id: Integer,
+      email: String,
+      name: String,
+      avatar_url: String,
+      left_at: nullable_response(hour_min_response),
+      attended_at: nullable_response(hour_min_response),
+      attendance_id: nullable_response(Integer)
+    }
+  end
+
   def response_user_with_permissions(size)
     response_user.merge(permissions: Array.new(size) { response_permission })
   end

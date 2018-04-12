@@ -13,6 +13,10 @@ class Api::V1::UsersLoyalty < ApplicationLoyalty
     true
   end
 
+  def today_attendances?
+    @user.superadmin?
+  end
+
   def destroy?
     return false if @record.owner?
     return true if @user.owner?

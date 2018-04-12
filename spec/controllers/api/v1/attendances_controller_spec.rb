@@ -124,13 +124,13 @@ RSpec.describe Api::V1::AttendancesController, type: :controller do
     context 'when attendance is created and already checked in and checked out' do
       let!(:attendance) { create :attendance, user: login_user, off_status: nil }
 
-      subject { post :create }
+      subject { post :create, params: { user_id: login_user.id } }
 
       its(:code) { is_expected.to eq '200' }
     end
 
     context 'when attendance is not created yet' do
-      subject { post :create }
+      subject { post :create, params: { user_id: login_user.id } }
 
       its(:code) { is_expected.to eq '201' }
       its(:body) { is_expected.to be_json_as(response_attendance) }
@@ -139,7 +139,7 @@ RSpec.describe Api::V1::AttendancesController, type: :controller do
 
   describe 'PATCH #update' do
     context 'when attendance is not created yet' do
-      subject { patch :update, params: { id: 1 }, format: :json }
+      subject { patch :update, params: { user_id: login_user.id, id: 1 }, format: :json }
 
       its(:code) { is_expected.to eq '404' }
       its(:body) { is_expected.to be_json_as(response_404) }
@@ -148,7 +148,7 @@ RSpec.describe Api::V1::AttendancesController, type: :controller do
     context 'when attendance is created and not checked in yet' do
       let(:attendance) { create :attendance, user: login_user, attended_at: nil, attending_status: nil, left_at: nil, leaving_status: nil }
 
-      subject { patch :update, params: { id: attendance.id }, format: :json }
+      subject { patch :update, params: { user_id: login_user.id, id: attendance.id }, format: :json }
 
       its(:code) { is_expected.to eq '404' }
       its(:body) { is_expected.to be_json_as(response_404) }
@@ -157,7 +157,7 @@ RSpec.describe Api::V1::AttendancesController, type: :controller do
     context 'when attendance is checked in and out' do
       let(:attendance) { create :attendance, user: login_user }
 
-      subject { patch :update, params: { id: attendance.id }, format: :json }
+      subject { patch :update, params: { user_id: login_user.id, id: attendance.id }, format: :json }
 
       its(:code) { is_expected.to eq '404' }
       its(:body) { is_expected.to be_json_as(response_404) }
@@ -171,7 +171,7 @@ RSpec.describe Api::V1::AttendancesController, type: :controller do
 
       after { Timecop.return }
 
-      subject { patch :update, params: { id: atd.id } }
+      subject { patch :update, params: { user_id: login_user.id, id: atd.id } }
 
       its(:code) { is_expected.to eq '200' }
       its(:body) { is_expected.to be_json_as(response_attendance) }

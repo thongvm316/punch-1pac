@@ -10,11 +10,11 @@ class Api::V1::AttendancesLoyalty < ApplicationLoyalty
   end
 
   def create?
-    true
+    @user.superadmin? || @user == @record
   end
 
   def update?
-    true
+    @user.superadmin? || @user == @record
   end
 
   def calendar?

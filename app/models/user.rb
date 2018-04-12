@@ -56,6 +56,12 @@ class User < ApplicationRecord
 
   include ImageUploader::Attachment.new(:avatar)
 
+  scope :with_today_attendance, -> {
+    select('users.id, users.name, users.avatar_data, users.email',
+           'attendances.id as attendance_id, attendances.attended_at as attended_at, attendances.left_at as left_at')
+      .joins("LEFT JOIN attendances ON users.id = attendances.user_id AND attendances.day = '#{Time.current}'")
+  }
+
   scope :not_in_group, ->(group_id) {
     left_outer_joins(:user_groups)
       .merge(UserGroup.not_in_group(group_id))

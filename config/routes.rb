@@ -16,6 +16,7 @@ Rails.application.routes.draw do
         resources :users, except: %i[new edit] do
           post 'create_multi', on: :collection
           match 'change_password', via: %i[patch put], on: :collection
+          get 'today_attendances', on: :collection
         end
 
         resources :holidays, only: %i[index create update destroy] do
