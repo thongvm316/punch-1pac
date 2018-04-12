@@ -14,7 +14,7 @@
         <p class="form-input-hint" v-if="companyErrors.breaktime">{{ $t('company.timezoneAndLanguage.labels.breaktime') }} {{ companyErrors.breaktime[0] }}</p>
       </div>
       <div class="form-group">
-        <button type="button" class="btn btn-primary btn-form-submit" @click="localUpdateCompany">{{ $t('company.timezoneAndLanguage.btn.save') }}</button>
+        <button type="button" class="btn btn-success btn-form-submit" @click="localUpdateCompany">{{ $t('company.timezoneAndLanguage.btn.save') }}</button>
       </div>
     </form>
   </setting-layout>

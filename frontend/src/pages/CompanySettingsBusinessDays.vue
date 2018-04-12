@@ -2,7 +2,6 @@
   <setting-layout sidebar-type="company" :title="$t('company.title')" :subtitle="$t('company.businessDays.title')">
     <div class="toolbar text-right mt-5">
       <button type="button" class="btn btn-success" @click="toggleAddModal()">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" fill-rule="eventodd" viewBox="0 0 24 24"><path d="M13.26318,13.26319l9.47367,0a1.26316,1.26316,0,1,0,0-2.52632l-9.4737,0,0-9.4737a1.26315,1.26315,0,0,0-2.52629,0l0,9.47369H1.26315a1.26315,1.26315,0,0,0,0,2.52629h9.47369v9.47369a1.26317,1.26317,0,1,0,2.52633,0Z" transform="translate(0 0)"/></svg>
         {{ $t('company.businessDays.btn.add') }}
       </button>
     </div>
@@ -50,7 +49,7 @@
         <p class="form-input-hint" v-if="errors.ended_at">{{ $t('company.businessDays.labels.endedAt') }} {{ errors.ended_at[0] }}</p>
       </div>
       <div class="form-group">
-        <button type="button" class="btn btn-primary btn-form-submit" @click="submitAddModal(createParams, addBusinessDay, $t('messages.businessDay.createSuccess'))">
+        <button type="button" class="btn btn-success btn-form-submit" @click="submitAddModal(createParams, addBusinessDay, $t('messages.businessDay.createSuccess'))">
           {{ $t('company.businessDays.btn.submit') }}
         </button>
       </div>
@@ -77,7 +76,7 @@
       <div class="form-group">
         <button
           type="button"
-          class="btn btn-primary btn-form-submit"
+          class="btn btn-success btn-form-submit"
           @click="saveEditModal({ updateParams: updateParams, businessDayId: currentId }, updateBusinessDay, $t('messages.businessDay.updateSuccess'))">
           {{ $t('company.businessDays.btn.save') }}
         </button>

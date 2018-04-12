@@ -2,7 +2,6 @@
   <setting-layout sidebar-type="company" :title="$t('company.title')" :subtitle="$t('company.allowedIPs.title')">
     <div class="toolbar clearfix mt-5">
       <button type="button" class="btn btn-success float-right" @click="toggleAddModal()">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" fill-rule="eventodd" viewBox="0 0 24 24"><path d="M13.26318,13.26319l9.47367,0a1.26316,1.26316,0,1,0,0-2.52632l-9.4737,0,0-9.4737a1.26315,1.26315,0,0,0-2.52629,0l0,9.47369H1.26315a1.26315,1.26315,0,0,0,0,2.52629h9.47369v9.47369a1.26317,1.26317,0,1,0,2.52633,0Z" transform="translate(0 0)"/></svg>
         {{ $t('company.allowedIPs.btn.add') }}
       </button>
     </div>
@@ -34,7 +33,7 @@
         <p class="form-input-hint" v-if="errors.ip_address">{{ $t('company.allowedIPs.labels.ipAddress') }} {{ errors.ip_address[0] }}</p>
       </div>
       <div class="form-group">
-        <a class="btn btn-primary btn-form-submit" @click="submitAddModal({ ip_address: newIp }, createIP, $t('messages.ip.createSuccess'))">{{ $t('company.allowedIPs.btn.submit') }}</a>
+        <a class="btn btn-success btn-form-submit" @click="submitAddModal({ ip_address: newIp }, createIP, $t('messages.ip.createSuccess'))">{{ $t('company.allowedIPs.btn.submit') }}</a>
       </div>
     </modal>
 
@@ -45,7 +44,7 @@
         <p class="form-input-hint" v-if="errors.ip_address">{{ $t('company.allowedIPs.labels.ipAddress') }} {{ errors.ip_address[0] }}</p>
       </div>
       <div class="form-group">
-        <a class="btn btn-primary btn-form-submit" @click="saveEditModal({ id: currentId, ip_address: editIp }, updateIP, $t('messages.ip.updateSuccess'))">{{ $t('company.allowedIPs.btn.save') }}</a>
+        <a class="btn btn-success btn-form-submit" @click="saveEditModal({ id: currentId, ip_address: editIp }, updateIP, $t('messages.ip.updateSuccess'))">{{ $t('company.allowedIPs.btn.save') }}</a>
       </div>
     </modal>
   </setting-layout>

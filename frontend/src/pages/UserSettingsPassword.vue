@@ -17,7 +17,7 @@
         <p class="form-input-hint" v-if="errors.password_confirmation">{{ $t('user.password.labels.confirmNewPassword') }} {{ errors.password_confirmation[0] }}</p>
       </div>
       <div class="form-group">
-        <button type="button" class="btn btn-primary btn-form-submit" @click="localUpdatePassword">{{ $t('user.password.btn.save') }}</button>
+        <button type="button" class="btn btn-success btn-form-submit" @click="localUpdatePassword">{{ $t('user.password.btn.save') }}</button>
       </div>
     </form>
   </setting-layout>
