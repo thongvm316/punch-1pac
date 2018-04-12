@@ -3,6 +3,7 @@ export default {
     users: 'Users',
     attendances: 'Attendances',
     requests: 'Requests',
+    report: 'Report',
     btn: {
       addUser: 'Add',
       edit: 'Edit Group',
