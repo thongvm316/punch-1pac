@@ -205,6 +205,20 @@ module JsonResponseHelper
     }
   end
 
+  def response_group_report
+    {
+      id: Integer,
+      name: String,
+      email: String,
+      avatar_url: String,
+      attend_ok: Integer,
+      attend_late: Integer,
+      leave_ok: Integer,
+      leave_early: Integer,
+      annual_leave: Integer
+    }
+  end
+
   private
 
   def nullable_response(expected_response)
