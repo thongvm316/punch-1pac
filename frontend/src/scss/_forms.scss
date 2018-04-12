@@ -11,7 +11,8 @@
     background-color: $light-color;
     background-image: url('../assets/ico-calendar.svg');
     background-repeat: no-repeat;
-    background-position: 98% 50%;
+    background-position: calc(100% - 0.4rem) 50%;
+    background-size: 0.8rem 0.8rem;
   }
 }
 
@@ -39,4 +40,36 @@
   input[type=search]::placeholder {
     color: $body-font-color;
   }
+
+  &:focus, &.open {
+    border-color: $border-color-dark;
+  }
+
+  .selected-tag {
+    height: 1.2rem;
+    padding: 0 0.4rem;
+    margin: 0.4rem 0.2rem;
+  }
+}
+
+.form-input,
+.form-select,
+.form-control,
+.v-select input[type=search],
+.dropdown-toggle {
+  border-color: $border-color;
+  height: 2rem;
+
+  &:focus {
+    border-color: $border-color-dark;
+    box-shadow: none;
+  }
+
+  &::placeholder {
+    color: $gray-color;
+  }
+}
+
+.form-select:not([multiple]):not([size]) {
+  background: $light-color url('../assets/ico-down.svg') calc(100% - 0.4rem) center/0.8rem 0.8rem  no-repeat;
 }

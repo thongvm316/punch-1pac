@@ -1,24 +1,44 @@
 .setting-sidebar {
   margin: 0;
   list-style: none;
+  background-color: $light-color;
+  border-radius: $border-radius;
+  @include shadow-variant(.05rem);
 
   li {
     margin-top: 0;
+
+    &:not(:first-child){
+      border-top: 0.05rem solid $border-color;
+    }
   }
 
   a {
-    display: block;
-    padding: .2rem;
-    color: $dark-color;
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    padding: 0 0.8rem;
+    color: $gray-color;
     text-decoration: none;
+
 
     &:hover {
       background-color: $border-color;
     }
 
     &.active {
-      background-color: $primary-color;
-      color: $light-color;
+      border-right: 0.2rem solid $primary-color;
+      color: $primary-color;
+
+      svg {
+        color: $primary-color;
+      }
+    }
+
+    svg {
+      margin-right: 0.8rem;
+      height: 1.2rem;
+      width: 1.2rem;
     }
   }
 }
