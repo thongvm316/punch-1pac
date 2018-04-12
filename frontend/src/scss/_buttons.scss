@@ -45,6 +45,16 @@
       }
     }
   }
+
+  &.btn-success {
+    svg {
+      color: inherit;
+    }
+  }
+
+  &.btn-form-submit {
+    margin-top: $unit-8;
+  }
 }
 
 // Button groups
