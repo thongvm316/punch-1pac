@@ -3,6 +3,7 @@ export default {
     users: 'Thành viên',
     attendances: 'Hiện diện',
     requests: 'Yêu cầu',
+    report: 'Thống kê',
     btn: {
       addUser: 'Thêm',
       edit: 'Chỉnh sửa Nhóm',
