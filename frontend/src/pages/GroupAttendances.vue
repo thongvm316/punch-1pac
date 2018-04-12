@@ -79,8 +79,7 @@ export default {
         user_id: '',
         from_date: null,
         to_date: null,
-        status: '',
-        group_id: this.$route.params.id
+        status: ''
       }
     }
   },
@@ -122,16 +121,13 @@ export default {
     this.params.to_date = this.dateRange[1]
     this.getGroup(this.$route.params.id)
     this.getAttendances(this.params)
-    this.getUsersInGroup(this.params.group_id)
+    this.getUsersInGroup(this.$route.params.id)
   },
 
   watch: {
     params: {
       handler: function (after, before) {
         this.getAttendances(Object.assign({ page: 1 }, this.params))
-        if (after.group_id !== before.group_id) {
-          this.getUsersInGroup(this.params.group_id)
-        }
       },
       deep: true
     },
