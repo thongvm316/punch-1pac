@@ -6,4 +6,20 @@
     padding-left: .4rem;
     padding-right: .4rem;
   }
+
+  &.label-primary {
+    @include label-variant($primary-color, $light-color);
+  }
+
+  &.label-success {
+    @include label-variant($success-color, $success-color-light);
+  }
+
+  &.label-warning {
+    @include label-variant($warning-color, $warning-color-light);
+  }
+
+  &.label-error {
+    @include label-variant($error-color, $error-color-light);
+  }
 }
