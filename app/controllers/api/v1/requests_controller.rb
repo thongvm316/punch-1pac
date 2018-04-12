@@ -9,7 +9,7 @@ class Api::V1::RequestsController < Api::V1::BaseController
     authorize!
     requests = Request.for_user(current_user, params['self'])
                       .search_by(params)
-                      .includes(:user, :attendance)
+                      .includes(:attendance, :admin)
                       .page(params[:page])
                       .per(params[:per_page])
                       .order('attendances.id DESC')
@@ -69,6 +69,6 @@ class Api::V1::RequestsController < Api::V1::BaseController
   end
 
   def set_request
-    @req = Request.find(params[:id])
+    @req = Request.find_by!(id: params[:id], user_id: current_company.users)
   end
 end
