@@ -12,8 +12,7 @@
 #  owner                  :boolean          default(FALSE), not null
 #  name                   :string           not null
 #  gender                 :integer          default("male"), not null
-#  position               :string
-#  avatar_data            :text
+#  position               :string avatar_data            :text
 #  language               :string           default("en"), not null
 #  reset_password_token   :string
 #  reset_password_sent_at :datetime
@@ -79,6 +78,28 @@ class User < ApplicationRecord
     q = q.by_group(current_user, params[:group_id]) if params[:type] && params[:type] == 'users_in_group'
     q
   }
+
+  def self.count_attendance_status(date)
+    select(
+      :id,
+      :name,
+      :email,
+      :avatar_data,
+      "(#{Attendance.status_count_on_month('attend_ok', 'attending_status', date).where('attendances.user_id = users.id').to_sql})",
+      "(#{Attendance.status_count_on_month('attend_late', 'attending_status', date).where('attendances.user_id = users.id').to_sql})",
+      "(#{Attendance.status_count_on_month('leave_ok', 'leaving_status', date).where('attendances.user_id = users.id').to_sql})",
+      "(#{Attendance.status_count_on_month('leave_early', 'leaving_status', date).where('attendances.user_id = users.id').to_sql})",
+      "(#{Attendance.status_count_on_month('annual_leave', 'off_status', date).where('attendances.user_id = users.id').to_sql})"
+    )
+  end
+
+  def self.report(params)
+    date = params[:date].present? ? Date.parse(params[:date]) : Date.current
+    raise ArgumentError if date.blank?
+    count_attendance_status(date).where(id: UserGroup.with_group(params[:group_id]))
+  rescue TypeError, ArgumentError
+    none
+  end
 
   def self.reset_password_token_valid?(token)
     user = find_by(reset_password_token: token)

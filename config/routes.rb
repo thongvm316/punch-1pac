@@ -23,8 +23,11 @@ Rails.application.routes.draw do
         end
 
         resources :groups, only: %i[index show create update destroy] do
-          post 'add_user',      on: :member
-          delete 'remove_user', on: :member
+          member do
+            get 'report'
+            post 'add_user'
+            delete 'remove_user'
+          end
         end
         resources :permissions, only: %i[index]
 
