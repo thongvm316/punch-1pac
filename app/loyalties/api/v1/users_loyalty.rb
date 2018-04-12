@@ -13,7 +13,7 @@ class Api::V1::UsersLoyalty < ApplicationLoyalty
     true
   end
 
-  def index_with_attendance?
+  def today_attendances?
     @user.superadmin?
   end
 

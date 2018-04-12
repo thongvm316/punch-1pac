@@ -11,18 +11,18 @@ RSpec.describe Api::V1::UsersController, type: :controller do
     authenticate_user(login_user)
   end
 
-  describe 'GET #index_with_attendance' do
+  describe 'GET #today_attendances' do
     context 'when login user is member' do
       let(:login_user) { create :user, company: company, role: 'member' }
 
-      subject { get :index_with_attendance }
+      subject { get :today_attendances }
       its(:code) { is_expected.to eq '401' }
     end
 
     context 'when login user is admin' do
       let(:login_user) { create :user, company: company, role: 'admin' }
 
-      subject { get :index_with_attendance }
+      subject { get :today_attendances }
       its(:code) { is_expected.to eq '401' }
     end
 
@@ -31,7 +31,7 @@ RSpec.describe Api::V1::UsersController, type: :controller do
         let!(:users) { create_list :user, 3, :with_attendance, company: company }
         let(:login_user) { create :user, company: company, role: 'superadmin' }
 
-        subject { get :index_with_attendance }
+        subject { get :today_attendances }
 
         its(:code) { is_expected.to eq '200' }
         its(:body) { is_expected.to be_json_as(Array.new(4) { response_user_with_attendance }) }

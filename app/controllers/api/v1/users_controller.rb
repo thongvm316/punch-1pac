@@ -14,7 +14,7 @@ class Api::V1::UsersController < Api::V1::BaseController
            meta: pager(users)
   end
 
-  def index_with_attendance
+  def today_attendances
     authorize!
     users = current_company.users.with_today_attendance
     render json: users, each_serializer: UserTodayAttendanceSerializer, status: :ok
