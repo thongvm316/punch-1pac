@@ -124,13 +124,13 @@ RSpec.describe Api::V1::AttendancesController, type: :controller do
     context 'when attendance is created and already checked in and checked out' do
       let!(:attendance) { create :attendance, user: login_user, off_status: nil }
 
-      subject { post :create, params: {user_id: login_user.id} }
+      subject { post :create, params: { user_id: login_user.id } }
 
       its(:code) { is_expected.to eq '200' }
     end
 
     context 'when attendance is not created yet' do
-      subject { post :create, params: { user_id: login_user.id} }
+      subject { post :create, params: { user_id: login_user.id } }
 
       its(:code) { is_expected.to eq '201' }
       its(:body) { is_expected.to be_json_as(response_attendance) }
