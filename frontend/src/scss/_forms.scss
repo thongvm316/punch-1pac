@@ -7,7 +7,7 @@
 }
 
 .form-input {
-  &.daterange-picker {
+  &.daterange-picker,  {
     background-color: $light-color;
     background-image: url('../assets/ico-calendar.svg');
     background-repeat: no-repeat;
@@ -16,39 +16,44 @@
   }
 }
 
+.vdp-datepicker.datepicker .datepicker-input {
+  background: $light-color url('../assets/ico-calendar.svg') calc(100% - 0.4rem) center/0.8rem 0.8rem no-repeat;
+}
+
 .v-select {
   width: 100%;
   background-color: $light-color;
   color: $dark-color;
+  border-radius: $border-radius;
+
+  .dropdown-toggle {
+    border-color: $border-color;
+  }
+
+  input[type=search] {
+    width: 1px;
+
+    &::placeholder {
+      color: $body-font-color;
+    }
+  }
+
+  &:focus, &.open {
+    .dropdown-toggle {
+      border-color: $border-color-dark;
+    }
+
+    input[type=search] {
+      height: 2rem;
+    }
+  }
 
   .tile-content {
     font-size: $font-size-sm;
   }
 
-  .dropdown-toggle {
-    border-color: $gray-color;
-  }
-
-  input[type=search] {
-    width: 1px;
-  }
-
-  .open-indicator:before {
-    border-color: $body-font-color;
-  }
-
-  input[type=search]::placeholder {
-    color: $body-font-color;
-  }
-
-  &:focus, &.open {
-    border-color: $border-color-dark;
-  }
-
-  .selected-tag {
-    height: 1.2rem;
-    padding: 0 0.4rem;
-    margin: 0.4rem 0.2rem;
+  .open-indicator {
+    display: none;
   }
 }
 
@@ -70,6 +75,6 @@
   }
 }
 
-.form-select:not([multiple]):not([size]) {
+.form-select:not([multiple]):not([size]), .v-select {
   background: $light-color url('../assets/ico-down.svg') calc(100% - 0.4rem) center/0.8rem 0.8rem  no-repeat;
 }

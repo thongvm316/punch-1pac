@@ -10,6 +10,6 @@
         <mask id="mask-2" fill="white">
             <use xlink:href="#path-1"></use>
         </mask>
-        <use id="icon/chevron/down" fill="#000000" fill-rule="nonzero" transform="translate(12.000000, 12.000000) rotate(90.000000) translate(-12.000000, -12.000000) " xlink:href="#path-1"></use>
+        <use id="icon/chevron/down" fill="#6C777E" fill-rule="nonzero" transform="translate(12.000000, 12.000000) rotate(90.000000) translate(-12.000000, -12.000000) " xlink:href="#path-1"></use>
     </g>
 </svg>
