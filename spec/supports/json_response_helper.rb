@@ -235,7 +235,6 @@ module JsonResponseHelper
   def nullable_response(expected_response)
     ->(actual) do
       return true if actual.is_a? NilClass
-      return true if actual == {}
       return actual.match?(expected_response) if actual.is_a? Regexp
       return actual.is_a?(expected_response) if actual.is_a? Class
       be_json_as(expected_response)
