@@ -93,6 +93,6 @@ class Api::V1::UsersController < Api::V1::BaseController
   end
 
   def set_user
-    current_company.users.find(params[:user_id])
+    @user = current_company.users.find(params[:id])
   end
 end
