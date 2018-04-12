@@ -1,5 +1,5 @@
 <template>
-  <div class="status-cards">
+  <div class="status-cards mt-5">
     <datepicker
       :language="currentUser.language"
       :format="function (date) { return $moment(date).format('MMM YYYY') }"
