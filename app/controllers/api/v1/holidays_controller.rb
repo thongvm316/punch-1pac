@@ -50,6 +50,6 @@ class Api::V1::HolidaysController < Api::V1::BaseController
   end
 
   def set_holiday
-    @holiday = Holiday.find(params[:id])
+    @holiday = current_company.holidays.find(params[:id])
   end
 end

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: requests
@@ -24,7 +25,7 @@
 class Request < ApplicationRecord
   belongs_to :attendance
   belongs_to :user
-  belongs_to :admin, class_name: 'User', foreign_key: :admin_id, optional: :true
+  belongs_to :admin, class_name: 'User', foreign_key: :admin_id, optional: true
   has_one :activity, as: :activitable, dependent: :destroy
 
   enum status: { pending: 0, approved: 1, rejected: 2 }

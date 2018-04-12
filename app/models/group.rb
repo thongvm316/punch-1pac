@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: groups
@@ -23,7 +24,7 @@ class Group < ApplicationRecord
   validates :name, presence: true
 
   include ImageUploader::Attachment.new(:image)
-  
+
   def self.for_user(user)
     if %w[member admin].include?(user.role)
       where(id: UserGroup.select(:group_id).where(user: user))
