@@ -20,27 +20,26 @@
   background: $light-color url('../assets/ico-calendar.svg') calc(100% - 0.4rem) center/0.8rem 0.8rem no-repeat;
 }
 
+input[type=search], .v-select {
+  background: $light-color url('../assets/ico-search.svg') calc(100% - 0.4rem) center/0.8rem 0.8rem  no-repeat;
+}
+
+.form-select:not([multiple]):not([size]) {
+  background: $light-color url('../assets/ico-down.svg') calc(100% - 0.4rem) center/0.8rem 0.8rem  no-repeat;
+}
+
 .v-select {
   width: 100%;
-  background-color: $light-color;
   color: $dark-color;
   border-radius: $border-radius;
 
   .dropdown-toggle {
-    border-color: $border-color;
-  }
-
-  input[type=search] {
-    width: 1px;
-
-    &::placeholder {
-      color: $body-font-color;
-    }
+    border-color: $gray-color;
   }
 
   &:focus, &.open {
     .dropdown-toggle {
-      border-color: $border-color-dark;
+      border-color: $gray-color-dark;
     }
 
     input[type=search] {
@@ -62,19 +61,15 @@
 .form-control,
 .v-select input[type=search],
 .dropdown-toggle {
-  border-color: $border-color;
+  border-color: $gray-color;
   height: 2rem;
 
   &:focus {
-    border-color: $border-color-dark;
+    border-color: $gray-color-dark;
     box-shadow: none;
   }
 
   &::placeholder {
     color: $gray-color;
   }
-}
-
-.form-select:not([multiple]):not([size]), .v-select {
-  background: $light-color url('../assets/ico-down.svg') calc(100% - 0.4rem) center/0.8rem 0.8rem  no-repeat;
 }
