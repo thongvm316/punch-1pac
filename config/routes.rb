@@ -47,8 +47,6 @@ Rails.application.routes.draw do
             get 'chart' => 'attendances#chart'
             get 'calendar' => 'attendances#calendar'
             get 'today' => 'attendances#today'
-            post 'create_for_user'
-            match 'update_for_user', via: %i[patch put]
           end
         end
 

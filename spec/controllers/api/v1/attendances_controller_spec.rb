@@ -120,51 +120,17 @@ RSpec.describe Api::V1::AttendancesController, type: :controller do
     end
   end
 
-  describe 'POST #create_for_user' do
-    context 'when super admin create attendance for user' do
-      let(:login_user) { create :user, company: company, role: 'superadmin' }
-      let(:user) { create :user, company: company }
-
-      subject { post :create_for_user, params: { user_id: user.id } }
-
-      its(:code) { is_expected.to eq '200' }
-      its(:body) { is_expected.to be_json_as(Array.new(2) { response_user_with_attendance }) }
-    end
-  end
-
-  describe 'PATCH #update_for_user' do
-    context 'when super admin create attendance for user' do
-      let(:login_user) { create :user, company: company, role: 'superadmin' }
-      let(:local_time) { Time.zone.local(2017, 12, 20, 10) }
-      let(:user) do
-        user = create :user, company: company
-        user.attendances << create(:attendance, user: user, attended_at: local_time,
-                                                attending_status: 'attend_late', updated_at: local_time,
-                                                left_at: nil, leaving_status: nil)
-        user
-      end
-
-      before { Timecop.freeze(local_time + 1.hour) }
-      after { Timecop.return }
-
-      subject { patch :update_for_user, params: { user_id: user.id } }
-
-      its(:code) { is_expected.to eq '200' }
-      its(:body) { is_expected.to be_json_as(Array.new(2) { response_user_with_attendance }) }
-    end
-  end
-
   describe 'POST #create' do
     context 'when attendance is created and already checked in and checked out' do
       let!(:attendance) { create :attendance, user: login_user, off_status: nil }
 
-      subject { post :create }
+      subject { post :create, params: {user_id: login_user.id} }
 
       its(:code) { is_expected.to eq '200' }
     end
 
     context 'when attendance is not created yet' do
-      subject { post :create }
+      subject { post :create, params: { user_id: login_user.id} }
 
       its(:code) { is_expected.to eq '201' }
       its(:body) { is_expected.to be_json_as(response_attendance) }
@@ -173,7 +139,7 @@ RSpec.describe Api::V1::AttendancesController, type: :controller do
 
   describe 'PATCH #update' do
     context 'when attendance is not created yet' do
-      subject { patch :update, params: { id: 1 }, format: :json }
+      subject { patch :update, params: { user_id: login_user.id, id: 1 }, format: :json }
 
       its(:code) { is_expected.to eq '404' }
       its(:body) { is_expected.to be_json_as(response_404) }
@@ -182,7 +148,7 @@ RSpec.describe Api::V1::AttendancesController, type: :controller do
     context 'when attendance is created and not checked in yet' do
       let(:attendance) { create :attendance, user: login_user, attended_at: nil, attending_status: nil, left_at: nil, leaving_status: nil }
 
-      subject { patch :update, params: { id: attendance.id }, format: :json }
+      subject { patch :update, params: { user_id: login_user.id, id: attendance.id }, format: :json }
 
       its(:code) { is_expected.to eq '404' }
       its(:body) { is_expected.to be_json_as(response_404) }
@@ -191,7 +157,7 @@ RSpec.describe Api::V1::AttendancesController, type: :controller do
     context 'when attendance is checked in and out' do
       let(:attendance) { create :attendance, user: login_user }
 
-      subject { patch :update, params: { id: attendance.id }, format: :json }
+      subject { patch :update, params: { user_id: login_user.id, id: attendance.id }, format: :json }
 
       its(:code) { is_expected.to eq '404' }
       its(:body) { is_expected.to be_json_as(response_404) }
@@ -205,7 +171,7 @@ RSpec.describe Api::V1::AttendancesController, type: :controller do
 
       after { Timecop.return }
 
-      subject { patch :update, params: { id: atd.id } }
+      subject { patch :update, params: { user_id: login_user.id, id: atd.id } }
 
       its(:code) { is_expected.to eq '200' }
       its(:body) { is_expected.to be_json_as(response_attendance) }
