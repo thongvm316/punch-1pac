@@ -2,7 +2,7 @@
   <main-layout :title="$t('groups.title')">
     <div class="toolbar mt-5 text-right">
       <button type="button" class="btn" @click="toggleAddModal()">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M24 10h-10v-10h-4v10h-10v4h10v10h4v-10h10z"></path></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" fill-rule="eventodd" viewBox="0 0 24 24"><path d="M13.26318,13.26319l9.47367,0a1.26316,1.26316,0,1,0,0-2.52632l-9.4737,0,0-9.4737a1.26315,1.26315,0,0,0-2.52629,0l0,9.47369H1.26315a1.26315,1.26315,0,0,0,0,2.52629h9.47369v9.47369a1.26317,1.26317,0,1,0,2.52633,0Z" transform="translate(0 0)"/></svg>
         {{ $t('groups.btn.add') }}
       </button>
     </div>
