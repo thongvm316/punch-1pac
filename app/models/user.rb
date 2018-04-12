@@ -58,7 +58,7 @@ class User < ApplicationRecord
 
   scope :with_today_attendance, -> {
     select('users.id, users.name, users.avatar_data, users.email',
-           'attendances.attended_at as attended_at, attendances.left_at as left_at')
+           'attendances.id as attendance_id, attendances.attended_at as attended_at, attendances.left_at as left_at')
       .joins("LEFT JOIN attendances ON users.id = attendances.user_id AND attendances.day = '#{Time.current}'")
   }
 
