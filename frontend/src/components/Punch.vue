@@ -48,7 +48,7 @@ export default {
     debouncePunchIn () {
       if (this.isPunching) return
       this.isPunching = true
-      this.punchIn().then((response) => {
+      this.punchIn(this.currentUser.id).then((response) => {
         this.isPunching = false
         if (response.data) this.setFlashMsg(this.$t('header.punchInSuccess', { at: response.data.attended_at }))
       })
@@ -57,7 +57,7 @@ export default {
     debouncePunchOut (attendance = {}) {
       if (this.isPunching) return
       this.isPunching = true
-      this.punchOut().then((response) => {
+      this.punchOut(this.currentUser.id).then((response) => {
         this.isPunching = false
         this.isOpenConfirmDialog = false
         this.setFlashMsg(this.$t('header.punchOutSuccess', { at: response.data.left_at }))
