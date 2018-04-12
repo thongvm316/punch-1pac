@@ -22,8 +22,8 @@ const mutations = {
 }
 
 const actions = {
-  punchIn ({ commit }) {
-    return axios.post('/attendances')
+  punchIn ({ commit }, userId) {
+    return axios.post('/attendances', { user_id: userId })
                 .then(response => {
                   commit(types.PUNCH_IN, response.data)
                   return response
@@ -31,8 +31,8 @@ const actions = {
                 .catch(error => { throw error })
   },
 
-  punchOut ({ commit, state }) {
-    return axios.patch(`/attendances/${state.attendance.id}`)
+  punchOut ({ commit, state }, userId) {
+    return axios.patch(`/attendances/${state.attendance.id}`, { user_id: userId })
                 .then(response => {
                   commit(types.PUNCH_OUT, response.data)
                   return response
