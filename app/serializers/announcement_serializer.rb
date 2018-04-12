@@ -8,6 +8,6 @@ class AnnouncementSerializer < ApplicationSerializer
   end
 
   def readed
-    ReadAnnouncement.exists?(announcement: object, user: current_user)
+    ReadAnnouncement.exists?(announcement: object, user: @instance_options[:current_user])
   end
 end
