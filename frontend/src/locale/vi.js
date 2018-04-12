@@ -121,6 +121,7 @@ export default {
   dashboard: {
     title: 'Bảng thông tin',
     calendar: 'Lịch',
+    calendarToday: 'Hôm nay',
     chart: 'Biểu đồ',
     chartNoData: 'Bạn không có dữ liệu nào trong tháng này',
     recentActivities: 'Hoạt động gần đây'

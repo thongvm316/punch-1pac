@@ -13,7 +13,7 @@
             </svg>
           </button>
           <button class="btn btn-secondary" @click="currentMonth">
-            Today
+            {{ $t('dashboard.calendarToday') }}
           </button>
           <button class="btn btn-secondary btn-action" @click="nextMonth">
             <svg width="14px" height="24px" viewBox="0 0 14 24" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="currentColor" fill-rule="evenodd">

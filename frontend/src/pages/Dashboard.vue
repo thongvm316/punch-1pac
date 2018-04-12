@@ -2,10 +2,10 @@
   <main-layout :title="$t('dashboard.title')" :is-open-announcement="true">
     <div class="columns mt-5">
       <div class="column col-8">
-        <status-cards/>
-        <div class="box mt-5 p-0">
+        <div class="box p-0">
           <full-calendar></full-calendar>
         </div>
+        <status-cards/>
       </div>
       <div class="column col-4">
         <div class="box">

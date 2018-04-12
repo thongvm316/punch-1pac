@@ -121,6 +121,7 @@ export default {
   dashboard: {
     title: 'Dashboard',
     calendar: 'Calendar',
+    calendarToday: 'Today',
     chart: 'Chart',
     chartNoData: "You don't have any data on this month",
     recentActivities: 'Recent activities'
