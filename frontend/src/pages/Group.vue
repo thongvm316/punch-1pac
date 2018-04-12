@@ -18,7 +18,7 @@
     <p class="form-input-hint text-dark">{{ $t('group.explain') }}</p>
 
     <div class="toolbar mt-5 text-right">
-      <button type="button" class="btn" @click="toggleEditModal">{{ $t('group.btn.edit') }}</button>
+      <button type="button" class="btn btn-success" @click="toggleEditModal">{{ $t('group.btn.edit') }}</button>
     </div>
 
     <table class="table table-hover bg-light mt-5">
@@ -65,7 +65,7 @@
         <p class="form-input-hint" v-if="errors.name">{{ $t('group.labels.name') }} {{ errors.name[0] }}</p>
       </div>
       <div class="form-group">
-        <button type="button" class="btn" @click="saveEditModal({ groupId: currentId, editParams: editParams }, updateGroup, $t('messages.group.createSuccess'))">{{ $t('group.btn.save') }}</button>
+        <button type="button" class="btn btn-primary btn-form-submit" @click="saveEditModal({ groupId: currentId, editParams: editParams }, updateGroup, $t('messages.group.createSuccess'))">{{ $t('group.btn.save') }}</button>
       </div>
     </modal>
   </main-layout>

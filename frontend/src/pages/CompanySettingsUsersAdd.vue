@@ -27,7 +27,7 @@
         <p class="form-input-hint" v-if="errors.group">{{ $t('company.users.add.labels.group') }} {{ errors.group[0] }}</p>
       </div>
       <div class="form-group">
-        <button type="button" class="btn" @click="create(params)">{{ $t('company.users.add.btn.submit') }}</button>
+        <button type="button" class="btn btn-primary btn-form-submit" @click="create(params)">{{ $t('company.users.add.btn.submit') }}</button>
       </div>
     </form>
   </setting-layout>

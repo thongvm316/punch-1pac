@@ -11,7 +11,7 @@
 
     <div class="toolbar clearfix mt-5">
       <input type="text" class="form-input" :placeholder="$t('company.holidays.placeholder.filterByName')" v-model="name">
-      <button type="button" class="btn float-right" @click="toggleAddModal()">
+      <button type="button" class="btn btn-success float-right" @click="toggleAddModal()">
         <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" fill-rule="eventodd" viewBox="0 0 24 24"><path d="M13.26318,13.26319l9.47367,0a1.26316,1.26316,0,1,0,0-2.52632l-9.4737,0,0-9.4737a1.26315,1.26315,0,0,0-2.52629,0l0,9.47369H1.26315a1.26315,1.26315,0,0,0,0,2.52629h9.47369v9.47369a1.26317,1.26317,0,1,0,2.52633,0Z" transform="translate(0 0)"/></svg>
         {{ $t('company.holidays.btn.add') }}
       </button>
@@ -66,7 +66,7 @@
       <div class="form-group">
         <button
           type="button"
-          class="btn"
+          class="btn btn-primary btn-form-submit"
           @click="submitAddModal(createParams, createHoliday, $t('messages.holiday.createSuccess'))">
           {{ $t('company.holidays.btn.submit') }}
         </button>
@@ -96,10 +96,7 @@
         <p class="form-input-hint" v-if="errors.reason">{{ $t('company.holidays.labels.endAt') }} {{ errors.ended_at[0] }}</p>
       </div>
       <div class="form-group">
-        <button
-          type="button"
-          class="btn"
-          @click="saveEditModal({ holidayID: currentID, updateParams: updateParams }, updateHoliday, $t('messages.holiday.updateSuccess'))">
+        <button type="button" class="btn btn-primary btn-form-submit" @click="saveEditModal({ holidayID: currentID, updateParams: updateParams }, updateHoliday, $t('messages.holiday.updateSuccess'))">
           {{ $t('company.holidays.btn.save') }}
         </button>
       </div>

@@ -47,7 +47,7 @@
       <p class="form-input-hint" v-if="errors.language">{{ $t('user.profile.labels.language') }} {{ errors.language[0] }}</p>
     </div>
     <div class="form-group">
-      <button type="button" class="btn" @click="updateUser">{{ $t('user.profile.btn.save') }}</button>
+      <button type="button" class="btn btn-primary btn-form-submit" @click="updateUser">{{ $t('user.profile.btn.save') }}</button>
     </div>
   </form>
 </template>

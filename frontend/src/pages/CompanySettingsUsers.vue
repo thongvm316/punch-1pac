@@ -2,10 +2,10 @@
   <setting-layout sidebar-type="company" :title="$t('company.title')" :subtitle="$t('company.users.title')">
     <div class="toolbar mt-5 clearfix">
       <input type="text" class="form-input" :placeholder="$t('company.users.placeholder.filterByEmail')" v-model="email">
-      <router-link to="/company/settings/users/add" tag="button" class="btn float-right">
+      <router-link to="/company/settings/users/add" tag="button" class="btn btn-success float-right">
         <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" fill-rule="eventodd" viewBox="0 0 24 24"><path d="M13.26318,13.26319l9.47367,0a1.26316,1.26316,0,1,0,0-2.52632l-9.4737,0,0-9.4737a1.26315,1.26315,0,0,0-2.52629,0l0,9.47369H1.26315a1.26315,1.26315,0,0,0,0,2.52629h9.47369v9.47369a1.26317,1.26317,0,1,0,2.52633,0Z" transform="translate(0 0)"/></svg>
         {{ $t('company.users.btn.add') }}
-      </router-link> <router-link to="/company/settings/users/add-multi" tag="button" class="btn float-right mr-2">
+      </router-link> <router-link to="/company/settings/users/add-multi" tag="button" class="btn btn-success float-right mr-2">
         <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" fill-rule="eventodd" viewBox="0 0 24 24"><path d="M13.26318,13.26319l9.47367,0a1.26316,1.26316,0,1,0,0-2.52632l-9.4737,0,0-9.4737a1.26315,1.26315,0,0,0-2.52629,0l0,9.47369H1.26315a1.26315,1.26315,0,0,0,0,2.52629h9.47369v9.47369a1.26317,1.26317,0,1,0,2.52633,0Z" transform="translate(0 0)"/></svg>
         {{ $t('company.users.btn.addMulti') }}
       </router-link>
