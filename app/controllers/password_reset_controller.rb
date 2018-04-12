@@ -42,7 +42,7 @@ class PasswordResetController < ApplicationController
 
   def update
     @user = User.reset_password_token_valid?(params[:token])
-    if @user.update(user_params.merge(reset_password_token: nil))
+    if @user.update(user_params.merge(reset_password_token: nil, password_changed: true))
       flash[:notice] = 'Password has been reset'
       redirect_to login_url
     else
