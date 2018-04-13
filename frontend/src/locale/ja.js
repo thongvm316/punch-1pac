@@ -26,6 +26,10 @@ export default {
     modal: {
       editUserTitle: 'Edit User',
       editTitle: 'Edit Group'
+    },
+    tooltip: {
+      editUser: 'Edit user',
+      deleteUser: 'Delete user'
     }
   },
   header: {
@@ -182,6 +186,12 @@ export default {
     modal: {
       editTitle: 'Edit Title'
     },
+    tooltip: {
+      edit: 'Edit request',
+      delete: 'Delete request',
+      approve: 'Approve request',
+      reject: 'Reject request'
+    },
     errors: {
       bothAttendedLeft: 'Both attended at and left at {msg}'
     },
@@ -225,6 +235,9 @@ export default {
     },
     modal: {
       addTitle: 'Add request'
+    },
+    tooltip: {
+      addRequest: 'Add request'
     }
   },
   user: {
@@ -310,6 +323,10 @@ export default {
       },
       placeholder: {
         chooseWeekday: 'Choose a weekday'
+      },
+      tooltip: {
+        edit: 'Edit Bussiness day',
+        delete: 'Delete Bussiness day'
       }
     },
     allowedIPs: {
@@ -329,6 +346,10 @@ export default {
       modal: {
         addTitle: 'Add IP address',
         editTitle: 'Edit IP address'
+      },
+      tooltip: {
+        edit: 'Edit IP address',
+        delete: 'Delete IP address'
       }
     },
     timezoneAndLanguage: {
@@ -372,6 +393,10 @@ export default {
       modal: {
         addTitle: 'Add holiday',
         editTitle: 'Edit holiday'
+      },
+      tooltip: {
+        edit: 'Edit holiday',
+        delete: 'Delete holiday'
       }
     },
     users: {
@@ -429,6 +454,10 @@ export default {
       },
       modal: {
         editTitle: 'Edit User'
+      },
+      tooltip: {
+        edit: 'Edit user',
+        delete: 'Delete user'
       }
     }
   },
