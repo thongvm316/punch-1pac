@@ -7,31 +7,35 @@
 }
 
 .form-input {
-  &.daterange-picker  {
+  &.daterange-picker {
     background-color: $light-color;
     background-image: url('../assets/ico-calendar.svg');
     background-repeat: no-repeat;
-    background-position: calc(100% - 0.4rem) 50%;
-    background-size: 0.8rem 0.8rem;
+    background-position: calc(100% - .4rem) 50%;
+    background-size: .8rem .8rem;
   }
 }
 
 .vdp-datepicker.datepicker .datepicker-input {
-  background: $light-color url('../assets/ico-calendar.svg') calc(100% - 0.4rem) center/0.8rem 0.8rem no-repeat;
+  background: $light-color url('../assets/ico-calendar.svg') calc(100% - .4rem) center / .8rem .8rem no-repeat;
 }
 
 input[type=search], .v-select {
-  background: $light-color url('../assets/ico-search.svg') calc(100% - 0.4rem) center/0.8rem 0.8rem  no-repeat;
+  background: $light-color url('../assets/ico-search.svg') calc(100% - .4rem) center / .8rem .8rem  no-repeat;
 }
 
 .form-select:not([multiple]):not([size]) {
-  background: $light-color url('../assets/ico-down.svg') calc(100% - 0.4rem) center/0.8rem 0.8rem  no-repeat;
+  background: $light-color url('../assets/ico-down.svg') calc(100% - .4rem) center / .8rem .8rem  no-repeat;
 }
 
 .v-select {
   width: 100%;
   color: $dark-color;
   border-radius: $border-radius;
+
+  .dropdown-toggle {
+    border: $border-width solid $gray-color;
+  }
 
   &:focus, &.open {
     .dropdown-toggle {
@@ -57,7 +61,6 @@ input[type=search], .v-select {
 .form-control,
 .v-select input[type=search],
 .dropdown-toggle {
-  border-color: $gray-color;
   height: 2rem;
 
   &:focus {
