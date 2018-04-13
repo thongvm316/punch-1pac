@@ -150,6 +150,7 @@ module JsonResponseHelper
       left_at:      hour_min_response,
       status:       String,
       updated_at:   time_iso8601_response,
+      user:         response_user,
       admin_reason: String,
       admin:        nullable_response(response_user)
     }
