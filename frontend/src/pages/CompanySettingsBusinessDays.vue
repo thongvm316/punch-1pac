@@ -49,7 +49,7 @@
         <p class="form-input-hint" v-if="errors.ended_at">{{ $t('company.businessDays.labels.endedAt') }} {{ errors.ended_at[0] }}</p>
       </div>
       <div class="form-group">
-        <button type="button" class="btn btn-success btn-form-submit" @click="submitAddModal(createParams, addBusinessDay, $t('messages.businessDay.createSuccess'))">
+        <button type="button" class="btn btn-success btn-submit" @click="submitAddModal(createParams, addBusinessDay, $t('messages.businessDay.createSuccess'))">
           {{ $t('company.businessDays.btn.submit') }}
         </button>
       </div>
@@ -76,7 +76,7 @@
       <div class="form-group">
         <button
           type="button"
-          class="btn btn-success btn-form-submit"
+          class="btn btn-success btn-submit"
           @click="saveEditModal({ updateParams: updateParams, businessDayId: currentId }, updateBusinessDay, $t('messages.businessDay.updateSuccess'))">
           {{ $t('company.businessDays.btn.save') }}
         </button>

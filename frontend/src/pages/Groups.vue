@@ -30,7 +30,7 @@
         <p class="form-input-hint" v-if="errors.name">{{ $t('groups.labels.name') }} {{ errors.name[0] }}</p>
       </div>
       <div class="form-group">
-        <button type="button" class="btn btn-success btn-form-submit" @click="submitAddModal(createParams, addGroup, $t('messages.group.createSuccess'))">{{ $t('groups.btn.submit') }}</button>
+        <button type="button" class="btn btn-success btn-submit" @click="submitAddModal(createParams, addGroup, $t('messages.group.createSuccess'))">{{ $t('groups.btn.submit') }}</button>
       </div>
     </modal>
   </main-layout>

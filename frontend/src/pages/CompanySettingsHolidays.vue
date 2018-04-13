@@ -65,7 +65,7 @@
       <div class="form-group">
         <button
           type="button"
-          class="btn btn-success btn-form-submit"
+          class="btn btn-success btn-submit"
           @click="submitAddModal(createParams, createHoliday, $t('messages.holiday.createSuccess'))">
           {{ $t('company.holidays.btn.submit') }}
         </button>
@@ -95,7 +95,7 @@
         <p class="form-input-hint" v-if="errors.reason">{{ $t('company.holidays.labels.endAt') }} {{ errors.ended_at[0] }}</p>
       </div>
       <div class="form-group">
-        <button type="button" class="btn btn-success btn-form-submit" @click="saveEditModal({ holidayID: currentID, updateParams: updateParams }, updateHoliday, $t('messages.holiday.updateSuccess'))">
+        <button type="button" class="btn btn-success btn-submit" @click="saveEditModal({ holidayID: currentID, updateParams: updateParams }, updateHoliday, $t('messages.holiday.updateSuccess'))">
           {{ $t('company.holidays.btn.save') }}
         </button>
       </div>

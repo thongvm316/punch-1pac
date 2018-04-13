@@ -4,7 +4,8 @@
       <input type="search" class="form-input" :placeholder="$t('company.users.placeholder.filterByEmail')" v-model="email">
       <router-link to="/company/settings/users/add" tag="button" class="btn btn-success float-right">
         {{ $t('company.users.btn.add') }}
-      </router-link> <router-link to="/company/settings/users/add-multi" tag="button" class="btn btn-success float-right mr-2">
+      </router-link> 
+      <router-link to="/company/settings/users/add-multi" tag="button" class="btn btn-success float-right mr-2">
         {{ $t('company.users.btn.addMulti') }}
       </router-link>
     </div>
