@@ -2,6 +2,7 @@
 
 class RequestSerializer < ApplicationSerializer
   attributes :id, :reason, :day, :attended_at, :left_at, :status, :updated_at, :admin_reason
+  belongs_to :user, serializer: UserSerializer
   belongs_to :admin, serializer: UserSerializer
 
   def day

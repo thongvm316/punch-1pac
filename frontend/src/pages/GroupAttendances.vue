@@ -10,7 +10,7 @@
       <attendance-status-select v-model="params.status">
         <option slot="placeholder" value="">{{ $t('attendances.placeholder.filterByStatus') }}</option>
       </attendance-status-select>
-      <v-select label="email" :placeholder="$t('attendances.placeholder.filterByUser')" v-model="selectedUsers" :options="usersInGroup">
+      <v-select label="email" :placeholder="$t('attendances.placeholder.filterByUser')" v-model="selectedUser" :options="usersInGroup">
         <template slot="option" slot-scope="option">
           <div class="tile tile-centered">
             <div class="tile-icon">
@@ -46,8 +46,8 @@
           <td :class="{ 'text-error': attendance.attending_status === 'attend_late', 'text-success': attendance.attending_status === 'attend_ok'}">{{ attendance.attended_at }}</td>
           <td :class="{ 'text-warning': attendance.leaving_status === 'leave_early', 'text-success': attendance.leaving_status === 'leave_ok'}">{{ attendance.left_at }}</td>
           <td>
-            <span class="label label-rounded" :class="{ 'label-error': attendance.attending_status === 'attend_late', 'label-success': attendance.attending_status === 'attend_ok'}" v-if="attendance.attending_status">{{ $t(`meta.attendance_statuses.${attendance.attending_status}`) }}</span>
-            <span class="label label-rounded" :class="{ 'label-warning': attendance.leaving_status === 'leave_early', 'label-success': attendance.leaving_status === 'leave_ok'}" v-if="attendance.leaving_status">{{ $t(`meta.attendance_statuses.${attendance.leaving_status}`) }}</span>
+            <span class="label" :class="{ 'label-error': attendance.attending_status === 'attend_late', 'label-success': attendance.attending_status === 'attend_ok'}" v-if="attendance.attending_status">{{ $t(`meta.attendance_statuses.${attendance.attending_status}`) }}</span>
+            <span class="label" :class="{ 'label-warning': attendance.leaving_status === 'leave_early', 'label-success': attendance.leaving_status === 'leave_ok'}" v-if="attendance.leaving_status">{{ $t(`meta.attendance_statuses.${attendance.leaving_status}`) }}</span>
           </td>
         </tr>
       </tbody>
@@ -72,7 +72,7 @@ export default {
 
   data () {
     return {
-      selectedUsers: null,
+      selectedUser: null,
       dateRange: [this.$moment().format('YYYY-MM-DD'), this.$moment().format('YYYY-MM-DD')],
       params: {
         self: null,
@@ -138,8 +138,8 @@ export default {
       this.params.to_date = dates[1]
     },
 
-    selectedUsers: function () {
-      this.params.user_id = this.selectedUsers ? this.selectedUsers.map(user => user.id) : ''
+    selectedUser: function () {
+      this.params.user_id = this.selectedUser ? this.selectedUser.id : ''
     }
   }
 }
