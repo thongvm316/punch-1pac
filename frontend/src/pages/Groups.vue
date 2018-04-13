@@ -1,13 +1,14 @@
 <template>
   <main-layout :title="$t('groups.title')">
-    <div class="toolbar mt-5 text-right">
-      <button type="button" class="btn btn-success" @click="toggleAddModal()">
+    <div class="toolbar mt-5 clearfix">
+      <input type="search" class="form-input" :placeholder="$t('groups.placeholder.filterByName')" v-model="name">
+      <button type="button" class="btn btn-success float-right" @click="toggleAddModal()">
         {{ $t('groups.btn.add') }}
       </button>
     </div>
 
     <div class="columns mt-5">
-      <div class="column col-3 mb-4" v-for="group in groups">
+      <div class="column col-3 mb-4" v-for="group in filterGroups(name)">
         <div class="box box-group">
           <div class="box-header">
             <router-link tag="h2" :to="`/groups/${group.id}`" class="box-title">{{ group.name }}</router-link>
@@ -40,13 +41,14 @@
 import MainLayout from '../layouts/Main.vue'
 import Pagination from '../components/Pagination.vue'
 import modal from '../mixins/modal'
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapGetters, mapActions } from 'vuex'
 
 export default {
   mixins: [modal],
 
   data () {
     return {
+      name: '',
       createParams: {
         name: ''
       }
@@ -68,6 +70,10 @@ export default {
     ...mapState('groups', [
       'errors',
       'groups'
+    ]),
+
+    ...mapGetters('groups', [
+      'filterGroups'
     ])
   },
 
