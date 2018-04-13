@@ -7,7 +7,7 @@
 }
 
 .form-input {
-  &.daterange-picker,  {
+  &.daterange-picker  {
     background-color: $light-color;
     background-image: url('../assets/ico-calendar.svg');
     background-repeat: no-repeat;
@@ -32,10 +32,6 @@ input[type=search], .v-select {
   width: 100%;
   color: $dark-color;
   border-radius: $border-radius;
-
-  .dropdown-toggle {
-    border-color: $gray-color;
-  }
 
   &:focus, &.open {
     .dropdown-toggle {
