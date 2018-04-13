@@ -1,5 +1,5 @@
 <template>
-  <div class="calendar-date current-month">
+  <div class="calendar-date current-month" :class="{'disabled': isWeekend}">
     <button class="date-item" :class="{ 'date-today': localAttendance.day === today.format('YYYY-MM-DD') }">
       {{ localAttendance.day.split('-')[2] }}
     </button>
@@ -43,7 +43,15 @@ export default {
   computed: {
     ...mapState('punch', [
       'attendance'
-    ])
+    ]),
+
+    ...mapState('initialStates', [
+      'meta'
+    ]),
+
+    isWeekend () {
+      return this.meta.weekend.includes(this.$moment(this.localAttendance.day).format('dddd').toLowerCase())
+    }
   },
 
   watch: {
