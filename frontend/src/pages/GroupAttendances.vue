@@ -10,7 +10,7 @@
       <attendance-status-select v-model="params.status">
         <option slot="placeholder" value="">{{ $t('attendances.placeholder.filterByStatus') }}</option>
       </attendance-status-select>
-      <v-select label="email" :placeholder="$t('attendances.placeholder.filterByUser')" v-model="selectedUsers" :options="usersInGroup">
+      <v-select label="email" :placeholder="$t('attendances.placeholder.filterByUser')" v-model="selectedUser" :options="usersInGroup">
         <template slot="option" slot-scope="option">
           <div class="tile tile-centered">
             <div class="tile-icon">
@@ -72,7 +72,7 @@ export default {
 
   data () {
     return {
-      selectedUsers: null,
+      selectedUser: null,
       dateRange: [this.$moment().format('YYYY-MM-DD'), this.$moment().format('YYYY-MM-DD')],
       params: {
         self: null,
@@ -138,8 +138,8 @@ export default {
       this.params.to_date = dates[1]
     },
 
-    selectedUsers: function () {
-      this.params.user_id = this.selectedUsers ? this.selectedUsers.map(user => user.id) : ''
+    selectedUser: function () {
+      this.params.user_id = this.selectedUser ? this.selectedUser.id : ''
     }
   }
 }
