@@ -44,6 +44,13 @@
         <input class="form-input" type="text" v-model="params.tax_code">
         <p class="form-input-hint" v-if="companyErrors.tax_code">{{ $t('company.profile.labels.taxCode') }} {{ companyErrors.tax_code[0] }}</p>
       </div>
+      <div class="form-group" :class="{ 'has-error': companyErrors.timezone }">
+        <label class="form-label">{{ $t('company.timezoneAndLanguage.labels.timezone') }}</label>
+        <select class="form-select" v-model="params.timezone">
+          <option :value="timezone" v-for="timezone in meta.timezones">{{ timezone }}</option>
+        </select>
+        <p class="form-input-hint" v-if="companyErrors.timezone">{{ $t('company.timezoneAndLanguage.labels.timezone') }} {{ companyErrors.timezone[0] }}</p>
+      </div>
       <div class="form-group">
         <button type="button" class="btn btn-success btn-submit" @click="localUpdateCompany">{{ $t('company.profile.btn.save') }}</button>
       </div>
@@ -67,7 +74,8 @@ export default {
         address: '',
         phone_number: '',
         postal_code: '',
-        tax_code: ''
+        tax_code: '',
+        timezone: ''
       }
     }
   },

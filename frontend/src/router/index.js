@@ -15,7 +15,6 @@ import UserSettingsProfile from '../pages/UserSettingsProfile'
 import UserSettingsPassword from '../pages/UserSettingsPassword'
 import UserSettingsSecurity from '../pages/UserSettingsSecurity'
 import CompanySettingsProfile from '../pages/CompanySettingsProfile'
-import CompanySettingsTimeLang from '../pages/CompanySettingsTimeLang'
 import CompanySettingsUsers from '../pages/CompanySettingsUsers'
 import CompanySettingsUsersAdd from '../pages/CompanySettingsUsersAdd'
 import CompanySettingsUsersAddMulti from '../pages/CompanySettingsUsersAddMulti'
@@ -46,7 +45,6 @@ const router = new Router({
     { path: '/settings/security', name: 'user-settings-security', component: UserSettingsSecurity, meta: { title: 'User Settings Security - 1Punch' } },
     { path: '/settings', redirect: '/settings/profile' },
     { path: '/company/settings/profile', name: 'company-settings-profile', component: CompanySettingsProfile, meta: { title: 'Company Settings Profile - 1Punch' } },
-    { path: '/company/settings/timelang', name: 'company-settings-timelang', component: CompanySettingsTimeLang, meta: { title: 'Company Settings Timezone and Language - 1Punch' } },
     { path: '/company/settings/users', name: 'company-settings-users', component: CompanySettingsUsers, meta: { title: 'Company Settings Users - 1Punch' } },
     { path: '/company/settings/users/add', name: 'company-settings-users-add', component: CompanySettingsUsersAdd, meta: { title: 'Company Settings Add User - 1Punch' } },
     { path: '/company/settings/users/add-multi', name: 'company-settings-users-add-multi', component: CompanySettingsUsersAddMulti, meta: { title: 'Company Settings Add Multiple Users - 1Punch' } },

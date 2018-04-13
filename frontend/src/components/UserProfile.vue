@@ -34,7 +34,7 @@
     </div>
     <div class="form-group" :class="{ 'has-error': errors.role }">
       <label class="form-label">{{ $t('user.profile.labels.role') }}</label>
-      <select class="form-select" v-model="params.role" :disabled="!canEditRole">
+      <select class="form-select" v-model="params.role" :disabled="$auth('User', currentUser, targetUser).canEdit()">
         <option :value="role" v-for="role in meta.roles">{{ $t(`meta.roles.${role}`) }}</option>
       </select>
       <p class="form-input-hint" v-if="errors.language">{{ $t('user.profile.labels.role') }} {{ errors.role[0] }}</p>
@@ -78,14 +78,7 @@ export default {
   computed: {
     ...mapState('initialStates', [
       'meta'
-    ]),
-
-    canEditRole () {
-      if (this.currentUser.owner && this.currentUser.id === this.targetUser.id) return false
-      if (this.currentUser.owner) return true
-      if (!this.currentUser.owner && this.currentUser.role === 'superadmin') return true
-      return false
-    }
+    ])
   },
 
   methods: {
