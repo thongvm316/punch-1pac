@@ -11,44 +11,48 @@
     background-color: $light-color;
     background-image: url('../assets/ico-calendar.svg');
     background-repeat: no-repeat;
-    background-position: calc(100% - 0.4rem) 50%;
-    background-size: 0.8rem 0.8rem;
+    background-position: calc(100% - .4rem) 50%;
+    background-size: .8rem .8rem;
   }
+}
+
+.vdp-datepicker.datepicker .datepicker-input {
+  background: $light-color url('../assets/ico-calendar.svg') calc(100% - .4rem) center / .8rem .8rem no-repeat;
+}
+
+input[type=search], .v-select {
+  background: $light-color url('../assets/ico-search.svg') calc(100% - .4rem) center / .8rem .8rem  no-repeat;
+}
+
+.form-select:not([multiple]):not([size]) {
+  background: $light-color url('../assets/ico-down.svg') calc(100% - .4rem) center / .8rem .8rem  no-repeat;
 }
 
 .v-select {
   width: 100%;
-  background-color: $light-color;
   color: $dark-color;
+  border-radius: $border-radius;
+
+  .dropdown-toggle {
+    border: $border-width solid $gray-color;
+  }
+
+  &:focus, &.open {
+    .dropdown-toggle {
+      border-color: $gray-color-dark;
+    }
+
+    input[type=search] {
+      height: 2rem;
+    }
+  }
 
   .tile-content {
     font-size: $font-size-sm;
   }
 
-  .dropdown-toggle {
-    border-color: $gray-color;
-  }
-
-  input[type=search] {
-    width: 1px;
-  }
-
-  .open-indicator:before {
-    border-color: $body-font-color;
-  }
-
-  input[type=search]::placeholder {
-    color: $body-font-color;
-  }
-
-  &:focus, &.open {
-    border-color: $border-color-dark;
-  }
-
-  .selected-tag {
-    height: 1.2rem;
-    padding: 0 0.4rem;
-    margin: 0.4rem 0.2rem;
+  .open-indicator {
+    display: none;
   }
 }
 
@@ -57,19 +61,14 @@
 .form-control,
 .v-select input[type=search],
 .dropdown-toggle {
-  border-color: $border-color;
   height: 2rem;
 
   &:focus {
-    border-color: $border-color-dark;
+    border-color: $gray-color-dark;
     box-shadow: none;
   }
 
   &::placeholder {
     color: $gray-color;
   }
-}
-
-.form-select:not([multiple]):not([size]) {
-  background: $light-color url('../assets/ico-down.svg') calc(100% - 0.4rem) center/0.8rem 0.8rem  no-repeat;
 }

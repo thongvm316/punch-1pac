@@ -45,7 +45,7 @@
         <p class="form-input-hint" v-if="companyErrors.tax_code">{{ $t('company.profile.labels.taxCode') }} {{ companyErrors.tax_code[0] }}</p>
       </div>
       <div class="form-group">
-        <button type="button" class="btn" @click="localUpdateCompany">{{ $t('company.profile.btn.save') }}</button>
+        <button type="button" class="btn btn-success btn-submit" @click="localUpdateCompany">{{ $t('company.profile.btn.save') }}</button>
       </div>
     </form>
   </setting-layout>

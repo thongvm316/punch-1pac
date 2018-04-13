@@ -13,7 +13,7 @@
         <p class="form-input-hint text-error">{{ $t('company.users.addMulti.errorMsg', { lines: errors.lines.join(', ') }) }}</p>
       </div>
       <div class="form-group">
-        <button type="button" class="btn" @click="upload(params)">{{ $t('company.users.addMulti.btn.submit') }}</button>
+        <button type="button" class="btn btn-success btn-submit" @click="upload(params)">{{ $t('company.users.addMulti.btn.submit') }}</button>
       </div>
     </form>
   </setting-layout>

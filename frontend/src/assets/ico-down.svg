@@ -1,15 +1,2 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="24px" height="14px" viewBox="0 0 24 14" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 48.1 (47250) - http://www.bohemiancoding.com/sketch -->
-    <title>icon/chevron/down</title>
-    <desc>Created with Sketch.</desc>
-    <defs>
-        <path d="M18.2777749,11.1434337 L7.44807493,0.354286569 C6.97287493,-0.118095523 6.20297493,-0.118095523 5.72657493,0.354286569 C5.25137493,0.82666866 5.25137493,1.59394075 5.72657493,2.06632284 L15.6972749,11.999402 L5.72777493,21.9324813 C5.25257493,22.4048633 5.25257493,23.1721354 5.72777493,23.6457134 C6.20297493,24.1180955 6.97407493,24.1180955 7.44927493,23.6457134 L18.2789749,12.8565663 C18.7469749,12.3890674 18.7469749,11.6097367 18.2777749,11.1434337 Z" id="path-1"></path>
-    </defs>
-    <g id="icon/next" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(0.000000, -5.000000)">
-        <mask id="mask-2" fill="white">
-            <use xlink:href="#path-1"></use>
-        </mask>
-        <use id="icon/chevron/down" fill="#000000" fill-rule="nonzero" transform="translate(12.000000, 12.000000) rotate(90.000000) translate(-12.000000, -12.000000) " xlink:href="#path-1"></use>
-    </g>
-</svg>
+<svg width="24px" height="14px" viewBox="0 0 24 14" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#6C777E" fill-rule="evenodd"><path d="M12.85657,13.27777,23.64571,2.44807a1.22274,1.22274,0,0,0,0-1.7215,1.2062,1.2062,0,0,0-1.712,0L12.0006,10.69728,2.06752.72778a1.20763,1.20763,0,0,0-1.71323,0,1.22274,1.22274,0,0,0,0,1.7215L11.14343,13.279A1.21956,1.21956,0,0,0,12.85657,13.27777Z" transform="translate(0 -0.37017)"/></svg>
