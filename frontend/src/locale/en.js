@@ -142,7 +142,8 @@ export default {
       name: 'Name'
     },
     placeholder: {
-      name: 'Name'
+      name: 'Name',
+      filterByName: 'Filter by name'
     },
     modal: {
       addTitle: 'Add group'

@@ -142,7 +142,8 @@ export default {
       name: 'Tên'
     },
     placeholder: {
-      name: 'Tên'
+      name: 'Tên',
+      filterByName: 'Lọc theo tên'
     },
     modal: {
       addTitle: 'Tạo nhóm'

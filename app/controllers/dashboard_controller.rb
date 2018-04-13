@@ -18,6 +18,7 @@ class DashboardController < ApplicationController
         request_statuses: Request.statuses.keys,
         languages: I18n.available_locales.map(&:to_s),
         weekdays: BusinessDay::WEEKDAYS,
+        weekend: BusinessDay::WEEKDAYS - current_company.business_days.pluck(:weekday),
         holiday_countries: NationalHoliday::COUNTRIES,
         timezones: Company::TIMEZONES,
         roles: User.roles.keys,

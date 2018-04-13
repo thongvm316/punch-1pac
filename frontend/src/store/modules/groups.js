@@ -6,6 +6,15 @@ const state = {
   groups: []
 }
 
+const getters = {
+  filterGroups (state) {
+    return function (query) {
+      const regex = new RegExp(`${query}`, 'g')
+      return query ? state.groups.filter(group => group.name.match(regex)) : state.groups
+    }
+  }
+}
+
 const mutations = {
   [types.RECEIVE_GROUPS] (state, payload) {
     state.groups = payload
@@ -54,6 +63,7 @@ const actions = {
 export default {
   namespaced: true,
   state,
+  getters,
   mutations,
   actions
 }
