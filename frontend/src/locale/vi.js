@@ -459,7 +459,7 @@ export default {
   activity: {
     attendance: {
       punch_in: '<span class="text-bold-600">{name}</span> đã đến văn phòng',
-      punch_out: '<span class="text-bold-600">{name}</span> đã rời khỏi văng phòng'
+      punch_out: '<span class="text-bold-600">{name}</span> đã rời khỏi văn phòng'
     },
     request: {
       create: '<span class="text-bold-600">{name}</span> đã gửi yêu cầu thay đổi',
