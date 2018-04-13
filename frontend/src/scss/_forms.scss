@@ -20,7 +20,8 @@
   background: $light-color url('../assets/ico-calendar.svg') calc(100% - .4rem) center / .8rem .8rem no-repeat;
 }
 
-input[type=search], .v-select {
+input[type=search],
+.v-select {
   background: $light-color url('../assets/ico-search.svg') calc(100% - .4rem) center / .8rem .8rem  no-repeat;
 }
 
