@@ -39,7 +39,7 @@
           <td>{{ request.attended_at }}</td>
           <td>{{ request.left_at }}</td>
           <td>{{ request.reason }}</td>
-          <td><span class="label label-rounded" :class="getStatusClass(request.status)">{{ $t(`meta.request_statuses.${request.status}`) }}</span></td>
+          <td><span class="label" :class="getStatusClass(request.status)">{{ $t(`meta.request_statuses.${request.status}`) }}</span></td>
           <td>
             <span v-if="request.status === 'pending'">
               <button class="btn btn-action btn-link" @click="approveRequest(request.id)">
