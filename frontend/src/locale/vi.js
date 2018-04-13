@@ -26,6 +26,10 @@ export default {
     modal: {
       editUserTitle: 'Sửa thông tin thành viên',
       editTitle: 'Sửa thông tin nhóm'
+    },
+    tooltip: {
+      editUser: 'Sửa thông tin thành viên',
+      deleteUser: 'Xoá thành viên'
     }
   },
   header: {
@@ -178,6 +182,12 @@ export default {
     modal: {
       editTitle: 'Chỉnh sửa yêu cầu'
     },
+    tooltip: {
+      edit: 'Sửa yêu cầu',
+      delete: 'Xoá yêu cầu',
+      approve: 'Duyệt yêu cầu',
+      reject: 'Từ chối yêu cầu'
+    },
     errors: {
       bothAttendedLeft: 'Cả 2 attended at và left at {msg}'
     },
@@ -217,6 +227,9 @@ export default {
     },
     modal: {
       addTitle: 'Tạo yêu cầu'
+    },
+    tooltip: {
+      addRequest: 'Tạo yêu cầu'
     }
   },
   user: {
@@ -302,6 +315,10 @@ export default {
       },
       placeholder: {
         chooseWeekday: 'Chọn ngày trong tuần'
+      },
+      tooltip: {
+        edit: 'Chỉnh sửa ngày đi làm',
+        delete: 'Xoá ngày đi làm'
       }
     },
     allowedIPs: {
@@ -321,6 +338,10 @@ export default {
       modal: {
         addTitle: 'Tạo địa chỉ IP',
         editTitle: 'Chỉnh sửa địa chỉ IP'
+      },
+      tooltip: {
+        edit: 'Chỉnh sửa địa chỉ IP',
+        delete: 'Xoá địa chỉ IP'
       }
     },
     timezoneAndLanguage: {
@@ -364,6 +385,10 @@ export default {
       modal: {
         addTitle: 'Tạo ngày lễ',
         editTitle: 'Chỉnh sửa ngày lễ'
+      },
+      tooltip: {
+        edit: 'Chỉnh sửa ngày lễ',
+        delete: 'Xoá ngày lễ'
       }
     },
     users: {
@@ -421,6 +446,10 @@ export default {
       },
       modal: {
         editTitle: 'Sửa thông tin thành viên'
+      },
+      tooltip: {
+        edit: 'Sửa thông tin thành viên',
+        delete: 'Xoá thành viên'
       }
     }
   },
@@ -459,7 +488,7 @@ export default {
   activity: {
     attendance: {
       punch_in: '<span class="text-bold-600">{name}</span> đã đến văn phòng',
-      punch_out: '<span class="text-bold-600">{name}</span> đã rời khỏi văng phòng'
+      punch_out: '<span class="text-bold-600">{name}</span> đã rời khỏi văn phòng'
     },
     request: {
       create: '<span class="text-bold-600">{name}</span> đã gửi yêu cầu thay đổi',
