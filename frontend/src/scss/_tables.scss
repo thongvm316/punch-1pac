@@ -1,6 +1,25 @@
 // Tables
 .table {
   font-size: .7rem;
+  border-radius: $border-radius;
+
+  th {
+    border-bottom: $border-width solid $border-color;
+    svg {
+      height: 0.6rem;
+      width: 0.6rem;
+      color: currentColor;
+      margin-left: 0.8rem;
+
+      &.sorted {
+        transform: rotate(180deg);
+      }
+    }
+  }
+
+  tr:last-child td {
+    border-bottom: 0;
+  }
 
   tbody > tr > td {
     .btn {
