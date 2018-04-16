@@ -40,7 +40,6 @@ gem 'factory_bot_rails'
 gem 'faker'
 gem 'kaminari'
 gem 'oj'
-gem 'rack-cors'
 gem 'shrine'
 gem 'virtus'
 
@@ -57,6 +56,8 @@ group :development, :test do
   gem 'pry-byebug'
   gem 'pry-coolline'
   gem 'awesome_print'
+
+  gem 'rack-cors'
 end
 
 group :development do
