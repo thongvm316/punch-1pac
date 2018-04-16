@@ -30,16 +30,20 @@ input[type=search],
 }
 
 .v-select {
-  width: 100%;
+  width: 30rem !important;
   color: $dark-color;
   border-radius: $border-radius;
+
+  input[type=search] {
+    height: 2rem !important;
+  }
 
   .dropdown-toggle {
     border: $border-width solid $gray-color;
   }
 
   &:focus, &.open {
-    .dropdown-toggle {
+    .dropdown-toggle, .dropdown-menu {
       border-color: $gray-color-dark;
     }
 
