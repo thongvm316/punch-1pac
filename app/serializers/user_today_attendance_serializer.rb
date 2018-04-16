@@ -8,10 +8,10 @@ class UserTodayAttendanceSerializer < ActiveModel::Serializer
   end
 
   def left_at
-    object.left_at&.strftime('%H:%M')
+    object.left_at&.localtime&.strftime('%H:%M')
   end
 
   def attended_at
-    object.attended_at&.strftime('%H:%M')
+    object.attended_at&.localtime&.strftime('%H:%M')
   end
 end
