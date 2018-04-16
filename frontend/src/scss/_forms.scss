@@ -29,13 +29,13 @@ input[type=search],
   background: $light-color url('../assets/ico-down.svg') calc(100% - .4rem) center / .8rem .8rem  no-repeat;
 }
 
-.v-select {
-  width: 30rem !important;
+.dropdown.v-select {
+  width: 30rem;
   color: $dark-color;
   border-radius: $border-radius;
 
   input[type=search] {
-    height: 2rem !important;
+    height: 2rem;
   }
 
   .dropdown-toggle {
@@ -48,7 +48,7 @@ input[type=search],
     }
 
     input[type=search] {
-      height: 2rem !important;
+      height: 2rem;
     }
   }
 
@@ -57,7 +57,7 @@ input[type=search],
   }
 
   .open-indicator {
-    display: none !important;
+    display: none;
   }
 }
 
