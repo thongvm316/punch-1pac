@@ -22,7 +22,7 @@
       </v-select>
     </div>
 
-    <table class="table table-hover bg-light mt-5">
+    <table class="table bg-light mt-5">
       <thead>
         <th>{{ $t('attendances.tableHeader.name') }}</th>
         <th>{{ $t('attendances.tableHeader.email') }}</th>

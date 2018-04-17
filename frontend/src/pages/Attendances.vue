@@ -11,7 +11,7 @@
       </attendance-status-select>
     </div>
 
-    <table class="table table-hover bg-light mt-5">
+    <table class="table bg-light mt-5">
       <thead>
         <tr>
           <th>{{ $t('attendances.tableHeader.date') }}</th>

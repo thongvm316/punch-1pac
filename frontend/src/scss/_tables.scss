@@ -1,6 +1,73 @@
 // Tables
 .table {
   font-size: .7rem;
+  border-radius: $border-radius;
+
+  th.no-break {
+    white-space: nowrap;
+    min-width: 200px;
+  }
+
+  &.table-scroll {
+    white-space: normal;
+    padding-bottom: 0;
+    display: block;
+
+    th {
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+    .cell {
+      &-xl {
+        min-width: 500px;
+        max-width: 700px;
+      }
+
+      &-lg {
+        min-width: 200px;
+        max-width: 250px;
+      }
+
+      &-md {
+        min-width: 150px;
+        max-width: 200px;
+      }
+
+      &-sm {
+        min-width: 130px;
+        max-width: 180px;
+      }
+
+      &-xs {
+        min-width: 80px;
+        max-width: 120px;
+      }
+    }
+  }
+
+  th {
+    border-bottom: $border-width solid $border-color;
+    text-align: center;
+    white-space: nowrap;
+    padding-left: 0.8rem;
+    padding-right: 0.8rem;
+
+    svg {
+      height: 0.6rem;
+      width: 0.6rem;
+      color: currentColor;
+      margin-left: 0.8rem;
+
+      &.sorted {
+        transform: rotate(180deg);
+      }
+    }
+  }
+
+  tr:last-child td {
+    border-bottom: 0;
+  }
 
   tbody > tr > td {
     .btn {

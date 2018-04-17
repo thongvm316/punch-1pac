@@ -16,7 +16,7 @@
       </button>
     </div>
 
-    <table class="table table-hover bg-light mt-5">
+    <table class="table bg-light mt-5">
       <thead>
         <th>{{ $t('company.holidays.tableHeader.name') }}</th>
         <th>{{ $t('company.holidays.tableHeader.startAt') }}</th>

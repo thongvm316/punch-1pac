@@ -21,7 +21,7 @@
       <button type="button" class="btn btn-success" @click="toggleEditModal">{{ $t('group.btn.edit') }}</button>
     </div>
 
-    <table class="table table-hover bg-light mt-5">
+    <table class="table bg-light mt-5">
       <thead>
         <th>{{ $t('group.tableHeader.name') }}</th>
         <th>{{ $t('group.tableHeader.email') }}</th>

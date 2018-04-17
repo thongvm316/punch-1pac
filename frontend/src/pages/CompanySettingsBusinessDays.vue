@@ -5,7 +5,7 @@
         {{ $t('company.businessDays.btn.add') }}
       </button>
     </div>
-    <table class="table table-hover bg-light mt-5">
+    <table class="table bg-light mt-5">
       <thead>
         <th>{{ $t('company.businessDays.tableHeader.weekday') }}</th>
         <th>{{ $t('company.businessDays.tableHeader.startedAt') }}</th>
