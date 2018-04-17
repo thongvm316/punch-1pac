@@ -10,7 +10,7 @@
       </router-link>
     </div>
 
-    <table class="table table-hover bg-light mt-5">
+    <table class="table bg-light mt-5">
       <thead>
         <th>{{ $t('company.users.tableHeader.name') }}</th>
         <th>{{ $t('company.users.tableHeader.email') }}</th>

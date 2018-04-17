@@ -9,17 +9,17 @@
       </select>
     </div>
 
-    <table class="table table-hover bg-light mt-4">
+    <table class="table table-scroll bg-light mt-5">
       <thead>
         <tr>
-          <th>{{ $t('requests.tableHeader.name') }}</th>
-          <th>{{ $t('requests.tableHeader.email') }}</th>
-          <th>{{ $t('requests.tableHeader.date') }}</th>
-          <th>{{ $t('requests.tableHeader.attendedAt') }}</th>
-          <th>{{ $t('requests.tableHeader.leftAt') }}</th>
-          <th style="width: 500px">{{ $t('requests.tableHeader.reason') }}</th>
-          <th>{{ $t('requests.tableHeader.status') }}</th>
-          <th>{{ $t('requests.tableHeader.actions') }}</th>
+          <th class="cell-lg">{{ $t('requests.tableHeader.name') }}</th>
+          <th class="cell-lg">{{ $t('requests.tableHeader.email') }}</th>
+          <th class="cell-xs">{{ $t('requests.tableHeader.date') }}</th>
+          <th class="cell-xs">{{ $t('requests.tableHeader.attendedAt') }}</th>
+          <th class="cell-xs">{{ $t('requests.tableHeader.leftAt') }}</th>
+          <th class="cell-xl">{{ $t('requests.tableHeader.reason') }}</th>
+          <th class="cell-sm">{{ $t('requests.tableHeader.status') }}</th>
+          <th class="cell-xs">{{ $t('requests.tableHeader.actions') }}</th>
         </tr>
       </thead>
       <tbody>
@@ -35,13 +35,13 @@
             </div>
           </td>
           <td>{{ request.user.email }}</td>
-          <td>{{ request.day | moment_l }}</td>
-          <td>{{ request.attended_at }}</td>
-          <td>{{ request.left_at }}</td>
+          <td class="cell-date text-center">{{ request.day | moment_l }}</td>
+          <td class="cell-date text-center">{{ request.attended_at }}</td>
+          <td class="cell-date text-center">{{ request.left_at }}</td>
           <td>{{ request.reason }}</td>
-          <td><span class="label" :class="getStatusClass(request.status)">{{ $t(`meta.request_statuses.${request.status}`) }}</span></td>
+          <td class="text-center"><span class="label" :class="getStatusClass(request.status)">{{ $t(`meta.request_statuses.${request.status}`) }}</span></td>
           <td>
-            <span v-if="request.status === 'pending'">
+            <span class="d-flex" v-if="request.status === 'pending'">
               <button class="btn btn-action btn-link tooltip" :data-tooltip="$t('requests.tooltip.approve')" @click="approveRequest(request.id)">
                 <svg width="24px" height="24px" viewBox="0 0 24 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#10b742" ><path d="M23.6485258,3.53890722 C23.179917,3.07025097 22.4201679,3.07025097 21.9514654,3.53890722 L7.57473294,17.9157978 L2.04855219,12.3896103 C1.57994338,11.9209541 0.820194311,11.921001 0.351491758,12.3896103 C-0.117163919,12.8582197 -0.117163919,13.6179697 0.351491758,14.086626 L6.72620273,20.461251 C7.1946709,20.9298603 7.95498248,20.9295322 8.42326316,20.461251 L23.6485258,5.23596972 C24.1171815,4.76736035 24.1171346,4.00756347 23.6485258,3.53890722 Z"/></svg>
               </button>

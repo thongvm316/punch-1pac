@@ -6,7 +6,7 @@
       </button>
     </div>
 
-    <table class="table table-hover bg-light mt-5">
+    <table class="table bg-light mt-5">
       <thead>
         <th>{{ $t('company.allowedIPs.tableHeader.ipAddress') }}</th>
         <th class="text-right">{{ $t('company.allowedIPs.tableHeader.createdAt') }}</th>

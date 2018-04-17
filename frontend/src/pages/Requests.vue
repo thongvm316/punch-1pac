@@ -7,7 +7,7 @@
       </select>
     </div>
 
-    <table class="table table-hover bg-light mt-4">
+    <table class="table bg-light mt-4">
       <thead>
         <tr>
           <th>{{ $t('requests.tableHeader.date') }}</th>
