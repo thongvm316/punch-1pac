@@ -13,7 +13,7 @@
         :wrapper-class="'datepicker'"
         @input="onInputDatepicker"
         v-model="month"/>
-      <v-select label="email" :placeholder="$t('attendances.placeholder.filterByUser')" v-model="selectedUser" :options="usersInGroup" @input="filterUser">
+      <v-select label="email" :placeholder="$t('attendances.placeholder.filterByUser')" v-model="selectedUser" :options="usersInGroup">
         <template slot="option" slot-scope="option">
           <div class="tile tile-centered">
             <div class="tile-icon">
@@ -24,10 +24,14 @@
         </template>
       </v-select>
     </div>
-    <table class="table bg-light mt-5">
+    <table class="table sortable-table bg-light mt-5">
       <thead>
-        <th>{{ $t('attendances.tableHeader.name') }}<svg class="sorted" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 292.362 292.362" fillrule="evenodd"><path d="M286.935,69.377c-3.614-3.617-7.898-5.424-12.848-5.424H18.274c-4.952,0-9.233,1.807-12.85,5.424 C1.807,72.998,0,77.279,0,82.228c0,4.948,1.807,9.229,5.424,12.847l127.907,127.907c3.621,3.617,7.902,5.428,12.85,5.428 s9.233-1.811,12.847-5.428L286.935,95.074c3.613-3.617,5.427-7.898,5.427-12.847C292.362,77.279,290.548,72.998,286.935,69.377z"/></svg></th>
-        <th v-for="meta in meta.attendance_statuses">{{ $t(`meta.attendance_statuses.${meta}`) }}<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 292.362 292.362" fillrule="evenodd"><path d="M286.935,69.377c-3.614-3.617-7.898-5.424-12.848-5.424H18.274c-4.952,0-9.233,1.807-12.85,5.424 C1.807,72.998,0,77.279,0,82.228c0,4.948,1.807,9.229,5.424,12.847l127.907,127.907c3.621,3.617,7.902,5.428,12.85,5.428  s9.233-1.811,12.847-5.428L286.935,95.074c3.613-3.617,5.427-7.898,5.427-12.847C292.362,77.279,290.548,72.998,286.935,69.377z"/></svg></th>
+        <th @click="sortBy('name')">{{ $t('attendances.tableHeader.name') }}
+          <svg :class="[{ sorted: sortOrders === 'desc' && sortKey === 'name' }, { show: sortKey === 'name' }]" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 292.362 292.362" fillrule="evenodd"><path d="M286.935,69.377c-3.614-3.617-7.898-5.424-12.848-5.424H18.274c-4.952,0-9.233,1.807-12.85,5.424 C1.807,72.998,0,77.279,0,82.228c0,4.948,1.807,9.229,5.424,12.847l127.907,127.907c3.621,3.617,7.902,5.428,12.85,5.428 s9.233-1.811,12.847-5.428L286.935,95.074c3.613-3.617,5.427-7.898,5.427-12.847C292.362,77.279,290.548,72.998,286.935,69.377z"/></svg>
+        </th>
+        <th v-for="meta in meta.attendance_statuses" @click="sortBy(meta)">{{ $t(`meta.attendance_statuses.${meta}`) }}
+          <svg :class="[{ sorted: sortOrders === 'desc' && sortKey === meta }, { show: sortKey === meta }]" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 292.362 292.362" fillrule="evenodd"><path d="M286.935,69.377c-3.614-3.617-7.898-5.424-12.848-5.424H18.274c-4.952,0-9.233,1.807-12.85,5.424 C1.807,72.998,0,77.279,0,82.228c0,4.948,1.807,9.229,5.424,12.847l127.907,127.907c3.621,3.617,7.902,5.428,12.85,5.428  s9.233-1.811,12.847-5.428L286.935,95.074c3.613-3.617,5.427-7.898,5.427-12.847C292.362,77.279,290.548,72.998,286.935,69.377z"/></svg>
+        </th>
       </thead>
       <tbody>
         <tr v-for="result in tmpResults">
@@ -62,7 +66,8 @@ export default {
     return {
       selectedUser: null,
       month: this.$moment().format('LL'),
-      tmpResults: []
+      sortKey: 'name',
+      sortOrders: 'asc'
     }
   },
 
@@ -88,7 +93,27 @@ export default {
 
     ...mapState('groupReport', [
       'results'
-    ])
+    ]),
+
+    tmpResults () {
+      let results = this.results
+
+      if (this.sortKey) {
+        results = results.slice().sort((a, b) => {
+          let modifier = 1
+          if (this.sortOrders === 'desc') modifier = -1
+          if (a[this.sortKey] < b[this.sortKey]) return -1 * modifier
+          if (a[this.sortKey] > b[this.sortKey]) return 1 * modifier
+          return 0
+        })
+      }
+
+      if (this.selectedUser) {
+        results = results.filter(result => result.id === this.selectedUser.id)
+      }
+
+      return results
+    }
   },
 
   methods: {
@@ -108,17 +133,14 @@ export default {
       this.month = this.$moment(this.month).format('YYYY-MM-DD')
     },
 
-    filterUser () {
-      if (this.selectedUser) {
-        this.tmpResults = this.results.filter(result => result.id === this.selectedUser.id)
-      } else {
-        this.tmpResults = this.results
-      }
+    sortBy (key) {
+      this.sortKey = key
+      this.sortOrders = this.sortOrders === 'asc' ? 'desc' : 'asc'
     }
   },
 
   created () {
-    this.getReport({ group_id: this.$route.params.id, date: this.month }).then(response => { this.tmpResults = response.data })
+    this.getReport({ group_id: this.$route.params.id, date: this.month })
     this.getGroup(this.$route.params.id)
     this.getUsersInGroup(this.$route.params.id)
   },
