@@ -5,10 +5,6 @@ class Api::V1::CompaniesLoyalty < ApplicationLoyalty
     @user.superadmin?
   end
 
-  def setup_rules?
-    @user.manager?
-  end
-
   def destroy?
     @user.superadmin?
   end
