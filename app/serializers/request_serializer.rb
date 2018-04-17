@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
 class RequestSerializer < ApplicationSerializer
-  attributes :id, :reason, :day, :attended_at, :left_at, :status, :updated_at, :admin_reason
+  attributes :id, :reason, :attendance_day, :attended_at, :left_at, :status, :updated_at, :admin_reason, :kind, :annual_leave_day
   belongs_to :user, serializer: UserSerializer
   belongs_to :admin, serializer: UserSerializer
 
-  def day
-    object.attendance.day
+  def attendance_day
+    object.attendance&.day
   end
 
   def attended_at

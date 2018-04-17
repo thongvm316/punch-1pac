@@ -35,7 +35,7 @@
             </div>
           </td>
           <td>{{ request.user.email }}</td>
-          <td class="text-center">{{ request.day | moment_l }}</td>
+          <td class="text-center">{{ request.attendance_day | moment_l }}</td>
           <td class="text-center">{{ request.attended_at }}</td>
           <td class="text-center">{{ request.left_at }}</td>
           <td>{{ request.reason }}</td>
