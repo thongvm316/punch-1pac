@@ -7,6 +7,10 @@
         <option value="">{{ $t('requests.placeholder.filterByStatus') }}</option>
         <option :value="status" v-for="status in meta.request_statuses">{{ $t(`meta.request_statuses.${status}`) }}</option>
       </select>
+      <select class="form-select" v-model="params.kind">
+        <option value="">{{ $t('requests.placeholder.filterByKind') }}</option>
+        <option :value="kind" v-for="kind in ['annual_leave', 'attendance']">{{ $t(`requests.kinds.${kind}`) }}</option>
+      </select>
     </div>
 
     <table class="table bg-light mt-5">
@@ -17,6 +21,7 @@
           <th class="cell-xs">{{ $t('requests.tableHeader.date') }}</th>
           <th class="cell-xs">{{ $t('requests.tableHeader.attendedAt') }}</th>
           <th class="cell-xs">{{ $t('requests.tableHeader.leftAt') }}</th>
+          <th class="cell-xs">{{ $t('requests.tableHeader.kind') }}</th>
           <th class="cell-xl">{{ $t('requests.tableHeader.reason') }}</th>
           <th class="cell-sm">{{ $t('requests.tableHeader.status') }}</th>
           <th class="cell-xs">{{ $t('requests.tableHeader.actions') }}</th>
@@ -35,9 +40,10 @@
             </div>
           </td>
           <td>{{ request.user.email }}</td>
-          <td class="text-center">{{ request.attendance_day | moment_l }}</td>
+          <td class="text-center">{{ (request.attendance_day || request.annual_leave_day) | moment_l }}</td>
           <td class="text-center">{{ request.attended_at }}</td>
           <td class="text-center">{{ request.left_at }}</td>
+          <td><span :class="{ 'text-primary': request.kind === 'attendance', 'text-info': request.kind === 'annual_leave' }">{{ $t(`requests.kinds.${request.kind}`) }}</span></td>
           <td>{{ request.reason }}</td>
           <td class="text-center"><span class="label" :class="getStatusClass(request.status)">{{ $t(`meta.request_statuses.${request.status}`) }}</span></td>
           <td>
@@ -72,6 +78,7 @@ export default {
       params: {
         self: null,
         status: '',
+        kind: '',
         group_id: this.$route.params.id
       }
     }

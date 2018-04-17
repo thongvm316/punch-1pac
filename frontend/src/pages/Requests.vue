@@ -5,6 +5,10 @@
         <option value="">{{ $t('requests.placeholder.filterByStatus') }}</option>
         <option :value="status" v-for="status in meta.request_statuses">{{ $t(`meta.request_statuses.${status}`) }}</option>
       </select>
+      <select class="form-select" v-model="params.kind">
+        <option value="">{{ $t('requests.placeholder.filterByKind') }}</option>
+        <option :value="kind" v-for="kind in ['annual_leave', 'attendance']">{{ $t(`requests.kinds.${kind}`) }}</option>
+      </select>
     </div>
 
     <table class="table bg-light mt-4">
@@ -13,6 +17,7 @@
           <th>{{ $t('requests.tableHeader.date') }}</th>
           <th>{{ $t('requests.tableHeader.attendedAt') }}</th>
           <th>{{ $t('requests.tableHeader.leftAt') }}</th>
+          <th>{{ $t('requests.tableHeader.kind') }}</th>
           <th style="width: 600px">{{ $t('requests.tableHeader.reason') }}</th>
           <th>{{ $t('requests.tableHeader.status') }}</th>
           <th>{{ $t('requests.tableHeader.actions') }}</th>
@@ -20,9 +25,10 @@
       </thead>
       <tbody>
         <tr v-for="request in requests">
-          <td>{{ request.attendance_day | moment_l }}</td>
+          <td>{{ (request.attendance_day || request.annual_leave_day) | moment_l }}</td>
           <td>{{ request.attended_at }}</td>
           <td>{{ request.left_at }}</td>
+          <td><span :class="{ 'text-primary': request.kind === 'attendance', 'text-info': request.kind === 'annual_leave' }">{{ $t(`requests.kinds.${request.kind}`) }}</span></td>
           <td>{{ request.reason }}</td>
           <td><span class="label" :class="getStatusClass(request.status)">{{ $t(`meta.request_statuses.${request.status}`) }}</span></td>
           <td>
@@ -40,31 +46,34 @@
     <pagination action="getRequests" namespace="requests" v-if="pager.total_pages > 1"/>
 
     <modal :title="$t('requests.modal.editTitle')" :modal-open.sync="isEditModalOpen">
-      <div class="form-group">
-        <label class="form-label">{{ $t('requests.labels.date') }}</label>
-      <flat-pickr
-        :config="{enable: [updateParams.day], locale: flatpickrLocaleMapper[currentUser.language]}"
-        class="form-input daterange-picker"
-        v-model="updateParams.day"/>
+      <div v-if="selectedRequest.kind === 'attendance'">
+        <div class="form-group">
+          <label class="form-label">{{ $t('requests.labels.date') }}</label>
+          <flat-pickr
+            :config="{enable: [updateParams.day], locale: flatpickrLocaleMapper[currentUser.language]}"
+            class="form-input daterange-picker"
+            v-model="updateParams.day"/>
+        </div>
+        <div class="form-group" :class="{ 'has-error': errors.attended_at }">
+          <label class="form-label">{{ $t('requests.labels.attendedAt') }}</label>
+          <input type="time" step="60" class="form-input" v-model="updateParams.attended_at">
+          <p class="form-input-hint" v-if="errors.attended_at">{{ $t('requests.errors.bothAttendedLeft', { msg: errors.attended_at[0] }) }}</p>
+        </div>
+        <div class="form-group" :class="{ 'has-error': errors.left_at }">
+          <label class="form-label">{{ $t('requests.labels.leftAt') }}</label>
+          <input type="time" step="60" class="form-input" v-model="updateParams.left_at">
+          <p class="form-input-hint" v-if="errors.left_at">{{ $t('requests.errors.bothAttendedLeft', { msg: errors.left_at[0] }) }}</p>
+        </div>
+        <div class="form-group" :class="{ 'has-error': errors.reason }">
+          <label class="form-label">{{ $t('requests.labels.reason') }}</label>
+          <textarea class="form-input" v-model="updateParams.reason"></textarea>
+          <p class="form-input-hint" v-if="errors.reason">{{ errors.reason[0] }}</p>
+        </div>
+        <div class="form-group">
+          <button type="button" class="btn" @click="saveEditModal({id: currentId, params: updateParams}, updateRequest, $t('messages.request.updateSuccess'))">{{ $t('requests.btn.save') }}</button>
+        </div>
       </div>
-      <div class="form-group" :class="{ 'has-error': errors.attended_at }">
-        <label class="form-label">{{ $t('requests.labels.attendedAt') }}</label>
-        <input type="time" step="60" class="form-input" v-model="updateParams.attended_at">
-        <p class="form-input-hint" v-if="errors.attended_at">{{ $t('requests.errors.bothAttendedLeft', { msg: errors.attended_at[0] }) }}</p>
-      </div>
-      <div class="form-group" :class="{ 'has-error': errors.left_at }">
-        <label class="form-label">{{ $t('requests.labels.leftAt') }}</label>
-        <input type="time" step="60" class="form-input" v-model="updateParams.left_at">
-        <p class="form-input-hint" v-if="errors.left_at">{{ $t('requests.errors.bothAttendedLeft', { msg: errors.left_at[0] }) }}</p>
-      </div>
-      <div class="form-group" :class="{ 'has-error': errors.reason }">
-        <label class="form-label">{{ $t('requests.labels.reason') }}</label>
-        <textarea class="form-input" v-model="updateParams.reason"></textarea>
-        <p class="form-input-hint" v-if="errors.reason">{{ errors.reason[0] }}</p>
-      </div>
-      <div class="form-group">
-        <button type="button" class="btn" @click="saveEditModal({id: currentId, params: updateParams}, updateRequest, $t('messages.request.updateSuccess'))">{{ $t('requests.btn.save') }}</button>
-      </div>
+      <annual-leave-form :request="selectedRequest" v-if="selectedRequest.kind === 'annual_leave'" @finishRequest="isEditModalOpen = false"/>
     </modal>
 
     <confirm-dialog :title="$t('requests.confirmDialog.deleteTitle')" :deleteObject="deleteRequest" :objectId="selectedObject.id" :modal-open.sync="isOpenConfirmDialog">
@@ -80,6 +89,7 @@ import confirmDialog from '../mixins/confirm-dialog'
 import modal from '../mixins/modal'
 import flatpickrLocale from '../mixins/flatpickr-locale'
 import Pagination from '../components/Pagination'
+import AnnualLeaveForm from '../components/AnnualLeaveForm'
 import { mapState, mapActions } from 'vuex'
 
 export default {
@@ -89,9 +99,12 @@ export default {
 
   data () {
     return {
+      modalTitle: '',
       currentId: '',
+      selectedRequest: {},
       params: {
         self: true,
+        kind: '',
         status: ''
       },
       updateParams: {
@@ -106,6 +119,7 @@ export default {
   components: {
     MainLayout,
     flatPickr,
+    AnnualLeaveForm,
     Pagination
   },
 
@@ -123,11 +137,16 @@ export default {
 
   methods: {
     toggleEditModal (request) {
-      this.clearRequestErrors()
-      this.isEditModalOpen = !this.isEditModalOpen
-      this.currentId = request.id
-      const statuses = ['day', 'attended_at', 'left_at', 'reason']
-      statuses.forEach(v => { this.updateParams[v] = request[v] })
+      this.selectedRequest = request
+      if (this.selectedRequest.kind === 'attendance') {
+        this.clearRequestErrors()
+        this.isEditModalOpen = !this.isEditModalOpen
+        this.currentId = request.id
+        const statuses = ['day', 'attended_at', 'left_at', 'reason']
+        statuses.forEach(v => { this.updateParams[v] = request[v] })
+      } else if (this.selectedRequest.kind === 'annual_leave') {
+        this.isEditModalOpen = !this.isEditModalOpen
+      }
     },
 
     getStatusClass (status) {
