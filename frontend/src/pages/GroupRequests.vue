@@ -9,10 +9,10 @@
       </select>
     </div>
 
-    <table class="table table-scroll bg-light mt-5">
+    <table class="table bg-light mt-5">
       <thead>
         <tr>
-          <th class="cell-lg">{{ $t('requests.tableHeader.name') }}</th>
+          <th class="cell-lg no-break">{{ $t('requests.tableHeader.name') }}</th>
           <th class="cell-lg">{{ $t('requests.tableHeader.email') }}</th>
           <th class="cell-xs">{{ $t('requests.tableHeader.date') }}</th>
           <th class="cell-xs">{{ $t('requests.tableHeader.attendedAt') }}</th>
