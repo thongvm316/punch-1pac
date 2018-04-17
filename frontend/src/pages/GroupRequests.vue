@@ -35,9 +35,9 @@
             </div>
           </td>
           <td>{{ request.user.email }}</td>
-          <td class="cell-date text-center">{{ request.day | moment_l }}</td>
-          <td class="cell-date text-center">{{ request.attended_at }}</td>
-          <td class="cell-date text-center">{{ request.left_at }}</td>
+          <td class="text-center">{{ request.day | moment_l }}</td>
+          <td class="text-center">{{ request.attended_at }}</td>
+          <td class="text-center">{{ request.left_at }}</td>
           <td>{{ request.reason }}</td>
           <td class="text-center"><span class="label" :class="getStatusClass(request.status)">{{ $t(`meta.request_statuses.${request.status}`) }}</span></td>
           <td>
