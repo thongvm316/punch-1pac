@@ -26,8 +26,8 @@
 
 class Request < ApplicationRecord
   belongs_to :attendance, optional: true
-  belongs_to :user
-  belongs_to :admin, class_name: 'User', foreign_key: :admin_id, optional: true
+  belongs_to :user, class_name: 'User', foreign_key: 'user_id'
+  belongs_to :admin, class_name: 'User', foreign_key: 'admin_id', optional: true
   has_one :activity, as: :activitable, dependent: :destroy
 
   enum status: { pending: 0, approved: 1, rejected: 2 }
@@ -57,6 +57,7 @@ class Request < ApplicationRecord
     q = all
     q = where(user_id: UserGroup.with_group(params[:group_id])) if params[:group_id].present?
     q = where(status: params[:status]) if params[:status].present?
+    q = where(kind: params[:kind]) if params[:kind].present?
     q
   }
 
