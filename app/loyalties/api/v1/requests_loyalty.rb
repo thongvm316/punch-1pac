@@ -14,11 +14,14 @@ class Api::V1::RequestsLoyalty < ApplicationLoyalty
   end
 
   def approve?
-    @user.manager? && @record.pending?
+    return false unless @record.pending?
+    return true if @user.superadmin? || @user.owner?
+    return true if @user.admin? && @record.user.groups.select { |group| @user.groups.include?(group) }.present?
+    false
   end
 
   def reject?
-    @user.manager? && @record.pending?
+    approve?
   end
 
   def destroy?

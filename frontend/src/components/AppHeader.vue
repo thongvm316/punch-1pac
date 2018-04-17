@@ -1,6 +1,6 @@
 <template>
   <header class="header">
-    <div class="container grid-xl">
+    <div class="container">
       <div class="navbar">
         <section class="navbar-section">
           <router-link to="/dashboard" class="navbar-brand mr-4">
@@ -13,6 +13,7 @@
         </section>
         <section class="navbar-section">
           <punch/>
+          <annual-leave/>
           <notifications/>
           <div class="dropdown" :class="{ active: isDropdownActive }" @click="toggleDropdown" ref="dropdownMenu">
             <a class="dropdown-toggle">
@@ -38,8 +39,9 @@
 <script>
 import axios from 'axios'
 import dropdown from '../mixins/dropdown'
-import Notifications from '../components/Notifications.vue'
-import Punch from '../components/Punch.vue'
+import Notifications from './Notifications'
+import Punch from './Punch'
+import AnnualLeave from './AnnualLeave'
 import { mapState } from 'vuex'
 
 export default {
@@ -48,6 +50,7 @@ export default {
 
   components: {
     Notifications,
+    AnnualLeave,
     Punch
   },
 

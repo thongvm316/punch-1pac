@@ -19,6 +19,11 @@
     &.active .notification-dropdown {
       display: block;
     }
+
+    .menu {
+      left: initial;
+      right: 0;
+    }
   }
 
   .notification {

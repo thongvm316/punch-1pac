@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180410013522) do
+ActiveRecord::Schema.define(version: 20180416090610) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -174,7 +174,7 @@ ActiveRecord::Schema.define(version: 20180410013522) do
   end
 
   create_table "requests", force: :cascade do |t|
-    t.bigint "attendance_id", null: false
+    t.bigint "attendance_id"
     t.bigint "user_id", null: false
     t.string "reason", limit: 500, null: false
     t.time "attended_at"
@@ -182,8 +182,10 @@ ActiveRecord::Schema.define(version: 20180410013522) do
     t.integer "status", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "admin_reason", limit: 500, default: "", null: false
+    t.string "admin_reason"
     t.bigint "admin_id"
+    t.date "annual_leave_day"
+    t.integer "kind", default: 0, null: false
     t.index ["attendance_id"], name: "index_requests_on_attendance_id"
     t.index ["user_id"], name: "index_requests_on_user_id"
   end

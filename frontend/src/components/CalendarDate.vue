@@ -16,10 +16,10 @@
       <span href="#" class="calendar-event bg-error text-error text-center" v-if="localAttendance.leaving_status === 'leave_early'">
         {{ $t(`meta.attendance_statuses.${localAttendance.leaving_status}`) }}
       </span>
-      <span href="#" class="calendar-event bg-error text-error text-center" v-if="localAttendance.off_status">
+      <span href="#" class="calendar-event bg-info text-info text-center" v-if="localAttendance.off_status">
         {{ $t(`meta.attendance_statuses.${localAttendance.off_status}`) }}
       </span>
-      <span href="#" class="calendar-event bg-primary text-primary text-center" v-if="localAttendance.holiday">
+      <span href="#" class="calendar-event bg-gray text-gray text-center" v-if="localAttendance.holiday">
         {{ localAttendance.holiday.name }}
       </span>
     </div>
@@ -46,11 +46,12 @@ export default {
     ]),
 
     ...mapState('initialStates', [
+      'currentCompany',
       'meta'
     ]),
 
     isWeekend () {
-      return this.meta.weekend.includes(this.$moment(this.localAttendance.day).format('dddd').toLowerCase())
+      return this.currentCompany.breakdays.includes(this.$moment(this.localAttendance.day).format('dddd').toLowerCase())
     }
   },
 

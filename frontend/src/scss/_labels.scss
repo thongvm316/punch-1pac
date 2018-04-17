@@ -22,4 +22,8 @@
   &.label-error {
     @include label-variant($error-color, $error-color-light);
   }
+
+  &.label-info {
+    @include label-variant($info-color, $info-color-light);
+  }
 }

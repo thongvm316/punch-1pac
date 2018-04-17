@@ -11,6 +11,13 @@ FactoryBot.define do
     email { Faker::Internet.email }
     password { Faker::Internet.password }
     password_confirmation { password }
+
+    trait :with_groups do
+      after(:create) do |user|
+        user.groups = [create(:group, company: user.company)]
+      end
+    end
+
     trait :with_attendance do
       after(:create) do |user|
         user.attendances << create(:attendance)

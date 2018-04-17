@@ -9,10 +9,11 @@ class Api::V1::RequestsController < Api::V1::BaseController
     authorize!
     requests = Request.for_user(current_user, params['self'])
                       .search_by(params)
-                      .includes(:attendance, :admin)
+                      .includes(:attendance)
+                      .preload(:admin, :user)
                       .page(params[:page])
                       .per(params[:per_page])
-                      .order('attendances.id DESC')
+                      .order('requests.id DESC')
     render json: requests,
            root: 'requests',
            each_serializer: RequestSerializer,
@@ -51,7 +52,7 @@ class Api::V1::RequestsController < Api::V1::BaseController
 
   def reject
     authorize! @req
-    RequestService.new(current_user, @req).reject
+    RequestService.new(current_user, @req, reject_request_params).reject
     TrackAndNotifyActivityWorker.perform_async(current_user.id, @req.id, @req.class.to_s, 'reject')
     head(200)
   end
@@ -65,7 +66,11 @@ class Api::V1::RequestsController < Api::V1::BaseController
   private
 
   def request_params
-    params.require(:request).permit(:attendance_id, :reason, :attended_at, :left_at, :status, :admin_reason, :admin_id)
+    params.require(:request).permit(:attendance_id, :reason, :attended_at, :left_at, :kind, :annual_leave_day)
+  end
+
+  def reject_request_params
+    params.require(:request).permit(:admin_reason)
   end
 
   def set_request

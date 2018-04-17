@@ -29,7 +29,9 @@ next_month = Time.current + 1.month
 (prev_month.to_i..next_month.to_i).step(1.day) do |t|
   day = Time.zone.at(t)
   attendance = FactoryBot.create(:attendance, day: day, user: [user, superadmin][rand(2)])
-  FactoryBot.create(:request, attendance: attendance, user: attendance.user, status: Request.statuses.keys[rand(3)])
+  status = Request.statuses.keys[rand(3)]
+  reason = status == 'rejected' ? 'admin_reason' : nil
+  FactoryBot.create(:request, attendance: attendance, user: attendance.user, status: status, admin_reason: reason)
 end
 
 10.times do

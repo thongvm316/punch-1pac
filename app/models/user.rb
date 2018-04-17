@@ -12,7 +12,8 @@
 #  owner                  :boolean          default(FALSE), not null
 #  name                   :string           not null
 #  gender                 :integer          default("male"), not null
-#  position               :string avatar_data            :text
+#  position               :string
+#  avatar_data            :text
 #  language               :string           default("en"), not null
 #  reset_password_token   :string
 #  reset_password_sent_at :datetime
@@ -57,9 +58,10 @@ class User < ApplicationRecord
   include ImageUploader::Attachment.new(:avatar)
 
   scope :with_today_attendance, -> {
+    sanitized_today_cond = sanitize_sql("attendances.day = '#{Time.current}'")
     select('users.id, users.name, users.avatar_data, users.email',
            'attendances.id as attendance_id, attendances.attended_at as attended_at, attendances.left_at as left_at')
-      .joins("LEFT JOIN attendances ON users.id = attendances.user_id AND attendances.day = '#{Time.current}'")
+      .joins("LEFT JOIN attendances ON users.id = attendances.user_id AND #{sanitized_today_cond}")
   }
 
   scope :not_in_group, ->(group_id) {

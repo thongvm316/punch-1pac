@@ -50,7 +50,8 @@ export default {
     punchOut: 'Punch Out',
     punchOutSuccess: 'You punched out at {at}',
     punchOutTitle: 'Punch Out',
-    punchOutConfirm: 'Do you intent to punch out at {at} ?'
+    punchOutConfirm: 'Do you intent to punch out at {at} ?',
+    btnAnnualLeave: 'Annual leave'
   },
   footer: {
     terms: 'Terms',
@@ -158,11 +159,8 @@ export default {
     groupTitle: 'Requests of {name} group',
     placeholder: {
       filterByGroup: 'Filter by group',
-      filterByStatus: 'Filter by status'
-    },
-    tab: {
-      my: 'My Requests',
-      group: 'Group Requests'
+      filterByStatus: 'Filter by status',
+      filterByKind: 'Filter by kind'
     },
     labels: {
       date: 'Date',
@@ -178,13 +176,14 @@ export default {
       status: 'Status',
       leftAt: 'Left At',
       reason: 'Reason',
-      actions: 'Actions'
+      actions: 'Actions',
+      kind: 'Kind'
     },
     btn: {
       save: 'Save'
     },
     modal: {
-      editTitle: 'Edit Title'
+      editTitle: 'Edit request'
     },
     tooltip: {
       edit: 'Edit request',
@@ -198,6 +197,10 @@ export default {
     confirmDialog: {
       deleteTitle: 'Delete request',
       deleteMsg: 'Are you sure to delete this request permanently ?'
+    },
+    kinds: {
+      annual_leave: 'Annual leave',
+      attendance: 'Attendance'
     }
   },
   attendances: {
@@ -218,10 +221,6 @@ export default {
       leftAt: 'Left at',
       status: 'Status',
       actions: 'Actions'
-    },
-    tab: {
-      my: 'My Attendances',
-      group: 'Group Attendances'
     },
     labels: {
       date: 'Date',
@@ -519,5 +518,16 @@ export default {
   },
   statusCards: {
     dayNum: '0 day | 1 day | {num} days'
+  },
+  annualLeave: {
+    title: 'Request an annual leave',
+    labels: {
+      annualLeaveDay: 'Annual leave day',
+      reason: 'Reason'
+    },
+    createSuccessMsg: 'An annual leave request is created',
+    updateSuccessMsg: 'Your annual leave request is updated',
+    submit: 'Submit',
+    save: 'Save'
   }
 }

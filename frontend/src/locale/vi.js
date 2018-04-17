@@ -50,7 +50,8 @@ export default {
     punchOut: 'Về đây',
     punchOutSuccess: 'Bạn về lúc {at}',
     punchOutTitle: 'Về đây',
-    punchOutConfirm: 'Bạn có chắc muốn về lúc {at} ?'
+    punchOutConfirm: 'Bạn có chắc muốn về lúc {at} ?',
+    btnAnnualLeave: 'Nghỉ phép'
   },
   footer: {
     terms: 'Quy định',
@@ -158,7 +159,8 @@ export default {
     groupTitle: 'Yêu cầu từ nhóm {name}',
     placeholder: {
       filterByGroup: 'Lọc theo nhóm',
-      filterByStatus: 'Lọc theo trạng thái'
+      filterByStatus: 'Lọc theo trạng thái',
+      filterByKind: 'Lọc theo loại'
     },
     labels: {
       date: 'Ngày',
@@ -174,7 +176,8 @@ export default {
       status: 'Trạng thái',
       leftAt: 'Về lúc',
       reason: 'Lý do',
-      actions: 'Thao tác'
+      actions: 'Thao tác',
+      kind: 'Loại'
     },
     btn: {
       save: 'Lưu'
@@ -194,6 +197,10 @@ export default {
     confirmDialog: {
       deleteTitle: 'Xoá yêu cầu',
       deleteMsg: 'Bạn có chắc muốn xoá yêu cầu này vĩnh viễn ?'
+    },
+    kinds: {
+      annual_leave: 'Nghỉ phép',
+      attendance: 'Hiện diện'
     }
   },
   attendances: {
@@ -511,5 +518,16 @@ export default {
   },
   statusCards: {
     dayNum: '0 ngày | 1 ngày | {num} ngày'
+  },
+  annualLeave: {
+    title: 'Xin nghỉ phép',
+    labels: {
+      annualLeaveDay: 'Ngày xin nghỉ',
+      reason: 'Lý do'
+    },
+    createSuccessMsg: 'Yêu cầu xin nghỉ đã được gửi',
+    updateSuccessMsg: 'Đã cập nhật ngày xin nghỉ phép',
+    submit: 'Gửi',
+    save: 'Lưu'
   }
 }

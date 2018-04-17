@@ -46,17 +46,17 @@
 @include padding-variant(5, $unit-5); //Padding variation 1rem
 
 // overwrite background color
-@include bg-color-variant(".bg-primary", $secondary-color);
-@include bg-color-variant(".bg-gray", $gray-color-lightest);
-@include bg-color-variant(".bg-success", $success-color-light);
-@include bg-color-variant(".bg-warning", $warning-color-light);
-@include bg-color-variant(".bg-error", $error-color-light);
-@include bg-color-variant(".bg-info", $info-color-light);
+@include bg-color-variant('.bg-primary', $secondary-color);
+@include bg-color-variant('.bg-gray', $gray-color-lightest);
+@include bg-color-variant('.bg-success', $success-color-light);
+@include bg-color-variant('.bg-warning', $warning-color-light);
+@include bg-color-variant('.bg-error', $error-color-light);
+@include bg-color-variant('.bg-info', $info-color-light);
 
 // overwrite text color
-@include text-color-variant(".text-secondary", $gray-color-dark);
-@include text-color-variant(".text-gray", $gray-color);
-@include text-color-variant(".text-success", $success-color);
-@include text-color-variant(".text-warning", $warning-color);
-@include text-color-variant(".text-error", $error-color);
-@include text-color-variant(".text-info", $info-color);
+@include text-color-variant('.text-secondary', $gray-color-dark);
+@include text-color-variant('.text-gray', $gray-color);
+@include text-color-variant('.text-success', $success-color);
+@include text-color-variant('.text-warning', $warning-color);
+@include text-color-variant('.text-error', $error-color);
+@include text-color-variant('.text-info', $info-color);
