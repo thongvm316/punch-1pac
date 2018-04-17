@@ -171,6 +171,7 @@ export default {
         const currentDay = this.$moment(`${date.year()}-${date.format('MM')}-${day}`, 'YYYY-MM-D')
         let attendance = { id: null, day: currentDay.format('YYYY-MM-DD'), attended_at: '', left_at: '', attending_status: '', leaving_status: '', off_status: '', holiday: null }
         let holiday = null
+        const tmpAttendance = response.attendances.find(item => currentDay.format('YYYY-MM-DD') === item.day)
 
         // Check if current rendering day is a holiday
         if (response.holidays) holiday = findHolidayByDay.call(this, currentDay)
@@ -178,10 +179,11 @@ export default {
         // If currentDay is a holiday, set holiday object into attendance object
         if (holiday) attendance = Object.assign({}, attendance, { holiday: holiday })
 
+        // If currentDay is an annual leave day
+        if (tmpAttendance && tmpAttendance.off_status === 'annual_leave') attendance = Object.assign({}, attendance, tmpAttendance)
+
         // A valid day is a day before today and after current user's join date
         if (this.today.isSameOrAfter(currentDay, 'day') && currentDay.isSameOrAfter(userJoinDate, 'day')) {
-          const tmpAttendance = response.attendances.find(item => currentDay.format('YYYY-MM-DD') === item.day)
-
           // If current user already attended on current day then set attendance information
           // Else if current user did not attend on current day then check if current day is weekend or unpaid leave day
           if (tmpAttendance) {
