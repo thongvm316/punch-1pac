@@ -18,13 +18,13 @@ RSpec.describe Api::V1::RequestsController, type: :controller do
 
   shared_examples 'request status is not pending' do
     context 'when request status is approved' do
-      let(:req) { create :request, user: login_user, status: 'approved' }
+      let(:req) { create :request, user: login_user, status: 'approved', admin_reason: 'hehehe', admin: create(:user, role: 'admin') }
 
       its(:code) { is_expected.to eq '401' }
     end
 
     context 'when request status is rejected' do
-      let(:req) { create :request, user: login_user, status: 'rejected' }
+      let(:req) { create :request, user: login_user, status: 'rejected', admin_reason: 'hehehe', admin: create(:user, role: 'admin') }
 
       its(:code) { is_expected.to eq '401' }
     end
@@ -133,64 +133,122 @@ RSpec.describe Api::V1::RequestsController, type: :controller do
   describe 'POST #create' do
     let(:login_user) { create :user, company: company, role: 'admin' }
 
-    context 'when params are invalid' do
-      let(:attendance) { create :attendance }
-      let(:request_params) { attributes_for(:request, reason: 'a' * 501) }
+    context 'when create attendance request' do
+      let(:attendance) { create :attendance, user: login_user }
 
-      subject { post :create, params: { request: request_params.merge(attendance_id: attendance.id, user: login_user) } }
+      context 'when params are invalid' do
+        let(:request_params) { attributes_for(:request, attendance_id: attendance.id, reason: 'a' * 501) }
 
-      its(:code) { is_expected.to eq '422' }
-      its(:body) { is_expected.to be_json_as(response_422(reason: Array)) }
+        subject { post :create, params: { request: request_params } }
+
+        its(:code) { is_expected.to eq '422' }
+        its(:body) { is_expected.to be_json_as(response_422(reason: Array)) }
+      end
+
+      context 'when params are valid' do
+        let(:request_params) { attributes_for(:request, attendance_id: attendance.id) }
+
+        subject { post :create, params: { request: request_params } }
+
+        its(:code) { is_expected.to eq '201' }
+        its(:body) { is_expected.to be_json_as(response_request) }
+        it 'should change number of request' do
+          expect { subject }.to change(Request, :count).by(1)
+        end
+      end
     end
 
-    context 'when params are valid' do
-      let(:attendance) { create :attendance }
-      let(:request_params) { attributes_for(:request) }
+    context 'when create annual_leave request' do
+      context 'when params are invalid' do
+        let(:request_params) { attributes_for(:request, reason: 'a' * 501, annual_leave_day: nil, kind: 'annual_leave') }
 
-      subject { post :create, params: { request: request_params.merge(attendance_id: attendance.id, user: login_user) } }
+        subject { post :create, params: { request: request_params } }
 
-      its(:code) { is_expected.to eq '201' }
-      its(:body) { is_expected.to be_json_as(response_request) }
-      it 'should change number of request' do
-        expect { subject }.to change(Request, :count).by(1)
+        its(:code) { is_expected.to eq '422' }
+        its(:body) { is_expected.to be_json_as(response_422(reason: Array, annual_leave_day: Array)) }
+      end
+
+      context 'when params are valid' do
+        let(:request_params) { attributes_for(:request, kind: 'annual_leave', annual_leave_day: Time.current) }
+
+        subject { post :create, params: { request: request_params } }
+
+        its(:code) { is_expected.to eq '201' }
+        its(:body) { is_expected.to be_json_as(response_request) }
+        it 'should change number of request' do
+          expect { subject }.to change(Request, :count).by(1)
+          req = Request.last
+          expect(req.annual_leave_day).to be_a(Date)
+          expect(req.kind).to eq 'annual_leave'
+        end
       end
     end
   end
 
   describe 'PATCH #update' do
     let(:login_user) { create :user, company: company, role: 'member' }
-    let(:req) { create :request, user: login_user }
 
     context 'when request is not existed' do
+      let(:req) { create :request, user: login_user }
       subject { patch :update, params: { id: req.id + 1 }, format: :json }
 
       its(:code) { is_expected.to eq '404' }
       its(:body) { is_expected.to be_json_as(response_404) }
     end
 
-    context 'when params are invalid' do
-      subject { patch :update, params: { id: req.id, request: { reason: 'a' * 501 } } }
+    context 'when request.kind = attendance' do
+      let(:req) { create :request, user: login_user }
 
-      its(:code) { is_expected.to eq '422' }
-      its(:body) { is_expected.to be_json_as(response_422(reason: Array)) }
-    end
+      context 'when params are invalid' do
+        subject { patch :update, params: { id: req.id, request: { reason: 'a' * 501 } } }
 
-    context 'when params are valid' do
-      subject { patch :update, params: { id: req.id, request: { reason: 'hehe' } } }
+        its(:code) { is_expected.to eq '422' }
+        its(:body) { is_expected.to be_json_as(response_422(reason: Array)) }
+      end
 
-      its(:code) { is_expected.to eq '200' }
-      its(:body) { is_expected.to be_json_as(response_request) }
-      it 'should change request attributes' do
-        is_expected
-        expect(Request.find(req.id).reason).to eq 'hehe'
+      context 'when params are valid' do
+        subject { patch :update, params: { id: req.id, request: { reason: 'hehe' } } }
+
+        its(:code) { is_expected.to eq '200' }
+        its(:body) { is_expected.to be_json_as(response_request) }
+        it 'should change request attributes' do
+          is_expected
+          expect(Request.find(req.id).reason).to eq 'hehe'
+        end
       end
     end
 
-    context 'when fails authorize' do
+    context 'when request.kind = annual_leave' do
+      let(:now) { Date.current }
+      let(:req) { create :request, user: login_user, kind: 'annual_leave', annual_leave_day: now }
+
+      context 'when params are invalid' do
+        subject { patch :update, params: { id: req.id, request: { reason: 'a' * 501, annual_leave_day: nil } } }
+
+        its(:code) { is_expected.to eq '422' }
+        its(:body) { is_expected.to be_json_as(response_422(reason: Array, annual_leave_day: Array)) }
+      end
+
+      context 'when params are valid' do
+        subject { patch :update, params: { id: req.id, request: { reason: 'hehe', annual_leave_day: now + 1.day } } }
+
+        its(:code) { is_expected.to eq '200' }
+        its(:body) { is_expected.to be_json_as(response_request) }
+        it 'should change request attributes' do
+          is_expected
+          req.reload
+          expect(req.reason).to eq 'hehe'
+          expect(req.annual_leave_day).to eq(now + 1.day)
+        end
+      end
+    end
+
+    context 'when request is not pending' do
+      let(:req) { create :request, user: login_user, status: 'approved' }
+
       subject { patch :update, params: { id: req.id, request: { reason: 'hehe' } } }
 
       it_behaves_like 'request status is not pending'
-      it_behaves_like 'request not belongs to current user'
     end
   end
 
@@ -208,6 +266,7 @@ RSpec.describe Api::V1::RequestsController, type: :controller do
 
     context 'when login user is admin' do
       let(:login_user) { create :user, company: company, role: 'admin' }
+
       context 'when request is not existed' do
         let(:req) { create :request }
 
@@ -219,9 +278,10 @@ RSpec.describe Api::V1::RequestsController, type: :controller do
 
       context 'when request is existed' do
         let(:company) { create :company, :with_business_days }
-        let(:login_user) { create :user, company: company, role: 'admin' }
-        let(:attendance) { create :attendance, user: login_user, attended_at: '08:30', attending_status: 'attend_late' }
-        let(:req) { create :request, attended_at: '07:55', left_at: '18:00', attendance: attendance, user: create(:user, company: company) }
+        let(:login_user) { create :user, :with_groups, company: company, role: 'admin' }
+        let(:req_user) { create :user, groups: login_user.groups, company: company }
+        let(:attendance) { create :attendance, user: req_user, attended_at: '08:30', attending_status: 'attend_late' }
+        let(:req) { create :request, attended_at: '07:55', left_at: '18:00', attendance: attendance, user: req_user }
 
         before { Timecop.freeze(Time.zone.local(2018, 1, 3)) }
 
@@ -237,33 +297,50 @@ RSpec.describe Api::V1::RequestsController, type: :controller do
           expect(req.status).to eq 'approved'
           expect(attendance.attended_at.strftime('%H:%M')).to eq '07:55'
           expect(attendance.attending_status).to eq 'attend_ok'
-          expect(req.admin_id).not_to be_nil
+          expect(req.admin_id).to eq login_user.id
         end
       end
 
-      context 'when fails authorize' do
+      context 'when request.user is not in login_user.group' do
+        let(:login_user) { create :user, :with_groups, company: company, role: 'admin' }
+        let(:req_user) { create :user, :with_groups, company: company }
+        let(:attendance) { create :attendance, user: req_user }
+        let(:req) { create :request, attendance: attendance, user: req_user }
+
         subject { post :approve, params: { id: req.id } }
 
-        it_behaves_like 'request status is not pending'
+        its(:code) { is_expected.to eq '401' }
+        its(:body) { is_expected.to be_json_as(response_401) }
       end
+    end
+
+    context 'when request is not pending' do
+      let(:login_user) { create :user, company: company, role: 'admin' }
+      let(:req) { create :request, attended_at: '07:55', attendance: attendance, user: create(:user, company: company) }
+
+      subject { post :approve, params: { id: req.id } }
+
+      it_behaves_like 'request status is not pending'
     end
   end
 
   describe 'POST #reject' do
-    let(:req) { create :request, user: create(:user, company: company) }
-
     context 'when login user is member' do
       let(:login_user) { create :user, company: company, role: 'member' }
+      let(:req) { create :request, user: create(:user, company: company) }
 
       subject { post :reject, params: { id: req.id } }
 
       its(:code) { is_expected.to eq '401' }
+      its(:body) { is_expected.to be_json_as(response_401) }
     end
 
     context 'when login user is admin' do
-      let(:login_user) { create :user, company: company, role: 'admin' }
+      let(:login_user) { create :user, :with_groups, company: company, role: 'admin' }
 
       context 'when request is not existed' do
+        let(:req) { create :request, user: create(:user, groups: login_user.groups, company: company) }
+
         subject { post :reject, params: { id: req.id + 1 }, format: :json }
 
         its(:code) { is_expected.to eq '404' }
@@ -271,22 +348,39 @@ RSpec.describe Api::V1::RequestsController, type: :controller do
       end
 
       context 'when request is existed' do
-        subject { post :reject, params: { id: req.id } }
+        let(:req) { create :request, user: create(:user, groups: login_user.groups, company: company) }
+
+        subject { post :reject, params: { id: req.id, request: { admin_reason: 'hehehehe' } } }
 
         its(:code) { is_expected.to eq '200' }
         it 'should change status to rejected' do
           is_expected
           req.reload
           expect(req.status).to eq 'rejected'
-          expect(req.admin_id).not_to be_nil
+          expect(req.admin_id).to eq login_user.id
+          expect(req.admin_reason).to be_truthy
         end
       end
 
-      context 'when fails authorize' do
-        subject { post :reject, params: { id: req.id } }
+      context 'when request.user is not in login_user.group' do
+        let(:req_user) { create :user, :with_groups, company: company }
+        let(:attendance) { create :attendance, user: req_user }
+        let(:req) { create :request, attendance: attendance, user: req_user }
 
-        it_behaves_like 'request status is not pending'
+        subject { post :approve, params: { id: req.id } }
+
+        its(:code) { is_expected.to eq '401' }
+        its(:body) { is_expected.to be_json_as(response_401) }
       end
+    end
+
+    context 'when request is not pending' do
+      let(:login_user) { create :user, :with_groups, company: company, role: 'admin' }
+      let(:req) { create :request, user: create(:user, groups: login_user.groups, company: company) }
+
+      subject { post :reject, params: { id: req.id } }
+
+      it_behaves_like 'request status is not pending'
     end
   end
 
@@ -311,7 +405,9 @@ RSpec.describe Api::V1::RequestsController, type: :controller do
       end
     end
 
-    context 'when fails authorize' do
+    context 'when request not belong to login_user' do
+      let!(:req) { create :request, user: create(:user, company: company) }
+
       subject { delete :destroy, params: { id: req.id } }
 
       it_behaves_like 'request not belongs to current user'

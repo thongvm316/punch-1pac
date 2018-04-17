@@ -8,5 +8,9 @@ FactoryBot.define do
     attended_at { Time.current }
     left_at { Time.current }
     status 'pending'
+    admin_reason nil
+    admin_id nil
+    kind 'attendance'
+    annual_leave_day nil
   end
 end
