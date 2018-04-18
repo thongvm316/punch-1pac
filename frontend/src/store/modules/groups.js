@@ -9,7 +9,7 @@ const state = {
 const getters = {
   filterGroups (state) {
     return function (query) {
-      const regex = new RegExp(`${query}`, 'g')
+      const regex = new RegExp(`${query}`, 'gi')
       return query ? state.groups.filter(group => group.name.match(regex)) : state.groups
     }
   }

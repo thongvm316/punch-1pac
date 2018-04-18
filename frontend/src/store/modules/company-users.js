@@ -8,7 +8,7 @@ const state = {
 const getters = {
   filterByEmail (state) {
     return function (query) {
-      const regex = new RegExp(`${query}`, 'g')
+      const regex = new RegExp(`${query}`, 'gi')
       return query ? state.users.filter(user => user.email.match(regex)) : state.users
     }
   }
