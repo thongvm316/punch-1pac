@@ -133,7 +133,11 @@ export default {
     recentActivities: 'Hoạt động gần đây'
   },
   notifications: {
-    title: 'Thông báo'
+    title: 'Thông báo',
+    btn: {
+      approve: 'Duyệt yêu cầu',
+      reject: 'Từ chối yêu cầu'
+    }
   },
   groups: {
     title: 'Nhóm',
@@ -481,7 +485,9 @@ export default {
     },
     request: {
       createSuccess: 'Yêu cầu mới đã được tạo',
-      updateSuccess: 'Thông tin yêu cầu đã được cập nhật'
+      updateSuccess: 'Thông tin yêu cầu đã được cập nhật',
+      approvedSuccess: 'Yêu cầu đã được phê duyệt',
+      rejectedSuccess: 'Yêu cầu đã bị loại bỏ'
     },
     holiday: {
       createSuccess: 'Ngày lễ đã được tạo',

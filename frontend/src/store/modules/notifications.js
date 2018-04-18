@@ -52,6 +52,22 @@ const actions = {
     return axios.post(`/notifications/${id}/read`)
                 .then(response => commit(types.READ_NOTIFICATIONS))
                 .catch(error => { throw error })
+  },
+
+  approveRequest ({ commit }, requestId) {
+    return axios.post(`/requests/${requestId}/approve`)
+                .then(response => {
+                  return response
+                })
+                .catch(error => { throw error })
+  },
+
+  rejectRequest ({ commit }, requestId) {
+    return axios.post(`/requests/${requestId}/reject`)
+                .then(response => {
+                  return response
+                })
+                .catch(error => { throw error })
   }
 }
 
