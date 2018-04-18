@@ -3,9 +3,13 @@
   font-size: .7rem;
   border-radius: $border-radius;
 
-  th.no-break {
+  td {
     white-space: nowrap;
-    min-width: 200px;
+    &.break {
+      white-space: normal;
+      min-width: 200px;
+      max-width: 400px;
+    }
   }
 
   &.table-scroll {
@@ -16,6 +20,7 @@
     th {
       padding-left: 0;
       padding-right: 0;
+      text-align: center;
     }
 
     .cell {
@@ -48,10 +53,9 @@
 
   th {
     border-bottom: $border-width solid $border-color;
-    text-align: center;
     white-space: nowrap;
-    padding-left: 0.8rem;
-    padding-right: 0.8rem;
+    padding-left: 0.4rem;
+    padding-right: 0.4rem;
 
     svg {
       height: 0.6rem;
