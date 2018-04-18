@@ -133,7 +133,11 @@ export default {
     recentActivities: 'Recent activities'
   },
   notifications: {
-    title: 'Notifications'
+    title: 'Notifications',
+    btn: {
+      approve: 'Approve',
+      reject: 'Reject'
+    }
   },
   groups: {
     title: 'Groups',
@@ -481,7 +485,9 @@ export default {
     },
     request: {
       createSuccess: 'Request is created',
-      updateSuccess: 'Request is updated'
+      updateSuccess: 'Request is updated',
+      approvedSuccess: 'Request is approved',
+      rejectedSuccess: 'Request is rejected'
     },
     holiday: {
       createSuccess: 'Holiday is created',
