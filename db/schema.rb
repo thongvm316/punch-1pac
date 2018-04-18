@@ -75,17 +75,20 @@ ActiveRecord::Schema.define(version: 20180416090610) do
     t.string "off_status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "working_hours", default: 0, null: false
     t.index ["user_id", "day"], name: "index_attendances_on_user_id_and_day", unique: true
     t.index ["user_id"], name: "index_attendances_on_user_id"
   end
 
   create_table "business_days", force: :cascade do |t|
     t.bigint "company_id", null: false
-    t.time "started_at", null: false
-    t.time "ended_at", null: false
     t.string "weekday", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.time "morning_started_at", null: false
+    t.time "morning_ended_at", null: false
+    t.time "afternoon_started_at", null: false
+    t.time "afternoon_ended_at", null: false
     t.index ["company_id"], name: "index_business_days_on_company_id"
   end
 
@@ -100,7 +103,6 @@ ActiveRecord::Schema.define(version: 20180416090610) do
     t.string "tax_code"
     t.boolean "activated", default: true, null: false
     t.string "timezone", default: "Asia/Hanoi", null: false
-    t.float "breaktime", default: 1.0, null: false
     t.text "logo_data"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

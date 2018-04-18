@@ -12,7 +12,6 @@ FactoryBot.define do
     tax_code { Faker::Internet.password }
     activated 1
     timezone 'Asia/Bangkok'
-    breaktime 1.0
 
     trait :with_default_group do
       after(:create) do |company|
@@ -23,7 +22,7 @@ FactoryBot.define do
     trait :with_business_days do
       after(:create) do |company|
         %w[monday tuesday wednesday thursday friday].each do |wday|
-          company.business_days << create(:business_day, started_at: '08:00', ended_at: '17:30', weekday: wday)
+          company.business_days << create(:business_day, morning_started_at: '08:00', morning_ended_at: '12:00', afternoon_started_at: '13:30', afternoon_ended_at: '17:30', weekday: wday)
         end
       end
     end

@@ -1,13 +1,21 @@
 # frozen_string_literal: true
 
 class BusinessDaySerializer < ApplicationSerializer
-  attributes :id, :started_at, :ended_at, :weekday
+  attributes :id, :weekday, :morning_started_at, :morning_ended_at, :afternoon_started_at, :afternoon_ended_at
 
-  def started_at
-    object.started_at.strftime('%H:%M')
+  def morning_started_at
+    object.morning_started_at.strftime('%H:%M')
   end
 
-  def ended_at
-    object.ended_at.strftime('%H:%M')
+  def morning_ended_at
+    object.morning_ended_at.strftime('%H:%M')
+  end
+
+  def afternoon_started_at
+    object.afternoon_started_at.strftime('%H:%M')
+  end
+
+  def afternoon_ended_at
+    object.afternoon_ended_at.strftime('%H:%M')
   end
 end

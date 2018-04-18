@@ -256,8 +256,8 @@ RSpec.describe Api::V1::RequestsController, type: :controller do
     context 'when login user is member' do
       let(:company) { create :company, :with_business_days }
       let(:login_user) { create :user, company: company, role: 'member' }
-      let(:attendance) { create :attendance, user: login_user, attended_at: '08:30', attending_status: 'attend_late' }
-      let(:req) { create :request, attended_at: '07:55', attendance: attendance, user: create(:user, company: company) }
+      let(:attendance) { create :attendance, user: login_user, attended_at: '01:30', attending_status: 'attend_late' }
+      let(:req) { create :request, attended_at: '00:55', attendance: attendance, user: create(:user, company: company) }
 
       subject { post :approve, params: { id: req.id } }
 

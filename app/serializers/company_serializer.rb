@@ -2,7 +2,7 @@
 
 class CompanySerializer < ApplicationSerializer
   attributes :id, :namespace, :name, :country, :industry, :address, :phone_number, :postal_code, :tax_code, :activated,
-             :timezone, :breaktime, :breakdays, :logo_url
+             :timezone, :logo_url
 
   def logo_url
     ActionController::Base.helpers.asset_url(object.logo_url)

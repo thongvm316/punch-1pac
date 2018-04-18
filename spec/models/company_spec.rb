@@ -20,7 +20,6 @@ RSpec.describe Company, type: :model do
     it { should validate_presence_of(:industry) }
     it { should validate_presence_of(:address) }
     it { should validate_presence_of(:phone_number) }
-    it { should validate_presence_of(:breaktime) }
   end
 
   describe 'Upload logo' do

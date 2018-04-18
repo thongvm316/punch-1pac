@@ -25,6 +25,6 @@ class Api::V1::CompaniesController < Api::V1::BaseController
   private
 
   def company_params
-    params.require(:company).permit(:name, :country, :industry, :address, :phone_number, :postal_code, :tax_code, :logo, :timezone, :breaktime)
+    params.require(:company).permit(:name, :country, :industry, :address, :phone_number, :postal_code, :tax_code, :logo, :timezone)
   end
 end

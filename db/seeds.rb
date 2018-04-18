@@ -4,7 +4,7 @@ company = FactoryBot.create(:company)
 user = FactoryBot.create(:user, email: 'wofi.minh@1pac.vn', password: 'password', password_confirmation: 'password', company: company, created_at: Time.current.beginning_of_year)
 superadmin = FactoryBot.create(:user, email: 'example@1pac.vn', password: 'password', password_confirmation: 'password', company: company, role: 'superadmin', created_at: Time.current.beginning_of_year)
 
-%w[monday tuesday wednesday thursday friday].each { |day| FactoryBot.create(:business_day, weekday: day, started_at: '01:00', ended_at: '10:30', company: company) }
+%w[monday tuesday wednesday thursday friday].each { |day| FactoryBot.create(:business_day, weekday: day, morning_started_at: '01:00', morning_ended_at: '05:00', afternoon_started_at: '06:30', afternoon_ended_at: '10:30', company: company) }
 FactoryBot.create(:allowed_ip, ip_address: '127.0.0.1', company: company)
 FactoryBot.create_list(:allowed_ip, 3, company: company)
 FactoryBot.create_list(:session, 4, user: superadmin, device_type: %w[desktop smartphone tablet][rand(3)])

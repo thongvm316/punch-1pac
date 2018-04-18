@@ -49,8 +49,10 @@ module JsonResponseHelper
   def response_business_day
     {
       id: Integer,
-      started_at: hour_min_response,
-      ended_at: hour_min_response,
+      morning_started_at: hour_min_response,
+      morning_ended_at: hour_min_response,
+      afternoon_started_at: hour_min_response,
+      afternoon_ended_at: hour_min_response,
       weekday: String
     }
   end
@@ -83,8 +85,6 @@ module JsonResponseHelper
       tax_code: nullable_response(String),
       activated: boolean_response,
       timezone: String,
-      breaktime: Float,
-      breakdays: Array,
       logo_url: String
     }
   end
@@ -177,6 +177,7 @@ module JsonResponseHelper
       attending_status: nullable_response(String),
       leaving_status:   nullable_response(String),
       off_status:       nullable_response(String),
+      working_hours:    Integer,
       user:             response_user
     }
   end
