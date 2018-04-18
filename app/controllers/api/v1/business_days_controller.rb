@@ -37,7 +37,7 @@ class Api::V1::BusinessDaysController < Api::V1::BaseController
   private
 
   def business_day_params
-    params.require(:business_day).permit(:started_at, :ended_at, :weekday)
+    params.require(:business_day).permit(:morning_started_at, :morning_ended_at, :afternoon_started_at, :afternoon_ended_at, :weekday)
   end
 
   def set_business_day

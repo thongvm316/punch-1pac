@@ -165,7 +165,7 @@ RSpec.describe Api::V1::AttendancesController, type: :controller do
 
     context 'when attendance is checked in and not checked out yet' do
       let(:local_time) { Time.zone.local(2017, 12, 20, 10) }
-      let(:atd) { create :attendance, user: login_user, left_at: nil, leaving_status: nil, updated_at: local_time }
+      let(:atd) { create :attendance, user: login_user, attended_at: '10:30', left_at: nil, leaving_status: nil, updated_at: local_time }
 
       before { Timecop.freeze(local_time + 1.hour) }
 
@@ -180,7 +180,248 @@ RSpec.describe Api::V1::AttendancesController, type: :controller do
         attendance = Attendance.find(atd.id)
         expect(attendance.left_at.strftime('%H:%M')).to eq Time.current.strftime('%H:%M')
         expect(attendance.leaving_status).to eq 'leave_early'
+        expect(attendance.working_hours).not_to eq 0
       end
+    end
+
+    context 'when user go before morning start and leave after afternoon end' do
+      let(:local_time) { Time.zone.local(2017, 12, 20, 17, 37) }
+      let(:atd) { create :attendance, user: login_user, attended_at: '07:37', left_at: nil, leaving_status: nil, updated_at: local_time }
+
+      before { Timecop.freeze(local_time) }
+      after { Timecop.return }
+      subject { patch :update, params: { user_id: login_user.id, id: atd.id } }
+
+      it {
+        is_expected
+        attendance = Attendance.find(atd.id)
+        expect(attendance.leaving_status).to eq 'leave_ok'
+        expect(attendance.working_hours).to eq 28800
+      }
+    end
+
+    context 'when user take off in afternoon' do
+      let(:local_time) { Time.zone.local(2017, 12, 20, 12, 30) }
+      let(:atd) { create :attendance, user: login_user, attended_at: '07:37', left_at: nil, leaving_status: nil, updated_at: local_time }
+
+      before { Timecop.freeze(local_time) }
+      after { Timecop.return }
+      subject { patch :update, params: { user_id: login_user.id, id: atd.id } }
+
+      it {
+        is_expected
+        attendance = Attendance.find(atd.id)
+        expect(attendance.leaving_status).to eq 'leave_early'
+        expect(attendance.working_hours).to eq 14400
+      }
+    end
+
+    context 'when user take off in morning' do
+      let(:local_time) { Time.zone.local(2017, 12, 20, 17, 30) }
+      let(:atd) { create :attendance, user: login_user, attended_at: '13:00', left_at: nil, leaving_status: nil, updated_at: local_time }
+
+      before { Timecop.freeze(local_time) }
+      after { Timecop.return }
+      subject { patch :update, params: { user_id: login_user.id, id: atd.id } }
+
+      it {
+        is_expected
+        attendance = Attendance.find(atd.id)
+        expect(attendance.leaving_status).to eq 'leave_ok'
+        expect(attendance.working_hours).to eq 14400
+      }
+    end
+
+    context 'when user go before morning start and leave 3:00' do
+      let(:local_time) { Time.zone.local(2017, 12, 20, 15, 30) }
+      let(:atd) { create :attendance, user: login_user, attended_at: '7:50', left_at: nil, leaving_status: nil, updated_at: local_time }
+
+      before { Timecop.freeze(local_time) }
+      after { Timecop.return }
+      subject { patch :update, params: { user_id: login_user.id, id: atd.id } }
+
+      it {
+        is_expected
+        attendance = Attendance.find(atd.id)
+        expect(attendance.leaving_status).to eq 'leave_early'
+        expect(attendance.working_hours).to eq 21600
+      }
+    end
+
+    context 'when user go 8:30 and leave 9:00' do
+      let(:local_time) { Time.zone.local(2017, 12, 20, 9, 0o0) }
+      let(:atd) { create :attendance, user: login_user, attended_at: '8:30', left_at: nil, leaving_status: nil, updated_at: local_time }
+
+      before { Timecop.freeze(local_time) }
+      after { Timecop.return }
+      subject { patch :update, params: { user_id: login_user.id, id: atd.id } }
+
+      it {
+        is_expected
+        attendance = Attendance.find(atd.id)
+        expect(attendance.leaving_status).to eq 'leave_early'
+        expect(attendance.working_hours).to eq 1800
+      }
+    end
+
+    context 'when user go 11:00 and leave 12:1' do
+      let(:local_time) { Time.zone.local(2017, 12, 20, 12, 0o1) }
+      let(:atd) { create :attendance, user: login_user, attended_at: '11:00', left_at: nil, leaving_status: nil, updated_at: local_time }
+
+      before { Timecop.freeze(local_time) }
+      after { Timecop.return }
+      subject { patch :update, params: { user_id: login_user.id, id: atd.id } }
+
+      it {
+        is_expected
+        attendance = Attendance.find(atd.id)
+        expect(attendance.leaving_status).to eq 'leave_early'
+        expect(attendance.working_hours).to eq 3600
+      }
+    end
+
+    context 'when user go 11:00 and leave 14:00' do
+      let(:local_time) { Time.zone.local(2017, 12, 20, 14, 0o0) }
+      let(:atd) { create :attendance, user: login_user, attended_at: '11:00', left_at: nil, leaving_status: nil, updated_at: local_time }
+
+      before { Timecop.freeze(local_time) }
+      after { Timecop.return }
+      subject { patch :update, params: { user_id: login_user.id, id: atd.id } }
+
+      it {
+        is_expected
+        attendance = Attendance.find(atd.id)
+        expect(attendance.leaving_status).to eq 'leave_early'
+        expect(attendance.working_hours).to eq 5400
+      }
+    end
+
+    context 'when user go 11:00 and leave 18:00' do
+      let(:local_time) { Time.zone.local(2017, 12, 20, 18, 0o0) }
+      let(:atd) { create :attendance, user: login_user, attended_at: '11:00', left_at: nil, leaving_status: nil, updated_at: local_time }
+
+      before { Timecop.freeze(local_time) }
+      after { Timecop.return }
+      subject { patch :update, params: { user_id: login_user.id, id: atd.id } }
+
+      it {
+        is_expected
+        attendance = Attendance.find(atd.id)
+        expect(attendance.leaving_status).to eq 'leave_ok'
+        expect(attendance.working_hours).to eq 18000
+      }
+    end
+
+    context 'when user go 12:30 and leave 14:00' do
+      let(:local_time) { Time.zone.local(2017, 12, 20, 14, 0o0) }
+      let(:atd) { create :attendance, user: login_user, attended_at: '12:30', left_at: nil, leaving_status: nil, updated_at: local_time }
+
+      before { Timecop.freeze(local_time) }
+      after { Timecop.return }
+      subject { patch :update, params: { user_id: login_user.id, id: atd.id } }
+
+      it {
+        is_expected
+        attendance = Attendance.find(atd.id)
+        expect(attendance.leaving_status).to eq 'leave_early'
+        expect(attendance.working_hours).to eq 1800
+      }
+    end
+
+    context 'when user go 12:30 and leave 18:00' do
+      let(:local_time) { Time.zone.local(2017, 12, 20, 18, 0o0) }
+      let(:atd) { create :attendance, user: login_user, attended_at: '12:30', left_at: nil, leaving_status: nil, updated_at: local_time }
+
+      before { Timecop.freeze(local_time) }
+      after { Timecop.return }
+      subject { patch :update, params: { user_id: login_user.id, id: atd.id } }
+
+      it {
+        is_expected
+        attendance = Attendance.find(atd.id)
+        expect(attendance.leaving_status).to eq 'leave_ok'
+        expect(attendance.working_hours).to eq 14400
+      }
+    end
+
+    context 'when user go 14:30 and leave 15:00' do
+      let(:local_time) { Time.zone.local(2017, 12, 20, 15, 0o0) }
+      let(:atd) { create :attendance, user: login_user, attended_at: '14:30', left_at: nil, leaving_status: nil, updated_at: local_time }
+
+      before { Timecop.freeze(local_time) }
+      after { Timecop.return }
+      subject { patch :update, params: { user_id: login_user.id, id: atd.id } }
+
+      it {
+        is_expected
+        attendance = Attendance.find(atd.id)
+        expect(attendance.leaving_status).to eq 'leave_early'
+        expect(attendance.working_hours).to eq 1800
+      }
+    end
+
+    context 'when user go 16:00 and leave 18:00' do
+      let(:local_time) { Time.zone.local(2017, 12, 20, 18, 0o0) }
+      let(:atd) { create :attendance, user: login_user, attended_at: '16:00', left_at: nil, leaving_status: nil, updated_at: local_time }
+
+      before { Timecop.freeze(local_time) }
+      after { Timecop.return }
+      subject { patch :update, params: { user_id: login_user.id, id: atd.id } }
+
+      it {
+        is_expected
+        attendance = Attendance.find(atd.id)
+        expect(attendance.leaving_status).to eq 'leave_ok'
+        expect(attendance.working_hours).to eq 5400
+      }
+    end
+
+    context 'when user go after morning start and leave 10:56' do
+      let(:local_time) { Time.zone.local(2017, 12, 20, 12, 56) }
+      let(:atd) { create :attendance, user: login_user, attended_at: '10:56', left_at: nil, leaving_status: nil, updated_at: local_time }
+
+      before { Timecop.freeze(local_time) }
+      after { Timecop.return }
+      subject { patch :update, params: { user_id: login_user.id, id: atd.id } }
+
+      it {
+        is_expected
+        attendance = Attendance.find(atd.id)
+        expect(attendance.leaving_status).to eq 'leave_early'
+        expect(attendance.working_hours).to eq 3840
+      }
+    end
+
+    context 'when user leave before morning started ' do
+      let(:local_time) { Time.zone.local(2017, 12, 20, 7, 0o0) }
+      let(:atd) { create :attendance, user: login_user, attended_at: '7:56', left_at: nil, leaving_status: nil, updated_at: local_time }
+
+      before { Timecop.freeze(local_time) }
+      after { Timecop.return }
+      subject { patch :update, params: { user_id: login_user.id, id: atd.id } }
+
+      it {
+        is_expected
+        attendance = Attendance.find(atd.id)
+        expect(attendance.leaving_status).to eq 'leave_early'
+        expect(attendance.working_hours).to eq 0
+      }
+    end
+
+    context 'when user go after afternoon ended ' do
+      let(:local_time) { Time.zone.local(2017, 12, 20, 17, 57) }
+      let(:atd) { create :attendance, user: login_user, attended_at: '17:56', left_at: nil, leaving_status: nil, updated_at: local_time }
+
+      before { Timecop.freeze(local_time) }
+      after { Timecop.return }
+      subject { patch :update, params: { user_id: login_user.id, id: atd.id } }
+
+      it {
+        is_expected
+        attendance = Attendance.find(atd.id)
+        expect(attendance.leaving_status).to eq 'leave_ok'
+        expect(attendance.working_hours).to eq 0
+      }
     end
   end
 end

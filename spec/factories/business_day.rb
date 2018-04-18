@@ -3,8 +3,10 @@
 FactoryBot.define do
   factory :business_day do
     association(:company, factory: :company, strategy: :build)
-    started_at { Time.current }
-    ended_at { Time.current }
+    morning_started_at { Time.current }
+    morning_ended_at { Time.current }
+    afternoon_started_at { Time.current }
+    afternoon_ended_at { Time.current }
     weekday 'monday'
   end
 end

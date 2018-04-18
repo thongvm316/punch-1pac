@@ -14,7 +14,7 @@ class AttendanceService
 
       return 'attend_ok' unless business_day
 
-      if attended_at.strftime('%H:%M') > business_day.started_at.strftime('%H:%M')
+      if attended_at.strftime('%H:%M') > business_day.morning_started_at.strftime('%H:%M')
         'attend_late'
       else
         'attend_ok'
@@ -27,7 +27,7 @@ class AttendanceService
 
       return 'leave_ok' unless business_day
 
-      if left_at.strftime('%H:%M') < business_day.ended_at.strftime('%H:%M')
+      if left_at.strftime('%H:%M') < business_day.afternoon_ended_at.strftime('%H:%M')
         'leave_early'
       else
         'leave_ok'
@@ -51,6 +51,7 @@ class AttendanceService
     attendance = @user.attendances.attended.find_by!(day: @now, left_at: nil)
     attendance.assign_attributes(
       left_at: @now,
+      working_hours: count_working_hours(@now, attendance),
       leaving_status: self.class.leaving_status(@user.company, @now, attendance)
     )
     attendance.save ? attendance : false
@@ -67,5 +68,64 @@ class AttendanceService
 
   def block_time_expired!(attendance)
     raise AppErrors::Error403 unless (@now - Attendance::BLOCK_TIME) > attendance.updated_at
+  end
+
+  def count_working_hours(left_at, attendance)
+    weekday                   = attendance.day.strftime('%A')
+    business_day              = @user.company.business_days.find_by(weekday: weekday.downcase)
+
+    morning_started_at        = business_day.morning_started_at.to_i
+    morning_ended_at          = business_day.morning_ended_at.to_i
+    afternoon_started_at      = business_day.afternoon_started_at.to_i
+    afternoon_ended_at        = business_day.afternoon_ended_at.to_i
+    attended_at               = attendance.attended_at.to_i
+    left_at                   = Time.zone.local(2000, 1, 1, left_at.hour, left_at.min, left_at.sec).to_i
+
+    before_morning_start_time = attended_at < morning_started_at
+    after_morning_start_time  = attended_at.between?(morning_started_at, morning_ended_at)
+    in_afternoon_break_time   = (morning_ended_at..afternoon_started_at)
+    in_morning_working_time   = (morning_started_at..morning_ended_at)
+    in_afternoon_working_time = (afternoon_started_at..afternoon_ended_at)
+    in_afternoon_leave_time   = (afternoon_started_at..9999999999)
+
+    return 0 if (left_at < morning_started_at) || (attended_at > afternoon_ended_at)
+
+    morning_start   = if before_morning_start_time
+                        morning_started_at
+                      elsif after_morning_start_time
+                        attended_at
+                      else
+                        0
+                      end
+
+    morning_end     = if in_afternoon_break_time.include? left_at
+                        morning_ended_at
+                      elsif in_morning_working_time.include? left_at
+                        left_at
+                      elsif before_morning_start_time || after_morning_start_time
+                        morning_ended_at
+                      else
+                        0
+                      end
+
+    afternoon_start = if in_afternoon_break_time.include? attended_at
+                        afternoon_started_at
+                      elsif in_afternoon_working_time.include? attended_at
+                        attended_at
+                      elsif in_afternoon_leave_time.include? left_at
+                        afternoon_started_at
+                      else
+                        0
+                      end
+
+    afternoon_end   = if left_at > afternoon_ended_at
+                        afternoon_ended_at
+                      elsif in_afternoon_working_time.include? left_at
+                        left_at
+                      else
+                        0
+                      end
+
+    (morning_end - morning_start) + (afternoon_end - afternoon_start)
   end
 end

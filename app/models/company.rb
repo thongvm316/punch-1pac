@@ -15,7 +15,6 @@
 #  tax_code     :string
 #  activated    :boolean          default(TRUE), not null
 #  timezone     :string           default("Asia/Hanoi"), not null
-#  breaktime    :float            default(1.0), not null
 #  logo_data    :text
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
@@ -41,7 +40,6 @@ class Company < ApplicationRecord
   validates :industry, presence: true, inclusion: { in: INDUSTRIES }
   validates :address, presence: true
   validates :phone_number, presence: true
-  validates :breaktime, presence: true
   validates :timezone, inclusion: { in: TIMEZONES }
 
   include ImageUploader::Attachment.new(:logo)
