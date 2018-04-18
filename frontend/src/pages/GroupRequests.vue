@@ -16,13 +16,13 @@
     <table class="table bg-light mt-5">
       <thead>
         <tr>
-          <th class="cell-lg no-break">{{ $t('requests.tableHeader.name') }}</th>
+          <th class="cell-lg">{{ $t('requests.tableHeader.name') }}</th>
           <th class="cell-lg">{{ $t('requests.tableHeader.email') }}</th>
           <th class="cell-xs">{{ $t('requests.tableHeader.date') }}</th>
           <th class="cell-xs">{{ $t('requests.tableHeader.attendedAt') }}</th>
           <th class="cell-xs">{{ $t('requests.tableHeader.leftAt') }}</th>
           <th class="cell-xs">{{ $t('requests.tableHeader.kind') }}</th>
-          <th class="cell-xl">{{ $t('requests.tableHeader.reason') }}</th>
+          <th class="cell-xl break">{{ $t('requests.tableHeader.reason') }}</th>
           <th class="cell-sm">{{ $t('requests.tableHeader.status') }}</th>
           <th class="cell-xs">{{ $t('requests.tableHeader.actions') }}</th>
         </tr>
@@ -40,11 +40,11 @@
             </div>
           </td>
           <td>{{ request.user.email }}</td>
-          <td class="text-center">{{ (request.attendance_day || request.annual_leave_day) | moment_l }}</td>
-          <td class="text-center">{{ request.attended_at }}</td>
-          <td class="text-center">{{ request.left_at }}</td>
+          <td>{{ (request.attendance_day || request.annual_leave_day) | moment_l }}</td>
+          <td>{{ request.attended_at }}</td>
+          <td>{{ request.left_at }}</td>
           <td><span :class="{ 'text-primary': request.kind === 'attendance', 'text-info': request.kind === 'annual_leave' }">{{ $t(`requests.kinds.${request.kind}`) }}</span></td>
-          <td>{{ request.reason }}</td>
+          <td class="break">{{ request.reason }}</td>
           <td class="text-center"><span class="label" :class="getStatusClass(request.status)">{{ $t(`meta.request_statuses.${request.status}`) }}</span></td>
           <td>
             <span class="d-flex" v-if="request.status === 'pending'">

@@ -18,7 +18,7 @@
           <th>{{ $t('requests.tableHeader.attendedAt') }}</th>
           <th>{{ $t('requests.tableHeader.leftAt') }}</th>
           <th>{{ $t('requests.tableHeader.kind') }}</th>
-          <th style="width: 600px">{{ $t('requests.tableHeader.reason') }}</th>
+          <th>{{ $t('requests.tableHeader.reason') }}</th>
           <th>{{ $t('requests.tableHeader.status') }}</th>
           <th>{{ $t('requests.tableHeader.actions') }}</th>
         </tr>
@@ -29,7 +29,7 @@
           <td>{{ request.attended_at }}</td>
           <td>{{ request.left_at }}</td>
           <td><span :class="{ 'text-primary': request.kind === 'attendance', 'text-info': request.kind === 'annual_leave' }">{{ $t(`requests.kinds.${request.kind}`) }}</span></td>
-          <td>{{ request.reason }}</td>
+          <td class="break">{{ request.reason }}</td>
           <td><span class="label" :class="getStatusClass(request.status)">{{ $t(`meta.request_statuses.${request.status}`) }}</span></td>
           <td>
             <button class="btn btn-action btn-link tooltip" :data-tooltip="$t('requests.tooltip.edit')" @click="toggleEditModal(request)" v-if="request.status == 'pending'">
