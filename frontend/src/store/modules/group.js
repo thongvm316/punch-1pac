@@ -13,7 +13,7 @@ const mutations = {
   },
 
   [types.UPDATE_GROUP] (state, payload) {
-    state.group.name = payload.name
+    state.group = payload
   },
 
   [types.ADD_GROUP_USER] (state, user) {
@@ -49,7 +49,10 @@ const actions = {
   },
 
   updateGroup ({ commit }, params) {
-    return axios.put(`/groups/${params.groupId}`, { group: params.editParams }, { headers: { 'Content-Type': 'application/json' } })
+    let formData = new FormData()
+    Object.keys(params.editParams).forEach(key => formData.set(`group[${key}]`, params.editParams[key] || ''))
+
+    return axios.put(`/groups/${params.groupId}`, formData, { headers: { 'Content-Type': 'multipart/form-data' } })
                 .then(response => {
                   commit(types.UPDATE_GROUP, response.data)
                   return response
