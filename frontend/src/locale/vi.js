@@ -18,9 +18,12 @@ export default {
       position: 'Chức vụ'
     },
     labels: {
-      name: 'Tên'
+      name: 'Tên',
+      description: 'Mô tả về nhóm',
+      image: 'Ảnh đại diện nhóm'
     },
     placeholder: {
+      description: 'Mô tả về nhóm',
       filterByEmail: 'Lọc theo email'
     },
     modal: {
@@ -148,10 +151,13 @@ export default {
     },
     member: ' | 1 thành viên | {count} thành viên',
     labels: {
-      name: 'Tên'
+      name: 'Tên',
+      description: 'Mô tả về nhóm',
+      image: 'Ảnh đại diện nhóm'
     },
     placeholder: {
       name: 'Tên',
+      description: 'Mô tả về nhóm',
       filterByName: 'Lọc theo tên'
     },
     modal: {
