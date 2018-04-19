@@ -59,14 +59,7 @@
     </modal>
 
     <modal :title="$t('group.modal.editTitle')" :modal-open.sync="isEditModalOpen">
-      <div class="form-group" :class="{ 'has-error': errors.name }">
-        <label class="form-label">{{ $t('group.labels.name') }}</label>
-        <input class="form-input" type="text" v-model="editParams.name">
-        <p class="form-input-hint" v-if="errors.name">{{ $t('group.labels.name') }} {{ errors.name[0] }}</p>
-      </div>
-      <div class="form-group">
-        <button type="button" class="btn btn-success btn-submit" @click="saveEditModal({ groupId: currentId, editParams: editParams }, updateGroup, $t('messages.group.createSuccess'))">{{ $t('group.btn.save') }}</button>
-      </div>
+      <group-form v-if="isEditModalOpen" :target-group="group" @afterModify="isEditModalOpen = false"></group-form>
     </modal>
   </main-layout>
 </template>
@@ -76,6 +69,7 @@ import MainLayout from '../layouts/Main'
 import modal from '../mixins/modal'
 import UserProfile from '../components/UserProfile'
 import GroupTab from '../components/GroupTab'
+import GroupForm from '../components/GroupForm.vue'
 import { mapState, mapActions } from 'vuex'
 import vSelect from 'vue-select'
 
@@ -86,10 +80,7 @@ export default {
     return {
       selectedUser: null,
       editUser: null,
-      currentId: this.$route.params.id,
-      editParams: {
-        name: ''
-      }
+      currentId: this.$route.params.id
     }
   },
 
@@ -97,12 +88,12 @@ export default {
     MainLayout,
     UserProfile,
     GroupTab,
+    GroupForm,
     vSelect
   },
 
   computed: {
     ...mapState('group', [
-      'errors',
       'group',
       'usersNotInGroup'
     ])
@@ -117,12 +108,10 @@ export default {
     toggleEditModal () {
       this.clearGroupErrors()
       this.isEditModalOpen = !this.isEditModalOpen
-      this.editParams.name = this.group.name
     },
 
     ...mapActions('group', [
       'getGroup',
-      'updateGroup',
       'addGroupUser',
       'removeGroupUser',
       'clearGroupErrors',
