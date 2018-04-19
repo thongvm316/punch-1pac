@@ -11,7 +11,7 @@
 
           <div class="column col-9">
             <div class="box-setting">
-              <h1 class="m-0">{{ subtitle }}</h1>
+              <h2>{{ subtitle }}</h2>
               <slot></slot>
             </div>
           </div>

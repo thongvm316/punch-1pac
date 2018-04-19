@@ -85,10 +85,10 @@ ActiveRecord::Schema.define(version: 20180416090610) do
     t.string "weekday", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.time "morning_started_at", null: false
-    t.time "morning_ended_at", null: false
-    t.time "afternoon_started_at", null: false
-    t.time "afternoon_ended_at", null: false
+    t.time "morning_started_at", default: "2000-01-01 00:00:00", null: false
+    t.time "morning_ended_at", default: "2000-01-01 00:00:00", null: false
+    t.time "afternoon_started_at", default: "2000-01-01 00:00:00", null: false
+    t.time "afternoon_ended_at", default: "2000-01-01 00:00:00", null: false
     t.index ["company_id"], name: "index_business_days_on_company_id"
   end
 

@@ -9,7 +9,7 @@ const state = {
 const getters = {
   filterHolidays (state) {
     return function (query) {
-      const regex = new RegExp(`${query}`, 'g')
+      const regex = new RegExp(`${query}`, 'gi')
       return query ? state.holidays.filter(holiday => holiday.name.match(regex)) : state.holidays
     }
   }

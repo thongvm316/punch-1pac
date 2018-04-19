@@ -85,7 +85,8 @@ module JsonResponseHelper
       tax_code: nullable_response(String),
       activated: boolean_response,
       timezone: String,
-      logo_url: String
+      logo_url: String,
+      breakdays: nullable_response(Array)
     }
   end
 
@@ -214,6 +215,7 @@ module JsonResponseHelper
     {
       id: Integer,
       user: response_user,
+      activitable: Hash,
       activitable_id: Integer,
       activitable_type: String,
       kind: String,

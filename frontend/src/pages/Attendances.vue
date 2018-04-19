@@ -148,7 +148,6 @@ export default {
   watch: {
     params: {
       handler: function () {
-        console.log('ccc')
         this.getAttendances(Object.assign({ page: 1 }, this.params))
       },
       deep: true
