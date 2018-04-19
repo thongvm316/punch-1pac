@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-
 # == Schema Information
 #
 # Table name: business_days
@@ -9,10 +8,10 @@
 #  weekday              :string           not null
 #  created_at           :datetime         not null
 #  updated_at           :datetime         not null
-#  morning_started_at   :time             not null
-#  morning_ended_at     :time             not null
-#  afternoon_started_at :time             not null
-#  afternoon_ended_at   :time             not null
+#  morning_started_at   :time             default(Sat, 01 Jan 2000 00:00:00 UTC +00:00), not null
+#  morning_ended_at     :time             default(Sat, 01 Jan 2000 00:00:00 UTC +00:00), not null
+#  afternoon_started_at :time             default(Sat, 01 Jan 2000 00:00:00 UTC +00:00), not null
+#  afternoon_ended_at   :time             default(Sat, 01 Jan 2000 00:00:00 UTC +00:00), not null
 #
 # Indexes
 #
