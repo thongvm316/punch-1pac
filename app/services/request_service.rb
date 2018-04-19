@@ -12,13 +12,11 @@ class RequestService
     ApplicationRecord.transaction do
       @req.update!(status: 'approved', admin_id: @user.id)
       approve_request
-      Activity.track(@user, @req, 'approve')
     end
   end
 
   def reject
     @req.update(status: 'rejected', admin_id: @user.id, admin_reason: @params[:admin_reason])
-    Activity.track(@user, @req, 'reject')
   end
 
   private
