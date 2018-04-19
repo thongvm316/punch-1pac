@@ -25,14 +25,7 @@
     </div>
 
     <modal :title="$t('groups.modal.addTitle')" :modal-open.sync="isAddModalOpen">
-      <div class="form-group" :class="{ 'has-error': errors.name }">
-        <label class="form-label">{{ $t('groups.labels.name') }}</label>
-        <input class="form-input" type="text" :placeholder="$t('groups.placeholder.name')" v-model="createParams.name">
-        <p class="form-input-hint" v-if="errors.name">{{ $t('groups.labels.name') }} {{ errors.name[0] }}</p>
-      </div>
-      <div class="form-group">
-        <button type="button" class="btn btn-success btn-submit" @click="submitAddModal(createParams, addGroup, $t('messages.group.createSuccess'))">{{ $t('groups.btn.submit') }}</button>
-      </div>
+      <group-form v-if="isAddModalOpen" @afterModify="isAddModalOpen = false"></group-form>
     </modal>
   </main-layout>
 </template>
@@ -40,6 +33,7 @@
 <script>
 import MainLayout from '../layouts/Main.vue'
 import Pagination from '../components/Pagination.vue'
+import GroupForm from '../components/GroupForm.vue'
 import modal from '../mixins/modal'
 import { mapState, mapGetters, mapActions } from 'vuex'
 
@@ -48,10 +42,7 @@ export default {
 
   data () {
     return {
-      name: '',
-      createParams: {
-        name: ''
-      }
+      name: ''
     }
   },
 
@@ -63,12 +54,12 @@ export default {
 
   components: {
     MainLayout,
-    Pagination
+    Pagination,
+    GroupForm
   },
 
   computed: {
     ...mapState('groups', [
-      'errors',
       'groups'
     ]),
 
@@ -80,12 +71,10 @@ export default {
   methods: {
     ...mapActions('groups', [
       'clearGroupsErrors',
-      'getGroups',
-      'addGroup'
+      'getGroups'
     ]),
 
     toggleAddModal () {
-      Object.keys(this.createParams).forEach(key => { this.createParams[key] = '' })
       this.clearGroupsErrors()
       this.isAddModalOpen = !this.isAddModalOpen
     },

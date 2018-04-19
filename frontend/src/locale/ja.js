@@ -18,9 +18,12 @@ export default {
       position: 'Position'
     },
     labels: {
-      name: 'Name'
+      name: 'Name',
+      description: 'Description',
+      image: 'Image'
     },
     placeholder: {
+      description: 'Description',
       filterByEmail: 'Filter by email'
     },
     modal: {
@@ -148,10 +151,13 @@ export default {
     },
     member: ' | 1 member | {count} members',
     labels: {
-      name: 'Name'
+      name: 'Name',
+      description: 'Description',
+      image: 'Image'
     },
     placeholder: {
       name: 'Name',
+      groupDescription: 'Description',
       filterByName: 'Filter by name'
     },
     modal: {

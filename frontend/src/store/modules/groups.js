@@ -44,7 +44,10 @@ const actions = {
   },
 
   addGroup ({ commit }, params) {
-    return axios.post('/groups', { group: params }, { headers: { 'Content-Type': 'application/json' } })
+    let formData = new FormData()
+    Object.keys(params).forEach(key => formData.set(`group[${key}]`, params[key] || ''))
+
+    return axios.post('/groups', formData, { headers: { 'Content-Type': 'multipart/form-data' } })
                 .then(response => {
                   commit(types.ADD_GROUP, response.data)
                   return response
