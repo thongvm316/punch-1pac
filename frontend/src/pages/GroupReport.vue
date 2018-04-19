@@ -13,16 +13,7 @@
         :wrapper-class="'datepicker'"
         @input="onInputDatepicker"
         v-model="month"/>
-      <v-select label="email" :placeholder="$t('attendances.placeholder.filterByUser')" v-model="selectedUser" :options="usersInGroup">
-        <template slot="option" slot-scope="option">
-          <div class="tile tile-centered">
-            <div class="tile-icon">
-              <img :src="option.avatar_url" class="avatar avatar-md">
-            </div>
-            <div class="tile-content">{{ option.email }} ({{ option.name }})</div>
-          </div>
-        </template>
-      </v-select>
+      <filter-user-box :queryParams="{ group_id: this.$route.params.id, type: 'users_in_group', per_page: 1000 }" :placeholder="$t('attendances.placeholder.filterByUser')" v-model="selectedUser"/>
     </div>
     <table class="table sortable-table bg-light mt-5">
       <thead>
@@ -58,7 +49,7 @@
 import Datepicker from 'vuejs-datepicker'
 import MainLayout from '../layouts/Main'
 import GroupTab from '../components/GroupTab'
-import vSelect from 'vue-select'
+import FilterUserBox from '../components/FilterUserBox'
 import { mapState, mapActions } from 'vuex'
 
 export default {
@@ -75,7 +66,7 @@ export default {
     MainLayout,
     GroupTab,
     Datepicker,
-    vSelect
+    FilterUserBox
   },
 
   computed: {
@@ -142,7 +133,6 @@ export default {
   created () {
     this.getReport({ group_id: this.$route.params.id, date: this.month })
     this.getGroup(this.$route.params.id)
-    this.getUsersInGroup(this.$route.params.id)
   },
 
   watch: {

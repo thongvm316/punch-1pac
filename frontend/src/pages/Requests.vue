@@ -50,9 +50,9 @@
         <div class="form-group">
           <label class="form-label">{{ $t('requests.labels.date') }}</label>
           <flat-pickr
-            :config="{enable: [updateParams.day], locale: flatpickrLocaleMapper[currentUser.language]}"
+            :config="{enable: [updateParams.attendance_day], locale: flatpickrLocaleMapper[currentUser.language]}"
             class="form-input daterange-picker"
-            v-model="updateParams.day"/>
+            v-model="updateParams.attendance_day"/>
         </div>
         <div class="form-group" :class="{ 'has-error': errors.attended_at }">
           <label class="form-label">{{ $t('requests.labels.attendedAt') }}</label>
@@ -108,7 +108,7 @@ export default {
         status: ''
       },
       updateParams: {
-        day: '',
+        attendance_day: '',
         attended_at: '',
         left_at: '',
         reason: ''
@@ -142,8 +142,7 @@ export default {
         this.clearRequestErrors()
         this.isEditModalOpen = !this.isEditModalOpen
         this.currentId = request.id
-        const statuses = ['day', 'attended_at', 'left_at', 'reason']
-        statuses.forEach(v => { this.updateParams[v] = request[v] })
+        Object.keys(this.updateParams).forEach(v => { this.updateParams[v] = request[v] })
       } else if (this.selectedRequest.kind === 'annual_leave') {
         this.isEditModalOpen = !this.isEditModalOpen
       }
