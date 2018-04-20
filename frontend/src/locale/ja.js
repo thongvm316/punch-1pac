@@ -157,7 +157,7 @@ export default {
     },
     placeholder: {
       name: 'Name',
-      groupDescription: 'Description',
+      description: 'Description',
       filterByName: 'Filter by name'
     },
     modal: {
@@ -466,7 +466,7 @@ export default {
       },
       tooltip: {
         edit: 'Edit user',
-        delete: 'Delete user'
+        remove: 'Remove user'
       }
     }
   },

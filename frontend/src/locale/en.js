@@ -466,7 +466,7 @@ export default {
       },
       tooltip: {
         edit: 'Edit user',
-        delete: 'Delete user'
+        remove: 'Remove user'
       }
     }
   },
