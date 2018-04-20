@@ -35,10 +35,10 @@ class BusinessDay < ApplicationRecord
   private
 
   def morning_started_cannot_be_greater_than_morning_ended
-    errors.add(:morning_started_at, :less_than, count: morning_ended_at) if morning_started_at.to_i > morning_ended_at.to_i
+    errors.add(:morning_started_at, :less_than, count: morning_ended_at.strftime('%H:%M')) if morning_started_at.to_i > morning_ended_at.to_i
   end
 
   def afternoon_started_cannot_be_greater_than_afternoon_ended
-    errors.add(:afternoon_started_at, :less_than, count: afternoon_ended_at) if afternoon_started_at.to_i > afternoon_ended_at.to_i
+    errors.add(:afternoon_started_at, :less_than, count: afternoon_ended_at.strftime('%H:%M')) if afternoon_started_at.to_i > afternoon_ended_at.to_i
   end
 end

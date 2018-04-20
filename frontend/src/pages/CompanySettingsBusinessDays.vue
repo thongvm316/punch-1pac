@@ -8,15 +8,19 @@
     <table class="table bg-light mt-5">
       <thead>
         <th>{{ $t('company.businessDays.tableHeader.weekday') }}</th>
-        <th>{{ $t('company.businessDays.tableHeader.startedAt') }}</th>
-        <th>{{ $t('company.businessDays.tableHeader.endedAt') }}</th>
+        <th>{{ $t('company.businessDays.tableHeader.morningStartedAt') }}</th>
+        <th>{{ $t('company.businessDays.tableHeader.morningEndedAt') }}</th>
+        <th>{{ $t('company.businessDays.tableHeader.afternoonStartedAt') }}</th>
+        <th>{{ $t('company.businessDays.tableHeader.afternoonEndedAt') }}</th>
         <th></th>
       </thead>
       <tbody>
         <tr v-for="businessDay in businessDays">
           <td>{{ $t(`meta.weekdays.${businessDay.weekday}`) }}</td>
-          <td>{{ businessDay.started_at }}</td>
-          <td>{{ businessDay.ended_at }}</td>
+          <td>{{ businessDay.morning_started_at }}</td>
+          <td>{{ businessDay.morning_ended_at }}</td>
+          <td>{{ businessDay.afternoon_started_at }}</td>
+          <td>{{ businessDay.afternoon_ended_at }}</td>
           <td class="text-center">
             <button class="btn btn-action btn-link tooltip" :data-tooltip="$t('company.businessDays.tooltip.edit')" @click="toggleEditModal(businessDay)">
               <svg width="24px" height="24px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="currentColor"><path d="M23.2530524,2.92025954 L21.0782401,0.745259708 C20.084537,-0.24844334 18.4678184,-0.248396465 17.4741154,0.745259708 C16.5385373,1.68093151 2.24841342,15.9721335 1.29342912,16.9271647 C1.19171037,17.0288834 1.12355413,17.1640709 1.09927288,17.2963053 L0.0118667154,23.1688048 C-0.0302739063,23.3964767 0.0422885881,23.6303361 0.20602295,23.7940704 C0.369944813,23.9579923 0.603851044,24.0304141 0.831241652,23.9882735 L6.70322557,22.9007267 C6.83892868,22.8754142 6.97233492,22.8066017 7.07236617,22.7065236 L23.2530524,6.52461863 C24.2490523,5.52861871 24.249193,3.91640009 23.2530524,2.92025954 Z M1.58077284,22.4191799 L2.23856967,18.8668052 L5.13291319,21.7613362 L1.58077284,22.4191799 Z M6.57520995,21.2149144 L2.78494462,17.4244147 L16.6229123,3.58536886 L20.4131776,7.37591544 L6.57520995,21.2149144 Z M22.2586931,5.53025934 L21.40749,6.38155614 L17.6172247,2.59100956 L18.4684278,1.73971276 C18.9137871,1.29430654 19.6384277,1.29425966 20.0838808,1.73971276 L22.2586931,3.91471259 C22.7051774,4.36119693 22.7051774,5.08372812 22.2586931,5.53025934 Z"/></svg>
@@ -30,57 +34,11 @@
     </table>
 
     <modal :title="$t('company.businessDays.modal.addTitle')" :modal-open.sync="isAddModalOpen">
-      <div class="form-group" :class="{ 'has-error': errors.weekday }">
-        <label class="form-label">{{ $t('company.businessDays.labels.weekday') }}</label>
-        <select class="form-select" v-model="createParams.weekday">
-          <option value="">{{ $t('company.businessDays.placeholder.chooseWeekday') }}</option>
-          <option :value="weekday" v-for="weekday in meta.weekdays">{{ $t(`meta.weekdays.${weekday}`) }}</option>
-        </select>
-        <p class="form-input-hint" v-if="errors.weekday">{{ $t('company.businessDays.labels.weekday') }} {{ errors.weekday[0] }}</p>
-      </div>
-      <div class="form-group" :class="{ 'has-error': errors.started_at }">
-        <label class="form-label">{{ $t('company.businessDays.labels.startedAt') }}</label>
-        <input class="form-input" type="time" step="300" v-model="createParams.started_at">
-        <p class="form-input-hint" v-if="errors.started_at">{{ $t('company.businessDays.labels.startedAt') }} {{ errors.started_at[0] }}</p>
-      </div>
-      <div class="form-group" :class="{ 'has-error': errors.ended_at }">
-        <label class="form-label">{{ $t('company.businessDays.labels.endedAt') }}</label>
-        <input class="form-input" type="time" step="300" v-model="createParams.ended_at">
-        <p class="form-input-hint" v-if="errors.ended_at">{{ $t('company.businessDays.labels.endedAt') }} {{ errors.ended_at[0] }}</p>
-      </div>
-      <div class="form-group">
-        <button type="button" class="btn btn-success btn-submit" @click="submitAddModal(createParams, addBusinessDay, $t('messages.businessDay.createSuccess'))">
-          {{ $t('company.businessDays.btn.submit') }}
-        </button>
-      </div>
+      <business-day-form v-if="isAddModalOpen" @afterModify="isAddModalOpen = false"></business-day-form>
     </modal>
 
     <modal :title="$t('company.businessDays.modal.editTitle')" :modal-open.sync="isEditModalOpen">
-      <div class="form-group" :class="{ 'has-error': errors.weekday }">
-        <label class="form-label">{{ $t('company.businessDays.labels.weekday') }}</label>
-        <select class="form-select" v-model="updateParams.weekday">
-          <option :value="weekday" v-for="weekday in meta.weekdays">{{ $t(`meta.weekdays.${weekday}`) }}</option>
-        </select>
-        <p class="form-input-hint" v-if="errors.weekday">{{ $t('company.businessDays.labels.weekday') }} {{ errors.weekday[0] }}</p>
-      </div>
-      <div class="form-group" :class="{ 'has-error': errors.started_at }">
-        <label class="form-label">{{ $t('company.businessDays.labels.startedAt') }}</label>
-        <input class="form-input" type="time" step="300" v-model="updateParams.started_at">
-        <p class="form-input-hint" v-if="errors.started_at">{{ $t('company.businessDays.labels.startedAt') }} {{ errors.started_at[0] }}</p>
-      </div>
-      <div class="form-group" :class="{ 'has-error': errors.ended_at }">
-        <label class="form-label">{{ $t('company.businessDays.labels.endedAt') }}</label>
-        <input class="form-input" type="time" step="300" v-model="updateParams.ended_at">
-        <p class="form-input-hint" v-if="errors.ended_at">{{ $t('company.businessDays.labels.endedAt') }} {{ errors.ended_at[0] }}</p>
-      </div>
-      <div class="form-group">
-        <button
-          type="button"
-          class="btn btn-success btn-submit"
-          @click="saveEditModal({ updateParams: updateParams, businessDayId: currentId }, updateBusinessDay, $t('messages.businessDay.updateSuccess'))">
-          {{ $t('company.businessDays.btn.save') }}
-        </button>
-      </div>
+      <business-day-form v-if="isEditModalOpen" :target-business-day="editBusinessDay" @afterModify="isEditModalOpen = false"></business-day-form>
     </modal>
   </setting-layout>
 </template>
@@ -88,66 +46,47 @@
 <script>
 import SettingLayout from '../layouts/Setting.vue'
 import modal from '../mixins/modal'
+import BusinessDayForm from '../components/BusinessDayForm.vue'
 import { mapState, mapActions } from 'vuex'
 
 export default {
   mixins: [modal],
+
   data () {
     return {
-      createParams: {
-        weekday: '',
-        started_at: '',
-        ended_at: ''
-      },
-      currentId: '',
-      updateParams: {
-        weekday: '',
-        started_at: '',
-        ended_at: ''
-      }
+      editBusinessDay: null
     }
+  },
+
+  components: {
+    SettingLayout,
+    BusinessDayForm
   },
 
   methods: {
     ...mapActions('companyBusinessDays', [
       'fetchBusinessDays',
-      'clearBusinessDayErrors',
-      'addBusinessDay',
-      'deleteBusinessDay',
-      'updateBusinessDay'
+      'deleteBusinessDay'
     ]),
 
     toggleAddModal () {
-      Object.keys(this.createParams).forEach(key => { this.createParams[key] = '' })
-      this.clearBusinessDayErrors()
       this.isAddModalOpen = !this.isAddModalOpen
     },
 
     toggleEditModal (businessDay) {
-      this.clearBusinessDayErrors()
+      this.editBusinessDay = businessDay
       this.isEditModalOpen = !this.isEditModalOpen
-      this.currentId = businessDay.id
-      Object.keys(this.updateParams).forEach(k => { this.updateParams[k] = businessDay[k] })
     }
   },
 
   computed: {
-    ...mapState('initialStates', [
-      'meta'
-    ]),
-
     ...mapState('companyBusinessDays', [
-      'errors',
       'businessDays'
     ])
   },
 
   created () {
     this.fetchBusinessDays()
-  },
-
-  components: {
-    SettingLayout
   }
 }
 </script>
