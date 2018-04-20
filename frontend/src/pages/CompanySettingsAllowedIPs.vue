@@ -15,7 +15,7 @@
       <tbody>
         <tr v-for="ip in allowedIPs">
           <td>{{ ip.ip_address }}</td>
-          <td class="text-right"></td> <td class="text-center"> <button class="btn btn-action btn-link tooltip" :data-tooltip="$t('company.allowedIPs.tooltip.edit')" @click="toggleEditModal(ip.id, ip.ip_address)">
+          <td class="text-right"></td> <td class="text-center"> <button class="btn btn-action btn-link tooltip" :data-tooltip="$t('company.allowedIPs.tooltip.edit')" @click="toggleEditModal(ip)">
               <svg width="24px" height="24px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="currentColor"><path d="M23.2530524,2.92025954 L21.0782401,0.745259708 C20.084537,-0.24844334 18.4678184,-0.248396465 17.4741154,0.745259708 C16.5385373,1.68093151 2.24841342,15.9721335 1.29342912,16.9271647 C1.19171037,17.0288834 1.12355413,17.1640709 1.09927288,17.2963053 L0.0118667154,23.1688048 C-0.0302739063,23.3964767 0.0422885881,23.6303361 0.20602295,23.7940704 C0.369944813,23.9579923 0.603851044,24.0304141 0.831241652,23.9882735 L6.70322557,22.9007267 C6.83892868,22.8754142 6.97233492,22.8066017 7.07236617,22.7065236 L23.2530524,6.52461863 C24.2490523,5.52861871 24.249193,3.91640009 23.2530524,2.92025954 Z M1.58077284,22.4191799 L2.23856967,18.8668052 L5.13291319,21.7613362 L1.58077284,22.4191799 Z M6.57520995,21.2149144 L2.78494462,17.4244147 L16.6229123,3.58536886 L20.4131776,7.37591544 L6.57520995,21.2149144 Z M22.2586931,5.53025934 L21.40749,6.38155614 L17.6172247,2.59100956 L18.4684278,1.73971276 C18.9137871,1.29430654 19.6384277,1.29425966 20.0838808,1.73971276 L22.2586931,3.91471259 C22.7051774,4.36119693 22.7051774,5.08372812 22.2586931,5.53025934 Z"/></svg>
             </button>
             <button class="btn btn-action btn-link tooltip" :data-tooltip="$t('company.allowedIPs.tooltip.delete')" @click="deleteIP(ip.id)">
@@ -27,25 +27,11 @@
     </table>
 
     <modal :title="$t('company.allowedIPs.modal.addTitle')" :modal-open.sync="isAddModalOpen">
-      <div class="form-group" :class="{ 'has-error': errors.ip_address}">
-        <label class="form-label">{{ $t('company.allowedIPs.labels.ipAddress') }}</label>
-        <input class="form-input" type="text" v-model="newIp">
-        <p class="form-input-hint" v-if="errors.ip_address">{{ $t('company.allowedIPs.labels.ipAddress') }} {{ errors.ip_address[0] }}</p>
-      </div>
-      <div class="form-group">
-        <a class="btn btn-success btn-submit" @click="submitAddModal({ ip_address: newIp }, createIP, $t('messages.ip.createSuccess'))">{{ $t('company.allowedIPs.btn.submit') }}</a>
-      </div>
+      <allowed-ip-form v-if="isAddModalOpen" @afterModify="isAddModalOpen = false"></allowed-ip-form>
     </modal>
 
     <modal :title="$t('company.allowedIPs.modal.editTitle')" :modal-open.sync="isEditModalOpen">
-      <div class="form-group" :class="{ 'has-error': errors.ip_address}">
-        <label class="form-label">{{ $t('company.allowedIPs.labels.ipAddress') }}</label>
-        <input class="form-input" type="text" v-model="editIp">
-        <p class="form-input-hint" v-if="errors.ip_address">{{ $t('company.allowedIPs.labels.ipAddress') }} {{ errors.ip_address[0] }}</p>
-      </div>
-      <div class="form-group">
-        <a class="btn btn-success btn-submit" @click="saveEditModal({ id: currentId, ip_address: editIp }, updateIP, $t('messages.ip.updateSuccess'))">{{ $t('company.allowedIPs.btn.save') }}</a>
-      </div>
+      <allowed-ip-form v-if="isEditModalOpen" :target-ip="editIp" @afterModify="isEditModalOpen = false"></allowed-ip-form>
     </modal>
   </setting-layout>
 </template>
@@ -54,49 +40,41 @@
 import { mapState, mapActions } from 'vuex'
 import SettingLayout from '../layouts/Setting.vue'
 import modal from '../mixins/modal'
+import AllowedIpForm from '../components/AllowedIpForm.vue'
 
 export default {
   mixins: [modal],
 
   data () {
     return {
-      currentId: '',
-      newIp: '',
       editIp: ''
     }
   },
 
   components: {
-    SettingLayout
+    SettingLayout,
+    AllowedIpForm
   },
 
   methods: {
     ...mapActions('companyAllowedIPs', [
       'fetchIPs',
-      'createIP',
-      'updateIP',
-      'deleteIP',
-      'clearIPErrors'
+      'deleteIP'
     ]),
 
     toggleAddModal () {
-      this.newIp = ''
-      this.clearIPErrors()
       this.isAddModalOpen = !this.isAddModalOpen
     },
 
-    toggleEditModal (id, ipAddress) {
-      this.clearIPErrors()
-      this.currentId = id
-      this.editIp = ipAddress
+    toggleEditModal (ip) {
+      this.editIp = ip
       this.isEditModalOpen = !this.isEditModalOpen
     }
   },
 
   computed: {
     ...mapState('companyAllowedIPs', [
-      'allowedIPs',
-      'errors'
+      'allowedIPs'
     ])
   },
 
