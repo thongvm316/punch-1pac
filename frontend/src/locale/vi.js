@@ -466,7 +466,7 @@ export default {
       },
       tooltip: {
         edit: 'Sửa thông tin thành viên',
-        delete: 'Xoá thành viên'
+        remove: 'Loại bỏ thành viên'
       }
     }
   },
