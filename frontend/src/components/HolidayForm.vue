@@ -42,12 +42,11 @@
   import flatPickr from 'vue-flatpickr-component'
   import flatpickrLocale from '../mixins/flatpickr-locale'
   import { mapState, mapActions } from 'vuex'
-  import modal from '../mixins/modal'
 
   export default {
     name: 'holiday-form',
 
-    mixins: [modal, flatpickrLocale],
+    mixins: [flatpickrLocale],
 
     components: {
       flatPickr
@@ -66,6 +65,10 @@
     },
 
     methods: {
+      ...mapActions('flash', [
+        'setFlashMsg'
+      ]),
+
       ...mapActions('companyHolidays', [
         'createHoliday',
         'updateHoliday',

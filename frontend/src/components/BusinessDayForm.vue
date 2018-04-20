@@ -49,12 +49,9 @@
 
 <script>
   import { mapState, mapActions } from 'vuex'
-  import modal from '../mixins/modal'
 
   export default {
     name: 'business-day-form',
-
-    mixins: [modal],
 
     props: ['targetBusinessDay'],
 
@@ -71,6 +68,10 @@
     },
 
     methods: {
+      ...mapActions('flash', [
+        'setFlashMsg'
+      ]),
+
       ...mapActions('companyBusinessDays', [
         'addBusinessDay',
         'updateBusinessDay',
@@ -108,7 +109,6 @@
       this.clearBusinessDayErrors()
       if (this.targetBusinessDay) {
         Object.keys(this.params).forEach(key => { this.params[key] = this.targetBusinessDay[key] })
-        console.log(this.params)
       }
     }
   }

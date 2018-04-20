@@ -20,12 +20,9 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
-import modal from '../mixins/modal'
 
 export default {
   name: 'allowed-ip-form',
-
-  mixins: [modal],
 
   props: ['targetIp'],
 
@@ -40,6 +37,10 @@ export default {
       'createIP',
       'updateIP',
       'clearIPErrors'
+    ]),
+
+    ...mapActions('flash', [
+      'setFlashMsg'
     ]),
 
     localAddIp () {
