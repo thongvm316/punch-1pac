@@ -41,122 +41,51 @@
     </table>
 
     <modal :title="$t('company.holidays.modal.addTitle')" :modal-open.sync="isAddModalOpen">
-      <div class="form-group" :class="{ 'has-error': errors.name }">
-        <label class="form-label">{{ $t('company.holidays.labels.name') }}</label>
-        <input class="form-input" type="text" v-model="createParams.name">
-        <p class="form-input-hint" v-if="errors.name">{{ $t('company.holidays.labels.name') }} {{ errors.name[0] }}</p>
-      </div>
-      <div class="form-group" :class="{ 'has-error': errors.started_at }">
-        <label class="form-label">{{ $t('company.holidays.labels.startAt') }}</label>
-        <flat-pickr
-          :config="{ locale: flatpickrLocaleMapper[currentUser.language] }"
-          class="form-input daterange-picker"
-          v-model="createParams.started_at"/>
-        <p class="form-input-hint" v-if="errors.started_at">{{ $t('company.holidays.labels.startAt') }} {{ errors.started_at[0] }}</p>
-      </div>
-      <div class="form-group" :class="{ 'has-error': errors.ended_at }">
-        <label class="form-label">{{ $t('company.holidays.labels.endAt') }}</label>
-        <flat-pickr
-          :config="{ locale: flatpickrLocaleMapper[currentUser.language] }"
-          class="form-input daterange-picker"
-          v-model="createParams.ended_at"/>
-        <p class="form-input-hint" v-if="errors.ended_at">{{ $t('company.holidays.labels.endAt') }} {{ errors.ended_at[0] }}</p>
-      </div>
-      <div class="form-group">
-        <button
-          type="button"
-          class="btn btn-success btn-submit"
-          @click="submitAddModal(createParams, createHoliday, $t('messages.holiday.createSuccess'))">
-          {{ $t('company.holidays.btn.submit') }}
-        </button>
-      </div>
+      <holiday-form v-if="isAddModalOpen" @afterModify="isAddModalOpen = false"></holiday-form>
     </modal>
 
     <modal :title="$t('company.holidays.modal.editTitle')" :modal-open.sync="isEditModalOpen">
-      <div class="form-group" :class="{ 'has-error': errors.name }">
-        <label class="form-label">{{ $t('company.holidays.labels.name') }}</label>
-        <input class="form-input" type="text" v-model="updateParams.name">
-        <p class="form-input-hint" v-if="errors.name">{{ $t('company.holidays.labels.name') }} {{ errors.name[0] }}</p>
-      </div>
-      <div class="form-group" :class="{ 'has-error': errors.started_at }">
-        <label class="form-label">{{ $t('company.holidays.labels.startAt') }}</label>
-        <flat-pickr
-          :config="{ locale: flatpickrLocaleMapper[currentUser.language] }"
-          class="form-input daterange-picker"
-          v-model="updateParams.started_at"/>
-        <p class="form-input-hint" v-if="errors.started_at">{{ $t('company.holidays.labels.startAt') }} {{ errors.started_at[0] }}</p>
-      </div>
-      <div class="form-group" :class="{ 'has-error': errors.ended_at }">
-        <label class="form-label">{{ $t('company.holidays.labels.endAt') }}</label>
-        <flat-pickr
-          :config="{ locale: flatpickrLocaleMapper[currentUser.language] }"
-          class="form-input daterange-picker"
-          v-model="updateParams.ended_at"/>
-        <p class="form-input-hint" v-if="errors.reason">{{ $t('company.holidays.labels.endAt') }} {{ errors.ended_at[0] }}</p>
-      </div>
-      <div class="form-group">
-        <button type="button" class="btn btn-success btn-submit" @click="saveEditModal({ holidayID: currentID, updateParams: updateParams }, updateHoliday, $t('messages.holiday.updateSuccess'))">
-          {{ $t('company.holidays.btn.save') }}
-        </button>
-      </div>
+      <holiday-form v-if="isEditModalOpen" :target-holiday="editHoliday" @afterModify="isEditModalOpen = false"></holiday-form>
     </modal>
   </setting-layout>
 </template>
 
 <script>
-import flatPickr from 'vue-flatpickr-component'
 import { mapState, mapGetters, mapActions } from 'vuex'
 import SettingLayout from '../layouts/Setting'
 import modal from '../mixins/modal'
-import flatpickrLocale from '../mixins/flatpickr-locale'
+import HolidayForm from '../components/HolidayForm.vue'
 
 export default {
-  mixins: [modal, flatpickrLocale],
+  mixins: [modal],
 
   data () {
     return {
       name: '',
-      createParams: {
-        name: '',
-        started_at: '',
-        ended_at: ''
-      },
-      updateParams: {
-        name: '',
-        started_at: '',
-        ended_at: ''
-      },
-      currentID: '',
+      editHoliday: '',
       country: ''
     }
   },
 
   components: {
     SettingLayout,
-    flatPickr
+    HolidayForm
   },
 
   methods: {
     ...mapActions('companyHolidays', [
       'fetchHolidays',
-      'createHoliday',
-      'updateHoliday',
       'deleteHoliday',
-      'clearHolidayErrors',
       'importNationalHolidays'
     ]),
 
     toggleAddModal () {
-      Object.keys(this.createParams).forEach(key => { this.createParams[key] = '' })
-      this.clearHolidayErrors()
       this.isAddModalOpen = !this.isAddModalOpen
     },
 
     toggleUpdateModal (holiday) {
-      this.clearHolidayErrors()
       this.isEditModalOpen = !this.isEditModalOpen
-      this.currentID = holiday.id
-      Object.keys(this.updateParams).forEach(k => { this.updateParams[k] = holiday[k] })
+      this.editHoliday = holiday
     }
   },
 
@@ -166,8 +95,7 @@ export default {
     ]),
 
     ...mapState('companyHolidays', [
-      'holidays',
-      'errors'
+      'holidays'
     ]),
 
     ...mapGetters('companyHolidays', [

@@ -25,12 +25,9 @@
 
 <script>
   import { mapActions } from 'vuex'
-  import modal from '../mixins/modal'
 
   export default {
     name: 'group-form',
-
-    mixins: [modal],
 
     props: ['targetGroup'],
 
@@ -46,6 +43,10 @@
     },
 
     methods: {
+      ...mapActions('flash', [
+        'setFlashMsg'
+      ]),
+
       ...mapActions('groups', [
         'addGroup'
       ]),

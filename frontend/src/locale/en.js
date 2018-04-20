@@ -122,7 +122,7 @@ export default {
       profile: 'Profile',
       users: 'Users',
       timezoneAndLanguage: 'Time',
-      bussinessDays: 'Bussiness Days',
+      businessDays: 'Business Days',
       holidays: 'Holidays',
       allowedIPs: 'Allowed IPs'
     }
@@ -313,13 +313,17 @@ export default {
       title: 'Business days',
       tableHeader: {
         weekday: 'Weekday',
-        startedAt: 'Started at',
-        endedAt: 'Ended at'
+        morningStartedAt: 'Morning started at',
+        morningEndedAt: 'Morning ended at',
+        afternoonStartedAt: 'Afternoon started at',
+        afternoonEndedAt: 'Afternoon ended at'
       },
       labels: {
         weekday: 'Weekday',
-        startedAt: 'Started at',
-        endedAt: 'Ended at'
+        morningStartedAt: 'Morning started at',
+        morningEndedAt: 'Morning ended at',
+        afternoonStartedAt: 'Afternoon started at',
+        afternoonEndedAt: 'Afternoon ended at'
       },
       btn: {
         add: 'Add Business day',
@@ -334,8 +338,8 @@ export default {
         chooseWeekday: 'Choose a weekday'
       },
       tooltip: {
-        edit: 'Edit Bussiness day',
-        delete: 'Delete Bussiness day'
+        edit: 'Edit Business day',
+        delete: 'Delete Business day'
       }
     },
     allowedIPs: {

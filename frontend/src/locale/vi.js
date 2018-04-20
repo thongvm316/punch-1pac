@@ -122,7 +122,7 @@ export default {
       profile: 'Thông tin công ty',
       users: 'Thành viên',
       timezoneAndLanguage: 'Thời gian',
-      bussinessDays: 'Ngày đi làm',
+      businessDays: 'Ngày đi làm',
       holidays: 'Ngày lễ',
       allowedIPs: 'Địa chỉ IP'
     }
@@ -313,13 +313,17 @@ export default {
       title: 'Ngày đi làm',
       tableHeader: {
         weekday: 'Ngày trong tuần',
-        startedAt: 'Bắt đầu lúc',
-        endedAt: 'Kết thúc lúc'
+        morningStartedAt: 'Bắt đầu buổi sáng',
+        morningEndedAt: 'Kết thúc buổi sáng',
+        afternoonStartedAt: 'Bắt đầu buổi chiều',
+        afternoonEndedAt: 'Kết thúc buổi chiều'
       },
       labels: {
         weekday: 'Ngày trong tuần',
-        startedAt: 'Bắt đầu lúc',
-        endedAt: 'Kết thúc lúc'
+        morningStartedAt: 'Bắt đầu buổi sáng',
+        morningEndedAt: 'Kết thúc buổi sáng',
+        afternoonStartedAt: 'Bắt đầu buổi chiều',
+        afternoonEndedAt: 'Kết thúc buổi chiều'
       },
       btn: {
         add: 'Tạo ngày đi làm',
