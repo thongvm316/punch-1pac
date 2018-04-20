@@ -46,10 +46,6 @@
     },
 
     methods: {
-      ...mapActions('flash', [
-        'setFlashMsg'
-      ]),
-
       ...mapActions('groups', [
         'addGroup'
       ]),
