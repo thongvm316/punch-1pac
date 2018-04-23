@@ -38,7 +38,10 @@ export default {
   },
 
   methods: {
-    filterUsers: debounce(function (search, loading) { this.search(search, loading) }, 350),
+    filterUsers: debounce(function (search, loading) {
+      loading(true)
+      this.search(search, loading)
+    }, 350),
 
     search (search, loading) {
       axios.get('/users', { params: Object.assign({ name_or_email: search }, this.queryParams) })

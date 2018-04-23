@@ -39,6 +39,10 @@
   }
 }
 
+.loading::after {
+  display: none;
+}
+
 @include margin-variant(4, $unit-4); //Margin variant .8rem
 @include margin-variant(10, $unit-10); //Margin variant 2rem
 @include padding-variant(4, $unit-4); //Padding variation .8rem

@@ -20,9 +20,20 @@
   background: $light-color url('../assets/ico-calendar.svg') calc(100% - .4rem) center / .8rem .8rem no-repeat;
 }
 
-input[type=search],
-.v-select {
+input[type=search] {
   background: $light-color url('../assets/ico-search.svg') calc(100% - .4rem) center / .8rem .8rem  no-repeat;
+}
+
+.v-select {
+  background-color: $light-color;
+  background-image: url('../assets/ico-search.svg');
+  background-position: right .4rem center;
+  background-size: .8rem;
+  background-repeat: no-repeat;
+
+  &.loading {
+    background-image: none;
+  }
 }
 
 .form-select:not([multiple]):not([size]) {
