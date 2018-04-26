@@ -52,7 +52,7 @@ const router = new Router({
     { path: '/company/settings/holidays', name: 'company-settings-holidays', component: CompanySettingsHolidays, meta: { title: 'Company Settings Holidays - 1Punch' } },
     { path: '/company/settings/allowed-ips', name: 'company-settings-allowed-ips', component: CompanySettingsAllowedIPs, meta: { title: 'Company Settings Allowed IPs - 1Punch' } },
     { path: '/company/settings', redirect: '/company/settings/profile' },
-    { path: '/404', name: 'error-404', component: Error404 },
+    { path: '/404', name: 'error-404', component: Error404, meta: { title: '404 Page not found' } },
     { path: '*', redirect: '/404' }
   ]
 })
