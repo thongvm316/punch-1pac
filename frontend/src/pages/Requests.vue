@@ -47,31 +47,7 @@
 
     <modal :title="$t('requests.modal.editTitle')" :modal-open.sync="isEditModalOpen">
       <div v-if="selectedRequest.kind === 'attendance'">
-        <div class="form-group">
-          <label class="form-label">{{ $t('requests.labels.date') }}</label>
-          <flat-pickr
-            :config="{enable: [updateParams.attendance_day], locale: flatpickrLocaleMapper[currentUser.language]}"
-            class="form-input daterange-picker"
-            v-model="updateParams.attendance_day"/>
-        </div>
-        <div class="form-group" :class="{ 'has-error': errors.attended_at }">
-          <label class="form-label">{{ $t('requests.labels.attendedAt') }}</label>
-          <input type="time" step="60" class="form-input" v-model="updateParams.attended_at">
-          <p class="form-input-hint" v-if="errors.attended_at">{{ $t('requests.errors.bothAttendedLeft', { msg: errors.attended_at[0] }) }}</p>
-        </div>
-        <div class="form-group" :class="{ 'has-error': errors.left_at }">
-          <label class="form-label">{{ $t('requests.labels.leftAt') }}</label>
-          <input type="time" step="60" class="form-input" v-model="updateParams.left_at">
-          <p class="form-input-hint" v-if="errors.left_at">{{ $t('requests.errors.bothAttendedLeft', { msg: errors.left_at[0] }) }}</p>
-        </div>
-        <div class="form-group" :class="{ 'has-error': errors.reason }">
-          <label class="form-label">{{ $t('requests.labels.reason') }}</label>
-          <textarea class="form-input" v-model="updateParams.reason"></textarea>
-          <p class="form-input-hint" v-if="errors.reason">{{ errors.reason[0] }}</p>
-        </div>
-        <div class="form-group">
-          <button type="button" class="btn" @click="saveEditModal({id: currentId, params: updateParams}, updateRequest, $t('messages.request.updateSuccess'))">{{ $t('requests.btn.save') }}</button>
-        </div>
+        <request-form v-if="isEditModalOpen" :request="selectedRequest" @afterModify="isEditModalOpen = false"></request-form>
       </div>
       <annual-leave-form :request="selectedRequest" v-if="selectedRequest.kind === 'annual_leave'" @finishRequest="isEditModalOpen = false"/>
     </modal>
@@ -83,49 +59,40 @@
 </template>
 
 <script>
-import flatPickr from 'vue-flatpickr-component'
 import MainLayout from '../layouts/Main'
 import confirmDialog from '../mixins/confirm-dialog'
-import modal from '../mixins/modal'
-import flatpickrLocale from '../mixins/flatpickr-locale'
 import Pagination from '../components/Pagination'
 import AnnualLeaveForm from '../components/AnnualLeaveForm'
+import RequestForm from '../components/RequestForm'
+import modal from '../mixins/modal'
 import { mapState, mapActions } from 'vuex'
 
 export default {
   name: 'requests',
 
-  mixins: [modal, confirmDialog, flatpickrLocale],
+  mixins: [modal, confirmDialog],
 
   data () {
     return {
       modalTitle: '',
-      currentId: '',
       selectedRequest: {},
       params: {
         self: true,
         kind: '',
         status: ''
-      },
-      updateParams: {
-        attendance_day: '',
-        attended_at: '',
-        left_at: '',
-        reason: ''
       }
     }
   },
 
   components: {
     MainLayout,
-    flatPickr,
     AnnualLeaveForm,
-    Pagination
+    Pagination,
+    RequestForm
   },
 
   computed: {
     ...mapState('requests', [
-      'errors',
       'pager',
       'requests'
     ]),
@@ -138,14 +105,7 @@ export default {
   methods: {
     toggleEditModal (request) {
       this.selectedRequest = request
-      if (this.selectedRequest.kind === 'attendance') {
-        this.clearRequestErrors()
-        this.isEditModalOpen = !this.isEditModalOpen
-        this.currentId = request.id
-        Object.keys(this.updateParams).forEach(v => { this.updateParams[v] = request[v] })
-      } else if (this.selectedRequest.kind === 'annual_leave') {
-        this.isEditModalOpen = !this.isEditModalOpen
-      }
+      this.isEditModalOpen = !this.isEditModalOpen
     },
 
     getStatusClass (status) {
@@ -160,9 +120,7 @@ export default {
     },
 
     ...mapActions('requests', [
-      'clearRequestErrors',
       'deleteRequest',
-      'updateRequest',
       'getRequests'
     ])
   },

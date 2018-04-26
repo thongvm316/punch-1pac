@@ -43,31 +43,7 @@
     <pagination action="getAttendances" namespace="attendances" v-if="pager.total_pages > 1"/>
 
     <modal :title="$t('attendances.modal.addTitle')" :modal-open.sync="isAddModalOpen">
-      <div class="form-group">
-        <label class="form-label">{{ $t('attendances.labels.date') }}</label>
-        <flat-pickr
-          :config="{ enable: [day], locale: flatpickrLocaleMapper[currentUser.language] }"
-          class="form-input daterange-picker"
-          v-model="day"/>
-      </div>
-      <div class="form-group" :class="{ 'has-error': errors.attended_at }">
-        <label class="form-label">{{ $t('attendances.labels.attendedAt') }}</label>
-        <input type="time" step="60" class="form-input" v-model="createRequestParams.attended_at">
-        <p class="form-input-hint" v-if="errors.attended_at">{{ $t('attendances.labels.attendedAt') }} {{ errors.attended_at[0] }}</p>
-      </div>
-      <div class="form-group" :class="{ 'has-error': errors.left_at }">
-        <label class="form-label">{{ $t('attendances.labels.leftAt') }}</label>
-        <input type="time" step="60" class="form-input" v-model="createRequestParams.left_at">
-        <p class="form-input-hint" v-if="errors.left_at">{{ $t('attendances.labels.leftAt') }} {{ errors.left_at[0] }}</p>
-      </div>
-      <div class="form-group" :class="{ 'has-error': errors.reason }">
-        <label class="form-label">{{ $t('attendances.labels.reason') }}</label>
-        <textarea class="form-input" v-model="createRequestParams.reason"></textarea>
-        <p class="form-input-hint" v-if="errors.reason">{{ $t('attendances.labels.reason') }} {{ errors.reason[0] }}</p>
-      </div>
-      <div class="form-group">
-        <button type="button" class="btn" @click="submitAddModal(createRequestParams, addRequest, $t('messages.request.createSuccess'))">{{ $t('attendances.btn.add') }}</button>
-      </div>
+      <request-form v-if="isAddModalOpen" :attendance="attendance" @afterModify="isAddModalOpen = false"></request-form>
     </modal>
   </main-layout>
 </template>
@@ -77,6 +53,7 @@ import flatPickr from 'vue-flatpickr-component'
 import MainLayout from '../layouts/Main'
 import Pagination from '../components/Pagination'
 import AttendanceStatusSelect from '../components/AttendanceStatusSelect'
+import RequestForm from '../components/RequestForm'
 import modal from '../mixins/modal'
 import flatpickrLocale from '../mixins/flatpickr-locale'
 import { mapState, mapActions } from 'vuex'
@@ -86,19 +63,13 @@ export default {
 
   data () {
     return {
-      day: '',
+      attendance: {},
       dateRange: [this.$moment().locale('en').startOf('month').format('YYYY-MM-DD'), this.$moment().locale('en').endOf('month').format('YYYY-MM-DD')],
       params: {
         self: true,
         from_date: this.$moment().locale('en').startOf('month').format('YYYY-MM-DD'),
         to_date: this.$moment().locale('en').endOf('month').format('YYYY-MM-DD'),
         status: ''
-      },
-      createRequestParams: {
-        attendance_id: '',
-        attended_at: '',
-        left_at: '',
-        reason: ''
       }
     }
   },
@@ -107,6 +78,7 @@ export default {
     MainLayout,
     Pagination,
     AttendanceStatusSelect,
+    RequestForm,
     flatPickr
   },
 
@@ -114,10 +86,6 @@ export default {
     ...mapState('attendances', [
       'pager',
       'attendances'
-    ]),
-
-    ...mapState('requests', [
-      'errors'
     ])
   },
 
@@ -126,18 +94,9 @@ export default {
       'getAttendances'
     ]),
 
-    ...mapActions('requests', [
-      'addRequest',
-      'clearRequestErrors'
-    ]),
-
     toggleAddModal (attendance) {
-      this.clearRequestErrors()
       this.isAddModalOpen = !this.isAddModalOpen
-      this.day = attendance.day
-      this.createRequestParams.attendance_id = attendance.id
-      const statuses = ['attended_at', 'left_at']
-      statuses.forEach(v => { this.createRequestParams[v] = attendance[v] })
+      this.attendance = attendance
     }
   },
 
