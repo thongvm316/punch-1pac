@@ -123,6 +123,8 @@ module JsonResponseHelper
       email: String,
       name: String,
       avatar_url: String,
+      position: nullable_response(String),
+      gender: String,
       left_at: nullable_response(hour_min_response),
       attended_at: nullable_response(hour_min_response),
       attendance_id: nullable_response(Integer)

@@ -59,7 +59,7 @@ class User < ApplicationRecord
 
   scope :with_today_attendance, -> {
     sanitized_today_cond = sanitize_sql("attendances.day = '#{Time.current}'")
-    select('users.id, users.name, users.avatar_data, users.email',
+    select('users.id, users.name, users.avatar_data, users.email, users.position, users.gender',
            'attendances.id as attendance_id, attendances.attended_at as attended_at, attendances.left_at as left_at')
       .joins("LEFT JOIN attendances ON users.id = attendances.user_id AND #{sanitized_today_cond}")
   }
