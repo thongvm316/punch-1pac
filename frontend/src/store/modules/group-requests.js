@@ -22,6 +22,14 @@ const mutations = {
   [types.REJECT_GROUP_REQUEST] (state, requestId) {
     const index = state.requests.findIndex(request => request.id === requestId)
     state.requests[index].status = 'rejected'
+  },
+
+  [types.REJECT_GROUP_REQUEST_ERRORS] (state, payload) {
+    state.errors = payload.errors
+  },
+
+  [types.CLEAR_REJECT_GROUP_REQUEST_ERRORS] (state) {
+    state.errors = {}
   }
 }
 
@@ -44,13 +52,20 @@ const actions = {
                 .catch(error => { throw error })
   },
 
-  rejectRequest ({ commit }, requestId) {
-    return axios.post(`/requests/${requestId}/reject`)
+  rejectRequest ({ commit }, params) {
+    return axios.post(`/requests/${params.requestId}/reject`, { admin_reason: params.adminReason })
                 .then(response => {
-                  commit(types.REJECT_GROUP_REQUEST, requestId)
+                  commit(types.REJECT_GROUP_REQUEST, params.requestId)
                   return response
                 })
-                .catch(error => { throw error })
+                .catch(error => {
+                  if (error.response && error.response.status === 422) commit(types.REJECT_GROUP_REQUEST_ERRORS, error.response.data)
+                  throw error
+                })
+  },
+
+  clearRejectRequestErrors ({ commit }) {
+    commit(types.CLEAR_REJECT_GROUP_REQUEST_ERRORS)
   }
 }
 
