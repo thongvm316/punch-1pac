@@ -83,6 +83,7 @@ class User < ApplicationRecord
     q = all
     q = q.where('email LIKE ?', "%#{params[:email]}%") if params[:email].present?
     q = q.not_in_group(params[:not_in_group_id]) if params[:not_in_group_id].present?
+    q = q.where.not(id: params[:exclude_user_ids]) if params[:exclude_user_ids].present?
     q = q.by_group(current_user, params[:group_id]) if params[:type] && params[:type] == 'users_in_group'
     q = q.where('lower(email) LIKE ? OR lower(name) LIKE ?', "%#{params[:name_or_email].downcase}%", "%#{params[:name_or_email].downcase}%") if params[:name_or_email].present?
     q
