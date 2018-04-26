@@ -7,20 +7,17 @@
     </router-link>
     <router-link tag="li"
       class="tab-item"
-      :to="`/groups/${groupId}/attendances`"
-      v-if="$auth('Page', currentUser).canViewGroups()">
+      :to="`/groups/${groupId}/attendances`">
       <a href="#">{{ $t('group.attendances') }}</a>
     </router-link>
     <router-link tag="li"
       class="tab-item"
-      :to="`/groups/${groupId}/requests`"
-      v-if="$auth('Page', currentUser).canViewGroups()">
+      :to="`/groups/${groupId}/requests`">
       <a href="#">{{ $t('group.requests') }}</a>
     </router-link>
     <router-link tag="li"
       class="tab-item"
-      :to="`/groups/${groupId}/report`"
-      v-if="$auth('Page', currentUser).canViewGroups()">
+      :to="`/groups/${groupId}/report`">
       <a href="#">{{ $t('group.report') }}</a>
     </router-link>
   </ul>

@@ -3,7 +3,7 @@
     <group-tab :group-id="$route.params.id"/>
 
     <div class="input-group mt-5">
-      <filter-user-box :queryParams="{ not_in_group_id: $route.params.id, per_page: 1000 }" :placeholder="$t('group.placeholder.filterByEmail')" v-model="selectedUser"/>
+      <filter-user-box :queryParams="{ not_in_group_id: $route.params.id, per_page: 1000, exclude_user_ids: groupUsers.map(user => user.id) }" :placeholder="$t('group.placeholder.filterByEmail')" :user.sync="selectedUser"/>
       <button type="button" class="btn input-group-btn" @click="localAddGroupUser">{{ $t('group.btn.addUser') }}</button>
     </div>
     <p class="form-input-hint text-dark">{{ $t('group.explain') }}</p>
@@ -69,6 +69,7 @@ export default {
 
   data () {
     return {
+      groupUsers: [],
       selectedUser: null,
       editUser: null
     }
@@ -113,12 +114,16 @@ export default {
   },
 
   created () {
-    this.getGroup(this.$route.params.id)
+    this.getGroup(this.$route.params.id).then(response => { this.groupUsers = response.data.users })
   },
 
   watch: {
     '$route': function (val) {
-      this.getGroup(this.$route.params.id)
+      this.getGroup(this.$route.params.id).then(response => { this.groupUsers = response.data.users })
+    },
+
+    'group.users': function () {
+      this.groupUsers = this.group.users
     }
   }
 }
