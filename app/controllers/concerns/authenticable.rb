@@ -57,7 +57,7 @@ module Authenticable
   end
 
   def jwt_decode
-    @jwt_decode ||= JWT.decode(token, ENV['JWT_KEY'], true, algorithm: ALGORITHM, verify_jti: ->(jti) { jwt_revoked?(jti) }).first
+    @jwt_decode ||= JWT.decode(token, ENV['JWT_KEY'], true, algorithm: ALGORITHM, verify_jti: ->(jti) { !jwt_revoked?(jti) }).first
   end
 
   def revoke_jwt!(usession = nil)
@@ -66,6 +66,6 @@ module Authenticable
   end
 
   def jwt_revoked?(jti)
-    !JwtBlacklist.exists?(jti: jti)
+    JwtBlacklist.exists?(jti: jti)
   end
 end

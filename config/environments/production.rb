@@ -90,9 +90,9 @@ Rails.application.configure do
     event.payload[:params].except('controller', 'action')
   end
 
-  config.action_mailer.default_options = { from: '1PUNCH <no-reply>@1punch.io' }
+  config.action_mailer.default_options = { from: 'PUNCH <no-reply@punch.ooo>' }
   config.action_mailer.delivery_method = :smtp
-  config.action_mailer.default_url_options = { host: '1punch.io', protocol: 'https' }
+  config.action_mailer.default_url_options = { host: 'punch.ooo', protocol: 'https' }
   config.action_mailer.smtp_settings = {
     address:              ENV['MAILGUN_HOST'],
     domain:               ENV['MAILGUN_DOMAIN'],

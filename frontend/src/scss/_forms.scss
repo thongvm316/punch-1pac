@@ -77,3 +77,14 @@ input[type=search],
     color: $gray-color;
   }
 }
+
+.has-error .form-input,
+.form-input.is-error,
+.has-error .form-select,
+.form-select.is-error {
+  border-color: $error-color;
+  &:focus {
+    box-shadow: none;
+  }
+}
+

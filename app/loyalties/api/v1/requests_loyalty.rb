@@ -25,6 +25,7 @@ class Api::V1::RequestsLoyalty < ApplicationLoyalty
   end
 
   def destroy?
+    return false unless @record.pending?
     @record.user == @user
   end
 end

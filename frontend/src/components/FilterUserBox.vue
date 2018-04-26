@@ -31,7 +31,7 @@ export default {
     }
   },
 
-  props: ['placeholder', 'queryParams'],
+  props: ['placeholder', 'queryParams', 'user'],
 
   components: {
     vSelect
@@ -50,7 +50,14 @@ export default {
     },
 
     updateSelectedUser () {
-      this.$emit('input', this.selectedUser)
+      this.$emit('update:user', this.selectedUser)
+    }
+  },
+
+  watch: {
+    user: function () {
+      this.optionUsers = []
+      this.selectedUser = this.user
     }
   }
 }

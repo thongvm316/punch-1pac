@@ -37,3 +37,7 @@ svg {
     color: $dark-color;
   }
 }
+
+a:focus {
+  box-shadow: none;
+}

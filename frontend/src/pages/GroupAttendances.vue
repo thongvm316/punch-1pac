@@ -11,7 +11,7 @@
         <option slot="placeholder" value="">{{ $t('attendances.placeholder.filterByStatus') }}</option>
       </attendance-status-select>
 
-      <filter-user-box :queryParams="{ group_id: this.$route.params.id, type: 'users_in_group', per_page: 1000 }" :placeholder="$t('attendances.placeholder.filterByUser')" v-model="selectedUser"/>
+      <filter-user-box :queryParams="{ group_id: this.$route.params.id, type: 'users_in_group', per_page: 1000 }" :placeholder="$t('attendances.placeholder.filterByUser')" :user.sync="selectedUser"/>
     </div>
 
     <table class="table bg-light mt-5">

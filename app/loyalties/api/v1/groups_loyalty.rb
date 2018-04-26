@@ -1,16 +1,19 @@
 # frozen_string_literal: true
 
 class Api::V1::GroupsLoyalty < ApplicationLoyalty
+  def create?
+    return true if user.owner? || user.superadmin?
+    false
+  end
+
   def update?
-    return true if user.superadmin?
+    return true if user.owner? || user.superadmin?
     return true if user.admin? && user.groups.include?(record)
     false
   end
 
   def show?
-    return true if user.superadmin?
-    return true if (user.admin? || user.member?) && user.groups.include?(record)
-    false
+    update?
   end
 
   def add_user?
@@ -18,12 +21,10 @@ class Api::V1::GroupsLoyalty < ApplicationLoyalty
   end
 
   def remove_user?
-    add_user?
+    update?
   end
 
   def report?
-    return true if user.superadmin?
-    return true if user.admin? && user.groups.include?(record)
-    false
+    update?
   end
 end

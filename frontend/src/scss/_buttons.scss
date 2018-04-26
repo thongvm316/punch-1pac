@@ -9,6 +9,10 @@
     margin-right: .2rem;
   }
 
+  &:focus {
+    box-shadow: none;
+  }
+
   &:focus,
   &:hover {
     border-color: $gray-color-dark;

@@ -10,7 +10,7 @@ class AuthController < ApplicationController
   def new
     respond_to do |f|
       f.html do
-        redirect_to(url_for(subdomain: request.subdomain, controller: 'dashboard', action: 'index', path: 'dashboard')) && return if signed_in?
+        redirect_to(subdomain: request.subdomain, controller: 'dashboard', action: 'index', path: 'dashboard') && return if signed_in?
         @user = User.new
       end
       f.json { render json: current_company, serializer: CompanySerializer, status: 200 }
@@ -27,7 +27,7 @@ class AuthController < ApplicationController
         @user.current_session(request) ? @user.touch(:updated_at) : Session.track!(@user, data, request)
         f.html do
           session[:access_token] = token
-          redirect_to(url_for(subdomain: request.subdomain, controller: 'dashboard', action: 'index', path: 'dashboard'))
+          redirect_to(subdomain: request.subdomain, controller: 'dashboard', action: 'index', path: 'dashboard')
         end
         f.json do
           user_json = ActiveModelSerializers::SerializableResource.new(@user, serializer: UserSerializer).as_json

@@ -1,9 +1,11 @@
 import User from './user'
 import Page from './page'
+import Group from './group'
 
 const classes = {
   User,
-  Page
+  Page,
+  Group
 }
 
 export default function authorization (model, currentUser, record) {

@@ -57,6 +57,7 @@ export default {
               password: '',
               password_confirmation: ''
             }
+            this.clearUserPasswordErrors()
           })
     }
   },

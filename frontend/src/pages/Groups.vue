@@ -2,7 +2,7 @@
   <main-layout :title="$t('groups.title')">
     <div class="toolbar mt-5 clearfix">
       <input type="search" class="form-input" :placeholder="$t('groups.placeholder.filterByName')" v-model="name">
-      <button type="button" class="btn btn-success float-right" @click="toggleAddModal()">
+      <button type="button" class="btn btn-success float-right" @click="toggleAddModal()" v-if="$auth('Group', currentUser).canCreate()">
         {{ $t('groups.btn.add') }}
       </button>
     </div>
