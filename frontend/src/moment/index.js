@@ -1,6 +1,6 @@
 import moment from 'moment-timezone'
 
-moment.tz.setDefault(window.INITIAL_STATE.company.timezone)
+moment.tz.setDefault(window.initialStates().company.timezone)
 moment.updateLocale('en', {
   longDateFormat: {
     'L': 'MMM DD',
@@ -20,6 +20,6 @@ moment.updateLocale('vi', {
     'LLLL': 'D MMMM YYYY, HH:mm'
   }
 })
-moment.locale(window.INITIAL_STATE.user.language || 'en')
+moment.locale(window.initialStates().user.language || 'en')
 
 export default moment

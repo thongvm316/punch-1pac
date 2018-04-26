@@ -36,6 +36,28 @@ svg {
   a {
     color: $dark-color;
   }
+  .footer-items {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    li {
+      vertical-align: middle;
+      line-height: 1;
+
+      &:first-child {
+        padding-left: 0;
+      }
+    }
+
+    img {
+      height: 32px;
+    }
+
+    span {
+      padding-top: 10px;
+    }
+  }
 }
 
 a:focus {

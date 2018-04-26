@@ -15,17 +15,17 @@
 <meta property="og:site_name" content="<%= yield(:title) || '1Punch' %>">
 <meta property="og:description" content="<%= yield(:og_description) || '1Punch description' %>">
 <meta property="og:url" content="<%= yield(:og_url) || root_url %>">
-<meta property="og:image" content="">
+<meta property="og:image" content="<%= asset_url('og.png') %>">
 <meta property="og:type" content="website">
 
 <link rel="dns-prefetch" href="">
 
-<link rel="shortcut icon" type="image/x-icon" href="">
-<link rel="apple-touch-icon" sizes="180x180" href="">
-<link rel="apple-touch-icon" sizes="152x152" href="">
-<link rel="apple-touch-icon" sizes="120x120" href="">
-<link rel="apple-touch-icon" sizes="76x76" href="">
-<link rel="icon" sizes="192x192" href="">
+<link rel="shortcut icon" type="image/x-icon" href="<%= asset_url('favicon.ico') %>">
+<link rel="apple-touch-icon" sizes="180x180" href="<%= asset_url('icon_180x180.png') %>">
+<link rel="apple-touch-icon" sizes="152x152" href="<%= asset_url('icon_152x152.png') %>">
+<link rel="apple-touch-icon" sizes="120x120" href="<%= asset_url('icon_120x120.png') %>">
+<link rel="apple-touch-icon" sizes="76x76" href="<%= asset_url('icon_76x76.png') %>">
+<link rel="icon" sizes="192x192" href="<%= asset_url('icon_192x192.png') %>">
 
 <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
 <%= stylesheet_link_tag('application', media: 'all') %>
