@@ -70,8 +70,8 @@ RSpec.describe Api::V1::GroupsController, type: :controller do
       its(:body) { is_expected.to be_json_as(response_401) }
     end
 
-    context 'when log in user is admin' do
-      let(:login_user) { create :user, company: company, role: 'admin' }
+    context 'when log in user is superadmin' do
+      let(:login_user) { create :user, company: company, role: 'superadmin' }
 
       context 'when params are valid' do
         let(:image) { fixture_file_upload('images/image.png', 'image/png') }
