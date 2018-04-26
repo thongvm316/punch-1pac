@@ -25,10 +25,10 @@ export default {
   },
 
   created () {
-    this.setCurrentUser(window.INITIAL_STATE)
-    this.setCurrentCompany(window.INITIAL_STATE)
-    this[RECEIVE_HEADER_ANNOUNCEMENTS](window.INITIAL_STATE)
-    this.setMeta(window.INITIAL_STATE)
+    this.setCurrentUser(window.initialStates())
+    this.setCurrentCompany(window.initialStates())
+    this[RECEIVE_HEADER_ANNOUNCEMENTS](window.initialStates())
+    this.setMeta(window.initialStates())
   }
 }
 </script>
