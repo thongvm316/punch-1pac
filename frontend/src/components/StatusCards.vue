@@ -17,10 +17,10 @@
           <h3>{{ $tc('statusCards.dayNum', statuses[status], { num: statuses[status] }) }}</h3>
         </div>
       </div>
-      <div class="column col-4">
+      <div class="column col-4" v-if="statuses['working_hours']">
         <div class="box mt-5">
           <p>{{ $t('meta.attendance_statuses.working_hours') }}</p>
-          <h3>{{ $t('statusCards.workingHours', { workingHours: statuses['working_hours'], companyTotalHours: companyTotalWorkingHoursOnMonth }) }}</h3>
+          <h3>{{ $t('statusCards.workingHours', { hours: statuses['working_hours'].hours, mins: statuses['working_hours'].mins, companyTotalHours: companyTotalWorkingHoursOnMonth }) }}</h3>
         </div>
       </div>
     </div>
@@ -36,7 +36,7 @@ export default {
 
   data () {
     return {
-      month: this.$moment().format('LL')
+      month: this.$moment().locale('en').format('LL')
     }
   },
 

@@ -51,7 +51,7 @@ export default {
     ]),
 
     isWeekend () {
-      return this.currentCompany.breakdays.includes(this.$moment(this.localAttendance.day).format('dddd').toLowerCase())
+      return this.currentCompany.breakdays.includes(this.$moment(this.localAttendance.day).locale('en').format('dddd').toLowerCase())
     }
   },
 

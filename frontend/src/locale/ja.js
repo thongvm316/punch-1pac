@@ -537,7 +537,7 @@ export default {
   },
   statusCards: {
     dayNum: '0 day | 1 day | {num} days',
-    workingHours: '{workingHours}/{companyTotalHours} hours'
+    workingHours: '{hours}h{mins}m/{companyTotalHours}h'
   },
   annualLeave: {
     title: 'Request an annual leave',
@@ -557,5 +557,8 @@ export default {
     btn: {
       goHome: 'Go Home'
     }
+  },
+  flatpickr: {
+    rangeSeparator: ' to '
   }
 }

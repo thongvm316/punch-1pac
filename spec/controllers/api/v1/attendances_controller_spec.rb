@@ -31,14 +31,14 @@ RSpec.describe Api::V1::AttendancesController, type: :controller do
     context 'when params is invalid' do
       subject { get :chart, params: { date: 'invalid' } }
       its(:code) { is_expected.to eq '200' }
-      its(:body) { is_expected.to be_json_as(nil) }
+      its(:body) { is_expected.to be_json_as(response_attendance_chart) }
     end
 
     context 'when chart absolutely has no data' do
       subject { get :chart, params: { date: Date.current } }
 
       its(:code) { is_expected.to eq '200' }
-      its(:body) { is_expected.to be_json_as(nil) }
+      its(:body) { is_expected.to be_json_as(response_attendance_chart) }
     end
 
     context 'when chart has no data in month' do

@@ -42,7 +42,7 @@
           <td>{{ result.leave_ok }}</td>
           <td>{{ result.leave_early }}</td>
           <td>{{ result.annual_leave }}</td>
-          <td>{{ `${result.working_hours}/${companyTotalWorkingHoursOnMonth}` }}</td>
+          <td>{{ `${result.working_hours.hours}h${result.working_hours.mins}m/${companyTotalWorkingHoursOnMonth}h` }}</td>
         </tr>
       </tbody>
     </table>
@@ -60,7 +60,7 @@ export default {
   data () {
     return {
       selectedUser: null,
-      month: this.$moment().format('LL'),
+      month: this.$moment().locale('en').format('LL'),
       sortKey: 'name',
       sortOrders: 'asc'
     }
@@ -98,8 +98,15 @@ export default {
         results = results.slice().sort((a, b) => {
           let modifier = 1
           if (this.sortOrders === 'desc') modifier = -1
-          if (a[this.sortKey] < b[this.sortKey]) return -1 * modifier
-          if (a[this.sortKey] > b[this.sortKey]) return 1 * modifier
+          if (this.sortKey === 'working_hours') {
+            const atimestamp = a[this.sortKey].hours * 3600 + a[this.sortKey].mins * 60
+            const btimestamp = b[this.sortKey].hours * 3600 + b[this.sortKey].mins * 60
+            if (atimestamp < btimestamp) return -1 * modifier
+            if (atimestamp > btimestamp) return 1 * modifier
+          } else {
+            if (a[this.sortKey] < b[this.sortKey]) return -1 * modifier
+            if (a[this.sortKey] > b[this.sortKey]) return 1 * modifier
+          }
           return 0
         })
       }

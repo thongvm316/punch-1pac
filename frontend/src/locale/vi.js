@@ -537,7 +537,7 @@ export default {
   },
   statusCards: {
     dayNum: '0 ngày | 1 ngày | {num} ngày',
-    workingHours: '{workingHours}/{companyTotalHours} giờ'
+    workingHours: '{hours}h{mins}m/{companyTotalHours}h'
   },
   annualLeave: {
     title: 'Xin nghỉ phép',
@@ -557,5 +557,8 @@ export default {
     btn: {
       goHome: 'Về Trang Chính'
     }
+  },
+  flatpickr: {
+    rangeSeparator: ' đến '
   }
 }

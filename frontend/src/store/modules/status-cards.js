@@ -9,7 +9,7 @@ const state = {
 const mutations = {
   [types.FETCH_STATUS_CARDS] (state, data) {
     state.statuses = data.statuses
-    state.companyTotalWorkingHoursOnMonth = data.company_total_working_hours_on_month
+    state.companyTotalWorkingHoursOnMonth = data.meta.company_total_working_hours_on_month
   }
 }
 

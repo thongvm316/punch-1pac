@@ -65,7 +65,7 @@ export default {
     return {
       attendance: {},
       today: this.$moment(),
-      dateContext: this.$moment(),
+      dateContext: this.$moment().locale('en'),
       days: this.$moment.weekdaysShort(),
       attendances: [],
       annualLeaveDay: ''
@@ -159,33 +159,33 @@ export default {
   methods: {
     nextMonth () {
       this.dateContext = this.$moment(this.dateContext).add(1, 'month')
-      this.getCalendarAttendances(this.dateContext.format('YYYY-MM-DD')).then(response => this.formatAttendances(response.data))
+      this.getCalendarAttendances(this.dateContext.locale('en').format('YYYY-MM-DD')).then(response => this.formatAttendances(response.data))
     },
 
     lastMonth () {
       this.dateContext = this.$moment(this.dateContext).subtract(1, 'month')
-      this.getCalendarAttendances(this.dateContext.format('YYYY-MM-DD')).then(response => this.formatAttendances(response.data))
+      this.getCalendarAttendances(this.dateContext.locale('en').format('YYYY-MM-DD')).then(response => this.formatAttendances(response.data))
     },
 
     currentMonth () {
       this.dateContext = this.$moment(this.today)
-      this.getCalendarAttendances(this.dateContext.format('YYYY-MM-DD')).then(response => this.formatAttendances(response.data))
+      this.getCalendarAttendances(this.dateContext.locale('en').format('YYYY-MM-DD')).then(response => this.formatAttendances(response.data))
     },
 
     formatAttendances (response) {
       this.attendances = []
       let attendances = []
-      const date = response.attendances[0] ? this.$moment(response.attendances[0].day) : this.dateContext
+      const date = response.attendances[0] ? this.$moment(response.attendances[0].day).locale('en') : this.dateContext
       const userJoinDate = this.$moment(this.currentUser.created_at)
       const findHolidayByDay = function (currentDay) {
         return response.holidays.find(holiday => {
-          return currentDay.isBetween(holiday.started_at, holiday.ended_at)
+          return currentDay.isBetween(holiday.started_at, holiday.ended_at, null, '[]')
         })
       }
 
       // Loop render day in month
       for (let day = 1; day <= date.daysInMonth(); day++) {
-        const currentDay = this.$moment(`${date.year()}-${date.format('MM')}-${day}`, 'YYYY-MM-D')
+        const currentDay = this.$moment(`${date.year()}-${date.format('MM')}-${day}`, 'YYYY-MM-D').locale('en')
         let attendance = { id: null, day: currentDay.format('YYYY-MM-DD'), attended_at: '', left_at: '', attending_status: '', leaving_status: '', off_status: '', holiday: null }
         let holiday = null
         const tmpAttendance = response.attendances.find(item => currentDay.format('YYYY-MM-DD') === item.day)
