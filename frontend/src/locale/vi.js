@@ -551,11 +551,11 @@ export default {
     save: 'Lưu'
   },
   page404: {
-    title: 'Whoop! Look like something is missing',
-    content: 'Sorry, the page you are looking for doesn’t exist.',
-    instruction: 'Press the button below to get back to previous page.',
+    title: 'Ý Da! Có vẻ như có gì đó không ổn',
+    content: 'Xin lỗi, nhưng trang web bạn đang tìm không tồn tại.',
+    instruction: 'Nhấn nút bên dưới để về trang chính.',
     btn: {
-      goHome: 'Go Home'
+      goHome: 'Về Trang Chính'
     }
   }
 }
