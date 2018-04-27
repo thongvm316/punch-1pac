@@ -43,7 +43,7 @@ module JsonResponseHelper
     {
       id: Integer,
       ip_address: String,
-      created_at: String
+      created_at: time_iso8601_response
     }
   end
 
