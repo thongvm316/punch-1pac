@@ -16,7 +16,7 @@
       <span href="#" class="calendar-event bg-error text-error text-center" v-if="localAttendance.leaving_status === 'leave_early'">
         {{ $t(`meta.attendance_statuses.${localAttendance.leaving_status}`) }}
       </span>
-      <span href="#" class="calendar-event bg-info text-info text-center" v-if="localAttendance.off_status">
+      <span href="#" class="calendar-event bg-notice text-notice text-center" v-if="localAttendance.off_status">
         {{ $t(`meta.attendance_statuses.${localAttendance.off_status}`) }}
       </span>
       <span href="#" class="calendar-event bg-gray text-gray text-center" v-if="localAttendance.holiday">

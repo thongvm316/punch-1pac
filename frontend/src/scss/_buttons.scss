@@ -60,6 +60,10 @@
     @include button-variant($info-color);
   }
 
+  &.btn-notice {
+    @include button-variant($notice-color);
+  }
+
   &.btn-submit {
     margin-top: $unit-4;
   }

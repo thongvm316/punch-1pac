@@ -549,5 +549,13 @@ export default {
     updateSuccessMsg: 'Đã cập nhật ngày xin nghỉ phép',
     submit: 'Gửi',
     save: 'Lưu'
+  },
+  page404: {
+    title: 'Ý Da! Có vẻ như có gì đó không ổn',
+    content: 'Xin lỗi, nhưng trang web bạn đang tìm không tồn tại.',
+    instruction: 'Nhấn nút bên dưới để về trang chính.',
+    btn: {
+      goHome: 'Về Trang Chính'
+    }
   }
 }

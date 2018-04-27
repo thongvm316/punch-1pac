@@ -549,5 +549,13 @@ export default {
     updateSuccessMsg: 'Your annual leave request is updated',
     submit: 'Submit',
     save: 'Save'
+  },
+  page404: {
+    title: 'Whoop! Look like something is missing',
+    content: 'Sorry, the page you are looking for doesn’t exist.',
+    instruction: 'Press the button below to get back to home page.',
+    btn: {
+      goHome: 'Go Home'
+    }
   }
 }

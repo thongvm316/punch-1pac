@@ -56,6 +56,7 @@
 @include bg-color-variant('.bg-warning', $warning-color-light);
 @include bg-color-variant('.bg-error', $error-color-light);
 @include bg-color-variant('.bg-info', $info-color-light);
+@include bg-color-variant('.bg-notice', $notice-color-light);
 
 // overwrite text color
 @include text-color-variant('.text-secondary', $gray-color-dark);
@@ -64,3 +65,4 @@
 @include text-color-variant('.text-warning', $warning-color);
 @include text-color-variant('.text-error', $error-color);
 @include text-color-variant('.text-info', $info-color);
+@include text-color-variant('.text-notice', $notice-color);
