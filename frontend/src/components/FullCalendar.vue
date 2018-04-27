@@ -31,34 +31,51 @@
           <div class="calendar-date prev-month disabled" v-for="date in lastDaysPreviousMonth">
             <button class="date-item">{{ date }}</button>
           </div>
-          <calendar-date :calendar-attendance="attendance" :today="today" v-for="attendance in attendances" :key="attendance.day"/>
+          <calendar-date :calendar-attendance="attendance" :today="today" v-for="attendance in attendances" :key="attendance.day" @click.native="openModal(attendance)"/>
           <div class="calendar-date next-month disabled" v-for="date in firstDaysNextMonth">
             <button class="date-item">{{ date }}</button>
           </div>
         </div>
       </div>
     </div>
+
+    <modal :title="$t('attendances.modal.addTitle')" :modal-open.sync="isEditModalOpen">
+      <request-form v-if="isEditModalOpen" :attendance="attendance" @afterModify="isEditModalOpen = false"></request-form>
+    </modal>
+
+    <modal :title="$t('annualLeave.title')" :modal-open.sync="isAddModalOpen">
+      <annual-leave-form v-if="isAddModalOpen" :annual-day="annualLeaveDay" @finishRequest="isAddModalOpen = false"/>
+    </modal>
   </div>
 </template>
 
 <script>
 import CalendarDate from '../components/CalendarDate.vue'
+import RequestForm from '../components/RequestForm'
+import AnnualLeaveForm from '../components/AnnualLeaveForm'
 import { mapState, mapActions } from 'vuex'
+import modal from '../mixins/modal'
 
 export default {
   name: 'full-calendar',
 
+  mixins: [modal],
+
   data () {
     return {
+      attendance: {},
       today: this.$moment(),
       dateContext: this.$moment(),
       days: this.$moment.weekdaysShort(),
-      attendances: []
+      attendances: [],
+      annualLeaveDay: ''
     }
   },
 
   components: {
-    CalendarDate
+    CalendarDate,
+    RequestForm,
+    AnnualLeaveForm
   },
 
   computed: {
@@ -203,7 +220,17 @@ export default {
 
     ...mapActions('calendar', [
       'getCalendarAttendances'
-    ])
+    ]),
+
+    openModal (data) {
+      if (data.attended_at === '' && this.today.isSameOrBefore(data.day)) {
+        this.annualLeaveDay = data.day
+        this.isAddModalOpen = !this.isAddModalOpen
+      } else if (data.attended_at !== '' && this.today.isSameOrAfter(data.day)) {
+        this.attendance = data
+        this.isEditModalOpen = !this.isEditModalOpen
+      }
+    }
   },
 
   created () {

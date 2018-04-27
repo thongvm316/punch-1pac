@@ -11,4 +11,25 @@
     display: flex;
     justify-content: space-between;
   }
+
+  .calendar-date {
+    &:hover {
+      cursor: pointer;
+    }
+
+    .date-item {
+      &:hover {
+        color: $gray-color-dark;
+        border: $border-width solid transparent;
+        background: transparent;
+      }
+
+      &.date-today {
+        &:hover {
+          border-color: $secondary-color-dark;
+          color: $primary-color;
+        }
+      }
+    }
+  }
 }

@@ -43,7 +43,7 @@ export default {
     }
   },
 
-  props: ['request', 'type'],
+  props: ['request', 'type', 'annualDay'],
 
   components: {
     flatPickr
@@ -82,6 +82,10 @@ export default {
   created () {
     if (this.request) {
       Object.keys(this.params).forEach(key => { this.params[key] = this.request[key] })
+    }
+
+    if (this.annualDay) {
+      this.params.annual_leave_day = this.annualDay
     }
   }
 }
