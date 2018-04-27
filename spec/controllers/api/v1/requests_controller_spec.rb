@@ -342,7 +342,6 @@ RSpec.describe Api::V1::RequestsController, type: :controller do
         end
       end
 
-
       context 'when request.user is not in login_user.group' do
         let(:login_user) { create :user, :with_groups, company: company, role: 'admin' }
         let(:req_user) { create :user, :with_groups, company: company }

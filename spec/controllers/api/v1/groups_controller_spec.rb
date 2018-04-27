@@ -342,7 +342,7 @@ RSpec.describe Api::V1::GroupsController, type: :controller do
         subject { get :report, params: { id: groups.first.id } }
 
         its(:code) { is_expected.to eq '200' }
-        its(:body) { is_expected.to be_json_as(Array.new(3) { response_group_report }) }
+        its(:body) { is_expected.to be_json_as(results: Array.new(3) { response_group_report }, meta: Hash) }
       end
 
       context 'when group not in login_user.groups' do
@@ -363,7 +363,7 @@ RSpec.describe Api::V1::GroupsController, type: :controller do
       subject { get :report, params: { id: groups.first.id } }
 
       its(:code) { is_expected.to eq '200' }
-      its(:body) { is_expected.to be_json_as(Array.new(3) { response_group_report }) }
+      its(:body) { is_expected.to be_json_as(results: Array.new(3) { response_group_report }, meta: Hash) }
     end
   end
 end

@@ -91,7 +91,6 @@ class AttendanceService
                         end
 
       (morning_end - morning_start) + (afternoon_end - afternoon_start)
-      
     end
   end
 

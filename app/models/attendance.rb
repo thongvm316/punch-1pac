@@ -69,6 +69,11 @@ class Attendance < ApplicationRecord
       .group(status_type)
   end
 
+  def self.sum_working_hours_on_month(date)
+    select('sum(working_hours) as working_hours')
+      .day_between(date.beginning_of_month, date.end_of_month)
+  end
+
   def self.chart(str_date = nil)
     date = str_date.present? ? Date.parse(str_date) : Date.current
     raise ArgumentError if date.blank?
@@ -77,7 +82,8 @@ class Attendance < ApplicationRecord
       "(#{status_count_on_month('attend_late', 'attending_status', date).to_sql})",
       "(#{status_count_on_month('leave_ok', 'leaving_status', date).to_sql})",
       "(#{status_count_on_month('leave_early', 'leaving_status', date).to_sql})",
-      "(#{status_count_on_month('annual_leave', 'off_status', date).to_sql})"
+      "(#{status_count_on_month('annual_leave', 'off_status', date).to_sql})",
+      "(#{sum_working_hours_on_month(date).to_sql})"
     ).limit(1)
   rescue TypeError, ArgumentError
     none

@@ -2,12 +2,14 @@ import * as types from '../mutation-types.js'
 import axios from 'axios'
 
 const state = {
-  statuses: {}
+  statuses: {},
+  companyTotalWorkingHoursOnMonth: 0
 }
 
 const mutations = {
   [types.FETCH_STATUS_CARDS] (state, data) {
-    state.statuses = data
+    state.statuses = data.statuses
+    state.companyTotalWorkingHoursOnMonth = data.company_total_working_hours_on_month
   }
 }
 

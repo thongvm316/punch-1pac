@@ -70,7 +70,8 @@ export default {
       leave_early: 'Về sớm',
       leave_ok: 'Về đúng giờ',
       unpaid_leave: 'Vắng ko phép',
-      annual_leave: 'Vắng có phép'
+      annual_leave: 'Vắng có phép',
+      working_hours: 'Số giờ làm việc'
     },
     request_statuses: {
       pending: 'Đang chờ',
@@ -535,7 +536,8 @@ export default {
     no: 'Không'
   },
   statusCards: {
-    dayNum: '0 ngày | 1 ngày | {num} ngày'
+    dayNum: '0 ngày | 1 ngày | {num} ngày',
+    workingHours: '{workingHours}/{companyTotalHours} giờ'
   },
   annualLeave: {
     title: 'Xin nghỉ phép',

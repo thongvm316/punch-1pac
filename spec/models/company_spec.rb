@@ -42,4 +42,16 @@ RSpec.describe Company, type: :model do
       end
     end
   end
+
+  describe '#total_working_hours_on_month' do
+    let(:company) { create :company, :with_business_days }
+
+    subject { company.total_working_hours_on_month }
+
+    before { Timecop.freeze(Time.zone.local(2018, 4, 20)) }
+    after { Timecop.return }
+
+    # 21 working days on April, 2018, 8 hours per day =>  21 * 8 = 168
+    it { is_expected.to eq 168 }
+  end
 end

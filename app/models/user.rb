@@ -99,7 +99,8 @@ class User < ApplicationRecord
       "(#{Attendance.status_count_on_month('attend_late', 'attending_status', date).where('attendances.user_id = users.id').to_sql})",
       "(#{Attendance.status_count_on_month('leave_ok', 'leaving_status', date).where('attendances.user_id = users.id').to_sql})",
       "(#{Attendance.status_count_on_month('leave_early', 'leaving_status', date).where('attendances.user_id = users.id').to_sql})",
-      "(#{Attendance.status_count_on_month('annual_leave', 'off_status', date).where('attendances.user_id = users.id').to_sql})"
+      "(#{Attendance.status_count_on_month('annual_leave', 'off_status', date).where('attendances.user_id = users.id').to_sql})",
+      "(#{Attendance.sum_working_hours_on_month(date).where('attendances.user_id = users.id').to_sql})"
     )
   end
 

@@ -70,7 +70,8 @@ export default {
       leave_early: 'Leave Early',
       leave_ok: 'Leave OK',
       unpaid_leave: 'Unpaid leave',
-      annual_leave: 'Annual leave'
+      annual_leave: 'Annual leave',
+      working_hours: 'Working hours'
     },
     request_statuses: {
       pending: 'Pending',
@@ -535,7 +536,8 @@ export default {
     no: 'No'
   },
   statusCards: {
-    dayNum: '0 day | 1 day | {num} days'
+    dayNum: '0 day | 1 day | {num} days',
+    workingHours: '{workingHours}/{companyTotalHours} hours'
   },
   annualLeave: {
     title: 'Request an annual leave',
