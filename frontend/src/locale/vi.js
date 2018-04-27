@@ -549,5 +549,13 @@ export default {
     updateSuccessMsg: 'Đã cập nhật ngày xin nghỉ phép',
     submit: 'Gửi',
     save: 'Lưu'
+  },
+  page404: {
+    title: 'Whoop! Look like something is missing',
+    content: 'Sorry, the page you are looking for doesn’t exist.',
+    instruction: 'Press the button below to get back to previous page.',
+    btn: {
+      goHome: 'Go Home'
+    }
   }
 }
