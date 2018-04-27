@@ -9,8 +9,8 @@
       <h1 class="text-center mt-10">Whoop! Look like something is missing</h1>
       <p class="text-center mb-0">Sorry, the page you are looking for doesn’t exist.</p>
       <p class="text-center">Press the button below to get back to previous page.</p>
-      <div class="form-group text-center">
-        <button @click="$router.go(-1)" class="btn btn-primary text-center mt-10" type="button">Go Back</button>
+      <div class="form-group text-center mt-10">
+        <router-link to="/dashboard" class="btn btn-primary" tag="button">Go Home</router-link>
       </div>
       </div>
     </div>
