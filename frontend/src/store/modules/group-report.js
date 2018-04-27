@@ -2,12 +2,14 @@ import * as types from '../mutation-types'
 import axios from 'axios'
 
 const state = {
-  results: []
+  results: [],
+  companyTotalWorkingHoursOnMonth: 0
 }
 
 const mutations = {
   [types.FETCH_GROUP_REPORT] (state, payload) {
-    state.results = payload
+    state.results = payload.results
+    state.companyTotalWorkingHoursOnMonth = payload.meta.company_total_working_hours_on_month
   }
 }
 
