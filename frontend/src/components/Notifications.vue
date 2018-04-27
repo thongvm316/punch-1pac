@@ -10,9 +10,9 @@
       <div class="box notifications notification-dropdown">
         <div class="notification-header">
           <h4>{{ $t('header.notifications') }}</h4>
-          <router-link to="/notifications">{{ $t('header.seeAll') }}</router-link>
+          <!-- <router-link to="/notifications">{{ $t('header.seeAll') }}</router-link> -->
         </div>
-        <ul v-if="headerNotifications.length > 0">
+        <ul v-if="headerNotifications.length > 0" ref="notiList">
           <li v-for="notification in headerNotifications" :key="notification.id" @click="openRequestModal(notification)" v-if="notification.activitable">
             <div class="tile tile-centered tile-activity">
               <div class="tile-icon">
@@ -24,6 +24,7 @@
               </div>
             </div>
           </li>
+          <!-- <li class="load-more" @click="getHeaderNotifications()">{{ $t('header.loadMore') }}</li> -->
         </ul>
         <p class="no-notification-msg" v-else>
           {{ $t('header.noNotificationMsg') }}
@@ -60,7 +61,8 @@ export default {
     ...mapState('notifications', [
       'hasIntervalFetchNotifications',
       'unreadNotificationsCount',
-      'headerNotifications'
+      'headerNotifications',
+      'pager'
     ]),
 
     ...mapGetters('notifications', [
@@ -69,14 +71,31 @@ export default {
   },
 
   methods: {
+    loadMoreOnScroll () {
+      let el = this.$refs.notiList
+
+      if (el.scrollTop + el.offsetHeight === el.scrollHeight && this.pager.next_page) {
+        this.getMoreHeaderNotifications({ page: this.pager.next_page })
+      }
+    },
+
     toggleDropdown () {
+      let el = this.$refs.notiList
+
       this.isDropdownActive = !this.isDropdownActive
       if (this.isDropdownActive && this.headerNotifications[0]) this.readNotifications(this.headerNotifications[0].id)
+      if (this.isDropdownActive && el !== undefined) {
+        el.addEventListener('scroll', this.loadMoreOnScroll)
+      } else if (!this.isDropdownActive && el !== undefined) {
+        el.removeEventListener('scroll', this.loadMoreOnScroll)
+      }
     },
 
     ...mapActions('notifications', [
       'readNotifications',
       'getHeaderNotifications',
+      'getMoreHeaderNotifications',
+      'getNewHeaderNotifications',
       'approveRequest',
       'rejectRequest'
     ]),
@@ -95,7 +114,7 @@ export default {
     if (!this.hasIntervalFetchNotifications) {
       this.getHeaderNotifications()
           .then(() => {
-            this[SET_INTERVAL_FETCH_NOTIFICATIONS](setInterval(this.getHeaderNotifications, 10000))
+            this[SET_INTERVAL_FETCH_NOTIFICATIONS](setInterval(this.getNewHeaderNotifications, 10000))
           })
     }
   }
