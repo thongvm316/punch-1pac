@@ -61,7 +61,12 @@ class Api::V1::GroupsController < Api::V1::BaseController
   def report
     authorize! @group
     results = current_company.users.report(params.merge(group_id: params[:id])).order(name: :asc)
-    render json: results, each_serializer: GroupReportSerializer, status: :ok
+    render json: results,
+           root: 'results',
+           each_serializer: GroupReportSerializer,
+           meta: { company_total_working_hours_on_month: current_company.total_working_hours_on_month },
+           adapter: :json,
+           status: :ok
   end
 
   private

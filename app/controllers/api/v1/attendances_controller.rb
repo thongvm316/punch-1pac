@@ -23,7 +23,10 @@ class Api::V1::AttendancesController < Api::V1::BaseController
 
   def chart
     authorize!
-    render json: current_user.attendances.chart(params[:date]).first.as_json(except: %i[id]), status: :ok
+    render json: {
+      statuses: current_user.attendances.chart(params[:date]).first.as_json(except: %i[id]),
+      company_total_working_hours_on_month: current_company.total_working_hours_on_month
+    }, status: :ok
   end
 
   def index
