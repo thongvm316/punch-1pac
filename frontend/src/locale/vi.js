@@ -176,7 +176,8 @@ export default {
       date: 'Ngày',
       attendedAt: 'Đến lúc',
       leftAt: 'Về lúc',
-      reason: 'Lý do'
+      reason: 'Lý do',
+      adminReason: 'Lý do từ chối'
     },
     tableHeader: {
       name: 'Tên',
@@ -190,7 +191,8 @@ export default {
       kind: 'Loại'
     },
     btn: {
-      save: 'Lưu'
+      save: 'Lưu',
+      reject: 'Từ chối'
     },
     modal: {
       editTitle: 'Chỉnh sửa yêu cầu'

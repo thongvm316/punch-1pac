@@ -176,7 +176,8 @@ export default {
       date: 'Date',
       attendedAt: 'Attended At',
       leftAt: 'Left At',
-      reason: 'Reason'
+      reason: 'Reason',
+      adminReason: 'Admin Reason'
     },
     tableHeader: {
       name: 'Name',
@@ -190,7 +191,8 @@ export default {
       kind: 'Kind'
     },
     btn: {
-      save: 'Save'
+      save: 'Save',
+      reject: 'Reject'
     },
     modal: {
       editTitle: 'Edit request'
