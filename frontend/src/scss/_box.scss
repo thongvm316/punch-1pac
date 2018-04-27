@@ -12,44 +12,37 @@
   }
 
   &.box-group {
-    height: 172px;
-  }
-
-  .box-header-flex,
-  .box-content-flex {
-    display: flex;
-    justify-content: space-between;
-    flex: 0 0 auto;
-    align-items: center;
+    height: 9rem;
   }
 
   .box-header {
-    &.box-header-flex {
-      h2 {
-        margin-bottom: 0;
-        vertical-align: text-bottom;
-      }
-    }
-
     .box-title {
       cursor: pointer;
+      margin: 0;
+
       &:hover {
         color: $primary-color;
       }
-      + span { font-size: .8rem;
-        color: $gray-color;
-      }
     }
 
-    .form-select {
-      width: 200px;
+    .group-description {
+      margin-bottom: .2rem;
+    }
+
+    span {
+      color: $gray-color;
     }
   }
 
   .box-content {
-    margin-top: 2rem;
+    margin-top: 1.8rem;
 
     &.box-content-flex {
+      display: flex;
+      justify-content: space-between;
+      flex: 0 0 auto;
+      align-items: center;
+
       span {
         vertical-align: middle;
       }

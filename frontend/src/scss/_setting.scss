@@ -22,17 +22,17 @@
     text-decoration: none;
 
 
-    &:hover {
-      background-color: $border-color;
-    }
-
+    &:hover,
     &.active {
-      border-right: .2rem solid $primary-color;
       color: $primary-color;
 
       svg {
         color: $primary-color;
       }
+    }
+
+    &.active {
+      border-right: .2rem solid $primary-color;
     }
 
     svg {
