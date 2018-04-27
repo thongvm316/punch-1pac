@@ -11,8 +11,16 @@
       <div class="column col-3 mb-4" v-for="group in filterGroups(name)">
         <div class="box box-group">
           <div class="box-header">
-            <router-link tag="h2" :to="`/groups/${group.id}`" class="box-title">{{ group.name }}</router-link>
-            <span>{{ $tc('groups.member', group.users.length, { count: group.users.length }) }}</span>
+            <div class="tile">
+              <div class="tile-icon">
+                <img class="avatar avatar-lg" :src="group.image_url" :alt="group.name">
+              </div>
+              <div class="tile-content">
+                <router-link tag="h2" :to="`/groups/${group.id}`" class="box-title">{{ group.name }}</router-link>
+                <p class="group-description">{{ group.description }}</p>
+                <span>{{ $tc('groups.member', group.users.length, { count: group.users.length }) }}</span>
+              </div>
+            </div>
           </div>
           <div class="box-content box-content-flex" v-if="group.users.length > 0">
             <div class="box-content-img">
