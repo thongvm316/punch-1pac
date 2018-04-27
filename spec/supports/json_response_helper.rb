@@ -165,14 +165,19 @@ module JsonResponseHelper
   def response_attendance_chart
     {
       statuses: {
-        attend_ok: nullable_response(Integer),
-        attend_late: nullable_response(Integer),
-        leave_ok: nullable_response(Integer),
-        leave_early: nullable_response(Integer),
-        annual_leave: nullable_response(Integer),
-        working_hours: nullable_response(Integer)
+        attend_ok: Integer,
+        attend_late: Integer,
+        leave_ok: Integer,
+        leave_early: Integer,
+        annual_leave: Integer,
+        working_hours: {
+          hours: Integer,
+          mins: Integer
+        }
       },
-      company_total_working_hours_on_month: Integer
+      meta: {
+        company_total_working_hours_on_month: Integer
+      }
     }
   end
 
@@ -241,7 +246,10 @@ module JsonResponseHelper
       leave_ok: Integer,
       leave_early: Integer,
       annual_leave: Integer,
-      working_hours: Integer
+      working_hours: {
+        hours: Integer,
+        mins: Integer
+      }
     }
   end
 

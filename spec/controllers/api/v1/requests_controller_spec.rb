@@ -257,7 +257,7 @@ RSpec.describe Api::V1::RequestsController, type: :controller do
       let(:company) { create :company, :with_business_days }
       let(:login_user) { create :user, company: company, role: 'member' }
       let(:attendance) { create :attendance, user: login_user, attended_at: '01:30', attending_status: 'attend_late' }
-      let(:req) { create :request, attended_at: '00:55', attendance: attendance, user: create(:user, company: company) }
+      let(:req) { create :request, attendance: attendance, user: create(:user, company: company) }
 
       subject { post :approve, params: { id: req.id } }
 
@@ -305,7 +305,7 @@ RSpec.describe Api::V1::RequestsController, type: :controller do
         let(:company) { create :company, :with_business_days }
         let(:login_user) { create :user, :with_groups, company: company, role: 'admin' }
         let(:req_user) { create :user, groups: login_user.groups, company: company }
-        let(:attendance) { create :attendance, user: req_user, attended_at: '08:30', left_at: '18:00', attending_status: 'attend_late' }
+        let(:attendance) { create :attendance, user: req_user, attended_at: '08:30', left_at: '18:00', day: Time.zone.local(2018, 4, 27), attending_status: 'attend_late' }
         let(:req) { create :request, attended_at: '08:00', left_at: '18:00', attendance: attendance, user: req_user }
 
         subject { post :approve, params: { id: req.id } }
@@ -325,7 +325,7 @@ RSpec.describe Api::V1::RequestsController, type: :controller do
         let(:company) { create :company, :with_business_days }
         let(:login_user) { create :user, :with_groups, company: company, role: 'admin' }
         let(:req_user) { create :user, groups: login_user.groups, company: company }
-        let(:attendance) { create :attendance, user: req_user, attended_at: '07:56', left_at: '17:00', leaving_status: 'leave_early' }
+        let(:attendance) { create :attendance, user: req_user, attended_at: '07:56', left_at: '17:00', day: Time.zone.local(2018, 4, 27), leaving_status: 'leave_early' }
         let(:req) { create :request, attended_at: '07:56', left_at: '18:30', attendance: attendance, user: req_user }
 
         subject { post :approve, params: { id: req.id } }
