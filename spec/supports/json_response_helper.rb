@@ -42,7 +42,8 @@ module JsonResponseHelper
   def response_allowed_ip
     {
       id: Integer,
-      ip_address: String
+      ip_address: String,
+      created_at: String
     }
   end
 
