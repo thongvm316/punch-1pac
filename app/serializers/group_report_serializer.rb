@@ -28,6 +28,9 @@ class GroupReportSerializer < ApplicationSerializer
   end
 
   def working_hours
-    object.working_hours.to_i
+    {
+      hours: object.working_hours.to_i / 3600,
+      mins: object.working_hours.to_i % 3600 / 60
+    }
   end
 end
