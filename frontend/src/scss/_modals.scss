@@ -6,3 +6,12 @@
 .modal.active .modal-overlay {
   background: rgba($dark-color, .65);
 }
+
+.modal-container {
+  padding: 1rem;
+
+  .modal-header,
+  .modal-body {
+    padding: 0;
+  }
+}
