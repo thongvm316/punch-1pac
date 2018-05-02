@@ -64,7 +64,10 @@ class Api::V1::GroupsController < Api::V1::BaseController
     render json: results,
            root: 'results',
            each_serializer: GroupReportSerializer,
-           meta: { company_total_working_hours_on_month: current_company.total_working_hours_on_month },
+           meta: {
+             company_total_working_hours_on_month: current_company.total_working_hours_on_month,
+             company_total_working_days_in_month: current_company.total_working_days_in_month
+           },
            adapter: :json,
            status: :ok
   end

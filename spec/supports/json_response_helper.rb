@@ -176,7 +176,8 @@ module JsonResponseHelper
         }
       },
       meta: {
-        company_total_working_hours_on_month: Integer
+        company_total_working_hours_on_month: Integer,
+        company_total_working_days_in_month: Integer
       }
     }
   end

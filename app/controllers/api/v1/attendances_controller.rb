@@ -26,7 +26,10 @@ class Api::V1::AttendancesController < Api::V1::BaseController
     render json: current_user.attendances.chart(params[:date]).first,
            root: 'statuses',
            serializer: AttendanceChartSerializer,
-           meta: { company_total_working_hours_on_month: current_company.total_working_hours_on_month },
+           meta: {
+             company_total_working_hours_on_month: current_company.total_working_hours_on_month,
+             company_total_working_days_in_month: current_company.total_working_days_in_month
+           },
            adapter: :json,
            status: :ok
   end
