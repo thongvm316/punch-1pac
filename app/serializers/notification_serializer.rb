@@ -10,7 +10,7 @@ class NotificationSerializer < ApplicationSerializer
            elsif object.activitable_type == 'Attendance'
              { activitable: Attendance.find_by(id: object.activitable_id), serializer: AttendanceSerializer }
            end
-    data.activitable ? ActiveModelSerializers::SerializableResource.new(data.activitable, serializer: data.serializer).as_json : nil
+    data[:activitable] ? ActiveModelSerializers::SerializableResource.new(data[:activitable], serializer: data[:serializer]).as_json : nil
   end
 
   def created_at
