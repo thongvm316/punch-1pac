@@ -58,7 +58,7 @@ class Company < ApplicationRecord
 
     (now.beginning_of_month.to_i..now.end_of_month.to_i).step(1.day) do |t|
       current_day = Time.zone.at(t)
-      next if hdays.find { |holiday| current_day.between?(holiday.started_at, holiday.ended_at) }
+      next if hdays.find { |holiday| current_day.to_date.between?(holiday.started_at, holiday.ended_at) }
       weekday = current_day.strftime('%A').downcase
       weekdays[weekday] += 1
     end
