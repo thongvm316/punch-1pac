@@ -50,8 +50,8 @@ class Company < ApplicationRecord
     holidays.in_holiday(target_date).exists?
   end
 
-  def total_working_hours_on_month
-    weekdays = weekdays_in_month
+  def total_working_hours_on_month(date)
+    weekdays = weekdays_in_month(date)
 
     business_days.reduce(0) do |total, business_day|
       working_hours_of_day = (business_day.morning_ended_at.to_i - business_day.morning_started_at.to_i) + (business_day.afternoon_ended_at.to_i - business_day.afternoon_started_at.to_i)
@@ -59,17 +59,18 @@ class Company < ApplicationRecord
     end
   end
 
-  def total_working_days_in_month
-    weekdays = weekdays_in_month
+  def total_working_days_in_month(date)
+    weekdays = weekdays_in_month(date)
     business_days.reduce(0) { |total, business_day| total + weekdays[business_day.weekday] }
   end
 
   private
 
-  def weekdays_in_month
+  def weekdays_in_month(date)
     weekdays = {}
     BusinessDay::WEEKDAYS.each { |weekday| weekdays.merge!(weekday.to_s => 0) }
-    now = Time.current
+    now = date ? Time.zone.parse(date) : Time.current
+    return weekdays unless now
     hdays = holidays.in_month(now.strftime('%Y-%m-%d'))
 
     (now.beginning_of_month.to_i..now.end_of_month.to_i).step(1.day) do |t|
@@ -79,6 +80,8 @@ class Company < ApplicationRecord
       weekdays[weekday] += 1
     end
 
+    weekdays
+  rescue TypeError, ArgumentError
     weekdays
   end
 end
