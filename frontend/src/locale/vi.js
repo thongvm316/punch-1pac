@@ -32,7 +32,7 @@ export default {
     },
     tooltip: {
       editUser: 'Sửa thông tin thành viên',
-      deleteUser: 'Xoá thành viên'
+      removeUser: 'Loại bỏ thành viên'
     }
   },
   header: {
@@ -473,7 +473,7 @@ export default {
       },
       tooltip: {
         edit: 'Sửa thông tin thành viên',
-        remove: 'Loại bỏ thành viên'
+        delete: 'Xoá thành viên'
       }
     }
   },
