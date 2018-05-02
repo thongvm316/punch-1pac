@@ -11,7 +11,7 @@
       @input="onInputDatepicker"
       v-model="month"/>
     <div class="columns">
-      <div class="column col-4" v-if="statuses['attend_ok']">
+      <div class="column col-4">
         <div class="box mt-5">
           <p>{{ $t('meta.attendance_statuses.attend_ok') }}</p>
           <h3>{{ $t('statusCards.attendOk', { num: statuses['attend_ok'], companyTotalDays: meta.company_total_working_days_in_month }) }}</h3>
