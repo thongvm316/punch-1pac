@@ -537,7 +537,7 @@ export default {
   },
   statusCards: {
     dayNum: '0 day | 1 day | {num} days',
-    workingHours: '{hours.hours}h{hours.mins}m/{companyTotalHours}h'
+    workingHours: '{hours}h{mins}m/{companyTotalHours}h'
   },
   annualLeave: {
     title: 'Request an annual leave',
