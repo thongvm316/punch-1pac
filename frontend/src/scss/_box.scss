@@ -12,10 +12,12 @@
   }
 
   &.box-group {
-    height: 9rem;
+    height: 10rem;
   }
 
   .box-header {
+    height: 5rem;
+
     .box-title {
       cursor: pointer;
       margin: 0;
@@ -25,8 +27,14 @@
       }
     }
 
+    .group-avatar {
+      width: 2.4rem;
+      height: 2.4rem;
+    }
+
     .group-description {
       margin-bottom: .2rem;
+      line-height: 1.2;
     }
 
     span {
@@ -35,7 +43,7 @@
   }
 
   .box-content {
-    margin-top: 1.8rem;
+    margin-top: 1.7rem;
 
     &.box-content-flex {
       display: flex;
@@ -45,6 +53,14 @@
 
       span {
         vertical-align: middle;
+      }
+    }
+
+    .box-content-img {
+      .avatar {
+        &:not(:first-child) {
+          margin-left: .2rem;
+        }
       }
     }
   }
