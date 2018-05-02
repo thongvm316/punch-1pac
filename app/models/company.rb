@@ -54,10 +54,15 @@ class Company < ApplicationRecord
     weekdays = {}
     BusinessDay::WEEKDAYS.each { |weekday| weekdays.merge!(weekday.to_s => 0) }
     now = Time.current
+    hdays = holidays.in_month(now.strftime('%Y-%m-%d'))
+
     (now.beginning_of_month.to_i..now.end_of_month.to_i).step(1.day) do |t|
-      weekday = Time.zone.at(t).strftime('%A').downcase
+      current_day = Time.zone.at(t)
+      next if hdays.find { |holiday| current_day.between?(holiday.started_at, holiday.ended_at) }
+      weekday = current_day.strftime('%A').downcase
       weekdays[weekday] += 1
     end
+
     business_days.reduce(0) do |total, business_day|
       working_hours_of_day = (business_day.morning_ended_at.to_i - business_day.morning_started_at.to_i) + (business_day.afternoon_ended_at.to_i - business_day.afternoon_started_at.to_i)
       total += (working_hours_of_day * weekdays[business_day.weekday]) / 3600
