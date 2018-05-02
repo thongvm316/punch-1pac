@@ -37,12 +37,12 @@
               <div class="tile-content">{{ result.name }}</div>
             </div>
           </td>
-          <td>{{ result.attend_ok }}</td>
+          <td>{{ `${result.attend_ok}/${reportMeta.company_total_working_days_in_month}` }}</td>
           <td>{{ result.attend_late }}</td>
           <td>{{ result.leave_ok }}</td>
           <td>{{ result.leave_early }}</td>
           <td>{{ result.annual_leave }}</td>
-          <td>{{ `${result.working_hours.hours}h${result.working_hours.mins}m/${companyTotalWorkingHoursOnMonth}h` }}</td>
+          <td>{{ `${result.working_hours.hours}h${result.working_hours.mins}m/${reportMeta.company_total_working_hours_on_month}h` }}</td>
         </tr>
       </tbody>
     </table>
@@ -88,7 +88,7 @@ export default {
 
     ...mapState('groupReport', [
       'results',
-      'companyTotalWorkingHoursOnMonth'
+      'reportMeta'
     ]),
 
     tmpResults () {
