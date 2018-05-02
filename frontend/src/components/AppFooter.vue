@@ -10,7 +10,7 @@
           <li><a href="/contact">{{ $t('footer.contact') }}</a></li>
           <li><a href="/about">{{ $t('footer.about') }}</a></li>
         </ul>
-        <span>© 2018 1PAC Vietnam, Co.,Ltd</span>
+        <span>© 2018 1PAC Vietnam Co.,Ltd</span>
       </div>
     </div>
   </footer>
