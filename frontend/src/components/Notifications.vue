@@ -13,7 +13,7 @@
           <router-link to="/notifications">{{ $t('header.seeAll') }}</router-link>
         </div>
         <ul v-if="headerNotifications.length > 0">
-          <li v-for="notification in headerNotifications" :key="notification.id" @click="openRequestModal(notification)">
+          <li v-for="notification in headerNotifications" :key="notification.id" @click="openRequestModal(notification)" v-if="notification.activitable">
             <div class="tile tile-centered tile-activity">
               <div class="tile-icon">
                 <img :src="notification.user.avatar_url" class="avatar avatar-md" :alt="notification.user.name">
