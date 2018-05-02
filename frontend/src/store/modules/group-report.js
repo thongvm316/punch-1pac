@@ -3,13 +3,13 @@ import axios from 'axios'
 
 const state = {
   results: [],
-  companyTotalWorkingHoursOnMonth: 0
+  reportMeta: {}
 }
 
 const mutations = {
   [types.FETCH_GROUP_REPORT] (state, payload) {
     state.results = payload.results
-    state.companyTotalWorkingHoursOnMonth = payload.meta.company_total_working_hours_on_month
+    state.reportMeta = payload.meta
   }
 }
 

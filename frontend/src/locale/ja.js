@@ -537,6 +537,7 @@ export default {
   },
   statusCards: {
     dayNum: '0 day | 1 day | {num} days',
+    attendOk: '{num}/{companyTotalDays} days',
     workingHours: '{hours}h{mins}m/{companyTotalHours}h'
   },
   annualLeave: {
