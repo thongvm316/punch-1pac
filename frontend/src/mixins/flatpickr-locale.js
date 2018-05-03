@@ -7,7 +7,17 @@ export default {
         vi: l10n.vn,
         ja: l10n.ja,
         en: l10n.en
-      }, { rangeSeparator: this.$t('flatpickr.rangeSeparator') })
+      }, {
+        vi: {
+          rangeSeparator: this.$t('flatpickr.rangeSeparator')
+        },
+        ja: {
+          rangeSeparator: this.$t('flatpickr.rangeSeparator')
+        },
+        en: {
+          rangeSeparator: this.$t('flatpickr.rangeSeparator')
+        }
+      })
     }
   }
 }
