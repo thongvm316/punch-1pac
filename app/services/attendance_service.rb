@@ -38,6 +38,8 @@ class AttendanceService
       weekday                   = attendance.day.strftime('%A')
       business_day              = company.business_days.find_by(weekday: weekday.downcase)
 
+      return 0 unless business_day
+
       morning_started_at        = business_day.morning_started_at.to_i
       morning_ended_at          = business_day.morning_ended_at.to_i
       afternoon_started_at      = business_day.afternoon_started_at.to_i
