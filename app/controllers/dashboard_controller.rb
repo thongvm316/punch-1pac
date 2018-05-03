@@ -10,7 +10,9 @@ class DashboardController < ApplicationController
 
     @initial_state = {
       attendance: attendance ? ActiveModelSerializers::SerializableResource.new(attendance, serializer: AttendanceSerializer).as_json : {},
-      user: ActiveModelSerializers::SerializableResource.new(current_user, serializer: UserWithGroupsSerializer).as_json,
+      user: ActiveModelSerializers::SerializableResource.new(current_user, serializer: UserWithGroupsSerializer)
+                                                        .as_json
+                                                        .merge('forgot_punch_in_days_in_month' => current_user.forgot_punch_in_days_in_month),
       company: ActiveModelSerializers::SerializableResource.new(current_company, serializer: CompanySerializer).as_json,
       announcements: ActiveModelSerializers::SerializableResource.new(announcements, each_serializer: AnnouncementSerializer, current_user: current_user).as_json,
       meta: {

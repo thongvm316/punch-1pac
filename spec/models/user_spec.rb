@@ -26,4 +26,23 @@ RSpec.describe User, type: :model do
     it { should validate_inclusion_of(:language).in_array(I18n.available_locales.map(&:to_s)) }
     # it { should validate_presence_of(:user_permissions) }
   end
+
+  describe '#forgot_punch_in_days_in_month' do
+    let(:company) { create :company, :with_business_days }
+    let(:user) { create :user, company: company }
+    let!(:holiday) { create :holiday, company: company, started_at: '2018-04-16', ended_at: '2018-04-17' }
+    let!(:attendance_1) { create :attendance, day: '2018-04-02', user: user }
+    let!(:attendance_2) { create :attendance, day: '2018-04-03', user: user }
+
+    before { Timecop.freeze(Time.zone.local(2018, 4, 20)) }
+    after { Timecop.return }
+
+    subject { user.forgot_punch_in_days_in_month }
+
+    it do
+      is_expected
+      expect(subject.size).to eq 11
+      expect(subject).to include('2018-04-04', '2018-04-05', '2018-04-06', '2018-04-09', '2018-04-10', '2018-04-11', '2018-04-12', '2018-04-13', '2018-04-18', '2018-04-19', '2018-04-20')
+    end
+  end
 end

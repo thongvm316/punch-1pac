@@ -139,4 +139,20 @@ class User < ApplicationRecord
     client = DeviceDetector.new(request.user_agent)
     sessions.find_by(client: client.name, device_type: client.device_type, ip_address: request.remote_ip, os: "#{client.os_name}_#{client.os_full_version}")
   end
+
+  def forgot_punch_in_days_in_month
+    now = Time.current
+    hdays = company.holidays.in_month(now.strftime('%Y-%m-%d'))
+    days = []
+
+    (now.beginning_of_month.to_i..now.to_i).step(1.day) do |timestamp|
+      current_day = Time.zone.at(timestamp).to_date
+      next if hdays.find { |holiday| current_day.between?(holiday.started_at, holiday.ended_at) }
+      next if company.breakdays.include?(current_day.strftime('%A').downcase)
+      days << current_day.strftime('%Y-%m-%d')
+    end
+
+    punch_in_days = Attendance.where(day: days).map { |a| a.day.strftime('%Y-%m-%d') }
+    days - punch_in_days
+  end
 end
