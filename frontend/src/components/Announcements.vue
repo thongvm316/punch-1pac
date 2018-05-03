@@ -1,8 +1,8 @@
 <template>
   <div>
-    <div class="toast toast-dark text-center mt-2"
-      :class="{ 'toast-warning': announcement.status === 'urgent' }"
-      v-for="announcement in headerAnnouncements">
+    <div class="toast text-center mt-2"
+			:class="[{ 'toast-warning': announcement.status === 'urgent' }, { 'toast-success': announcement.status === 'normal' }]"
+			v-for="announcement in headerAnnouncements">
       <button class="btn btn-clear float-right" @click="readAnnouncement(announcement.id)"></button>
       {{ announcement.content }}
     </div>
@@ -23,8 +23,13 @@ export default {
 
   methods: {
     ...mapActions('announcements', [
-      'readAnnouncement'
+      'readAnnouncement',
+      'getHeaderAnnouncements'
     ])
+  },
+
+  created () {
+    this.getHeaderAnnouncements()
   }
 }
 </script>
