@@ -156,7 +156,8 @@ export default {
     btn: {
       add: 'Tạo nhóm',
       leave: 'Rời nhóm',
-      submit: 'Xác nhận'
+      submit: 'Xác nhận',
+      export: 'Xuất file CSV'
     },
     member: ' | 1 thành viên | {count} thành viên',
     labels: {

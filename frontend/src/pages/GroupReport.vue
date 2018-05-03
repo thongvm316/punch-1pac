@@ -2,7 +2,7 @@
   <main-layout :title="$t('attendances.groupTitle', { name: group.name })">
     <group-tab :group-id="$route.params.id"/>
 
-    <div class="toolbar mt-5">
+    <div class="toolbar mt-5 clearfix">
       <datepicker
         :language="currentUser.language"
         :format="function (date) { return $moment(date).format('MMM YYYY') }"
@@ -14,6 +14,7 @@
         @input="onInputDatepicker"
         v-model="month"/>
       <filter-user-box :queryParams="{ group_id: this.$route.params.id, type: 'users_in_group', per_page: 1000 }" :placeholder="$t('attendances.placeholder.filterByUser')" :user.sync="selectedUser"/>
+      <button class="btn btn-success float-right">{{ $t('groups.btn.export') }}</button>
     </div>
     <table class="table sortable-table bg-light mt-5">
       <thead>
