@@ -136,11 +136,11 @@ export default {
     chartNoData: "You don't have any data on this month",
     recentActivities: 'Recent activities',
     request: {
-      title: 'Request kind',
-      label: 'Select your request kind',
+      title: 'What kind of request do you want to send ?',
+      label: 'Kind',
       kind: {
-        attendance: 'Attendance Request',
-        annual_leave: 'Annual leave Request'
+        attendance: 'Request for editing attendance',
+        annual_leave: 'Request an annual leave'
       }
     }
   },
