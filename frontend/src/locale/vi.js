@@ -208,7 +208,9 @@ export default {
       leftAt: 'Về lúc',
       reason: 'Lý do',
       actions: 'Thao tác',
-      kind: 'Loại'
+      admin: 'Quản lý',
+      kind: 'Loại',
+      adminReason: 'Lý do từ chối'
     },
     btn: {
       save: 'Lưu',
@@ -335,17 +337,17 @@ export default {
       title: 'Ngày đi làm',
       tableHeader: {
         weekday: 'Ngày trong tuần',
-        morningStartedAt: 'Bắt đầu buổi sáng',
-        morningEndedAt: 'Kết thúc buổi sáng',
-        afternoonStartedAt: 'Bắt đầu buổi chiều',
-        afternoonEndedAt: 'Kết thúc buổi chiều'
+        morningStartAt: 'Bắt đầu buổi sáng',
+        morningEndAt: 'Kết thúc buổi sáng',
+        afternoonStartAt: 'Bắt đầu buổi chiều',
+        afternoonEndAt: 'Kết thúc buổi chiều'
       },
       labels: {
         weekday: 'Ngày trong tuần',
-        morningStartedAt: 'Bắt đầu buổi sáng',
-        morningEndedAt: 'Kết thúc buổi sáng',
-        afternoonStartedAt: 'Bắt đầu buổi chiều',
-        afternoonEndedAt: 'Kết thúc buổi chiều'
+        morningStartAt: 'Bắt đầu buổi sáng',
+        morningEndAt: 'Kết thúc buổi sáng',
+        afternoonStartAt: 'Bắt đầu buổi chiều',
+        afternoonEndAt: 'Kết thúc buổi chiều'
       },
       btn: {
         add: 'Tạo ngày đi làm',

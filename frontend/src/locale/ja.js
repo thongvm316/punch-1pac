@@ -208,7 +208,9 @@ export default {
       leftAt: 'Left At',
       reason: 'Reason',
       actions: 'Actions',
-      kind: 'Kind'
+      admin: 'Admin',
+      kind: 'Kind',
+      adminReason: 'Admin Reason'
     },
     btn: {
       save: 'Save',
@@ -335,17 +337,17 @@ export default {
       title: 'Business days',
       tableHeader: {
         weekday: 'Weekday',
-        morningStartedAt: 'Morning started at',
-        morningEndedAt: 'Morning ended at',
-        afternoonStartedAt: 'Afternoon started at',
-        afternoonEndedAt: 'Afternoon ended at'
+        morningStartAt: 'Morning start at',
+        morningEndAt: 'Morning end at',
+        afternoonStartAt: 'Afternoon start at',
+        afternoonEndAt: 'Afternoon end at'
       },
       labels: {
         weekday: 'Weekday',
-        morningStartedAt: 'Morning started at',
-        morningEndedAt: 'Morning ended at',
-        afternoonStartedAt: 'Afternoon started at',
-        afternoonEndedAt: 'Afternoon ended at'
+        morningStartAt: 'Morning start at',
+        morningEndAt: 'Morning end at',
+        afternoonStartAt: 'Afternoon start at',
+        afternoonEndAt: 'Afternoon end at'
       },
       btn: {
         add: 'Add Business day',
