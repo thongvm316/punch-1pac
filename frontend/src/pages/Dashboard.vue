@@ -26,7 +26,7 @@
             </ul>
           </div>
           <div class="text-center" v-if="pager.next_page">
-            <button type="button" class="btn btn-block" @click="getMoreActivities({ page: pager.next_page })">View more activities</button>
+            <button type="button" class="btn btn-block" @click="getMoreActivities({ page: pager.next_page })">{{ $t('activity.showMore') }}</button>
           </div>
         </div>
       </div>

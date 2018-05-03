@@ -19,7 +19,7 @@
                 <img :src="notification.user.avatar_url" class="avatar avatar-md" :alt="notification.user.name">
               </div>
               <div class="tile-content">
-                <p class="tile-title" v-html="$t(`activity.${notification.activitable_type.toLowerCase()}.${notification.kind}`, { name: notification.user.name })"></p>
+                <p class="tile-title" v-html="$t(`notifications.${notification.activitable_type.toLowerCase()}.${notification.kind}`, { name: notification.user.name })"></p>
                 <p class="tile-subtitle">{{ notification.created_at | moment_activity }}</p>
               </div>
             </div>
