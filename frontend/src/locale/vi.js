@@ -134,7 +134,15 @@ export default {
     calendarToday: 'Hôm nay',
     chart: 'Biểu đồ',
     chartNoData: 'Bạn không có dữ liệu nào trong tháng này',
-    recentActivities: 'Hoạt động gần đây'
+    recentActivities: 'Hoạt động gần đây',
+    request: {
+      title: 'Loại yêu cầu',
+      label: 'Lựa chọn loại yêu cầu',
+      kind: {
+        attendance: 'Yêu cầu hiện diện',
+        annual_leave: 'Yêu cầu nghỉ phép'
+      }
+    }
   },
   notifications: {
     title: 'Thông báo',

@@ -4,7 +4,7 @@
     <div class="modal-container">
       <div class="modal-header">
         <span class="btn btn-clear float-right" @click="toggle"></span>
-        <h3 class="modal-title">{{ title }}</h3>
+        <h3 class="modal-title">{{ titleModal }}</h3>
       </div>
       <div class="modal-body">
         <div class="content">
@@ -23,7 +23,8 @@ export default {
 
   data () {
     return {
-      open: this.modalOpen
+      open: this.modalOpen,
+      titleModal: this.title
     }
   },
 
@@ -37,6 +38,10 @@ export default {
   watch: {
     modalOpen () {
       this.open = this.modalOpen
+    },
+
+    title () {
+      this.titleModal = this.title
     }
   }
 }

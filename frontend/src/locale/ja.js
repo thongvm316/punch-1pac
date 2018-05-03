@@ -134,7 +134,15 @@ export default {
     calendarToday: 'Today',
     chart: 'Chart',
     chartNoData: "You don't have any data on this month",
-    recentActivities: 'Recent activities'
+    recentActivities: 'Recent activities',
+    request: {
+      title: 'Request kind',
+      label: 'Select your request kind',
+      kind: {
+        attendance: 'Attendance Request',
+        annual_leave: 'Annual leave Request'
+      }
+    }
   },
   notifications: {
     title: 'Notifications',
