@@ -1,9 +1,10 @@
 <template>
   <div>
     <app-header></app-header>
-    <announcements v-if="isOpenAnnouncement"/>
     <main>
       <div class="container grid-xl">
+        <announcements/>
+        <remind-punch-in/>
         <h1 class="title">{{ title }}</h1>
         <slot></slot>
       </div>
@@ -19,6 +20,7 @@ import AppHeader from '../components/AppHeader'
 import AppFooter from '../components/AppFooter'
 import Flash from '../components/Flash'
 import Announcements from '../components/Announcements'
+import RemindPunchIn from '../components/RemindPunchIn'
 import PopupChangePassword from '../components/PopupChangePassword'
 
 export default {
@@ -29,7 +31,8 @@ export default {
     AppFooter,
     Flash,
     Announcements,
-    PopupChangePassword
+    PopupChangePassword,
+    RemindPunchIn
   }
 }
 </script>

@@ -13,6 +13,16 @@ ActiveAdmin.register Announcement do
     permitted
   end
 
+  form do |f|
+    f.inputs 'Announcement' do
+      f.input :target
+      f.input :status
+      f.input :content
+      f.input :due_date
+    end
+    f.actions
+  end
+
   index do
     selectable_column
     column :status

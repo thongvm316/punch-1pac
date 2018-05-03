@@ -11,16 +11,10 @@
       @input="onInputDatepicker"
       v-model="month"/>
     <div class="columns">
-      <div class="column col-4">
-        <div class="box mt-5">
-          <p>{{ $t('meta.attendance_statuses.attend_ok') }}</p>
-          <h3>{{ $t('statusCards.attendOk', { num: statuses['attend_ok'], companyTotalDays: meta.company_total_working_days_in_month }) }}</h3>
-        </div>
-      </div>
-      <div class="column col-4" v-for="status in Object.keys(statuses).filter(status => !['attend_ok', 'working_hours'].includes(status))">
+      <div class="column col-4" v-for="status in Object.keys(statuses).filter(status => !['working_hours'].includes(status))">
         <div class="box mt-5">
           <p>{{ $t(`meta.attendance_statuses.${status}`) }}</p>
-          <h3>{{ $tc('statusCards.dayNum', statuses[status], { num: statuses[status] }) }}</h3>
+          <h3>{{ $tc('statusCards.dayNum', statuses[status], { num: statuses[status], companyTotalDays: meta.company_total_working_days_in_month }) }}</h3>
         </div>
       </div>
       <div class="column col-4" v-if="statuses['working_hours']">

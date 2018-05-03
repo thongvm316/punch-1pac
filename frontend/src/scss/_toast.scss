@@ -1,4 +1,10 @@
 // Toasts
+
+@mixin custom-toast-variant($text-color, $bg-color) {
+  @include toast-variant($bg-color)
+  color: $text-color;
+}
+
 .toast {
   position: relative;
   font-size: $font-size-sm;
@@ -19,5 +25,25 @@
     z-index: $zindex-1;
     top: 80px;
     border-radius: 0;
+  }
+
+  .btn-clear {
+    margin-top: 1px;
+  }
+
+  &.toast-primary {
+    @include custom-toast-variant($primary-color, $light-color);
+  }
+
+  &.toast-success {
+    @include custom-toast-variant($success-color, $success-color-light);
+  }
+
+  &.toast-warning {
+    @include custom-toast-variant($warning-color, $warning-color-light);
+  }
+
+  &.toast-error {
+    @include custom-toast-variant($error-color, $error-color-light);
   }
 }
