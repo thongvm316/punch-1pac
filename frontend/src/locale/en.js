@@ -148,7 +148,8 @@ export default {
     btn: {
       add: 'Add Group',
       leave: 'Leave',
-      submit: 'Submit'
+      submit: 'Submit',
+      export: 'Export CSV'
     },
     member: ' | 1 member | {count} members',
     labels: {
