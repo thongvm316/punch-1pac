@@ -9,6 +9,6 @@ class CompanySerializer < ApplicationSerializer
   end
 
   def breakdays
-    BusinessDay::WEEKDAYS - object.business_days.pluck(:weekday)
+    object.breakdays
   end
 end
