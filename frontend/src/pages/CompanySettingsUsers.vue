@@ -10,12 +10,13 @@
       </router-link>
     </div>
 
-    <table class="table bg-light mt-5">
+    <table class="table table-scroll bg-light mt-5">
       <thead>
-        <th>{{ $t('company.users.tableHeader.name') }}</th>
-        <th>{{ $t('company.users.tableHeader.email') }}</th>
-        <th>{{ $t('company.users.tableHeader.position') }}</th>
-        <th>{{ $t('company.users.tableHeader.role') }}</th> <th></th>
+        <th class="cell-md">{{ $t('company.users.tableHeader.name') }}</th>
+        <th class="cell-md">{{ $t('company.users.tableHeader.email') }}</th>
+        <th class="cell-md">{{ $t('company.users.tableHeader.position') }}</th>
+        <th class="cell-md">{{ $t('company.users.tableHeader.role') }}</th>
+        <th class="cel-sm"></th>
       </thead>
       <tbody>
         <tr v-for="user in filterByEmail(email)">
