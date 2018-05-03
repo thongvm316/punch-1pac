@@ -16,14 +16,9 @@
     padding-bottom: 0;
 
     .cell {
-      &-xl {
+      &-lg {
         min-width: 300px;
         max-width: 300px;
-      }
-
-      &-lg {
-        min-width: 180px;
-        max-width: 180px;
       }
 
       &-md {
