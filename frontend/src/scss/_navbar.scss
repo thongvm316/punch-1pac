@@ -22,7 +22,6 @@
         color: $dark-color;
         height: .6rem;
         width: .6rem;
-        -webkit-transition: color .1s ease-in-out;
         transition: color .1s ease-in-out;
       }
 
@@ -40,6 +39,7 @@
     .menu {
       left: initial;
       right: 0;
+      overflow-y: unset;
     }
   }
 

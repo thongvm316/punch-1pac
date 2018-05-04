@@ -10,6 +10,16 @@
     animation: slide-down .15s ease 1;
   }
 
+  &.arrow-box {
+    &::before {
+      right: 3.7rem;
+    }
+
+    &::after {
+      right: 3.2rem;
+    }
+  }
+
   .notification-header {
     padding: .4rem .8rem;
     display: flex;

@@ -27,7 +27,7 @@
                 </div>
               </div>
             </a>
-            <ul class="menu">
+            <ul class="menu arrow-box">
               <li class="menu-item"><router-link to="/settings">{{ $t('header.settings') }}</router-link></li>
               <li class="menu-item"><router-link to="/company/settings" v-if="$auth('Page', currentUser).canViewCompanySettings()">{{ $t('header.companySettings') }}</router-link></li>
               <li class="menu-item"><a href="#" @click="logout($event)">{{ $t('header.logout') }}</a></li>
