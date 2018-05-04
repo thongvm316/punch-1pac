@@ -5,14 +5,15 @@
         {{ $t('company.businessDays.btn.add') }}
       </button>
     </div>
-    <table class="table bg-light mt-5">
+
+    <table class="table table-scroll bg-light mt-5">
       <thead>
-        <th>{{ $t('company.businessDays.tableHeader.weekday') }}</th>
-        <th>{{ $t('company.businessDays.tableHeader.morningStartedAt') }}</th>
-        <th>{{ $t('company.businessDays.tableHeader.morningEndedAt') }}</th>
-        <th>{{ $t('company.businessDays.tableHeader.afternoonStartedAt') }}</th>
-        <th>{{ $t('company.businessDays.tableHeader.afternoonEndedAt') }}</th>
-        <th></th>
+        <th class="cell-sm">{{ $t('company.businessDays.tableHeader.weekday') }}</th>
+        <th class="cell-md">{{ $t('company.businessDays.tableHeader.morningStartAt') }}</th>
+        <th class="cell-md">{{ $t('company.businessDays.tableHeader.morningEndAt') }}</th>
+        <th class="cell-md">{{ $t('company.businessDays.tableHeader.afternoonStartAt') }}</th>
+        <th class="cell-md">{{ $t('company.businessDays.tableHeader.afternoonEndAt') }}</th>
+        <th class="cell-sm"></th>
       </thead>
       <tbody>
         <tr v-for="businessDay in businessDays">

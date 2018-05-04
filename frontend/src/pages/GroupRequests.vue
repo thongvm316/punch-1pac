@@ -13,18 +13,19 @@
       </select>
     </div>
 
-    <table class="table bg-light mt-5">
+    <table class="table table-scroll bg-light mt-5">
       <thead>
         <tr>
-          <th class="cell-lg">{{ $t('requests.tableHeader.name') }}</th>
-          <th class="cell-lg">{{ $t('requests.tableHeader.email') }}</th>
-          <th class="cell-xs">{{ $t('requests.tableHeader.date') }}</th>
-          <th class="cell-xs">{{ $t('requests.tableHeader.attendedAt') }}</th>
-          <th class="cell-xs">{{ $t('requests.tableHeader.leftAt') }}</th>
-          <th class="cell-xs">{{ $t('requests.tableHeader.kind') }}</th>
-          <th class="cell-xl break">{{ $t('requests.tableHeader.reason') }}</th>
-          <th class="cell-sm">{{ $t('requests.tableHeader.status') }}</th>
-          <th class="cell-xs">{{ $t('requests.tableHeader.actions') }}</th>
+          <th>{{ $t('requests.tableHeader.name') }}</th>
+          <th class="cell-mw-90">{{ $t('requests.tableHeader.date') }}</th>
+          <th class="cell-mw-120">{{ $t('requests.tableHeader.attendedAt') }}</th>
+          <th class="cell-mw-90">{{ $t('requests.tableHeader.leftAt') }}</th>
+          <th class="cell-mw-120">{{ $t('requests.tableHeader.kind') }}</th>
+          <th class="cell-lg">{{ $t('requests.tableHeader.reason') }}</th>
+          <th class="cell-mw-120">{{ $t('requests.tableHeader.status') }}</th>
+          <th class="cell-mw-120">{{ $t('requests.tableHeader.admin') }}</th>
+          <th class="cell-lg">{{ $t('requests.tableHeader.adminReason') }}</th>
+          <th class="cell-sm">{{ $t('requests.tableHeader.actions') }}</th>
         </tr>
       </thead>
       <tbody>
@@ -39,13 +40,14 @@
               </div>
             </div>
           </td>
-          <td>{{ request.user.email }}</td>
           <td>{{ (request.attendance_day || request.annual_leave_day) | moment_l }}</td>
           <td>{{ request.attended_at }}</td>
           <td>{{ request.left_at }}</td>
           <td><span :class="{ 'text-primary': request.kind === 'attendance', 'text-info': request.kind === 'annual_leave' }">{{ $t(`requests.kinds.${request.kind}`) }}</span></td>
           <td class="break">{{ request.reason }}</td>
-          <td class="text-center"><span class="label" :class="getStatusClass(request.status)">{{ $t(`meta.request_statuses.${request.status}`) }}</span></td>
+          <td><span class="label" :class="getStatusClass(request.status)">{{ $t(`meta.request_statuses.${request.status}`) }}</span></td>
+          <td>{{ request.admin.name }}</td>
+          <td class="break">{{ request.admin_reason }}</td>
           <td>
             <span class="d-flex" v-if="request.status === 'pending'">
               <button class="btn btn-action btn-link tooltip" :data-tooltip="$t('requests.tooltip.approve')" @click="approveRequest(request.id)">
