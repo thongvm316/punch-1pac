@@ -43,7 +43,7 @@
       <div class="form-group">
         <label class="form-label">{{ $t('dashboard.request.label') }}</label>
         <select class="form-select" v-model="selectedRequestKind" @change="changeTitleConfirmModal">
-          <option value="">{{ $t('dashboard.request.label') }}</option>
+          <option value=""></option>
           <option :value="kind" v-for="kind in ['attendance', 'annual_leave']">{{ $t(`dashboard.request.kind.${kind}`) }}</option>}
         </select>
       </div>
@@ -238,6 +238,7 @@ export default {
 
     toggleConfirmModal (data) {
       this.selectedRequestKind = ''
+      this.titleModal = this.$t('dashboard.request.title')
       this.annualLeaveDay = data.day
       this.attendance = data
 

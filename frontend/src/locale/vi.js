@@ -136,11 +136,11 @@ export default {
     chartNoData: 'Bạn không có dữ liệu nào trong tháng này',
     recentActivities: 'Hoạt động gần đây',
     request: {
-      title: 'Loại yêu cầu',
-      label: 'Lựa chọn loại yêu cầu',
+      title: 'Loại yêu cầu bạn muốn gởi ?',
+      label: 'Loại yêu cầu',
       kind: {
-        attendance: 'Yêu cầu hiện diện',
-        annual_leave: 'Yêu cầu nghỉ phép'
+        attendance: 'Tạo yêu cầu hiện diện',
+        annual_leave: 'Tạo yêu cầu nghỉ phép'
       }
     }
   },
