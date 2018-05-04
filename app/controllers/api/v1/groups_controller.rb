@@ -61,15 +61,20 @@ class Api::V1::GroupsController < Api::V1::BaseController
   def report
     authorize! @group
     results = current_company.users.report(params.merge(group_id: params[:id])).order(name: :asc)
-    render json: results,
-           root: 'results',
-           each_serializer: GroupReportSerializer,
-           meta: {
-             company_total_working_hours_on_month: current_company.total_working_hours_on_month(params[:date]),
-             company_total_working_days_in_month: current_company.total_working_days_in_month(params[:date])
-           },
-           adapter: :json,
-           status: :ok
+    respond_to do |format|
+      format.json do
+        render  json: results,
+                root: 'results',
+                each_serializer: GroupReportSerializer,
+                meta: {
+                  company_total_working_hours_on_month: current_company.total_working_hours_on_month(params[:date]),
+                  company_total_working_days_in_month: current_company.total_working_days_in_month(params[:date])
+                },
+                adapter: :json,
+                status: :ok
+      end
+      format.csv { send_data(Group.report_csv(results), type: 'text/csv; charset=utf-8; header=present', filename: "report.csv", disposition: 'attachment')}
+    end
   end
 
   private

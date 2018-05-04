@@ -229,3 +229,13 @@ en:
       long: "%B %d, %Y %H:%M"
       short: "%d %b %H:%M"
     pm: pm
+  group:
+    report:
+      name: Name
+      email: Email
+      attend_ok: Attend Ok
+      attend_late: Attend Late
+      leave_ok: Leave Ok
+      leave_early: Leave Early
+      annual_leave: Annual Leave
+      working_hours: Working Hours
