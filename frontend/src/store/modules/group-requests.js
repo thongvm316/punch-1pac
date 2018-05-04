@@ -53,7 +53,7 @@ const actions = {
   },
 
   rejectRequest ({ commit }, params) {
-    return axios.post(`/requests/${params.requestId}/reject`, { admin_reason: params.adminReason })
+    return axios.post(`/requests/${params.requestId}/reject`, { reject_reason: params.rejectReason })
                 .then(response => {
                   commit(types.REJECT_GROUP_REQUEST, params.requestId)
                   return response

@@ -197,7 +197,7 @@ export default {
       attendedAt: 'Attended At',
       leftAt: 'Left At',
       reason: 'Reason',
-      adminReason: 'Admin Reason'
+      rejectReason: 'Reject Reason'
     },
     tableHeader: {
       name: 'Name',
@@ -210,7 +210,7 @@ export default {
       actions: 'Actions',
       admin: 'Admin',
       kind: 'Kind',
-      adminReason: 'Admin Reason'
+      rejectReason: 'Reject Reason'
     },
     btn: {
       save: 'Save',

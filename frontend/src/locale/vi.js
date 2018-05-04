@@ -197,7 +197,7 @@ export default {
       attendedAt: 'Đến lúc',
       leftAt: 'Về lúc',
       reason: 'Lý do',
-      adminReason: 'Lý do từ chối'
+      rejectReason: 'Lý do từ chối'
     },
     tableHeader: {
       name: 'Tên',
@@ -210,7 +210,7 @@ export default {
       actions: 'Thao tác',
       admin: 'Quản lý',
       kind: 'Loại',
-      adminReason: 'Lý do từ chối'
+      rejectReason: 'Lý do từ chối'
     },
     btn: {
       save: 'Lưu',

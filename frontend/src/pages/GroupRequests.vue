@@ -24,7 +24,7 @@
           <th class="cell-lg">{{ $t('requests.tableHeader.reason') }}</th>
           <th class="cell-mw-120">{{ $t('requests.tableHeader.status') }}</th>
           <th class="cell-mw-120">{{ $t('requests.tableHeader.admin') }}</th>
-          <th class="cell-lg">{{ $t('requests.tableHeader.adminReason') }}</th>
+          <th class="cell-lg">{{ $t('requests.tableHeader.rejectReason') }}</th>
           <th class="cell-sm">{{ $t('requests.tableHeader.actions') }}</th>
         </tr>
       </thead>
@@ -47,7 +47,7 @@
           <td class="break">{{ request.reason }}</td>
           <td><span class="label" :class="getStatusClass(request.status)">{{ $t(`meta.request_statuses.${request.status}`) }}</span></td>
           <td>{{ request.admin.name }}</td>
-          <td class="break">{{ request.admin_reason }}</td>
+          <td class="break">{{ request.reject_reason }}</td>
           <td>
             <span class="d-flex" v-if="request.status === 'pending'">
               <button class="btn btn-action btn-link tooltip" :data-tooltip="$t('requests.tooltip.approve')" @click="approveRequest(request.id)">
@@ -65,10 +65,10 @@
     <pagination namespace="requests" action="getRequests" v-if="pager.total_pages > 1"/>
 
     <modal :title="$t('requests.modal.editTitle')" :modal-open.sync="isEditModalOpen">
-      <div class="form-group" :class="{ 'has-error': errors.admin_reason }">
-        <label class="form-label">{{ $t('requests.labels.adminReason') }}</label>
-        <textarea class="form-input" v-model="requestParams.admin_reason"></textarea>
-        <p class="form-input-hint" v-if="errors.admin_reason">{{ $t('requests.labels.adminReason') }} {{ errors.admin_reason[0] }}</p>
+      <div class="form-group" :class="{ 'has-error': errors.reject_reason }">
+        <label class="form-label">{{ $t('requests.labels.rejectReason') }}</label>
+        <textarea class="form-input" v-model="requestParams.reject_reason"></textarea>
+        <p class="form-input-hint" v-if="errors.reject_reason">{{ $t('requests.labels.rejectReason') }} {{ errors.reject_reason[0] }}</p>
       </div>
       <div class="form-group">
         <button type="button" class="btn btn-error" @click="saveEditModal(requestParams, rejectRequest)">{{ $t('requests.btn.reject') }}</button>
@@ -99,7 +99,7 @@ export default {
       },
       requestParams: {
         requestId: '',
-        adminReason: ''
+        rejectReason: ''
       }
     }
   },
