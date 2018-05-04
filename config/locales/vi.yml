@@ -218,3 +218,13 @@ vi:
       long: "%d %B, %Y %H:%M"
       short: "%d %b %H:%M"
     pm: chiều
+  group:
+    report:
+      name: Họ tên
+      email: Địa chỉ email
+      attend_ok: Đến đúng giờ
+      attend_late: Đến trễ
+      leave_ok: Về đúng giờ
+      leave_early: Về sớm
+      annual_leave: Nghỉ phép
+      working_hours: Số giờ làm việc

@@ -221,3 +221,13 @@ ja:
       long: "%Y年%m月%d日(%a) %H時%M分%S秒 %z"
       short: "%y/%m/%d %H:%M"
     pm: 午後
+  group:
+    report:
+      name: Name
+      email: Email
+      attend_ok: Attend Ok
+      attend_late: Attend Late
+      leave_ok: Leave Ok
+      leave_early: Leave Early
+      annual_leave: Annual Leave
+      working_hours: Working Hours

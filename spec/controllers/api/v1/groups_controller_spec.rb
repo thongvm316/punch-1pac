@@ -339,7 +339,7 @@ RSpec.describe Api::V1::GroupsController, type: :controller do
       let!(:users) { create_list :user, 2, company: company, role: 'member', groups: [groups.first] }
 
       context 'when group in login_user.groups' do
-        subject { get :report, params: { id: groups.first.id } }
+        subject { get :report, params: { id: groups.first.id }, format: :json }
 
         its(:code) { is_expected.to eq '200' }
         its(:body) { is_expected.to be_json_as(results: Array.new(3) { response_group_report }, meta: Hash) }
@@ -360,10 +360,41 @@ RSpec.describe Api::V1::GroupsController, type: :controller do
       let(:login_user) { create :user, company: company, role: 'superadmin', groups: groups }
       let!(:users) { create_list :user, 2, company: company, role: 'member', groups: [groups.first] }
 
-      subject { get :report, params: { id: groups.first.id } }
+      subject { get :report, params: { id: groups.first.id }, format: :json}
 
       its(:code) { is_expected.to eq '200' }
       its(:body) { is_expected.to be_json_as(results: Array.new(3) { response_group_report }, meta: Hash) }
+    end
+
+    context 'when report has data' do
+      let(:groups) { create_list :group, 2, company: company }
+      let(:login_user) { create :user, company: company, role: 'superadmin', groups: groups }
+      let!(:users) { create_list :user, 2, company: company, role: 'member', groups: [groups.first] }
+
+      subject { get :report, params: { id: groups.first.id }, format: :csv}
+
+      it do
+        is_expected
+        headers = response.body.split("\n")
+        expect(headers.first).to include 'Email,Name,Attend Ok,Attend Late,Leave Ok,Leave Early,Annual Leave,Working Hours'
+        expect(response.header['Content-Type']).to eql 'text/csv; charset=utf-8; header=present'
+        expect(headers.size).to eq(4)
+      end
+    end
+
+    context 'when superadmin export report of empty member group' do
+      let(:group) { create :group, company: company }
+      let(:login_user) { create :user, company: company, role: 'superadmin'}
+
+      subject { get :report, params: { id: group.id }, format: :csv }
+
+      it do
+        is_expected
+        headers = response.body.split("\n")
+        expect(headers.first).to include 'Email,Name,Attend Ok,Attend Late,Leave Ok,Leave Early,Annual Leave,Working Hours'
+        expect(response.header['Content-Type']).to eql 'text/csv; charset=utf-8; header=present'
+        expect(headers.size).to eq(1)
+      end
     end
   end
 end
