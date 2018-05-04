@@ -33,9 +33,15 @@
     </div>
     <modal :title="$t('header.notifications')" :modal-open.sync="isAddModalOpen" v-if="['create', 'update'].includes(notification.kind) && notification.activitable_type === 'Request' && !['approved', 'rejected'].includes(notification.activitable.status)">
       <p>{{ notification.activitable.reason }}</p>
+      <div class="modal-body">
+        <div class="content">
+          <label class="form-label">{{ $t('requests.labels.rejectReason') }}</label>
+          <textarea class="form-input" :placeholder="$t('requests.labels.rejectReason')" v-model="rejectReason"></textarea>
+        </div>
+      </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-success btn-submit" @click="submitAddModal(notification.activitable_id, approveRequest, $t('messages.request.approvedSuccess'))">{{ $t('notifications.btn.approve') }}</button>
-        <button type="button" class="btn btn-success btn-error mt-4" @click="submitAddModal(notification.activitable_id, rejectRequest, $t('messages.request.rejectedSuccess'))">{{ $t('notifications.btn.reject') }}</button>
+        <button type="button" class="btn btn-success btn-error mt-4" @click="submitAddModal({ id: notification.activitable_id, admin_reason: rejectReason }, rejectRequest, $t('messages.request.rejectedSuccess'))">{{ $t('notifications.btn.reject') }}</button>
       </div>
     </modal>
   </div>
@@ -53,7 +59,8 @@ export default {
 
   data () {
     return {
-      notification: ''
+      notification: '',
+      rejectReason: ''
     }
   },
 

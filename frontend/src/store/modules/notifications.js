@@ -82,8 +82,9 @@ const actions = {
                 .catch(error => { throw error })
   },
 
-  rejectRequest ({ commit }, requestId) {
-    return axios.post(`/requests/${requestId}/reject`)
+  rejectRequest ({ commit }, params) {
+    console.log(params)
+    return axios.post(`/requests/${params.id}/reject`, { admin_reason: params.admin_reason }, { headers: { 'Content-Type': 'application/json' } })
                 .then(response => {
                   return response
                 })
