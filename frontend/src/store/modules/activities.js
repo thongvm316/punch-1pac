@@ -13,7 +13,7 @@ const mutations = {
   },
 
   [types.FETCH_MORE_ACTIVITIES] (state, payload) {
-    payload.activities.forEach(activity => state.activities.push(activity))
+    state.activities = state.activities.concat(payload.activities)
     state.pager = payload.meta
   }
 }

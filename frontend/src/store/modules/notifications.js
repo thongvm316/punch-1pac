@@ -4,6 +4,7 @@ import axios from 'axios'
 const state = {
   pager: {},
   unreadNotificationsCount: 0,
+  lastUnreadNotificationsCount: 0,
   hasIntervalFetchNotifications: null,
   notifications: [],
   headerNotifications: []
@@ -24,10 +25,29 @@ const mutations = {
   [types.FETCH_HEADER_NOTIFICATIONS] (state, payload) {
     state.headerNotifications = payload.notifications
     state.unreadNotificationsCount = payload.meta.unread_notifications_count
+    state.lastUnreadNotificationsCount = payload.meta.unread_notifications_count
+    state.pager = payload.meta
+  },
+
+  [types.FETCH_NEW_HEADER_NOTIFICATIONS] (state, payload) {
+    state.unreadNotificationsCount = payload.meta.unread_notifications_count
+    let newNotificationsCount = state.unreadNotificationsCount - state.lastUnreadNotificationsCount
+
+    if (newNotificationsCount > 0) {
+      let unreadNotifications = payload.notifications.slice(0, newNotificationsCount)
+      unreadNotifications.forEach(notification => state.headerNotifications.unshift(notification))
+      state.lastUnreadNotificationsCount = payload.meta.unread_notifications_count
+    }
+  },
+
+  [types.FETCH_MORE_HEADER_NOTIFICATIONS] (state, payload) {
+    state.headerNotifications = state.headerNotifications.concat(payload.notifications)
+    state.pager = payload.meta
   },
 
   [types.READ_NOTIFICATIONS] (state, payload) {
     state.unreadNotificationsCount = 0
+    state.lastUnreadNotificationsCount = 0
   },
 
   [types.SET_INTERVAL_FETCH_NOTIFICATIONS] (state, payload) {
@@ -43,8 +63,20 @@ const actions = {
   },
 
   getHeaderNotifications ({ commit }, params = {}) {
-    return axios.get('/notifications', { params: Object.assign({ per_page: 10 }, params) })
+    return axios.get('/notifications', { params: Object.assign({ per_page: 20 }, params) })
                 .then(response => commit(types.FETCH_HEADER_NOTIFICATIONS, response.data))
+                .catch(error => { throw error })
+  },
+
+  getNewHeaderNotifications ({ commit }, params = {}) {
+    return axios.get('/notifications', { params: Object.assign({ per_page: 20 }, params) })
+                .then(response => commit(types.FETCH_NEW_HEADER_NOTIFICATIONS, response.data))
+                .catch(error => { throw error })
+  },
+
+  getMoreHeaderNotifications ({ commit }, params = {}) {
+    return axios.get('/notifications', { params: Object.assign({ per_page: 20 }, params) })
+                .then(response => commit(types.FETCH_MORE_HEADER_NOTIFICATIONS, response.data))
                 .catch(error => { throw error })
   },
 

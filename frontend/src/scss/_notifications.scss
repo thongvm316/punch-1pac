@@ -30,6 +30,8 @@
   ul {
     margin: 0;
     list-style: none;
+    max-height: calc(100vh - 5.8rem);
+    overflow-y: scroll;
   }
 
   p {
@@ -54,13 +56,6 @@
     &:hover {
       background-color: $bg-color;
     }
-  }
-
-  > a {
-    font-size: .7rem;
-    padding: .4rem .8rem;
-    display: block;
-    text-align: center;
   }
 
   .no-notification-msg {
