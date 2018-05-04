@@ -16,6 +16,23 @@
 
   .dropdown {
     padding: .4rem 0;
+
+    .dropdown-toggle {
+      svg {
+        color: $dark-color;
+        height: .6rem;
+        width: .6rem;
+        -webkit-transition: color .1s ease-in-out;
+        transition: color .1s ease-in-out;
+      }
+
+      &:hover {
+        svg {
+          color: $primary-color;
+        }
+      }
+    }
+
     &.active .notification-dropdown {
       display: block;
     }
