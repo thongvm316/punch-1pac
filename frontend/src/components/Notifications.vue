@@ -10,7 +10,6 @@
       <div class="box notifications notification-dropdown">
         <div class="notification-header">
           <h4>{{ $t('header.notifications') }}</h4>
-          <!-- <router-link to="/notifications">{{ $t('header.seeAll') }}</router-link> -->
         </div>
         <ul v-if="headerNotifications.length > 0" ref="notiList">
           <li v-for="notification in headerNotifications" :key="notification.id" @click="openRequestModal(notification)" v-if="notification.activitable">
@@ -24,7 +23,6 @@
               </div>
             </div>
           </li>
-          <!-- <li class="load-more" @click="getHeaderNotifications()">{{ $t('header.loadMore') }}</li> -->
         </ul>
         <p class="no-notification-msg" v-else>
           {{ $t('header.noNotificationMsg') }}
