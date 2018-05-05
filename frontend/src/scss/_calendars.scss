@@ -31,5 +31,9 @@
         }
       }
     }
+
+    &.disabled .date-item.date-today {
+      opacity: 1;
+    }
   }
 }
