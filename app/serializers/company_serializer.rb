@@ -8,7 +8,5 @@ class CompanySerializer < ApplicationSerializer
     ActionController::Base.helpers.asset_url(object.logo_url)
   end
 
-  def breakdays
-    object.breakdays
-  end
+  delegate :breakdays, to: :object
 end
