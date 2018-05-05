@@ -14,16 +14,63 @@ RSpec.describe AuthController, type: :controller do
   end
 
   describe 'POST #create' do
-    context 'when email is wrong' do
-      subject { post :create, params: { user: { email: user.email + 'fake', password: user.password } }, format: :json }
+    context 'when user is deactivated' do
+      let(:user) { create :user, company: company, activated: false }
 
-      its(:code) { is_expected.to eq '401' }
+      context 'when format is json' do
+        subject { post :create, params: { user: { email: user.email, password: user.password } }, format: :json }
+
+        its(:code) { is_expected.to eq '401' }
+      end
+
+      context 'when format is html' do
+        subject { post :create, params: { user: { email: user.email, password: user.password } } }
+
+        it do
+          is_expected
+          expect(subject.code).to eq '200'
+          expect(subject).to render_template(:new)
+          expect(controller).to set_flash.now[:alert]
+        end
+      end
+    end
+
+    context 'when email is wrong' do
+      context 'when format is json' do
+        subject { post :create, params: { user: { email: user.email + 'fake', password: user.password } }, format: :json }
+
+        its(:code) { is_expected.to eq '401' }
+      end
+
+      context 'when format is html' do
+        subject { post :create, params: { user: { email: user.email + 'fake', password: user.password } } }
+
+        it do
+          is_expected
+          expect(subject.code).to eq '200'
+          expect(subject).to render_template(:new)
+          expect(controller).to set_flash.now[:alert]
+        end
+      end
     end
 
     context 'when password is wrong' do
-      subject { post :create, params: { user: { email: user.email, password: user.password + 'fake' } }, format: :json }
+      context 'when format is json' do
+        subject { post :create, params: { user: { email: user.email, password: user.password + 'fake' } }, format: :json }
 
-      its(:code) { is_expected.to eq '401' }
+        its(:code) { is_expected.to eq '401' }
+      end
+
+      context 'when format is html' do
+        subject { post :create, params: { user: { email: user.email, password: user.password + 'fake' } } }
+
+        it do
+          is_expected
+          expect(subject.code).to eq '200'
+          expect(subject).to render_template(:new)
+          expect(controller).to set_flash.now[:alert]
+        end
+      end
     end
 
     context 'when email and password are correct' do
