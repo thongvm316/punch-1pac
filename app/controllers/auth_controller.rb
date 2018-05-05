@@ -22,22 +22,25 @@ class AuthController < ApplicationController
     @user = current_company.users.find_by(email: auth_params[:email])
     respond_to do |f|
       if @user&.authenticate(auth_params[:password])
-        data = payload(sub: @user.id)
-        token = jwt_encode(data)
-        @user.current_session(request) ? @user.touch(:updated_at) : Session.track!(@user, data, request)
+        token = jwt_encode(sub: @user.id)
+        update_session!
         f.html do
           session[:access_token] = token
-          redirect_to(subdomain: request.subdomain, controller: 'dashboard', action: 'index', path: 'dashboard')
+          redirect_to(subdomain: request.subdomain, controller: 'dashboard', action: 'index', path: 'dashboard') && return
         end
         f.json do
           user_json = ActiveModelSerializers::SerializableResource.new(@user, serializer: UserSerializer).as_json
-          render json: user_json.merge(access_token: token), status: :ok
+          render(json: user_json.merge(access_token: token), status: :ok)
         end
       else
         f.html do
+          flash.now[:alert] = if current_company.users.unscope(where: :activated).find_by(activated: false, email: auth_params[:email])
+                                'Oops!!! Your account is deactivated. Please contact your manager'
+                              else
+                                'Incorrect email or password'
+                              end
           @user = User.new(email: auth_params[:email])
-          flash.now[:alert] = 'Incorrect email or password'
-          render :new
+          render(:new)
         end
         f.json { head(401) }
       end
@@ -51,6 +54,11 @@ class AuthController < ApplicationController
   end
 
   private
+
+  def update_session!
+    current_session = @user.current_session(request)
+    current_session ? current_session.touch(:updated_at) : Session.track!(@user, data, request)
+  end
 
   def auth_params
     params.require(:user).permit(:email, :password)
