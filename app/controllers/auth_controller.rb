@@ -57,7 +57,7 @@ class AuthController < ApplicationController
 
   def update_session!
     current_session = @user.current_session(request)
-    current_session ? current_session.touch(:updated_at) : Session.track!(@user, data, request)
+    current_session ? current_session.touch(:updated_at) : Session.track!(@user, payload(sub: @user.id), request)
   end
 
   def auth_params
