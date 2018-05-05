@@ -38,13 +38,13 @@ class AttendanceService
       weekday                   = attendance.day.strftime('%A')
       business_day              = company.business_days.find_by(weekday: weekday.downcase)
 
-      return 0 unless business_day
+      return 0 if !business_day || !left_at
 
       morning_started_at        = business_day.morning_started_at.to_i
       morning_ended_at          = business_day.morning_ended_at.to_i
       afternoon_started_at      = business_day.afternoon_started_at.to_i
       afternoon_ended_at        = business_day.afternoon_ended_at.to_i
-      attended_at               = attended_at.nil? ? attendance.attended_at.to_i : attended_at.to_i
+      attended_at               = attended_at.to_i
       left_at                   = Time.zone.local(2000, 1, 1, left_at.hour, left_at.min, left_at.sec).to_i
 
       before_morning_start_time = attended_at < morning_started_at
@@ -112,7 +112,7 @@ class AttendanceService
     attendance = @user.attendances.attended.find_by!(day: @now, left_at: nil)
     attendance.assign_attributes(
       left_at: @now,
-      working_hours: self.class.count_working_hours(@user.company, nil, @now, attendance),
+      working_hours: self.class.count_working_hours(@user.company, attendance.attended_at, @now, attendance),
       leaving_status: self.class.leaving_status(@user.company, @now, attendance)
     )
     attendance.save ? attendance : false
