@@ -22,7 +22,6 @@ class Api::V1::UsersLoyalty < ApplicationLoyalty
     return true if @user.owner?
     return true if @user.superadmin? && !@record.owner?
     return true if @user.admin? && @record.member?
-    return true if @user == @record
     false
   end
 
@@ -31,6 +30,20 @@ class Api::V1::UsersLoyalty < ApplicationLoyalty
     return true if @user.superadmin? && !@record.owner?
     return true if @user.admin? && @record.member?
     return true if @user == @record
+    false
+  end
+
+  def activate?
+    return true if @user.owner?
+    return true if @user.superadmin? && !@record.owner?
+    return true if @user.admin? && @record.member?
+    false
+  end
+
+  def deactivate?
+    return true if @user.owner?
+    return true if @user.superadmin? && !@record.owner?
+    return true if @user.admin? && @record.member?
     false
   end
 
