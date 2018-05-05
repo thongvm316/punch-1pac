@@ -30,8 +30,8 @@ const mutations = {
 }
 
 const actions = {
-  fetchUsers ({ commit }) {
-    return axios.get('/users', { params: { per_page: 1000 } })
+  fetchUsers ({ commit }, params) {
+    return axios.get('/users', { params: Object.assign({ per_page: 1000 }, params) })
                 .then(response => {
                   commit(types.FETCH_USERS, response.data)
                   return response

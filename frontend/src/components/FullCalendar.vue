@@ -210,19 +210,21 @@ export default {
         // If currentDay is a holiday, set holiday object into attendance object
         if (holiday) attendance = Object.assign({}, attendance, { holiday: holiday })
 
-        // If currentDay is an annual leave day
-        if (tmpAttendance && tmpAttendance.off_status === 'annual_leave') attendance = Object.assign({}, attendance, tmpAttendance)
+        if (!this.isInDeactivatedTime(currentDay)) {
+          // If currentDay is an annual leave day
+          if (tmpAttendance && tmpAttendance.off_status === 'annual_leave') attendance = Object.assign({}, attendance, tmpAttendance)
 
-        // A valid day is a day before today and after current user's join date
-        if (this.today.isSameOrAfter(currentDay, 'day') && currentDay.isSameOrAfter(userJoinDate, 'day')) {
-          // If current user already attended on current day then set attendance information
-          // Else if current user did not attend on current day then check if current day is weekend or unpaid leave day
-          if (tmpAttendance) {
-            attendance = tmpAttendance
-          } else if (!holiday) {
-            attendance = Object.assign({}, attendance, {
-              off_status: this.currentCompany.breakdays.includes(currentDay.format('dddd').toLowerCase()) ? '' : 'unpaid_leave'
-            })
+          // A valid day is a day before today and after current user's join date
+          if (this.today.isSameOrAfter(currentDay, 'day') && currentDay.isSameOrAfter(userJoinDate, 'day')) {
+            // If current user already attended on current day then set attendance information
+            // Else if current user did not attend on current day then check if current day is weekend or unpaid leave day
+            if (tmpAttendance) {
+              attendance = tmpAttendance
+            } else if (!holiday) {
+              attendance = Object.assign({}, attendance, {
+                off_status: this.currentCompany.breakdays.includes(currentDay.format('dddd').toLowerCase()) ? '' : 'unpaid_leave'
+              })
+            }
           }
         }
 
@@ -230,6 +232,12 @@ export default {
       }
 
       this.attendances = attendances
+    },
+
+    isInDeactivatedTime (currentDay) {
+      if (currentDay.isBetween(this.currentUser.deactivated_at, this.currentUser.activated_at, null, '[]')) return true
+      if (!this.currentUser.activated && currentDay.isSameOrAfter(this.currentUser.deactivated_at, 'day')) return true
+      return false
     },
 
     ...mapActions('calendar', [

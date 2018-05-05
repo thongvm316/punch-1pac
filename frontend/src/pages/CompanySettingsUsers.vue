@@ -98,7 +98,7 @@ export default {
   },
 
   created () {
-    this.fetchUsers()
+    this.fetchUsers({ include_deactivated: true })
   }
 }
 </script>
