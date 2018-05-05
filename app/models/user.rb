@@ -21,6 +21,9 @@
 #  updated_at             :datetime         not null
 #  last_read_noti_id      :integer          default(0), not null
 #  password_changed       :boolean          default(FALSE), not null
+#  activated              :boolean          default(TRUE), not null
+#  activated_at           :datetime
+#  deactivated_at         :datetime
 #
 # Indexes
 #
@@ -34,6 +37,8 @@ class User < ApplicationRecord
 
   REGEX_VALID_EMAIL = /\A([\w+\-].?)+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i
   RESET_PASSWORD_TOKEN_EXPIRY = 1800.0
+
+  before_create { self.activated_at = created_at }
 
   enum role: { member: 0, admin: 1, superadmin: 2 }
   enum gender: { male: 0, female: 1 }
@@ -56,6 +61,8 @@ class User < ApplicationRecord
   validates :language, presence: true, inclusion: { in: I18n.available_locales.map(&:to_s) }
 
   include ImageUploader::Attachment.new(:avatar)
+
+  default_scope -> { where(activated: true) }
 
   scope :with_today_attendance, -> {
     sanitized_today_cond = sanitize_sql("attendances.day = '#{Time.current}'")
@@ -81,6 +88,7 @@ class User < ApplicationRecord
   }
   scope :search_by, ->(params, current_user) {
     q = all
+    q = q.unscope(where: :activated) if params[:include_deactivated].present?
     q = q.where('email LIKE ?', "%#{params[:email]}%") if params[:email].present?
     q = q.not_in_group(params[:not_in_group_id]) if params[:not_in_group_id].present?
     q = q.where.not(id: params[:exclude_user_ids]) if params[:exclude_user_ids].present?
@@ -135,6 +143,10 @@ class User < ApplicationRecord
     superadmin? || admin?
   end
 
+  def deactivated?
+    !activated?
+  end
+
   def current_session(request)
     client = DeviceDetector.new(request.user_agent)
     sessions.find_by(client: client.name, device_type: client.device_type, ip_address: request.remote_ip, os: "#{client.os_name}_#{client.os_full_version}")
@@ -147,8 +159,11 @@ class User < ApplicationRecord
 
     (now.beginning_of_month.to_i..now.to_i).step(1.day) do |timestamp|
       current_day = Time.zone.at(timestamp).to_date
+      next if current_day < created_at.to_date
       next if hdays.find { |holiday| current_day.between?(holiday.started_at, holiday.ended_at) }
       next if company.breakdays.include?(current_day.strftime('%A').downcase)
+      next if deactivated_at && current_day.between?(deactivated_at.to_date, activated_at.to_date - 1.day)
+      next if deactivated? && current_day >= deactivated_at.to_date
       days << current_day.strftime('%Y-%m-%d')
     end
 

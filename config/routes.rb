@@ -14,9 +14,15 @@ Rails.application.routes.draw do
     namespace :api, defaults: { format: :json }, constraints: { id: /\d+/ } do
       namespace :v1 do
         resources :users, except: %i[new edit] do
-          post 'create_multi', on: :collection
-          match 'change_password', via: %i[patch put], on: :collection
-          get 'today_attendances', on: :collection
+          collection do
+            post 'create_multi'
+            match 'change_password', via: %i[patch put]
+            get 'today_attendances'
+          end
+          member do
+            post 'deactivate'
+            post 'activate'
+          end
         end
 
         resources :holidays, only: %i[index create update destroy] do

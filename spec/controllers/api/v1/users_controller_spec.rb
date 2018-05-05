@@ -479,4 +479,56 @@ RSpec.describe Api::V1::UsersController, type: :controller do
       end
     end
   end
+
+  describe 'POST #activate' do
+    let(:login_user) { create :user, :with_groups, company: company, role: 'superadmin' }
+
+    context 'when user.activated = true' do
+      let!(:user) { create :user, company: company, groups: login_user.groups }
+
+      subject { post :activate, params: { id: user.id }, format: :json }
+
+      its(:code) { is_expected.to eq '404' }
+      its(:body) { is_expected.to be_json_as(response_404) }
+    end
+
+    context 'when login_user.activated = false' do
+      let!(:user) { create :user, company: company, groups: login_user.groups, activated: false }
+
+      subject { post :activate, params: { id: user.id } }
+
+      it do
+        is_expected
+        user.reload
+        expect(subject.code).to eq '200'
+        expect(user.activated).to be_truthy
+      end
+    end
+  end
+
+  describe 'POST #deactivate' do
+    let(:login_user) { create :user, :with_groups, company: company, role: 'superadmin' }
+
+    context 'when user.activated = false' do
+      let!(:user) { create :user, company: company, groups: login_user.groups, activated: false }
+
+      subject { post :deactivate, params: { id: user.id }, format: :json }
+
+      its(:code) { is_expected.to eq '404' }
+      its(:body) { is_expected.to be_json_as(response_404) }
+    end
+
+    context 'when login_user.activated = true' do
+      let!(:user) { create :user, company: company, groups: login_user.groups }
+
+      subject { post :deactivate, params: { id: user.id } }
+
+      it do
+        is_expected
+        user.reload
+        expect(subject.code).to eq '200'
+        expect(user.activated).to be_falsey
+      end
+    end
+  end
 end

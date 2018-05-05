@@ -29,7 +29,6 @@ RSpec.describe User, type: :model do
 
   describe '#forgot_punch_in_days_in_month' do
     let(:company) { create :company, :with_business_days }
-    let(:user) { create :user, company: company }
     let!(:holiday) { create :holiday, company: company, started_at: '2018-04-16', ended_at: '2018-04-17' }
     let!(:attendance_1) { create :attendance, day: '2018-04-02', user: user }
     let!(:attendance_2) { create :attendance, day: '2018-04-03', user: user }
@@ -37,12 +36,29 @@ RSpec.describe User, type: :model do
     before { Timecop.freeze(Time.zone.local(2018, 4, 20)) }
     after { Timecop.return }
 
-    subject { user.forgot_punch_in_days_in_month }
+    context 'when user is activated' do
+      let(:user) { create :user, company: company, deactivated_at: '2018-04-04', created_at: '2018-04-01' }
 
-    it do
-      is_expected
-      expect(subject.size).to eq 11
-      expect(subject).to include('2018-04-04', '2018-04-05', '2018-04-06', '2018-04-09', '2018-04-10', '2018-04-11', '2018-04-12', '2018-04-13', '2018-04-18', '2018-04-19', '2018-04-20')
+      before { user.update(activated_at: '2018-04-06') }
+      subject { user.forgot_punch_in_days_in_month }
+
+      it do
+        is_expected
+        expect(subject.size).to eq 9
+        expect(subject).to include('2018-04-06', '2018-04-09', '2018-04-10', '2018-04-11', '2018-04-12', '2018-04-13', '2018-04-18', '2018-04-19', '2018-04-20')
+      end
+    end
+
+    context 'when user.activated=false and user.deactivated_at > user.activated_at' do
+      let(:user) { create :user, company: company, deactivated_at: '2018-04-10', created_at: '2018-04-01', activated: false }
+
+      subject { user.forgot_punch_in_days_in_month }
+
+      it do
+        is_expected
+        expect(subject.size).to eq 4
+        expect(subject).to include('2018-04-04', '2018-04-05', '2018-04-06', '2018-04-09')
+      end
     end
   end
 end
