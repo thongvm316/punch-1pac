@@ -13,7 +13,7 @@
         <th class="cell-md">{{ $t('company.businessDays.tableHeader.morningEndAt') }}</th>
         <th class="cell-md">{{ $t('company.businessDays.tableHeader.afternoonStartAt') }}</th>
         <th class="cell-md">{{ $t('company.businessDays.tableHeader.afternoonEndAt') }}</th>
-        <th class="cell-sm"></th>
+        <th class="cell-sm text-center">{{ $t('company.businessDays.tableHeader.actions') }}</th>
       </thead>
       <tbody>
         <tr v-for="businessDay in businessDays">

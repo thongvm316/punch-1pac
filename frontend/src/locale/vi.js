@@ -340,7 +340,8 @@ export default {
         morningStartAt: 'Bắt đầu buổi sáng',
         morningEndAt: 'Kết thúc buổi sáng',
         afternoonStartAt: 'Bắt đầu buổi chiều',
-        afternoonEndAt: 'Kết thúc buổi chiều'
+        afternoonEndAt: 'Kết thúc buổi chiều',
+        actions: 'Thao tác'
       },
       labels: {
         weekday: 'Ngày trong tuần',
@@ -370,7 +371,8 @@ export default {
       title: 'Địa chỉ IP',
       tableHeader: {
         ipAddress: 'Địa chỉ IP',
-        createdAt: 'Tạo lúc'
+        createdAt: 'Tạo lúc',
+        actions: 'Thao tác'
       },
       labels: {
         ipAddress: 'Địa chỉ IP'
@@ -408,7 +410,8 @@ export default {
       tableHeader: {
         name: 'Tên',
         startAt: 'Bắt đầu lúc',
-        endAt: 'Kết thúc lúc'
+        endAt: 'Kết thúc lúc',
+        actions: 'Thao tác'
       },
       labels: {
         name: 'Tên',
@@ -479,7 +482,8 @@ export default {
         email: 'Email',
         position: 'Chức vụ',
         group: 'Nhóm',
-        role: 'Quyền hạn'
+        role: 'Quyền hạn',
+        actions: 'Thao tác'
       },
       btn: {
         add: 'Tạo thành viên',

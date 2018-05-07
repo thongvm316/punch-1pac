@@ -340,7 +340,8 @@ export default {
         morningStartAt: 'Morning start at',
         morningEndAt: 'Morning end at',
         afternoonStartAt: 'Afternoon start at',
-        afternoonEndAt: 'Afternoon end at'
+        afternoonEndAt: 'Afternoon end at',
+        actions: 'Actions'
       },
       labels: {
         weekday: 'Weekday',
@@ -370,7 +371,8 @@ export default {
       title: 'Allowed IPs',
       tableHeader: {
         ipAddress: 'IP address',
-        createdAt: 'Created at'
+        createdAt: 'Created at',
+        actions: 'Actions'
       },
       labels: {
         ipAddress: 'IP address'
@@ -408,7 +410,8 @@ export default {
       tableHeader: {
         name: 'Name',
         startAt: 'Start at',
-        endAt: 'End at'
+        endAt: 'End at',
+        actions: 'Actions'
       },
       labels: {
         name: 'Name',
@@ -479,7 +482,8 @@ export default {
         email: 'Email',
         position: 'Position',
         group: 'Group',
-        role: 'Role'
+        role: 'Role',
+        actions: 'Actions'
       },
       btn: {
         add: 'Add user',

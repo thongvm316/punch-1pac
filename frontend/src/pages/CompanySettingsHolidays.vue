@@ -21,7 +21,7 @@
         <th>{{ $t('company.holidays.tableHeader.name') }}</th>
         <th>{{ $t('company.holidays.tableHeader.startAt') }}</th>
         <th>{{ $t('company.holidays.tableHeader.endAt') }}</th>
-        <th></th>
+        <th class="text-center">{{ $t('company.holidays.tableHeader.actions') }}</th>
       </thead>
       <tbody>
         <tr v-for="holiday in filterHolidays(name)">
