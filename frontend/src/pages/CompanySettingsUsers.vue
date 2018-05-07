@@ -16,7 +16,7 @@
         <th class="cell-md">{{ $t('company.users.tableHeader.email') }}</th>
         <th class="cell-md">{{ $t('company.users.tableHeader.position') }}</th>
         <th class="cell-md">{{ $t('company.users.tableHeader.role') }}</th>
-        <th class="cel-sm"></th>
+        <th class="cel-sm">{{ $t('company.users.tableHeader.actions') }}</th>
       </thead>
       <tbody>
         <tr v-for="user in filterByEmail(email)">
