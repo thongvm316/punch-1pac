@@ -61,7 +61,7 @@ namespace :deploy do
     end
   end
 
-  desc 'Seed the database.'
+  desc 'Seed data by specific file'
   task :seed_by_file do
     on roles(:app) do
       within current_path do
