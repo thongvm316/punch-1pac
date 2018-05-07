@@ -15,8 +15,9 @@
 
 class Group < ApplicationRecord
   DEFAULT_NAME = 'default'
-  CSVHeader = I18n.t([('group.report.email'), ('group.report.name'), ('group.report.attend_ok'), ('group.report.attend_late'), ('group.report.leave_ok'), ('group.report.leave_early'), ('group.report.annual_leave'), ('group.report.working_hours')])
-  
+  CSVHeader = I18n.t(['group.report.email', 'group.report.name', 'group.report.attend_ok', 'group.report.attend_late',
+                      'group.report.leave_ok', 'group.report.leave_early', 'group.report.annual_leave', 'group.report.working_hours'])
+
   belongs_to :company
   has_many :group_permissions, dependent: :destroy
   has_many :permissions, through: :group_permissions

@@ -70,10 +70,11 @@ class Api::V1::GroupsController < Api::V1::BaseController
                   company_total_working_hours_on_month: current_company.total_working_hours_on_month(params[:date]),
                   company_total_working_days_in_month: current_company.total_working_days_in_month(params[:date])
                 },
+                leave_days: current_user.forgot_punch_in_days_in_month(params[:date]),
                 adapter: :json,
                 status: :ok
       end
-      format.csv { send_data(Group.report_csv(results), type: 'text/csv; charset=utf-8; header=present', filename: "report.csv", disposition: 'attachment')}
+      format.csv { send_data(Group.report_csv(results), type: 'text/csv; charset=utf-8; header=present', filename: 'report.csv', disposition: 'attachment') }
     end
   end
 

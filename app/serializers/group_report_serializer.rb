@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class GroupReportSerializer < ApplicationSerializer
-  attributes :id, :name, :email, :avatar_url, :attend_ok, :attend_late, :leave_ok, :leave_early, :annual_leave, :working_hours
+  attributes :id, :name, :email, :avatar_url, :attend_ok, :attend_late, :leave_ok, :leave_early, :leave, :working_hours
 
   def avatar_url
     ActionController::Base.helpers.asset_url(object.avatar_url)
@@ -23,8 +23,8 @@ class GroupReportSerializer < ApplicationSerializer
     object.leave_early.to_i
   end
 
-  def annual_leave
-    object.annual_leave.to_i
+  def leave
+    instance_options[:leave_days].size + object&.annual_leave.to_i
   end
 
   def working_hours

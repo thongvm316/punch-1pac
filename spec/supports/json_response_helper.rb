@@ -172,7 +172,7 @@ module JsonResponseHelper
         attend_late: Integer,
         leave_ok: Integer,
         leave_early: Integer,
-        annual_leave: Integer,
+        leave: Integer,
         working_hours: {
           hours: Integer,
           mins: Integer
@@ -249,7 +249,7 @@ module JsonResponseHelper
       attend_late: Integer,
       leave_ok: Integer,
       leave_early: Integer,
-      annual_leave: Integer,
+      leave: Integer,
       working_hours: {
         hours: Integer,
         mins: Integer

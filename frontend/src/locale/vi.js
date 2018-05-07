@@ -54,7 +54,8 @@ export default {
     punchOutSuccess: 'Bạn về lúc {at}',
     punchOutTitle: 'Về đây',
     punchOutConfirm: 'Bạn có chắc muốn về lúc {at} ?',
-    btnAnnualLeave: 'Nghỉ phép'
+    btnAnnualLeave: 'Nghỉ phép',
+    btnLeave: 'Xin nghỉ'
   },
   footer: {
     terms: 'Quy định',
@@ -71,6 +72,7 @@ export default {
       leave_ok: 'Về đúng giờ',
       unpaid_leave: 'Vắng ko phép',
       annual_leave: 'Vắng có phép',
+      leave: 'Vắng',
       working_hours: 'Số giờ làm việc'
     },
     request_statuses: {
@@ -140,7 +142,7 @@ export default {
       label: 'Loại yêu cầu',
       kind: {
         attendance: 'Tạo yêu cầu hiện diện',
-        annual_leave: 'Tạo yêu cầu nghỉ phép'
+        annual_leave: 'Tạo yêu cầu xin nghỉ'
       }
     }
   },
@@ -233,7 +235,7 @@ export default {
       deleteMsg: 'Bạn có chắc muốn xoá yêu cầu này vĩnh viễn ?'
     },
     kinds: {
-      annual_leave: 'Nghỉ phép',
+      annual_leave: 'Vắng',
       attendance: 'Hiện diện'
     }
   },
@@ -558,17 +560,16 @@ export default {
   },
   statusCards: {
     dayNum: '0 ngày | 1 ngày | {num} ngày',
-    attendOk: '{num}/{companyTotalDays} ngày',
     workingHours: '{hours}h{mins}m/{companyTotalHours}h'
   },
   annualLeave: {
-    title: 'Xin nghỉ phép',
+    title: 'Xin nghỉ',
     labels: {
       annualLeaveDay: 'Ngày xin nghỉ',
       reason: 'Lý do'
     },
     createSuccessMsg: 'Yêu cầu xin nghỉ đã được gửi',
-    updateSuccessMsg: 'Đã cập nhật ngày xin nghỉ phép',
+    updateSuccessMsg: 'Đã cập nhật ngày xin nghỉ',
     submit: 'Gửi',
     save: 'Lưu'
   },

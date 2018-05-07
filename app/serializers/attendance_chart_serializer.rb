@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class AttendanceChartSerializer < ApplicationSerializer
-  attributes :attend_ok, :attend_late, :leave_ok, :leave_early, :annual_leave, :working_hours
+  attributes :attend_ok, :attend_late, :leave_ok, :leave_early, :leave, :working_hours
 
   def attend_ok
     object&.attend_ok.to_i
@@ -19,8 +19,8 @@ class AttendanceChartSerializer < ApplicationSerializer
     object&.leave_early.to_i
   end
 
-  def annual_leave
-    object&.annual_leave.to_i
+  def leave
+    instance_options[:leave_days].size + object&.annual_leave.to_i
   end
 
   def working_hours

@@ -152,12 +152,16 @@ class User < ApplicationRecord
     sessions.find_by(client: client.name, device_type: client.device_type, ip_address: request.remote_ip, os: "#{client.os_name}_#{client.os_full_version}")
   end
 
-  def forgot_punch_in_days_in_month
+  def forgot_punch_in_days_in_month(date = nil)
     now = Time.current
-    hdays = company.holidays.in_month(now.strftime('%Y-%m-%d'))
+    query_time = date.present? ? Time.zone.parse(date) : now
+    raise ArgumentError if query_time.blank?
+    hdays = company.holidays.in_month(query_time.strftime('%Y-%m-%d'))
     days = []
 
-    (now.beginning_of_month.to_i..now.to_i).step(1.day) do |timestamp|
+    to_date = query_time.month < now.month ? query_time.end_of_month.to_i : now.to_i
+
+    (query_time.beginning_of_month.to_i..to_date).step(1.day) do |timestamp|
       current_day = Time.zone.at(timestamp).to_date
       next if current_day < created_at.to_date
       next if hdays.find { |holiday| current_day.between?(holiday.started_at, holiday.ended_at) }
@@ -167,7 +171,9 @@ class User < ApplicationRecord
       days << current_day.strftime('%Y-%m-%d')
     end
 
-    punch_in_days = Attendance.where(day: days).map { |a| a.day.strftime('%Y-%m-%d') }
+    punch_in_days = attendances.where(day: days).map { |a| a.day.strftime('%Y-%m-%d') }
     days - punch_in_days
+  rescue TypeError, ArgumentError
+    []
   end
 end
