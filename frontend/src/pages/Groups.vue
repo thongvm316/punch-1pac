@@ -17,7 +17,7 @@
               </div>
               <div class="tile-content">
                 <router-link tag="h2" :to="`/groups/${group.id}`" class="box-title">{{ group.name }}</router-link>
-                <p class="group-description" v-if="group.description">{{ group.description | limitedLenghtDescription }}</p>
+                <p class="group-description" v-if="group.description">{{ group.description | limitedLengthDescription }}</p>
                 <span>{{ $tc('groups.member', group.users.length, { count: group.users.length }) }}</span>
               </div>
             </div>
@@ -59,7 +59,7 @@ export default {
       return userNum > 5 ? `+ ${userNum - 5}` : ''
     },
 
-    limitedLenghtDescription (description) {
+    limitedLengthDescription (description) {
       return description.length > 80 ? `${description.trim().substring(0, 80)}...` : description
     }
   },

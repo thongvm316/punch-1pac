@@ -26,6 +26,16 @@ const mutations = {
   [types.UPDATE_USER] (state, payload) {
     const index = state.users.findIndex(user => user.id === payload.id)
     state.users[index] = payload
+  },
+
+  [types.DEACTIVATE_USER] (state, userId) {
+    const index = state.users.findIndex(user => user.id === userId)
+    state.users[index].activated = false
+  },
+
+  [types.ACTIVATE_USER] (state, userId) {
+    const index = state.users.findIndex(user => user.id === userId)
+    state.users[index].activated = true
   }
 }
 
@@ -43,6 +53,24 @@ const actions = {
     return axios.delete(`/users/${id}`)
                 .then(response => {
                   commit(types.DELETE_USER, id)
+                  return response
+                })
+                .catch(error => { throw error })
+  },
+
+  deactivateUser ({ commit }, userId) {
+    return axios.post(`/users/${userId}/deactivate`, { headers: { 'Content-Type': 'application/json' } })
+                .then(response => {
+                  commit(types.DEACTIVATE_USER, userId)
+                  return response
+                })
+                .catch(error => { throw error })
+  },
+
+  activateUser ({ commit }, userId) {
+    return axios.post(`/users/${userId}/activate`, { headers: { 'Content-Type': 'application/json' } })
+                .then(response => {
+                  commit(types.ACTIVATE_USER, userId)
                   return response
                 })
                 .catch(error => { throw error })

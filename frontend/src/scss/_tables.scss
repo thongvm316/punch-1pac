@@ -66,6 +66,11 @@
     }
   }
 
+  tr.deactivated td {
+    color: $gray-color;
+    font-style: italic;
+  }
+
   tr:last-child td {
     border-bottom: 0;
   }

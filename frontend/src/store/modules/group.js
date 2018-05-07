@@ -21,6 +21,16 @@ const mutations = {
     state.usersNotInGroup = state.usersNotInGroup.filter(u => u.id !== user.id)
   },
 
+  [types.DEACTIVATE_GROUP_USER] (state, userId) {
+    const index = state.group.users.findIndex(user => user.id === userId)
+    state.group.users[index].activated = false
+  },
+
+  [types.ACTIVATE_GROUP_USER] (state, userId) {
+    const index = state.group.users.findIndex(user => user.id === userId)
+    state.group.users[index].activated = true
+  },
+
   [types.REMOVE_GROUP_USER] (state, payload) {
     state.group.users = state.group.users.filter(user => user.id !== payload)
   },
@@ -67,6 +77,24 @@ const actions = {
     return axios.post(`/groups/${params.groupId}/add_user`, { user_id: params.user.id }, { headers: { 'Content-Type': 'application/json' } })
                 .then(response => {
                   commit(types.ADD_GROUP_USER, params.user)
+                  return response
+                })
+                .catch(error => { throw error })
+  },
+
+  deactivateGroupUser ({ commit }, userId) {
+    return axios.post(`/users/${userId}/deactivate`, { headers: { 'Content-Type': 'application/json' } })
+                .then(response => {
+                  commit(types.DEACTIVATE_GROUP_USER, userId)
+                  return response
+                })
+                .catch(error => { throw error })
+  },
+
+  activateGroupUser ({ commit }, userId) {
+    return axios.post(`/users/${userId}/activate`, { headers: { 'Content-Type': 'application/json' } })
+                .then(response => {
+                  commit(types.ACTIVATE_GROUP_USER, userId)
                   return response
                 })
                 .catch(error => { throw error })
