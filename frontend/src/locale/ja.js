@@ -32,7 +32,9 @@ export default {
     },
     tooltip: {
       editUser: 'Edit user',
-      removeUser: 'Remove user'
+      activateUser: 'Activate User',
+      deactivateUser: 'Deactivate User',
+      removeUser: 'Remove User'
     }
   },
   header: {
@@ -500,7 +502,9 @@ export default {
       },
       tooltip: {
         edit: 'Edit user',
-        delete: 'Delete user'
+        delete: 'Delete user',
+        activateUser: 'Activate User',
+        deactivateUser: 'Deactivate User'
       }
     }
   },

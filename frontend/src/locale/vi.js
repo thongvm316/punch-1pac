@@ -32,7 +32,9 @@ export default {
     },
     tooltip: {
       editUser: 'Sửa thông tin thành viên',
-      removeUser: 'Loại bỏ thành viên'
+      activateUser: 'Kích hoạt thành viên',
+      deactivateUser: 'Huỷ kích hoạt thành viên',
+      removeUser: 'Xoá bỏ thành viên'
     }
   },
   header: {
@@ -500,7 +502,9 @@ export default {
       },
       tooltip: {
         edit: 'Sửa thông tin thành viên',
-        delete: 'Xoá thành viên'
+        delete: 'Xoá thành viên',
+        activateUser: 'Kích hoạt thành viên',
+        deactivateUser: 'Huỷ kích hoạt thành viên'
       }
     }
   },
