@@ -21,11 +21,3 @@ namespace :punch do
     ::STATS_DIRECTORIES << %w[Specs spec]
   end
 end
-
-namespace :db do
-  task :seed_by_file do
-    filename = Rails.root.join('db', 'seeds', ENV['FILE'])
-    puts "Seeding #{filename}..."
-    load(filename) if File.exist?(filename)
-  end
-end
