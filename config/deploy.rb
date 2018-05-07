@@ -66,7 +66,7 @@ namespace :deploy do
     on roles(:app) do
       within current_path do
         with(rails_env: fetch(:stage)) do
-          execute :bundle, :exec, :rake, "db:seed_by_file FILE=#{END['FILE']}"
+          execute :bundle, :exec, :rake, "db:seed_by_file FILE=#{ENV['FILE']}"
         end
       end
     end
