@@ -17,14 +17,14 @@
           <notifications/>
           <div class="dropdown" :class="{ active: isDropdownActive }" @click="toggleDropdown" ref="dropdownMenu">
             <a class="dropdown-toggle">
-              <div class="tile tile-centered">
+              <div class="tile tile-centered mr-2">
                 <div class="tile-icon">
                   <img :src="currentUser.avatar_url" class="avatar avatar-md" :alt="currentUser.name">
                 </div>
-                <div class="tile-content mr-2">{{ currentUser.name }}</div>
+                <div class="tile-content">{{ currentUser.name }}</div>
               </div>
             </a>
-            <ul class="menu">
+            <ul class="menu triangle-top">
               <li class="menu-item"><router-link to="/settings">{{ $t('header.settings') }}</router-link></li>
               <li class="menu-item"><router-link to="/company/settings" v-if="$auth('Page', currentUser).canViewCompanySettings()">{{ $t('header.companySettings') }}</router-link></li>
               <li class="menu-item"><a href="#" @click="logout($event)">{{ $t('header.logout') }}</a></li>

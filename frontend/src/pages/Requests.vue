@@ -21,7 +21,7 @@
           <th class="cell-lg">{{ $t('requests.tableHeader.reason') }}</th>
           <th class="cell-mw-120">{{ $t('requests.tableHeader.status') }}</th>
           <th class="cell-mw-120">{{ $t('requests.tableHeader.admin') }}</th>
-          <th class="cell-lg">{{ $t('requests.tableHeader.adminReason') }}</th>
+          <th class="cell-lg">{{ $t('requests.tableHeader.rejectReason') }}</th>
           <th class="cell-xs">{{ $t('requests.tableHeader.actions') }}</th>
         </tr>
       </thead>

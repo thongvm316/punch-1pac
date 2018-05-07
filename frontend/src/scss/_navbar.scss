@@ -16,6 +16,22 @@
 
   .dropdown {
     padding: .4rem 0;
+
+    .dropdown-toggle {
+      svg {
+        color: $dark-color;
+        height: .6rem;
+        width: .6rem;
+        transition: color .1s ease-in-out;
+      }
+
+      &:hover {
+        svg {
+          color: $primary-color;
+        }
+      }
+    }
+
     &.active .notification-dropdown {
       display: block;
     }
@@ -23,6 +39,7 @@
     .menu {
       left: initial;
       right: 0;
+      overflow-y: unset;
     }
   }
 

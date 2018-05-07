@@ -7,10 +7,9 @@
           2.122v.003c.001.751-.396 1.446-1.041 1.82-4.667 2.712-1.985 11.715-6.862 13.306v1.749h20v-1.749c-4.877-1.591-2.195-10.594-6.863-13.306zm-3.137-2.945c.552
           0 1 .449 1 1 0 .552-.448 1-1 1s-1-.448-1-1c0-.551.448-1 1-1zm3 20c0 1.598-1.392 3-2.971 3s-3.029-1.402-3.029-3h6z"/></svg>
       </span>
-      <div class="box notifications notification-dropdown">
+      <div class="box notifications notification-dropdown arrow-box">
         <div class="notification-header">
           <h4>{{ $t('header.notifications') }}</h4>
-          <!-- <router-link to="/notifications">{{ $t('header.seeAll') }}</router-link> -->
         </div>
         <ul v-if="headerNotifications.length > 0" ref="notiList">
           <li v-for="notification in headerNotifications" :key="notification.id" @click="openRequestModal(notification)" v-if="notification.activitable">
@@ -24,7 +23,6 @@
               </div>
             </div>
           </li>
-          <!-- <li class="load-more" @click="getHeaderNotifications()">{{ $t('header.loadMore') }}</li> -->
         </ul>
         <p class="no-notification-msg" v-else>
           {{ $t('header.noNotificationMsg') }}
@@ -33,9 +31,15 @@
     </div>
     <modal :title="$t('header.notifications')" :modal-open.sync="isAddModalOpen" v-if="['create', 'update'].includes(notification.kind) && notification.activitable_type === 'Request' && !['approved', 'rejected'].includes(notification.activitable.status)">
       <p>{{ notification.activitable.reason }}</p>
+      <div class="modal-body">
+        <div class="content">
+          <label class="form-label">{{ $t('requests.labels.rejectReason') }}</label>
+          <textarea class="form-input" :placeholder="$t('requests.labels.rejectReason')" v-model="rejectReason"></textarea>
+        </div>
+      </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-success btn-submit" @click="submitAddModal(notification.activitable_id, approveRequest, $t('messages.request.approvedSuccess'))">{{ $t('notifications.btn.approve') }}</button>
-        <button type="button" class="btn btn-success btn-error mt-4" @click="submitAddModal(notification.activitable_id, rejectRequest, $t('messages.request.rejectedSuccess'))">{{ $t('notifications.btn.reject') }}</button>
+        <button type="button" class="btn btn-success btn-error mt-4" @click="submitAddModal({ id: notification.activitable_id, admin_reason: rejectReason }, rejectRequest, $t('messages.request.rejectedSuccess'))">{{ $t('notifications.btn.reject') }}</button>
       </div>
     </modal>
   </div>
@@ -53,7 +57,8 @@ export default {
 
   data () {
     return {
-      notification: ''
+      notification: '',
+      rejectReason: ''
     }
   },
 
