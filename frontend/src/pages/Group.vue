@@ -21,7 +21,7 @@
         <th>{{ $t('group.tableHeader.actions') }}</th>
       </thead>
       <tbody>
-        <tr v-for="user in group.users" :class="!user.activated ? 'rejected' : ''">
+        <tr v-for="user in group.users" :class="{ 'deactivated': !user.activated }">
           <td>
             <div class="tile tile-centered">
               <div class="tile-icon">
