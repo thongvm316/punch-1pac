@@ -14,7 +14,7 @@
         @input="onInputDatepicker"
         v-model="month"/>
       <filter-user-box :queryParams="{ group_id: this.$route.params.id, type: 'users_in_group', per_page: 1000 }" :placeholder="$t('attendances.placeholder.filterByUser')" :user.sync="selectedUser"/>
-      <button class="btn btn-success float-right">{{ $t('groups.btn.export') }}</button>
+      <button class="btn btn-success float-right" @click="exportCsvFile">{{ $t('groups.btn.export') }}</button>
     </div>
     <table class="table sortable-table bg-light mt-5">
       <thead>
@@ -56,6 +56,7 @@ import MainLayout from '../layouts/Main'
 import GroupTab from '../components/GroupTab'
 import FilterUserBox from '../components/FilterUserBox'
 import { mapState, mapActions } from 'vuex'
+import axios from 'axios'
 
 export default {
   data () {
@@ -140,6 +141,20 @@ export default {
     sortBy (key) {
       this.sortKey = key
       this.sortOrders = this.sortOrders === 'asc' ? 'desc' : 'asc'
+    },
+
+    exportCsvFile () {
+      axios.get(`/groups/${this.$route.params.id}/report.csv`, {
+        headers: { 'Accept': 'application/csv' },
+        params: { date: this.month },
+        responseType: 'blob'
+      }).then(response => {
+        const downloadLink = document.createElement('a')
+        downloadLink.href = window.URL.createObjectURL(new Blob([response.data]))
+        downloadLink.setAttribute('download', 'report.csv')
+        document.body.appendChild(downloadLink)
+        downloadLink.click()
+      }).catch(error => { throw error })
     }
   },
 
