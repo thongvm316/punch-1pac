@@ -42,7 +42,7 @@
           <td><span class="text-lg text-bold-600">{{ result.attend_late }}</span> / {{ reportMeta.company_total_working_days_in_month }}</td>
           <td><span class="text-lg text-bold-600">{{ result.leave_ok }}</span> / {{ reportMeta.company_total_working_days_in_month }}</td>
           <td><span class="text-lg text-bold-600">{{ result.leave_early }}</span> / {{ reportMeta.company_total_working_days_in_month }}</td>
-          <td><span class="text-lg text-bold-600">{{ result.annual_leave }}</span> / {{ reportMeta.company_total_working_days_in_month }}</td>
+          <td><span class="text-lg text-bold-600">{{ result.leave }}</span> / {{ reportMeta.company_total_working_days_in_month }}</td>
           <td><span class="text-lg text-bold-600">{{ `${result.working_hours.hours}h${result.working_hours.mins}m` }}</span> / {{ `${reportMeta.company_total_working_hours_on_month}h` }}</td>
         </tr>
       </tbody>

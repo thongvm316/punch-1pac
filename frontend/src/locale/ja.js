@@ -54,7 +54,8 @@ export default {
     punchOutSuccess: 'You punched out at {at}',
     punchOutTitle: 'Punch Out',
     punchOutConfirm: 'Do you intent to punch out at {at} ?',
-    btnAnnualLeave: 'Annual leave'
+    btnAnnualLeave: 'Annual leave',
+    btnLeave: 'Leave'
   },
   footer: {
     terms: 'Terms',
@@ -70,7 +71,8 @@ export default {
       leave_early: 'Leave Early',
       leave_ok: 'Leave OK',
       unpaid_leave: 'Unpaid leave',
-      annual_leave: 'Annual leave',
+      annual_leave: 'Leave',
+      leave: 'Leave',
       working_hours: 'Working hours'
     },
     request_statuses: {
@@ -233,7 +235,7 @@ export default {
       deleteMsg: 'Are you sure to delete this request permanently ?'
     },
     kinds: {
-      annual_leave: 'Annual leave',
+      annual_leave: 'Leave',
       attendance: 'Attendance'
     }
   },
@@ -561,13 +563,13 @@ export default {
     workingHours: '{hours}h{mins}m / {companyTotalHours}h'
   },
   annualLeave: {
-    title: 'Request an annual leave',
+    title: 'Request a leave',
     labels: {
-      annualLeaveDay: 'Annual leave day',
+      annualLeaveDay: 'Leave day',
       reason: 'Reason'
     },
-    createSuccessMsg: 'An annual leave request is created',
-    updateSuccessMsg: 'Your annual leave request is updated',
+    createSuccessMsg: 'A leave request is created',
+    updateSuccessMsg: 'Your leave request is updated',
     submit: 'Submit',
     save: 'Save'
   },
