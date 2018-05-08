@@ -3,9 +3,9 @@
     <div class="input-group mt-5">
       <select class="form-select" v-model="country">
         <option value="">{{ $t('company.holidays.placeholder.chooseCountry') }}</option>
-        <option value="country" v-for="country in meta.holiday_countries">{{ $t(`meta.holiday_countries.${country}`) }}</option>
+        <option :value="country" v-for="country in meta.holiday_countries">{{ $t(`meta.holiday_countries.${country}`) }}</option>
       </select>
-      <button class="btn input-group-btn" @click="importNationalHolidays(country)">{{ $t('company.holidays.btn.import') }}</button>
+      <button class="btn input-group-btn" @click="importHolidays()">{{ $t('company.holidays.btn.import') }}</button>
     </div>
     <p class="form-input-hint text-dark">{{ $t('company.holidays.explain') }}</p>
 
@@ -78,6 +78,24 @@ export default {
       'deleteHoliday',
       'importNationalHolidays'
     ]),
+
+    ...mapActions('flash', [
+      'setFlashMsg'
+    ]),
+
+    importHolidays () {
+      this.importNationalHolidays(this.country)
+          .then(response => this.setFlashMsg({ message: this.$t('company.holidays.msg.importSuccess', { country: this.$t(`meta.holiday_countries.${this.country}`) }) }))
+          .catch(error => {
+            if (error.response && error.response.status === 422 && error.response.data.errors === 'blank_or_already_imported') {
+              this.setFlashMsg({
+                message: this.$t('company.holidays.msg.blankOrAlreadyImported', { country: this.$t(`meta.holiday_countries.${this.country}`) }),
+                type: 'error',
+                timeout: 6000
+              })
+            }
+          })
+    },
 
     toggleAddModal () {
       this.isAddModalOpen = !this.isAddModalOpen

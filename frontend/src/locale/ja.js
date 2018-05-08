@@ -441,6 +441,10 @@ export default {
       tooltip: {
         edit: 'Edit holiday',
         delete: 'Delete holiday'
+      },
+      msg: {
+        importSuccess: 'Imported national holidays of {country}',
+        blankOrAlreadyImported: 'You already imported national days of {country} or they are not existed'
       }
     },
     users: {

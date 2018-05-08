@@ -57,7 +57,7 @@ export default {
     create () {
       axios.post('/requests', Object.assign(this.params, { kind: 'annual_leave' }))
            .then(response => {
-             this.setFlashMsg(this.$t('annualLeave.createSuccessMsg'))
+             this.setFlashMsg({ message: this.$t('annualLeave.createSuccessMsg') })
              this.$emit('finishRequest')
            })
            .catch(error => {
@@ -68,7 +68,7 @@ export default {
     update () {
       axios.put(`/requests/${this.request.id}`, Object.assign(this.params, { kind: 'annual_leave' }))
            .then(response => {
-             this.setFlashMsg(this.$t('annualLeave.updateSuccessMsg'))
+             this.setFlashMsg({ message: this.$t('annualLeave.updateSuccessMsg') })
              this.$emit('finishRequest')
            })
            .catch(error => {

@@ -34,14 +34,14 @@ export default {
     submitAddModal (params, callback, msg = '') {
       callback(params).then(response => {
         this.isAddModalOpen = false
-        if (msg) this.setFlashMsg(msg)
+        if (msg) this.setFlashMsg({ message: msg })
       })
     },
 
     saveEditModal (params, callback, msg = '') {
       callback(params).then(response => {
         this.isEditModalOpen = false
-        if (msg) this.setFlashMsg(msg)
+        if (msg) this.setFlashMsg({ message: msg })
       })
     }
   }

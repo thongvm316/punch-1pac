@@ -55,7 +55,7 @@ export default {
       formData.append('csv_file', params.csv_file)
       axios.post('/users/create_multi', formData, { headers: { 'Content-Type': 'multipart/form-data' } })
            .then(response => {
-             this.setFlashMsg(this.$t('messages.user.addMultiSuccess'))
+             this.setFlashMsg({ message: this.$t('messages.user.addMultiSuccess') })
              this.errors = response.data.errors
            })
            .catch(error => {

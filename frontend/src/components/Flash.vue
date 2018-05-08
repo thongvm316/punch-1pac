@@ -1,6 +1,8 @@
 <template>
   <transition name="fade">
-    <div class="toast toast-success text-center toast-flash" v-if="message">
+    <div class="toast toast-success text-center toast-flash"
+      :class="{ 'toast-success': type === 'success', 'toast-error': type === 'error' }"
+      v-if="message">
       {{ message }}
     </div>
   </transition>
@@ -14,7 +16,9 @@ export default {
 
   computed: {
     ...mapState('flash', [
-      'message'
+      'message',
+      'type',
+      'timeout'
     ])
   },
 
@@ -26,7 +30,7 @@ export default {
 
   watch: {
     message: function (newMsg) {
-      if (newMsg) setTimeout(() => { this.setFlashMsg(null) }, 2000)
+      if (newMsg) setTimeout(() => { this.setFlashMsg({ message: null }) }, this.timeout)
     }
   }
 }

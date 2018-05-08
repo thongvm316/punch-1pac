@@ -70,7 +70,7 @@ export default {
 
     create (params) {
       axios.post('/users', { user: params }, { headers: { 'Content-Type': 'application/json' } })
-           .then(response => this.setFlashMsg(this.$t('messages.user.addSuccess')))
+           .then(response => this.setFlashMsg({ message: this.$t('messages.user.addSuccess') }))
            .catch(error => {
              if (error.response && error.response.status === 422) this.errors = error.response.data.errors
              else throw error

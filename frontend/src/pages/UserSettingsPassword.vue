@@ -51,7 +51,7 @@ export default {
     localUpdatePassword () {
       this.updatePassword(this.updateParams)
           .then(response => {
-            this.setFlashMsg(this.$t('messages.user.updatePwdSuccess'))
+            this.setFlashMsg({ message: this.$t('messages.user.updatePwdSuccess') })
             this.updateParams = {
               current_password: '',
               password: '',
