@@ -47,8 +47,8 @@ const mutations = {
 }
 
 const actions = {
-  fetchHolidays ({ commit }) {
-    return axios.get('/holidays')
+  fetchHolidays ({ commit }, year) {
+    return axios.get('/holidays', { params: { year: year } })
                 .then(response => {
                   commit(types.FETCH_HOLIDAYS, response.data)
                   return response

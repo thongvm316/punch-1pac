@@ -5,7 +5,7 @@ class Api::V1::HolidaysController < Api::V1::BaseController
 
   def index
     authorize!
-    holidays = current_company.holidays.order(id: :asc)
+    holidays = current_company.holidays.filter(params).order(id: :asc)
     render json: holidays, each_serializer: HolidaySerializer, status: 200
   end
 
