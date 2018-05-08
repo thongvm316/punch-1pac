@@ -543,6 +543,7 @@ export default {
     }
   },
   activity: {
+    showMore: 'Show more',
     attendance: {
       punch_in: '<span class="text-bold-600">{name}</span> punched in',
       punch_out: '<span class="text-bold-600">{name}</span> punched out'

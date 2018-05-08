@@ -46,7 +46,7 @@
           <td><span :class="{ 'text-primary': request.kind === 'attendance', 'text-info': request.kind === 'annual_leave' }">{{ $t(`requests.kinds.${request.kind}`) }}</span></td>
           <td class="break">{{ request.reason }}</td>
           <td><span class="label" :class="getStatusClass(request.status)">{{ $t(`meta.request_statuses.${request.status}`) }}</span></td>
-          <td>{{ request.admin.name }}</td>
+          <td>{{ request.admin ? request.admin.name : '' }}</td>
           <td class="break">{{ request.admin_reason }}</td>
           <td>
             <span class="d-flex" v-if="request.status === 'pending'">
