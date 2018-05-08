@@ -105,7 +105,7 @@ RSpec.describe Api::V1::UsersController, type: :controller do
   describe 'DELETE #destroy' do
     context 'when login user is member' do
       let(:login_user) { create :user, company: company, role: 'member' }
-      let(:target_user) { create :user, company: company }
+      let(:target_user) { create :user, company: company, activated: false }
 
       subject { delete :destroy, params: { id: target_user.id } }
 
@@ -116,7 +116,7 @@ RSpec.describe Api::V1::UsersController, type: :controller do
       let(:login_user) { create :user, company: company, role: 'admin' }
 
       context 'when target user is member' do
-        let(:target_user) { create :user, company: company, role: 'member' }
+        let(:target_user) { create :user, company: company, activated: false, role: 'member' }
 
         subject { delete :destroy, params: { id: target_user.id } }
 
@@ -128,7 +128,7 @@ RSpec.describe Api::V1::UsersController, type: :controller do
       end
 
       context 'when target user is admin' do
-        let(:target_user) { create :user, company: company, role: 'admin' }
+        let(:target_user) { create :user, company: company, activated: false, role: 'admin' }
 
         subject { delete :destroy, params: { id: target_user.id } }
 
@@ -140,13 +140,22 @@ RSpec.describe Api::V1::UsersController, type: :controller do
 
         its(:code) { is_expected.to eq '404' }
       end
+
+      context 'when target user activated = true' do
+        let(:target_user) { create :user, company: company, groups: login_user.groups, activated: true, role: 'member' }
+
+        subject { delete :destroy, params: { id: target_user.id }, format: :json }
+
+        its(:code) { is_expected.to eq '404' }
+        its(:body) { is_expected.to be_json_as(response_404) }
+      end
     end
 
     context 'when login user is super admin' do
       let(:login_user) { create :user, company: company, role: 'superadmin' }
 
       context 'when target user is member' do
-        let(:target_user) { create :user, company: company, role: 'member' }
+        let(:target_user) { create :user, company: company, activated: false, role: 'member' }
 
         subject { delete :destroy, params: { id: target_user.id } }
 
@@ -158,7 +167,7 @@ RSpec.describe Api::V1::UsersController, type: :controller do
       end
 
       context 'when target user is admin' do
-        let(:target_user) { create :user, company: company, role: 'admin' }
+        let(:target_user) { create :user, company: company, activated: false, role: 'admin' }
 
         subject { delete :destroy, params: { id: target_user.id } }
 
@@ -170,7 +179,7 @@ RSpec.describe Api::V1::UsersController, type: :controller do
       end
 
       context 'when target user is super admin' do
-        let(:target_user) { create :user, company: company, role: 'superadmin' }
+        let(:target_user) { create :user, company: company, activated: false, role: 'superadmin' }
 
         subject { delete :destroy, params: { id: target_user.id } }
 
@@ -185,6 +194,15 @@ RSpec.describe Api::V1::UsersController, type: :controller do
         subject { delete :destroy, params: { id: 0 } }
 
         its(:code) { is_expected.to eq '404' }
+      end
+
+      context 'when target user activated = true' do
+        let(:target_user) { create :user, company: company, groups: login_user.groups, activated: true, role: 'member' }
+
+        subject { delete :destroy, params: { id: target_user.id }, format: :json }
+
+        its(:code) { is_expected.to eq '404' }
+        its(:body) { is_expected.to be_json_as(response_404) }
       end
     end
   end
