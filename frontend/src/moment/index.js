@@ -4,7 +4,7 @@ moment.tz.setDefault(window.initialStates().company.timezone)
 moment.updateLocale('en', {
   longDateFormat: {
     'L': 'MMM DD',
-    'LL': 'MMM DD YYYY',
+    'LL': 'MMM DD, YYYY',
     'LLL': 'MMM D, hh:mm',
     'LLLL': 'MMM DD YYYY, HH:mm'
   }
@@ -15,7 +15,7 @@ moment.updateLocale('vi', {
   weekdaysShort: ['Chủ nhật', 'Thứ 2', 'Thứ 3', 'Thứ 4', 'Thứ 5', 'Thứ 6', 'Thứ 7'],
   longDateFormat: {
     'L': 'D MMMM',
-    'LL': 'D MMMM YYYY',
+    'LL': 'D MMMM, YYYY',
     'LLL': 'D MMMM, hh:mm',
     'LLLL': 'D MMMM YYYY, HH:mm'
   }

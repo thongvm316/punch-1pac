@@ -10,6 +10,16 @@
     <p class="form-input-hint text-dark">{{ $t('company.holidays.explain') }}</p>
 
     <div class="toolbar clearfix mt-5">
+      <datepicker
+        :language="currentUser.language"
+        :format="function (date) { return $moment(date).format('YYYY') }"
+        :minimumView="'year'"
+        :maximumView="'year'"
+        :input-class="'datepicker-input form-input'"
+        :calendar-class="'datepicker-calendar'"
+        :wrapper-class="'datepicker'"
+        @input="onInputDatepicker"
+        v-model="year"/>
       <input type="search" class="form-input" :placeholder="$t('company.holidays.placeholder.filterByName')" v-model="name">
       <button type="button" class="btn btn-success float-right" @click="toggleAddModal()">
         {{ $t('company.holidays.btn.add') }}
@@ -26,8 +36,8 @@
       <tbody>
         <tr v-for="holiday in filterHolidays(name)">
           <td>{{ holiday.name }}</td>
-          <td>{{ holiday.started_at | moment_l }}</td>
-          <td>{{ holiday.ended_at | moment_l }}</td>
+          <td>{{ holiday.started_at | moment_ll }}</td>
+          <td>{{ holiday.ended_at | moment_ll }}</td>
           <td class="text-center">
             <button class="btn btn-action btn-link tooltip" :data-tooltip="$t('company.holidays.tooltip.edit')" @click="toggleUpdateModal(holiday)">
               <svg width="24px" height="24px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="currentColor"><path d="M23.2530524,2.92025954 L21.0782401,0.745259708 C20.084537,-0.24844334 18.4678184,-0.248396465 17.4741154,0.745259708 C16.5385373,1.68093151 2.24841342,15.9721335 1.29342912,16.9271647 C1.19171037,17.0288834 1.12355413,17.1640709 1.09927288,17.2963053 L0.0118667154,23.1688048 C-0.0302739063,23.3964767 0.0422885881,23.6303361 0.20602295,23.7940704 C0.369944813,23.9579923 0.603851044,24.0304141 0.831241652,23.9882735 L6.70322557,22.9007267 C6.83892868,22.8754142 6.97233492,22.8066017 7.07236617,22.7065236 L23.2530524,6.52461863 C24.2490523,5.52861871 24.249193,3.91640009 23.2530524,2.92025954 Z M1.58077284,22.4191799 L2.23856967,18.8668052 L5.13291319,21.7613362 L1.58077284,22.4191799 Z M6.57520995,21.2149144 L2.78494462,17.4244147 L16.6229123,3.58536886 L20.4131776,7.37591544 L6.57520995,21.2149144 Z M22.2586931,5.53025934 L21.40749,6.38155614 L17.6172247,2.59100956 L18.4684278,1.73971276 C18.9137871,1.29430654 19.6384277,1.29425966 20.0838808,1.73971276 L22.2586931,3.91471259 C22.7051774,4.36119693 22.7051774,5.08372812 22.2586931,5.53025934 Z"/></svg>
@@ -55,6 +65,7 @@ import { mapState, mapGetters, mapActions } from 'vuex'
 import SettingLayout from '../layouts/Setting'
 import modal from '../mixins/modal'
 import HolidayForm from '../components/HolidayForm.vue'
+import Datepicker from 'vuejs-datepicker'
 
 export default {
   mixins: [modal],
@@ -63,13 +74,15 @@ export default {
     return {
       name: '',
       editHoliday: '',
-      country: ''
+      country: '',
+      year: this.$moment().locale('en').format('YYYY')
     }
   },
 
   components: {
     SettingLayout,
-    HolidayForm
+    HolidayForm,
+    Datepicker
   },
 
   methods: {
@@ -104,6 +117,10 @@ export default {
     toggleUpdateModal (holiday) {
       this.isEditModalOpen = !this.isEditModalOpen
       this.editHoliday = holiday
+    },
+
+    onInputDatepicker () {
+      this.year = this.$moment(this.year).format('YYYY')
     }
   },
 
@@ -122,7 +139,13 @@ export default {
   },
 
   created () {
-    this.fetchHolidays()
+    this.fetchHolidays(this.year)
+  },
+
+  watch: {
+    year: function () {
+      this.fetchHolidays(this.year)
+    }
   }
 }
 </script>

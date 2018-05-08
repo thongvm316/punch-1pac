@@ -32,6 +32,7 @@ class Holiday < ApplicationRecord
   scope :filter, ->(params) {
     q = all
     q = q.where('name LIKE ?', "%#{name}%") if params[:name].present?
+    q = q.where('extract(year from started_at) = ?', params[:year]) if params[:year].present?
     q
   }
   scope :national_holiday_ids, ->(company_id) { select(:national_holiday_id).where(company_id: company_id).where.not(national_holiday_id: nil) }
