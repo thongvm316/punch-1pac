@@ -21,7 +21,6 @@
                 <div class="tile-icon">
                   <img :src="currentUser.avatar_url" class="avatar avatar-md" :alt="currentUser.name">
                 </div>
-                <div class="tile-content">{{ currentUser.name }}</div>
               </div>
             </a>
             <ul class="menu triangle-top">

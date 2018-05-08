@@ -12,7 +12,11 @@
           <h4>{{ $t('header.notifications') }}</h4>
         </div>
         <ul v-if="headerNotifications.length > 0" ref="notiList">
-          <li v-for="notification in headerNotifications" :key="notification.id" @click="openRequestModal(notification)" v-if="notification.activitable">
+          <li :class="{'notification-pending': notification.activitable.status === 'pending'}"
+              v-for="notification in headerNotifications"
+              :key="notification.id"
+              @click="openRequestModal(notification)"
+              v-if="notification.activitable">
             <div class="tile tile-centered tile-activity">
               <div class="tile-icon">
                 <img :src="notification.user.avatar_url" class="avatar avatar-md" :alt="notification.user.name">
