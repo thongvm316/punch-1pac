@@ -18,37 +18,30 @@
     .cell {
       &-lg {
         min-width: 300px;
-        max-width: 300px;
       }
 
       &-md {
         min-width: 150px;
-        max-width: 200px;
       }
 
       &-sm {
         min-width: 130px;
-        max-width: 180px;
       }
 
       &-xs {
         min-width: 80px;
-        max-width: 120px;
       }
 
       &-mw-230 {
         min-width: 230px;
-        max-width: 250px;
       }
 
       &-mw-120 {
         min-width: 120px;
-        max-width: 150px;
       }
 
       &-mw-90 {
         min-width: 90px;
-        max-width: 120px;
       }
     }
   }

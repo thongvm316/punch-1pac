@@ -20,9 +20,9 @@
           <th class="cell-mw-120">{{ $t('requests.tableHeader.kind') }}</th>
           <th class="cell-lg">{{ $t('requests.tableHeader.reason') }}</th>
           <th class="cell-mw-120">{{ $t('requests.tableHeader.status') }}</th>
-          <th class="cell-mw-120">{{ $t('requests.tableHeader.admin') }}</th>
+          <th class="cell-md">{{ $t('requests.tableHeader.admin') }}</th>
           <th class="cell-lg">{{ $t('requests.tableHeader.rejectReason') }}</th>
-          <th class="cell-xs">{{ $t('requests.tableHeader.actions') }}</th>
+          <th class="cell-mw-120">{{ $t('requests.tableHeader.actions') }}</th>
         </tr>
       </thead>
       <tbody>
