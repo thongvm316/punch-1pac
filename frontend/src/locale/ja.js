@@ -35,6 +35,10 @@ export default {
       activateUser: 'Activate User',
       deactivateUser: 'Deactivate User',
       removeUser: 'Remove User'
+    },
+    confirmDialog: {
+      deactivateUserTitle: 'Deactivate User',
+      deactivateUserMsg: 'Are you sure to deactivate <span class="text-bold-600">{name}</span> ?'
     }
   },
   header: {

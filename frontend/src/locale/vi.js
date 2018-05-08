@@ -35,6 +35,10 @@ export default {
       activateUser: 'Kích hoạt thành viên',
       deactivateUser: 'Huỷ kích hoạt thành viên',
       removeUser: 'Xoá bỏ thành viên'
+    },
+    confirmDialog: {
+      deactivateUserTitle: 'Huỷ kích hoạt thành viên',
+      deactivateUserMsg: 'Bạn có muốn huỷ kích hoạt <span class="text-bold-600">{name}</span> ?'
     }
   },
   header: {
