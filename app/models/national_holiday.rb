@@ -28,5 +28,5 @@ class NationalHoliday < ApplicationRecord
 
   belongs_to :admin
 
-  scope :selected_attr, -> { select(:name, :started_at, :ended_at) }
+  scope :selected_attr, -> { select('id as national_holiday_id', :name, :started_at, :ended_at) }
 end
