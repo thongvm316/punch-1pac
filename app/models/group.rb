@@ -48,7 +48,7 @@ class Group < ApplicationRecord
           obj.leave_ok.to_i,
           obj.leave_early.to_i,
           obj.annual_leave.to_i,
-          obj.working_hours.to_i
+          "#{obj.working_hours.to_i / 3600}h#{obj.working_hours.to_i % 3600 / 60}m"
         ]
       end
     end

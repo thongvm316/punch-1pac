@@ -286,7 +286,7 @@ RSpec.describe Api::V1::GroupsController, type: :controller do
 
     context 'when login_user not in target_group' do
       let(:login_user) { create :user, company: company, role: 'admin' }
-      let(:target_user) { create :user, company: company, activated: false, role: 'member' }
+      let(:target_user) { create :user, company: company , role: 'member' }
       let(:group) { create :group, company: company }
 
       subject { post :remove_user, params: { id: group.id, user_id: target_user.id }, format: :json }
@@ -308,7 +308,7 @@ RSpec.describe Api::V1::GroupsController, type: :controller do
 
     context 'when params are valid' do
       let(:login_user) { create :user, company: company, role: 'admin' }
-      let(:target_user) { create :user, company: company, activated: false, role: 'member' }
+      let(:target_user) { create :user, company: company, role: 'member' }
       let(:group) { create :group, company: company, users: [login_user, target_user] }
 
       subject { delete :remove_user, params: { id: group.id, user_id: target_user.id } }
@@ -318,15 +318,6 @@ RSpec.describe Api::V1::GroupsController, type: :controller do
         is_expected
         target_user.reload
         expect(target_user.groups).to eq []
-      end
-
-      context 'when user activated = true' do
-        let(:user) { create :user, company: company, activated: true, role: 'member' }
-
-        subject { delete :destroy, params: { id: user.id }, format: :json }
-
-        its(:code) { is_expected.to eq '404' }
-        its(:body) { is_expected.to be_json_as(response_404) }
       end
     end
   end
