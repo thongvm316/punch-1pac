@@ -44,8 +44,8 @@ RSpec.describe User, type: :model do
 
       it do
         is_expected
-        expect(subject.size).to eq 9
-        expect(subject).to include('2018-04-06', '2018-04-09', '2018-04-10', '2018-04-11', '2018-04-12', '2018-04-13', '2018-04-18', '2018-04-19', '2018-04-20')
+        expect(subject.size).to eq 8
+        expect(subject).to include('2018-04-06', '2018-04-09', '2018-04-10', '2018-04-11', '2018-04-12', '2018-04-13', '2018-04-18', '2018-04-19')
       end
     end
 
