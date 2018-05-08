@@ -51,7 +51,7 @@ class Api::V1::GroupsController < Api::V1::BaseController
   end
 
   def remove_user
-    user = User.find(params[:user_id])
+    user = User.unscope(where: :activated).find_by!(activated: false, id: params[:user_id])
     authorize! @group
     user_group = UserGroup.find_by!(group: @group, user: user)
     user_group.destroy

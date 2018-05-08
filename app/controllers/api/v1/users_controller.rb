@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Api::V1::UsersController < Api::V1::BaseController
-  before_action :set_user, only: %i[show update destroy deactivate]
+  before_action :set_user, only: %i[show update deactivate]
   include Pagination
 
   def index
@@ -70,6 +70,7 @@ class Api::V1::UsersController < Api::V1::BaseController
   end
 
   def destroy
+    @user = current_company.users.unscope(where: :activated).find_by!(activated: false, id: params[:id])
     authorize! @user
     @user.destroy
     head(200)
