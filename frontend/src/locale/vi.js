@@ -543,6 +543,7 @@ export default {
     }
   },
   activity: {
+    showMore: 'Tải thêm',
     attendance: {
       punch_in: '<span class="text-bold-600">{name}</span> đã đến văn phòng',
       punch_out: '<span class="text-bold-600">{name}</span> đã rời khỏi văn phòng'
