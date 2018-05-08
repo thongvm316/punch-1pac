@@ -48,7 +48,8 @@ RSpec.describe Api::V1::HolidaysController, type: :controller do
 
       subject { post :import, params: { country: 'vietnam' } }
 
-      its(:code) { is_expected.to eq '404' }
+      its(:code) { is_expected.to eq '422' }
+      its(:body) { is_expected.to be_json_as(response_422(String)) }
     end
 
     context 'when national holidays are found' do

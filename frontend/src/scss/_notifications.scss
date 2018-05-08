@@ -63,6 +63,7 @@
       border-bottom: 0;
     }
 
+    &.notification-pending,
     &:hover {
       background-color: $bg-color;
     }

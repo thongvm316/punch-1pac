@@ -441,6 +441,10 @@ export default {
       tooltip: {
         edit: 'Chỉnh sửa ngày lễ',
         delete: 'Xoá ngày lễ'
+      },
+      msg: {
+        importSuccess: 'Đã nhập ngày nghỉ lễ của {country}',
+        blankOrAlreadyImported: 'Bạn đã nhập ngày nghỉ lễ của {country} rồi hoặc là ngày nghĩ lễ của {country} không tồn tại'
       }
     },
     users: {

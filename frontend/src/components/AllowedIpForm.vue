@@ -46,7 +46,7 @@ export default {
     localAddIp () {
       this.createIP({ ip_address: this.params })
           .then(response => {
-            this.setFlashMsg(this.$t('messages.ip.createSuccess'))
+            this.setFlashMsg({ message: this.$t('messages.ip.createSuccess') })
             this.$emit('afterModify')
           })
     },
@@ -54,7 +54,7 @@ export default {
     localEditIp () {
       this.updateIP({ id: this.targetIp.id, ip_address: this.params })
           .then(response => {
-            this.setFlashMsg(this.$t('messages.ip.updateSuccess'))
+            this.setFlashMsg({ message: this.$t('messages.ip.updateSuccess') })
             this.$emit('afterModify')
           })
     }

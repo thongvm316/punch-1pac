@@ -110,7 +110,7 @@ export default {
 
     localUpdateCompany () {
       this.updateCompany(this.params)
-          .then(response => this.setFlashMsg(this.$t('messages.company.updateSuccess')))
+          .then(response => this.setFlashMsg({ message: this.$t('messages.company.updateSuccess') }))
     }
   },
 

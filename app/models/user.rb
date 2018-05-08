@@ -159,7 +159,7 @@ class User < ApplicationRecord
     hdays = company.holidays.in_month(query_time.strftime('%Y-%m-%d'))
     days = []
 
-    to_date = query_time.month < now.month ? query_time.end_of_month.to_i : now.to_i
+    to_date = query_time.month < now.month ? query_time.end_of_month.to_i : (now - 1.day).to_i
 
     (query_time.beginning_of_month.to_i..to_date).step(1.day) do |timestamp|
       current_day = Time.zone.at(timestamp).to_date

@@ -12,7 +12,7 @@ class Api::V1::HolidaysController < Api::V1::BaseController
   def import
     authorize!
     national_holidays = NationalHoliday.selected_attr.where(country: params[:country]).where.not(id: Holiday.national_holiday_ids(current_company.id))
-    return head(404) if national_holidays.blank?
+    render_422('blank_or_already_imported') && return if national_holidays.blank?
     holidays = current_company.holidays.build(national_holidays.map(&:attributes))
     Holiday.import(holidays)
     render json: holidays, each_serializer: HolidaySerializer, status: 200

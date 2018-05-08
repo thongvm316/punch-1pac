@@ -81,7 +81,7 @@
       localAddBusinessDay () {
         this.addBusinessDay(this.params)
             .then(response => {
-              this.setFlashMsg(this.$t('messages.businessDay.createSuccess'))
+              this.setFlashMsg({ message: this.$t('messages.businessDay.createSuccess') })
               this.$emit('afterModify')
             })
       },
@@ -89,7 +89,7 @@
       localEditBusinessDay () {
         this.updateBusinessDay({ businessDayId: this.targetBusinessDay.id, updateParams: this.params })
             .then(response => {
-              this.setFlashMsg(this.$t('messages.businessDay.updateSuccess'))
+              this.setFlashMsg({ message: this.$t('messages.businessDay.updateSuccess') })
               this.$emit('afterModify')
             })
       }

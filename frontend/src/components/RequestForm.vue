@@ -78,7 +78,7 @@ export default {
     localAddRequest () {
       this.addRequest(this.params)
           .then(response => {
-            this.setFlashMsg(this.$t('messages.request.createSuccess'))
+            this.setFlashMsg({ message: this.$t('messages.request.createSuccess') })
             this.$emit('afterModify')
           })
     },
@@ -86,7 +86,7 @@ export default {
     localEditRequest () {
       this.updateRequest({ id: this.request.id, params: this.params })
           .then(response => {
-            this.setFlashMsg(this.$t('messages.request.updateSuccess'))
+            this.setFlashMsg({ message: this.$t('messages.request.updateSuccess') })
             this.$emit('afterModify')
           })
     }

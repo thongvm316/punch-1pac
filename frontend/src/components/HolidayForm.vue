@@ -79,7 +79,7 @@
         this.createHoliday(this.params)
             .then(response => {
               Object.keys(this.params).forEach(key => { this.params[key] = '' })
-              this.setFlashMsg(this.$t('messages.holiday.createSuccess'))
+              this.setFlashMsg({ message: this.$t('messages.holiday.createSuccess') })
               this.$emit('afterModify')
             })
       },
@@ -87,7 +87,7 @@
       localEditHoliday () {
         this.updateHoliday({ holidayID: this.targetHoliday.id, updateParams: this.params })
             .then(response => {
-              this.setFlashMsg(this.$t('messages.holiday.updateSuccess'))
+              this.setFlashMsg({ message: this.$t('messages.holiday.updateSuccess') })
               this.$emit('afterModify')
             })
       }

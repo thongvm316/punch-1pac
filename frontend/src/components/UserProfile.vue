@@ -101,7 +101,7 @@ export default {
       axios.put(`/users/${this.targetUser.id}`, formData, { headers: { 'Content-Type': 'multipart/form-data' } })
            .then(response => {
              this.self ? this[types.INITIAL_STATES_UPDATE_USER](response.data) : this[types.UPDATE_USER](response.data)
-             this.setFlashMsg(this.$t('messages.user.updateProfileSuccess'))
+             this.setFlashMsg({ message: this.$t('messages.user.updateProfileSuccess') })
              this.$i18n.locale = this.params.language
            })
            .catch(error => { if (error.response && error.response.status === 422) this.errors = error.response.data })
