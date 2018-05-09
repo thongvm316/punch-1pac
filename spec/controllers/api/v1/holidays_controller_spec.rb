@@ -32,12 +32,21 @@ RSpec.describe Api::V1::HolidaysController, type: :controller do
       end
 
       context 'when filter by year' do
-        let!(:holiday) { create_list :holiday, 2, company: company, started_at: Date.current , ended_at: Date.current + 1 }
+        let!(:holiday) { create_list :holiday, 2, company: company, started_at: Date.current , ended_at: Date.current + 1.day }
 
         subject { get :index, params: { year: Date.current.year } }
 
         its(:code) { is_expected.to eq '200' }
         its(:body) { is_expected.to be_json_as(Array.new(2) { response_holiday }) }
+      end
+
+      context 'when filter by year response empty data' do
+        let!(:holiday) { create_list :holiday, 2, company: company, started_at: Date.current , ended_at: Date.current + 1.day }
+
+        subject { get :index, params: { year: Date.current.year - 1 } }
+
+        its(:code) { is_expected.to eq '200' }
+        its(:body) { is_expected.to be_json_as([]) }
       end
     end
   end
