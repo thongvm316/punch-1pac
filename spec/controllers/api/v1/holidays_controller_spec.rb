@@ -32,7 +32,7 @@ RSpec.describe Api::V1::HolidaysController, type: :controller do
       end
 
       context 'when filter by year' do
-        let!(:holiday) { create_list :holiday, 2, company: company, started_at: Date.current , ended_at: Date.current + 1.day }
+        let!(:holiday) { create_list :holiday, 2, company: company, started_at: Date.current, ended_at: Date.current + 1.day }
 
         subject { get :index, params: { year: Date.current.year } }
 
@@ -41,7 +41,7 @@ RSpec.describe Api::V1::HolidaysController, type: :controller do
       end
 
       context 'when filter by year response empty data' do
-        let!(:holiday) { create_list :holiday, 2, company: company, started_at: Date.current , ended_at: Date.current + 1.day }
+        let!(:holiday) { create_list :holiday, 2, company: company, started_at: Date.current, ended_at: Date.current + 1.day }
 
         subject { get :index, params: { year: Date.current.year - 1 } }
 
