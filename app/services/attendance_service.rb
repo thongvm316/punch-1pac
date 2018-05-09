@@ -51,7 +51,7 @@ class AttendanceService
     attendance = @user.attendances.attended.find_by!(day: @now, left_at: nil)
     attendance.assign_attributes(
       left_at: @now,
-      working_hours: WorkingHourService.new(@user.company, attendance.attended_at, @now, attendance).execute,
+      working_hours: CountWorkingHoursService.new(@user.company, attendance.attended_at, @now, attendance).execute,
       leaving_status: self.class.leaving_status(@user.company, @now, attendance)
     )
     attendance.save ? attendance : false

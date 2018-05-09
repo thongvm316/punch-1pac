@@ -32,7 +32,7 @@ class RequestService
         attendance_params[:left_at] = @req.left_at
         attendance_params[:leaving_status] = AttendanceService.leaving_status(@user.company, @req.left_at, @attendance)
       end
-      attendance_params[:working_hours] = WorkingHourService.new(@user.company, @req.attended_at || @attendance.attended_at, @req.left_at || @attendance.left_at, @attendance).execute
+      attendance_params[:working_hours] = CountWorkingHoursService.new(@user.company, @req.attended_at || @attendance.attended_at, @req.left_at || @attendance.left_at, @attendance).execute
       @attendance.update!(attendance_params)
     elsif @req.annual_leave?
       Attendance.create(user: @req.user, day: @req.annual_leave_day, off_status: 'annual_leave')
