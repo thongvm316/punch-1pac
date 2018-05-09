@@ -8,21 +8,25 @@ module Authenticable
 
   def authenticate_user!
     respond_to do |f|
-      @current_user ||= current_company.users.find(jwt_decode['sub'])
+      @current_user ||= current_company.users.unscope(where: :activated).find(jwt_decode['sub'])
+      raise AppErrors::DeactivatedUser if @current_user.deactivated?
       Session.track!(@current_user, payload(sub: @current_user.id), request) unless @current_user.current_session(request)
       return
+    rescue AppErrors::DeactivatedUser
+      f.html { redirect_to login_url }
+      f.json { render json: { message: I18n.t('auth.messages.deactivated_user'), code: 'unauthenticated' }, status: :unauthorized }
     rescue ActiveRecord::RecordNotFound
       f.html { redirect_to login_url }
-      f.json { head(401) }
+      f.json { render json: { message: I18n.t('auth.messages.unauthorized'), code: 'unauthenticated' }, status: :unauthorized }
     rescue JWT::InvalidJtiError
       f.html { redirect_to login_url }
-      f.json { render json: { message: 'Token is revoked' }, status: :unauthorized }
+      f.json { render json: { message: I18n.t('auth.messages.access_token_revoked'), code: 'unauthenticated' }, status: :unauthorized }
     rescue JWT::ExpiredSignature
       f.html { redirect_to login_url }
-      f.json { render json: { message: 'Token is expired' }, status: :unauthorized }
+      f.json { render json: { message: I18n.t('auth.messages.access_token_expired'), code: 'unauthenticated' }, status: :unauthorized }
     rescue JWT::DecodeError
       f.html { redirect_to login_url }
-      f.json { render json: { message: 'Token is invalid' }, status: :unauthorized }
+      f.json { render json: { message: I18n.t('auth.messages.access_token_invalid'), code: 'unauthenticated' }, status: :unauthorized }
     end
   end
 

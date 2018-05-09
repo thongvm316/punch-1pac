@@ -30,6 +30,30 @@ RSpec.describe Api::V1::BaseController, type: :controller do
       its(:code) { is_expected.to eq '200' }
     end
 
+    context 'when user is deactivated' do
+      let(:user) { create :user, company: company, activated: false }
+
+      before do
+        jti = SecureRandom.uuid
+        exp = Time.current.to_i + 2.days.to_i
+        token = JWT.encode({ sub: user.id, exp: exp, jti: jti }, ENV['JWT_KEY'], 'HS256')
+        request.headers['Authorization'] = "Bearer #{token}"
+      end
+
+      context 'when format is json' do
+        subject { get :index, format: :json }
+
+        its(:code) { is_expected.to eq '401' }
+        its(:body) { is_expected.to be_json_as(message: I18n.t('auth.messages.deactivated_user'), code: String) }
+      end
+
+      context 'when format is html' do
+        subject { get :index }
+
+        it { is_expected.to redirect_to(login_url) }
+      end
+    end
+
     context 'when user.id not found' do
       before do
         jti = SecureRandom.uuid
@@ -38,9 +62,18 @@ RSpec.describe Api::V1::BaseController, type: :controller do
         request.headers['Authorization'] = "Bearer #{token}"
       end
 
-      subject { get :index, format: :json }
+      context 'when format is json' do
+        subject { get :index, format: :json }
 
-      its(:code) { is_expected.to eq '401' }
+        its(:code) { is_expected.to eq '401' }
+        its(:body) { is_expected.to be_json_as(message: I18n.t('auth.messages.unauthorized'), code: String) }
+      end
+
+      context 'when format is html' do
+        subject { get :index }
+
+        it { is_expected.to redirect_to(login_url) }
+      end
     end
 
     context 'when token is valid' do
@@ -59,10 +92,18 @@ RSpec.describe Api::V1::BaseController, type: :controller do
         request.headers['Authorization'] = "Bearer #{token}"
       end
 
-      subject { get :index, format: :json }
+      context 'when format is json' do
+        subject { get :index, format: :json }
 
-      its(:code) { is_expected.to eq '401' }
-      its(:body) { is_expected.to be_json_as(response_token_expired) }
+        its(:code) { is_expected.to eq '401' }
+        its(:body) { is_expected.to be_json_as(message: I18n.t('auth.messages.access_token_expired'), code: String) }
+      end
+
+      context 'when format is html' do
+        subject { get :index }
+
+        it { is_expected.to redirect_to(login_url) }
+      end
     end
 
     context 'when token is revoked' do
@@ -74,10 +115,18 @@ RSpec.describe Api::V1::BaseController, type: :controller do
         create :jwt_blacklist, jti: jti, exp: exp
       end
 
-      subject { get :index, format: :json }
+      context 'when format is json' do
+        subject { get :index, format: :json }
 
-      its(:code) { is_expected.to eq '401' }
-      its(:body) { is_expected.to be_json_as(response_token_revoked) }
+        its(:code) { is_expected.to eq '401' }
+        its(:body) { is_expected.to be_json_as(message: I18n.t('auth.messages.access_token_revoked'), code: String) }
+      end
+
+      context 'when format is html' do
+        subject { get :index }
+
+        it { is_expected.to redirect_to(login_url) }
+      end
     end
 
     context 'when token is invalid' do
@@ -86,10 +135,18 @@ RSpec.describe Api::V1::BaseController, type: :controller do
         request.headers['Authorization'] = "Bearer #{token}"
       end
 
-      subject { get :index, format: :json }
+      context 'when format is json' do
+        subject { get :index, format: :json }
 
-      its(:code) { is_expected.to eq '401' }
-      its(:body) { is_expected.to be_json_as(response_token_invalid) }
+        its(:code) { is_expected.to eq '401' }
+        its(:body) { is_expected.to be_json_as(message: I18n.t('auth.messages.access_token_invalid'), code: String) }
+      end
+
+      context 'when format is html' do
+        subject { get :index }
+
+        it { is_expected.to redirect_to(login_url) }
+      end
     end
   end
 end
