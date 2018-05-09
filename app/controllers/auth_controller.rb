@@ -10,7 +10,8 @@ class AuthController < ApplicationController
   def new
     respond_to do |f|
       f.html do
-        redirect_to(subdomain: request.subdomain, controller: 'dashboard', action: 'index', path: 'dashboard') && return if signed_in?
+        return redirect_to(subdomain: request.subdomain, controller: 'dashboard', action: 'index', path: 'dashboard') if signed_in?
+        flash.now[:alert] = params[:error_msg] if params[:error_msg].present?
         @user = User.new
       end
       f.json { render json: current_company, serializer: CompanySerializer, status: 200 }
@@ -18,15 +19,20 @@ class AuthController < ApplicationController
   end
 
   def create
-    head(200) if signed_in?
-    @user = current_company.users.find_by(email: auth_params[:email])
     respond_to do |f|
+      if signed_in?
+        f.html { return redirect_to(subdomain: request.subdomain, controller: 'dashboard', action: 'index', path: 'dashboard') }
+        f.json { return head(200) }
+      end
+
+      @user = current_company.users.find_by(email: auth_params[:email])
+
       if @user&.authenticate(auth_params[:password])
         token = jwt_encode(sub: @user.id)
         update_session!
         f.html do
           session[:access_token] = token
-          redirect_to(subdomain: request.subdomain, controller: 'dashboard', action: 'index', path: 'dashboard') && return
+          redirect_to(subdomain: request.subdomain, controller: 'dashboard', action: 'index', path: 'dashboard')
         end
         f.json do
           user_json = ActiveModelSerializers::SerializableResource.new(@user, serializer: UserSerializer).as_json
@@ -35,9 +41,9 @@ class AuthController < ApplicationController
       else
         f.html do
           flash.now[:alert] = if current_company.users.unscope(where: :activated).find_by(activated: false, email: auth_params[:email])
-                                'Oops!!! Your account is deactivated. Please contact your manager'
+                                I18n.t('auth.messages.deactivated_user')
                               else
-                                'Incorrect email or password'
+                                I18n.t('auth.messages.invalid_user_password')
                               end
           @user = User.new(email: auth_params[:email])
           render(:new)

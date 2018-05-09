@@ -9,4 +9,6 @@ module AppErrors
 
   class InvalidResetPwdToken < StandardError; end
   class ExpiredResetPwdToken < StandardError; end
+
+  class DeactivatedUser < StandardError; end
 end

@@ -286,7 +286,7 @@ RSpec.describe Api::V1::GroupsController, type: :controller do
 
     context 'when login_user not in target_group' do
       let(:login_user) { create :user, company: company, role: 'admin' }
-      let(:target_user) { create :user, company: company , role: 'member' }
+      let(:target_user) { create :user, company: company, role: 'member' }
       let(:group) { create :group, company: company }
 
       subject { post :remove_user, params: { id: group.id, user_id: target_user.id }, format: :json }
