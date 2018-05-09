@@ -32,9 +32,9 @@ export default {
     },
     tooltip: {
       editUser: 'Edit user',
-      activateUser: 'Activate User',
-      deactivateUser: 'Deactivate User',
-      removeUser: 'Remove User'
+      activateUser: 'Activate user',
+      deactivateUser: 'Deactivate user',
+      removeUser: 'Remove user'
     },
     confirmDialog: {
       deactivateUserTitle: 'Deactivate User',

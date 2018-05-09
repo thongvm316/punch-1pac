@@ -20,7 +20,7 @@ class Api::V1::UsersLoyalty < ApplicationLoyalty
   def destroy?
     return false if @record.owner?
     return true if @user.owner?
-    return true if @user.superadmin? && !@record.owner?
+    return true if @user.superadmin?
     return true if @user.admin? && @record.member?
     false
   end
@@ -34,15 +34,17 @@ class Api::V1::UsersLoyalty < ApplicationLoyalty
   end
 
   def activate?
+    return false if @record.owner?
     return true if @user.owner?
-    return true if @user.superadmin? && !@record.owner?
+    return true if @user.superadmin?
     return true if @user.admin? && @record.member?
     false
   end
 
   def deactivate?
+    return false if @record.owner?
     return true if @user.owner?
-    return true if @user.superadmin? && !@record.owner?
+    return true if @user.superadmin?
     return true if @user.admin? && @record.member?
     false
   end
