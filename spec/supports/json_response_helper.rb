@@ -111,6 +111,7 @@ module JsonResponseHelper
       avatar_url: String,
       gender: String,
       position: nullable_response(String),
+      owner: boolean_response,
       role: String,
       language: String,
       password_changed: boolean_response,

@@ -12,7 +12,23 @@ export default class User extends Abstract {
   canDelete () {
     if (this.record.owner) return false
     if (this.currentUser.owner) return true
-    if (this.currentUser.role === 'superadmin' && !this.record.owner) return true
+    if (this.currentUser.role === 'superadmin') return true
+    if (this.currentUser.role === 'admin' && this.record.role === 'member') return true
+    return false
+  }
+
+  canActivate () {
+    if (this.record.owner) return false
+    if (this.currentUser.owner) return true
+    if (this.currentUser.role === 'superadmin') return true
+    if (this.currentUser.role === 'admin' && this.record.role === 'member') return true
+    return false
+  }
+
+  canDeactivate () {
+    if (this.record.owner) return false
+    if (this.currentUser.owner) return true
+    if (this.currentUser.role === 'superadmin') return true
     if (this.currentUser.role === 'admin' && this.record.role === 'member') return true
     return false
   }

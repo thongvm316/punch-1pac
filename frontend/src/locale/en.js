@@ -32,9 +32,13 @@ export default {
     },
     tooltip: {
       editUser: 'Edit user',
-      activateUser: 'Activate User',
-      deactivateUser: 'Deactivate User',
-      removeUser: 'Remove User'
+      activateUser: 'Activate user',
+      deactivateUser: 'Deactivate user',
+      removeUser: 'Remove user'
+    },
+    confirmDialog: {
+      deactivateUserTitle: 'Deactivate User',
+      deactivateUserMsg: 'Are you sure to deactivate <span class="text-bold-600">{name}</span> ?'
     }
   },
   header: {
