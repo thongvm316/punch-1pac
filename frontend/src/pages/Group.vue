@@ -2,13 +2,13 @@
   <main-layout :title="group.name">
     <group-tab :group-id="$route.params.id"/>
 
-    <div class="input-group mt-5" v-if="$auth('Group', currentUser, group).canAddUser()">
+    <div class="input-group mt-5" v-if="$auth('Group', currentUser, group.id).canAddUser()">
       <filter-user-box :queryParams="{ not_in_group_id: $route.params.id, per_page: 1000, exclude_user_ids: groupUsers.map(user => user.id) }" :placeholder="$t('group.placeholder.filterByEmail')" :user.sync="selectedUser"/>
       <button type="button" class="btn input-group-btn" @click="localAddGroupUser">{{ $t('group.btn.addUser') }}</button>
     </div>
     <p class="form-input-hint text-dark">{{ $t('group.explain') }}</p>
 
-    <div class="toolbar mt-5 text-right" v-if="$auth('Group', currentUser, group).canEdit()">
+    <div class="toolbar mt-5 text-right" v-if="$auth('Group', currentUser, group.id).canEdit()">
       <button type="button" class="btn btn-success" @click="toggleEditModal">{{ $t('group.btn.edit') }}</button>
     </div>
 
@@ -43,7 +43,7 @@
             <button class="btn btn-action btn-link tooltip" :data-tooltip="$t('group.tooltip.activateUser')" @click="activateGroupUser(user.id)" v-if="$auth('User', currentUser, user).canActivate() && !user.activated">
               <svg width="24px" height="24px" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="currentColor"><path d="M400,188h-36.037v-82.23c0-58.322-48.449-105.77-108-105.77c-59.551,0-108,47.448-108,105.77V188H112 c-33.084,0-60,26.916-60,60v204c0,33.084,26.916,60,60,60h288c33.084,0,60-26.916,60-60V248C460,214.916,433.084,188,400,188z M187.963,105.77c0-36.266,30.505-65.77,68-65.77s68,29.504,68,65.77V188h-136V105.77z M420,452c0,11.028-8.972,20-20,20H112 c-11.028,0-20-8.972-20-20V248c0-11.028,8.972-20,20-20h288c11.028,0,20,8.972,20,20V452z"/></svg>
             </button>
-            <button class="btn btn-action btn-link tooltip" :data-tooltip="$t('group.tooltip.removeUser')" @click="removeGroupUser({ groupId: $route.params.id, userId: user.id })" v-if="$auth('Group', currentUser, group).canRemoveUser()">
+            <button class="btn btn-action btn-link tooltip" :data-tooltip="$t('group.tooltip.removeUser')" @click="removeGroupUser({ groupId: $route.params.id, userId: user.id })" v-if="$auth('Group', currentUser, group.id).canRemoveUser()">
               <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="currentColor"><path d="M12,24 C18.611399,24 24,18.611399 24,12 C24,5.38860104 18.611399,-4.47641924e-13 12,-4.47641924e-13 C5.38860104,-4.47641924e-13 7.10542736e-15,5.38860104 7.10542736e-15,12 C7.10542736e-15,18.611399 5.38860104,24 12,24 Z M12,1.67875648 C17.6787565,1.67875648 22.3212435,6.30051813 22.3212435,12 C22.3212435,17.6994819 17.6994819,22.3212435 12,22.3212435 C6.30051813,22.3212435 1.67875648,17.6787565 1.67875648,12 C1.67875648,6.32124352 6.32124352,1.67875648 12,1.67875648 Z M6.46632124,12.7253886 L17.5129534,12.7253886 C17.9896373,12.7253886 18.3626943,12.3523316 18.3626943,11.8756477 C18.3626943,11.3989637 17.9896373,11.0259067 17.5129534,11.0259067 L6.46632124,11.0259067 C5.98963731,11.0259067 5.61658031,11.3989637 5.61658031,11.8756477 C5.61658031,12.3523316 6.01036269,12.7253886 6.46632124,12.7253886 Z" /></svg>
             </button>
           </td>

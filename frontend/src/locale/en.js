@@ -143,6 +143,10 @@ export default {
     chart: 'Chart',
     chartNoData: "You don't have any data on this month",
     recentActivities: 'Recent activities',
+    emptyActivity: "You don't have any activity",
+    pendingRequests: 'Pending requests',
+    havePendingRequests: 'You have pending requests in below groups:',
+    emptyPendingRequests: "You don't have any pending requests in your groups",
     request: {
       title: 'What kind of request do you want to send ?',
       label: 'Kind',

@@ -143,6 +143,10 @@ export default {
     chart: 'Biểu đồ',
     chartNoData: 'Bạn không có dữ liệu nào trong tháng này',
     recentActivities: 'Hoạt động gần đây',
+    emptyActivity: 'Bạn không có hoạt động nào gần đây',
+    pendingRequests: 'Yêu cầu chờ duyệt',
+    havePendingRequests: 'Bạn có yêu cầu chờ duyệt trong các nhóm dưới đây:',
+    emptyPendingRequests: 'Bạn không có yêu cầu chờ duyệt nào trong nhóm của bạn',
     request: {
       title: 'Loại yêu cầu bạn muốn gởi ?',
       label: 'Loại yêu cầu',
