@@ -1,3 +1,63 @@
+.toolbar {
+  .month-year-picker {
+    width: 8rem;
+    height: 2rem;
+    display: inline-block;
+    vertical-align: top;
+    position: relative;
+
+    .month-year-picker-control {
+      height: 10.1rem;
+      border: .05rem solid $gray-color;
+      border-right: 0;
+      width: 4rem;
+      z-index: 100;
+      background-color: $light-color;
+      padding: .5rem .3rem;
+      position: absolute;
+      left: 0;
+      top: 2.1rem;
+
+      span {
+        font-size: .65rem;
+        background-color: $gray-color-lightest;
+        border: 1px solid $gray-color-lightest;
+        border-radius: .2rem;
+        color: $primary-color;
+        padding: .15rem .6rem;
+        margin-bottom: .4rem;
+        display: inline-block;
+        cursor: pointer;
+
+        &:hover,
+        &.active {
+          background-color: $primary-color;
+          border: 1px solid $primary-color;
+          color: #fff;
+        }
+      }
+    }
+
+    .vdp-datepicker__calendar {
+      margin-top: .1rem;
+      margin-left: 4rem;
+      display: block !important;
+    }
+
+    .form-input {
+      display: none;
+    }
+  }
+
+  .month-year-picker-result {
+    border: .05rem solid $gray-color;
+    background: $light-color url('/static/img/ico-calendar.7bd5648.svg') calc(100% - .4rem) center/0.8rem 0.8rem no-repeat;
+    border-radius: 0.15rem;
+    padding: 0.425rem 0.4rem;
+    margin-right: .5rem;
+  }
+}
+
 .datepicker {
   display: inline-block;
   vertical-align: top;
