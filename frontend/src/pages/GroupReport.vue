@@ -3,7 +3,7 @@
     <group-tab :group-id="$route.params.id"/>
 
     <div class="toolbar mt-5 clearfix">
-      <month-year-picker v-model="month" />
+      <month-year-picker v-model="month"/>
       <filter-user-box :queryParams="{ group_id: this.$route.params.id, type: 'users_in_group', per_page: 1000 }" :placeholder="$t('attendances.placeholder.filterByUser')" :user.sync="selectedUser"/>
       <button class="btn btn-success float-right" @click="exportCsvFile">{{ $t('groups.btn.export') }}</button>
     </div>

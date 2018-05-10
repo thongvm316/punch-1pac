@@ -25,7 +25,7 @@
                 <p class="tile-subtitle">{{ notification.created_at | moment_activity }}</p>
               </div>
               <div class="tile-action" v-if="notification.activitable.status === 'pending'">
-                <span class="label label-warning" v-if="notification.activitable.status === 'pending'">{{ $t('meta.request_statuses.pending') }}</span>
+                <span class="label label-warning">{{ $t('meta.request_statuses.pending') }}</span>
               </div>
             </div>
           </li>
@@ -144,7 +144,9 @@ export default {
     },
 
     isEditable (notification) {
-      return ['create', 'update'].includes(notification.kind) && notification.activitable_type === 'Request' && !['approved', 'rejected'].includes(notification.activitable.status)
+      return ['create', 'update'].includes(notification.kind) &&
+             notification.activitable_type === 'Request' &&
+             !['approved', 'rejected'].includes(notification.activitable.status)
     }
   },
 
