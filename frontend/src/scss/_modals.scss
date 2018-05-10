@@ -11,7 +11,12 @@
   padding: 1rem;
 
   .modal-header,
-  .modal-body {
+  .modal-body,
+  .modal-footer {
     padding: 0;
+  }
+
+  .modal-footer {
+    margin-top: .8rem;
   }
 }
