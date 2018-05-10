@@ -3,16 +3,7 @@
     <group-tab :group-id="$route.params.id"/>
 
     <div class="toolbar mt-5 clearfix">
-      <datepicker
-        :language="currentUser.language"
-        :format="function (date) { return $moment(date).format('MMM YYYY') }"
-        :minimumView="'month'"
-        :maximumView="'month'"
-        :input-class="'datepicker-input form-input'"
-        :calendar-class="'datepicker-calendar'"
-        :wrapper-class="'datepicker'"
-        @input="onInputDatepicker"
-        v-model="month"/>
+      <month-year-picker v-model="month" />
       <filter-user-box :queryParams="{ group_id: this.$route.params.id, type: 'users_in_group', per_page: 1000 }" :placeholder="$t('attendances.placeholder.filterByUser')" :user.sync="selectedUser"/>
       <button class="btn btn-success float-right" @click="exportCsvFile">{{ $t('groups.btn.export') }}</button>
     </div>
@@ -51,7 +42,7 @@
 </template>
 
 <script>
-import Datepicker from 'vuejs-datepicker'
+import MonthYearPicker from '../components/MonthYearPicker'
 import MainLayout from '../layouts/Main'
 import GroupTab from '../components/GroupTab'
 import FilterUserBox from '../components/FilterUserBox'
@@ -62,7 +53,7 @@ export default {
   data () {
     return {
       selectedUser: null,
-      month: this.$moment().locale('en').format('LL'),
+      month: '',
       sortKey: 'name',
       sortOrders: 'asc'
     }
@@ -71,7 +62,7 @@ export default {
   components: {
     MainLayout,
     GroupTab,
-    Datepicker,
+    MonthYearPicker,
     FilterUserBox
   },
 
@@ -133,10 +124,6 @@ export default {
     ...mapActions('groupReport', [
       'getReport'
     ]),
-
-    onInputDatepicker () {
-      this.month = this.$moment(this.month).format('YYYY-MM-DD')
-    },
 
     sortBy (key) {
       this.sortKey = key
