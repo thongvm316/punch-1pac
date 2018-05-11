@@ -77,10 +77,10 @@ Rails.application.routes.draw do
   end
 
   root to: 'statics#top'
-
-  get 'about'   => 'statics#about'
+  get 'help'    => 'statics#help'
   get 'tos'     => 'statics#tos'
   get 'privacy' => 'statics#privacy'
+  get '*path'   => 'statics#page_404'
 
   devise_for :admins, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)

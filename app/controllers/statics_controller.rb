@@ -5,9 +5,11 @@ class StaticsController < ApplicationController
 
   def top; end
 
-  def about; end
+  def help; end
 
   def tos; end
 
   def privacy; end
+
+  def page404; end
 end
