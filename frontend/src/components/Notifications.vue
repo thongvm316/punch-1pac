@@ -121,9 +121,9 @@ export default {
     },
 
     isEditable (notification) {
-      return ['create', 'update'].includes(notification.kind)
-             && notification.activitable_type === 'Request'
-             && !['approved', 'rejected'].includes(notification.activitable.status)
+      return ['create', 'update'].includes(notification.kind) &&
+             notification.activitable_type === 'Request' &&
+             !['approved', 'rejected'].includes(notification.activitable.status)
     }
   },
 
