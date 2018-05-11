@@ -76,6 +76,12 @@ class Api::V1::UsersController < Api::V1::BaseController
     head(200)
   end
 
+  def group_pending_requests
+    authorize! @user
+    pending_requests = current_user.groups.pending_requests
+    render json: pending_requests, each_serializer: nil
+  end
+
   def deactivate
     authorize! @user
     @user.update!(activated: false, deactivated_at: Time.current)

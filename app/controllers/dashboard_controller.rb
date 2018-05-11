@@ -15,6 +15,7 @@ class DashboardController < ApplicationController
                                                         .merge('forgot_punch_in_days_in_month' => current_user.forgot_punch_in_days_in_month),
       company: ActiveModelSerializers::SerializableResource.new(current_company, serializer: CompanySerializer).as_json,
       announcements: ActiveModelSerializers::SerializableResource.new(announcements, each_serializer: AnnouncementSerializer, current_user: current_user).as_json,
+      pending_requests: current_user.groups.pending_requests,
       meta: {
         attendance_statuses: [].concat(Attendance::ATTENDING_STATUSES).concat(Attendance::LEAVING_STATUSES).concat(Attendance::OFF_STATUSES),
         request_statuses: Request.statuses.keys,

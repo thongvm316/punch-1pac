@@ -549,4 +549,39 @@ RSpec.describe Api::V1::UsersController, type: :controller do
       end
     end
   end
+
+  describe 'GET #group_pending_requests' do
+    let(:company) { create :company, :with_business_days }
+    let(:groups) { create_list :group, 2, company: company }
+
+    context 'when login user is member' do
+      let(:login_user) { create :user, company: company, groups: [groups.first], role: 'member' }
+      let!(:requests) { create_list :request, 11, status: :pending, user: create(:user, company: company, groups: [groups.first]) }
+
+      subject { get :group_pending_requests }
+
+      its(:code) { is_expected.to eq '401' }
+      its(:body) { is_expected.to be_json_as(response_401) }
+    end
+
+    context 'when login user is admin' do
+      let(:login_user) { create :user, company: company, groups: [groups.first], role: 'admin' }
+      let!(:requests) { create_list :request, 11, status: :pending, user: create(:user, company: company, groups: [groups.first]) }
+
+      subject { get :group_pending_requests, format: :json }
+
+      its(:code) { is_expected.to eq '200' }
+      its(:body) { is_expected.to be_json_as(Array.new(1) { response_pending_request }) }
+    end
+
+    context 'when login user is admin' do
+      let(:login_user) { create :user, company: company, groups: [groups.first], role: 'superadmin' }
+      let!(:requests) { create_list :request, 11, status: :pending, user: create(:user, company: company, groups: [groups.first]) }
+
+      subject { get :group_pending_requests, format: :json }
+
+      its(:code) { is_expected.to eq '200' }
+      its(:body) { is_expected.to be_json_as(Array.new(1) { response_pending_request }) }
+    end
+  end
 end
