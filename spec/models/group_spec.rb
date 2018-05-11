@@ -18,7 +18,7 @@ RSpec.describe Group, type: :model do
 
   describe '#pending_requests' do
     let(:company) { create :company, :with_business_days }
-    let(:groups){create_list :group, 2, company: company}
+    let(:groups) { create_list :group, 2, company: company }
     let(:login_user) { create :user, company: company, groups: [groups.first], role: 'admin' }
 
     context 'when user in group and request status is pending' do
@@ -42,7 +42,7 @@ RSpec.describe Group, type: :model do
     end
 
     context 'when user not belong in group' do
-      let(:login_usr) { create :user, company: company , role: 'admin' }
+      let(:login_usr) { create :user, company: company, role: 'admin' }
       let!(:requests) { create_list :request, 11, status: :approved, admin: login_usr, user: create(:user, company: company, groups: [groups.first]) }
 
       subject { login_usr.groups.pending_requests }
