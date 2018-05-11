@@ -46,6 +46,16 @@ const mutations = {
 
   [types.SET_INTERVAL_FETCH_NOTIFICATIONS] (state, payload) {
     state.hasIntervalFetchNotifications = payload
+  },
+
+  [types.APPROVE_NOTIFICATION_REQUEST] (state, notificationId) {
+    const index = state.headerNotifications.findIndex(notification => notification.activitable_id === notificationId)
+    state.headerNotifications[index].activitable.status = 'approved'
+  },
+
+  [types.REJECT_NOTIFICATION_REQUEST] (state, notificationId) {
+    const index = state.headerNotifications.findIndex(notification => notification.activitable_id === notificationId)
+    state.headerNotifications[index].activitable.status = 'rejected'
   }
 }
 
@@ -74,18 +84,19 @@ const actions = {
                 .catch(error => { throw error })
   },
 
-  approveRequest ({ commit }, requestId) {
-    return axios.post(`/requests/${requestId}/approve`)
+  rejectNotificationRequest ({ commit }, params) {
+    return axios.post(`/requests/${params.id}/reject`, { admin_reason: params.admin_reason }, { headers: { 'Content-Type': 'application/json' } })
                 .then(response => {
+                  commit(types.REJECT_NOTIFICATION_REQUEST, params.id)
                   return response
                 })
                 .catch(error => { throw error })
   },
 
-  rejectRequest ({ commit }, params) {
-    console.log(params)
-    return axios.post(`/requests/${params.id}/reject`, { admin_reason: params.admin_reason }, { headers: { 'Content-Type': 'application/json' } })
+  approveNotificationRequest ({ commit }, notificationId) {
+    return axios.post(`/requests/${notificationId}/approve`)
                 .then(response => {
+                  commit(types.APPROVE_NOTIFICATION_REQUEST, notificationId)
                   return response
                 })
                 .catch(error => { throw error })

@@ -171,6 +171,13 @@ export default {
       update: '<span class="text-bold-600">{name}</span> đã chỉnh sửa yêu cầu',
       approve: '<span class="text-bold-600">{name}</span> đã duyệt yêu cầu của bạn',
       reject: '<span class="text-bold-600">{name}</span> đã từ chối yêu cầu của bạn'
+    },
+    labels: {
+      date: 'Ngày',
+      attendedAt: 'Đến lúc',
+      leftAt: 'Về lúc',
+      reason: 'Lý do',
+      rejectReason: 'Lý do từ chối'
     }
   },
   groups: {
