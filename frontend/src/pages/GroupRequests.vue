@@ -100,7 +100,8 @@ export default {
       requestParams: {
         requestId: '',
         rejectReason: ''
-      }
+      },
+      queryStatus: this.$route.query.status
     }
   },
 
@@ -159,6 +160,7 @@ export default {
   created () {
     this.getGroup(this.$route.params.id)
     this.getRequests(this.params)
+    this.params.status = this.queryStatus || ''
   },
 
   watch: {
