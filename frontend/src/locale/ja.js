@@ -171,6 +171,13 @@ export default {
       update: '<span class="text-bold-600">{name}</span> updated a request',
       approve: '<span class="text-bold-600">{name}</span> approved your request',
       reject: '<span class="text-bold-600">{name}</span> rejected your request'
+    },
+    labels: {
+      date: 'Date',
+      attendedAt: 'Attended At',
+      leftAt: 'Left At',
+      reason: 'Reason',
+      rejectReason: 'Comment'
     }
   },
   groups: {
