@@ -25,7 +25,7 @@
                 <p class="tile-subtitle">{{ notification.created_at | moment_activity }}</p>
               </div>
               <div class="tile-action" v-if="notification.activitable.status === 'pending'">
-                <span class="label label-warning">{{ $t('meta.request_statuses.pending') }}</span>
+                <span class="label label-warning" v-if="notification.activitable.status === 'pending'">{{ $t('meta.request_statuses.pending') }}</span>
               </div>
             </div>
           </li>
@@ -35,23 +35,42 @@
         </p>
       </div>
     </div>
-    <modal :title="$t('header.notifications')" :modal-open.sync="isAddModalOpen" v-if="isEditable(notification)">
-      <p>{{ notification.activitable.reason }}</p>
-      <div class="modal-body">
-        <div class="content">
-          <label class="form-label">{{ $t('requests.labels.rejectReason') }}</label>
-          <textarea class="form-input" :placeholder="$t('requests.labels.rejectReason')" v-model="rejectReason"></textarea>
-        </div>
+    <modal :title="$t('notifications.title')" :modal-open.sync="isAddModalOpen" v-if="isEditable(notification)">
+      <div class="form-group">
+        <label class="form-label">{{ $t('notifications.labels.date') }}</label>
+        <flat-pickr
+          :config="{ enable: [notification.activitable.attendance_day], locale: flatpickrLocaleMapper[currentUser.language] }"
+          class="form-input daterange-picker"
+          :value="notification.activitable.attendance_day"
+          disabled />
+      </div>
+      <div class="form-group">
+        <label class="form-label">{{ $t('notifications.labels.attendedAt') }}</label>
+        <input type="time" class="form-input" :value="notification.activitable.attended_at" disabled>
+      </div>
+      <div class="form-group">
+        <label class="form-label">{{ $t('notifications.labels.leftAt') }}</label>
+        <input type="time" class="form-input" :value="notification.activitable.left_at" disabled>
+      </div>
+      <div class="form-group">
+        <label class="form-label">{{ $t('notifications.labels.reason') }}</label>
+        <textarea class="form-input" :value="notification.activitable.reason" disabled></textarea>
+      </div>
+      <div class="form-group">
+        <label class="form-label">{{ $t('notifications.labels.rejectReason') }}</label>
+        <textarea class="form-input" :placeholder="$t('notifications.labels.rejectReason')" v-model="rejectReason"></textarea>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-success" @click="submitAddModal(notification.activitable_id, approveRequest, $t('messages.request.approvedSuccess'))">{{ $t('notifications.btn.approve') }}</button>
-        <button type="button" class="btn btn-error" @click="submitAddModal({ id: notification.activitable_id, admin_reason: rejectReason }, rejectRequest, $t('messages.request.rejectedSuccess'))">{{ $t('notifications.btn.reject') }}</button>
+        <button type="button" class="btn btn-success" @click="submitAddModal(notification.activitable_id, approveNotificationRequest, $t('messages.request.approvedSuccess'))">{{ $t('notifications.btn.approve') }}</button>
+        <button type="button" class="btn btn-error" @click="submitAddModal({ id: notification.activitable_id, admin_reason: rejectReason }, rejectNotificationRequest, $t('messages.request.rejectedSuccess'))">{{ $t('notifications.btn.reject') }}</button>
       </div>
     </modal>
   </div>
 </template>
 
 <script>
+import flatPickr from 'vue-flatpickr-component'
+import flatpickrLocale from '../mixins/flatpickr-locale'
 import dropdown from '../mixins/dropdown'
 import modal from '../mixins/modal'
 import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
@@ -59,13 +78,17 @@ import { SET_INTERVAL_FETCH_NOTIFICATIONS } from '../store/mutation-types'
 
 export default {
   name: 'notifications',
-  mixins: [dropdown, modal],
+  mixins: [dropdown, modal, flatpickrLocale],
 
   data () {
     return {
       notification: '',
       rejectReason: ''
     }
+  },
+
+  components: {
+    flatPickr
   },
 
   computed: {
@@ -107,8 +130,8 @@ export default {
       'getHeaderNotifications',
       'getMoreHeaderNotifications',
       'getNewHeaderNotifications',
-      'approveRequest',
-      'rejectRequest'
+      'approveNotificationRequest',
+      'rejectNotificationRequest'
     ]),
 
     ...mapMutations('notifications', [
@@ -121,9 +144,7 @@ export default {
     },
 
     isEditable (notification) {
-      return ['create', 'update'].includes(notification.kind)
-             && notification.activitable_type === 'Request'
-             && !['approved', 'rejected'].includes(notification.activitable.status)
+      return ['create', 'update'].includes(notification.kind) && notification.activitable_type === 'Request' && !['approved', 'rejected'].includes(notification.activitable.status)
     }
   },
 
