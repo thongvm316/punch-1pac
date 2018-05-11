@@ -28,6 +28,12 @@ class Group < ApplicationRecord
 
   include ImageUploader::Attachment.new(:image)
 
+  scope :pending_requests, -> {
+    select('COUNT(*) as num_pending_request', :id, :name)
+      .joins(:users).merge(User.pending_requests)
+      .group(:id)
+  }
+
   def self.for_user(user)
     if %w[member admin].include?(user.role)
       where(id: UserGroup.select(:group_id).where(user: user))

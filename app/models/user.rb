@@ -97,6 +97,8 @@ class User < ApplicationRecord
     q
   }
 
+  scope :pending_requests, -> { joins(:requests).merge(Request.where(status: :pending)) }
+
   def self.count_attendance_status(date)
     select(
       :id,

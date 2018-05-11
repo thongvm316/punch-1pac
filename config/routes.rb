@@ -18,6 +18,7 @@ Rails.application.routes.draw do
             post 'create_multi'
             match 'change_password', via: %i[patch put]
             get 'today_attendances'
+            get 'group_pending_requests'
           end
           member do
             post 'deactivate'

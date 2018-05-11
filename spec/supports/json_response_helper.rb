@@ -188,6 +188,14 @@ module JsonResponseHelper
     }
   end
 
+  def response_pending_request
+    {
+      id:                  Integer,
+      name:                String,
+      num_pending_request: Integer
+    }
+  end
+
   def response_permission
     {
       id:          Integer,

@@ -56,4 +56,8 @@ class Api::V1::UsersLoyalty < ApplicationLoyalty
       %w[gender name email avatar language position]
     end
   end
+
+  def group_pending_requests?
+    @user.manager?
+  end
 end
