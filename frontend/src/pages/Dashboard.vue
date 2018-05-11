@@ -88,12 +88,7 @@ export default {
 
     ...mapState('groupPendingRequests', [
       'pendingRequests'
-    ]),
-
-    htmlPendingRequests () {
-      let html = 'You have pending requests in '
-      return html.slice(0, -2)
-    }
+    ])
   }
 }
 </script>

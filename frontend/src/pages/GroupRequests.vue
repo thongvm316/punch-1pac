@@ -93,15 +93,14 @@ export default {
     return {
       params: {
         self: null,
-        status: '',
+        status: this.$route.query.status || '',
         kind: '',
         group_id: this.$route.params.id
       },
       requestParams: {
         requestId: '',
         rejectReason: ''
-      },
-      queryStatus: this.$route.query.status
+      }
     }
   },
 
@@ -160,7 +159,6 @@ export default {
   created () {
     this.getGroup(this.$route.params.id)
     this.getRequests(this.params)
-    this.params.status = this.queryStatus || ''
   },
 
   watch: {
