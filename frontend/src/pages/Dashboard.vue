@@ -15,7 +15,7 @@
               {{ $t('dashboard.havePendingRequests') }}
             </p>
             <ul class="list-pending-requests">
-              <router-link tag="li" :to="`/groups/${request.id}`" v-for="request in pendingRequests" :key="request.id">
+              <router-link tag="li" :to="`/groups/${request.id}/requests?status=pending`" v-for="request in pendingRequests" :key="request.id">
                 <a>{{ request.name }} ({{request.num_pending_request}})</a>
               </router-link>
             </ul>
@@ -58,27 +58,14 @@ import StatusCards from '../components/StatusCards.vue'
 import { mapState, mapActions } from 'vuex'
 
 export default {
-  data () {
-    return {
-      pendingRequests: [
-        {
-          id: 1,
-          name: 'default',
-          num_pending_request: 10
-        },
-        {
-          id: 2,
-          name: 'test',
-          num_pending_request: 3
-        }
-      ]
-    }
-  },
-
   methods: {
     ...mapActions('activities', [
       'getActivities',
       'getMoreActivities'
+    ]),
+
+    ...mapActions('groupPendingRequests', [
+      'getGroupPendingRequests'
     ])
   },
 
@@ -90,6 +77,7 @@ export default {
 
   created () {
     this.getActivities()
+    this.getGroupPendingRequests()
   },
 
   computed: {
@@ -98,10 +86,9 @@ export default {
       'activities'
     ]),
 
-    htmlPendingRequests () {
-      let html = 'You have pending requests in '
-      return html.slice(0, -2)
-    }
+    ...mapState('groupPendingRequests', [
+      'pendingRequests'
+    ])
   }
 }
 </script>

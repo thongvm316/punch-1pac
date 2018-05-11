@@ -93,7 +93,7 @@ export default {
     return {
       params: {
         self: null,
-        status: '',
+        status: this.$route.query.status || '',
         kind: '',
         group_id: this.$route.params.id
       },
