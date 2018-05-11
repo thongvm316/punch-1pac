@@ -38,7 +38,6 @@ class Attendance < ApplicationRecord
   validates :off_status, inclusion: { in: OFF_STATUSES }, allow_nil: true
 
   scope :attended, -> { where.not(attended_at: nil) }
-  scope :day_between, ->(from_date, to_date) { where(day: from_date..to_date) }
   scope :with_status, ->(status) {
     where(attending_status: status)
       .or(where(leaving_status: status))
@@ -62,37 +61,45 @@ class Attendance < ApplicationRecord
       .group(:month)
   }
 
-  def self.status_count_on_month(status_value, status_type, date)
+  def self.in_period(str_date, date_type = nil)
+    date = str_date.present? ? Date.parse(str_date) : Date.current
+    raise ArgumentError if date.blank?
+    if date_type == 'year'
+      where('extract(year from day) = ?', date.year)
+    else
+      where(day: date.beginning_of_month..date.end_of_month)
+    end
+  end
+
+  def self.status_count_on_month(status_value, status_type, date, date_type = nil)
     select("count(id) as #{status_value}")
-      .day_between(date.beginning_of_month, date.end_of_month)
+      .in_period(date, date_type)
       .where("#{status_type}": status_value)
       .group(status_type)
   end
 
-  def self.sum_working_hours_on_month(date)
+  def self.sum_working_hours_on_month(date, date_type = nil)
     select('sum(working_hours) as working_hours')
-      .day_between(date.beginning_of_month, date.end_of_month)
+      .in_period(date, date_type)
+  rescue TypeError, ArgumentError
+    none
   end
 
   def self.chart(str_date = nil)
-    date = str_date.present? ? Date.parse(str_date) : Date.current
-    raise ArgumentError if date.blank?
     select(
-      "(#{status_count_on_month('attend_ok', 'attending_status', date).to_sql})",
-      "(#{status_count_on_month('attend_late', 'attending_status', date).to_sql})",
-      "(#{status_count_on_month('leave_ok', 'leaving_status', date).to_sql})",
-      "(#{status_count_on_month('leave_early', 'leaving_status', date).to_sql})",
-      "(#{status_count_on_month('annual_leave', 'off_status', date).to_sql})",
-      "(#{sum_working_hours_on_month(date).to_sql})"
+      "(#{status_count_on_month('attend_ok', 'attending_status', str_date).to_sql})",
+      "(#{status_count_on_month('attend_late', 'attending_status', str_date).to_sql})",
+      "(#{status_count_on_month('leave_ok', 'leaving_status', str_date).to_sql})",
+      "(#{status_count_on_month('leave_early', 'leaving_status', str_date).to_sql})",
+      "(#{status_count_on_month('annual_leave', 'off_status', str_date).to_sql})",
+      "(#{sum_working_hours_on_month(str_date).to_sql})"
     ).limit(1)
   rescue TypeError, ArgumentError
     none
   end
 
   def self.calendar(str_date)
-    date = str_date.present? ? Date.parse(str_date) : Date.current
-    raise ArgumentError if date.blank?
-    day_between(date.beginning_of_month, date.end_of_month)
+    in_period(str_date)
   rescue TypeError, ArgumentError
     none
   end
@@ -101,7 +108,7 @@ class Attendance < ApplicationRecord
     q = all
     q = where(user_id: UserGroup.with_group(params[:group_id])) if params[:group_id].present?
     q = q.with_status(params[:status]) if params[:status].present?
-    q = q.day_between(Date.parse(params[:from_date]), Date.parse(params[:to_date])) if params[:from_date].present? && params[:to_date].present?
+    q = q.where(day: Date.parse(params[:from_date])..Date.parse(params[:to_date])) if params[:from_date].present? && params[:to_date].present?
     q = q.where(user_id: params[:user_id]) if params[:user_id].present?
     q
   rescue TypeError, ArgumentError

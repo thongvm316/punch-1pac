@@ -21,34 +21,15 @@ class AuthController < ApplicationController
   def create
     respond_to do |f|
       if signed_in?
-        f.html { return redirect_to(subdomain: request.subdomain, controller: 'dashboard', action: 'index', path: 'dashboard') }
-        f.json { return head(200) }
-      end
-
-      @user = current_company.users.find_by(email: auth_params[:email])
-
-      if @user&.authenticate(auth_params[:password])
-        token = jwt_encode(sub: @user.id)
-        update_session!
-        f.html do
-          session[:access_token] = token
-          redirect_to(subdomain: request.subdomain, controller: 'dashboard', action: 'index', path: 'dashboard')
-        end
-        f.json do
-          user_json = ActiveModelSerializers::SerializableResource.new(@user, serializer: UserSerializer).as_json
-          render(json: user_json.merge(access_token: token), status: :ok)
-        end
+        handle_signed_in!(f)
       else
-        f.html do
-          flash.now[:alert] = if current_company.users.unscope(where: :activated).find_by(activated: false, email: auth_params[:email])
-                                I18n.t('auth.messages.deactivated_user')
-                              else
-                                I18n.t('auth.messages.invalid_user_password')
-                              end
-          @user = User.new(email: auth_params[:email])
-          render(:new)
+        @user = current_company.users.find_by(email: auth_params[:email])
+
+        if @user&.authenticate(auth_params[:password])
+          handle_success_login!(f)
+        else
+          handle_failed_login!(f)
         end
-        f.json { head(401) }
       end
     end
   end
@@ -60,6 +41,37 @@ class AuthController < ApplicationController
   end
 
   private
+
+  def handle_signed_in!(format)
+    format.html { redirect_to(subdomain: request.subdomain, controller: 'dashboard', action: 'index', path: 'dashboard') }
+    format.json { head(200) }
+  end
+
+  def handle_success_login!(format)
+    token = jwt_encode(sub: @user.id)
+    update_session!
+    format.html do
+      session[:access_token] = token
+      redirect_to(subdomain: request.subdomain, controller: 'dashboard', action: 'index', path: 'dashboard')
+    end
+    format.json do
+      user_json = ActiveModelSerializers::SerializableResource.new(@user, serializer: UserSerializer).as_json
+      render(json: user_json.merge(access_token: token), status: :ok)
+    end
+  end
+
+  def handle_failed_login!(format)
+    format.html do
+      flash.now[:alert] = if current_company.users.unscope(where: :activated).find_by(activated: false, email: auth_params[:email])
+                            I18n.t('auth.messages.deactivated_user')
+                          else
+                            I18n.t('auth.messages.invalid_user_password')
+                          end
+      @user = User.new(email: auth_params[:email])
+      render(:new)
+    end
+    format.json { head(401) }
+  end
 
   def update_session!
     current_session = @user.current_session(request)
