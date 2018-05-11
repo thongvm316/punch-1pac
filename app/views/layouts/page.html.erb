@@ -27,12 +27,15 @@
 <link rel="apple-touch-icon" sizes="76x76" href="<%= asset_url('icon_76x76.png') %>">
 <link rel="icon" sizes="192x192" href="<%= asset_url('icon_192x192.png') %>">
 
-<link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
 <%= stylesheet_link_tag('application', media: 'all') %>
 </head>
 
 <body class="bg-gray">
+
+<%= render 'shared/header' %>
 <%= yield %>
+<%= render 'shared/footer' %>
+
 <%= javascript_include_tag('application') %>
 </body>
 </html>

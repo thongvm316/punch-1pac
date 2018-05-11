@@ -13,6 +13,43 @@
  *= require_self
  */
 
+// Variables and mixins
+@import 'spectre.css/src/variables';
+@import 'spectre.css/src/mixins';
+
+// Reset and dependencies
+@import 'spectre.css/src/normalize';
+@import 'spectre.css/src/base';
+
+// Elements
+@import 'spectre.css/src/typography';
+@import 'spectre.css/src/asian';
+@import 'spectre.css/src/tables';
+@import 'spectre.css/src/buttons';
+@import 'spectre.css/src/forms';
+@import 'spectre.css/src/labels';
+
+// Layout
+@import 'spectre.css/src/layout';
+@import 'spectre.css/src/navbar';
+
+// Components
+@import 'spectre.css/src/avatars';
+@import 'spectre.css/src/badges';
+@import 'spectre.css/src/dropdowns';
+@import 'spectre.css/src/menus';
+@import 'spectre.css/src/modals';
+@import 'spectre.css/src/navs';
+@import 'spectre.css/src/panels';
+@import 'spectre.css/src/tabs';
+@import 'spectre.css/src/tiles';
+@import 'spectre.css/src/toasts';
+@import 'spectre.css/src/tooltips';
+
+// Utility classes
+@import 'spectre.css/src/animations';
+@import 'spectre.css/src/utilities';
+
 .auth-form {
   background-color: #fff;
   margin-top: 80px;

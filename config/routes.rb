@@ -77,12 +77,13 @@ Rails.application.routes.draw do
     get '*path' => 'dashboard#index'
   end
 
-  root to: 'statics#top'
-
-  get 'about'   => 'statics#about'
-  get 'tos'     => 'statics#tos'
-  get 'privacy' => 'statics#privacy'
+  root to: 'pages#top'
+  get 'help'    => 'pages#help'
+  get 'terms'   => 'pages#terms'
+  get 'privacy' => 'pages#privacy'
 
   devise_for :admins, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
+
+  get '*path'   => 'pages#page_404'
 end
