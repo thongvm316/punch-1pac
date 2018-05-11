@@ -13,9 +13,7 @@
           <div class="box-header">
             <div class="tile">
               <div class="tile-icon">
-                <figure class="avatar avatar-lg">
-                  <img :src="group.image_url" :alt="group.name">
-                </figure>
+                <img class="group-avatar" :src="group.image_url" :alt="group.name">
               </div>
               <div class="tile-content">
                 <router-link tag="h2" :to="`/groups/${group.id}`" class="box-title">{{ group.name }}</router-link>
