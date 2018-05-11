@@ -58,6 +58,8 @@ group :development, :test do
   gem 'awesome_print'
 
   gem 'rack-cors'
+
+  gem 'rspec-rails'
 end
 
 group :development do
@@ -86,7 +88,6 @@ end
 group :test do
   gem 'simplecov', require: false
   gem 'rails-controller-testing'
-  gem 'rspec-rails'
   gem 'rspec_junit_formatter'
   gem 'rspec-its'
   gem 'rspec-json_matcher'
