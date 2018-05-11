@@ -40,7 +40,7 @@ RSpec.describe User, type: :model do
       let(:user) { create :user, company: company, deactivated_at: '2018-04-04', created_at: '2018-04-01' }
 
       before { user.update(activated_at: '2018-04-06') }
-      subject { user.forgot_punch_in_days_in_month }
+      subject { ForgotPunchInDaysService.new(user).execute }
 
       it do
         is_expected
@@ -52,7 +52,7 @@ RSpec.describe User, type: :model do
     context 'when user.activated=false and user.deactivated_at > user.activated_at' do
       let(:user) { create :user, company: company, deactivated_at: '2018-04-10', created_at: '2018-04-01', activated: false }
 
-      subject { user.forgot_punch_in_days_in_month }
+      subject { ForgotPunchInDaysService.new(user).execute }
 
       it do
         is_expected

@@ -99,27 +99,23 @@ class User < ApplicationRecord
 
   scope :pending_requests, -> { joins(:requests).merge(Request.where(status: :pending)) }
 
-  def self.count_attendance_status(date)
+  def self.count_attendance_status(date, date_type)
     select(
       :id,
       :name,
       :email,
       :avatar_data,
-      "(#{Attendance.status_count_on_month('attend_ok', 'attending_status', date).where('attendances.user_id = users.id').to_sql})",
-      "(#{Attendance.status_count_on_month('attend_late', 'attending_status', date).where('attendances.user_id = users.id').to_sql})",
-      "(#{Attendance.status_count_on_month('leave_ok', 'leaving_status', date).where('attendances.user_id = users.id').to_sql})",
-      "(#{Attendance.status_count_on_month('leave_early', 'leaving_status', date).where('attendances.user_id = users.id').to_sql})",
-      "(#{Attendance.status_count_on_month('annual_leave', 'off_status', date).where('attendances.user_id = users.id').to_sql})",
-      "(#{Attendance.sum_working_hours_on_month(date).where('attendances.user_id = users.id').to_sql})"
+      "(#{Attendance.status_count_on_month('attend_ok', 'attending_status', date, date_type).where('attendances.user_id = users.id').to_sql})",
+      "(#{Attendance.status_count_on_month('attend_late', 'attending_status', date, date_type).where('attendances.user_id = users.id').to_sql})",
+      "(#{Attendance.status_count_on_month('leave_ok', 'leaving_status', date, date_type).where('attendances.user_id = users.id').to_sql})",
+      "(#{Attendance.status_count_on_month('leave_early', 'leaving_status', date, date_type).where('attendances.user_id = users.id').to_sql})",
+      "(#{Attendance.status_count_on_month('annual_leave', 'off_status', date, date_type).where('attendances.user_id = users.id').to_sql})",
+      "(#{Attendance.sum_working_hours_on_month(date, date_type).where('attendances.user_id = users.id').to_sql})"
     )
   end
 
   def self.report(params)
-    date = params[:date].present? ? Date.parse(params[:date]) : Date.current
-    raise ArgumentError if date.blank?
-    count_attendance_status(date).where(id: UserGroup.with_group(params[:group_id]))
-  rescue TypeError, ArgumentError
-    none
+    count_attendance_status(params[:date], params[:date_type]).where(id: UserGroup.with_group(params[:group_id]))
   end
 
   def self.reset_password_token_valid?(token)
@@ -152,30 +148,5 @@ class User < ApplicationRecord
   def current_session(request)
     client = DeviceDetector.new(request.user_agent)
     sessions.find_by(client: client.name, device_type: client.device_type, ip_address: request.remote_ip, os: "#{client.os_name}_#{client.os_full_version}")
-  end
-
-  def forgot_punch_in_days_in_month(date = nil)
-    now = Time.current
-    query_time = date.present? ? Time.zone.parse(date) : now
-    raise ArgumentError if query_time.blank?
-    hdays = company.holidays.in_month(query_time.strftime('%Y-%m-%d'))
-    days = []
-
-    to_date = query_time.month < now.month ? query_time.end_of_month.to_i : (now - 1.day).to_i
-
-    (query_time.beginning_of_month.to_i..to_date).step(1.day) do |timestamp|
-      current_day = Time.zone.at(timestamp).to_date
-      next if current_day < created_at.to_date
-      next if hdays.find { |holiday| current_day.between?(holiday.started_at, holiday.ended_at) }
-      next if company.breakdays.include?(current_day.strftime('%A').downcase)
-      next if deactivated_at && current_day.between?(deactivated_at.to_date, activated_at.to_date - 1.day)
-      next if deactivated? && current_day >= deactivated_at.to_date
-      days << current_day.strftime('%Y-%m-%d')
-    end
-
-    punch_in_days = attendances.where(day: days).map { |a| a.day.strftime('%Y-%m-%d') }
-    days - punch_in_days
-  rescue TypeError, ArgumentError
-    []
   end
 end
