@@ -1,150 +1,150 @@
 export default {
   group: {
-    users: 'Users',
-    attendances: 'Attendances',
-    requests: 'Requests',
-    report: 'Report',
+    users: 'ユーザー一覧',
+    attendances: '勤務状況',
+    requests: '申請一覧',
+    report: 'レポート',
     btn: {
-      addUser: 'Add',
-      edit: 'Edit Group',
-      save: 'Save'
+      addUser: '追加',
+      edit: '編集',
+      save: '保存'
     },
-    explain: "Add a member to this group, then manager of this group can see the user's activities",
+    explain: "このグループにメンバーを追加すると、グループのアドミンはメンバーの勤務状況を見ることができます。",
     tableHeader: {
-      email: 'Email',
-      name: 'Name',
-      actions: 'Actions',
-      gender: 'Gender',
-      position: 'Position'
+      email: 'メール',
+      name: 'ユーザー名',
+      actions: '操作',
+      gender: '性別',
+      position: '役職'
     },
     labels: {
-      name: 'Name',
-      description: 'Description',
-      image: 'Image'
+      name: 'グループ名',
+      description: '説明',
+      image: '画像'
     },
     placeholder: {
-      description: 'Description',
-      filterByEmail: 'Filter by email'
+      description: '説明',
+      filterByEmail: 'メールで検索'
     },
     modal: {
-      editUserTitle: 'Edit User',
-      editTitle: 'Edit Group'
+      editUserTitle: 'ユーザー情報の編集',
+      editTitle: 'グループ情報の編集'
     },
     tooltip: {
-      editUser: 'Edit user',
-      activateUser: 'Activate user',
-      deactivateUser: 'Deactivate user',
-      removeUser: 'Remove user'
+      editUser: '編集する',
+      activateUser: 'アクティブ化する',
+      deactivateUser: '非アクティブ化する',
+      removeUser: '削除する'
     },
     confirmDialog: {
-      deactivateUserTitle: 'Deactivate User',
-      deactivateUserMsg: 'Are you sure to deactivate <span class="text-bold-600">{name}</span> ?'
+      deactivateUserTitle: 'ユーザーを非アクティブ化する',
+      deactivateUserMsg: '<span class="text-bold-600">{name}</span>を非アクティブ化しますか？'
     }
   },
   header: {
-    dashboard: 'Dashboard',
-    attendances: 'Attendances',
-    requests: 'Requests',
-    groups: 'Groups',
-    notifications: 'Notifications',
-    noNotificationMsg: 'You have no new notifications',
-    settings: 'Settings',
-    companySettings: 'Company Settings',
-    seeAll: 'See All',
-    logout: 'Logout',
-    in: 'In',
-    out: 'Out',
-    punchIn: 'Punch In',
-    punchInSuccess: 'You punched in at {at}',
-    punchOut: 'Punch Out',
-    punchOutSuccess: 'You punched out at {at}',
-    punchOutTitle: 'Punch Out',
-    punchOutConfirm: 'Do you intent to punch out at {at} ?',
-    btnAnnualLeave: 'Annual leave',
-    btnLeave: 'Leave'
+    dashboard: 'ダッシュボード',
+    attendances: '勤務状況',
+    requests: '申請一覧',
+    groups: 'グループ一覧',
+    notifications: 'お知らせ',
+    noNotificationMsg: '新しいお知らせがありません',
+    settings: '個人設定',
+    companySettings: '会社情報の設定',
+    seeAll: '全て見る',
+    logout: 'ログアウト',
+    in: '出勤時間',
+    out: '退勤時間',
+    punchIn: '出勤',
+    punchInSuccess: 'あなたは{at}に出勤しました',
+    punchOut: '退勤',
+    punchOutSuccess: 'あなたは{at}に退勤しました',
+    punchOutTitle: '退勤時間を確認する',
+    punchOutConfirm: 'あなたは{at}に退勤しますか？',
+    btnAnnualLeave: '年次休暇',
+    btnLeave: '休憩入り'
   },
   footer: {
-    terms: 'Terms',
-    privacy: 'Privacy',
-    help: 'Help',
-    contact: 'Contact',
-    about: 'About'
+    terms: '利用規約',
+    privacy: '個人情報保護方針',
+    help: 'ヘルプ',
+    contact: 'お問い合わせ',
+    about: '会社概要'
   },
   meta: {
     attendance_statuses: {
-      attend_ok: 'Attend OK',
-      attend_late: 'Attend Late',
-      leave_early: 'Leave Early',
-      leave_ok: 'Leave OK',
-      unpaid_leave: 'Unpaid leave',
-      annual_leave: 'Leave',
-      leave: 'Leave',
-      working_hours: 'Working hours'
+      attend_ok: '定刻出勤',
+      attend_late: '遅刻',
+      leave_early: '早退',
+      leave_ok: '定刻退勤',
+      unpaid_leave: '無給休暇',
+      annual_leave: '年次休暇',
+      leave: '欠勤日数',
+      working_hours: '総勤務時間'
     },
     request_statuses: {
-      pending: 'Pending',
-      approved: 'Approved',
-      rejected: 'Rejected'
+      pending: '申請中',
+      approved: '承認済',
+      rejected: '拒否'
     },
     gender: {
-      male: 'Male',
-      female: 'Female'
+      male: '男性',
+      female: '女性'
     },
     languages: {
-      en: 'English',
-      vi: 'Vietnamese',
-      ja: 'Japanese'
+      en: '英語',
+      vi: 'ベトナム語',
+      ja: '日本語'
     },
     weekdays: {
-      monday: 'Monday',
-      tuesday: 'Tuesday',
-      wednesday: 'Wednesday',
-      thursday: 'Thursday',
-      friday: 'Friday',
-      saturday: 'Saturday',
-      sunday: 'Sunday'
+      monday: '月曜日',
+      tuesday: '火曜日',
+      wednesday: '水曜日',
+      thursday: '木曜日',
+      friday: '水曜日',
+      saturday: '土曜日',
+      sunday: '日曜日'
     },
     roles: {
-      member: 'Member',
-      admin: 'Admin',
-      superadmin: 'Superadmin'
+      member: 'メンバー',
+      admin: 'アドミン',
+      superadmin: 'スーパーアドミン'
     },
     holiday_countries: {
-      vietnam: 'Vietnam',
-      japan: 'Japan'
+      vietnam: 'ベトナム',
+      japan: '日本'
     },
     industries: {
-      hr_agency: 'Human Resource Agency',
-      restaurant: 'Restaurant',
-      cafe_shop: 'Cafe shop',
-      software_company: 'Software Company',
-      startup: 'Startup'
+      hr_agency: 'HR会社',
+      restaurant: 'レストラン',
+      cafe_shop: 'カフェショップ',
+      software_company: 'ソフトウェア会社',
+      startup: '新興企業'
     }
   },
   sidebar: {
     user: {
-      profile: 'Profile',
-      password: 'Password',
-      security: 'Security'
+      profile: 'プロフィール',
+      password: 'パスワード',
+      security: 'セキュリティ'
     },
     company: {
-      profile: 'Profile',
-      users: 'Users',
-      timezoneAndLanguage: 'Time',
-      businessDays: 'Business Days',
-      holidays: 'Holidays',
-      allowedIPs: 'Allowed IPs'
+      profile: 'プロフィール',
+      users: 'ユーザー',
+      timezoneAndLanguage: '言語と時刻',
+      businessDays: '営業日',
+      holidays: '休日',
+      allowedIPs: '許可されたIP'
     }
   },
   dashboard: {
-    title: 'Dashboard',
-    calendar: 'Calendar',
-    calendarToday: 'Today',
-    chart: 'Chart',
-    chartNoData: "You don't have any data on this month",
-    recentActivities: 'Recent activities',
-    emptyActivity: "You don't have any activity",
-    pendingRequests: 'Pending requests',
+    title: 'ダッシュボード',
+    calendar: 'カレンダー',
+    calendarToday: '本日',
+    chart: 'チャート',
+    chartNoData: "今月のデータはありません",
+    recentActivities: '最新の活動',
+    emptyActivity: "活動はありません",
+    pendingRequests: '承認待ちの一覧',
     havePendingRequests: 'You have pending requests in below groups:',
     emptyPendingRequests: "You don't have any pending requests in your groups",
     request: {
