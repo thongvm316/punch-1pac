@@ -19,6 +19,7 @@ jobs:
            POSTGRES_DB: 1punch_test
            POSTGRES_PASSWORD: ''
        - image: redis
+       - image: circleci/node:8.11-browsers
 
     steps:
       - checkout
@@ -29,16 +30,30 @@ jobs:
           - 1punch-api-v1-dependencies-{{ checksum "Gemfile.lock" }}
           # fallback to using the latest cache if no exact match is found
           - 1punch-api-v1-dependencies-
-
       - run:
           name: install dependencies
           command: |
             bundle install --jobs=4 --retry=3 --path vendor/bundle
-
       - save_cache:
           paths:
             - ./vendor/bundle
           key: 1punch-api-v1-dependencies-{{ checksum "Gemfile.lock" }}
+
+      - restore_cache:
+          name: Restore Yarn Package Cache
+          keys:
+            - yarn-packages-{{ .Branch }}-{{ checksum "yarn.lock" }}
+            - yarn-packages-{{ .Branch }}
+            - yarn-packages-master
+            - yarn-packages-
+      - run:
+          name: Install Dependencies
+          command: cd frontend && yarn install
+      - save_cache:
+          name: Save Yarn Package Cache
+          key: yarn-packages-{{ .Branch }}-{{ checksum "yarn.lock" }}
+          paths:
+            - node_modules/
 
       - run:
           name: setup config files
