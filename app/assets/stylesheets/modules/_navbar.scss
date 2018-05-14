@@ -1,0 +1,253 @@
+body.menu-opened {
+  overflow: hidden;
+
+  &::before {
+    @include respond-to-mobile() {
+      background-color: rgba($black-color, .5);
+      content: '';
+      display: block;
+      height: 100%;
+      left: 0;
+      position: absolute;
+      top: 0;
+      width: 100%;
+      z-index: 1;
+      transition: all .3s ease-in-out;
+    }
+  }
+}
+
+.nav {
+  left: 0;
+  padding-bottom: .8rem;
+  padding-top: .8rem;
+  position: fixed;
+  top: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+  z-index: 100;
+
+  &.inverse-nav {
+    background-color: $light-color;
+    border-bottom: 1px solid $gray-color-dark;
+
+    .navbar-logo {
+      background-image: url('/static/ico_logo.svg');
+    }
+
+    .navbar-link { color: $black-color; }
+
+    .signin-btn {
+      background-color: $primary-color;
+      color: $light-color;
+    }
+
+    .menu-burger {
+      background-image: url('/static/ico_burger-black.svg');
+    }
+  }
+
+  .navbar-control {
+    @include respond-to-mobile () {
+      justify-content: inherit;
+    }
+  }
+
+  .navbar-menu {
+    position: relative;
+    text-align: left;
+    justify-content: flex-end;
+
+    @include respond-to-tablet () {
+      flex-grow: 2;
+    }
+
+    @include respond-to-mobile () {
+      display: none;
+    }
+
+    &.open {
+      @include respond-to-mobile() {
+        background-color: $light-color;
+        display: block;
+        flex: unset;
+        width: 100%;
+      }
+    }
+  }
+
+  .navbar-logo {
+    background-image: url('/static/ico_logo-white.svg');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-position: center;
+    height: 1.5rem;
+    width: 6.5rem;
+  }
+
+  .navbar-utilities {
+    margin: 0;
+    list-style: none;
+
+    @include respond-to-mobile() {
+      padding-left: .4rem;
+      padding-top: .8rem;
+    }
+
+    li {
+      margin-top: 0;
+      display: inline-block;
+
+      @include respond-to-mobile() {
+        display: block;
+        font-size: .8rem;
+        line-height: 1.5;
+      }
+
+      &:not(:first-of-type) {
+        margin-left: 1.6rem;
+
+        @include respond-to-mobile() {
+          margin: 1.6rem 0 0 0;
+        }
+      }
+    }
+  }
+
+  .navbar-link {
+    color: $light-color;
+
+    &:hover,
+    &:focus {
+      box-shadow: unset;
+      outline: none;
+      text-decoration: none;
+    }
+  }
+
+  .signin-btn {
+    background-color: $light-color;
+    border-radius: 1.25rem;
+    border: 0;
+    color: $primary-color;
+    margin-left: 1.6rem;
+    padding: .4rem 1.2rem;
+
+    @include respond-to-mobile () {
+      display: none;
+    }
+  }
+
+  .menu-burger {
+    align-self: center;
+    background-image: url('/static/ico_burger.svg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    display: none;
+    height: 1.1rem;
+    width: 1.1rem;
+    transition: all .2s ease-in-out;
+
+    &.open {
+      background-image: url('/static/ico_close.svg');
+    }
+
+    @include respond-to-mobile () {
+      display: block;
+    }
+  }
+
+  .signin-form {
+    background-color: $light-color;
+    border-radius: 3px;
+    box-shadow: 0 .25rem 1rem 0 rgba(0,0,0,0.2);
+    display: none;
+    padding: .8rem;
+    position: absolute;
+    right: 0;
+    top: 60px;
+    width: 403px;
+
+    &.open {
+      display: block;
+    }
+
+    @include respond-to-mobile() {
+      border-bottom: .05rem solid $gray-color-light;
+      box-shadow: unset;
+      display: block;
+      padding: 1.6rem 0 .8rem 0;
+      position: static;
+      width: 100%;
+    }
+
+    .input-group {
+      @include respond-to-mobile() {
+        display: inline-block;
+        font-size: 0;
+        width: 100%;
+      }
+    }
+
+    .close {
+      background-image: url('/static/ico_close.svg');
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      cursor: pointer;
+      display: block;
+      height: .8rem;
+      width: .8rem;
+
+      @include respond-to-mobile () {
+        display: none;
+      }
+    }
+
+    p {
+      margin-bottom: .8rem;
+      line-height: 1;
+    }
+
+    span {
+      align-self: center;
+      margin-left: 8px;
+      font-size: .7rem;
+    }
+
+    input {
+      border-radius: 3px;
+      border: 1px solid $gray-color-dark;
+      font-size: .7rem;
+      height: auto;
+      padding: 0 .4rem;
+      text-align: right;
+
+      &:focus {
+        box-shadow: unset;
+        outline: none;
+      }
+
+      @include respond-to-mobile() {
+        display: inline-block;
+        width: calc(100% - 88px);
+        padding: .5rem .4rem;
+      }
+    }
+
+    .btn-primary {
+      height: auto;
+      line-height: 1;
+      margin-left: .8rem;
+      padding: .6rem 1.3rem;
+
+      @include respond-to-mobile() {
+        display: block;
+        margin-top: .8rem;
+        margin-left: 0;
+        width: 100%;
+      }
+    }
+  }
+}

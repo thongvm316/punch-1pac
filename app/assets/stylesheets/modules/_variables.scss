@@ -1,0 +1,124 @@
+$screen-pc: 1120px !default;
+$screen-mobile: 768px !default;
+
+// Core colors
+$primary-color: #439aff; // primary
+$primary-color-dark: darken($primary-color, 3%);
+$primary-color-darkest: #0052ac;
+$primary-color-light: lighten($primary-color, 3%);
+$secondary-color: #dcecff; //primary-light
+$secondary-color-dark: darken($secondary-color, 3%);
+$secondary-color-light: lighten($secondary-color, 3%);
+
+// Gray colors
+$dark-color: #2e3e48; // grayscale-5
+$light-color: #fff; // grayscale-0
+$gray-color: #abb2b6; // grayscale-3
+$gray-color-dark: #6c777e; // grayscale-4
+$gray-color-light: #e3e3e7; // grayscale-2
+$gray-color-lightest: #f0f3f7; // grayscale-1
+$black-color: #000;
+
+$border-color: $gray-color-light;
+$border-color-dark: $gray-color;
+$bg-color: $gray-color-lightest;
+$bg-color-dark: darken($bg-color, 3%);
+$bg-color-light: $light-color;
+
+// Control colors
+$success-color: #10b742;  // secondary-1
+$warning-color: #fc9f00;  //seondary-3
+$error-color: #fc4e5c;  // secondary-2
+$info-color: #ac68ff; //secondary-4
+$notice-color: #ff6ee4; // secondary-5
+
+$success-color-light: #d3f1dc; // secondary-1-light
+$error-color-light: #fedee1;  //secondary-2-light
+$warning-color-light: #feedd0;  //secondary-3-light
+$info-color-light: #ecddff; //secondary-4-light
+$notice-color-light: #ffe5fe; //secondary-5-light
+
+
+// Other colors
+$code-color: #e06870;
+$highlight-color: #ffe9b3;
+$body-bg: $bg-color-light;
+$body-font-color: #575757;
+$link-color: $primary-color;
+$link-color-dark: darken($link-color, 5%);
+
+// Fonts
+// Credit: https://www.smashingmagazine.com/2015/11/using-system-ui-fonts-practical-guide/
+$base-font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto;
+$mono-font-family: "SF Mono", "Segoe UI Mono", "Roboto Mono", Menlo, Courier, monospace;
+$fallback-font-family: "Helvetica Neue", sans-serif;
+$cjk-zh-font-family: $base-font-family, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", $fallback-font-family;
+$cjk-jp-font-family: $base-font-family, "Hiragino Sans", "Hiragino Kaku Gothic Pro", "Yu Gothic", YuGothic, Meiryo, $fallback-font-family;
+$cjk-ko-font-family: $base-font-family, "Malgun Gothic", $fallback-font-family;
+$body-font-family: $base-font-family, $fallback-font-family;
+
+// Unit sizes
+$unit-o: .05rem;
+$unit-h: .15rem;
+$unit-1: .2rem;
+$unit-2: .4rem;
+$unit-3: .6rem;
+$unit-4: .8rem;
+$unit-5: 1rem;
+$unit-6: 1.2rem;
+$unit-7: 1.4rem;
+$unit-8: 1.6rem;
+$unit-9: 1.8rem;
+$unit-10: 2rem;
+$unit-12: 2.4rem;
+$unit-16: 3.2rem;
+
+// Font sizes
+$html-font-size: 20px;
+$html-line-height: 1.5;
+$font-size: .7rem;
+$font-size-xs: .5rem;
+$font-size-sm: .6rem;
+$font-size-lg: .8rem;
+$line-height: 1rem;
+
+// Sizes
+$layout-spacing: $unit-2;
+$layout-spacing-sm: $unit-1;
+$layout-spacing-lg: $unit-4;
+$border-radius: $unit-h;
+$border-width: $unit-o;
+$border-width-lg: $unit-h;
+$control-size: $unit-9;
+$control-size-sm: $unit-7;
+$control-size-lg: $unit-10;
+$control-padding-x: $unit-2;
+$control-padding-x-sm: $unit-2 * .75;
+$control-padding-x-lg: $unit-2 * 1.5;
+$control-padding-y: ($control-size - $line-height) / 2 - $border-width;
+$control-padding-y-sm: ($control-size-sm - $line-height) / 2 - $border-width;
+$control-padding-y-lg: ($control-size-lg - $line-height) / 2 - $border-width;
+$control-icon-size: .8rem;
+
+$control-width-xs: 180px;
+$control-width-sm: 320px;
+$control-width-md: 640px;
+$control-width-lg: 980px;
+$control-width-xl: 1200px;
+
+// Responsive breakpoints
+$size-xs: 480px;
+$size-sm: 600px;
+$size-md: 840px;
+$size-lg: 980px;
+$size-xl: 1200px;
+$size-2x: 1440px;
+
+$responsive-breakpoint: $size-xs;
+
+// Z-index
+$zindex-0: 1;
+$zindex-1: 100;
+$zindex-2: 200;
+$zindex-3: 300;
+$zindex-4: 400;

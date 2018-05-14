@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="22px" height="22px" viewBox="0 0 22 22" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 49.3 (51167) - http://www.bohemiancoding.com/sketch -->
+    <title>9513BB25-C0E4-42AD-9AF3-963B690183D7</title>
+    <desc>Created with sketchtool.</desc>
+    <defs>
+        <linearGradient x1="0%" y1="100%" x2="100%" y2="0%" id="linearGradient-1">
+            <stop stop-color="#234FFF" offset="0%"></stop>
+            <stop stop-color="#539BF4" offset="100%"></stop>
+        </linearGradient>
+        <rect id="path-2" x="0" y="0" width="320" height="568"></rect>
+        <pattern id="pattern-3" width="7.2" height="7.2" x="-7.2" y="-7.2" patternUnits="userSpaceOnUse">
+            <use xlink:href="#image-4" transform="scale(0.15,0.15)"></use>
+        </pattern>
+        <image id="image-4" width="48" height="48" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAEGWlDQ1BrQ0dDb2xvclNwYWNlR2VuZXJpY1JHQgAAOI2NVV1oHFUUPrtzZyMkzlNsNIV0qD8NJQ2TVjShtLp/3d02bpZJNtoi6GT27s6Yyc44M7v9oU9FUHwx6psUxL+3gCAo9Q/bPrQvlQol2tQgKD60+INQ6Ium65k7M5lpurHeZe58853vnnvuuWfvBei5qliWkRQBFpquLRcy4nOHj4g9K5CEh6AXBqFXUR0rXalMAjZPC3e1W99Dwntf2dXd/p+tt0YdFSBxH2Kz5qgLiI8B8KdVy3YBevqRHz/qWh72Yui3MUDEL3q44WPXw3M+fo1pZuQs4tOIBVVTaoiXEI/MxfhGDPsxsNZfoE1q66ro5aJim3XdoLFw72H+n23BaIXzbcOnz5mfPoTvYVz7KzUl5+FRxEuqkp9G/Ajia219thzg25abkRE/BpDc3pqvphHvRFys2weqvp+krbWKIX7nhDbzLOItiM8358pTwdirqpPFnMF2xLc1WvLyOwTAibpbmvHHcvttU57y5+XqNZrLe3lE/Pq8eUj2fXKfOe3pfOjzhJYtB/yll5SDFcSDiH+hRkH25+L+sdxKEAMZahrlSX8ukqMOWy/jXW2m6M9LDBc31B9LFuv6gVKg/0Szi3KAr1kGq1GMjU/aLbnq6/lRxc4XfJ98hTargX++DbMJBSiYMIe9Ck1YAxFkKEAG3xbYaKmDDgYyFK0UGYpfoWYXG+fAPPI6tJnNwb7ClP7IyF+D+bjOtCpkhz6CFrIa/I6sFtNl8auFXGMTP34sNwI/JhkgEtmDz14ySfaRcTIBInmKPE32kxyyE2Tv+thKbEVePDfW/byMM1Kmm0XdObS7oGD/MypMXFPXrCwOtoYjyyn7BV29/MZfsVzpLDdRtuIZnbpXzvlf+ev8MvYr/Gqk4H/kV/G3csdazLuyTMPsbFhzd1UabQbjFvDRmcWJxR3zcfHkVw9GfpbJmeev9F08WW8uDkaslwX6avlWGU6NRKz0g/SHtCy9J30o/ca9zX3Kfc19zn3BXQKRO8ud477hLnAfc1/G9mrzGlrfexZ5GLdn6ZZrrEohI2wVHhZywjbhUWEy8icMCGNCUdiBlq3r+xafL549HQ5jH+an+1y+LlYBifuxAvRN/lVVVOlwlCkdVm9NOL5BE4wkQ2SMlDZU97hX86EilU/lUmkQUztTE6mx1EEPh7OmdqBtAvv8HdWpbrJS6tJj3n0CWdM6busNzRV3S9KTYhqvNiqWmuroiKgYhshMjmhTh9ptWhsF7970j/SbMrsPE1suR5z7DMC+P/Hs+y7ijrQAlhyAgccjbhjPygfeBTjzhNqy28EdkUh8C+DU9+z2v/oyeH791OncxHOs5y2AtTc7nb/f73TWPkD/qwBnjX8BoJ98VQNcC+8AAADBSURBVGgF7ZdBDoAgDASJ8Vn+Xv+lcKghHggIPWwzJAQVWNspBU2J0iRw5N5S3crmpowwBJYQIAeWYEREmAA5IBw8TF9CgBxYghERYQJXtv0Utj/d2fhS3Yr8Dw0OuK2NTuEwEfiemKP3ZaexhK1b41g/s+t6dxp93ztePgJGyKs12l76ST4COOC2NjqF5SOwdzr6d1j5mKNAYILAe2JOaDSnyidx0zs6AxAgBwIEERemCJADU/iYHIAAORAgiG0XHti1GWyhsUX6AAAAAElFTkSuQmCC"></image>
+        <path d="M13.7864195,12.0000088 L21.8436498,3.94272175 C22.3369142,3.44940985 22.3369142,2.64962958 21.8436498,2.15636456 C21.3503385,1.66305266 20.5505123,1.66305266 20.0572479,2.15636456 L11.9999707,10.2136516 L3.78635501,2 C3.29304372,1.5066881 2.49326442,1.5066881 2,2 C1.50673558,2.4933119 1.5066887,3.29309217 2,3.78635719 L10.2136157,12.0000088 L2,20.2136428 C1.5066887,20.7069547 1.5066887,21.506735 2,22 C2.4933113,22.4933119 3.29309059,22.493265 3.78635501,22 L11.9999707,13.786366 L20.2135981,22 C20.7069094,22.4933119 21.5067356,22.493265 22,22 C22.4932644,21.5066881 22.4932644,20.7069078 22,20.2136428 L13.7864195,12.0000088 Z" id="path-5"></path>
+    </defs>
+    <g id="Landing-Pages" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Mobile-Menu" transform="translate(-282.000000, -21.000000)">
+            <g id="Rectangle-5">
+                <use fill="url(#linearGradient-1)" xlink:href="#path-2"></use>
+                <use fill-opacity="0.2" fill="url(#pattern-3)" xlink:href="#path-2"></use>
+            </g>
+            <rect id="Rectangle-16" fill-opacity="0.5" fill="#363636" x="0" y="0" width="320" height="568"></rect>
+            <rect id="Rectangle-12" fill="#FFFFFF" x="0" y="0" width="320" height="393"></rect>
+            <g>
+                <rect id="Rectangle" x="0" y="0" width="320" height="64"></rect>
+                <g id="icon/cancel" transform="translate(281.000000, 20.000000)">
+                    <mask id="mask-6" fill="white">
+                        <use xlink:href="#path-5"></use>
+                    </mask>
+                    <use id="002-cancel" fill="#000000" fill-rule="nonzero" xlink:href="#path-5"></use>
+                    <g id="color-/-grayscale-/-4" mask="url(#mask-6)" fill="#6C777E" fill-rule="evenodd">
+                        <rect id="color/header" x="0" y="0" width="24" height="24"></rect>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
