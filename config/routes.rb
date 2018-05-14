@@ -82,7 +82,7 @@ Rails.application.routes.draw do
   get 'terms'   => 'pages#terms'
   get 'privacy' => 'pages#privacy'
   get '403'     => 'pages#page_403'
-
+  get '500'     => 'pages#page_500'
   devise_for :admins, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
 
