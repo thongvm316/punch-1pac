@@ -45,7 +45,6 @@ export default {
     return {
       day: '',
       params: {
-        attendance_id: '',
         attendance_day: '',
         attended_at: '',
         left_at: '',
@@ -95,8 +94,7 @@ export default {
   created () {
     this.clearRequestErrors()
     if (this.attendance) {
-      this.day = this.attendance.day
-      this.params.attendance_id = this.attendance.id
+      this.day = this.params.attendance_day = this.attendance.day
       const statuses = ['attended_at', 'left_at']
       statuses.forEach(key => { this.params[key] = this.attendance[key] })
     } else if (this.request) {

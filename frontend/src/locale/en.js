@@ -177,7 +177,7 @@ export default {
       attendedAt: 'Attended At',
       leftAt: 'Left At',
       reason: 'Reason',
-      rejectReason: 'Comment'
+      rejectReason: 'Reject Reason'
     }
   },
   groups: {

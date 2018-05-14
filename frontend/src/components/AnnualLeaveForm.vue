@@ -1,12 +1,12 @@
 <template>
   <div>
-    <div class="form-group" :class="{ 'has-error': errors.annual_leave_day }">
+    <div class="form-group" :class="{ 'has-error': errors.attendance_day }">
       <label class="form-label">{{ $t('annualLeave.labels.annualLeaveDay') }}</label>
       <flat-pickr
         :config="{mode: 'single', locale: flatpickrLocaleMapper[currentUser.language]}"
         class="form-input daterange-picker"
-        v-model="params.annual_leave_day"/>
-      <p class="form-input-hint" v-if="errors.annual_leave_day">{{ $t('annualLeave.labels.annualLeaveDay') }} {{ errors.annual_leave_day[0] }}</p>
+        v-model="params.attendance_day"/>
+      <p class="form-input-hint" v-if="errors.attendance_day">{{ $t('annualLeave.labels.annualLeaveDay') }} {{ errors.attendance_day[0] }}</p>
     </div>
     <div class="form-group" :class="{ 'has-error': errors.reason }">
       <label class="form-label">{{ $t('annualLeave.labels.reason') }}</label>
@@ -37,7 +37,7 @@ export default {
     return {
       errors: {},
       params: {
-        annual_leave_day: '',
+        attendance_day: '',
         reason: ''
       }
     }
@@ -85,7 +85,7 @@ export default {
     }
 
     if (this.annualDay) {
-      this.params.annual_leave_day = this.annualDay
+      this.params.attendance_day = this.annualDay
     }
   }
 }
