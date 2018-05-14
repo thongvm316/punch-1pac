@@ -186,7 +186,7 @@ ActiveRecord::Schema.define(version: 20180511093242) do
     t.string "admin_reason"
     t.bigint "admin_id"
     t.integer "kind", default: 0, null: false
-    t.date "attendance_day", null: false
+    t.date "attendance_day"
     t.index ["user_id"], name: "index_requests_on_user_id"
   end
 
