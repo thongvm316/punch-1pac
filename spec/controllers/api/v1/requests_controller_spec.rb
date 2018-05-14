@@ -137,7 +137,7 @@ RSpec.describe Api::V1::RequestsController, type: :controller do
       let(:attendance) { create :attendance, user: login_user }
 
       context 'when params are invalid' do
-        let(:request_params) { attributes_for(:request, attendance_id: attendance.id, reason: 'a' * 501) }
+        let(:request_params) { attributes_for(:request, attendance_day: attendance.day, reason: 'a' * 501) }
 
         subject { post :create, params: { request: request_params } }
 
@@ -146,7 +146,7 @@ RSpec.describe Api::V1::RequestsController, type: :controller do
       end
 
       context 'when params are valid' do
-        let(:request_params) { attributes_for(:request, attendance_id: attendance.id) }
+        let(:request_params) { attributes_for(:request, attendance_day: attendance.day) }
 
         subject { post :create, params: { request: request_params } }
 
@@ -160,16 +160,16 @@ RSpec.describe Api::V1::RequestsController, type: :controller do
 
     context 'when create annual_leave request' do
       context 'when params are invalid' do
-        let(:request_params) { attributes_for(:request, reason: 'a' * 501, annual_leave_day: nil, kind: 'annual_leave') }
+        let(:request_params) { attributes_for(:request, reason: 'a' * 501, attendance_day: nil, kind: 'annual_leave') }
 
         subject { post :create, params: { request: request_params } }
 
         its(:code) { is_expected.to eq '422' }
-        its(:body) { is_expected.to be_json_as(response_422(reason: Array, annual_leave_day: Array)) }
+        its(:body) { is_expected.to be_json_as(response_422(reason: Array, attendance_day: Array)) }
       end
 
       context 'when params are valid' do
-        let(:request_params) { attributes_for(:request, kind: 'annual_leave', annual_leave_day: Time.current) }
+        let(:request_params) { attributes_for(:request, kind: 'annual_leave', attendance_day: Time.current) }
 
         subject { post :create, params: { request: request_params } }
 
@@ -178,7 +178,7 @@ RSpec.describe Api::V1::RequestsController, type: :controller do
         it 'should change number of request' do
           expect { subject }.to change(Request, :count).by(1)
           req = Request.last
-          expect(req.annual_leave_day).to be_a(Date)
+          expect(req.attendance_day).to be_a(Date)
           expect(req.kind).to eq 'annual_leave'
         end
       end
@@ -220,17 +220,17 @@ RSpec.describe Api::V1::RequestsController, type: :controller do
 
     context 'when request.kind = annual_leave' do
       let(:now) { Date.current }
-      let(:req) { create :request, user: login_user, kind: 'annual_leave', annual_leave_day: now }
+      let(:req) { create :request, user: login_user, kind: 'annual_leave', attendance_day: now }
 
       context 'when params are invalid' do
-        subject { patch :update, params: { id: req.id, request: { reason: 'a' * 501, annual_leave_day: nil } } }
+        subject { patch :update, params: { id: req.id, request: { reason: 'a' * 501, attendance_day: nil } } }
 
         its(:code) { is_expected.to eq '422' }
-        its(:body) { is_expected.to be_json_as(response_422(reason: Array, annual_leave_day: Array)) }
+        its(:body) { is_expected.to be_json_as(response_422(reason: Array, attendance_day: Array)) }
       end
 
       context 'when params are valid' do
-        subject { patch :update, params: { id: req.id, request: { reason: 'hehe', annual_leave_day: now + 1.day } } }
+        subject { patch :update, params: { id: req.id, request: { reason: 'hehe', attendance_day: now + 1.day } } }
 
         its(:code) { is_expected.to eq '200' }
         its(:body) { is_expected.to be_json_as(response_request) }
@@ -238,7 +238,7 @@ RSpec.describe Api::V1::RequestsController, type: :controller do
           is_expected
           req.reload
           expect(req.reason).to eq 'hehe'
-          expect(req.annual_leave_day).to eq(now + 1.day)
+          expect(req.attendance_day).to eq(now + 1.day)
         end
       end
     end
@@ -257,7 +257,7 @@ RSpec.describe Api::V1::RequestsController, type: :controller do
       let(:company) { create :company, :with_business_days }
       let(:login_user) { create :user, company: company, role: 'member' }
       let(:attendance) { create :attendance, user: login_user, attended_at: '01:30', attending_status: 'attend_late' }
-      let(:req) { create :request, attendance: attendance, user: create(:user, company: company) }
+      let(:req) { create :request, attendance_day: attendance.day, user: create(:user, company: company) }
 
       subject { post :approve, params: { id: req.id } }
 
@@ -281,7 +281,7 @@ RSpec.describe Api::V1::RequestsController, type: :controller do
         let(:login_user) { create :user, :with_groups, company: company, role: 'admin' }
         let(:req_user) { create :user, groups: login_user.groups, company: company }
         let(:attendance) { create :attendance, user: req_user, attended_at: '08:30', attending_status: 'attend_late' }
-        let(:req) { create :request, attended_at: '07:55', left_at: '18:00', attendance: attendance, user: req_user }
+        let(:req) { create :request, attended_at: '07:55', left_at: '18:00', attendance_day: attendance.day, user: req_user }
 
         before { Timecop.freeze(Time.zone.local(2018, 1, 3)) }
 
@@ -293,7 +293,7 @@ RSpec.describe Api::V1::RequestsController, type: :controller do
         it do
           is_expected
           req.reload
-          attendance = Attendance.find(req.attendance.id)
+          attendance = Attendance.find_by(day: req.attendance_day)
           expect(req.status).to eq 'approved'
           expect(attendance.attended_at.strftime('%H:%M')).to eq '07:55'
           expect(attendance.attending_status).to eq 'attend_ok'
@@ -306,7 +306,7 @@ RSpec.describe Api::V1::RequestsController, type: :controller do
         let(:login_user) { create :user, :with_groups, company: company, role: 'admin' }
         let(:req_user) { create :user, groups: login_user.groups, company: company }
         let(:attendance) { create :attendance, user: req_user, attended_at: '08:30', left_at: '18:00', day: Time.zone.local(2018, 4, 27), attending_status: 'attend_late' }
-        let(:req) { create :request, attended_at: '08:00', left_at: '18:00', attendance: attendance, user: req_user }
+        let(:req) { create :request, attended_at: '08:00', left_at: '18:00', attendance_day: attendance.day, user: req_user }
 
         subject { post :approve, params: { id: req.id } }
 
@@ -314,7 +314,7 @@ RSpec.describe Api::V1::RequestsController, type: :controller do
         it do
           is_expected
           req.reload
-          attendance = Attendance.find(req.attendance.id)
+          attendance = Attendance.find_by(day: req.attendance_day)
           expect(req.status).to eq 'approved'
           expect(attendance.attending_status).to eq 'attend_ok'
           expect(attendance.working_hours).to eq 28800
@@ -326,7 +326,7 @@ RSpec.describe Api::V1::RequestsController, type: :controller do
         let(:login_user) { create :user, :with_groups, company: company, role: 'admin' }
         let(:req_user) { create :user, groups: login_user.groups, company: company }
         let(:attendance) { create :attendance, user: req_user, attended_at: '07:56', left_at: '17:00', day: Time.zone.local(2018, 4, 27), leaving_status: 'leave_early' }
-        let(:req) { create :request, attended_at: '07:56', left_at: '18:30', attendance: attendance, user: req_user }
+        let(:req) { create :request, attended_at: '07:56', left_at: '18:30', attendance_day: attendance.day, user: req_user }
 
         subject { post :approve, params: { id: req.id } }
 
@@ -334,7 +334,7 @@ RSpec.describe Api::V1::RequestsController, type: :controller do
         it do
           is_expected
           req.reload
-          attendance = Attendance.find(req.attendance.id)
+          attendance = Attendance.find_by(day: req.attendance_day)
           expect(req.status).to eq 'approved'
           expect(attendance.attended_at.strftime('%H:%M')).to eq '07:56'
           expect(attendance.leaving_status).to eq 'leave_ok'
@@ -346,7 +346,7 @@ RSpec.describe Api::V1::RequestsController, type: :controller do
         let(:login_user) { create :user, :with_groups, company: company, role: 'admin' }
         let(:req_user) { create :user, :with_groups, company: company }
         let(:attendance) { create :attendance, user: req_user }
-        let(:req) { create :request, attendance: attendance, user: req_user }
+        let(:req) { create :request, attendance_day: attendance.day, user: req_user }
 
         subject { post :approve, params: { id: req.id } }
 
@@ -357,7 +357,7 @@ RSpec.describe Api::V1::RequestsController, type: :controller do
 
     context 'when request is not pending' do
       let(:login_user) { create :user, company: company, role: 'admin' }
-      let(:req) { create :request, attended_at: '07:55', attendance: attendance, user: create(:user, company: company) }
+      let(:req) { create :request, attended_at: '07:55', attendance_day: attendance.day, user: create(:user, company: company) }
 
       subject { post :approve, params: { id: req.id } }
 
@@ -406,7 +406,7 @@ RSpec.describe Api::V1::RequestsController, type: :controller do
       context 'when request.user is not in login_user.group' do
         let(:req_user) { create :user, :with_groups, company: company }
         let(:attendance) { create :attendance, user: req_user }
-        let(:req) { create :request, attendance: attendance, user: req_user }
+        let(:req) { create :request, attendance_day: attendance.day, user: req_user }
 
         subject { post :approve, params: { id: req.id } }
 

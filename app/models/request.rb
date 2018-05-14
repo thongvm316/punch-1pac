@@ -4,24 +4,22 @@
 #
 # Table name: requests
 #
-#  id               :integer          not null, primary key
-#  attendance_id    :integer
-#  user_id          :integer          not null
-#  reason           :string(500)      not null
-#  attended_at      :time
-#  left_at          :time
-#  status           :integer          default("pending"), not null
-#  created_at       :datetime         not null
-#  updated_at       :datetime         not null
-#  admin_reason     :string
-#  admin_id         :integer
-#  annual_leave_day :date
-#  kind             :integer          default("attendance"), not null
+#  id             :integer          not null, primary key
+#  user_id        :integer          not null
+#  reason         :string(500)      not null
+#  attended_at    :time
+#  left_at        :time
+#  status         :integer          default("pending"), not null
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
+#  admin_reason   :string
+#  admin_id       :integer
+#  kind           :integer          default("attendance"), not null
+#  attendance_day :date             not null
 #
 # Indexes
 #
-#  index_requests_on_attendance_id  (attendance_id)
-#  index_requests_on_user_id        (user_id)
+#  index_requests_on_user_id  (user_id)
 #
 
 class Request < ApplicationRecord
@@ -33,9 +31,8 @@ class Request < ApplicationRecord
   enum status: { pending: 0, approved: 1, rejected: 2 }
   enum kind: { attendance: 0, annual_leave: 1 }
 
-  validates :attendance, presence: true, if: -> { attendance? }
+  validates :attendance_day, presence: true
   validates :admin, presence: true, if: -> { !pending? }
-  validates :annual_leave_day, presence: true, if: -> { annual_leave? }
   validates :admin_reason, length: { maximum: 500 }, if: -> { rejected? }
   validates :reason, presence: true, length: { maximum: 500 }
   validate :both_attended_at_left_at_cannot_be_blank, if: -> { attendance? }
