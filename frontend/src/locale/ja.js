@@ -11,7 +11,7 @@ export default {
     },
     explain: "このグループにメンバーを追加すると、グループのアドミンはメンバーの勤務状況を見ることができます。",
     tableHeader: {
-      email: 'メール',
+      email: 'メールアドレス',
       name: 'ユーザー名',
       actions: '操作',
       gender: '性別',
@@ -24,7 +24,7 @@ export default {
     },
     placeholder: {
       description: '説明',
-      filterByEmail: 'メールで検索'
+      filterByEmail: 'メールアドレスを検索'
     },
     modal: {
       editUserTitle: 'ユーザー情報の編集',
@@ -49,7 +49,7 @@ export default {
     notifications: 'お知らせ',
     noNotificationMsg: '新しいお知らせがありません',
     settings: '個人設定',
-    companySettings: '会社情報の設定',
+    companySettings: '企業の設定',
     seeAll: '全て見る',
     logout: 'ログアウト',
     in: '出勤時間',
@@ -68,7 +68,7 @@ export default {
     privacy: '個人情報保護方針',
     help: 'ヘルプ',
     contact: 'お問い合わせ',
-    about: '会社概要'
+    about: '企業概要'
   },
   meta: {
     attendance_statuses: {
@@ -145,474 +145,474 @@ export default {
     recentActivities: '最新の活動',
     emptyActivity: "活動はありません",
     pendingRequests: '承認待ちの一覧',
-    havePendingRequests: 'You have pending requests in below groups:',
-    emptyPendingRequests: "You don't have any pending requests in your groups",
+    havePendingRequests: '承認待ちの依頼は以下のグロープにあります：',
+    emptyPendingRequests: "あなたのグループに承認待ちの依頼は現在ありません。",
     request: {
-      title: 'What kind of request do you want to send ?',
-      label: 'Kind',
+      title: 'どのような依頼を送信しますか？',
+      label: '種別',
       kind: {
-        attendance: 'Request for editing attendance',
-        annual_leave: 'Request an annual leave'
+        attendance: '出席者の編集依頼',
+        annual_leave: '年次休暇の依頼'
       }
     }
   },
   notifications: {
-    title: 'Notifications',
+    title: 'お知らせ',
     btn: {
-      approve: 'Approve',
-      reject: 'Reject'
+      approve: '承認',
+      reject: '拒否'
     },
     attendance: {
-      punch_in: '<span class="text-bold-600">{name}</span> punched in',
-      punch_out: '<span class="text-bold-600">{name}</span> punched out'
+      punch_in: '<span class="text-bold-600">{name}</span>は出勤しました',
+      punch_out: '<span class="text-bold-600">{name}</span>は退勤しました'
     },
     request: {
-      create: '<span class="text-bold-600">{name}</span> created a request',
-      update: '<span class="text-bold-600">{name}</span> updated a request',
-      approve: '<span class="text-bold-600">{name}</span> approved your request',
-      reject: '<span class="text-bold-600">{name}</span> rejected your request'
+      create: '<span class="text-bold-600">{name}</span>は依頼を作成しました',
+      update: '<span class="text-bold-600">{name}</span>は依頼を更新しました',
+      approve: '<span class="text-bold-600">{name}</span>はあなたの依頼を承認しました',
+      reject: '<span class="text-bold-600">{name}</span>はあなたの依頼を拒否しました'
     },
     labels: {
-      date: 'Date',
-      attendedAt: 'Attended At',
-      leftAt: 'Left At',
-      reason: 'Reason',
-      rejectReason: 'Reject Reason'
+      date: '日付',
+      attendedAt: '出勤時間',
+      leftAt: '退勤時間',
+      reason: '理由',
+      rejectReason: '拒否理由'
     }
   },
   groups: {
-    title: 'Groups',
+    title: 'グループ一覧',
     btn: {
-      add: 'Add Group',
-      leave: 'Leave',
-      submit: 'Submit',
-      export: 'Export CSV'
+      add: 'グループの追加',
+      leave: '抜け',
+      submit: '提出',
+      export: 'CSV出力'
     },
     member: ' | 1 member | {count} members',
     labels: {
-      name: 'Name',
-      description: 'Description',
-      image: 'Image'
+      name: 'ユーザー名',
+      description: '説明',
+      image: '画像'
     },
     placeholder: {
-      name: 'Name',
-      description: 'Description',
-      filterByName: 'Filter by name'
+      name: 'グループ名',
+      description: '説明',
+      filterByName: 'グループ名で検察'
     },
     modal: {
-      addTitle: 'Add group'
+      addTitle: 'グループの追加'
     }
   },
   requests: {
-    title: 'Requests',
-    groupTitle: 'Requests of {name} group',
+    title: '申請一覧',
+    groupTitle: '{name}グループの依頼',
     placeholder: {
-      filterByGroup: 'Filter by group',
-      filterByStatus: 'Filter by status',
-      filterByKind: 'Filter by kind'
+      filterByGroup: 'グループ名を検索',
+      filterByStatus: '状態で絞り込み',
+      filterByKind: '種別で絞り込み'
     },
     labels: {
-      date: 'Date',
-      attendedAt: 'Attended At',
-      leftAt: 'Left At',
-      reason: 'Reason',
-      rejectReason: 'Reject Reason'
+      date: '日付',
+      attendedAt: '出勤時間',
+      leftAt: '退勤時間',
+      reason: '理由',
+      rejectReason: '拒否理由'
     },
     tableHeader: {
-      name: 'Name',
-      email: 'Email',
-      date: 'Date',
-      attendedAt: 'Attended At',
-      status: 'Status',
-      leftAt: 'Left At',
-      reason: 'Reason',
-      actions: 'Actions',
-      admin: 'Admin',
-      kind: 'Kind',
-      rejectReason: 'Reject Reason'
+      name: 'ユーザー名',
+      email: 'メールアドレス',
+      date: '日付',
+      attendedAt: '出勤時間',
+      status: '申請状態',
+      leftAt: '退勤時間',
+      reason: '理由',
+      actions: '操作',
+      admin: 'アドミン',
+      kind: '種別',
+      rejectReason: '拒否理由'
     },
     btn: {
-      save: 'Save',
-      reject: 'Reject'
+      save: '保存',
+      reject: '拒否'
     },
     modal: {
-      editTitle: 'Edit request'
+      editTitle: '申請の変種'
     },
     tooltip: {
-      edit: 'Edit request',
-      delete: 'Delete request',
-      approve: 'Approve request',
-      reject: 'Reject request'
+      edit: '編集する',
+      delete: '削除する',
+      approve: '承認する',
+      reject: '拒否する'
     },
     errors: {
       bothAttendedLeft: 'Both attended at and left at {msg}'
     },
     confirmDialog: {
-      deleteTitle: 'Delete request',
-      deleteMsg: 'Are you sure to delete this request permanently ?'
+      deleteTitle: '依頼の削除',
+      deleteMsg: 'この依頼を削除してよろしいですか？'
     },
     kinds: {
-      annual_leave: 'Leave',
-      attendance: 'Attendance'
+      annual_leave: '休暇',
+      attendance: '出席'
     }
   },
   attendances: {
-    title: 'Attendances',
-    groupTitle: 'Attendances of {name} group',
+    title: '勤務状況',
+    groupTitle: '{name}グループの勤務状況',
     placeholder: {
-      fromDate: 'From date',
-      toDate: 'To date',
-      filterByStatus: 'Filter by status',
-      filterByGroup: 'Filter by group',
-      filterByUser: 'Filter by user'
+      fromDate: '日付から',
+      toDate: '日付まで',
+      filterByStatus: '状態で絞り込み',
+      filterByGroup: 'グループ名を検索',
+      filterByUser: 'ユーザー名を検索'
     },
     tableHeader: {
-      name: 'Name',
-      email: 'Email',
-      date: 'Date',
-      attendedAt: 'Attended at',
-      leftAt: 'Left at',
-      status: 'Status',
-      actions: 'Actions'
+      name: 'ユーザー名',
+      email: 'メールアドレス',
+      date: '日付',
+      attendedAt: '出勤時間',
+      leftAt: '退勤時間',
+      status: '状態',
+      actions: '操作'
     },
     labels: {
-      date: 'Date',
-      attendedAt: 'Attended At',
-      leftAt: 'Left At',
-      reason: 'Reason'
+      date: '日付',
+      attendedAt: '出勤時間',
+      leftAt: '退勤時間',
+      reason: '理由'
     },
     btn: {
-      save: 'Save',
-      add: 'Add'
+      save: '保存する',
+      add: '作成する'
     },
     modal: {
-      addTitle: 'Add request'
+      addTitle: '依頼の作成'
     },
     tooltip: {
-      addRequest: 'Add request'
+      addRequest: '依頼を作成する'
     }
   },
   user: {
-    title: 'Settings for {name}',
+    title: '{name}の設定',
     profile: {
-      title: 'Profile',
+      title: 'プロフィール',
       labels: {
-        avatar: 'Avatar',
-        email: 'Email',
-        name: 'Name',
-        gender: 'Gender',
-        position: 'Position',
-        language: 'Language',
-        role: 'Role'
+        avatar: '画像',
+        email: 'メールアドレス',
+        name: 'ユーザー名',
+        gender: '性別',
+        position: '役職',
+        language: '言語',
+        role: 'アカウントの種類'
       },
       btn: {
-        save: 'Save'
+        save: '保存'
       }
     },
     password: {
-      title: 'Password',
+      title: 'パスワード',
       labels: {
-        currentPassword: 'Current password',
-        newPassword: 'New password',
-        confirmNewPassword: 'Confirm new password'
+        currentPassword: '現パスワード',
+        newPassword: '新パスワード',
+        confirmNewPassword: '新パスワード（確認）'
       },
       btn: {
-        save: 'Save'
+        save: '保存'
       }
     },
     security: {
-      title: 'Security',
-      currentSession: 'Current session',
+      title: 'セキュリティ',
+      currentSession: '現在のセッション',
       tableHeader: {
-        client: 'Client',
+        client: 'クライアント',
         os: 'OS',
-        ip: 'IP address',
-        lastSignedIn: 'Last signed in'
+        ip: 'IPアドレス',
+        lastSignedIn: '最後のログイン日時'
       },
       btn: {
-        revoke: 'Revoke'
+        revoke: '取り消す'
       }
     }
   },
   company: {
-    title: 'Company settings',
+    title: '企業の設定',
     profile: {
-      title: 'Profile',
+      title: 'プロフィール',
       labels: {
-        logo: 'Logo',
-        name: 'Name',
-        industry: 'Industry',
-        country: 'Country',
-        address: 'Address',
-        phoneNum: 'Phone number',
-        postalCode: 'Postal code',
-        taxCode: 'Tax code'
+        logo: 'ロゴ画像',
+        name: '企業名',
+        industry: '業種',
+        country: '所在地（国）',
+        address: '所在地（住所）',
+        phoneNum: '電話番号',
+        postalCode: '郵便番号',
+        taxCode: '納税者番号'
       },
       btn: {
-        save: 'Save'
+        save: '保存'
       }
     },
     businessDays: {
-      title: 'Business days',
+      title: '営業日',
       tableHeader: {
-        weekday: 'Weekday',
-        morningStartAt: 'Morning start at',
-        morningEndAt: 'Morning end at',
-        afternoonStartAt: 'Afternoon start at',
-        afternoonEndAt: 'Afternoon end at',
-        actions: 'Actions'
+        weekday: '曜日',
+        morningStartAt: '勤務開始',
+        morningEndAt: '休憩開始',
+        afternoonStartAt: '休憩終了',
+        afternoonEndAt: '勤務定時',
+        actions: '操作'
       },
       labels: {
-        weekday: 'Weekday',
-        morningStartAt: 'Morning start at',
-        morningEndAt: 'Morning end at',
-        afternoonStartAt: 'Afternoon start at',
-        afternoonEndAt: 'Afternoon end at'
+        weekday: '曜日',
+        morningStartAt: '勤務開始',
+        morningEndAt: '休憩開始',
+        afternoonStartAt: '休憩終了',
+        afternoonEndAt: '勤務定時'
       },
       btn: {
-        add: 'Add Business day',
-        submit: 'Submit',
-        save: 'Save'
+        add: '営業日の追加',
+        submit: '追加',
+        save: '保存'
       },
       modal: {
-        addTitle: 'Add business day',
-        editTitle: 'Edit business day'
+        addTitle: '営業日の追加',
+        editTitle: '営業日の編集'
       },
       placeholder: {
-        chooseWeekday: 'Choose a weekday'
+        chooseWeekday: '曜日を選択してください'
       },
       tooltip: {
-        edit: 'Edit Business day',
-        delete: 'Delete Business day'
+        edit: '営業日の編集',
+        delete: '営業日の削除'
       }
     },
     allowedIPs: {
-      title: 'Allowed IPs',
+      title: '許可されたIP',
       tableHeader: {
-        ipAddress: 'IP address',
-        createdAt: 'Created at',
-        actions: 'Actions'
+        ipAddress: 'IPアドレス',
+        createdAt: '作成日',
+        actions: '操作'
       },
       labels: {
-        ipAddress: 'IP address'
+        ipAddress: 'IPアドレス'
       },
       btn: {
-        add: 'Add IP address',
-        submit: 'Submit',
-        save: 'Save'
+        add: 'IPアドレスの追加',
+        submit: '追加',
+        save: '保存'
       },
       modal: {
-        addTitle: 'Add IP address',
-        editTitle: 'Edit IP address'
+        addTitle: 'IPアドレスの追加',
+        editTitle: 'IPアドレスの編集'
       },
       tooltip: {
-        edit: 'Edit IP address',
-        delete: 'Delete IP address'
+        edit: '編集する',
+        delete: '削除する'
       }
     },
     timezoneAndLanguage: {
-      title: 'Time',
+      title: '時刻',
       labels: {
-        timezone: 'Timezone',
-        breaktime: 'Break time'
+        timezone: '時刻',
+        breaktime: '休憩時間'
       },
       btn: {
-        save: 'Save'
+        save: '保存'
       },
       msg: {
-        success: "Company's timezone and language are updated"
+        success: "企業の言語と時刻の情報が更新さレました"
       }
     },
     holidays: {
-      title: 'Holidays',
-      explain: "Import country's holidays for your company, then 1Punch will not count a holiday as leaving day",
+      title: '休日',
+      explain: "あなたの企業の祝日を追加すると、休日としてカウントされます",
       tableHeader: {
-        name: 'Name',
-        startAt: 'Start at',
-        endAt: 'End at',
-        actions: 'Actions'
+        name: '休日名',
+        startAt: '開始',
+        endAt: '終了',
+        actions: '操作'
       },
       labels: {
-        name: 'Name',
-        startAt: 'Start at',
-        endAt: 'End at'
+        name: '休日名',
+        startAt: '開始',
+        endAt: '終了'
       },
       placeholder: {
-        chooseCountry: 'Choose a country',
-        filterByName: 'Filter by name',
-        fromDate: 'From date',
-        toDate: 'To date'
+        chooseCountry: '国を選択してください',
+        filterByName: '休日を検索',
+        fromDate: '日付から',
+        toDate: '日付まで'
       },
       btn: {
-        import: 'Import',
-        add: 'Add holiday',
-        submit: 'Submit',
-        save: 'Save'
+        import: '取り込む',
+        add: '休日の追加',
+        submit: '追加',
+        save: '保存'
       },
       modal: {
-        addTitle: 'Add holiday',
-        editTitle: 'Edit holiday'
+        addTitle: '休日の追加',
+        editTitle: '休日の編集'
       },
       tooltip: {
-        edit: 'Edit holiday',
-        delete: 'Delete holiday'
+        edit: '編集する',
+        delete: '削除する'
       },
       msg: {
-        importSuccess: 'Imported national holidays of {country}',
-        blankOrAlreadyImported: 'You already imported national days of {country} or they are not existed'
+        importSuccess: '{country}の祝日を取り込みました',
+        blankOrAlreadyImported: '{country}の祝日は既に取り込みました、または存在していません'
       }
     },
     users: {
-      title: 'Users',
+      title: 'ユーザー',
       add: {
-        title: 'Add user',
-        successMsg: 'An user is created successfully',
-        note: 'An email contains login information is sent to user. Please ensure that email address is correct',
+        title: 'ユーザーの追加',
+        successMsg: '新しいユーザーが登録されました',
+        note: 'ログイン情報が含まれたメールはユーザーに送信されました。メールボックスをチェックしてください',
         labels: {
-          name: 'Name',
-          email: 'Email',
-          role: 'Role',
-          group: 'Group'
+          name: 'ユーザー名',
+          email: 'メールアドレス',
+          role: 'アカウントの種類',
+          group: 'グループ'
         },
         placeholder: {
-          name: 'Name',
-          email: 'Email',
-          chooseGroup: 'Choose a group'
+          name: '氏名',
+          email: 'メールアドレス',
+          chooseGroup: 'グループを選択してください'
         },
         btn: {
-          submit: 'Submit'
+          submit: '追加'
         }
       },
       addMulti: {
-        title: 'Add multi users',
-        successCSVMsg: 'Users in csv file are created',
-        note: 'An email contains login information is sent to user. Please ensure that email address is correct',
-        errorMsg: 'There are incorrect information at rows {rows}',
-        download: 'Download template',
-        templateGuide: 'Please download the CSV file above. Fill out the cells and upload the file',
+        title: 'ユーザーの一括追加',
+        successCSVMsg: 'CSVファイルに指定されたユーザーの全ては追加しました',
+        note: 'ログイン情報が含まれたメールはユーザーに送信されました。メールボックスをチェックしてください',
+        errorMsg: '{rows}に不正な情報があります',
+        download: 'ユーザ一括追加用CSVテンプレート',
+        templateGuide: '上記のCSVテンプレートをダウンロードしてください. 内容を編集後、CSVファイルをアップロードしてください',
         labels: {
-          csvFile: 'CSV file'
+          csvFile: 'CSVファイル'
         },
         btn: {
-          submit: 'Submit'
+          submit: '一括登録'
         }
       },
       placeholder: {
-        filterByEmail: 'Filter by email'
+        filterByEmail: 'メールアドレスを検索'
       },
       tableHeader: {
-        name: 'Name',
-        email: 'Email',
-        position: 'Position',
-        group: 'Group',
-        role: 'Role',
-        actions: 'Actions'
+        name: '氏名',
+        email: 'メールアドレス',
+        position: '役職',
+        group: 'グループ',
+        role: 'アカウントの種類',
+        actions: '操作'
       },
       btn: {
-        add: 'Add user',
-        addMulti: 'Add multi users'
+        add: 'ユーザーの追加',
+        addMulti: 'ユーザーの一括追加'
       },
       confirmDialog: {
-        deleteUserTitle: 'Delete user',
-        deleteUserMsg: 'Are you sure to delete <span class="text-bold-600">{name}</span> user permanently ?'
+        deleteUserTitle: 'ユーザーの削除',
+        deleteUserMsg: '<span class="text-bold-600">{name}</span>を削除してよろしですか？'
       },
       modal: {
-        editTitle: 'Edit User'
+        editTitle: 'ユーザーの編集'
       },
       tooltip: {
-        edit: 'Edit user',
-        delete: 'Delete user',
-        activateUser: 'Activate User',
-        deactivateUser: 'Deactivate User'
+        edit: '編集する',
+        delete: '削除する',
+        activateUser: 'アクティブ化する',
+        deactivateUser: '非アクティブ化する'
       }
     }
   },
   messages: {
     company: {
-      updateSuccess: "Company's information is updated",
-      updateTimeSuccess: "Company's timezone and breaktime are updated"
+      updateSuccess: "企業情報が更新されました",
+      updateTimeSuccess: "企業の時刻と休憩時間が更新されました"
     },
     user: {
-      addSuccess: 'An user is created. Email contains login information is sent to user',
-      updatePwdSuccess: 'Your password is updated',
-      addMultiSuccess: 'Multi users are created. Email contains login information is sent to them',
-      updateProfileSuccess: 'Your profile is updated'
+      addSuccess: '新しいユーザーが登録されました。ログイン情報が含まれたメールはユーザーに送信されました。',
+      updatePwdSuccess: 'パスワードが更新されました',
+      addMultiSuccess: 'ユーザーが一括登録しました。ログイン情報が含まれたメールはユーザーに送信されました。',
+      updateProfileSuccess: 'あなたのプロフィールが更新されました'
     },
     ip: {
-      createSuccess: 'Allowed IP address is created',
-      updateSuccess: 'Allowed IP address is updated'
+      createSuccess: '許可されたIPアドレスは追加ました',
+      updateSuccess: '許可されたIPアドレスはアップデートました'
     },
     group: {
-      createSuccess: 'Group is created',
-      updateSuccess: 'Group is updated'
+      createSuccess: 'グループは追加しました',
+      updateSuccess: 'グループの情報はアップデートアップデートしました'
     },
     request: {
-      createSuccess: 'Request is created',
-      updateSuccess: 'Request is updated',
-      approvedSuccess: 'Request is approved',
-      rejectedSuccess: 'Request is rejected'
+      createSuccess: '依頼が作成しました',
+      updateSuccess: '依頼がアップデートしました',
+      approvedSuccess: 'あなたの依頼が承認されました',
+      rejectedSuccess: 'あなたの依頼が拒否されました'
     },
     holiday: {
-      createSuccess: 'Holiday is created',
-      updateSuccess: 'Holiday is updated'
+      createSuccess: '休日が追加しました',
+      updateSuccess: '休日がアップデートしました'
     },
     businessDay: {
-      createSuccess: 'Business day is created',
-      updateSuccess: 'Business day is updated'
+      createSuccess: '営業日が追加しました',
+      updateSuccess: '営業日がアップデートしました'
     }
   },
   activity: {
-    showMore: 'Show more',
+    showMore: '詳細を見る',
     attendance: {
-      punch_in: '<span class="text-bold-600">{name}</span> punched in',
-      punch_out: '<span class="text-bold-600">{name}</span> punched out'
+      punch_in: '<span class="text-bold-600">{name}</span>が出勤しました',
+      punch_out: '<span class="text-bold-600">{name}</span>が退勤しました'
     },
     request: {
-      create: '<span class="text-bold-600">{name}</span> created a request',
-      update: '<span class="text-bold-600">{name}</span> updated a request',
-      approve: '<span class="text-bold-600">{name}</span> approved a request',
-      reject: '<span class="text-bold-600">{name}</span> rejected a request'
+      create: '<span class="text-bold-600">{name}</span>が新しい依頼を作成しました',
+      update: '<span class="text-bold-600">{name}</span>が依頼をアップデートしました',
+      approve: '<span class="text-bold-600">{name}</span>が依頼を承認しました',
+      reject: '<span class="text-bold-600">{name}</span>が依頼を拒否しました'
     }
   },
   popup: {
     changePassword: {
-      title: 'Your password is not secured',
-      description: "You are using password generated by system, it's not secured. Please change your password as soon as possible",
-      btnChange: 'Change password',
-      btnRemind: 'Remind me later'
+      title: 'あなたのパスワードは保護されていません',
+      description: "あなたはシステムによって生成されたパスワードを使用していますが、安全ではありません。新しいパスワードを変更してください",
+      btnChange: 'パスワードの変更',
+      btnRemind: '後でリマインド'
     }
   },
   confirmDialog: {
-    yes: 'Yes',
-    no: 'No'
+    yes: 'はい',
+    no: 'いいえ'
   },
   statusCards: {
-    dayNum: '{num} / {companyTotalDays} days',
-    workingHours: '{hours}h{mins}m / {companyTotalHours}h'
+    dayNum: '{num} / {companyTotalDays}日',
+    workingHours: '{hours}時{mins}分 / {companyTotalHours}時'
   },
   annualLeave: {
-    title: 'Request a leave',
+    title: '休暇の依頼',
     labels: {
-      annualLeaveDay: 'Leave day',
-      reason: 'Reason'
+      annualLeaveDay: '休暇',
+      reason: '理由'
     },
-    createSuccessMsg: 'A leave request is created',
-    updateSuccessMsg: 'Your leave request is updated',
+    createSuccessMsg: '新しい休暇依頼が作成しました',
+    updateSuccessMsg: 'あなたの休暇依頼がアップデートしました',
     submit: 'Submit',
-    save: 'Save'
+    save: '保存'
   },
   page404: {
-    title: 'Whoop! Look like something is missing',
-    content: 'Sorry, the page you are looking for doesn’t exist.',
-    instruction: 'Press the button below to get back to home page.',
+    title: 'お探しのページが見つかりましせんでした',
+    content: '申し訳ございません。お探しのページが見つかりませんでした。',
+    instruction: '下のボタンを押すと、ホームページに戻ります。',
     btn: {
-      goHome: 'Go Home'
+      goHome: 'ホームページに戻る'
     }
   },
   flatpickr: {
     rangeSeparator: ' to '
   },
   remind: {
-    message: 'You forgot to punch in on {days}. Please send request to admin for editing attendances on those days !!!'
+    message: 'あなたは{days}に出勤登録を忘れました. 当日は出席者を編集するためにアドミンに依頼を送信してください。'
   }
 }
