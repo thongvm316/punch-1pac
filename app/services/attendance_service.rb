@@ -8,9 +8,8 @@ class AttendanceService
   end
 
   class << self
-    def attending_status(company, attended_at, attendance)
-      weekday = attendance ? attendance.day.strftime('%A') : attended_at.strftime('%A')
-      business_day = company.business_days.find_by(weekday: weekday.downcase)
+    def attending_status(company, attended_at, attendance_day)
+      business_day = company.business_days.find_by(weekday: attendance_day.strftime('%A').downcase)
 
       return 'attend_ok' unless business_day
 
@@ -21,9 +20,8 @@ class AttendanceService
       end
     end
 
-    def leaving_status(company, left_at, attendance)
-      weekday = attendance.day.strftime('%A')
-      business_day = company.business_days.find_by(weekday: weekday.downcase)
+    def leaving_status(company, left_at, attendance_day)
+      business_day = company.business_days.find_by(weekday: attendance_day.strftime('%A').downcase)
 
       return 'leave_ok' unless business_day
 
@@ -41,7 +39,7 @@ class AttendanceService
     attendance = @user.attendances.build(
       day: @now,
       attended_at: @now,
-      attending_status: self.class.attending_status(@user.company, @now, nil)
+      attending_status: self.class.attending_status(@user.company, @now, @now)
     )
     attendance.save ? attendance : false
   end
@@ -51,8 +49,8 @@ class AttendanceService
     attendance = @user.attendances.attended.find_by!(day: @now, left_at: nil)
     attendance.assign_attributes(
       left_at: @now,
-      working_hours: CountWorkingHoursService.new(@user.company, attendance.attended_at, @now, attendance).execute,
-      leaving_status: self.class.leaving_status(@user.company, @now, attendance)
+      working_hours: CountWorkingHoursService.new(@user.company, attendance.attended_at, @now, attendance.day).execute,
+      leaving_status: self.class.leaving_status(@user.company, @now, attendance.day)
     )
     attendance.save ? attendance : false
   end

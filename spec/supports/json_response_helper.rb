@@ -149,8 +149,7 @@ module JsonResponseHelper
       user:             response_user,
       admin_reason:     nullable_response(String),
       admin:            nullable_response(response_user),
-      kind:             String,
-      annual_leave_day: nullable_response(date_response)
+      kind:             String
     }
   end
 

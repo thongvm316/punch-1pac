@@ -39,7 +39,7 @@
       </div>
     </div>
 
-    <modal :title="titleModal" :modal-open.sync="isConfirmModalOpen">
+    <modal :title="titleModal" :modal-open.sync="isRequestModalOpen">
       <div class="form-group">
         <label class="form-label">{{ $t('dashboard.request.label') }}</label>
         <select class="form-select" v-model="selectedRequestKind" @change="changeTitleConfirmModal">
@@ -47,8 +47,8 @@
           <option :value="kind" v-for="kind in ['attendance', 'annual_leave']">{{ $t(`dashboard.request.kind.${kind}`) }}</option>}
         </select>
       </div>
-      <request-form v-if="this.selectedRequestKind === 'attendance'" :attendance="attendance" @afterModify="isConfirmModalOpen = false"></request-form>
-      <annual-leave-form v-if="this.selectedRequestKind === 'annual_leave'" :annual-day="annualLeaveDay" @finishRequest="isConfirmModalOpen = false"/></annual-leave-form>
+      <request-form v-if="this.selectedRequestKind === 'attendance'" :attendance="attendance" @afterModify="isRequestModalOpen = false"></request-form>
+      <annual-leave-form v-if="this.selectedRequestKind === 'annual_leave'" :annual-day="annualLeaveDay" @finishRequest="isRequestModalOpen = false"/></annual-leave-form>
     </modal>
 
     <modal :title="$t('attendances.modal.addTitle')" :modal-open.sync="isEditModalOpen">
@@ -82,7 +82,8 @@ export default {
       attendances: [],
       annualLeaveDay: '',
       titleModal: this.$t('dashboard.request.title'),
-      selectedRequestKind: {}
+      selectedRequestKind: {},
+      isRequestModalOpen: false
     }
   },
 
@@ -251,7 +252,7 @@ export default {
       this.attendance = data
 
       if (this.today.isSameOrAfter(data.day)) {
-        data.attended_at === '' ? this.isConfirmModalOpen = !this.isConfirmModalOpen : this.isEditModalOpen = !this.isEditModalOpen
+        data.attended_at === '' ? this.isRequestModalOpen = !this.isRequestModalOpen : this.isEditModalOpen = !this.isEditModalOpen
       } else {
         this.isAddModalOpen = !this.isAddModalOpen
       }

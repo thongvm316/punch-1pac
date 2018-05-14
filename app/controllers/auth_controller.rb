@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class AuthController < ApplicationController
-  layout 'page'
+  layout 'auth'
   before_action :current_company
   before_action :authenticate_user!, only: %i[destroy]
 

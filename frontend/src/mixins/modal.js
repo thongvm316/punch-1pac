@@ -5,8 +5,7 @@ export default {
   data () {
     return {
       isAddModalOpen: false,
-      isEditModalOpen: false,
-      isConfirmModalOpen: false
+      isEditModalOpen: false
     }
   },
 
@@ -25,10 +24,6 @@ export default {
 
     toggleEditModal () {
       this.isEditModalOpen = !this.isEditModalOpen
-    },
-
-    toggleConfirmModal () {
-      this.isConfirmModalOpen = !this.isConfirmModalOpen
     },
 
     submitAddModal (params, callback, msg = '') {

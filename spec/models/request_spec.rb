@@ -5,23 +5,10 @@ require 'rails_helper'
 RSpec.describe Request, type: :model do
   describe 'associations' do
     it { should belong_to(:user) }
-    it { should belong_to(:attendance) }
   end
 
   describe 'validations' do
     it { should validate_presence_of(:reason) }
-
-    context 'when request.kind = attendance' do
-      subject { build :request, kind: :attendance }
-
-      it { should validate_presence_of(:attendance) }
-    end
-
-    context 'when request.kind = annual_leave' do
-      subject { build :request, kind: :annual_leave }
-
-      it { should validate_presence_of(:annual_leave_day) }
-    end
 
     context 'when request.status = rejected' do
       subject { build :request, kind: :annual_leave, status: 'rejected' }

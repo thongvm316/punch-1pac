@@ -9,7 +9,6 @@ class Api::V1::RequestsController < Api::V1::BaseController
     authorize!
     requests = Request.for_user(current_user, params['self'])
                       .search_by(params)
-                      .includes(:attendance)
                       .preload(:admin, :user)
                       .page(params[:page])
                       .per(params[:per_page])
@@ -66,7 +65,7 @@ class Api::V1::RequestsController < Api::V1::BaseController
   private
 
   def request_params
-    params.require(:request).permit(:attendance_id, :reason, :attended_at, :left_at, :kind, :annual_leave_day)
+    params.require(:request).permit(:reason, :attended_at, :left_at, :kind, :attendance_day)
   end
 
   def reject_request_params
