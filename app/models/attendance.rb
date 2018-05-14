@@ -29,7 +29,6 @@ class Attendance < ApplicationRecord
   OFF_STATUSES = %w[annual_leave].freeze
 
   belongs_to :user
-  has_many :requests, dependent: :destroy
   has_one :activity, as: :activitable, dependent: :destroy
 
   validates :day, presence: true
@@ -53,12 +52,6 @@ class Attendance < ApplicationRecord
     when 'admin'
       where(user_id: UserGroup.with_group(user.groups)).includes(:user)
     end
-  }
-  scope :status_count_each_month, ->(status) {
-    select("DATE_TRUNC('month', day) as month, COUNT(id) as status_count")
-      .where('extract(year from day) = ?', Date.current.year)
-      .with_status(status)
-      .group(:month)
   }
 
   def self.in_period(str_date, date_type = nil)
