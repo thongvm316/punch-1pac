@@ -3,6 +3,10 @@
     <group-tab :group-id="$route.params.id"/>
 
     <div class="toolbar mt-5">
+      <flat-pickr
+        :config="{mode: 'range', locale: flatpickrLocaleMapper[currentUser.language]}"
+        class="form-input daterange-picker"
+        v-model="dateRange"/>
       <select class="form-select" v-model="params.status">
         <option value="">{{ $t('requests.placeholder.filterByStatus') }}</option>
         <option :value="status" v-for="status in meta.request_statuses">{{ $t(`meta.request_statuses.${status}`) }}</option>
@@ -82,20 +86,25 @@ import MainLayout from '../layouts/Main'
 import Pagination from '../components/Pagination'
 import GroupTab from '../components/GroupTab'
 import modal from '../mixins/modal'
+import flatPickr from 'vue-flatpickr-component'
+import flatpickrLocale from '../mixins/flatpickr-locale'
 import { mapState, mapActions } from 'vuex'
 
 export default {
   name: 'group-requests',
 
-  mixins: [modal],
+  mixins: [modal, flatpickrLocale],
 
   data () {
     return {
+      dateRange: [this.$moment().startOf('month').format('YYYY-MM-DD'), this.$moment().endOf('month').format('YYYY-MM-DD')],
       params: {
         self: null,
         status: this.$route.query.status || '',
         kind: '',
-        group_id: this.$route.params.id
+        group_id: this.$route.params.id,
+        from_date: '',
+        to_date: ''
       },
       requestParams: {
         requestId: '',
@@ -107,7 +116,8 @@ export default {
   components: {
     MainLayout,
     Pagination,
-    GroupTab
+    GroupTab,
+    flatPickr
   },
 
   computed: {
@@ -157,6 +167,8 @@ export default {
   },
 
   created () {
+    this.params.from_date = this.dateRange[0]
+    this.params.to_date = this.dateRange[1]
     this.getGroup(this.$route.params.id)
     this.getRequests(this.params)
   },
@@ -167,6 +179,12 @@ export default {
         this.getRequests(Object.assign({ page: 1 }, this.params))
       },
       deep: true
+    },
+
+    dateRange: function () {
+      const dates = this.dateRange.split(' ')
+      this.params.from_date = dates[0]
+      this.params.to_date = dates[2]
     }
   }
 }
