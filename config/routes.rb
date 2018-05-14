@@ -81,6 +81,7 @@ Rails.application.routes.draw do
   get 'help'    => 'pages#help'
   get 'terms'   => 'pages#terms'
   get 'privacy' => 'pages#privacy'
+  get '403'     => 'pages#page_403'
 
   devise_for :admins, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
