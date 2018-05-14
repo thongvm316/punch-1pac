@@ -11,6 +11,8 @@ class RemoveAttendanceIdOfRequests < ActiveRecord::Migration[5.1]
       end
     end
 
+    Request.where(attendance_day: nil).update_all(attendance_day: Date.current)
+
     remove_column :requests, :attendance_id
     remove_column :requests, :annual_leave_day
   end
