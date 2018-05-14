@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
 class CountWorkingHoursService
-  def initialize(company, attended_at, left_at, attendance)
+  def initialize(company, attended_at, left_at, attendance_day)
     @attended_at  = attended_at.to_i
     @left_at      = left_at ? Time.zone.local(2000, 1, 1, left_at.hour, left_at.min, left_at.sec).to_i : nil
-    @business_day = company.business_days.find_by(weekday: attendance.day.strftime('%A').downcase)
+    @business_day = company.business_days.find_by(weekday: attendance_day.strftime('%A').downcase)
   end
 
   def execute
-    return 0 if !@business_day || !@left_at
+    return 0 if !@business_day || !@left_at || @attended_at.zero?
 
     @ts_business_day = convert_business_day_to_timestamp
 
