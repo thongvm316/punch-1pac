@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-
 # == Schema Information
 #
 # Table name: requests
@@ -15,7 +14,7 @@
 #  admin_reason   :string
 #  admin_id       :integer
 #  kind           :integer          default("attendance"), not null
-#  attendance_day :date             not null
+#  attendance_day :date
 #
 # Indexes
 #
