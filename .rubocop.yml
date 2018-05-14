@@ -23,6 +23,7 @@ Rails/NotNullColumn:
 Rails/SkipsModelValidations:
   Exclude:
     - 'app/controllers/auth_controller.rb'
+    - 'db/migrate/20180514080341_change_column_attendance_day_requests.rb'
 
 Rails/ReversibleMigration:
   Exclude:
