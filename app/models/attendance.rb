@@ -99,7 +99,7 @@ class Attendance < ApplicationRecord
 
   def self.search_by(params)
     q = all
-    q = where(user_id: UserGroup.with_group(params[:group_id])) if params[:group_id].present?
+    q = q.where(user_id: UserGroup.with_group(params[:group_id])) if params[:group_id].present?
     q = q.with_status(params[:status]) if params[:status].present?
     q = q.where(day: Date.parse(params[:from_date])..Date.parse(params[:to_date])) if params[:from_date].present? && params[:to_date].present?
     q = q.where(user_id: params[:user_id]) if params[:user_id].present?
