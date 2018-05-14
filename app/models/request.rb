@@ -14,7 +14,7 @@
 #  admin_reason   :string
 #  admin_id       :integer
 #  kind           :integer          default("attendance"), not null
-#  attendance_day :date
+#  attendance_day :date             not null
 #
 # Indexes
 #
