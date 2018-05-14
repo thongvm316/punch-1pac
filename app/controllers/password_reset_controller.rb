@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class PasswordResetController < ApplicationController
-  layout 'page'
+  layout 'auth'
   before_action :current_company
 
   def new
