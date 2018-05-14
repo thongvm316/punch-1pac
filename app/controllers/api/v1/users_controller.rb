@@ -22,7 +22,7 @@ class Api::V1::UsersController < Api::V1::BaseController
 
   def show
     authorize! @user
-    render json: @user, serializer: UserWithPermissionSerializer, status: 200
+    render json: @user, serializer: UserSerializer, status: 200
   end
 
   def create
@@ -63,7 +63,7 @@ class Api::V1::UsersController < Api::V1::BaseController
   def update
     authorize! @user
     if @user.update(user_update_params)
-      render json: @user, serializer: UserWithPermissionSerializer, status: 200
+      render json: @user, serializer: UserSerializer, status: 200
     else
       render_422(@user.errors)
     end

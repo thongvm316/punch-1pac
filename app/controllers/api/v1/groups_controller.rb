@@ -6,7 +6,7 @@ class Api::V1::GroupsController < Api::V1::BaseController
   def index
     authorize!
     groups = current_company.groups.for_user(current_user).order(name: :asc)
-    render json: groups, each_serializer: GroupSerializer, status: 200
+    render json: groups, each_serializer: GroupSerializer, include: 'users', status: 200
   end
 
   def show
