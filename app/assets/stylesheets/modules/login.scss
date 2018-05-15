@@ -1,7 +1,13 @@
 .auth-form {
   background-color: #fff;
-  margin-top: 64px;
+  margin-top: 3.2rem;
   width: 400px;
+
+  @include respond-to-mobile() {
+    width: 100%;
+    margin-top: 0.8rem;
+  }
+
   img {
     height: 100px;
     width: auto;
@@ -9,14 +15,20 @@
 
   .panel-header {
     padding: 2rem 1.6rem 0;
+    @include respond-to-mobile() {
+      padding: 1rem 0.8rem 0;
+    }
   }
 
   .panel-title {
-    margin: 1.2rem 0 1.6rem;
+    margin: 1.2rem 0 1.2rem;
   }
 
   .panel-body {
     padding: 0 1.6rem 2rem;
+    @include respond-to-mobile() {
+      padding: 0 0.8rem 1rem;
+    }
   }
 
   .toast {
@@ -24,16 +36,27 @@
   }
 
   .btn-block {
-    margin: 24px 0 16px 0;
+    margin: 1.2rem 0 0.8rem 0;
   }
 }
 
 .auth-footer {
   margin-top: 2.8rem;
+  margin-bottom: 2.8rem;
+  width: 100%;
+
+  @include respond-to-mobile() {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
 
   a {
     margin-left: 0.8rem;
     margin-right: 0.8rem;
+    @include respond-to-mobile() {
+      margin-left: 0.4rem;
+      margin-right: 0.4rem;
+    }
     color: #abb2b6;
     font-size: 0.7rem;
   }
@@ -41,5 +64,10 @@
 
 .punch-logo {
   width: 250px;
-  margin-top: 64px;
+  margin-top: 3.2rem;
+
+  @include respond-to-mobile() {
+    width: 150px;
+    margin-top: 1rem;
+  }
 }
