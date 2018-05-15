@@ -2,7 +2,7 @@
 
 class UserWithGroupsSerializer < ActiveModel::Serializer
   attributes :id, :email, :name, :avatar_url, :gender, :position, :owner, :role, :language, :password_changed,
-             :activated, :activated_at, :deactivated_at, :created_at
+             :forgot_punch_in_days_in_month, :activated, :activated_at, :deactivated_at, :created_at
 
   has_many :groups
 

@@ -23,7 +23,8 @@ class DashboardController < ApplicationController
         timezones: Company::TIMEZONES,
         roles: User.roles.keys,
         industries: Company::INDUSTRIES,
-        csv_template_url: ActionController::Base.helpers.asset_url('template.csv')
+        csv_template_url: ActionController::Base.helpers.asset_url('template.csv'),
+        base_url: root_url(subdomain: false)
       }
     }
     @webpack_assets = Oj.load_file(Rails.root.join('public', 'app', '_webpack-assets-nxu54TIPbpRWzks8.json').to_s)
