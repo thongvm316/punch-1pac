@@ -188,7 +188,7 @@ export default {
       submit: '提出',
       export: 'CSV出力'
     },
-    member: ' | 1人 | {count} メンバー',
+    member: ' | 1 メンバー | {count} メンバー',
     labels: {
       name: 'ユーザー名',
       description: '説明',
@@ -245,7 +245,7 @@ export default {
       reject: '拒否する'
     },
     errors: {
-      bothAttendedLeft: 'Both attended at and left at {msg}'
+      bothAttendedLeft: '出勤時間と退勤時間は {msg}'
     },
     confirmDialog: {
       deleteTitle: '依頼の削除',
