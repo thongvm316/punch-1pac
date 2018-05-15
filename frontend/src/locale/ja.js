@@ -9,7 +9,7 @@ export default {
       edit: '編集',
       save: '保存'
     },
-    explain: "このグループにメンバーを追加すると、グループのアドミンはメンバーの勤務状況を見ることができます。",
+    explain: 'このグループにメンバーを追加すると、グループのアドミンはメンバーの勤務状況を見ることができます。',
     tableHeader: {
       email: 'メールアドレス',
       name: 'ユーザー名',
@@ -141,12 +141,12 @@ export default {
     calendar: 'カレンダー',
     calendarToday: '本日',
     chart: 'チャート',
-    chartNoData: "今月のデータはありません",
+    chartNoData: '今月のデータはありません',
     recentActivities: '最新の活動',
-    emptyActivity: "活動はありません",
+    emptyActivity: '活動はありません',
     pendingRequests: '承認待ちの一覧',
     havePendingRequests: '承認待ちの依頼は以下のグロープにあります：',
-    emptyPendingRequests: "あなたのグループに承認待ちの依頼は現在ありません。",
+    emptyPendingRequests: 'あなたのグループに承認待ちの依頼は現在ありません。',
     request: {
       title: 'どのような依頼を送信しますか？',
       label: '種別',
@@ -420,12 +420,12 @@ export default {
         save: '保存'
       },
       msg: {
-        success: "企業の言語と時刻の情報が更新さレました"
+        success: '企業の言語と時刻の情報が更新さレました'
       }
     },
     holidays: {
       title: '休日',
-      explain: "あなたの企業の祝日を追加すると、休日としてカウントされます",
+      explain: 'あなたの企業の祝日を追加すると、休日としてカウントされます',
       tableHeader: {
         name: '休日名',
         startAt: '開始',
@@ -529,8 +529,8 @@ export default {
   },
   messages: {
     company: {
-      updateSuccess: "企業情報が更新されました",
-      updateTimeSuccess: "企業の時刻と休憩時間が更新されました"
+      updateSuccess: '企業情報が更新されました',
+      updateTimeSuccess: '企業の時刻と休憩時間が更新されました'
     },
     user: {
       addSuccess: '新しいユーザーが登録されました。ログイン情報が含まれたメールはユーザーに送信されました。',
@@ -577,7 +577,7 @@ export default {
   popup: {
     changePassword: {
       title: 'あなたのパスワードは保護されていません',
-      description: "あなたはシステムによって生成されたパスワードを使用していますが、安全ではありません。新しいパスワードを変更してください",
+      description: 'あなたはシステムによって生成されたパスワードを使用していますが、安全ではありません。新しいパスワードを変更してください',
       btnChange: 'パスワードの変更',
       btnRemind: '後でリマインド'
     }
