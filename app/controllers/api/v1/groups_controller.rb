@@ -67,8 +67,8 @@ class Api::V1::GroupsController < Api::V1::BaseController
                 root: 'results',
                 each_serializer: GroupReportSerializer,
                 meta: {
-                  company_total_working_hours_on_month: current_company.total_working_hours_on_month(params[:date]),
-                  company_total_working_days_in_month: current_company.total_working_days_in_month(params[:date])
+                  company_total_working_hours_on_month: current_company.total_working_hours_on_month(params[:date], params[:date_type]),
+                  company_total_working_days_in_month: current_company.total_working_days_in_month(params[:date], params[:date_type])
                 },
                 leave_days: ForgotPunchInDaysService.new(current_user, current_company, params[:date]).execute,
                 adapter: :json,

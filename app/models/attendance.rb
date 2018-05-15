@@ -69,13 +69,15 @@ class Attendance < ApplicationRecord
       .in_period(date, date_type)
       .where("#{status_type}": status_value)
       .group(status_type)
+  rescue TypeError, ArgumentError
+    select("count(id) as #{status_value}").where(id: nil)
   end
 
   def self.sum_working_hours_on_month(date, date_type = nil)
     select('sum(working_hours) as working_hours')
       .in_period(date, date_type)
   rescue TypeError, ArgumentError
-    none
+    select('sum(working_hours) as working_hours').where(id: nil)
   end
 
   def self.chart(str_date = nil)
