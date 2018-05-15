@@ -4,6 +4,8 @@ export default {
     attendances: 'Attendances',
     requests: 'Requests',
     report: 'Report',
+    month: 'Month',
+    year: 'Year',
     btn: {
       addUser: 'Add',
       edit: 'Edit Group',

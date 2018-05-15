@@ -4,6 +4,8 @@ export default {
     attendances: 'Hiện diện',
     requests: 'Yêu cầu',
     report: 'Thống kê',
+    month: 'Tháng',
+    year: 'Năm',
     btn: {
       addUser: 'Thêm',
       edit: 'Chỉnh sửa Nhóm',
