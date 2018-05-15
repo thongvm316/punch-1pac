@@ -9,7 +9,7 @@ class UserSerializer < ActiveModel::Serializer
   end
 
   def forgot_punch_in_days_in_month
-    ForgotPunchInDaysService.new(object).execute
+    ForgotPunchInDaysService.new(object, object.company).execute
   end
 
   def activated_at

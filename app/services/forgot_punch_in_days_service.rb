@@ -1,10 +1,11 @@
 # frozen_string_literal: true
 
 class ForgotPunchInDaysService
-  def initialize(current_user, date = nil)
+  def initialize(current_user, current_company, date = nil)
     @current_user = current_user
     @now = Time.current
     @query_time = date.present? ? Time.zone.parse(date) : @now
+    @current_company = current_company
   end
 
   def execute
@@ -41,11 +42,11 @@ class ForgotPunchInDaysService
   end
 
   def in_breakday?(current_day)
-    @current_user.company.breakdays.include?(current_day.strftime('%A').downcase)
+    @current_company.breakdays.include?(current_day.strftime('%A').downcase)
   end
 
   def holidays
-    @holidays ||= @current_user.company.holidays.in_month(@query_time.strftime('%Y-%m-%d'))
+    @holidays ||= @current_company.holidays.in_month(@query_time.strftime('%Y-%m-%d'))
   end
 
   def to_date
