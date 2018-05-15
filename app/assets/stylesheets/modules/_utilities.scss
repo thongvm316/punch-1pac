@@ -1,0 +1,48 @@
+.bg-linear-blue {
+  position: relative;
+  background: linear-gradient(45deg, $primary-color-dark 0%, $primary-color 100%);
+
+  &:after {
+    content: '';
+    width: 100%;
+    height: 100%;
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: asset-url('img_pattern.png');
+    background-repeat: repeat;
+    background-size: .2rem .2rem;
+    background-position: center center;
+    z-index: 3;
+  }
+}
+
+.bg-linear-gray {
+  background: linear-gradient(180deg, $light-color 0%, $color-gray-lightest 100%);
+}
+
+.bg-white {
+  background-color: $light-color;
+}
+
+.bg-gray {
+  background: $color-gray-lightest;
+}
+
+.mt-40 {
+  margin-top: 2rem;
+}
+
+.mt-24 {
+  margin-top: 1.2rem;
+}
+
+.section-title {
+  margin-bottom: 3.2rem;
+  text-align: center;
+
+  @include respond-to-mobile {
+    margin-bottom: 2rem;
+  }
+}

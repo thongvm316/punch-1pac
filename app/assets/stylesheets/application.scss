@@ -17,6 +17,8 @@
 @import 'spectre.css/src/variables';
 @import 'spectre.css/src/mixins';
 
+@import 'base/variables';
+
 // Reset and dependencies
 @import 'spectre.css/src/normalize';
 @import 'spectre.css/src/base';
@@ -51,10 +53,25 @@
 @import 'spectre.css/src/utilities';
 
 // Custom
-@import 'base/variables';
 @import 'base/mixins';
+@import 'modules/base';
 @import 'modules/error_pages';
 @import 'modules/login';
 @import 'modules/navbar';
 @import 'modules/footer';
-@import 'modules/error_pages';
+@import 'modules/typography';
+@import 'modules/buttons';
+@import 'modules/form';
+@import 'modules/layout';
+@import 'modules/avatars';
+@import 'modules/tiles';
+@import 'modules/utilities';
+
+// Modules
+@import 'modules/hero';
+@import 'modules/features';
+@import 'modules/cards';
+@import 'modules/download';
+@import 'modules/scroller';
+@import 'modules/comment';
+@import 'modules/trial';
