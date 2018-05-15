@@ -4,6 +4,10 @@
   background-color: $light-color;
   border-radius: $border-radius;
 
+  + .box {
+    margin-top: 1rem;
+  }
+
   &-setting {
     @include shadow-variant(.05rem);
     padding: 1.2rem;
