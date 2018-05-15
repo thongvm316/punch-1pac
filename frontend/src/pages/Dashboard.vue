@@ -8,7 +8,7 @@
         <status-cards/>
       </div>
       <div class="column col-4">
-        <div class="box">
+        <div class="box" v-if="$auth('Page', currentUser).canViewPendingBlock()">
           <h2 class="subtitle">{{ $t('dashboard.pendingRequests') }}</h2>
           <div v-if="pendingRequests.length > 0">
             <p class="mb-0">
@@ -23,7 +23,7 @@
           <p class="mb-0" v-else>{{ $t('dashboard.emptyPendingRequests') }}</p>
         </div>
 
-        <div class="box mt-5">
+        <div class="box">
           <h2 class="subtitle">{{ $t('dashboard.recentActivities') }}</h2>
           <div class="notifications" v-if="activities.length > 0">
             <ul>
