@@ -1,3 +1,4 @@
+<img class="punch-logo centered" src="<%= asset_url("punch_logo.png") %>" alt="punch logo">
 <div class="auth-form centered">
   <div class="panel">
     <div class="panel-header text-center">
@@ -15,7 +16,7 @@
           <%= error_message(@user.errors, :password_confirmation) %>
         </div>
         <div class="form-group">
-          <%= f.submit t('password_reset.edit.reset_password'), class: 'btn btn-success btn-block' %>
+          <%= f.submit t('password_reset.edit.reset_password'), class: 'btn btn-primary btn-block' %>
         </div>
       <% end %>
     </div>
