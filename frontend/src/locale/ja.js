@@ -245,7 +245,7 @@ export default {
       reject: '拒否する'
     },
     errors: {
-      bothAttendedLeft: '出勤時間と退勤時間は {msg}'
+      bothAttendedLeft: '出勤時間と退勤時間{msg}'
     },
     confirmDialog: {
       deleteTitle: '依頼の削除',
