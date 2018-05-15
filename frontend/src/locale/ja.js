@@ -188,7 +188,7 @@ export default {
       submit: '提出',
       export: 'CSV出力'
     },
-    member: ' | 1 member | {count} members',
+    member: ' | 1人 | {count} メンバー',
     labels: {
       name: 'ユーザー名',
       description: '説明',
@@ -610,7 +610,7 @@ export default {
     }
   },
   flatpickr: {
-    rangeSeparator: ' to '
+    rangeSeparator: ' - '
   },
   remind: {
     message: 'あなたは{days}に出勤登録を忘れました. 当日は出席者を編集するためにアドミンに依頼を送信してください。'
