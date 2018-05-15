@@ -1,0 +1,14 @@
+.btn {
+  font-size: .7rem;
+  padding: .5rem .8rem;
+  height: auto;
+  background: $primary-color;
+  border: $primary-color;
+  color: $light-color;
+
+  &:hover {
+    background: $primary-color;
+    border: $primary-color;
+    color: $light-color;
+  }
+}

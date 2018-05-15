@@ -1,0 +1,35 @@
+.input-group {
+  .form-input {
+    &.input-lg {
+      height: 2.4rem;
+      background: transparent;
+      border-radius: .2rem;
+      border: .05rem solid $light-color;
+      color: $light-color;
+      font-size: .8rem;
+
+      &:hover {
+        border: .05rem solid $light-color;
+      }
+
+      &:focus {
+        box-shadow: none;
+      }
+    }
+  }
+
+  .btn-lg {
+    height: 2.4rem;
+    border-radius: .2rem;
+    border: .05rem solid $light-color;
+    background-color: $light-color;
+    color: $primary-color;
+    font-size: .7rem;
+
+    &:hover {
+      border: .05rem solid $light-color;
+      background-color: $light-color;
+      color: $primary-color;
+    }
+  }
+}

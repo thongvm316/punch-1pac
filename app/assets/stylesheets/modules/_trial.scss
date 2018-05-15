@@ -1,0 +1,26 @@
+.trial {
+  padding: 4rem .8rem;
+
+  .trial-content {
+    position: relative;
+    z-index: 5;
+    width: 19.2rem;
+    margin: 0 auto;
+
+    @include respond-to-mobile() {
+      width: 100%;
+      max-width: 17.2rem;
+    }
+
+    .trial-title {
+      text-align: center;
+      margin-bottom: 2rem;
+      color: $light-color;
+
+      @include respond-to-xs-mobile() {
+        font-size: 24px;
+        line-height: 1.3333;
+      }
+    }
+  }
+}

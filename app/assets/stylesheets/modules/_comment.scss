@@ -1,0 +1,19 @@
+.comment {
+  margin-top: -3.6rem;
+  position: relative;
+  padding: 4rem 0 3.2rem;
+
+  @include respond-to-mobile() {
+    margin-top: 0;
+  }
+
+  .comment-title {
+    text-align: center;
+    margin-bottom: .3rem;
+  }
+
+  .comment-group {
+    max-width: 62.4rem;
+    margin: 0 auto;
+  }
+}

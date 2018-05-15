@@ -1,0 +1,32 @@
+.card {
+  background-color: $color-blue-lightest;
+  padding: 2rem 1.6rem;
+  margin-bottom: 1.6rem;
+
+  .card-header {
+    margin: 2rem 0 .8rem;
+  }
+
+  .card-body {
+    font-size: .7rem;
+    margin-bottom: .4rem;
+  }
+
+  &.card-comment {
+    width: calc(33.3333% - .8rem);
+    background: $light-color;
+    box-shadow: 0 .25rem 1.5rem 0 rgba(0,0,0,0.05);
+    border-radius: .2rem;
+    padding: 1.2rem 1.6rem;
+    margin-bottom: 0;
+
+    .card-header {
+      margin-top: 0;
+    }
+  }
+
+  &.card-center {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+}

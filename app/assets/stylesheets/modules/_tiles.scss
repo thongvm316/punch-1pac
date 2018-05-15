@@ -1,0 +1,23 @@
+.tile {
+  align-items: center;
+
+  .tile-content {
+    &:not(:first-child) {
+      padding-left: .8rem;
+    }
+  }
+
+  .tile-title {
+    font-size: .9rem;
+    line-height: 1.4;
+    font-weight: 700;
+    margin-bottom: 0;
+
+    + p {
+      font-size: 15px;
+      line-height: 1.1333;
+      color: $primary-color;
+      margin-bottom: 0;
+    }
+  }
+}
