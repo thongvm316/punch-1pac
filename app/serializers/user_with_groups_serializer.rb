@@ -10,6 +10,10 @@ class UserWithGroupsSerializer < ActiveModel::Serializer
     ActionController::Base.helpers.asset_url(object.avatar_url)
   end
 
+  def forgot_punch_in_days_in_month
+    ForgotPunchInDaysService.new(object, object.company).execute
+  end
+
   def activated_at
     object.activated_at&.strftime('%Y-%m-%d')
   end

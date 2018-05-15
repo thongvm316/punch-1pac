@@ -1,12 +1,12 @@
 <template>
   <div class="month-year-picker">
     <div class="month-year-picker-result" @click="togglePicker">
-      {{ this.monthFormat }}
+      {{ monthFormat }}
     </div>
     <div class="month-year-picker-content" v-show="isOpenMonthYearPicker" ref="result">
       <div class="month-year-picker-control">
-        <span :class="{ 'active': (isOpenMonthYearPicker && isMonthPicker) }" @click="monthPicker">Month</span>
-        <span :class="{ 'active': (isOpenMonthYearPicker && !isMonthPicker)}" @click="yearPicker">Year</span>
+        <span :class="{ 'active': (isOpenMonthYearPicker && isMonthPicker) }" @click="isMonthPicker = true">{{ $t('group.month') }}</span>
+        <span :class="{ 'active': (isOpenMonthYearPicker && !isMonthPicker)}" @click="isMonthPicker = false">{{ $t('group.year') }}</span>
       </div>
       <datepicker
         :inline="true"
@@ -64,18 +64,11 @@ export default {
 
     onInputDatepicker () {
       this.month = this.$moment(this.month).format('YYYY-MM-DD')
-      this.$emit('input', this.monthFormat)
+      this.$emit('input', {
+        date: this.$moment(this.month).format('YYYY-MM-DD'),
+        type: this.isMonthPicker ? 'month' : 'year'
+      })
       this.isOpenMonthYearPicker = false
-    },
-
-    monthPicker (e) {
-      this.isMonthPicker = true
-      this.$emit('input', this.monthFormat)
-    },
-
-    yearPicker (e) {
-      this.isMonthPicker = false
-      this.$emit('input', this.monthFormat)
     }
   }
 }

@@ -4,6 +4,8 @@ export default {
     attendances: '勤務状況',
     requests: '申請一覧',
     report: 'レポート',
+    month: '月',
+    year: '年',
     btn: {
       addUser: '追加',
       edit: '編集',
