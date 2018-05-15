@@ -11,5 +11,4 @@
 // about supported directives.
 //
 //= require_self
-//= require jquery
-//= require_tree
+//= require ./navbar

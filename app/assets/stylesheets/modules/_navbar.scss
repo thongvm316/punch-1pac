@@ -27,12 +27,12 @@ body.menu-opened {
   margin-bottom: 0;
   z-index: 100;
 
-  &.inverse-nav {
+  &.nav-inverse {
     background-color: $light-color;
     border-bottom: 1px solid $gray-color-dark;
 
     .navbar-logo {
-      background-image: url('/static/ico_logo.svg');
+      background-image: asset-url("ico_logo.svg");
     }
 
     .navbar-link { color: $black-color; }
@@ -43,7 +43,7 @@ body.menu-opened {
     }
 
     .menu-burger {
-      background-image: url('/static/ico_burger-black.svg');
+      background-image: asset-url("ico_burger-black.svg");
     }
   }
 
@@ -77,7 +77,7 @@ body.menu-opened {
   }
 
   .navbar-logo {
-    background-image: url('/static/ico_logo-white.svg');
+    background-image: asset-url("ico_logo-white.svg");
     background-repeat: no-repeat;
     background-size: 100% 100%;
     background-position: center;
@@ -116,6 +116,7 @@ body.menu-opened {
 
   .navbar-link {
     color: $light-color;
+    cursor: pointer;
 
     &:hover,
     &:focus {
@@ -140,7 +141,7 @@ body.menu-opened {
 
   .menu-burger {
     align-self: center;
-    background-image: url('/static/ico_burger.svg');
+    background-image: asset-url("ico_burger.svg");
     background-position: center;
     background-repeat: no-repeat;
     background-size: 100% 100%;
@@ -150,7 +151,7 @@ body.menu-opened {
     transition: all .2s ease-in-out;
 
     &.open {
-      background-image: url('/static/ico_close.svg');
+      background-image: asset-url("ico_close.svg");
     }
 
     @include respond-to-mobile () {
@@ -191,7 +192,7 @@ body.menu-opened {
     }
 
     .close {
-      background-image: url('/static/ico_close.svg');
+      background-image: asset-url("ico_close.svg");
       background-position: center;
       background-repeat: no-repeat;
       background-size: 100% 100%;
