@@ -18,6 +18,7 @@ body.menu-opened {
 }
 
 .nav {
+  width: 100%;
   left: 0;
   margin-bottom: 0;
   margin-top: 0;
@@ -40,6 +41,12 @@ body.menu-opened {
     .btn-signin {
       background-color: $primary-color;
       color: $light-color;
+
+      &:hover,
+      &:active {
+        background-color: $primary-color;
+        color: $light-color;
+      }
     }
   }
 
@@ -127,6 +134,12 @@ body.menu-opened {
     color: $primary-color;
     margin-left: 1.6rem;
     padding: .4rem 1.2rem;
+
+    &:hover,
+    &:active {
+      background-color: $light-color;
+      color: $primary-color;
+    }
 
     @include respond-to-mobile () {
       display: none;
@@ -235,6 +248,7 @@ body.menu-opened {
       line-height: 1;
       margin-left: .8rem;
       padding: .6rem 1.3rem;
+      background-color: $primary-color;
 
       &:hover,
       &:focus {

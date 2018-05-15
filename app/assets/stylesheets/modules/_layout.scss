@@ -1,7 +1,10 @@
 .container {
-  max-width: 64rem;
   padding-left: .8rem;
   padding-right: .8rem;
+
+  @media (min-width: 1280px) {
+    width: 64rem;
+  }
 }
 
 .columns {
