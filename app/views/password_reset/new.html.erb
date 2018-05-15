@@ -1,4 +1,4 @@
-<img class="punch-logo centered" src="<%= asset_url("punch_logo.png") %>" alt="punch logo">
+<img class="punch-logo centered" src="<%= asset_url('punch_logo.png') %>" alt="punch logo">
 <div class="auth-form centered">
   <%= render('shared/flash', type: 'error', message: flash[:alert], btn_clear_opened: true) if flash[:alert] %>
   <%= render('shared/flash', type: 'success', message: flash[:notice]) if flash[:notice] %>
@@ -20,9 +20,4 @@
     </div>
   </div>
 </div>
-<div class="auth-footer text-center">
-  <a href="#">About</a>
-  <a href="#">Contact Us</a>
-  <a href="#">Terms</a>
-  <a href="#">Privacy</a>
-</div>
+<%= render 'shared/auth_footer' %>
