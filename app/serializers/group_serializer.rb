@@ -5,7 +5,7 @@ class GroupSerializer < ApplicationSerializer
   has_many :users, serializer: UserSerializer
 
   def users
-    object.users.unscope(where: :activated)
+    object.users.unscope(where: :activated).preload(:company)
   end
 
   def image_url

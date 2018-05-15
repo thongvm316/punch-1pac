@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: requests
@@ -49,13 +50,16 @@ class Request < ApplicationRecord
     end
   }
 
-  scope :search_by, ->(params) {
+  def self.search_by(params)
     q = all
-    q = where(user_id: UserGroup.with_group(params[:group_id])) if params[:group_id].present?
-    q = where(status: params[:status]) if params[:status].present?
-    q = where(kind: params[:kind]) if params[:kind].present?
+    q = q.where(user_id: UserGroup.with_group(params[:group_id])) if params[:group_id].present?
+    q = q.where(status: params[:status]) if params[:status].present?
+    q = q.where(kind: params[:kind]) if params[:kind].present?
+    q = q.where(attendance_day: Date.parse(params[:from_date])..Date.parse(params[:to_date])) if params[:from_date].present? && params[:to_date].present?
     q
-  }
+  rescue TypeError, ArgumentError
+    none
+  end
 
   private
 

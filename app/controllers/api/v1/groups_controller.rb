@@ -6,7 +6,7 @@ class Api::V1::GroupsController < Api::V1::BaseController
   def index
     authorize!
     groups = current_company.groups.for_user(current_user).order(name: :asc)
-    render json: groups, each_serializer: GroupSerializer, status: 200
+    render json: groups, each_serializer: GroupSerializer, include: 'users', status: 200
   end
 
   def show
@@ -70,7 +70,7 @@ class Api::V1::GroupsController < Api::V1::BaseController
                   company_total_working_hours_on_month: current_company.total_working_hours_on_month(params[:date]),
                   company_total_working_days_in_month: current_company.total_working_days_in_month(params[:date])
                 },
-                leave_days: ForgotPunchInDaysService.new(current_user, params[:date]).execute,
+                leave_days: ForgotPunchInDaysService.new(current_user, current_company, params[:date]).execute,
                 adapter: :json,
                 status: :ok
       end

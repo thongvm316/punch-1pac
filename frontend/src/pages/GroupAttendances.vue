@@ -125,9 +125,9 @@ export default {
     },
 
     dateRange: function () {
-      const dates = this.dateRange.split(' to ')
+      const dates = this.dateRange.split(' ')
       this.params.from_date = dates[0]
-      this.params.to_date = dates[1]
+      this.params.to_date = dates[2]
     },
 
     selectedUser: function () {
