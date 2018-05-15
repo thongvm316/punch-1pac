@@ -31,8 +31,8 @@
 </head>
 
 <body class="bg-gray">
-
-<%= yield %>
-
+  <%= render 'shared/auth_header' %>
+  <%= yield %>
+  <%= render 'shared/auth_footer' %>
 </body>
 </html>

@@ -7,20 +7,22 @@
       <figure class="figure">
         <img src="<%= current_company.logo_url %>" alt="<%= current_company.name %>">
       </figure>
-      <h1 class="panel-title h3 mt-10"><%= t('auth.new.title', company: current_company.name) %></h1>
+      <h4 class="panel-title mt-10"><%= t('auth.new.title', company: current_company.name) %></h4>
     </div>
     <div class="panel-body">
       <%= form_with(model: @user, url: login_url, method: :post, local: true) do |f| %>
         <div class="form-group">
+          <label class="form-label">Email</label>
           <%= f.email_field :email, class: 'form-input', placeholder: t('auth.new.email'), value: @user.email %>
         </div>
         <div class="form-group">
+          <label class="form-label">Password</label>
           <%= f.password_field :password, class: 'form-input', placeholder: t('auth.new.password') %>
         </div>
         <div class="form-group">
-          <%= f.submit t('auth.new.sign_in'), class: 'btn btn-success btn-block' %>
+          <%= f.submit t('auth.new.sign_in'), class: 'btn btn-primary btn-block' %>
         </div>
-        <div class="form-group">
+        <div class="form-group text-center">
           <%= link_to t('auth.new.forgot_password'), password_reset_url %>
         </div>
       <% end %>
