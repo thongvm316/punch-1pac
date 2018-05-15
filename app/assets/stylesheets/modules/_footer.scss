@@ -1,0 +1,99 @@
+.footer {
+  background-color: $black-color;
+  color: $light-color;
+  padding-top: 1.6rem;
+  padding-bottom: 1.6rem;
+
+  @include respond-to-mobile() {
+    padding-top: 2.4rem;
+    padding-bottom: 2.4rem;
+  }
+
+  .navbar-section,
+  .navbar-center {
+    @include respond-to-not-pc() {
+      display: block;
+      width: 100%;
+    }
+  }
+
+  .footer-utility {
+    list-style: none;
+    margin: 0;
+    display: block;
+
+    @include respond-to-not-pc() {
+      width: 15.3rem;
+      margin: 0 auto;
+    }
+
+    li {
+      display: inline-block;
+      font-size: $font-size-lg;
+      margin-top: 0;
+
+      &:not(:first-of-type) {
+        margin-left: 1.2rem;
+      }
+    }
+
+    a {
+      color: $light-color;
+
+      &:hover,
+      &:focus {
+        text-decoration: none;
+      }
+    }
+  }
+
+  p {
+    font-size: $font-size-lg;
+    margin-bottom: 0;
+
+    @include respond-to-not-pc() {
+      text-align: center;
+      margin-top: 2rem;
+    }
+  }
+
+  .language-switcher {
+    font-size: 0;
+    text-align: right;
+    width: 10rem;
+
+    @include respond-to-not-pc() {
+      margin: 2rem auto 0;
+      padding-top: 0;
+      text-align: left;
+      width: 9.1rem;
+    }
+
+    &-label {
+      cursor: pointer;
+      font-size: $font-size-lg;
+      line-height: 1;
+      padding-right: .4rem;
+    }
+
+    &-box {
+      -webkit-appearance: none;
+      -moz-appearance:    none;
+      appearance:         none;
+      background: transparent;
+      border: 0;
+      font-size: $font-size-lg;
+      outline: 0;
+      padding: .2rem 1rem .2rem .4rem;
+    }
+
+    select {
+      color: $light-color;
+      font-weight: bold;
+
+      @include respond-to-not-pc() {
+        padding: 0;
+      }
+    }
+  }
+}

@@ -7,10 +7,15 @@ $screen-xs-mobile: 375px !default;
 
 // Color
 $primary-color: #439aff;
+$light-color: #fff;
+$black-color: #000;
 $primary-color-dark: #234FFF;
 $color-blue-lightest: #fafcff;
 $color-gray-lightest: #f0f3f7;
 $color-dark-lightest: #6c777e;
+
+$header-border-color: #e0e0e0;
+$border-color: #e3e3e7;
 
 // Font
 $base-font-family: 'Roboto', sans-serif;
@@ -19,4 +24,13 @@ $base-font-family: 'Roboto', sans-serif;
 $size-sm: 768px;
 $size-md: 991px;
 $size-lg: 1024px;
+
+// Font sizes
+$html-font-size: 20px;
+$html-line-height: 1.5;
+$font-size: .7rem;
+$font-size-xs: .5rem;
+$font-size-sm: .6rem;
+$font-size-lg: .8rem;
+$line-height: 1rem;
 

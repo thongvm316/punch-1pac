@@ -1,0 +1,252 @@
+body.menu-opened {
+  overflow: hidden;
+
+  &::before {
+    @include respond-to-mobile() {
+      background-color: rgba($black-color, .5);
+      content: '';
+      display: block;
+      height: 100%;
+      left: 0;
+      position: absolute;
+      top: 0;
+      transition: all .3s ease-in-out;
+      width: 100%;
+      z-index: 1;
+    }
+  }
+}
+
+.nav {
+  left: 0;
+  margin-bottom: 0;
+  margin-top: 0;
+  padding-bottom: .8rem;
+  padding-top: .8rem;
+  position: fixed;
+  top: 0;
+  z-index: 100;
+
+  &.nav-inverse {
+    background-color: $light-color;
+    border-bottom: 1px solid $header-border-color;
+
+    .navbar-logo {
+      background-image: asset-url("ico_logo.svg");
+    }
+
+    .navbar-link { color: $black-color; }
+
+    .btn-signin {
+      background-color: $primary-color;
+      color: $light-color;
+    }
+  }
+
+  .navbar-control {
+    @include respond-to-mobile () {
+      justify-content: inherit;
+    }
+  }
+
+  .navbar-menu {
+    position: relative;
+    text-align: left;
+    justify-content: flex-end;
+
+    @include respond-to-tablet () {
+      flex-grow: 2;
+    }
+
+    @include respond-to-mobile () {
+      display: none;
+    }
+
+    &.open {
+      @include respond-to-mobile() {
+        background-color: $light-color;
+        display: block;
+        flex: unset;
+        width: 100%;
+      }
+    }
+  }
+
+  .navbar-logo {
+    @include background-img();
+    background-image: asset-url("ico_logo-white.svg");
+    height: 1.5rem;
+    width: 6.5rem;
+  }
+
+  .navbar-utilities {
+    margin: 0;
+    list-style: none;
+
+    @include respond-to-mobile() {
+      padding-left: .4rem;
+      padding-top: .8rem;
+    }
+
+    li {
+      margin-top: 0;
+      display: inline-block;
+
+      @include respond-to-mobile() {
+        display: block;
+        font-size: .8rem;
+        line-height: 1.5;
+      }
+
+      &:not(:first-of-type) {
+        margin-left: 1.6rem;
+
+        @include respond-to-mobile() {
+          margin: 1.6rem 0 0 0;
+        }
+      }
+    }
+  }
+
+  .navbar-link {
+    color: $light-color;
+    cursor: pointer;
+
+    &:hover,
+    &:focus {
+      box-shadow: unset;
+      outline: none;
+      text-decoration: none;
+    }
+  }
+
+  .btn-signin {
+    background-color: $light-color;
+    border-radius: 1.25rem;
+    border: 0;
+    color: $primary-color;
+    margin-left: 1.6rem;
+    padding: .4rem 1.2rem;
+
+    @include respond-to-mobile () {
+      display: none;
+    }
+  }
+
+  .menu-burger {
+    align-self: center;
+    display: none;
+    height: 1.1rem;
+    transition: all .2s ease-in-out;
+    width: 1.1rem;
+
+    &.open {
+      @include background-img();
+      background-image: asset-url("ico_close.svg");
+
+      svg { display: none; }
+    }
+
+    @include respond-to-mobile () {
+      display: block;
+    }
+  }
+
+  .signin-form {
+    background-color: $light-color;
+    padding: .8rem;
+    width: 403px;
+
+    @include respond-to-not-mobile() {
+      border-radius: 3px;
+      box-shadow: 0 .25rem 1rem 0 rgba(0, 0, 0, .2);
+      display: none;
+      position: absolute;
+      right: 0;
+      top: 60px;
+    }
+
+    @include respond-to-mobile() {
+      border-bottom: .05rem solid $border-color;
+      display: block;
+      padding: 1.6rem 0 .8rem 0;
+      width: 100%;
+    }
+
+    &.open {
+      display: block;
+    }
+
+    .input-group {
+      @include respond-to-mobile() {
+        display: inline-block;
+        font-size: 0;
+        width: 100%;
+      }
+    }
+
+    .close {
+      @include background-img();
+      background-image: asset-url("ico_close.svg");
+      cursor: pointer;
+      display: block;
+      height: .8rem;
+      width: .8rem;
+
+      @include respond-to-mobile () {
+        display: none;
+      }
+    }
+
+    p {
+      margin-bottom: .8rem;
+      line-height: 1;
+    }
+
+    span {
+      align-self: center;
+      margin-left: 8px;
+      font-size: .7rem;
+    }
+
+    input {
+      border-radius: 3px;
+      border: 1px solid $border-color;
+      font-size: .7rem;
+      height: auto;
+      padding: 0 .4rem;
+      text-align: right;
+
+      &:focus {
+        box-shadow: unset;
+        outline: none;
+      }
+
+      @include respond-to-mobile() {
+        display: inline-block;
+        width: calc(100% - 88px);
+        padding: .5rem .4rem;
+      }
+    }
+
+    .btn-primary {
+      border: 0;
+      height: auto;
+      line-height: 1;
+      margin-left: .8rem;
+      padding: .6rem 1.3rem;
+
+      &:hover,
+      &:focus {
+        background-color: $primary-color;
+      }
+
+      @include respond-to-mobile() {
+        display: block;
+        margin-left: 0;
+        margin-top: .8rem;
+        width: 100%;
+      }
+    }
+  }
+}
