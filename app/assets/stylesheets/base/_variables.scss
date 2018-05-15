@@ -1,0 +1,22 @@
+// Responsive screen
+$screen-pc: 1200px !default;
+$screen-md-pc: 1024px !default;
+$screen-tablet: 992px !default;
+$screen-mobile: 768px !default;
+$screen-xs-mobile: 375px !default;
+
+// Color
+$primary-color: #439aff;
+$primary-color-dark: #234FFF;
+$color-blue-lightest: #fafcff;
+$color-gray-lightest: #f0f3f7;
+$color-dark-lightest: #6c777e;
+
+// Font
+$base-font-family: 'Roboto', sans-serif;
+
+// Break point
+$size-sm: 768px;
+$size-md: 991px;
+$size-lg: 1024px;
+

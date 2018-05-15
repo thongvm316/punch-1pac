@@ -1,0 +1,15 @@
+body {
+  font-family: $base-font-family;
+}
+
+a {
+  color: $primary-color;
+  font-size: .7rem;
+
+  &:focus,
+  &:hover,
+  &:active {
+    color: $primary-color;
+    text-decoration: none;
+  }
+}
