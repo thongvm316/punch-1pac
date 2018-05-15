@@ -45,11 +45,12 @@ function closeIndexMenuOnBodyClick () {
 }
 
 function indexHeaderScroll () {
+  var indexNav = document.getElementById('index-nav');
   var nav = document.querySelector('.nav');
   var navHeight = nav.offsetHeight;
 
   window.onscroll = function () {
-    if(this.scrollY >= navHeight && !nav.classList.contains('nav-inverse')) {
+    if(this.scrollY >= navHeight && indexNav) {
       nav.classList.add('nav-inverse');
     } else {
       nav.classList.remove('nav-inverse');
