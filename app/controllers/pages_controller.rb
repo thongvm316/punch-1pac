@@ -3,9 +3,7 @@
 class PagesController < ApplicationController
   layout 'page'
 
-  def top
-    render layout: 'page-top'
-  end
+  def top; end
 
   def help; end
 

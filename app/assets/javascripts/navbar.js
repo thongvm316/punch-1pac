@@ -1,16 +1,20 @@
-window.onload = function() {
+window.addEventListener('DOMContentLoaded', function () {
   indexHeaderScroll();
 
-  window.onresize = function(event) {
+  document.querySelector('.menu-burger').addEventListener('click', toggleNavMenu);
+  document.querySelector('.close').addEventListener('click', toggleSigninForm);
+  document.querySelector('.btn-signin').addEventListener('click', toggleSigninForm);
+
+  window.addEventListener('resize', function () {
     indexHeaderScroll();
-  };
-};
+  });
+});
 
 function toggleSigninForm () {
   document.querySelector('.signin-form').classList.toggle('open');
 }
 
-function toggleIndexMenu () {
+function toggleNavMenu () {
   var nav = document.querySelector('.nav');
   var indexNav = document.getElementById('index-nav');
 
@@ -22,18 +26,18 @@ function toggleIndexMenu () {
     indexNav.classList.toggle('nav-inverse');
   }
 
-  closeIndexMenuOnBodyClick();
+  closeNavMenuOnBodyClick();
 }
 
-function closeIndexMenuOnBodyClick () {
+function closeNavMenuOnBodyClick () {
   var nav = document.querySelector('.nav');
   var indexNav = document.getElementById('index-nav');
 
-  nav.onclick = function (e) {
+  nav.addEventListener('click', function (e) {
     e.stopPropagation();
-  }
+  });
 
-  document.onclick = function (e) {
+  document.addEventListener('click', function (e) {
     document.querySelector('body').classList.remove('menu-opened');
     nav.querySelector('.navbar-menu').classList.remove('open');
     nav.querySelector('.menu-burger').classList.remove('open');
@@ -41,7 +45,7 @@ function closeIndexMenuOnBodyClick () {
     if (indexNav) {
       indexNav.classList.remove('nav-inverse');
     }
-  }
+  });
 }
 
 function indexHeaderScroll () {
@@ -49,11 +53,11 @@ function indexHeaderScroll () {
   var nav = document.querySelector('.nav');
   var navHeight = nav.offsetHeight;
 
-  window.onscroll = function () {
+  window.addEventListener('scroll', function () {
     if(this.scrollY >= navHeight && indexNav) {
       nav.classList.add('nav-inverse');
     } else {
       nav.classList.remove('nav-inverse');
     }
-  }
+  });
 }

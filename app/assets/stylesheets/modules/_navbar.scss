@@ -10,26 +10,26 @@ body.menu-opened {
       left: 0;
       position: absolute;
       top: 0;
+      transition: all .3s ease-in-out;
       width: 100%;
       z-index: 1;
-      transition: all .3s ease-in-out;
     }
   }
 }
 
 .nav {
   left: 0;
+  margin-bottom: 0;
+  margin-top: 0;
   padding-bottom: .8rem;
   padding-top: .8rem;
   position: fixed;
   top: 0;
-  margin-top: 0;
-  margin-bottom: 0;
   z-index: 100;
 
   &.nav-inverse {
     background-color: $light-color;
-    border-bottom: 1px solid $gray-color-dark;
+    border-bottom: 1px solid $header-border-color;
 
     .navbar-logo {
       background-image: asset-url("ico_logo.svg");
@@ -37,13 +37,9 @@ body.menu-opened {
 
     .navbar-link { color: $black-color; }
 
-    .signin-btn {
+    .btn-signin {
       background-color: $primary-color;
       color: $light-color;
-    }
-
-    .menu-burger {
-      background-image: asset-url("ico_burger-black.svg");
     }
   }
 
@@ -77,10 +73,8 @@ body.menu-opened {
   }
 
   .navbar-logo {
+    @include background-img();
     background-image: asset-url("ico_logo-white.svg");
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
-    background-position: center;
     height: 1.5rem;
     width: 6.5rem;
   }
@@ -126,7 +120,7 @@ body.menu-opened {
     }
   }
 
-  .signin-btn {
+  .btn-signin {
     background-color: $light-color;
     border-radius: 1.25rem;
     border: 0;
@@ -141,17 +135,16 @@ body.menu-opened {
 
   .menu-burger {
     align-self: center;
-    background-image: asset-url("ico_burger.svg");
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
     display: none;
     height: 1.1rem;
-    width: 1.1rem;
     transition: all .2s ease-in-out;
+    width: 1.1rem;
 
     &.open {
+      @include background-img();
       background-image: asset-url("ico_close.svg");
+
+      svg { display: none; }
     }
 
     @include respond-to-mobile () {
@@ -161,26 +154,27 @@ body.menu-opened {
 
   .signin-form {
     background-color: $light-color;
-    border-radius: 3px;
-    box-shadow: 0 .25rem 1rem 0 rgba(0,0,0,0.2);
-    display: none;
     padding: .8rem;
-    position: absolute;
-    right: 0;
-    top: 60px;
     width: 403px;
 
-    &.open {
-      display: block;
+    @include respond-to-not-mobile() {
+      border-radius: 3px;
+      box-shadow: 0 .25rem 1rem 0 rgba(0, 0, 0, .2);
+      display: none;
+      position: absolute;
+      right: 0;
+      top: 60px;
     }
 
     @include respond-to-mobile() {
-      border-bottom: .05rem solid $gray-color-light;
-      box-shadow: unset;
+      border-bottom: .05rem solid $border-color;
       display: block;
       padding: 1.6rem 0 .8rem 0;
-      position: static;
       width: 100%;
+    }
+
+    &.open {
+      display: block;
     }
 
     .input-group {
@@ -192,10 +186,8 @@ body.menu-opened {
     }
 
     .close {
+      @include background-img();
       background-image: asset-url("ico_close.svg");
-      background-position: center;
-      background-repeat: no-repeat;
-      background-size: 100% 100%;
       cursor: pointer;
       display: block;
       height: .8rem;
@@ -219,7 +211,7 @@ body.menu-opened {
 
     input {
       border-radius: 3px;
-      border: 1px solid $gray-color-dark;
+      border: 1px solid $border-color;
       font-size: .7rem;
       height: auto;
       padding: 0 .4rem;
@@ -238,15 +230,21 @@ body.menu-opened {
     }
 
     .btn-primary {
+      border: 0;
       height: auto;
       line-height: 1;
       margin-left: .8rem;
       padding: .6rem 1.3rem;
 
+      &:hover,
+      &:focus {
+        background-color: $primary-color;
+      }
+
       @include respond-to-mobile() {
         display: block;
-        margin-top: .8rem;
         margin-left: 0;
+        margin-top: .8rem;
         width: 100%;
       }
     }

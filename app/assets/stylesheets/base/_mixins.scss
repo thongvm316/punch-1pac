@@ -34,6 +34,12 @@
   }
 }
 
+@mixin respond-to-not-mobile() {
+  @media (min-width: $screen-mobile) {
+    @content
+  }
+}
+
 @mixin respond-to-xs-mobile() {
   @media (max-width: $screen-xs-mobile) {
     @content
@@ -44,4 +50,10 @@
   display: flex;
   flex: 1 0 auto;
   justify-content: $justify;
+}
+
+@mixin background-img() {
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
 }
