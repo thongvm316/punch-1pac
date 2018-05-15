@@ -52,19 +52,4 @@
 
 // Custom
 @import 'modules/error_pages';
-.auth-form {
-  background-color: #fff;
-  margin-top: 80px;
-  width: 400px;
-  img {
-    height: 100px;
-    width: auto;
-  }
-  .panel-body {
-    padding-bottom: .8rem;
-  }
-
-  .toast {
-    margin-bottom: 10px;
-  }
-}
+@import 'modules/login';

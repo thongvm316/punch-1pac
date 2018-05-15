@@ -1,0 +1,45 @@
+.auth-form {
+  background-color: #fff;
+  margin-top: 64px;
+  width: 400px;
+  img {
+    height: 100px;
+    width: auto;
+  }
+
+  .panel-header {
+    padding: 2rem 1.6rem 0;
+  }
+
+  .panel-title {
+    margin: 1.2rem 0 1.6rem;
+  }
+
+  .panel-body {
+    padding: 0 1.6rem 2rem;
+  }
+
+  .toast {
+    margin-bottom: 10px;
+  }
+
+  .btn-block {
+    margin: 24px 0 16px 0;
+  }
+}
+
+.auth-footer {
+  margin-top: 2.8rem;
+
+  a {
+    margin-left: 0.8rem;
+    margin-right: 0.8rem;
+    color: #abb2b6;
+    font-size: 0.7rem;
+  }
+}
+
+.punch-logo {
+  width: 250px;
+  margin-top: 64px;
+}
