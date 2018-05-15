@@ -1,6 +1,10 @@
 <template>
   <main-layout :title="$t('requests.title')">
     <div class="toolbar mt-5">
+      <flat-pickr
+        :config="{mode: 'range', locale: flatpickrLocaleMapper[currentUser.language]}"
+        class="form-input daterange-picker"
+        v-model="dateRange"/>
       <select class="form-select" v-model="params.status">
         <option value="">{{ $t('requests.placeholder.filterByStatus') }}</option>
         <option :value="status" v-for="status in meta.request_statuses">{{ $t(`meta.request_statuses.${status}`) }}</option>
@@ -69,21 +73,26 @@ import Pagination from '../components/Pagination'
 import AnnualLeaveForm from '../components/AnnualLeaveForm'
 import RequestForm from '../components/RequestForm'
 import modal from '../mixins/modal'
+import flatPickr from 'vue-flatpickr-component'
+import flatpickrLocale from '../mixins/flatpickr-locale'
 import { mapState, mapActions } from 'vuex'
 
 export default {
   name: 'requests',
 
-  mixins: [modal, confirmDialog],
+  mixins: [modal, confirmDialog, flatpickrLocale],
 
   data () {
     return {
       modalTitle: '',
       selectedRequest: {},
+      dateRange: [this.$moment().startOf('month').format('YYYY-MM-DD'), this.$moment().endOf('month').format('YYYY-MM-DD')],
       params: {
         self: true,
         kind: '',
-        status: ''
+        status: '',
+        from_date: this.$moment().startOf('month').format('YYYY-MM-DD'),
+        to_date: this.$moment().endOf('month').format('YYYY-MM-DD')
       }
     }
   },
@@ -92,7 +101,8 @@ export default {
     MainLayout,
     AnnualLeaveForm,
     Pagination,
-    RequestForm
+    RequestForm,
+    flatPickr
   },
 
   computed: {
@@ -139,6 +149,12 @@ export default {
         this.getRequests(Object.assign({ page: 1 }, this.params))
       },
       deep: true
+    },
+
+    dateRange: function () {
+      const dates = this.dateRange.split(' ')
+      this.params.from_date = dates[0]
+      this.params.to_date = dates[2]
     }
   }
 }

@@ -64,11 +64,11 @@ export default {
   data () {
     return {
       attendance: {},
-      dateRange: [this.$moment().locale('en').startOf('month').format('YYYY-MM-DD'), this.$moment().locale('en').endOf('month').format('YYYY-MM-DD')],
+      dateRange: [this.$moment().startOf('month').format('YYYY-MM-DD'), this.$moment().endOf('month').format('YYYY-MM-DD')],
       params: {
         self: true,
-        from_date: this.$moment().locale('en').startOf('month').format('YYYY-MM-DD'),
-        to_date: this.$moment().locale('en').endOf('month').format('YYYY-MM-DD'),
+        from_date: this.$moment().startOf('month').format('YYYY-MM-DD'),
+        to_date: this.$moment().endOf('month').format('YYYY-MM-DD'),
         status: ''
       }
     }

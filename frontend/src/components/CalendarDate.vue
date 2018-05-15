@@ -1,5 +1,5 @@
 <template>
-  <div class="calendar-date current-month" :class="{'disabled': isWeekend}">
+  <div class="calendar-date current-month tooltip" :data-tooltip="tooltip" :class="{'disabled': isWeekend}">
     <button class="date-item" :class="{ 'date-today': localAttendance.day === today.format('YYYY-MM-DD') }">
       {{ localAttendance.day.split('-')[2] }}
     </button>
@@ -52,6 +52,17 @@ export default {
 
     isWeekend () {
       return this.currentCompany.breakdays.includes(this.$moment(this.localAttendance.day).locale('en').format('dddd').toLowerCase())
+    },
+
+    tooltip () {
+      if (this.localAttendance.holiday) {
+        return this.localAttendance.holiday.name
+      } else {
+        let text = ''
+        if (this.localAttendance.attending_status) text += this.$t('header.in') + ': ' + this.localAttendance.attended_at
+        if (this.localAttendance.leaving_status) text += ' - ' + this.$t('header.out') + ': ' + this.localAttendance.left_at
+        return text
+      }
     }
   },
 

@@ -6,6 +6,10 @@ export default class Page extends Abstract {
   }
 
   canViewCompanySettings () {
-    return this.currentUser.role === 'superadmin' || this.currentUser.role === 'admin'
+    return this.canViewGroups()
+  }
+
+  canViewPendingBlock () {
+    return this.canViewGroups()
   }
 }
