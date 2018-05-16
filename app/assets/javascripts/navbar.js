@@ -53,7 +53,7 @@ function indexHeaderScroll () {
 
   if(indexNav) {
     window.addEventListener('scroll', function () {
-      if(this.scrollY > 0) {
+      if(this.pageYOffset > 0) {
         indexNav.classList.add('nav-inverse');
       } else {
         indexNav.classList.remove('nav-inverse');

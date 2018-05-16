@@ -13,14 +13,12 @@
   }
 
   .description-content {
-    display: table;
+    align-items: center;
 
     &.col-reverse {
-      flex-direction: column-reverse;
-    }
-
-    @include respond-to-smaller-tablet() {
-      display: flex;
+      @include respond-to-smaller-tablet() {
+        flex-direction: column-reverse;
+      }
     }
 
     &:not(:first-of-type) {
@@ -33,9 +31,6 @@
   }
 
   .description-section {
-    display: table-cell;
-    vertical-align: middle;
-
     .description-text {
       width: 13.2rem;
 
