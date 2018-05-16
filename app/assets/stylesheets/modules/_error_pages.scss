@@ -1,6 +1,10 @@
 .error-img {
   margin-top: 2.4rem;
-  width: 100%;
+  width: 600px;
+
+  @include respond-to-mobile(){
+    width: 100%;
+  };
 }
 
 .error-content {
@@ -16,5 +20,14 @@
     margin: 0.8rem 0;
     font-size: 0.8rem;
     color: #6c777e;
+  }
+
+  &.btn-primary {
+    &:hover,
+    &:active,
+    &:focus {
+      background: $primary-color;
+      color: $light-color;
+    }
   }
 }
