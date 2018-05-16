@@ -1,6 +1,7 @@
 .bg-linear-blue {
   position: relative;
   background: linear-gradient(45deg, $primary-color-dark 0%, $primary-color 100%);
+  zoom: 101%;
 
   &:after {
     content: '';
@@ -14,7 +15,6 @@
     background-size: .2rem .2rem;
     background-position: center center;
     z-index: 3;
-    zoom: 101%;
   }
 }
 
