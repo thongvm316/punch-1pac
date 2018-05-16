@@ -1,8 +1,8 @@
 .hero {
   padding: 7.2rem 0;
 
-  @include respond-to-mobile() {
-    padding: 6rem 0 4rem;
+  @include respond-to-smaller-tablet() {
+    padding: 5.2rem 0 2rem;
   }
 
   .hero-content {
@@ -35,7 +35,6 @@
 
     .hero-title {
       color: $light-color;
-      line-height: 1;
       margin: 0;
 
       @include respond-to-mobile() {
@@ -49,11 +48,17 @@
       }
 
       + p {
+        font-size: .8rem;
         color: $light-color;
-        margin: 1.6rem 0;
+        margin: 1.2rem 0 1.6rem;
 
-        @include respond-to-mobile() {
+        @include respond-to-smaller-tablet() {
           margin-top: .8rem;
+          margin-bottom: 1.2rem;
+        }
+
+        @include respond-to-xs-mobile() {
+          margin-bottom: 1.6rem;
         }
       }
     }

@@ -1,5 +1,7 @@
 body {
   font-family: $base-font-family;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
 }
 
 a {
