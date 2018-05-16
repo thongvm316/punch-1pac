@@ -6,12 +6,20 @@
   }
 
   .hero-content {
+    margin-left: -.8rem;
+    margin-right: -.8rem;
     display: table;
     position: relative;
     z-index: 5;
 
     @include respond-to-smaller-tablet() {
-      display: flex;
+      display: block;
+      max-width: 22.8rem;
+      margin: 0 auto;
+    }
+
+    @include respond-to-mobile() {
+      max-width: 21rem;
     }
   }
 
@@ -19,13 +27,20 @@
   .hero-img {
     display: table-cell;
     vertical-align: middle;
+    width: 50%;
+    padding: 0 .8rem;
+
+    @include respond-to-smaller-tablet() {
+      display: block;
+      padding: 0;
+      width: 100%;
+    }
   }
 
   .hero-introduction-text {
     max-width: 22.8rem;
 
     @include respond-to-smaller-tablet() {
-      margin: 0 auto;
       text-align: center;
     }
 
@@ -74,10 +89,6 @@
     img {
       vertical-align: bottom;
       width: 100%;
-
-      @include respond-to-smaller-tablet() {
-        max-width: 456px;
-      }
     }
   }
 }
