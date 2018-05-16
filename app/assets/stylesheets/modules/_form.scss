@@ -15,6 +15,11 @@
       &:focus {
         box-shadow: none;
       }
+
+      &::placeholder {
+        color: $light-color;
+        font-style: italic;
+      }
     }
   }
 
@@ -25,11 +30,5 @@
     background-color: $light-color;
     color: $primary-color;
     font-size: .7rem;
-
-    &:hover {
-      border: .05rem solid $light-color;
-      background-color: $light-color;
-      color: $primary-color;
-    }
   }
 }
