@@ -2,7 +2,9 @@
   <div class="container">
     <div class="navbar">
       <div class="navbar-section navbar-control">
-        <a href="/"><div class="navbar-logo"></div></a>
+        <%= link_to root_path do %>
+          <div class="navbar-logo"></div>
+        <% end %>
         <btn class="menu-burger">
           <svg fill="currentColor" width="22px" height="22px" viewBox="0 0 22 22" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M0,17 L24,17 L24,20 L0,20 L0,17 Z M0,10 L24,10 L24,13 L0,13 L0,10 Z M4,3 L24,3 L24,6 L4,6 L4,3 Z" id="path-1"></path></svg>
         </btn>
@@ -18,8 +20,8 @@
           </div>
         </div>
         <ul class="navbar-utilities">
-          <li><a href="#" class="navbar-link">Features</a></li>
-          <li><a href="#" class="navbar-link">Documentation</a></li>
+          <li><%= link_to "Features", features_path, class: "navbar-link" %></li>
+          <li><%= link_to "Documentation", help_path, class: "navbar-link" %></li>
           <li><a href="#" class="navbar-link">Contact us</a></li>
         </ul>
         <btn class="btn btn-signin navbar-link">Sign In</btn>
