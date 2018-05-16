@@ -68,6 +68,8 @@ GEM
       activesupport (>= 3.0.0)
     arel (8.0.0)
     ast (2.4.0)
+    autoprefixer-rails (8.5.0)
+      execjs
     awesome_print (1.8.0)
     axiom-types (0.1.1)
       descendants_tracker (~> 0.0.4)
@@ -424,6 +426,7 @@ DEPENDENCIES
   activeadmin
   activerecord-import
   annotate
+  autoprefixer-rails
   awesome_print
   banken
   bcrypt

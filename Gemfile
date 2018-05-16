@@ -42,6 +42,7 @@ gem 'kaminari'
 gem 'oj'
 gem 'shrine'
 gem 'virtus'
+gem 'autoprefixer-rails'
 
 group :staging, :production do
   gem 'logglier'
