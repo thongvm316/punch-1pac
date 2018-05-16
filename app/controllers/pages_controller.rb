@@ -11,6 +11,8 @@ class PagesController < ApplicationController
 
   def privacy; end
 
+  def features; end
+
   def page_404; end
 
   def page_403; end

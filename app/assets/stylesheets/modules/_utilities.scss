@@ -18,6 +18,10 @@
   }
 }
 
+.text-blue {
+  color: $primary-color;
+}
+
 .bg-linear-gray {
   background: linear-gradient(180deg, $light-color 0%, $color-gray-lightest 100%);
 }
@@ -49,4 +53,16 @@
   @include respond-to-mobile {
     margin-bottom: 2rem;
   }
+}
+
+.pb-80 {
+  padding-bottom: 4rem;
+}
+
+.mt-64 {
+  margin-top: 3.2rem;
+}
+
+.mt-40 {
+  margin-top: 2rem;
 }

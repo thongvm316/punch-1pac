@@ -81,6 +81,7 @@ Rails.application.routes.draw do
   get 'help'    => 'pages#help'
   get 'terms'   => 'pages#terms'
   get 'privacy' => 'pages#privacy'
+  get 'features' => 'pages#features'
   get '403'     => 'pages#page_403' if Rails.env.development?
   get '500'     => 'pages#page_500' if Rails.env.development?
   devise_for :admins, ActiveAdmin::Devise.config
