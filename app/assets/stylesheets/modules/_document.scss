@@ -1,5 +1,4 @@
 .document {
-  padding-top: 3.2rem;
   background: $color-gray-lightest;
 
   .document-container {
@@ -103,6 +102,10 @@
 
       &:last-child {
         border-bottom: 0;
+
+        div {
+          padding-bottom: 0;
+        }
       }
 
       div {
