@@ -149,4 +149,51 @@ RSpec.describe Api::V1::BaseController, type: :controller do
       end
     end
   end
+
+  describe '#ip_address_user' do
+    let(:company) { create :company, :with_default_group, app_blocked_by_ip: true }
+    let(:login_usr) { create :user, company: company, role: 'member' }
+
+    before do
+      in_namespace(company)
+      authenticate_user(login_usr)
+      request.remote_ip = '192.168.1.1'
+    end
+
+    context 'when app_blocker_by_ip is true' do
+      context ' when ip address not exists in allowed_ip' do
+        let(:session) { create :session, user: login_usr }
+        let!(:allowed_ip1) { create :allowed_ip, ip_address: '10.0.0.1', company: company }
+
+        subject { get :index, format: :json }
+
+        its(:code) { is_expected.to eq '403' }
+        its(:body) { is_expected.to include(I18n.t('auth.messages.ip_address_block')) }
+      end
+
+      context 'when response render format html' do
+        subject { get :index, format: :html }
+
+        it { expect(subject).to be_forbidden }
+        it {  expect(subject).to render_template('pages/page_403') }
+      end
+
+      context 'when ip address exists allowed_ip' do
+        let(:session) { create :session, user: login_usr }
+        let!(:allowed_ip2) { create :allowed_ip, ip_address: '192.168.1.1', company: company }
+
+        subject { get :index, format: :json }
+
+        its(:code) { is_expected.to eq '200' }
+      end
+    end
+
+    context 'when app_blocked_by_ip is false' do
+      let!(:company) { create :company, :with_default_group, app_blocked_by_ip: false }
+
+      subject { get :index, format: :json }
+
+      its(:code) { is_expected.to eq '200' }
+    end
+  end
 end

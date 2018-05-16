@@ -1,23 +1,23 @@
 # frozen_string_literal: true
-
 # == Schema Information
 #
 # Table name: companies
 #
-#  id           :integer          not null, primary key
-#  namespace    :string           not null
-#  name         :string           not null
-#  country      :string           not null
-#  industry     :string           not null
-#  address      :string           not null
-#  phone_number :string           not null
-#  postal_code  :string
-#  tax_code     :string
-#  activated    :boolean          default(TRUE), not null
-#  timezone     :string           default("Asia/Hanoi"), not null
-#  logo_data    :text
-#  created_at   :datetime         not null
-#  updated_at   :datetime         not null
+#  id                :integer          not null, primary key
+#  namespace         :string           not null
+#  name              :string           not null
+#  country           :string           not null
+#  industry          :string           not null
+#  address           :string           not null
+#  phone_number      :string           not null
+#  postal_code       :string
+#  tax_code          :string
+#  activated         :boolean          default(TRUE), not null
+#  timezone          :string           default("Asia/Hanoi"), not null
+#  logo_data         :text
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
+#  app_blocked_by_ip :boolean          default(FALSE), not null
 #
 # Indexes
 #

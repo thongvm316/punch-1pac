@@ -106,6 +106,7 @@ ActiveRecord::Schema.define(version: 20180514080341) do
     t.text "logo_data"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "app_blocked_by_ip", default: false, null: false
     t.index ["namespace"], name: "index_companies_on_namespace", unique: true
   end
 

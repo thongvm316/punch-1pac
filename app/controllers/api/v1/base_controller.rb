@@ -7,6 +7,7 @@ class Api::V1::BaseController < ApplicationController
 
   before_action :current_company
   before_action :authenticate_user!
+  before_action :ip_address_user!
   before_action :set_timezone
   before_action :set_locale
 

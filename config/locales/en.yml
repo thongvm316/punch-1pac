@@ -7,6 +7,7 @@ en:
       sign_in: Sign In
       forgot_password: Forgot your password?
     messages:
+      ip_address_block: 'IP Address was blocked'
       invalid_user_password: 'Incorrect email or password'
       deactivated_user: 'Your account is deactivated, please contact your administrators'
       unauthorized: 'Unauthorized'

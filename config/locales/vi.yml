@@ -6,6 +6,14 @@ vi:
       password: Password
       sign_in: Sign In
       forgot_password: Forgot your password?
+    messages:
+      ip_address_block: 'IP Address was blocked'
+      invalid_user_password: 'Incorrect email or password'
+      deactivated_user: 'Your account is deactivated, please contact your administrators'
+      unauthorized: 'Unauthorized'
+      access_token_revoked: 'Access token is revoked'
+      access_token_expired: 'Access token is expired'
+      access_token_invalid: 'Access token is invalid'
   password_reset:
     new:
       title: Forgot your password?
