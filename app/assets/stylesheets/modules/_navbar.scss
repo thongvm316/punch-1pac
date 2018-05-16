@@ -1,18 +1,19 @@
 body.menu-opened {
   overflow: hidden;
 
-  &::before {
+  .nav::before {
     @include respond-to-mobile() {
       background-color: rgba($black-color, .5);
       content: '';
       display: block;
       height: 100%;
       left: 0;
+      min-height: 100vh;
       position: absolute;
-      top: 0;
+      top: 19.2rem;
       transition: all .3s ease-in-out;
       width: 100%;
-      z-index: 1;
+      z-index: 10;
     }
   }
 }
@@ -48,6 +49,10 @@ body.menu-opened {
         color: $light-color;
       }
     }
+
+    .menu-burger {
+      color: $color-burger;
+    }
   }
 
   .navbar-control {
@@ -82,7 +87,7 @@ body.menu-opened {
   .navbar-logo {
     @include background-img();
     background-image: asset-url("ico_logo-white.svg");
-    height: 1.5rem;
+    height: 1.6rem;
     width: 6.5rem;
   }
 
@@ -132,8 +137,9 @@ body.menu-opened {
     border-radius: 1.25rem;
     border: 0;
     color: $primary-color;
+    line-height: 1;
     margin-left: 1.6rem;
-    padding: .4rem 1.2rem;
+    padding: .45rem 1.2rem;
 
     &:hover,
     &:active {
@@ -148,6 +154,7 @@ body.menu-opened {
 
   .menu-burger {
     align-self: center;
+    color: $light-color;
     display: none;
     height: 1.1rem;
     transition: all .2s ease-in-out;

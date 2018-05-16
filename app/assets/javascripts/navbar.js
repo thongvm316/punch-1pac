@@ -22,7 +22,7 @@ function toggleNavMenu () {
   nav.querySelector('.navbar-menu').classList.toggle('open');
   nav.querySelector('.menu-burger').classList.toggle('open');
 
-  if (indexNav) {
+  if (window.pageYOffset === 0 && indexNav) {
     indexNav.classList.toggle('nav-inverse');
   }
 
@@ -42,7 +42,7 @@ function closeNavMenuOnBodyClick () {
     nav.querySelector('.navbar-menu').classList.remove('open');
     nav.querySelector('.menu-burger').classList.remove('open');
 
-    if (indexNav) {
+    if (window.pageYOffset === 0 && indexNav) {
       indexNav.classList.remove('nav-inverse');
     }
   });
@@ -50,14 +50,14 @@ function closeNavMenuOnBodyClick () {
 
 function indexHeaderScroll () {
   var indexNav = document.getElementById('index-nav');
-  var nav = document.querySelector('.nav');
-  var navHeight = nav.offsetHeight;
 
-  window.addEventListener('scroll', function () {
-    if(this.scrollY >= navHeight && indexNav) {
-      nav.classList.add('nav-inverse');
-    } else {
-      nav.classList.remove('nav-inverse');
-    }
-  });
+  if(indexNav) {
+    window.addEventListener('scroll', function () {
+      if(this.scrollY > 0) {
+        indexNav.classList.add('nav-inverse');
+      } else {
+        indexNav.classList.remove('nav-inverse');
+      }
+    });
+  }
 }
