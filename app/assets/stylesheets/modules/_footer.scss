@@ -19,15 +19,15 @@
     }
   }
 
+  .navbar-section:first-of-type {
+    @include respond-to-smaller-tablet() {
+      text-align: center;
+    }
+  }
+
   .footer-utility {
     list-style: none;
     margin: 0;
-    display: block;
-
-    @include respond-to-smaller-tablet() {
-      width: 15.3rem;
-      margin: 0 auto;
-    }
 
     li {
       display: inline-block;
@@ -79,9 +79,7 @@
     }
 
     &-box {
-      -webkit-appearance: none;
-      -moz-appearance:    none;
-      appearance:         none;
+      appearance: none;
       background: transparent;
       border: 0;
       font-size: $font-size-lg;
