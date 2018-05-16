@@ -1,6 +1,10 @@
 .error-img {
   margin-top: 2.4rem;
-  width: 100%;
+  width: 600px;
+
+  @include respond-to-mobile(){
+    width: 100%;
+  };
 }
 
 .error-content {
