@@ -2,16 +2,18 @@
 <%= render 'shared/header' %>
 <% end %>
 
-<div class="container">
-  <div class="columns">
-    <div class="column col-6 col-xs-10 col-mx-auto">
-      <img class="error-img" src="<%= asset_url('404.png') %>" alt="404 image">
-    </div>
-    <div class="column col-10 col-mx-auto">
-      <div class="error-content text-center">
-        <h2 class="error-content-title">Nothing to see here, Captain!</h2>
-        <h4 class="error-content-subtitle">Punch the button below to space jump</h4>
-        <button class="btn btn-primary">To Homepage</button>
+<div id="main" class="main mt-64 pb-80">
+  <div class="container">
+    <div class="columns">
+      <div class="column col-6 col-xs-10 col-mx-auto">
+        <img class="error-img" src="<%= asset_url('404.png') %>" alt="404 image">
+      </div>
+      <div class="column col-10 col-mx-auto">
+        <div class="error-content text-center">
+          <h2 class="error-content-title">Nothing to see here, Captain!</h2>
+          <h4 class="error-content-subtitle">Punch the button below to space jump</h4>
+          <button class="btn btn-primary">To Homepage</button>
+        </div>
       </div>
     </div>
   </div>
