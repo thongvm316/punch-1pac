@@ -2,7 +2,6 @@
 
 class Api::V1::RequestsController < Api::V1::BaseController
   include Pagination
-
   before_action :set_request, only: %i[update destroy approve reject]
 
   def index

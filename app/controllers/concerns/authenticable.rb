@@ -30,6 +30,16 @@ module Authenticable
     end
   end
 
+  def ip_address_user!
+    if current_company.app_blocked_by_ip
+      return if current_company.allowed_ips.exists?(ip_address: request.remote_ip)
+      respond_to do |f|
+        f.html { render file: 'pages/page_403', status: :forbidden, layout: 'page' }
+        f.json { render json: { message: I18n.t('auth.messages.ip_address_block') }, status: :forbidden }
+      end
+    end
+  end
+
   def current_company
     @current_company ||= Company.find_by!(namespace: request.subdomain)
   end
