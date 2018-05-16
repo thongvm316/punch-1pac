@@ -95,8 +95,19 @@
     }
 
     ol > li {
+      border-bottom: .05rem solid $border-color;
+
+      &:not(:first-child) {
+        margin-top: 3.2rem;
+      }
+
+      &:last-child {
+        border-bottom: 0;
+      }
+
       div {
         padding-left: 0;
+        padding-bottom: 2rem;
 
         &:before {
           display: none;
