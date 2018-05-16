@@ -77,7 +77,7 @@ export default {
 
   created () {
     this.getActivities()
-    this.getGroupPendingRequests()
+    if (this.$auth('Page', this.currentUser).canViewPendingBlock()) this.getGroupPendingRequests()
   },
 
   computed: {

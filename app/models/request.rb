@@ -64,7 +64,7 @@ class Request < ApplicationRecord
   private
 
   def attended_at_cannot_be_greater_than_left_at
-    errors.add(:attended_at, :less_than, count: 'left at') if attended_at && left_at && attended_at > left_at
+    errors.add(:attended_at, :less_than, count: 'left at') if attended_at && left_at && attended_at.strftime('%H:%M') > left_at.strftime('%H:%M')
   end
 
   def both_attended_at_left_at_cannot_be_blank

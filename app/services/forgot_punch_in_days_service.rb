@@ -42,7 +42,11 @@ class ForgotPunchInDaysService
   end
 
   def in_breakday?(current_day)
-    @current_company.breakdays.include?(current_day.strftime('%A').downcase)
+    breakdays.include?(current_day.strftime('%A').downcase)
+  end
+
+  def breakdays
+    @breakdays ||= @current_company.breakdays
   end
 
   def holidays

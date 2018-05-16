@@ -38,6 +38,7 @@ class Api::V1::AttendancesController < Api::V1::BaseController
   def index
     authorize!
     attendances = Attendance.for_user(current_user, params['self'])
+                            .includes(user: :company)
                             .search_by(params)
                             .page(params[:page])
                             .per(params[:per_page])

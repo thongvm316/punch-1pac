@@ -2,13 +2,13 @@
 
 class CountWorkingHoursService
   def initialize(company, attended_at, left_at, attendance_day)
-    @attended_at  = attended_at.to_i
+    @attended_at  = attended_at ? Time.zone.local(2000, 1, 1, attended_at.hour, attended_at.min, attended_at.sec).to_i : nil
     @left_at      = left_at ? Time.zone.local(2000, 1, 1, left_at.hour, left_at.min, left_at.sec).to_i : nil
     @business_day = company.business_days.find_by(weekday: attendance_day.strftime('%A').downcase)
   end
 
   def execute
-    return 0 if !@business_day || !@left_at || @attended_at.zero?
+    return 0 if !@business_day || !@left_at || !@attended_at
 
     @ts_business_day = convert_business_day_to_timestamp
 
@@ -20,7 +20,10 @@ class CountWorkingHoursService
   private
 
   def convert_business_day_to_timestamp
-    %i[morning_started_at morning_ended_at afternoon_started_at afternoon_ended_at].each_with_object({}) { |k, o| o[k] = @business_day.send(k).to_i }
+    %i[morning_started_at morning_ended_at afternoon_started_at afternoon_ended_at].each_with_object({}) do |k, o|
+      time = @business_day.send(k)
+      o[k] = Time.zone.local(2000, 1, 1, time.hour, time.min, time.sec).to_i
+    end
   end
 
   def morning_start_at
