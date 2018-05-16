@@ -1,5 +1,7 @@
 body.menu-opened {
-  overflow: hidden;
+  .main {
+    overflow: hidden;
+  }
 
   .nav::before {
     @include respond-to-mobile() {
@@ -78,7 +80,7 @@ body.menu-opened {
       @include respond-to-mobile() {
         background-color: $light-color;
         display: block;
-        flex: unset;
+        flex: none;
         width: 100%;
       }
     }
@@ -260,6 +262,8 @@ body.menu-opened {
       &:hover,
       &:focus {
         background-color: $primary-color;
+        border: 0;
+        color: $light-color;
       }
 
       @include respond-to-mobile() {
