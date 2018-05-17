@@ -35,7 +35,7 @@ body.menu-opened {
     border-bottom: 1px solid $header-border-color;
 
     .navbar-logo {
-      background-image: asset-url("ico_logo.svg");
+      background-image: asset-url('ico_logo.svg');
     }
 
     .navbar-link { color: $black-color; }
@@ -52,7 +52,7 @@ body.menu-opened {
     }
 
     .menu-burger {
-      color: $color-burger;
+      color: $color-dark-lightest;
     }
   }
 
@@ -87,7 +87,7 @@ body.menu-opened {
 
   .navbar-logo {
     @include background-img();
-    background-image: asset-url("ico_logo-white.svg");
+    background-image: asset-url('ico_logo-white.svg');
     height: 1.6rem;
     width: 6.5rem;
   }
@@ -115,7 +115,7 @@ body.menu-opened {
         margin-left: 1.6rem;
 
         @include respond-to-mobile() {
-          margin: 1.6rem 0 0 0;
+          margin: 1.6rem 0 0;
         }
       }
     }
@@ -142,14 +142,14 @@ body.menu-opened {
     margin-left: 1.6rem;
     padding: .45rem 1.2rem;
 
+    @include respond-to-mobile () {
+      display: none;
+    }
+
     &:hover,
     &:active {
       background-color: $light-color;
       color: $primary-color;
-    }
-
-    @include respond-to-mobile () {
-      display: none;
     }
   }
 
@@ -161,15 +161,15 @@ body.menu-opened {
     transition: all .2s ease-in-out;
     width: 1.1rem;
 
-    &.open {
-      @include background-img();
-      background-image: asset-url("ico_close.svg");
-
-      svg { display: none; }
-    }
-
     @include respond-to-mobile () {
       display: block;
+    }
+
+    &.open {
+      @include background-img();
+      background-image: asset-url('ico_close.svg');
+
+      svg { display: none; }
     }
   }
 
@@ -190,7 +190,7 @@ body.menu-opened {
     @include respond-to-mobile() {
       border-bottom: .05rem solid $border-color;
       display: block;
-      padding: 1.6rem 0 .8rem 0;
+      padding: 1.6rem 0 .8rem;
       width: 100%;
     }
 
@@ -208,7 +208,7 @@ body.menu-opened {
 
     .close {
       @include background-img();
-      background-image: asset-url("ico_close.svg");
+      background-image: asset-url('ico_close.svg');
       cursor: pointer;
       display: block;
       height: .8rem;
@@ -238,15 +238,15 @@ body.menu-opened {
       padding: 0 .4rem;
       text-align: right;
 
+      @include respond-to-mobile() {
+        display: inline-block;
+        width: calc(100% - 4.4rem);
+        padding: .5rem .4rem;
+      }
+
       &:focus {
         box-shadow: unset;
         outline: none;
-      }
-
-      @include respond-to-mobile() {
-        display: inline-block;
-        width: calc(100% - 88px);
-        padding: .5rem .4rem;
       }
     }
 
@@ -258,18 +258,18 @@ body.menu-opened {
       padding: .6rem 1.3rem;
       background-color: $primary-color;
 
-      &:hover,
-      &:focus {
-        background-color: $primary-color;
-        border: 0;
-        color: $light-color;
-      }
-
       @include respond-to-mobile() {
         display: block;
         margin-left: 0;
         margin-top: .8rem;
         width: 100%;
+      }
+
+      &:hover,
+      &:focus {
+        background-color: $primary-color;
+        border: 0;
+        color: $light-color;
       }
     }
   }
