@@ -18,7 +18,7 @@
     <table class="table bg-light mt-4">
       <thead>
         <tr>
-          <th>{{ $t('requests.tableHeader.date') }}</th>
+          <th class="w-cell-date">{{ $t('requests.tableHeader.date') }}</th>
           <th>{{ $t('requests.tableHeader.attendedAt') }}</th>
           <th>{{ $t('requests.tableHeader.leftAt') }}</th>
           <th>{{ $t('requests.tableHeader.kind') }}</th>
@@ -34,9 +34,9 @@
           <td class="w-cell-date">{{ request.attendance_day | moment_l }}</td>
           <td>{{ request.attended_at }}</td>
           <td>{{ request.left_at }}</td>
-          <td><span :class="{ 'text-primary': request.kind === 'attendance', 'text-info': request.kind === 'annual_leave' }">{{ $t(`requests.kinds.${request.kind}`) }}</span></td>
+          <td class="w-cell-kind"><span :class="{ 'text-primary': request.kind === 'attendance', 'text-info': request.kind === 'annual_leave' }">{{ $t(`requests.kinds.${request.kind}`) }}</span></td>
           <td>{{ request.reason }}</td>
-          <td><span class="label" :class="getStatusClass(request.status)">{{ $t(`meta.request_statuses.${request.status}`) }}</span></td>
+          <td class="w-cell-status"><span class="label" :class="getStatusClass(request.status)">{{ $t(`meta.request_statuses.${request.status}`) }}</span></td>
           <td class="w-cell-admin">{{ request.admin ? request.admin.name : '' }}</td>
           <td class="w-cell-reason">{{ request.admin_reason }}</td>
           <td class="w-cell-action">
