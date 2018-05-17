@@ -10,5 +10,8 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
+//= require ./lazyload
 //= require_self
 //= require ./navbar
+
+var myLazyLoad = new LazyLoad();
