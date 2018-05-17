@@ -157,11 +157,21 @@ body.menu-opened {
 
   .menu-burger {
     align-self: center;
+    background: transparent;
     color: $light-color;
     display: none;
     height: 1.1rem;
+    padding: 0;
     transition: all .2s ease-in-out;
     width: 1.1rem;
+
+    &:hover,
+    &:focus,
+    &:active {
+      background: transparent;
+      border: 0;
+      box-shadow: none;
+    }
 
     @include respond-to-mobile () {
       display: block;
@@ -242,7 +252,7 @@ body.menu-opened {
 
       @include respond-to-mobile() {
         display: inline-block;
-        width: calc(100% - 4.5rem);
+        width: calc(100% - 5rem);
         padding: .5rem .4rem;
       }
 
