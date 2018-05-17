@@ -5,6 +5,7 @@ body.menu-opened {
     @include respond-to-mobile() {
       background-color: rgba($black-color, .5);
       content: '';
+      cursor: pointer;
       display: block;
       height: 100%;
       left: 0;
