@@ -65,7 +65,17 @@ const webpackConfig = merge(baseWebpackConfig, {
     }),
 
     new PurgecssPlugin({
-      whitelistPatterns: [/.*flatpickr.*/, /.*numInputWrapper.*/, /.*dayContainer.*/, /.*numInput.*/, /.*range.*/i, /.*cur-.*/, /.*arrow.*/, /.*MonthDay.*/],
+      whitelistPatterns: [
+        /.*flatpickr.*/,
+        /.*numInputWrapper.*/,
+        /.*dayContainer.*/,
+        /.*numInput.*/,
+        /.*range.*/i,
+        /.*cur-.*/,
+        /.*arrow.*/,
+        /.*MonthDay.*/,
+        /.*open-indicator.*/
+      ],
       paths: glob.sync([
         path.join(__dirname, '../index.html'),
         path.join(__dirname, '../src/**/*.js'),

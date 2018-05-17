@@ -15,6 +15,7 @@ gem 'pg', '~> 0.18'
 
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
+gem 'rack-cors'
 
 # Background job
 gem 'sidekiq'
@@ -33,6 +34,7 @@ gem 'devise'
 # Application dependencies
 gem 'active_model_serializers', '~> 0.10.0'
 gem 'activerecord-import'
+gem 'autoprefixer-rails'
 gem 'bootsnap', require: false
 gem 'device_detector'
 gem 'dotenv-rails'
@@ -42,7 +44,6 @@ gem 'kaminari'
 gem 'oj'
 gem 'shrine'
 gem 'virtus'
-gem 'autoprefixer-rails'
 
 group :staging, :production do
   gem 'logglier'
@@ -57,8 +58,6 @@ group :development, :test do
   gem 'pry-byebug'
   gem 'pry-coolline'
   gem 'awesome_print'
-
-  gem 'rack-cors'
 
   gem 'rspec-rails'
 end

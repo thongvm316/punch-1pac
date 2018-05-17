@@ -2,18 +2,10 @@
 <%= render 'shared/header' %>
 <% end %>
 
-<div id="main" class="main pb-80">
-  <div class="container">
-    <div class="columns">
-      <div class="column col-lg-10 col-mx-auto">
-        <img class="error-img centered" src="<%= asset_url('403.png') %>" alt="403 image">
-      </div>
-      <div class="column col-10 col-mx-auto">
-        <div class="error-content text-center">
-          <h2 class="error-content-title">Well, we’re not going anywhere today, Captain!</h2>
-          <h4 class="error-content-subtitle">You don’t have permission to access this page.</h4>
-        </div>
-      </div>
-    </div>
+<div id="main" class="main pt-40 pb-80">
+  <div class="container text-center">
+    <img class="img-error" src="<%= asset_url('403.png') %>" alt="403 image">
+    <h2>Well, we’re not going anywhere today, Captain!</h2>
+    <h4>You don’t have permission to access this page.</h4>
   </div>
 </div>

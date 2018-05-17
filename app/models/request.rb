@@ -44,9 +44,9 @@ class Request < ApplicationRecord
     when 'member'
       user.requests
     when 'superadmin'
-      where(user_id: user.company.users).includes(:user)
+      where(user_id: user.company.users)
     when 'admin'
-      where(user_id: UserGroup.with_group(user.groups)).includes(:user)
+      where(user_id: UserGroup.with_group(user.groups))
     end
   }
 
