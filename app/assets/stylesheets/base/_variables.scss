@@ -23,6 +23,18 @@ $color-error: #fc4e5c;
 $header-border-color: #e0e0e0;
 $border-color: #e3e3e7;
 
+$color-orange: #fc9f00;
+$color-orange-tint: #feedd0;
+$color-red-tint: #ffe7e7;
+$color-green: #10b742;
+$color-green-tint: #d3f1dc;
+$color-violet: #ff83f8;
+$color-violet-tint: #ffe5fe;
+$color-gray-tint: #e3e3e7;
+
+$group-animated-shadow: $color-orange-tint, $color-red-tint, $color-green-tint, $color-violet-tint, $color-gray-tint;
+$group-animated-color: $color-orange, $red-color, $color-green, $color-violet, $color-true-gray;
+
 // Font
 $base-font-family: 'Roboto', sans-serif;
 
@@ -39,4 +51,3 @@ $font-size-xs: .5rem;
 $font-size-sm: .6rem;
 $font-size-lg: .8rem;
 $line-height: 1rem;
-
