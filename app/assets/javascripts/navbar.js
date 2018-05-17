@@ -50,8 +50,9 @@ function closeNavMenuOnBodyClick () {
 }
 
 function indexHeaderScroll () {
-  if(indexNav && !navMenu.classList.contains('open')) {
+  if(indexNav) {
     window.addEventListener('scroll', function () {
+      if (navMenu.classList.contains('open')) return;
       if(this.pageYOffset > 0) {
         indexNav.classList.add('nav-inverse');
       } else {
