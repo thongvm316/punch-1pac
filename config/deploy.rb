@@ -44,6 +44,7 @@ namespace :deploy do
       execute "mkdir -p #{shared_path}/config/puma"
       upload!('config/database.yml', "#{shared_path}/config/database.yml")
       upload!('config/secrets.yml', "#{shared_path}/config/secrets.yml")
+      upload!('public/static/500.png', "#{shared_path}/public/static/500.png")
       upload!('.env.staging', "#{shared_path}/.env.staging")
       upload!('config/puma/1punch-stg.1pac.vn.rb', "#{shared_path}/config/puma/1punch-stg.1pac.vn.rb")
     end
