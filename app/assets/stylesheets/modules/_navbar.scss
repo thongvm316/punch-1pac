@@ -109,7 +109,7 @@ body.menu-opened {
 
       @include respond-to-mobile() {
         display: block;
-        font-size: .8rem;
+        font-size: $font-size-lg;
         line-height: 1.5;
       }
 
@@ -229,13 +229,13 @@ body.menu-opened {
     span {
       align-self: center;
       margin-left: 8px;
-      font-size: .7rem;
+      font-size: $font-size-lg;
     }
 
     input {
       border-radius: 3px;
       border: 1px solid $border-color;
-      font-size: .7rem;
+      font-size: $font-size-lg;
       height: auto;
       padding: 0 .4rem;
       text-align: right;

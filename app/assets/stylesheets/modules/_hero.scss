@@ -53,17 +53,17 @@
       margin: 0;
 
       @include respond-to-mobile() {
-        font-size: 32px;
+        font-size: 1.6rem;
         line-height: 1.25;
       }
 
       @include respond-to-xs-mobile() {
-        font-size: 24px;
+        font-size: 1.2rem;
         line-height: 1.33333;
       }
 
       + p {
-        font-size: .8rem;
+        font-size: $font-size-lg;
         color: $light-color;
         margin: 1.2rem 0 1.6rem;
 

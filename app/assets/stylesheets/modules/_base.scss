@@ -6,7 +6,7 @@ body {
 
 a {
   color: $primary-color;
-  font-size: .7rem;
+  font-size: $font-size-lg;
 
   &:focus,
   &:hover,
