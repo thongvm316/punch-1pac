@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class AuthController < ApplicationController
-  layout 'auth'
   before_action :current_company
   before_action :authenticate_user!, only: %i[destroy]
 
@@ -13,6 +12,7 @@ class AuthController < ApplicationController
         return redirect_to(subdomain: request.subdomain, controller: 'dashboard', action: 'index', path: 'dashboard') if signed_in?
         flash.now[:alert] = params[:error_msg] if params[:error_msg].present?
         @user = User.new
+        render layout: 'page'
       end
       f.json { render json: current_company, serializer: CompanySerializer, status: 200 }
     end
@@ -68,7 +68,7 @@ class AuthController < ApplicationController
                             I18n.t('auth.messages.invalid_user_password')
                           end
       @user = User.new(email: auth_params[:email])
-      render(:new)
+      render(:new, layout: 'page')
     end
     format.json { head(401) }
   end

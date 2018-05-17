@@ -30,6 +30,9 @@ Rails/ReversibleMigration:
     - 'db/migrate/20180511092012_remove_attendance_id_of_requests.rb'
     - 'db/migrate/20180511093242_drop_table_read_requests.rb'
 
+Style/GuardClause:
+  Enabled: false
+
 Lint/ScriptPermission:
   Enabled: false
 

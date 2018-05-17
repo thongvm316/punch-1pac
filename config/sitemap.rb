@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Set the host name for URL creation
-SitemapGenerator::Sitemap.default_host = 'https://1punch.io'
+SitemapGenerator::Sitemap.default_host = 'https://punch.ooo'
 
 SitemapGenerator::Sitemap.create do
   # Put links creation logic here.
@@ -27,7 +27,8 @@ SitemapGenerator::Sitemap.create do
   #     add article_path(article), :lastmod => article.updated_at
   #   end
 
-  add about_path, priority: 0.8
-  add tos_path, priority: 0.8
-  add privacy_path, priority: 0.8
+  add features_path, priority: 0.8
+  add help_path, priority: 0.8
+  add terms_path, priority: 0.6
+  add privacy_path, priority: 0.6
 end

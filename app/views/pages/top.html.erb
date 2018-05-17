@@ -1,5 +1,13 @@
+<%= provide(:page_title, 'Home | Punch') %>
+<%= provide(:page_description, 'Punch description') %>
+<%= provide(:page_url, root_url) %>
+
 <% content_for(:header) do %>
-<%= render 'shared/index-header' %>
+<%= render 'shared/top_header' %>
+<% end %>
+
+<% content_for(:footer) do %>
+<%= render 'shared/footer' %>
 <% end %>
 
 <div id="main" class="main main-mt-0">
@@ -17,7 +25,7 @@
           </div>
         </div>
         <div class="hero-img">
-          <img src="<%= asset_url('img_hero_01.png') %>" alt="">
+          <img src="<%= asset_url('img_hero_01.png') %>" alt="Punch screenshot">
         </div>
       </div>
     </div>
@@ -73,10 +81,10 @@
     <div class="container">
       <h2 class="section-title">Why punch?</h2>
       <div class="columns">
-        <div class="column col-4 col-md-5 col-md-6 col-sm-12 col-ml-auto">
+        <div class="column col-4 col-md-6 col-sm-12 col-ml-auto">
           <div class="card">
             <div class="card-image">
-              <img src="<%= asset_url('img_feature_01.png') %>" alt="" width="100">
+              <img data-src="<%= asset_url('img_feature_01.png') %>" alt="Many ways to track" width="100">
             </div>
             <h3 class="card-header">Many ways to track</h3>
             <div class="card-body">
@@ -88,7 +96,7 @@
           </div>
           <div class="card">
             <div class="card-image">
-              <img src="<%= asset_url('img_feature_03.png') %>" alt="" width="100">
+              <img data-src="<%= asset_url('img_feature_03.png') %>" alt="Comprehensive reports" width="100">
             </div>
             <h3 class="card-header">Comprehensive reports</h3>
             <div class="card-body">
@@ -99,10 +107,10 @@
             </div>
           </div>
         </div>
-        <div class="column col-4 col-md-5 col-md-6 col-sm-12 col-mr-auto">
+        <div class="column col-4 col-md-6 col-sm-12 col-mr-auto">
           <div class="card">
             <div class="card-image">
-              <img src="<%= asset_url('img_feature_02.png') %>" alt="" width="100">
+              <img data-src="<%= asset_url('img_feature_02.png') %>" alt="Data on Cloud" width="100">
             </div>
             <h3 class="card-header">Data on Cloud</h3>
             <div class="card-body">
@@ -114,7 +122,7 @@
           </div>
           <div class="card">
             <div class="card-image">
-              <img src="<%= asset_url('img_feature_04.png') %>" alt="" width="100">
+              <img data-src="<%= asset_url('img_feature_04.png') %>" alt="No time-comsuming, paper-wasting, just profit." width="100">
             </div>
             <h3 class="card-header">No time-comsuming, paper-wasting, just profit.</h3>
             <div class="card-body">
@@ -137,10 +145,10 @@
       <h2 class="section-title">Available for Android & iOS</h2>
       <ul class="download-widget">
         <li class="download-widget-item">
-          <a href="#"><img src="<%= asset_url('img_widget_01.png') %>" alt="" width="120"></a>
+          <a href="#"><img data-src="<%= asset_url('img_widget_01.png') %>" alt="Download Punch on iOS" width="120"></a>
         </li>
         <li class="download-widget-item">
-          <a href="#"><img src="<%= asset_url('img_widget_02.png') %>" alt="" width="132"></a>
+          <a href="#"><img data-src="<%= asset_url('img_widget_02.png') %>" alt="Download Punch on Android" width="132"></a>
         </li>
       </ul>
       <div class="columns">
@@ -150,16 +158,16 @@
             <div class="scroller-control">
               <div class="scroller-slider">
                 <div class="scroller-slider-item">
-                  <a href="#"><img src="<%= asset_url('img_device_01.png') %>" alt="" width="288"></a>
+                  <a href="#"><img data-src="<%= asset_url('img_device_01.png') %>" alt="Dowloand Punch on Ipad" width="288"></a>
                 </div>
                 <div class="scroller-slider-item">
-                  <a href="#"><img src="<%= asset_url('img_device_02.png') %>" alt="" width="160"></a>
+                  <a href="#"><img data-src="<%= asset_url('img_device_02.png') %>" alt="Download Punch on Iphone" width="160"></a>
                 </div>
                 <div class="scroller-slider-item">
-                  <a href="#"><img src="<%= asset_url('img_device_03.png') %>" alt="" width="152"></a>
+                  <a href="#"><img data-src="<%= asset_url('img_device_03.png') %>" alt="Download Punch on Android mobile" width="152"></a>
                 </div>
                 <div class="scroller-slider-item">
-                  <a href="#"><img src="<%= asset_url('img_device_04.png') %>" alt="" width="400"></a>
+                  <a href="#"><img data-src="<%= asset_url('img_device_04.png') %>" alt="Download Punch on Android tablet" width="400"></a>
                 </div>
               </div>
             </div>
@@ -178,7 +186,7 @@
             <div class="card-header">
               <div class="tile">
                 <div class="tile-icon">
-                  <img src="<%= asset_url('img_avatar.png') %>" alt="" class="avatar avatar-lg">
+                  <img data-src="<%= asset_url('img_avatar.png') %>" alt="John Doe" class="avatar avatar-lg">
                 </div>
                 <div class="tile-content">
                   <h4 class="tile-title">John Doe</h4>
@@ -194,7 +202,7 @@
             <div class="card-header">
               <div class="tile">
                 <div class="tile-icon">
-                  <img src="<%= asset_url('img_avatar.png') %>" alt="" class="avatar avatar-lg">
+                  <img data-src="<%= asset_url('img_avatar.png') %>" alt="Mary Jane" class="avatar avatar-lg">
                 </div>
                 <div class="tile-content">
                   <h4 class="tile-title">Mary Jane</h4>
@@ -210,7 +218,7 @@
             <div class="card-header">
               <div class="tile">
                 <div class="tile-icon">
-                  <img src="<%= asset_url('img_avatar.png') %>" alt="" class="avatar avatar-lg">
+                  <img data-src="<%= asset_url('img_avatar.png') %>" alt="Amanda Lee" class="avatar avatar-lg">
                 </div>
                 <div class="tile-content">
                   <h4 class="tile-title">Amanda Lee</h4>
