@@ -50,7 +50,8 @@ config/database.yml
 
 .byebug_history
 
-/public/static/
+/public/static/*
+!/public/static/500.png
 /public/app/
 /public/index.html
 
