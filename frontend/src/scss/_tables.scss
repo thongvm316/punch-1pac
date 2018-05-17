@@ -3,54 +3,33 @@
   font-size: .7rem;
   border-radius: $border-radius;
 
-  td {
-    white-space: nowrap;
+  .w-cell-user {
+    width: 140px;
+  }
 
-    &.break {
-      white-space: normal;
-    }
+  .w-cell-date {
+    width: 70px;
+  }
+
+  .w-cell-admin {
+    width: 100px;
+  }
+
+  .w-cell-reason {
+    width: 180px;
+  }
+
+  .w-cell-action {
+    width: 92px;
   }
 
   &.table-scroll {
-    white-space: normal;
     padding-bottom: 0;
-
-    .cell {
-      &-lg {
-        min-width: 300px;
-      }
-
-      &-md {
-        min-width: 150px;
-      }
-
-      &-sm {
-        min-width: 130px;
-      }
-
-      &-xs {
-        min-width: 80px;
-      }
-
-      &-mw-230 {
-        min-width: 230px;
-      }
-
-      &-mw-120 {
-        min-width: 120px;
-      }
-
-      &-mw-90 {
-        min-width: 90px;
-      }
-    }
   }
 
   th {
     border-bottom: $border-width solid $border-color;
     white-space: nowrap;
-    padding-left: 0.4rem;
-    padding-right: 0.4rem;
 
     svg {
       height: 0.6rem;
@@ -90,13 +69,6 @@
 
   .btn {
     font-size: .7rem;
-  }
-
-  &.no-border {
-    td,
-    th {
-      border: 0;
-    }
   }
 
   &.sortable-table {

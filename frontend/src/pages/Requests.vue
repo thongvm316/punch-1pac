@@ -15,31 +15,31 @@
       </select>
     </div>
 
-    <table class="table table-scroll bg-light mt-4">
+    <table class="table bg-light mt-4">
       <thead>
         <tr>
-          <th class="cell-mw-90">{{ $t('requests.tableHeader.date') }}</th>
-          <th class="cell-mw-120">{{ $t('requests.tableHeader.attendedAt') }}</th>
-          <th class="cell-mw-90">{{ $t('requests.tableHeader.leftAt') }}</th>
-          <th class="cell-mw-120">{{ $t('requests.tableHeader.kind') }}</th>
-          <th class="cell-lg">{{ $t('requests.tableHeader.reason') }}</th>
-          <th class="cell-mw-120">{{ $t('requests.tableHeader.status') }}</th>
-          <th class="cell-md">{{ $t('requests.tableHeader.admin') }}</th>
-          <th class="cell-lg">{{ $t('requests.tableHeader.rejectReason') }}</th>
-          <th class="cell-mw-120">{{ $t('requests.tableHeader.actions') }}</th>
+          <th>{{ $t('requests.tableHeader.date') }}</th>
+          <th>{{ $t('requests.tableHeader.attendedAt') }}</th>
+          <th>{{ $t('requests.tableHeader.leftAt') }}</th>
+          <th>{{ $t('requests.tableHeader.kind') }}</th>
+          <th>{{ $t('requests.tableHeader.reason') }}</th>
+          <th>{{ $t('requests.tableHeader.status') }}</th>
+          <th>{{ $t('requests.tableHeader.admin') }}</th>
+          <th>{{ $t('requests.tableHeader.rejectReason') }}</th>
+          <th>{{ $t('requests.tableHeader.actions') }}</th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="request in requests">
-          <td>{{ request.attendance_day | moment_l }}</td>
+          <td class="w-cell-date">{{ request.attendance_day | moment_l }}</td>
           <td>{{ request.attended_at }}</td>
           <td>{{ request.left_at }}</td>
           <td><span :class="{ 'text-primary': request.kind === 'attendance', 'text-info': request.kind === 'annual_leave' }">{{ $t(`requests.kinds.${request.kind}`) }}</span></td>
-          <td class="break">{{ request.reason }}</td>
+          <td>{{ request.reason }}</td>
           <td><span class="label" :class="getStatusClass(request.status)">{{ $t(`meta.request_statuses.${request.status}`) }}</span></td>
-          <td>{{ request.admin ? request.admin.name : '' }}</td>
-          <td class="break">{{ request.admin_reason }}</td>
-          <td>
+          <td class="w-cell-admin">{{ request.admin ? request.admin.name : '' }}</td>
+          <td class="w-cell-reason">{{ request.admin_reason }}</td>
+          <td class="w-cell-action">
             <button class="btn btn-action btn-link tooltip" :data-tooltip="$t('requests.tooltip.edit')" @click="toggleEditModal(request)" v-if="request.status === 'pending'">
               <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="currentColor"><path d="M23.2530524,2.92025954 L21.0782401,0.745259708 C20.084537,-0.24844334 18.4678184,-0.248396465 17.4741154,0.745259708 C16.5385373,1.68093151 2.24841342,15.9721335 1.29342912,16.9271647 C1.19171037,17.0288834 1.12355413,17.1640709 1.09927288,17.2963053 L0.0118667154,23.1688048 C-0.0302739063,23.3964767 0.0422885881,23.6303361 0.20602295,23.7940704 C0.369944813,23.9579923 0.603851044,24.0304141 0.831241652,23.9882735 L6.70322557,22.9007267 C6.83892868,22.8754142 6.97233492,22.8066017 7.07236617,22.7065236 L23.2530524,6.52461863 C24.2490523,5.52861871 24.249193,3.91640009 23.2530524,2.92025954 Z M1.58077284,22.4191799 L2.23856967,18.8668052 L5.13291319,21.7613362 L1.58077284,22.4191799 Z M6.57520995,21.2149144 L2.78494462,17.4244147 L16.6229123,3.58536886 L20.4131776,7.37591544 L6.57520995,21.2149144 Z M22.2586931,5.53025934 L21.40749,6.38155614 L17.6172247,2.59100956 L18.4684278,1.73971276 C18.9137871,1.29430654 19.6384277,1.29425966 20.0838808,1.73971276 L22.2586931,3.91471259 C22.7051774,4.36119693 22.7051774,5.08372812 22.2586931,5.53025934 Z"/></svg>
             </button>

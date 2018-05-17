@@ -10,13 +10,13 @@
       </router-link>
     </div>
 
-    <table class="table table-scroll bg-light mt-5">
+    <table class="table bg-light mt-5">
       <thead>
-        <th class="cell-mw-230">{{ $t('company.users.tableHeader.name') }}</th>
-        <th class="cell-mw-230">{{ $t('company.users.tableHeader.email') }}</th>
-        <th class="cell-md">{{ $t('company.users.tableHeader.position') }}</th>
-        <th class="cell-mw-90">{{ $t('company.users.tableHeader.role') }}</th>
-        <th class="cell-mw-120">{{ $t('company.users.tableHeader.actions') }}</th>
+        <th>{{ $t('company.users.tableHeader.name') }}</th>
+        <th>{{ $t('company.users.tableHeader.email') }}</th>
+        <th>{{ $t('company.users.tableHeader.position') }}</th>
+        <th>{{ $t('company.users.tableHeader.role') }}</th>
+        <th>{{ $t('company.users.tableHeader.actions') }}</th>
       </thead>
       <tbody>
         <tr v-for="user in filterByEmail(email)" :class="{ 'deactivated': !user.activated }">
