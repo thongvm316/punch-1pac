@@ -1,6 +1,5 @@
 body.menu-opened {
   overflow: hidden;
-  position: relative;
 
   &::before {
     @include respond-to-mobile() {
@@ -33,6 +32,7 @@ body.menu-opened {
   &.nav-inverse {
     background-color: $light-color;
     border-bottom: 1px solid $header-border-color;
+    box-shadow: 0 2px 3px 0 rgba($black-color, .2);
 
     .navbar-logo {
       background-image: asset-url('ico_logo.svg');
@@ -242,7 +242,7 @@ body.menu-opened {
 
       @include respond-to-mobile() {
         display: inline-block;
-        width: calc(100% - 4.4rem);
+        width: calc(100% - 4.5rem);
         padding: .5rem .4rem;
       }
 
