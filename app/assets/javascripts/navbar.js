@@ -19,6 +19,7 @@ function toggleNavMenu () {
   var indexNav = document.getElementById('index-nav');
 
   document.querySelector('body').classList.toggle('menu-opened');
+  document.addEventListener('touchmove', function (e) { e.preventDefault(); });
   nav.querySelector('.navbar-menu').classList.toggle('open');
   nav.querySelector('.menu-burger').classList.toggle('open');
 
@@ -46,6 +47,10 @@ function closeNavMenuOnBodyClick () {
       indexNav.classList.remove('nav-inverse');
     }
   });
+
+  if (!nav.querySelector('.navbar-menu').classList.contains('open')) {
+    document.addEventListener('touchmove', function (e) { return true; });
+  }
 }
 
 function indexHeaderScroll () {

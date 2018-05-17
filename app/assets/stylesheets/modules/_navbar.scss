@@ -58,6 +58,8 @@ body.menu-opened {
 
   .navbar-control {
     @include respond-to-mobile () {
+      flex: none;
+      width: 100%;
       justify-content: inherit;
     }
   }
