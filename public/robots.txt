@@ -1,8 +1,9 @@
 User-Agent: *
 Allow: /$
 Allow: /privacy
-Allow: /tos
-Allow: /about
+Allow: /terms
+Allow: /features
+Allow: /help
 Disallow: /
 
 # Sitemap: https://1punch.io/sitemap.xml.gz
