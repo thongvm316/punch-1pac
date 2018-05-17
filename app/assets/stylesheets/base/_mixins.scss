@@ -5,7 +5,7 @@
 }
 
 @mixin respond-to-not-pc() {
-  @media (max-width: $screen-pc) {
+  @media (max-width: $screen-pc - 1) {
     @content
   }
 }
