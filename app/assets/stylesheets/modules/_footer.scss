@@ -12,7 +12,7 @@
 
   .navbar-section,
   .navbar-center {
-    @include respond-to-not-pc() {
+    @include respond-to-smaller-tablet() {
       display: block;
       width: 100%;
       flex: none;
@@ -24,7 +24,7 @@
     margin: 0;
     display: block;
 
-    @include respond-to-not-pc() {
+    @include respond-to-smaller-tablet() {
       width: 15.3rem;
       margin: 0 auto;
     }
@@ -53,7 +53,7 @@
     font-size: $font-size-lg;
     margin-bottom: 0;
 
-    @include respond-to-not-pc() {
+    @include respond-to-smaller-tablet() {
       text-align: center;
       margin-top: 2rem;
     }
@@ -64,7 +64,7 @@
     text-align: right;
     width: 10rem;
 
-    @include respond-to-not-pc() {
+    @include respond-to-smaller-tablet() {
       margin: 2rem auto 0;
       padding-top: 0;
       text-align: left;
@@ -86,16 +86,16 @@
       border: 0;
       font-size: $font-size-lg;
       outline: 0;
-      padding: .2rem 1rem .2rem .4rem;
+      padding-right: .8rem;
+      background-image: asset-url('ico_arrow-down_white.png');
+      background-size: 10px auto;
+      background-repeat: no-repeat;
+      background-position: right calc(50% - .05rem);
     }
 
     select {
       color: $light-color;
       font-weight: bold;
-
-      @include respond-to-not-pc() {
-        padding: 0;
-      }
     }
   }
 }
