@@ -1,56 +1,58 @@
 .auth-form {
   margin-top: 3.2rem;
-  width: 400px;
+  width: 20rem;
 
   @include respond-to-mobile() {
     width: 100%;
-    margin-top: 0.8rem;
+    margin-top: .8rem;
   }
 
   img {
-    height: 100px;
+    height: 5rem;
     width: auto;
   }
 
   .panel {
-    background-color: #fff;
+    background-color: $light-color;
 
     &-header {
       padding: 2rem 1.6rem 0;
+
       @include respond-to-mobile() {
-        padding: 1rem 0.8rem 0;
+        padding: 1rem .8rem 0;
       }
     }
 
     &-title {
-      margin: 1.2rem 0 1.2rem;
+      margin: 1.2rem 0;
     }
 
     &-body {
       padding: 0 1.6rem 2rem;
+
       @include respond-to-mobile() {
-        padding: 0 0.8rem 1rem;
+        padding: 0 .8rem 1rem;
       }
     }
   }
 
   .toast {
-    margin-bottom: 10px;
+    margin-bottom: .5rem;
 
     &-error {
-      background-color: #ffe7e7;
-      color: #fc4e5c;
-      border-color: #fc4e5c;
+      background-color: $red-color-lightest;
+      color: $red-color;
+      border-color: $red-color;
 
-      @include respond-to-mobile(){
-        margin-left: 0.8rem;
+      @include respond-to-mobile() {
+        margin-left: .8rem;
         width: calc(100% - 1.6rem);
       }
     }
   }
 
   .btn-block {
-    margin: 1.2rem 0 0.8rem 0;
+    margin: 1.2rem 0 .8rem;
   }
 }
 
@@ -65,23 +67,24 @@
   }
 
   a {
-    margin-left: 0.8rem;
-    margin-right: 0.8rem;
+    margin-left: .8rem;
+    margin-right: .8rem;
+    color: $color-true-gray;
+    font-size: .7rem;
+
     @include respond-to-mobile() {
-      margin-left: 0.4rem;
-      margin-right: 0.4rem;
+      margin-left: .4rem;
+      margin-right: .4rem;
     }
-    color: #abb2b6;
-    font-size: 0.7rem;
   }
 }
 
 .punch-logo {
-  width: 250px;
+  width: 12.5rem;
   margin-top: 3.2rem;
 
   @include respond-to-mobile() {
-    width: 150px;
+    width: 7.5rem;
     margin-top: 1rem;
   }
 }
