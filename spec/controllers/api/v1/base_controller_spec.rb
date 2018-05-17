@@ -7,6 +7,7 @@ RSpec.describe Api::V1::BaseController, type: :controller do
     include Authenticable
 
     before_action :authenticate_user!
+    before_action :app_blocked_by_ip!
     before_action :set_timezone
     before_action :set_locale
     skip_after_action :verify_authorized
@@ -150,7 +151,7 @@ RSpec.describe Api::V1::BaseController, type: :controller do
     end
   end
 
-  describe '#ip_address_user' do
+  describe '#app_blocked_by_ip!' do
     let(:company) { create :company, :with_default_group, app_blocked_by_ip: true }
     let(:login_usr) { create :user, company: company, role: 'member' }
 
