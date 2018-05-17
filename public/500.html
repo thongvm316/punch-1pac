@@ -14,44 +14,36 @@
     background-color: #f0f3f7;
   }
 
-  .mt-48 {
-    margin-top: 48px;
-  }
-
   .main {
-    margin: 120px auto;
-  }
-
-  @media (max-width: 767px) {
-   .main {
-      margin: 40px auto;
-    }
-  }
-
-  .main-content {
+    margin-top: 80px auto 0;
     padding-left: 16px;
     padding-right: 16px;
     text-align: center
   }
 
-  .main-content img {
+  @media (max-width: 767px) {
+   .main {
+      margin-top: 40px;
+    }
+  }
+
+  .main img {
+    width: 600px;
     max-width: 100%
   }
 
-  .main-content h2 {
-    margin: 0;
+  .main h2 {
+    margin-bottom: 16px;
     font-size: 32px;
     color: #363636
   }
 
-  .main-content h4 {
-    margin: 16px 0;
-    font-size: 16px;
+  .main p {
+    margin-bottom: 16px;
     color: #6c777e
   }
 
   .btn {
-    font-size: 16px;
     padding: 10px 20px;
     height: auto;
     border-radius: 4px;
@@ -67,18 +59,11 @@
 </head>
 
 <body>
-  <div id="main" class="main">
-    <div class="main-content">
-      <img src="/static/500.png" alt="500 image" width="600">
-      <div class="mt-48">
-        <h2>Something’s wrong, Captain!</h2>
-        <h4>Just try to refresh the page, the problem may be temporary.</h4>
-      </div>
-      <div class="mt-48">
-        <a href="/" class="btn">Homepage</a>
-      </div>
-    </div>
+  <div class="main">
+    <img src="/static/500.png" alt="500 image">
+    <h2>Something’s wrong, Captain!</h2>
+    <p>Just try to refresh the page, the problem may be temporary.</p>
+    <a href="/" class="btn">Homepage</a>
   </div>
 </body>
 </html>
-
