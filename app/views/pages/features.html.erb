@@ -1,5 +1,13 @@
+<%= provide(:page_title, 'Punch') %>
+<%= provide(:page_description, 'Punch description') %>
+<%= provide(:page_url, features_url) %>
+
 <% content_for(:header) do %>
 <%= render 'shared/header' %>
+<% end %>
+
+<% content_for(:footer) do %>
+<%= render 'shared/footer' %>
 <% end %>
 
 <div id="main" class="main">
@@ -18,12 +26,12 @@
           </div>
         </div>
         <div class="column col-md-8 col-sm-12 col-mx-auto description-section">
-          <img src="<%= asset_url('img_features_01.png') %>">
+          <img src="<%= asset_url('img_features_01.png') %>" alt="Real-time tracking">
         </div>
       </div>
       <div class="columns description-content">
         <div class="column col-md-8 col-sm-12 col-mx-auto description-section">
-          <img src="<%= asset_url('img_features_01.png') %>">
+          <img data-src="<%= asset_url('img_features_01.png') %>" alt="Real-time tracking">
         </div>
         <div class="column col-md-4 col-sm-12 col-mx-auto description-section">
           <div class="description-text float-left">
@@ -46,12 +54,12 @@
           </div>
         </div>
         <div class="column col-md-8 col-sm-12 col-mx-auto description-section">
-          <img src="<%= asset_url('img_features_01.png') %>">
+          <img data-src="<%= asset_url('img_features_01.png') %>" alt="Real-time tracking">
         </div>
       </div>
       <div class="columns description-content">
         <div class="column col-md-8 col-sm-12 col-mx-auto description-section">
-          <img src="<%= asset_url('img_features_01.png') %>">
+          <img data-src="<%= asset_url('img_features_01.png') %>" alt="Real-time tracking">
         </div>
         <div class="column col-md-4 col-sm-12 col-mx-auto description-section">
           <div class="description-text float-left">
@@ -74,12 +82,12 @@
           </div>
         </div>
         <div class="column col-md-8 col-sm-12 col-mx-auto description-section">
-          <img src="<%= asset_url('img_features_01.png') %>">
+          <img data-src="<%= asset_url('img_features_01.png') %>" alt="Real-time tracking">
         </div>
       </div>
       <div class="columns description-content">
         <div class="column col-md-8 col-sm-12 col-mx-auto description-section">
-          <img src="<%= asset_url('img_features_01.png') %>">
+          <img data-src="<%= asset_url('img_features_01.png') %>" alt="Real-time tracking">
         </div>
         <div class="column col-md-4 col-sm-12 col-mx-auto description-section">
           <div class="description-text float-left">
