@@ -1,9 +1,13 @@
+var nav = document.querySelector('.nav');
+var navMenu = nav.querySelector('.navbar-menu');
+var indexNav = document.getElementById('index-nav');
+
 window.addEventListener('DOMContentLoaded', function () {
   indexHeaderScroll();
 
-  document.querySelector('.menu-burger').addEventListener('click', toggleNavMenu);
-  document.querySelector('.close').addEventListener('click', toggleSigninForm);
-  document.querySelector('.btn-signin').addEventListener('click', toggleSigninForm);
+  nav.querySelector('.menu-burger').addEventListener('click', toggleNavMenu);
+  nav.querySelector('.close').addEventListener('click', toggleSigninForm);
+  nav.querySelector('.btn-signin').addEventListener('click', toggleSigninForm);
 
   window.addEventListener('resize', function () {
     indexHeaderScroll();
@@ -15,9 +19,6 @@ function toggleSigninForm () {
 }
 
 function toggleNavMenu () {
-  var nav = document.querySelector('.nav');
-  var indexNav = document.getElementById('index-nav');
-
   document.querySelector('body').classList.toggle('menu-opened');
   nav.querySelector('.navbar-menu').classList.toggle('open');
   nav.querySelector('.menu-burger').classList.toggle('open');
@@ -30,9 +31,6 @@ function toggleNavMenu () {
 }
 
 function closeNavMenuOnBodyClick () {
-  var nav = document.querySelector('.nav');
-  var indexNav = document.getElementById('index-nav');
-
   nav.addEventListener('click', function (e) {
     e.stopPropagation();
   });
@@ -42,16 +40,13 @@ function closeNavMenuOnBodyClick () {
     nav.querySelector('.navbar-menu').classList.remove('open');
     nav.querySelector('.menu-burger').classList.remove('open');
 
-    if (window.pageYOffset === 0 && indexNav) {
+    if (window.pageYOffset === 0 && !navMenu.classList.contains('open') && indexNav) {
       indexNav.classList.remove('nav-inverse');
     }
   });
 }
 
 function indexHeaderScroll () {
-  var indexNav = document.getElementById('index-nav');
-  var navMenu = indexNav.querySelector('.navbar-menu')
-
   if(indexNav && !navMenu.classList.contains('open')) {
     window.addEventListener('scroll', function () {
       if(this.pageYOffset > 0) {
