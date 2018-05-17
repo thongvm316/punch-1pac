@@ -68,11 +68,9 @@ class Request < ApplicationRecord
   end
 
   def both_attended_at_left_at_cannot_be_blank
-    # rubocop:disable Style/GuardClause
     if attended_at.blank? && left_at.blank?
       errors.add(:attended_at, :blank)
       errors.add(:left_at, :blank)
     end
-    # rubocop:enable Style/GuardClause
   end
 end

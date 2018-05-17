@@ -37,4 +37,14 @@ class ApplicationController < ActionController::Base
   def render_422(error_messages)
     render json: { message: 'Unprocessable Entity', errors: error_messages }, status: :unprocessable_entity
   end
+
+  def app_blocked_by_ip!
+    if current_company.app_blocked_by_ip
+      return if current_company.allowed_ips.exists?(ip_address: request.remote_ip)
+      respond_to do |f|
+        f.html { render file: 'pages/page_403', status: :forbidden, layout: 'page' }
+        f.json { render json: { message: I18n.t('auth.messages.ip_address_block') }, status: :forbidden }
+      end
+    end
+  end
 end
