@@ -1,5 +1,8 @@
-window.addEventListener('DOMContentLoaded', function () {
+var nav = document.querySelector('.nav');
+var navMenu = nav.querySelector('.navbar-menu');
+var indexNav = document.getElementById('index-nav');
 
+window.addEventListener('DOMContentLoaded', function () {
   if(nav) {
     indexHeaderScroll();
 
@@ -19,10 +22,6 @@ function toggleSigninForm () {
 }
 
 function toggleNavMenu () {
-  var nav = document.querySelector('.nav');
-  var navMenu = nav.querySelector('.navbar-menu');
-  var indexNav = document.getElementById('index-nav');
-
   document.querySelector('body').classList.toggle('menu-opened');
   nav.querySelector('.navbar-menu').classList.toggle('open');
   nav.querySelector('.menu-burger').classList.toggle('open');
@@ -35,10 +34,6 @@ function toggleNavMenu () {
 }
 
 function closeNavMenuOnBodyClick () {
-  var nav = document.querySelector('.nav');
-  var navMenu = nav.querySelector('.navbar-menu');
-  var indexNav = document.getElementById('index-nav');
-
   nav.addEventListener('click', function (e) {
     e.stopPropagation();
   });
@@ -55,10 +50,6 @@ function closeNavMenuOnBodyClick () {
 }
 
 function indexHeaderScroll () {
-  var nav = document.querySelector('.nav');
-  var navMenu = nav.querySelector('.navbar-menu');
-  var indexNav = document.getElementById('index-nav');
-
   if(indexNav && !navMenu.classList.contains('open')) {
     window.addEventListener('scroll', function () {
       if(this.pageYOffset > 0) {
@@ -71,9 +62,6 @@ function indexHeaderScroll () {
 }
 
 function checkNamespace () {
-  var nav = document.querySelector('.nav');
-  var navMenu = nav.querySelector('.navbar-menu');
-
   var xhr = new XMLHttpRequest();
   var namespace = nav.querySelector('.namespace-input').value;
   xhr.open("GET", "http://" + namespace + ".builcauhinh.com");
