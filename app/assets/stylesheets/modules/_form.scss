@@ -6,7 +6,7 @@
       border-radius: .2rem;
       border: .05rem solid $light-color;
       color: $light-color;
-      font-size: .8rem;
+      font-size: $font-size-lg;
 
       &:hover {
         border: .05rem solid $light-color;
@@ -29,6 +29,6 @@
     border: .05rem solid $light-color;
     background-color: $light-color;
     color: $primary-color;
-    font-size: .7rem;
+    font-size: $font-size-lg;
   }
 }
