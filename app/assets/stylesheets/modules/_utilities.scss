@@ -34,7 +34,7 @@
 }
 
 .section-mh {
-  height: calc(100vh - 4.8rem);
+  height: calc(100vh - 4.4rem);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -42,6 +42,10 @@
   h1 {
     color: $light-color;
     z-index: 4;
+  }
+
+  @include respond-to-mobile() {
+    height: calc(100vh - 9.2rem);
   }
 }
 

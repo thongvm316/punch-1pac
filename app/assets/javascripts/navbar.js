@@ -9,7 +9,7 @@ window.addEventListener('DOMContentLoaded', function () {
     nav.querySelector('.menu-burger').addEventListener('click', toggleNavMenu);
     nav.querySelector('.close-form').addEventListener('click', toggleSigninForm);
     nav.querySelector('.btn-signin').addEventListener('click', toggleSigninForm);
-    nav.querySelector('.btn-submit').addEventListener('click', checkNamespace);
+    nav.querySelector('.btn-submit').addEventListener('click', debounce(checkNamespace, 500));
 
     window.addEventListener('resize', function () {
       indexHeaderScroll();
@@ -79,4 +79,13 @@ function checkNamespace () {
     }
   };
   xhr.send();
+}
+
+function debounce(func, delay) {
+  var inDebounce;
+  return function() {
+    var context = this, args = arguments;
+    clearTimeout(inDebounce)
+    inDebounce = setTimeout(function() { func.apply(context, args) }, delay)
+  }
 }
