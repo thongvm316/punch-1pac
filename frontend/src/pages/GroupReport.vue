@@ -150,7 +150,7 @@ export default {
 
   created () {
     this.getReport({ group_id: this.$route.params.id, ...this.dateData })
-    this.getGroup(this.$route.params.id)
+    if (!this.group) this.getGroup(this.$route.params.id)
   },
 
   watch: {

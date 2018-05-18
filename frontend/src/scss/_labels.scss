@@ -26,4 +26,8 @@
   &.label-info {
     @include label-variant($info-color, $info-color-light);
   }
+
+  &.label-notice {
+    @include label-variant($notice-color, $notice-color-light);
+  }
 }
