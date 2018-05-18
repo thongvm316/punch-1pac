@@ -1,6 +1,6 @@
 <%= provide(:page_title, 'Home | Punch') %>
 <%= provide(:page_description, 'Punch description') %>
-<%= provide(:page_url, edit_password_reset(params[:token])) %>
+<%= provide(:page_url, edit_password_reset_url(params[:token])) %>
 
 <% content_for(:meta) do %>
 <meta name="robots" content="noindex,nofollow">
