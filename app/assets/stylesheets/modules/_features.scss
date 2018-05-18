@@ -10,6 +10,17 @@
   p {
     font-size: $font-size-lg;
     line-height: 1.5;
+    margin-bottom: 1.2rem;
+  }
+
+  ul {
+    margin-top: 0;
+    margin-bottom: 0;
+    list-style: disc;
+
+    li {
+      margin-top: 0;
+    }
   }
 
   .description-content {
@@ -32,28 +43,31 @@
 
   .description-section {
     .description-text {
-      width: 13.2rem;
+      padding: 2.4rem 4rem 2.4rem 1rem;
 
       @include respond-to-smaller-tablet() {
         width: 100%;
-        margin-top: 2rem;
+        padding: 2rem 0 0;
         font-size: $font-size-lg;
       }
 
-      svg {
-        color: $primary-color;
-        margin-bottom: 1rem;
-
-        @include respond-to-smaller-tablet() {
-          display: none;
-        }
-      }
-
       h3 {
-        margin-bottom: .15rem;
+        margin-bottom: .4rem;
 
         @include respond-to-smaller-tablet() {
           font-size: $font-size-lg;
+        }
+      }
+
+      ul {
+        list-style-image: url('icon_tick.svg');
+
+        li {
+          padding-left: .5rem;
+
+          &:not(:first-child) {
+            margin-top: .8rem;
+          }
         }
       }
     }
@@ -61,6 +75,81 @@
     img {
       display: block;
       width: 100%;
+
+      &.animated-img-back {
+        display: none;
+
+        @include respond-to-mobile() {
+          display: block;
+        }
+      }
     }
+
+    .animated {
+      position: relative;
+
+      @include respond-to-mobile() {
+        display: none;
+      }
+
+      span {
+        position: absolute;
+        padding: .4rem 0;
+        min-width: 6.5rem;
+        border-radius: .25rem;
+        text-align: center;
+        font-size: .8rem;
+        font-weight: bold;
+        animation: features 4s ease-in-out infinite;
+
+        &:nth-of-type(1) {
+          left: 23%;
+          top: 24%;
+        }
+
+        &:nth-of-type(2) {
+          left: 72%;
+          top: 31%;
+          animation-delay: 300ms;
+        }
+
+        &:nth-of-type(3) {
+          left: 43%;
+          top: 44%;
+          animation-delay: 600ms;
+        }
+
+        &:nth-of-type(4) {
+          left: 13%;
+          top: 63%;
+          animation-delay: 900ms;
+        }
+
+        &:nth-of-type(5) {
+          left: 63%;
+          top: 73%;
+          animation-delay: 1200ms;
+        }
+      }
+
+      @for $i from 1 through length($group-animated-color) {
+        span:nth-of-type(#{$i}) {
+          color: nth($group-animated-color, $i);
+          background: nth($group-animated-shadow, $i);
+          box-shadow: 0 .5rem 2rem 0 rgba(nth($group-animated-color, $i), .3);
+        }
+      }
+    }
+  }
+}
+
+@keyframes features {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(1rem);
   }
 }
