@@ -7,7 +7,18 @@
 <title>1Punch</title>
 <meta name="description" content="Punch description">
 
-<link rel="dns-prefetch" href="">
+<meta property="og:title" content="Punch">
+<meta property="og:site_name" content="Punch">
+<meta property="og:description" content="Punch description">
+<meta property="og:url" content="https://punch.ooo">
+<meta property="og:image" content="<%= asset_url('og.png') %>">
+<meta property="og:type" content="website">
+
+<meta name="twitter:site" content="Punch">
+<meta name="twitter:title" content="Punch">
+<meta name="twitter:description" content="Punch description">
+<meta name="twitter:image" content="<%= asset_url('og.png') %>">
+<meta name="twitter:card" content="summary">
 
 <link rel="shortcut icon" type="image/x-icon" href="<%= asset_url('favicon.ico') %>">
 <link rel="apple-touch-icon" sizes="180x180" href="<%= asset_url('icon_180x180.png') %>">
@@ -15,13 +26,6 @@
 <link rel="apple-touch-icon" sizes="120x120" href="<%= asset_url('icon_120x120.png') %>">
 <link rel="apple-touch-icon" sizes="76x76" href="<%= asset_url('icon_76x76.png') %>">
 <link rel="icon" sizes="192x192" href="<%= asset_url('icon_192x192.png') %>">
-
-<meta property="og:title" content="Punch">
-<meta property="og:site_name" content="Punch">
-<meta property="og:description" content="Punch description">
-<meta property="og:url" content="https://punch.ooo">
-<meta property="og:image" content="<%= asset_url('og.png') %>">
-<meta property="og:type" content="website">
 
 <link rel="stylesheet" href="<%= @webpack_assets['app.css'] %>">
 <%= csrf_meta_tags %>
