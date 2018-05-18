@@ -7,7 +7,7 @@ window.addEventListener('DOMContentLoaded', function () {
     indexHeaderScroll();
 
     nav.querySelector('.menu-burger').addEventListener('click', toggleNavMenu);
-    nav.querySelector('.close').addEventListener('click', toggleSigninForm);
+    nav.querySelector('.close-form').addEventListener('click', toggleSigninForm);
     nav.querySelector('.btn-signin').addEventListener('click', toggleSigninForm);
     nav.querySelector('.btn-submit').addEventListener('click', checkNamespace);
 
@@ -74,7 +74,7 @@ function checkNamespace () {
       nav.querySelector('.namespace-input').value = '';
       window.location.href = "http://" + namespace + ".buildcauhinh.com";
     } else if (xhr.status === 404) {
-      textError.classList.add('d-block');
+      textError.classList.add('show');
       nav.querySelector('.namespace-input').value = '';
     }
   };

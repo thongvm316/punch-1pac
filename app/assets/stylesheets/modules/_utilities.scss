@@ -73,6 +73,10 @@
 .text-error {
   color: $color-error;
   display: none;
+
+  &.show {
+    display: block;
+  }
 }
 
 .img-error {
