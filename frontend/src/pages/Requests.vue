@@ -51,8 +51,6 @@
       </tbody>
     </table>
 
-    <pagination action="getRequests" namespace="requests" v-if="pager.total_pages > 1"/>
-
     <modal :title="$t('requests.modal.editTitle')" :modal-open.sync="isEditModalOpen">
       <div v-if="selectedRequest.kind === 'attendance'">
         <request-form v-if="isEditModalOpen" :request="selectedRequest" @afterModify="isEditModalOpen = false"></request-form>
@@ -69,7 +67,6 @@
 <script>
 import MainLayout from '../layouts/Main'
 import confirmDialog from '../mixins/confirm-dialog'
-import Pagination from '../components/Pagination'
 import AnnualLeaveForm from '../components/AnnualLeaveForm'
 import RequestForm from '../components/RequestForm'
 import modal from '../mixins/modal'
@@ -100,7 +97,6 @@ export default {
   components: {
     MainLayout,
     AnnualLeaveForm,
-    Pagination,
     RequestForm,
     flatPickr
   },

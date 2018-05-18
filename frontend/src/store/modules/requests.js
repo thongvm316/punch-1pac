@@ -38,7 +38,7 @@ const mutations = {
 
 const actions = {
   getRequests ({ commit, state }, params = {}) {
-    return axios.get('/requests', { params: Object.assign(state.params, params) })
+    return axios.get('/requests', { params: Object.assign(state.params, params, { per_page: 1000 }) })
                 .then(response => {
                   commit(types.RECEIVE_REQUESTS, response.data)
                   return response

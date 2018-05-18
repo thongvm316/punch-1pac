@@ -46,7 +46,7 @@
       </tbody>
     </table>
 
-    <pagination action="getAttendances" namespace="attendances" v-if="pager.total_pages > 1"/>
+    <pagination action="getAttendances" namespace="groupAttendances" v-if="pager.total_pages > 1"/>
   </main-layout>
 </template>
 
@@ -70,8 +70,8 @@ export default {
       params: {
         self: null,
         user_id: '',
-        from_date: null,
-        to_date: null,
+        from_date: this.$moment().format('YYYY-MM-DD'),
+        to_date: this.$moment().format('YYYY-MM-DD'),
         status: ''
       }
     }
@@ -110,9 +110,7 @@ export default {
   },
 
   created () {
-    this.params.from_date = this.dateRange[0]
-    this.params.to_date = this.dateRange[1]
-    this.getGroup(this.$route.params.id)
+    if (!this.group) this.getGroup(this.$route.params.id)
     this.getAttendances(this.params)
   },
 

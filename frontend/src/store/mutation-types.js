@@ -129,3 +129,6 @@ export const FETCH_MORE_ACTIVITIES = 'FETCH_MORE_ACTIVITIES'
 
 // status-cards
 export const FETCH_STATUS_CARDS = 'FETCH_STATUS_CARDS'
+
+// remind-punch-in
+export const UPDATE_REMIND_PUNCH_IN = 'UPDATE_REMIND_PUNCH_IN'

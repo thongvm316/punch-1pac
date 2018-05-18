@@ -40,7 +40,6 @@
 
 <script>
 import MainLayout from '../layouts/Main.vue'
-import Pagination from '../components/Pagination.vue'
 import GroupForm from '../components/GroupForm.vue'
 import modal from '../mixins/modal'
 import { mapState, mapGetters, mapActions } from 'vuex'
@@ -66,7 +65,6 @@ export default {
 
   components: {
     MainLayout,
-    Pagination,
     GroupForm
   },
 

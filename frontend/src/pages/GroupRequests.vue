@@ -66,7 +66,7 @@
       </tbody>
     </table>
 
-    <pagination namespace="requests" action="getRequests" v-if="pager.total_pages > 1"/>
+    <pagination namespace="groupRequests" action="getRequests" v-if="pager.total_pages > 1"/>
 
     <modal :title="$t('requests.modal.editTitle')" :modal-open.sync="isEditModalOpen">
       <div class="form-group" :class="{ 'has-error': errors.admin_reason }">
@@ -103,8 +103,8 @@ export default {
         status: this.$route.query.status || '',
         kind: '',
         group_id: this.$route.params.id,
-        from_date: '',
-        to_date: ''
+        from_date: this.$moment().startOf('month').format('YYYY-MM-DD'),
+        to_date: this.$moment().endOf('month').format('YYYY-MM-DD')
       },
       requestParams: {
         requestId: '',
@@ -167,9 +167,7 @@ export default {
   },
 
   created () {
-    this.params.from_date = this.dateRange[0]
-    this.params.to_date = this.dateRange[1]
-    this.getGroup(this.$route.params.id)
+    if (!this.group) this.getGroup(this.$route.params.id)
     this.getRequests(this.params)
   },
 

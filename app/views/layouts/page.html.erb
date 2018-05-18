@@ -14,18 +14,18 @@
 
 <%= yield(:meta) if content_for?(:meta) %>
 
-<meta name="twitter:site" content="<%= yield(:page_title) %>">
-<meta name="twitter:title" content="<%= yield(:page_title) %>">
-<meta name="twitter:description" content="<%= yield(:page_description) %>">
-<meta name="twitter:image:src" content="<%= asset_url('og.png') %>">
-<meta name="twitter:card" content="summary">
-
 <meta property="og:title" content="<%= yield(:page_title) %>">
 <meta property="og:site_name" content="<%= yield(:page_title) %>">
 <meta property="og:description" content="<%= yield(:page_description) %>">
 <meta property="og:url" content="<%= yield(:page_url) %>">
 <meta property="og:image" content="<%= asset_url('og.png') %>">
 <meta property="og:type" content="website">
+
+<meta name="twitter:site" content="<%= yield(:page_title) %>">
+<meta name="twitter:title" content="<%= yield(:page_title) %>">
+<meta name="twitter:description" content="<%= yield(:page_description) %>">
+<meta name="twitter:image" content="<%= asset_url('og.png') %>">
+<meta name="twitter:card" content="summary">
 
 <link rel="shortcut icon" type="image/x-icon" href="<%= asset_url('favicon.ico') %>">
 <link rel="apple-touch-icon" sizes="180x180" href="<%= asset_url('icon_180x180.png') %>">
