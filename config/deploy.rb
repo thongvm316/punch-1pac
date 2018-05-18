@@ -73,6 +73,17 @@ namespace :deploy do
     end
   end
 
+  desc 'Clear sidekiq queues'
+  task :clear_sidekiq_queues do
+    on roles(:app) do
+      within current_path do
+        with(rails_env: fetch(:stage)) do
+          execute :bundle, :exec, :rake, 'punch:clear_sidekiq_queues'
+        end
+      end
+    end
+  end
+
   desc 'Reset database'
   task :reset_db do
     on roles(:app) do
