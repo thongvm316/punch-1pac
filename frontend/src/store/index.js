@@ -30,6 +30,7 @@ import calendar from './modules/calendar'
 import flash from './modules/flash'
 import notifications from './modules/notifications'
 import activities from './modules/activities'
+import remindPunchIn from './modules/remind-punch-in'
 
 Vue.use(Vuex)
 
@@ -59,7 +60,8 @@ export default new Vuex.Store({
     calendar,
     flash,
     notifications,
-    activities
+    activities,
+    remindPunchIn
   },
   strict: debug,
   plugins: debug ? [createLogger()] : []
