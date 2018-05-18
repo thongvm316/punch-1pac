@@ -1,5 +1,5 @@
 var nav = document.querySelector('.nav');
-var navMenu = nav.querySelector('.navbar-menu');
+var navMenu = document.querySelector('.navbar-menu');
 var indexNav = document.getElementById('index-nav');
 
 window.addEventListener('DOMContentLoaded', function () {
@@ -65,17 +65,17 @@ function indexHeaderScroll () {
 function checkNamespace () {
   var xhr = new XMLHttpRequest();
   var namespace = nav.querySelector('.namespace-input').value;
-  xhr.open("GET", "http://" + namespace + ".builcauhinh.com");
-  xhr.setRequestHeader("Accept", "application/json");
-  xhr.setRequestHeader("Content-Type", "application/json");
-  xhr.onload = function(e) {
-    if (this.status === 200) {
-      window.location.href = "http://" + namespace + ".builcauhinh.com";
-    } else if (this.status === 404) {
-      var HTMLtoDoItem = '<span class="text-error mt-8">Company namespace is not found</span>';
+  var textError = nav.querySelector('.text-error');
 
-      document.querySelector('.input-group').insertAdjacentHTML('afterend', HTMLtoDoItem);
-      nav.querySelector('.namespace-input').reset();
+  xhr.open("GET", "http://" + namespace + ".buildcauhinh.com");
+  xhr.setRequestHeader('Accept', 'application/json');
+  xhr.onload = function(e) {
+    if (xhr.status === 200) {
+      nav.querySelector('.namespace-input').value = '';
+      window.location.href = "http://" + namespace + ".buildcauhinh.com";
+    } else if (xhr.status === 404) {
+      textError.classList.add('d-block');
+      nav.querySelector('.namespace-input').value = '';
     }
   };
   xhr.send();

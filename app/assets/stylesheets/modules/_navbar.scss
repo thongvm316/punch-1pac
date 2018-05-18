@@ -137,7 +137,7 @@ body.menu-opened {
   }
 
   .btn-signin {
-    background-color: $light-color;
+    background: $light-color;
     border-radius: 1.25rem;
     border: 0;
     color: $primary-color;
@@ -150,8 +150,9 @@ body.menu-opened {
     }
 
     &:hover,
-    &:active {
-      background-color: $light-color;
+    &:active,
+    &:focus {
+      background: $light-color;
       color: $primary-color;
     }
   }
