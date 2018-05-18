@@ -1,7 +1,7 @@
 export default {
   group: {
     users: 'ユーザー一覧',
-    attendances: '勤務状況',
+    attendances: '勤怠管理',
     requests: '申請一覧',
     report: 'レポート',
     month: '月',
@@ -11,7 +11,7 @@ export default {
       edit: '編集',
       save: '保存'
     },
-    explain: 'このグループにメンバーを追加すると、グループのアドミンはメンバーの勤務状況を見ることができます。',
+    explain: 'このグループにメンバーを追加すると、グループの管理者はメンバーの勤務状況を見ることができます。',
     tableHeader: {
       email: 'メールアドレス',
       name: 'ユーザー名',
@@ -26,7 +26,7 @@ export default {
     },
     placeholder: {
       description: '説明',
-      filterByEmail: 'メールアドレスを検索'
+      filterByEmail: 'メールアドレスで検索'
     },
     modal: {
       editUserTitle: 'ユーザー情報の編集',
@@ -34,24 +34,24 @@ export default {
     },
     tooltip: {
       editUser: '編集する',
-      activateUser: 'アクティブ化する',
-      deactivateUser: '非アクティブ化する',
+      activateUser: '再開する',
+      deactivateUser: '停止する',
       removeUser: '削除する'
     },
     confirmDialog: {
-      deactivateUserTitle: 'ユーザーを非アクティブ化する',
-      deactivateUserMsg: '<span class="text-bold-600">{name}</span>を非アクティブ化しますか？'
+      deactivateUserTitle: 'ユーザーを停止する',
+      deactivateUserMsg: '<span class="text-bold-600">{name}</span>を停止しますか？'
     }
   },
   header: {
     dashboard: 'ダッシュボード',
-    attendances: '勤務状況',
+    attendances: '勤怠管理',
     requests: '申請一覧',
     groups: 'グループ一覧',
     notifications: 'お知らせ',
-    noNotificationMsg: '新しいお知らせがありません',
+    noNotificationMsg: '現在新しいお知らせはありません',
     settings: '個人設定',
-    companySettings: '企業の設定',
+    companySettings: '組織の設定',
     seeAll: '全て見る',
     logout: 'ログアウト',
     in: '出勤時間',
@@ -66,11 +66,11 @@ export default {
     btnLeave: '休憩入り'
   },
   footer: {
-    terms: '利用規約',
+    terms: 'プライバシーポリシー',
     privacy: '個人情報保護方針',
     help: 'ヘルプ',
     contact: 'お問い合わせ',
-    about: '企業概要'
+    about: '企業情報'
   },
   meta: {
     attendance_statuses: {
@@ -84,9 +84,9 @@ export default {
       working_hours: '総勤務時間'
     },
     request_statuses: {
-      pending: '申請中',
+      pending: '承認待ち',
       approved: '承認済',
-      rejected: '拒否'
+      rejected: '却下済'
     },
     gender: {
       male: '男性',
@@ -108,8 +108,8 @@ export default {
     },
     roles: {
       member: 'メンバー',
-      admin: 'アドミン',
-      superadmin: 'スーパーアドミン'
+      admin: '管理者',
+      superadmin: 'スーパー管理者'
     },
     holiday_countries: {
       vietnam: 'ベトナム',
@@ -141,20 +141,20 @@ export default {
   dashboard: {
     title: 'ダッシュボード',
     calendar: 'カレンダー',
-    calendarToday: '本日',
+    calendarToday: '今日',
     chart: 'チャート',
     chartNoData: '今月のデータはありません',
-    recentActivities: '最新の活動',
+    recentActivities: '最近の活動',
     emptyActivity: '活動はありません',
     pendingRequests: '承認待ちの一覧',
-    havePendingRequests: '承認待ちの依頼は以下のグロープにあります：',
-    emptyPendingRequests: 'あなたのグループに承認待ちの依頼は現在ありません。',
+    havePendingRequests: '以下のグループにユーザーからの申請が届いています。',
+    emptyPendingRequests: '現在新しい申請はありません。',
     request: {
-      title: 'どのような依頼を送信しますか？',
+      title: 'どのような申請を送信しますか？',
       label: '種別',
       kind: {
-        attendance: '出席者の編集依頼',
-        annual_leave: '年次休暇の依頼'
+        attendance: '勤怠の修正申請',
+        annual_leave: '休暇・欠勤の申請'
       }
     }
   },
@@ -162,24 +162,24 @@ export default {
     title: 'お知らせ',
     btn: {
       approve: '承認',
-      reject: '拒否'
+      reject: '却下'
     },
     attendance: {
       punch_in: '<span class="text-bold-600">{name}</span>は出勤しました',
       punch_out: '<span class="text-bold-600">{name}</span>は退勤しました'
     },
     request: {
-      create: '<span class="text-bold-600">{name}</span>は依頼を作成しました',
+      create: '<span class="text-bold-600">{name}</span>は申請を提出しました',
       update: '<span class="text-bold-600">{name}</span>は依頼を更新しました',
-      approve: '<span class="text-bold-600">{name}</span>はあなたの依頼を承認しました',
-      reject: '<span class="text-bold-600">{name}</span>はあなたの依頼を拒否しました'
+      approve: '<span class="text-bold-600">{name}</span>はあなたの申請を承認しました',
+      reject: '<span class="text-bold-600">{name}</span>はあなたの申請を却下しました'
     },
     labels: {
       date: '日付',
       attendedAt: '出勤時間',
       leftAt: '退勤時間',
       reason: '理由',
-      rejectReason: '拒否理由'
+      rejectReason: '却下理由'
     }
   },
   groups: {
@@ -190,7 +190,7 @@ export default {
       submit: '提出',
       export: 'CSV出力'
     },
-    member: ' | 1 メンバー | {count} メンバー',
+    member: ' | 1名 | {count}名',
     labels: {
       name: 'ユーザー名',
       description: '説明',
@@ -199,7 +199,7 @@ export default {
     placeholder: {
       name: 'グループ名',
       description: '説明',
-      filterByName: 'グループ名で検察'
+      filterByName: 'グループ名を検察'
     },
     modal: {
       addTitle: 'グループの追加'
@@ -207,9 +207,9 @@ export default {
   },
   requests: {
     title: '申請一覧',
-    groupTitle: '{name}グループの依頼',
+    groupTitle: '{name}グループの申請',
     placeholder: {
-      filterByGroup: 'グループ名を検索',
+      filterByGroup: 'グループ名で検索',
       filterByStatus: '状態で絞り込み',
       filterByKind: '種別で絞り込み'
     },
@@ -218,7 +218,7 @@ export default {
       attendedAt: '出勤時間',
       leftAt: '退勤時間',
       reason: '理由',
-      rejectReason: '拒否理由'
+      rejectReason: '却下理由'
     },
     tableHeader: {
       name: 'ユーザー名',
@@ -229,44 +229,44 @@ export default {
       leftAt: '退勤時間',
       reason: '理由',
       actions: '操作',
-      admin: 'アドミン',
+      admin: '管理者',
       kind: '種別',
-      rejectReason: '拒否理由'
+      rejectReason: '却下理由'
     },
     btn: {
       save: '保存',
-      reject: '拒否'
+      reject: '却下'
     },
     modal: {
-      editTitle: '申請の変種'
+      editTitle: '申請の編集'
     },
     tooltip: {
       edit: '編集する',
       delete: '削除する',
       approve: '承認する',
-      reject: '拒否する'
+      reject: '却下する'
     },
     errors: {
       bothAttendedLeft: '出勤時間と退勤時間{msg}'
     },
     confirmDialog: {
-      deleteTitle: '依頼の削除',
-      deleteMsg: 'この依頼を削除してよろしいですか？'
+      deleteTitle: '申請の削除',
+      deleteMsg: 'この申請を削除してよろしいですか？'
     },
     kinds: {
       annual_leave: '休暇',
-      attendance: '出席'
+      attendance: '勤怠'
     }
   },
   attendances: {
-    title: '勤務状況',
-    groupTitle: '{name}グループの勤務状況',
+    title: '勤怠管理',
+    groupTitle: '{name}グループの勤怠管理',
     placeholder: {
       fromDate: '日付から',
       toDate: '日付まで',
       filterByStatus: '状態で絞り込み',
-      filterByGroup: 'グループ名を検索',
-      filterByUser: 'ユーザー名を検索'
+      filterByGroup: 'グループ名で検索',
+      filterByUser: 'ユーザー名で検索'
     },
     tableHeader: {
       name: 'ユーザー名',
@@ -284,14 +284,14 @@ export default {
       reason: '理由'
     },
     btn: {
-      save: '保存する',
-      add: '作成する'
+      save: '保存',
+      add: '追加'
     },
     modal: {
-      addTitle: '依頼の作成'
+      addTitle: '申請を提出する'
     },
     tooltip: {
-      addRequest: '依頼を作成する'
+      addRequest: '申請を提出する'
     }
   },
   user: {
@@ -305,7 +305,7 @@ export default {
         gender: '性別',
         position: '役職',
         language: '言語',
-        role: 'アカウントの種類'
+        role: 'ロール'
       },
       btn: {
         save: '保存'
@@ -337,12 +337,12 @@ export default {
     }
   },
   company: {
-    title: '企業の設定',
+    title: '組織の設定',
     profile: {
       title: 'プロフィール',
       labels: {
         logo: 'ロゴ画像',
-        name: '企業名',
+        name: '組織名',
         industry: '業種',
         country: '所在地（国）',
         address: '所在地（住所）',
@@ -422,12 +422,12 @@ export default {
         save: '保存'
       },
       msg: {
-        success: '企業の言語と時刻の情報が更新さレました'
+        success: '組織の言語と時刻の情報が更新さレました'
       }
     },
     holidays: {
       title: '休日',
-      explain: 'あなたの企業の祝日を追加すると、休日としてカウントされます',
+      explain: 'あなたの組織の祝日を追加すると、休日としてカウントされます',
       tableHeader: {
         name: '休日名',
         startAt: '開始',
@@ -441,7 +441,7 @@ export default {
       },
       placeholder: {
         chooseCountry: '国を選択してください',
-        filterByName: '休日を検索',
+        filterByName: '休日で検索',
         fromDate: '日付から',
         toDate: '日付まで'
       },
@@ -473,7 +473,7 @@ export default {
         labels: {
           name: 'ユーザー名',
           email: 'メールアドレス',
-          role: 'アカウントの種類',
+          role: 'ロール',
           group: 'グループ'
         },
         placeholder: {
@@ -500,14 +500,14 @@ export default {
         }
       },
       placeholder: {
-        filterByEmail: 'メールアドレスを検索'
+        filterByEmail: 'メールアドレスで検索'
       },
       tableHeader: {
         name: '氏名',
         email: 'メールアドレス',
         position: '役職',
         group: 'グループ',
-        role: 'アカウントの種類',
+        role: 'ロール',
         actions: '操作'
       },
       btn: {
@@ -524,43 +524,43 @@ export default {
       tooltip: {
         edit: '編集する',
         delete: '削除する',
-        activateUser: 'アクティブ化する',
-        deactivateUser: '非アクティブ化する'
+        activateUser: '再開する',
+        deactivateUser: '停止する'
       }
     }
   },
   messages: {
     company: {
-      updateSuccess: '企業情報が更新されました',
-      updateTimeSuccess: '企業の時刻と休憩時間が更新されました'
+      updateSuccess: '組織情報を更新しました',
+      updateTimeSuccess: '組織の時刻と休憩時間を更新しました'
     },
     user: {
-      addSuccess: '新しいユーザーが登録されました。ログイン情報が含まれたメールはユーザーに送信されました。',
-      updatePwdSuccess: 'パスワードが更新されました',
-      addMultiSuccess: 'ユーザーが一括登録しました。ログイン情報が含まれたメールはユーザーに送信されました。',
-      updateProfileSuccess: 'あなたのプロフィールが更新されました'
+      addSuccess: '新しいユーザーを登録しました。ログイン情報が含まれたメールはユーザーに送信されました。',
+      updatePwdSuccess: 'パスワードを更新しました',
+      addMultiSuccess: 'ユーザーを一括登録しました。ログイン情報が含まれたメールはユーザーに送信されました。',
+      updateProfileSuccess: 'あなたのプロフィールを更新しました'
     },
     ip: {
-      createSuccess: '許可されたIPアドレスは追加ました',
-      updateSuccess: '許可されたIPアドレスはアップデートました'
+      createSuccess: '許可されたIPアドレスを追加ました',
+      updateSuccess: '許可されたIPアドレスを更新ました'
     },
     group: {
-      createSuccess: 'グループは追加しました',
-      updateSuccess: 'グループの情報はアップデートアップデートしました'
+      createSuccess: 'グループを追加しました',
+      updateSuccess: 'グループの情報を更新しました'
     },
     request: {
-      createSuccess: '依頼が作成しました',
-      updateSuccess: '依頼がアップデートしました',
-      approvedSuccess: 'あなたの依頼が承認されました',
-      rejectedSuccess: 'あなたの依頼が拒否されました'
+      createSuccess: '申請を提出しました',
+      updateSuccess: '申請を更新しました',
+      approvedSuccess: 'あなたの申請が承認されました',
+      rejectedSuccess: 'あなたの申請が却下されました'
     },
     holiday: {
-      createSuccess: '休日が追加しました',
-      updateSuccess: '休日がアップデートしました'
+      createSuccess: '休日を追加しました',
+      updateSuccess: '休日を更新しました'
     },
     businessDay: {
-      createSuccess: '営業日が追加しました',
-      updateSuccess: '営業日がアップデートしました'
+      createSuccess: '営業日を追加しました',
+      updateSuccess: '営業日を更新しました'
     }
   },
   activity: {
@@ -570,10 +570,10 @@ export default {
       punch_out: '<span class="text-bold-600">{name}</span>が退勤しました'
     },
     request: {
-      create: '<span class="text-bold-600">{name}</span>が新しい依頼を作成しました',
-      update: '<span class="text-bold-600">{name}</span>が依頼をアップデートしました',
-      approve: '<span class="text-bold-600">{name}</span>が依頼を承認しました',
-      reject: '<span class="text-bold-600">{name}</span>が依頼を拒否しました'
+      create: '<span class="text-bold-600">{name}</span>が新しい申請を提出しました',
+      update: '<span class="text-bold-600">{name}</span>が申請を更新しました',
+      approve: '<span class="text-bold-600">{name}</span>が申請を承認しました',
+      reject: '<span class="text-bold-600">{name}</span>が申請を却下しました'
     }
   },
   popup: {
@@ -593,14 +593,14 @@ export default {
     workingHours: '{hours}時{mins}分 / {companyTotalHours}時'
   },
   annualLeave: {
-    title: '休暇の依頼',
+    title: '休暇申請',
     labels: {
       annualLeaveDay: '休暇',
       reason: '理由'
     },
-    createSuccessMsg: '新しい休暇依頼が作成しました',
-    updateSuccessMsg: 'あなたの休暇依頼がアップデートしました',
-    submit: 'Submit',
+    createSuccessMsg: '新しい休暇申請を提出しました',
+    updateSuccessMsg: 'あなたの休暇申請が更新しました',
+    submit: '提出',
     save: '保存'
   },
   page404: {
@@ -615,6 +615,6 @@ export default {
     rangeSeparator: ' - '
   },
   remind: {
-    message: 'あなたは{days}に出勤登録を忘れました. 当日は出席者を編集するためにアドミンに依頼を送信してください。'
+    message: 'あなたは{days}に出勤登録を忘れました. 当日は出席者を編集するために管理者に申請を提出してください。'
   }
 }
