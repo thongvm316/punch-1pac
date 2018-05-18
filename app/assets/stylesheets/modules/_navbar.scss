@@ -36,7 +36,7 @@ body.menu-opened {
     box-shadow: 0 2px 3px 0 rgba($black-color, .2);
 
     .navbar-logo {
-      background-image: asset-url('ico_logo.svg');
+      background-image: asset-url('ico_logo.png');
     }
 
     .navbar-link { color: $black-color; }
@@ -46,7 +46,8 @@ body.menu-opened {
       color: $light-color;
 
       &:hover,
-      &:active {
+      &:active,
+      &:focus {
         background-color: $primary-color;
         color: $light-color;
       }
@@ -90,7 +91,7 @@ body.menu-opened {
 
   .navbar-logo {
     @include background-img();
-    background-image: asset-url('ico_logo-white.svg');
+    background-image: asset-url('ico_logo-white.png');
     height: 1.6rem;
     width: 6.5rem;
   }
@@ -179,11 +180,12 @@ body.menu-opened {
       display: block;
     }
 
-    &.open {
-      @include background-img();
-      background-image: asset-url('ico_close.svg');
+    .close { display: none; }
 
-      svg { display: none; }
+    &.open {
+      .close { display: block; }
+
+      .burger { display: none; }
     }
   }
 
@@ -221,8 +223,6 @@ body.menu-opened {
     }
 
     .close {
-      @include background-img();
-      background-image: asset-url('ico_close.svg');
       cursor: pointer;
       display: block;
       height: .8rem;
