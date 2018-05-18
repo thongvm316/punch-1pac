@@ -22,14 +22,14 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="attendance in attendances">
+        <tr v-for="attendance in formattedAttendances">
           <td>{{ attendance.day | moment_l }}</td>
           <td :class="{ 'text-warning': attendance.attending_status === 'attend_late', 'text-success': attendance.attending_status === 'attend_ok'}">{{ attendance.attended_at }}</td>
           <td :class="{ 'text-error': attendance.leaving_status === 'leave_early', 'text-success': attendance.leaving_status === 'leave_ok'}">{{ attendance.left_at }}</td>
           <td>
             <span class="label" :class="{ 'label-warning': attendance.attending_status === 'attend_late', 'label-success': attendance.attending_status === 'attend_ok'}" v-if="attendance.attending_status">{{ $t(`meta.attendance_statuses.${attendance.attending_status}`) }}</span>
             <span class="label" :class="{ 'label-error': attendance.leaving_status === 'leave_early', 'label-success': attendance.leaving_status === 'leave_ok'}" v-if="attendance.leaving_status">{{ $t(`meta.attendance_statuses.${attendance.leaving_status}`) }}</span>
-            <span class="label" :class="{ 'label-info': attendance.off_status === 'annual_leave' }" v-if="attendance.off_status">{{ $t(`meta.attendance_statuses.${attendance.off_status}`) }}</span>
+            <span class="label label-notice" v-if="attendance.off_status">{{ $t(`meta.attendance_statuses.${attendance.off_status}`) }}</span>
           </td>
           <td>
             <button class="btn btn-action btn-link tooltip" :data-tooltip="$t('attendances.tooltip.addRequest')" @click="toggleAddModal(attendance)">
@@ -40,8 +40,6 @@
       </tbody>
     </table>
 
-    <pagination action="getAttendances" namespace="attendances" v-if="pager.total_pages > 1"/>
-
     <modal :title="$t('attendances.modal.addTitle')" :modal-open.sync="isAddModalOpen">
       <request-form v-if="isAddModalOpen" :attendance="attendance" @afterModify="isAddModalOpen = false"></request-form>
     </modal>
@@ -51,12 +49,11 @@
 <script>
 import flatPickr from 'vue-flatpickr-component'
 import MainLayout from '../layouts/Main'
-import Pagination from '../components/Pagination'
 import AttendanceStatusSelect from '../components/AttendanceStatusSelect'
 import RequestForm from '../components/RequestForm'
 import modal from '../mixins/modal'
 import flatpickrLocale from '../mixins/flatpickr-locale'
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapGetters, mapActions } from 'vuex'
 
 export default {
   mixins: [modal, flatpickrLocale],
@@ -76,7 +73,6 @@ export default {
 
   components: {
     MainLayout,
-    Pagination,
     AttendanceStatusSelect,
     RequestForm,
     flatPickr
@@ -84,8 +80,11 @@ export default {
 
   computed: {
     ...mapState('attendances', [
-      'pager',
       'attendances'
+    ]),
+
+    ...mapGetters('attendances', [
+      'formattedAttendances'
     ])
   },
 
