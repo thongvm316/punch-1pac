@@ -19,4 +19,14 @@ namespace :punch do
     ::STATS_DIRECTORIES << ['Policies', 'app/loyalties']
     ::STATS_DIRECTORIES << ['Uploaders', 'app/uploaders']
   end
+
+  task :clear_sidekiq_queues do
+    require 'sidekiq/api'
+    # 1. Clear retry set
+    Sidekiq::RetrySet.new.clear
+    # 2. Clear scheduled jobs
+    Sidekiq::ScheduledSet.new.clear
+    # 3. Clear 'Processed' and 'Failed' jobs statistics (OPTIONAL)
+    Sidekiq::Stats.new.reset
+  end
 end
