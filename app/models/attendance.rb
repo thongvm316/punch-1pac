@@ -48,9 +48,9 @@ class Attendance < ApplicationRecord
     when 'member'
       user.attendances
     when 'superadmin'
-      where(user_id: user.company.users).includes(user: :company)
+      where(user_id: user.company.users).includes(:user)
     when 'admin'
-      where(user_id: UserGroup.with_group(user.groups)).includes(user: :company)
+      where(user_id: UserGroup.with_group(user.groups)).includes(:user)
     end
   }
 
@@ -62,6 +62,8 @@ class Attendance < ApplicationRecord
     else
       where(day: date.beginning_of_month..date.end_of_month)
     end
+  rescue TypeError, ArgumentError
+    where(id: nil)
   end
 
   def self.status_count_on_month(status_value, status_type, date, date_type = nil)
@@ -69,15 +71,11 @@ class Attendance < ApplicationRecord
       .in_period(date, date_type)
       .where("#{status_type}": status_value)
       .group(status_type)
-  rescue TypeError, ArgumentError
-    select("count(id) as #{status_value}").where(id: nil)
   end
 
   def self.sum_working_hours_on_month(date, date_type = nil)
     select('sum(working_hours) as working_hours')
       .in_period(date, date_type)
-  rescue TypeError, ArgumentError
-    select('sum(working_hours) as working_hours').where(id: nil)
   end
 
   def self.chart(str_date = nil)
@@ -89,14 +87,6 @@ class Attendance < ApplicationRecord
       "(#{status_count_on_month('annual_leave', 'off_status', str_date).to_sql})",
       "(#{sum_working_hours_on_month(str_date).to_sql})"
     ).limit(1)
-  rescue TypeError, ArgumentError
-    none
-  end
-
-  def self.calendar(str_date)
-    in_period(str_date)
-  rescue TypeError, ArgumentError
-    none
   end
 
   def self.search_by(params)

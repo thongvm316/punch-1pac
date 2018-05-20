@@ -7,11 +7,13 @@ class Api::V1::UsersController < Api::V1::BaseController
   def index
     authorize!
     users = current_company.users.distinct.search_by(params, current_user).page(params[:page]).per(params[:per_page])
-    render json: users,
-           root: 'users',
-           each_serializer: UserSerializer,
-           adapter: :json,
-           meta: pager(users)
+    if stale?(users)
+      render json: users,
+             root: 'users',
+             each_serializer: UserSerializer,
+             adapter: :json,
+             meta: pager(users)
+    end
   end
 
   def today_attendances
@@ -63,7 +65,7 @@ class Api::V1::UsersController < Api::V1::BaseController
   def update
     authorize! @user
     if @user.update(user_update_params)
-      render json: @user, serializer: UserSerializer, status: 200
+      render json: @user, serializer: UserWithGroupsSerializer, status: 200
     else
       render_422(@user.errors)
     end

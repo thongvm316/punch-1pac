@@ -103,7 +103,6 @@ module JsonResponseHelper
       role: String,
       language: String,
       password_changed: boolean_response,
-      forgot_punch_in_days_in_month: Array,
       activated: boolean_response,
       activated_at: date_response,
       deactivated_at: nullable_response(date_response),
@@ -125,7 +124,7 @@ module JsonResponseHelper
     }
   end
 
-  def response_user_with_permissions(size)
+  def response_user_with_groups(size = 0)
     {
       id: Integer,
       email: String,
@@ -136,12 +135,13 @@ module JsonResponseHelper
       owner: boolean_response,
       role: String,
       language: String,
+      forgot_punch_in_days_in_month: Array,
       password_changed: boolean_response,
       activated: boolean_response,
       activated_at: date_response,
       deactivated_at: nullable_response(date_response),
       created_at: date_response,
-      permissions: Array.new(size) { response_permission }
+      groups: Array.new(size) { response_group }
     }
   end
 
