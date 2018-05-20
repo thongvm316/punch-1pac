@@ -42,24 +42,28 @@ class Api::V1::AttendancesController < Api::V1::BaseController
                             .page(params[:page])
                             .per(params[:per_page])
                             .order(day: :desc)
-    render json: attendances,
-           root: 'attendances',
-           each_serializer: AttendanceSerializer,
-           adapter: :json,
-           meta: pager(attendances),
-           status: :ok
+    if stale?(attendances)
+      render json: attendances,
+             root: 'attendances',
+             each_serializer: AttendanceSerializer,
+             adapter: :json,
+             meta: pager(attendances),
+             status: :ok
+    end
   end
 
   def calendar
     authorize!
-    attendances = current_user.attendances.calendar(params[:day]).order(day: :asc)
-    render json: attendances,
-           root: 'attendances',
-           meta: ActiveModelSerializers::SerializableResource.new(current_company.holidays.in_month(params[:day]), each_serializer: HolidaySerializer).as_json,
-           meta_key: 'holidays',
-           each_serializer: AttendanceSerializer,
-           adapter: :json,
-           status: :ok
+    attendances = current_user.attendances.in_period(params[:day]).order(day: :asc)
+    if stale?(attendances)
+      render json: attendances,
+             root: 'attendances',
+             meta: ActiveModelSerializers::SerializableResource.new(current_company.holidays.in_month(params[:day]), each_serializer: HolidaySerializer).as_json,
+             meta_key: 'holidays',
+             each_serializer: AttendanceSerializer,
+             adapter: :json,
+             status: :ok
+    end
   end
 
   def update

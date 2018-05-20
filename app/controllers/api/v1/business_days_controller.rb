@@ -6,7 +6,7 @@ class Api::V1::BusinessDaysController < Api::V1::BaseController
   def index
     authorize!
     business_days = current_company.business_days
-    render json: business_days, each_serializer: BusinessDaySerializer, status: 200
+    render json: business_days, each_serializer: BusinessDaySerializer, status: 200 if stale?(business_days)
   end
 
   def create

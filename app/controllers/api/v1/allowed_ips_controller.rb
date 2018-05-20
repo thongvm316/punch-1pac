@@ -6,7 +6,7 @@ class Api::V1::AllowedIpsController < Api::V1::BaseController
   def index
     authorize!
     allowed_ips = current_company.allowed_ips
-    render json: allowed_ips, each_serializer: AllowedIpSerializer, status: 200
+    render json: allowed_ips, each_serializer: AllowedIpSerializer, status: 200 if stale?(allowed_ips)
   end
 
   def create
