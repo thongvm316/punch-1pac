@@ -320,7 +320,7 @@ RSpec.describe Api::V1::UsersController, type: :controller do
           subject { patch :update, params: { id: target_user.id, user: { name: 'thoi', permission_ids: permissions } } }
 
           its(:code) { is_expected.to eq '200' }
-          its(:body) { is_expected.to be_json_as(response_user) }
+          its(:body) { is_expected.to be_json_as(response_user_with_groups) }
         end
 
         context 'when update without permission' do
@@ -334,7 +334,7 @@ RSpec.describe Api::V1::UsersController, type: :controller do
           subject { patch :update, params: { id: target_user.id, user: params } }
 
           its(:code) { is_expected.to eq '200' }
-          its(:body) { is_expected.to be_json_as(response_user) }
+          its(:body) { is_expected.to be_json_as(response_user_with_groups) }
           it 'should change user name attributes' do
             is_expected
             attendance = User.find(target_user.id)
@@ -386,7 +386,7 @@ RSpec.describe Api::V1::UsersController, type: :controller do
         subject { patch :update, params: { id: target_user.id, user: { name: 'thoi' } } }
 
         its(:code) { is_expected.to eq '200' }
-        its(:body) { is_expected.to be_json_as(response_user) }
+        its(:body) { is_expected.to be_json_as(response_user_with_groups) }
         it 'should update target_user name' do
           is_expected
           expect { target_user.reload }.to change(target_user, :name).to('thoi')
