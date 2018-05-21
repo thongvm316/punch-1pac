@@ -32,3 +32,17 @@
     font-size: $font-size-lg;
   }
 }
+
+.contact-form {
+  textarea { min-height: 80px; }
+
+  .btn {
+    margin: 1.2rem auto .8rem;
+    width: 8rem;
+    display: block;
+
+    @include respond-to-mobile() {
+      width: 100%;
+    }
+  }
+}
