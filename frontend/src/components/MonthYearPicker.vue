@@ -42,7 +42,7 @@ export default {
 
   computed: {
     monthFormat () {
-      return this.isMonthPicker ? this.$moment(this.month).format('MMM YYYY') : this.$moment(this.month).format('YYYY')
+      return this.isMonthPicker ? this.$moment(this.month).format('LLL') : this.$moment(this.month).format('YYYY')
     }
   },
 

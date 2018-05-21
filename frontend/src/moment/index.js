@@ -5,7 +5,7 @@ moment.updateLocale('en', {
   longDateFormat: {
     'L': 'MMM DD',
     'LL': 'MMM DD, YYYY',
-    'LLL': 'MMM D, hh:mm',
+    'LLL': 'MMM YYYY',
     'LLLL': 'MMM DD YYYY, HH:mm'
   }
 })
@@ -16,8 +16,19 @@ moment.updateLocale('vi', {
   longDateFormat: {
     'L': 'D MMMM',
     'LL': 'D MMMM, YYYY',
-    'LLL': 'D MMMM, hh:mm',
+    'LLL': 'MMM YYYY',
     'LLLL': 'D MMMM YYYY, HH:mm'
+  }
+})
+
+moment.updateLocale('ja', {
+  monthsShort: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+  weekdaysShort: ['日曜日', '月曜日', '火曜日', '水曜日', '木曜日', '金曜日', '土曜日'],
+  longDateFormat: {
+    'L': 'M月D日',
+    'LL': 'Y年M月D日',
+    'LLL': 'Y年M月',
+    'LLLL': 'Y年M月D日 HH:mm'
   }
 })
 moment.locale(window.initialStates().user.language || 'en')
