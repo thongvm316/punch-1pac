@@ -163,6 +163,9 @@ GEM
     faker (1.8.7)
       i18n (>= 0.7)
     ffi (1.9.23)
+    foreman (0.63.0)
+      dotenv (>= 0.7)
+      thor (>= 0.13.6)
     formtastic (3.1.5)
       actionpack (>= 3.2.13)
     formtastic_i18n (0.6.0)
@@ -447,6 +450,7 @@ DEPENDENCIES
   dotenv-rails
   factory_bot_rails
   faker
+  foreman
   jwt
   kaminari
   letter_opener
