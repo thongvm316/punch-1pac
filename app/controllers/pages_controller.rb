@@ -13,6 +13,8 @@ class PagesController < ApplicationController
 
   def features; end
 
+  def contact; end
+
   def page_404; end
 
   def page_403; end
