@@ -1,0 +1,26 @@
+.contact {
+  padding: 160px 0;
+
+  .contact-container {
+    position: relative;
+    z-index: 5;
+    max-width: 35rem;
+  }
+
+  h1,
+  h3,
+  a {
+    color: $light-color;
+  }
+
+  a { font-weight: bold; }
+
+  .contact-form {
+    background-color: $light-color;
+    margin: 0 auto;
+    padding: 1.2rem;
+    border-radius: .2rem;
+    margin-top: 3.2rem;
+    box-shadow: 0 10px 30px 0 rgba($dark-color, .4);
+  }
+}

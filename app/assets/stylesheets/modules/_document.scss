@@ -2,7 +2,7 @@
   background: $color-gray-lightest;
 
   .document-container {
-    max-width: 700px;
+    max-width: 35rem;
     margin: 0 auto;
     padding: 3.2rem 0;
 
@@ -29,9 +29,9 @@
   }
 
   h3 {
-    padding: 1.6rem;
+    padding: 1.6rem 2.4rem 0;
     color: $dark-color;
-    background-color: $light-color;
+    background-color: $color-gray-lightest;
     text-align: center;
   }
 

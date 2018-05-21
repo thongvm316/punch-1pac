@@ -49,18 +49,6 @@
   }
 }
 
-.contact-mh {
-  height: calc(100vh - 3.2rem - 4.4rem);
-
-  @include respond-to-smaller-tablet() {
-    height: calc(100vh - 3.2rem - 7.6rem);;
-  }
-
-  @include respond-to-mobile() {
-    height: auto;
-  }
-}
-
 .section-title {
   margin-bottom: 3.2rem;
   text-align: center;
