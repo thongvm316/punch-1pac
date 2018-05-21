@@ -79,6 +79,8 @@ group :development do
   gem 'capistrano-sidekiq'
   gem 'capistrano-yarn'
 
+  gem 'foreman'
+
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
 
