@@ -2,7 +2,7 @@
   background: $color-gray-lightest;
 
   .document-container {
-    max-width: 600px;
+    max-width: 700px;
     margin: 0 auto;
     padding: 3.2rem 0;
 
@@ -16,8 +16,7 @@
   h1,
   h4,
   ol,
-  li,
-  p {
+  li {
     margin: 0;
   }
 
@@ -118,4 +117,27 @@
       }
     }
   }
+
+  table {
+    padding: 0.8rem;
+    background-color: $light-color;
+  }
+
+  td {
+    font-weight: 400;
+  }
+
+  th {
+    width: 150px;
+  }
+
+  @include respond-to-mobile(){
+    td,th {
+      display: block;
+      width: 100%;
+    }
+    td {
+      padding-bottom: 0.8rem;
+    }
+  };
 }
