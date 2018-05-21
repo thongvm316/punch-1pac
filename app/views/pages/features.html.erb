@@ -10,6 +10,10 @@
 <%= render 'shared/footer' %>
 <% end %>
 
+<% content_for(:js) do %>
+<%= render 'shared/chat_tawk_to' %>
+<% end %>
+
 <div id="main" class="main">
   <section class="description">
     <p class="text-center text-blue">Features</p>

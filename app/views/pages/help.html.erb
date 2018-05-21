@@ -10,6 +10,10 @@
 <%= render 'shared/footer' %>
 <% end %>
 
+<% content_for(:js) do %>
+<%= render 'shared/chat_tawk_to' %>
+<% end %>
+
 <section class="section-mh bg-linear-blue">
   <h1>Coming Soon!</h1>
 </section>
