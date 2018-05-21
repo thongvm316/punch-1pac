@@ -23,6 +23,7 @@ class PasswordResetController < ApplicationController
         msg = 'Invalid email. Please try another.'
         f.html do
           flash.now[:alert] = msg
+          @user = User.new
           render :new
         end
         f.json { render json: { message: msg }, status: :unprocessable_entity }
