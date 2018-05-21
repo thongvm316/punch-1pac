@@ -13,5 +13,6 @@ a {
   &:active {
     color: $primary-color;
     text-decoration: none;
+    box-shadow: none;
   }
 }

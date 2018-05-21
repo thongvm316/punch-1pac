@@ -1,0 +1,50 @@
+.contact {
+  padding: 8rem 0;
+
+  @include respond-to-mobile() {
+    padding: 4rem 0;
+  }
+
+  .contact-container {
+    max-width: 35rem;
+    position: relative;
+    z-index: 5;
+  }
+
+  h1,
+  p,
+  a {
+    color: $light-color;
+  }
+
+  p {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    margin-bottom: 0;
+  }
+
+  a {
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+
+  textarea { min-height: 80px; }
+
+  .contact-form {
+    background-color: $light-color;
+    border-radius: .2rem;
+    box-shadow: 0 10px 30px 0 rgba($dark-color, .4);
+    margin: 3.2rem auto 0;
+    padding: 1.2rem;
+  }
+
+  .btn {
+    display: block;
+    margin-top: 1.2rem;
+    width: 8rem;
+
+    @include respond-to-mobile() {
+      width: 100%;
+    }
+  }
+}
