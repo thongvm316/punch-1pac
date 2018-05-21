@@ -24,7 +24,7 @@ class Api::V1::UsersController < Api::V1::BaseController
 
   def show
     authorize! @user
-    render json: @user, serializer: UserSerializer, status: 200
+    render json: @user, serializer: UserSerializer, status: :ok
   end
 
   def create
@@ -32,7 +32,7 @@ class Api::V1::UsersController < Api::V1::BaseController
     user_form = UserCreateForm.new(user_create_params, current_user)
     if user_form.save
       UserMailer.create(user_form.user.id, current_company.id, user_form.password).deliver_later
-      render json: user_form.user, serializer: UserSerializer, status: 201
+      render json: user_form.user, serializer: UserSerializer, status: :created
     else
       render_422(user_form.error_messages)
     end
@@ -65,7 +65,7 @@ class Api::V1::UsersController < Api::V1::BaseController
   def update
     authorize! @user
     if @user.update(user_update_params)
-      render json: @user, serializer: UserWithGroupsSerializer, status: 200
+      render json: @user, serializer: UserWithGroupsSerializer, status: :ok
     else
       render_422(@user.errors)
     end

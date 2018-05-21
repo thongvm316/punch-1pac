@@ -3,8 +3,8 @@
 ## Requirements
 
 * Postgres 10
-* Ruby 2.4.2
-* Rails 5.1.4
+* Ruby 2.5.0
+* Rails 5.1.6
 * Redis
 
 ## Start web/worker/app

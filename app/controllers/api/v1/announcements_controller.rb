@@ -12,12 +12,12 @@ class Api::V1::AnnouncementsController < Api::V1::BaseController
            each_serializer: AnnouncementSerializer,
            adapter: :json,
            meta: pager(announcements),
-           status: 200
+           status: :ok
   end
 
   def show
     authorize!
     announcement = Announcement.for_user(current_user).find(params[:id])
-    render json: announcement, serializer: AnnouncementSerializer, status: 200
+    render json: announcement, serializer: AnnouncementSerializer, status: :ok
   end
 end

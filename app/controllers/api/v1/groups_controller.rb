@@ -6,19 +6,19 @@ class Api::V1::GroupsController < Api::V1::BaseController
   def index
     authorize!
     groups = current_company.groups.for_user(current_user).order(name: :asc)
-    render json: groups, each_serializer: GroupSerializer, include: 'users', status: 200 if stale?(groups)
+    render json: groups, each_serializer: GroupSerializer, include: 'users', status: :ok if stale?(groups)
   end
 
   def show
     authorize! @group
-    render json: @group, serializer: GroupSerializer, status: 200 if stale?(@group)
+    render json: @group, serializer: GroupSerializer, status: :ok if stale?(@group)
   end
 
   def create
     authorize!
     group = current_company.groups.build(group_params)
     if group.save
-      render json: group, serializer: GroupSerializer, status: 201
+      render json: group, serializer: GroupSerializer, status: :created
     else
       render_422(group.errors.messages)
     end
@@ -27,7 +27,7 @@ class Api::V1::GroupsController < Api::V1::BaseController
   def update
     authorize! @group
     if @group.update(group_params)
-      render json: @group, serializer: GroupSerializer, status: 200
+      render json: @group, serializer: GroupSerializer, status: :ok
     else
       render_422(@group.errors.messages)
     end

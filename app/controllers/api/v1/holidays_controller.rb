@@ -6,7 +6,7 @@ class Api::V1::HolidaysController < Api::V1::BaseController
   def index
     authorize!
     holidays = current_company.holidays.filter(params).order(id: :asc)
-    render json: holidays, each_serializer: HolidaySerializer, status: 200 if stale?(holidays)
+    render json: holidays, each_serializer: HolidaySerializer, status: :ok if stale?(holidays)
   end
 
   def import
@@ -15,14 +15,14 @@ class Api::V1::HolidaysController < Api::V1::BaseController
     render_422('blank_or_already_imported') && return if national_holidays.blank?
     holidays = current_company.holidays.build(national_holidays.map(&:attributes))
     Holiday.import(holidays)
-    render json: holidays, each_serializer: HolidaySerializer, status: 200
+    render json: holidays, each_serializer: HolidaySerializer, status: :ok
   end
 
   def create
     authorize!
     holiday = current_company.holidays.build(holiday_params)
     if holiday.save
-      render json: holiday, serializer: HolidaySerializer, status: 201
+      render json: holiday, serializer: HolidaySerializer, status: :created
     else
       render_422(holiday.errors.messages)
     end
@@ -31,7 +31,7 @@ class Api::V1::HolidaysController < Api::V1::BaseController
   def update
     authorize!
     if @holiday.update(holiday_params)
-      render json: @holiday, serializer: HolidaySerializer, status: 200
+      render json: @holiday, serializer: HolidaySerializer, status: :ok
     else
       render_422(@holiday.errors.messages)
     end

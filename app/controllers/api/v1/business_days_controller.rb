@@ -6,14 +6,14 @@ class Api::V1::BusinessDaysController < Api::V1::BaseController
   def index
     authorize!
     business_days = current_company.business_days
-    render json: business_days, each_serializer: BusinessDaySerializer, status: 200 if stale?(business_days)
+    render json: business_days, each_serializer: BusinessDaySerializer, status: :ok if stale?(business_days)
   end
 
   def create
     authorize!
     business_day = current_company.business_days.build(business_day_params)
     if business_day.save
-      render json: business_day, serializer: BusinessDaySerializer, status: 201
+      render json: business_day, serializer: BusinessDaySerializer, status: :created
     else
       render_422(business_day.errors.messages)
     end
@@ -22,7 +22,7 @@ class Api::V1::BusinessDaysController < Api::V1::BaseController
   def update
     authorize!
     if @business_day.update(business_day_params)
-      render json: @business_day, serializer: BusinessDaySerializer, status: 200
+      render json: @business_day, serializer: BusinessDaySerializer, status: :ok
     else
       render_422(@business_day.errors.messages)
     end

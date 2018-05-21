@@ -6,14 +6,14 @@ class Api::V1::AllowedIpsController < Api::V1::BaseController
   def index
     authorize!
     allowed_ips = current_company.allowed_ips
-    render json: allowed_ips, each_serializer: AllowedIpSerializer, status: 200 if stale?(allowed_ips)
+    render json: allowed_ips, each_serializer: AllowedIpSerializer, status: :ok if stale?(allowed_ips)
   end
 
   def create
     authorize!
     allowed_ip = current_company.allowed_ips.build(allowed_ip_params)
     if allowed_ip.save
-      render json: allowed_ip, serializer: AllowedIpSerializer, status: 201
+      render json: allowed_ip, serializer: AllowedIpSerializer, status: :created
     else
       render_422(allowed_ip.errors.messages)
     end
@@ -22,7 +22,7 @@ class Api::V1::AllowedIpsController < Api::V1::BaseController
   def update
     authorize!
     if @allowed_ip.update(allowed_ip_params)
-      render json: @allowed_ip, serializer: AllowedIpSerializer, status: 200
+      render json: @allowed_ip, serializer: AllowedIpSerializer, status: :ok
     else
       render_422(@allowed_ip.errors.messages)
     end

@@ -18,7 +18,7 @@ class Api::V1::RequestsController < Api::V1::BaseController
              each_serializer: RequestSerializer,
              adapter: :json,
              meta: pager(requests),
-             status: 200
+             status: :ok
     end
   end
 
@@ -27,7 +27,7 @@ class Api::V1::RequestsController < Api::V1::BaseController
     req = current_user.requests.build(request_params)
     if req.save
       TrackAndNotifyActivityWorker.perform_async(current_user.id, req.id, req.class.to_s, 'create')
-      render json: req, serializer: RequestSerializer, status: 201
+      render json: req, serializer: RequestSerializer, status: :created
     else
       render_422(req.errors.messages)
     end
@@ -37,7 +37,7 @@ class Api::V1::RequestsController < Api::V1::BaseController
     authorize! @req
     if @req.update(request_params)
       TrackAndNotifyActivityWorker.perform_async(current_user.id, @req.id, @req.class.to_s, 'update')
-      render json: @req, serializer: RequestSerializer, status: 200
+      render json: @req, serializer: RequestSerializer, status: :ok
     else
       render_422(@req.errors.messages)
     end
