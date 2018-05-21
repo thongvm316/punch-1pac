@@ -11,7 +11,7 @@ class Api::V1::SessionsController < Api::V1::BaseController
            each_serializer: SessionSerializer,
            meta: current_session ? ActiveModelSerializers::SerializableResource.new(current_session, serializer: SessionSerializer) : nil,
            adapter: :json,
-           status: 200
+           status: :ok
   end
 
   def destroy

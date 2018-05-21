@@ -14,7 +14,7 @@ class AuthController < ApplicationController
         @user = User.new
         render layout: 'page'
       end
-      f.json { render json: current_company, serializer: CompanySerializer, status: 200 }
+      f.json { render json: current_company, serializer: CompanySerializer, status: :ok }
     end
   end
 

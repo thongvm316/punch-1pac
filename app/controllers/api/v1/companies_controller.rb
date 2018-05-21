@@ -4,7 +4,7 @@ class Api::V1::CompaniesController < Api::V1::BaseController
   def update
     authorize!
     if current_company.update(company_params)
-      render json: current_company, serializer: CompanySerializer, status: 200
+      render json: current_company, serializer: CompanySerializer, status: :ok
     else
       render_422(current_company.errors.messages)
     end

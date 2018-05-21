@@ -29,7 +29,7 @@ class ApplicationController < ActionController::Base
 
   def internal_server_error
     respond_to do |f|
-      f.html { render file: 'errors/500.html', status: 500, layout: 'page' }
+      f.html { render file: 'errors/500.html', status: :internal_server_error, layout: 'page' }
       f.json { render json: { message: 'Internal Server Error' }, status: :internal_server_error }
     end
   end
