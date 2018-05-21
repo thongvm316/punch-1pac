@@ -2,7 +2,7 @@
   <div class="status-cards mt-5">
     <datepicker
       :language="currentUser.language"
-      :format="function (date) { return $moment(date).format('MMM YYYY') }"
+      :format="function (date) { return $moment(date).format('LLL') }"
       :minimumView="'month'"
       :maximumView="'month'"
       :input-class="'datepicker-input form-input'"

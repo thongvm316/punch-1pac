@@ -3,7 +3,7 @@
     <div class="calendar calendar-lg">
       <div class="calendar-nav">
         <div class="calendar-nav-section">
-          <h3 class="m-0">{{ month }} {{ year }}</h3>
+          <h3 class="m-0">{{ dateContext.locale(currentUser.language) | moment_lll }}</h3>
         </div>
         <div class="calendar-nav-section">
           <button class="btn btn-secondary btn-action" @click="lastMonth">
