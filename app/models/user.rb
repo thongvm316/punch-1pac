@@ -1,11 +1,10 @@
 # frozen_string_literal: true
-
 # == Schema Information
 #
 # Table name: users
 #
-#  id                     :integer          not null, primary key
-#  company_id             :integer          not null
+#  id                     :bigint(8)        not null, primary key
+#  company_id             :bigint(8)        not null
 #  email                  :string           not null
 #  password_digest        :string           not null
 #  role                   :integer          default("member"), not null
@@ -19,7 +18,7 @@
 #  reset_password_sent_at :datetime
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
-#  last_read_noti_id      :integer          default(0), not null
+#  last_read_noti_id      :bigint(8)        default(0), not null
 #  password_changed       :boolean          default(FALSE), not null
 #  activated              :boolean          default(TRUE), not null
 #  activated_at           :datetime

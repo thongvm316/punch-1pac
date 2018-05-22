@@ -1,11 +1,10 @@
 # frozen_string_literal: true
-
 # == Schema Information
 #
 # Table name: requests
 #
-#  id             :integer          not null, primary key
-#  user_id        :integer          not null
+#  id             :bigint(8)        not null, primary key
+#  user_id        :bigint(8)        not null
 #  reason         :string(500)      not null
 #  attended_at    :time
 #  left_at        :time
@@ -13,7 +12,7 @@
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
 #  admin_reason   :string
-#  admin_id       :integer
+#  admin_id       :bigint(8)
 #  kind           :integer          default("attendance"), not null
 #  attendance_day :date             not null
 #
