@@ -17,6 +17,7 @@
   "dependencies": {
     "axios": "^0.17.1",
     "chart.js": "^2.7.2",
+    "formdata-polyfill": "^3.0.10",
     "lodash.debounce": "^4.0.8",
     "moment-timezone": "^0.5.14",
     "spectre.css": "^0.5.0",

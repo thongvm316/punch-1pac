@@ -56,6 +56,7 @@
 import { mapState, mapActions, mapMutations } from 'vuex'
 import * as types from '../store/mutation-types'
 import axios from 'axios'
+import 'formdata-polyfill'
 
 export default {
   data () {
