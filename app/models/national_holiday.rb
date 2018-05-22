@@ -1,11 +1,10 @@
 # frozen_string_literal: true
-
 # == Schema Information
 #
 # Table name: national_holidays
 #
-#  id         :integer          not null, primary key
-#  admin_id   :integer          not null
+#  id         :bigint(8)        not null, primary key
+#  admin_id   :bigint(8)        not null
 #  country    :string           not null
 #  name       :string           not null
 #  started_at :date             not null

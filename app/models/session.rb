@@ -1,13 +1,12 @@
 # frozen_string_literal: true
-
 # == Schema Information
 #
 # Table name: sessions
 #
-#  id          :integer          not null, primary key
-#  user_id     :integer          not null
+#  id          :bigint(8)        not null, primary key
+#  user_id     :bigint(8)        not null
 #  jti         :string           not null
-#  exp         :integer          not null
+#  exp         :bigint(8)        not null
 #  ip_address  :inet             not null
 #  client      :string
 #  device_name :string

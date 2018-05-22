@@ -1,17 +1,16 @@
 # frozen_string_literal: true
-
 # == Schema Information
 #
 # Table name: holidays
 #
-#  id                  :integer          not null, primary key
-#  company_id          :integer          not null
+#  id                  :bigint(8)        not null, primary key
+#  company_id          :bigint(8)        not null
 #  started_at          :date             not null
 #  ended_at            :date             not null
 #  name                :string           not null
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
-#  national_holiday_id :integer
+#  national_holiday_id :bigint(8)
 #
 # Indexes
 #

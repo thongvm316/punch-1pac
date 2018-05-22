@@ -1,11 +1,10 @@
 # frozen_string_literal: true
-
 # == Schema Information
 #
 # Table name: announcements
 #
-#  id         :integer          not null, primary key
-#  admin_id   :integer          not null
+#  id         :bigint(8)        not null, primary key
+#  admin_id   :bigint(8)        not null
 #  target     :integer          default("everyone"), not null
 #  sent       :boolean          default(FALSE), not null
 #  status     :integer          default("normal"), not null

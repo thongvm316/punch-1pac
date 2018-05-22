@@ -23,6 +23,7 @@
 import SettingLayout from '../layouts/Setting.vue'
 import axios from 'axios'
 import { mapState, mapActions } from 'vuex'
+import 'formdata-polyfill'
 
 export default {
   data () {
