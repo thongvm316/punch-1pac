@@ -33,6 +33,10 @@ exports.cssLoaders = function (options) {
   function generateLoaders (loader, loaderOptions) {
     const loaders = options.usePostCSS ? [cssLoader, postcssLoader] : [cssLoader]
 
+    loaders.unshift({
+      loader: 'font-family-unescape-loader'
+    })
+
     if (loader) {
       loaders.push({
         loader: loader + '-loader',

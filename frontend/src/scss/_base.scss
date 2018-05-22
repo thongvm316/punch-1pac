@@ -14,6 +14,10 @@ body {
   }
 }
 
+:lang(ja) {
+  font-family: '游ゴシック Medium', '游ゴシック体', 'Yu Gothic Medium', YuGothic, 'ヒラギノ角ゴ ProN', 'Hiragino Kaku Gothic ProN', 'メイリオ', Meiryo, 'ＭＳ Ｐゴシック', 'MS PGothic', sans-serif;
+}
+
 .main {
   background: $gray-color-lightest;
   padding: .8rem 2rem 0;
