@@ -6,14 +6,12 @@ class Api::V1::NotificationsController < Api::V1::BaseController
   def index
     authorize!
     notifications = current_user.notifications.includes(:user).page(params[:page]).per(params[:per_page])
-    if stale?(notifications)
-      render json: notifications,
-             root: 'notifications',
-             each_serializer: NotificationSerializer,
-             adapter: :json,
-             meta: pager(notifications).merge(unread_notifications_count: notifications.unread_count(current_user.last_read_noti_id)),
-             status: :ok
-    end
+    render json: notifications,
+            root: 'notifications',
+            each_serializer: NotificationSerializer,
+            adapter: :json,
+            meta: pager(notifications).merge(unread_notifications_count: notifications.unread_count(current_user.last_read_noti_id)),
+            status: :ok
   end
 
   def read
