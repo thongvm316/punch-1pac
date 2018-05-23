@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: requests
@@ -32,7 +33,7 @@ class Request < ApplicationRecord
 
   validates :attendance_day, presence: true
   validates :admin, presence: true, if: -> { !pending? }
-  validates :admin_reason, length: { maximum: 500 }, if: -> { rejected? }
+  validates :admin_reason, presence: true, length: { maximum: 500 }, if: -> { rejected? }
   validates :reason, presence: true, length: { maximum: 500 }
   validate :both_attended_at_left_at_cannot_be_blank, if: -> { attendance? }
   validate :attended_at_cannot_be_greater_than_left_at, if: -> { attendance? }
