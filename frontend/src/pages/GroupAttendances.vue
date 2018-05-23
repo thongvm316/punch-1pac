@@ -72,6 +72,7 @@ export default {
         user_id: '',
         from_date: this.$moment().format('YYYY-MM-DD'),
         to_date: this.$moment().format('YYYY-MM-DD'),
+        group_id: this.$route.params.id,
         status: ''
       }
     }
