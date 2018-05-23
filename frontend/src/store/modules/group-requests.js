@@ -19,9 +19,13 @@ const mutations = {
     state.requests[index].status = 'approved'
   },
 
-  [types.REJECT_GROUP_REQUEST] (state, requestId) {
-    const index = state.requests.findIndex(request => request.id === requestId)
-    state.requests[index].status = 'rejected'
+  [types.REJECT_GROUP_REQUEST] (state, params) {
+    const index = state.requests.findIndex(request => request.id === params.requestId)
+    Object.assign(state.requests[index], {
+      status: 'rejected',
+      admin: params.admin,
+      admin_reason: params.admin_reason
+    })
   },
 
   [types.REJECT_GROUP_REQUEST_ERRORS] (state, payload) {
@@ -53,9 +57,9 @@ const actions = {
   },
 
   rejectRequest ({ commit }, params) {
-    return axios.post(`/requests/${params.requestId}/reject`, { admin_reason: params.rejectReason })
+    return axios.post(`/requests/${params.requestId}/reject`, { request: { admin_reason: params.admin_reason } })
                 .then(response => {
-                  commit(types.REJECT_GROUP_REQUEST, params.requestId)
+                  commit(types.REJECT_GROUP_REQUEST, params)
                   return response
                 })
                 .catch(error => {
