@@ -15,6 +15,7 @@
         <div class="tile-content">{{ option.name }} ({{ option.email }})</div>
       </div>
     </template>
+    <span slot="no-options">{{ $t('filterUserBox.noOptions') }}</span>
   </v-select>
 </template>
 

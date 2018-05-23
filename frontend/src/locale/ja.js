@@ -26,7 +26,8 @@ export default {
     },
     placeholder: {
       description: '説明',
-      filterByEmail: 'メールアドレスで検索'
+      filterByEmail: 'メールアドレスで検索',
+      searchByNameEmail: 'Search user by name or email'
     },
     modal: {
       editUserTitle: 'ユーザー情報の編集',
@@ -616,5 +617,8 @@ export default {
   },
   remind: {
     message: 'あなたは{days}に出勤登録を忘れました. 当日は出席者を編集するために管理者に申請を提出してください。'
+  },
+  filterUserBox: {
+    noOptions: 'No user matching. Please type user name or email for searching'
   }
 }

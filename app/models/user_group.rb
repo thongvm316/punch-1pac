@@ -11,8 +11,8 @@
 #
 
 class UserGroup < ApplicationRecord
-  belongs_to :user
-  belongs_to :group
+  belongs_to :user, touch: true
+  belongs_to :group, touch: true
 
   scope :not_in_group, ->(group_id) { where.not(group_id: group_id).or(UserGroup.where(group_id: nil)) }
 
