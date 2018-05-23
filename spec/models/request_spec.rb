@@ -13,6 +13,7 @@ RSpec.describe Request, type: :model do
     context 'when request.status = rejected' do
       subject { build :request, kind: :annual_leave, status: 'rejected' }
 
+      it { should validate_presence_of(:admin_reason) }
       it { should validate_length_of(:admin_reason).is_at_most(500) }
     end
 
