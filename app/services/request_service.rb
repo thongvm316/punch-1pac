@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class RequestService
+  attr_reader :req
+
   def initialize(current_user, request, params = {})
     @user = current_user
     @req = request

@@ -52,9 +52,13 @@ class Api::V1::RequestsController < Api::V1::BaseController
 
   def reject
     authorize! @req
-    RequestService.new(current_user, @req, reject_request_params).reject
-    TrackAndNotifyActivityWorker.perform_async(current_user.id, @req.id, @req.class.to_s, 'reject')
-    head(200)
+    request_service = RequestService.new(current_user, @req, reject_request_params)
+    if request_service.reject
+      TrackAndNotifyActivityWorker.perform_async(current_user.id, @req.id, @req.class.to_s, 'reject')
+      head(200)
+    else
+      render_422(request_service.req.errors.messages)
+    end
   end
 
   def destroy

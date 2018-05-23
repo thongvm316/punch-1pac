@@ -2,6 +2,7 @@
 
 class DashboardController < ApplicationController
   before_action :authenticate_user!
+  before_action :set_locale
   before_action :current_company
 
   def index

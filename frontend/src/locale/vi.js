@@ -37,7 +37,7 @@ export default {
       editUser: 'Sửa thông tin thành viên',
       activateUser: 'Kích hoạt thành viên',
       deactivateUser: 'Huỷ kích hoạt thành viên',
-      removeUser: 'Xoá bỏ thành viên'
+      removeUser: 'Bỏ nhóm của thành viên'
     },
     confirmDialog: {
       deactivateUserTitle: 'Huỷ kích hoạt thành viên',

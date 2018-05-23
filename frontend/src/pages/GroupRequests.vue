@@ -50,7 +50,17 @@
           <td class="w-cell-kind"><span :class="{ 'text-primary': request.kind === 'attendance', 'text-info': request.kind === 'annual_leave' }">{{ $t(`requests.kinds.${request.kind}`) }}</span></td>
           <td>{{ request.reason }}</td>
           <td class="w-cell-status"><span class="label" :class="getStatusClass(request.status)">{{ $t(`meta.request_statuses.${request.status}`) }}</span></td>
-          <td class="w-cell-admin">{{ request.admin ? request.admin.name : '' }}</td>
+          <td class="w-cell-admin">
+            <div class="tile tile-centered" v-if="request.admin">
+              <div class="tile-icon">
+                <img class="avatar avatar-md" :src="request.admin.avatar_url">
+              </div>
+              <div class="tile-content">
+                {{ request.admin.name }}
+              </div>
+            </div>
+            <span v-else></span>
+          </td>
           <td class="w-cell-reason">{{ request.admin_reason }}</td>
           <td class="w-cell-action">
             <span class="d-flex" v-if="request.status === 'pending'">
@@ -107,8 +117,9 @@ export default {
         to_date: this.$moment().endOf('month').format('YYYY-MM-DD')
       },
       requestParams: {
+        admin: null,
         requestId: '',
-        rejectReason: ''
+        admin_reason: ''
       }
     }
   },
@@ -151,6 +162,8 @@ export default {
     toggleEditModal (requestId) {
       this.clearRejectRequestErrors()
       this.requestParams.requestId = requestId
+      this.requestParams.admin = this.currentUser
+      this.requestParams.admin_reason = ''
       this.isEditModalOpen = !this.isEditModalOpen
     },
 

@@ -17,8 +17,4 @@ class Api::V1::BaseController < ApplicationController
   def set_timezone
     Time.zone = current_company.timezone
   end
-
-  def set_locale
-    I18n.locale = current_user.language
-  end
 end
