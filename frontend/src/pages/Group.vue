@@ -3,7 +3,7 @@
     <group-tab :group-id="$route.params.id"/>
 
     <div class="input-group mt-5" v-if="$auth('Group', currentUser, group.id).canAddUser()">
-      <filter-user-box :queryParams="{ not_in_group_id: $route.params.id, per_page: 1000, exclude_user_ids: groupUsers.map(user => user.id) }" :placeholder="$t('group.placeholder.filterByEmail')" :user.sync="selectedUser"/>
+      <filter-user-box :queryParams="{ not_in_group_id: $route.params.id, per_page: 1000, exclude_user_ids: groupUsers.map(user => user.id) }" :placeholder="$t('group.placeholder.searchByNameEmail')" :user.sync="selectedUser"/>
       <button type="button" class="btn input-group-btn" @click="localAddGroupUser">{{ $t('group.btn.addUser') }}</button>
     </div>
     <p class="form-input-hint text-dark">{{ $t('group.explain') }}</p>

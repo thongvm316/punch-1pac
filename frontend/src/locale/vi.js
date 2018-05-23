@@ -26,7 +26,8 @@ export default {
     },
     placeholder: {
       description: 'Mô tả về nhóm',
-      filterByEmail: 'Lọc theo email'
+      filterByEmail: 'Lọc theo email',
+      searchByNameEmail: 'Tìm kiếm thành viên theo tên hoặc email'
     },
     modal: {
       editUserTitle: 'Sửa thông tin thành viên',
@@ -535,9 +536,9 @@ export default {
       updateTimeSuccess: 'Múi giờ và giờ nghỉ đã được cập nhật'
     },
     user: {
-      addSuccess: 'Một người dùng mới đã được tạo. Email chứa thông tin đăng nhập đã được gửi đến người dùng',
+      addSuccess: 'Một thành viên mới đã được tạo. Email chứa thông tin đăng nhập đã được gửi đến thành viên',
       updatePwdSuccess: 'Mật khẩu của bạn đã được cập nhật',
-      addMultiSuccess: 'Danh sách người dùng trong tập tin CSV đã được tạo. Email chứa thông tin đã gửi đến email trong danh sách',
+      addMultiSuccess: 'Danh sách thành viên trong tập tin CSV đã được tạo. Email chứa thông tin đã gửi đến email trong danh sách',
       updateProfileSuccess: 'Thông tin cá nhân đã được cập nhật'
     },
     ip: {
@@ -616,5 +617,8 @@ export default {
   },
   remind: {
     message: 'Bạn quên bấm đến rồi vào các ngày {days}. Vui lòng tạo yêu cầu chỉnh sửa thông tin hiện diện các ngày hôm đó'
+  },
+  filterUserBox: {
+    noOptions: 'Không tìm thấy thành viên. Chỉ có thể mời quản trị viên hoặc thành viên chưa vào nhóm nào cả'
   }
 }
