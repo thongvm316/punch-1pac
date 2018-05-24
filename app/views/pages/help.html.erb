@@ -1,9 +1,9 @@
-<%= provide(:page_title, 'Support | Punch') %>
-<%= provide(:page_description, 'Punch Support team is always ready to answer any and all questions you may have.') %>
+<%= provide(:page_title, 'Punch Help') %>
+<%= provide(:page_description, 'Frequently asked questions and help documentation for Punch') %>
 <%= provide(:page_url, help_url) %>
 
 <% content_for(:header) do %>
-<%= render 'shared/top_header' %>
+<%= render partial: 'shared/header', locals: { nav_id: 'index-nav' } %>
 <% end %>
 
 <% content_for(:footer) do %>

@@ -1,9 +1,9 @@
-<%= provide(:page_title, 'Features | Punch') %>
+<%= provide(:page_title, 'Features of Punch') %>
 <%= provide(:page_description, 'Increase attendance efficiency of your team lightweight tools and features Punch provide.')%>
 <%= provide(:page_url, features_url) %>
 
 <% content_for(:header) do %>
-<%= render 'shared/header' %>
+<%= render partial: 'shared/header', locals: { nav_klass: 'nav-inverse' } %>
 <% end %>
 
 <% content_for(:footer) do %>
@@ -121,13 +121,6 @@
       </div>
     </div>
   </section>
-  <section class="trial bg-linear-blue">
-      <div class="trial-content">
-        <h2 class="trial-title">Free trial up to 30 days sign up now !</h2>
-        <div class="input-group">
-          <input type="email" class="form-input input-lg" placeholder="Enter your email!">
-          <button class="btn btn-primary input-group-btn btn-lg">Try it free</button>
-        </div>
-      </div>
-  </section>
+
+  <%= render 'shared/get_started_block' %>
 </div>
