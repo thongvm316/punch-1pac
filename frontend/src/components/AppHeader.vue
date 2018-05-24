@@ -56,12 +56,6 @@ export default {
   name: 'app-header',
   mixins: [dropdown],
 
-  data () {
-    return {
-      isLangSelectActive: false
-    }
-  },
-
   components: {
     Notifications,
     AnnualLeave,

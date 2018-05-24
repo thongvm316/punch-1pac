@@ -1,7 +1,8 @@
 export default {
   data () {
     return {
-      isDropdownActive: false
+      isDropdownActive: false,
+      isLangSelectActive: false
     }
   },
 
@@ -11,6 +12,7 @@ export default {
       const target = e.target
       if ((el !== target) && (!el.contains(target))) {
         this.isDropdownActive = false
+        this.isLangSelectActive = false
       }
     }
   },
