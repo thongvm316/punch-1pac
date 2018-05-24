@@ -42,12 +42,19 @@ body.menu-opened {
     .navbar-link { color: $black-color; }
 
     .btn-signin {
-      background-color: $primary-color;
-      color: $light-color;
+      border: 1px solid $primary-color;
+      color: $primary-color;
 
       &:hover,
       &:active,
       &:focus {
+        border: 1px solid $primary-color;
+      }
+    }
+
+    .btn.btn-get-started {
+      @include respond-to-not-mobile() {
+        border: 1px solid $primary-color;
         background-color: $primary-color;
         color: $light-color;
       }
@@ -137,13 +144,36 @@ body.menu-opened {
     }
   }
 
-  .btn-signin {
-    background: $light-color;
-    border-radius: 1.25rem;
+  .btn.btn-get-started {
+    background: none;
     border: 0;
-    color: $primary-color;
+    color: $color-darker;
+    padding: 0;
+    font-weight: normal;
+
+    @include respond-to-not-mobile() {
+      background: $light-color;
+      border: 1px solid $light-color;
+      color: $primary-color;
+      line-height: 1;
+      font-weight: normal;
+      padding: .4rem .6rem;
+
+      &:hover,
+      &:active,
+      &:focus {
+        border: 1px solid $primary-color;
+        background: $primary-color;
+        color: $light-color;
+      }
+    }
+  }
+
+  .btn-signin {
+    background: transparent;
+    border: 1px solid $light-color;
+    color: $light-color;
     line-height: 1;
-    margin-left: 1.6rem;
     padding: .4rem 1.2rem;
 
     @include respond-to-mobile () {
@@ -153,6 +183,7 @@ body.menu-opened {
     &:hover,
     &:active,
     &:focus {
+      border: 1px solid $light-color;
       background: $light-color;
       color: $primary-color;
     }

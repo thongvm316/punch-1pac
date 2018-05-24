@@ -32,3 +32,7 @@
     font-size: $font-size-lg;
   }
 }
+
+.form-input:not(:placeholder-shown):invalid {
+  border-color: $border-color;
+}

@@ -5,11 +5,11 @@
   background: $primary-color;
   border: $primary-color;
   color: $light-color;
+  outline: 0;
 
   &:hover,
   &:active,
   &:focus {
-    outline: 0;
     background: $primary-color;
     border: $primary-color;
     color: $light-color;
@@ -22,6 +22,22 @@
       border: .05rem solid $light-color;
       background: $light-color;
       color: $primary-color;
+    }
+  }
+
+  &.btn-get-started {
+    border: 0;
+    border-radius: .2rem;
+    background-color: $light-color;
+    color: $primary-color;
+    font-size: $font-size-lg;
+    font-weight: 600;
+
+    &:hover,
+    &:active,
+    &:focus {
+      background: $primary-color;
+      color: $light-color;
     }
   }
 }

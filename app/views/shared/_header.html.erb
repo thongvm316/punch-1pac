@@ -1,4 +1,6 @@
-<header class="nav nav-inverse">
+<% nav_id = nav_id ? nav_id : '' %>
+<% nav_klass = nav_klass ? nav_klass : '' %>
+<header id="<%= nav_id %>" class="nav <%= nav_klass %>">
   <div class="container">
     <div class="navbar">
       <div class="navbar-section navbar-control">
@@ -26,9 +28,9 @@
         <ul class="navbar-utilities">
           <li><%= link_to "Features", features_path, class: "navbar-link" %></li>
           <li><%= link_to "Help", help_path, class: "navbar-link" %></li>
-          <li><%= link_to "Contact Us", contact_path, class: "navbar-link" %></li>
+          <li><button class="btn btn-signin navbar-link">Sign In</button></li>
+          <li><%= link_to 'Get Started', get_started_url, class: 'btn btn-get-started navbar-link' %></li>
         </ul>
-        <button class="btn btn-signin navbar-link">Sign In</button>
       </div>
     </div>
   </div>
