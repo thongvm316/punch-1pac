@@ -29,6 +29,8 @@ SitemapGenerator::Sitemap.create do
 
   add features_path, priority: 0.8
   add help_path, priority: 0.8
+  add get_started_path, priority: 0.8
+  add contact_path, priority: 0.8
   add terms_path, priority: 0.6
   add privacy_path, priority: 0.6
 end

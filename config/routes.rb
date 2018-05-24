@@ -78,13 +78,14 @@ Rails.application.routes.draw do
   end
 
   root to: 'pages#top'
-  get 'help'    => 'pages#help'
-  get 'terms'   => 'pages#terms'
-  get 'privacy' => 'pages#privacy'
-  get 'contact' => 'pages#contact'
-  get 'features' => 'pages#features'
-  get '403'     => 'pages#page_403' if Rails.env.development?
-  get '500'     => 'pages#page_500' if Rails.env.development?
+  get 'get-started' => 'pages#get_started'
+  get 'help'        => 'pages#help'
+  get 'terms'       => 'pages#terms'
+  get 'privacy'     => 'pages#privacy'
+  get 'contact'     => 'pages#contact'
+  get 'features'    => 'pages#features'
+  get '403'         => 'pages#page_403' if Rails.env.development?
+  get '500'         => 'pages#page_500' if Rails.env.development?
   devise_for :admins, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
 
