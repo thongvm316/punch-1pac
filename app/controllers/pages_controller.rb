@@ -5,6 +5,8 @@ class PagesController < ApplicationController
 
   def top; end
 
+  def get_started; end
+
   def help; end
 
   def terms; end
