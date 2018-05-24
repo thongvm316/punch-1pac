@@ -27,14 +27,22 @@ RSpec.describe Api::V1::UsersController, type: :controller do
     end
 
     context 'when login user is superadmin' do
-      context 'when company had users' do
-        let!(:users) { create_list :user, 3, :with_attendance, company: company }
+      context 'when group had users' do
+        let(:users) { create_list :user, 3, :with_attendance, company: company }
+        let(:group) { create :group, company: company, users: users }
         let(:login_user) { create :user, company: company, role: 'superadmin' }
 
-        subject { get :today_attendances }
+        subject { get :today_attendances, params: { group_id: group.id } }
 
         its(:code) { is_expected.to eq '200' }
-        its(:body) { is_expected.to be_json_as(Array.new(4) { response_user_with_attendance }) }
+        its(:body) { is_expected.to be_json_as(Array.new(3) { response_user_with_attendance }) }
+      end
+      context 'when group not found' do
+        let(:login_user) { create :user, company: company, role: 'superadmin' }
+
+        subject { get :today_attendances, params: { group_id: -1 } }
+
+        its(:code) { is_expected.to eq '404' }
       end
     end
   end
