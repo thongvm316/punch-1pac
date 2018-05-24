@@ -136,7 +136,7 @@ export default {
     exportCsvFile () {
       axios.get(`/groups/${this.$route.params.id}/report.csv`, {
         headers: { 'Accept': 'application/csv' },
-        params: { date: this.month },
+        params: { date: this.dateData.date, date_type: this.dateData.type },
         responseType: 'blob'
       }).then(response => {
         const downloadLink = document.createElement('a')
