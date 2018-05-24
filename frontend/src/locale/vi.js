@@ -64,7 +64,9 @@ export default {
     punchOutTitle: 'Về đây',
     punchOutConfirm: 'Bạn có chắc muốn về lúc {at} ?',
     btnAnnualLeave: 'Nghỉ phép',
-    btnLeave: 'Xin nghỉ'
+    btnLeave: 'Xin nghỉ',
+    changeLanguage: 'Đổi ngôn ngữ',
+    languages: 'Ngôn ngữ'
   },
   footer: {
     terms: 'Quy định',

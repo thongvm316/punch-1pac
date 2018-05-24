@@ -23,10 +23,19 @@
                 </div>
               </div>
             </a>
-            <ul class="menu triangle-top">
+            <ul class="menu triangle-top" v-if="!isLangSelectActive">
               <li class="menu-item"><router-link to="/settings">{{ $t('header.settings') }}</router-link></li>
               <li class="menu-item"><router-link to="/company/settings" v-if="$auth('Page', currentUser).canViewCompanySettings()">{{ $t('header.companySettings') }}</router-link></li>
+              <li class="menu-item"><a @click="toggleLangSelect">{{ $t('header.changeLanguage') }}...</a></li>
               <li class="menu-item"><a href="#" @click="logout($event)">{{ $t('header.logout') }}</a></li>
+            </ul>
+
+            <ul class="menu triangle-top lang-select" v-else>
+              <li class="header">
+                <a class="btn-back" @click="toggleLangSelect"></a>
+                <p>{{ $t('header.languages') }}</p>
+              </li>
+              <li class="menu-item" v-for="language in meta.languages"><a  @click="updateUser(language)">{{ $t(`meta.languages.${language}`) }}</a></li>
             </ul>
           </div>
         </section>
@@ -47,6 +56,12 @@ export default {
   name: 'app-header',
   mixins: [dropdown],
 
+  data () {
+    return {
+      isLangSelectActive: false
+    }
+  },
+
   components: {
     Notifications,
     AnnualLeave,
@@ -60,12 +75,25 @@ export default {
 
     toggleDropdown () {
       this.isDropdownActive = !this.isDropdownActive
+    },
+
+    toggleLangSelect () {
+      this.isDropdownActive = !this.isDropdownActive
+      this.isLangSelectActive = !this.isLangSelectActive
+    },
+
+    updateUser (language) {
+      axios.put(`/users/${this.currentUser.id}`, { user: { language: language } })
+           .then(response => {
+             this.$router.go()
+           })
     }
   },
 
   computed: {
     ...mapState('initialStates', [
-      'currentCompany'
+      'currentCompany',
+      'meta'
     ])
   }
 }

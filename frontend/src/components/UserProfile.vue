@@ -37,14 +37,7 @@
       <select class="form-select" v-model="params.role" :disabled="$auth('User', currentUser, targetUser).canEdit()">
         <option :value="role" v-for="role in meta.roles">{{ $t(`meta.roles.${role}`) }}</option>
       </select>
-      <p class="form-input-hint" v-if="errors.language">{{ $t('user.profile.labels.role') }} {{ errors.role[0] }}</p>
-    </div>
-    <div class="form-group" :class="{ 'has-error': errors.name }">
-      <label class="form-label">{{ $t('user.profile.labels.language') }}</label>
-      <select class="form-select" v-model="params.language">
-        <option :value="language" v-for="language in meta.languages">{{ $t(`meta.languages.${language}`) }}</option>
-      </select>
-      <p class="form-input-hint" v-if="errors.language">{{ $t('user.profile.labels.language') }} {{ errors.language[0] }}</p>
+      <p class="form-input-hint" v-if="errors.role">{{ $t('user.profile.labels.role') }} {{ errors.role[0] }}</p>
     </div>
     <div class="form-group">
       <button type="button" class="btn btn-success btn-submit" @click="updateUser">{{ $t('user.profile.btn.save') }}</button>
@@ -67,7 +60,6 @@ export default {
         name: '',
         position: '',
         email: '',
-        language: '',
         role: ''
       },
       errors: {}
@@ -103,7 +95,6 @@ export default {
            .then(response => {
              this.self ? this[types.INITIAL_STATES_UPDATE_USER](response.data) : this[types.UPDATE_USER](response.data)
              this.setFlashMsg({ message: this.$t('messages.user.updateProfileSuccess') })
-             this.$i18n.locale = this.params.language
            })
            .catch(error => { if (error.response && error.response.status === 422) this.errors = error.response.data })
     },

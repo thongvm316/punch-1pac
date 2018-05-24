@@ -87,3 +87,45 @@
     }
   }
 }
+
+.lang-select {
+  .header {
+    border-bottom: .05rem solid $border-color;
+    margin-bottom: .4rem;
+    position: relative;
+
+    p {
+      font-size: .6rem;
+      font-weight: bold;
+      line-height: 1;
+      margin: 0;
+      padding-bottom: .5rem;
+      text-align: center;
+    }
+
+    .btn-back {
+      color: $dark-color;
+      left: .8rem;
+      position: absolute;
+      top: -.15rem;
+
+      &:hover {
+        color: $primary-color;
+      }
+
+      &::before {
+        content: '\2190';
+      }
+    }
+  }
+
+  &.menu {
+    padding-left: 0;
+    padding-right: 0;
+
+    .menu-item {
+      padding-right: .8rem;
+      padding-left: .8rem;
+    }
+  }
+}
