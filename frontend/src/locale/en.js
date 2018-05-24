@@ -64,7 +64,9 @@ export default {
     punchOutTitle: 'Punch Out',
     punchOutConfirm: 'Do you intent to punch out at {at} ?',
     btnAnnualLeave: 'Annual leave',
-    btnLeave: 'Leave'
+    btnLeave: 'Leave',
+    changeLanguage: 'Change Language',
+    languages: 'Languages'
   },
   footer: {
     terms: 'Terms',

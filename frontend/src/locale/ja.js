@@ -64,7 +64,9 @@ export default {
     punchOutTitle: '退勤時間を確認する',
     punchOutConfirm: 'あなたは{at}に退勤しますか？',
     btnAnnualLeave: '年次休暇',
-    btnLeave: '休憩入り'
+    btnLeave: '休憩入り',
+    changeLanguage: 'Change Language',
+    languages: 'Languages'
   },
   footer: {
     terms: 'プライバシーポリシー',
