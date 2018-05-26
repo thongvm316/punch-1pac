@@ -12,8 +12,10 @@
     "test": "npm run unit && npm run e2e",
     "lint": "eslint --ext .js,.vue src test/unit/specs test/e2e/specs",
     "build": "node build/build.js",
-    "stylelint": "stylelint 'src/scss/**/*.scss' --config=.stylelintrc.json; exit 0",
-    "stylelint-fix": "stylelint 'src/scss/**/*.scss' --syntax=scss --config=.stylelintrc.json --fix; exit 0"
+    "stylelint-check": "stylelint 'src/scss/**/*.scss' --config=.stylelintrc.json; exit 0",
+    "stylelint-fix": "stylelint 'src/scss/**/*.scss' --syntax=scss --config=.stylelintrc.json --fix; exit 0",
+    "prettier-check": "yarn prettier --config .prettierrc --debug-check \"src/**/*.{vue,js}\"",
+    "prettier-fix": "yarn prettier --config .prettierrc --write \"src/**/*.{vue,js}\""
   },
   "dependencies": {
     "axios": "^0.17.1",
@@ -51,14 +53,12 @@
     "cross-spawn": "^5.0.1",
     "css-loader": "^0.28.0",
     "eslint": "^3.19.0",
-    "eslint-config-prettier": "^2.9.0",
     "eslint-config-standard": "^10.2.1",
     "eslint-friendly-formatter": "^3.0.0",
     "eslint-loader": "^1.7.1",
     "eslint-plugin-html": "^3.0.0",
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-node": "^5.2.0",
-    "eslint-plugin-prettier": "^2.6.0",
     "eslint-plugin-promise": "^3.4.0",
     "eslint-plugin-standard": "^3.0.1",
     "extract-text-webpack-plugin": "^3.0.0",
