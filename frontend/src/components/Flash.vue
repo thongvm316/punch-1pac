@@ -24,10 +24,7 @@ export default {
 
   watch: {
     message: function(newMsg) {
-      if (newMsg)
-        setTimeout(() => {
-          this.setFlashMsg({ message: null })
-        }, this.timeout)
+      if (newMsg) setTimeout(() => { this.setFlashMsg({ message: null }) }, this.timeout)
     }
   }
 }
