@@ -13,13 +13,13 @@
 
 .border-bottom {
   border-bottom: 1px solid $border-color-dark;
-  padding-bottom: .3rem;
+  padding-bottom: 0.3rem;
 }
 
 .circle {
   display: inline-block;
-  width: .8rem;
-  height: .8rem;
+  width: 0.8rem;
+  height: 0.8rem;
 }
 
 .img-profile {
@@ -50,14 +50,14 @@
 .triangle-top {
   &::before {
     background: $light-color;
-    box-shadow: -1px -1px 1px -1px rgba(0, 0, 0, .2);
-    content: "";
-    height: .8rem;
+    box-shadow: -1px -1px 1px -1px rgba(0, 0, 0, 0.2);
+    content: '';
+    height: 0.8rem;
     position: absolute;
-    right: .8rem;
-    top: -.35rem;
+    right: 0.8rem;
+    top: -0.35rem;
     transform: rotate(45deg);
-    width: .8rem;
+    width: 0.8rem;
   }
 }
 

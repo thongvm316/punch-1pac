@@ -4,7 +4,7 @@
 
 .modal:target .modal-overlay,
 .modal.active .modal-overlay {
-  background: rgba($dark-color, .65);
+  background: rgba($dark-color, 0.65);
 }
 
 .modal-container {
@@ -17,6 +17,6 @@
   }
 
   .modal-footer {
-    margin-top: .8rem;
+    margin-top: 0.8rem;
   }
 }

@@ -2,7 +2,7 @@
 
 @mixin custom-toast-variant($text-color, $bg-color) {
   @include toast-variant($bg-color)
-  color: $text-color;
+    color: $text-color;
 }
 
 .toast {
@@ -12,10 +12,10 @@
 
   svg {
     position: absolute;
-    width: .6rem;
-    height: .6rem;
-    top: .6rem;
-    right: .4rem;
+    width: 0.6rem;
+    height: 0.6rem;
+    top: 0.6rem;
+    right: 0.4rem;
     color: $light-color;
     cursor: pointer;
   }
