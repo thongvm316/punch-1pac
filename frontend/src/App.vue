@@ -12,19 +12,12 @@ export default {
   name: 'app',
 
   methods: {
-    ...mapActions('initialStates', [
-      'setCurrentUser',
-      'setCurrentCompany',
-      'setAnnouncements',
-      'setMeta'
-    ]),
+    ...mapActions('initialStates', ['setCurrentUser', 'setCurrentCompany', 'setAnnouncements', 'setMeta']),
 
-    ...mapMutations('announcements', [
-      RECEIVE_HEADER_ANNOUNCEMENTS
-    ])
+    ...mapMutations('announcements', [RECEIVE_HEADER_ANNOUNCEMENTS])
   },
 
-  created () {
+  created() {
     this.setCurrentUser(window.initialStates())
     this.setCurrentCompany(window.initialStates())
     this[RECEIVE_HEADER_ANNOUNCEMENTS](window.initialStates())

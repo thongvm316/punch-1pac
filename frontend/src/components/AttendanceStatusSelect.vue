@@ -14,13 +14,11 @@ export default {
   props: ['value'],
 
   computed: {
-    ...mapState('initialStates', [
-      'meta'
-    ])
+    ...mapState('initialStates', ['meta'])
   },
 
   methods: {
-    updateValue (e) {
+    updateValue(e) {
       this.$emit('input', e.target.value)
     }
   }

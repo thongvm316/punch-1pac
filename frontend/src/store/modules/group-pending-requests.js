@@ -6,19 +6,22 @@ const state = {
 }
 
 const mutations = {
-  [types.RECEVIE_GROUP_PENDING_REQUESTS] (state, payload) {
+  [types.RECEVIE_GROUP_PENDING_REQUESTS](state, payload) {
     state.pendingRequests = payload
   }
 }
 
 const actions = {
-  getGroupPendingRequests ({ commit, state }) {
-    return axios.get('/users/group_pending_requests')
-                .then(response => {
-                  commit(types.RECEVIE_GROUP_PENDING_REQUESTS, response.data)
-                  return response
-                })
-                .catch(error => { throw error })
+  getGroupPendingRequests({ commit, state }) {
+    return axios
+      .get('/users/group_pending_requests')
+      .then(response => {
+        commit(types.RECEVIE_GROUP_PENDING_REQUESTS, response.data)
+        return response
+      })
+      .catch(error => {
+        throw error
+      })
   }
 }
 

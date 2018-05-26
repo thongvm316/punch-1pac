@@ -7,8 +7,8 @@ const state = {
 }
 
 const getters = {
-  filterHolidays (state) {
-    return function (query) {
+  filterHolidays(state) {
+    return function(query) {
       const regex = new RegExp(`${query}`, 'gi')
       return query ? state.holidays.filter(holiday => holiday.name.match(regex)) : state.holidays
     }
@@ -16,91 +16,102 @@ const getters = {
 }
 
 const mutations = {
-  [types.FETCH_HOLIDAYS] (state, payload) {
+  [types.FETCH_HOLIDAYS](state, payload) {
     state.holidays = payload
   },
 
-  [types.DELETE_HOLIDAY] (state, payload) {
+  [types.DELETE_HOLIDAY](state, payload) {
     state.holidays = state.holidays.filter(holiday => holiday.id !== payload)
   },
 
-  [types.CREATE_HOLIDAY] (state, payload) {
+  [types.CREATE_HOLIDAY](state, payload) {
     state.holidays.push(payload)
   },
 
-  [types.UPDATE_HOLIDAY] (state, payload) {
+  [types.UPDATE_HOLIDAY](state, payload) {
     const index = state.holidays.findIndex(holiday => holiday.id === payload.id)
     state.holidays.splice(index, 1, payload)
   },
 
-  [types.UPDATE_HOLIDAY_ERRORS] (state, payload) {
+  [types.UPDATE_HOLIDAY_ERRORS](state, payload) {
     state.errors = payload.errors
   },
 
-  [types.CLEAR_HOLIDAY_ERRORS] (state) {
+  [types.CLEAR_HOLIDAY_ERRORS](state) {
     state.errors = {}
   },
 
-  [types.IMPORT_NATIONAL_HOLIDAYS] (state, payload) {
+  [types.IMPORT_NATIONAL_HOLIDAYS](state, payload) {
     state.holidays = state.holidays.concat(payload)
   }
 }
 
 const actions = {
-  fetchHolidays ({ commit }, year) {
-    return axios.get('/holidays', { params: { year: year } })
-                .then(response => {
-                  commit(types.FETCH_HOLIDAYS, response.data)
-                  return response
-                })
-                .catch(error => { throw error })
+  fetchHolidays({ commit }, year) {
+    return axios
+      .get('/holidays', { params: { year: year } })
+      .then(response => {
+        commit(types.FETCH_HOLIDAYS, response.data)
+        return response
+      })
+      .catch(error => {
+        throw error
+      })
   },
 
-  deleteHoliday ({ commit }, holidayID) {
-    return axios.delete(`/holidays/${holidayID}`)
-                .then((response) => {
-                  commit(types.DELETE_HOLIDAY, holidayID)
-                  return response
-                })
-                .catch(error => { throw error })
+  deleteHoliday({ commit }, holidayID) {
+    return axios
+      .delete(`/holidays/${holidayID}`)
+      .then(response => {
+        commit(types.DELETE_HOLIDAY, holidayID)
+        return response
+      })
+      .catch(error => {
+        throw error
+      })
   },
 
-  createHoliday ({ commit }, data) {
-    return axios.post(`/holidays`, { holiday: data }, { headers: { 'Content-Type': 'application/json' } })
-                .then(response => {
-                  commit(types.CREATE_HOLIDAY, response.data)
-                  return response
-                })
-                .catch(error => {
-                  if (error.response && error.response.status === 422) commit(types.UPDATE_HOLIDAY_ERRORS, error.response.data)
-                  throw error
-                })
+  createHoliday({ commit }, data) {
+    return axios
+      .post(`/holidays`, { holiday: data }, { headers: { 'Content-Type': 'application/json' } })
+      .then(response => {
+        commit(types.CREATE_HOLIDAY, response.data)
+        return response
+      })
+      .catch(error => {
+        if (error.response && error.response.status === 422) commit(types.UPDATE_HOLIDAY_ERRORS, error.response.data)
+        throw error
+      })
   },
 
-  updateHoliday ({ commit }, data) {
-    return axios.put(`/holidays/${data.holidayID}`, { holiday: data.updateParams }, { headers: { 'Content-Type': 'application/json' } })
-                .then(response => {
-                  commit(types.UPDATE_HOLIDAY, response.data)
-                  return response
-                })
-                .catch(error => {
-                  if (error.response && error.response.status === 422) commit(types.UPDATE_HOLIDAY_ERRORS, error.response.data)
-                  throw error
-                })
+  updateHoliday({ commit }, data) {
+    return axios
+      .put(`/holidays/${data.holidayID}`, { holiday: data.updateParams }, { headers: { 'Content-Type': 'application/json' } })
+      .then(response => {
+        commit(types.UPDATE_HOLIDAY, response.data)
+        return response
+      })
+      .catch(error => {
+        if (error.response && error.response.status === 422) commit(types.UPDATE_HOLIDAY_ERRORS, error.response.data)
+        throw error
+      })
   },
 
-  clearHolidayErrors ({ commit }) {
+  clearHolidayErrors({ commit }) {
     commit(types.CLEAR_HOLIDAY_ERRORS)
   },
 
-  importNationalHolidays ({ commit }, country) {
+  importNationalHolidays({ commit }, country) {
     if (!country) return
-    return axios.post('/holidays/import', { country: country }, { headers: { 'Content-Type': 'application/json' } })
-                .then(response => {
-                  commit(types.IMPORT_NATIONAL_HOLIDAYS, response.data)
-                  return response
-                })
-                .catch(error => { throw error })
+    return axios
+      .post('/holidays/import', { country: country }, { headers: { 'Content-Type': 'application/json' } })
+      .then(response => {
+        commit(types.IMPORT_NATIONAL_HOLIDAYS, response.data)
+        return response
+      })
+      .catch(error => {
+        throw error
+      })
   }
 }
 

@@ -34,9 +34,11 @@ import { mapState, mapActions } from 'vuex'
 export default {
   name: 'status-cards',
 
-  data () {
+  data() {
     return {
-      month: this.$moment().locale('en').format('LL')
+      month: this.$moment()
+        .locale('en')
+        .format('LL')
     }
   },
 
@@ -45,28 +47,23 @@ export default {
   },
 
   computed: {
-    ...mapState('statusCards', [
-      'statuses',
-      'meta'
-    ])
+    ...mapState('statusCards', ['statuses', 'meta'])
   },
 
   methods: {
-    ...mapActions('statusCards', [
-      'getStatuses'
-    ]),
+    ...mapActions('statusCards', ['getStatuses']),
 
-    onInputDatepicker () {
+    onInputDatepicker() {
       this.month = this.$moment(this.month).format('YYYY-MM-DD')
     }
   },
 
-  created () {
+  created() {
     this.getStatuses(this.month)
   },
 
   watch: {
-    month: function () {
+    month: function() {
       this.getStatuses(this.month)
     }
   }

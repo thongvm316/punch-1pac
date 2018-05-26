@@ -24,24 +24,22 @@ import { INITIAL_STATES_UPDATE_PASSWORD_CHANGED } from '../store/mutation-types.
 export default {
   name: 'popup-change-password',
 
-  data () {
+  data() {
     return {
       open: false
     }
   },
 
   methods: {
-    ...mapMutations('initialStates', [
-      INITIAL_STATES_UPDATE_PASSWORD_CHANGED
-    ]),
+    ...mapMutations('initialStates', [INITIAL_STATES_UPDATE_PASSWORD_CHANGED]),
 
-    remind () {
+    remind() {
       this[INITIAL_STATES_UPDATE_PASSWORD_CHANGED](true)
       this.open = !this.currentUser.password_changed
     }
   },
 
-  created () {
+  created() {
     this.open = !this.currentUser.password_changed
   }
 }

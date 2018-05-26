@@ -26,7 +26,7 @@ import { mapState, mapActions } from 'vuex'
 import 'formdata-polyfill'
 
 export default {
-  data () {
+  data() {
     return {
       errors: {},
       params: {
@@ -40,32 +40,29 @@ export default {
   },
 
   computed: {
-    ...mapState('initialStates', [
-      'meta'
-    ])
+    ...mapState('initialStates', ['meta'])
   },
 
   methods: {
-    ...mapActions('flash', [
-      'setFlashMsg'
-    ]),
+    ...mapActions('flash', ['setFlashMsg']),
 
-    upload (params) {
+    upload(params) {
       if (!params.csv_file) return
       let formData = new FormData()
       formData.append('csv_file', params.csv_file)
-      axios.post('/users/create_multi', formData, { headers: { 'Content-Type': 'multipart/form-data' } })
-           .then(response => {
-             this.setFlashMsg({ message: this.$t('messages.user.addMultiSuccess') })
-             this.errors = response.data.errors
-           })
-           .catch(error => {
-             if (error.response && error.response.status === 422) this.errors = error.response.data.errors
-             else throw error
-           })
+      axios
+        .post('/users/create_multi', formData, { headers: { 'Content-Type': 'multipart/form-data' } })
+        .then(response => {
+          this.setFlashMsg({ message: this.$t('messages.user.addMultiSuccess') })
+          this.errors = response.data.errors
+        })
+        .catch(error => {
+          if (error.response && error.response.status === 422) this.errors = error.response.data.errors
+          else throw error
+        })
     },
 
-    setCsvFile (e) {
+    setCsvFile(e) {
       const files = e.target.files || e.dataTransfer.files
       if (!files.length) return
       this.params.csv_file = files[0]

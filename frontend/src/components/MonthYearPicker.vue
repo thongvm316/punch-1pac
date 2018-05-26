@@ -28,9 +28,11 @@ import Datepicker from 'vuejs-datepicker'
 export default {
   name: 'month-year-picker',
 
-  data () {
+  data() {
     return {
-      month: this.$moment().locale('en').format('YYYY-MM-DD'),
+      month: this.$moment()
+        .locale('en')
+        .format('YYYY-MM-DD'),
       isMonthPicker: true,
       isOpenMonthYearPicker: false
     }
@@ -41,28 +43,28 @@ export default {
   },
 
   computed: {
-    monthFormat () {
+    monthFormat() {
       return this.isMonthPicker ? this.$moment(this.month).format('LLL') : this.$moment(this.month).format('YYYY')
     }
   },
 
   methods: {
-    togglePicker (event) {
+    togglePicker(event) {
       event.stopPropagation()
       this.isOpenMonthYearPicker = !this.isOpenMonthYearPicker
       const elResult = this.$refs.result
 
       if (!document.onclick) {
-        document.onclick = (e) => {
+        document.onclick = e => {
           const target = e.target
-          if ((target !== elResult.className) && (!elResult.contains(target))) {
+          if (target !== elResult.className && !elResult.contains(target)) {
             this.isOpenMonthYearPicker = false
           }
         }
       }
     },
 
-    onInputDatepicker () {
+    onInputDatepicker() {
       this.month = this.$moment(this.month).format('YYYY-MM-DD')
       this.$emit('input', {
         date: this.$moment(this.month).format('YYYY-MM-DD'),

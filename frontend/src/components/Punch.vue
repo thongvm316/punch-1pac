@@ -23,7 +23,7 @@ export default {
 
   mixins: [confirmDialog],
 
-  data () {
+  data() {
     return {
       isPunching: false,
       currentTime: null
@@ -31,33 +31,27 @@ export default {
   },
 
   methods: {
-    updateCurrentTime () {
+    updateCurrentTime() {
       this.currentTime = this.$moment().format('HH:mm:ss')
     },
 
-    ...mapActions('punch', [
-      'punchIn',
-      'punchOut',
-      'initAttendance'
-    ]),
+    ...mapActions('punch', ['punchIn', 'punchOut', 'initAttendance']),
 
-    ...mapActions('flash', [
-      'setFlashMsg'
-    ]),
+    ...mapActions('flash', ['setFlashMsg']),
 
-    debouncePunchIn () {
+    debouncePunchIn() {
       if (this.isPunching) return
       this.isPunching = true
-      this.punchIn(this.currentUser.id).then((response) => {
+      this.punchIn(this.currentUser.id).then(response => {
         this.isPunching = false
         if (response.data) this.setFlashMsg({ message: this.$t('header.punchInSuccess', { at: response.data.attended_at }) })
       })
     },
 
-    debouncePunchOut (attendance = {}) {
+    debouncePunchOut(attendance = {}) {
       if (this.isPunching) return
       this.isPunching = true
-      this.punchOut(this.currentUser.id).then((response) => {
+      this.punchOut(this.currentUser.id).then(response => {
         this.isPunching = false
         this.isOpenConfirmDialog = false
         this.setFlashMsg({ message: this.$t('header.punchOutSuccess', { at: response.data.left_at }) })
@@ -66,13 +60,10 @@ export default {
   },
 
   computed: {
-    ...mapState('punch', [
-      'isInited',
-      'attendance'
-    ])
+    ...mapState('punch', ['isInited', 'attendance'])
   },
 
-  created () {
+  created() {
     if (!this.isInited) this.initAttendance(window.initialStates().attendance)
     this.updateCurrentTime()
     setInterval(this.updateCurrentTime, 1 * 1000)

@@ -6,7 +6,7 @@
           <router-link to="/dashboard" class="navbar-brand mr-4">
             <img :src="currentCompany.logo_url" :alt="currentCompany.name">
           </router-link>
-          <router-link class="mr-5" to="/dashboard">{{ $t('header.dashboard') }}</router-link>
+          <!--<router-link class="mr-5" to="/dashboard">{{ $t('header.dashboard') }}</router-link>-->
           <router-link class="mr-5" to="/attendances">{{ $t('header.attendances') }}</router-link>
           <router-link class="mr-5" to="/requests">{{ $t('header.requests') }}</router-link>
           <router-link class="mr-5" to="/groups" v-if="$auth('Page', currentUser).canViewGroups()">{{ $t('header.groups') }}</router-link>
@@ -63,32 +63,30 @@ export default {
   },
 
   methods: {
-    logout () {
-      axios.post('/logout', {}, { baseURL: '' }).then(() => { window.location.href = '/' })
+    logout() {
+      axios.post('/logout', {}, { baseURL: '' }).then(() => {
+        window.location.href = '/'
+      })
     },
 
-    toggleDropdown () {
+    toggleDropdown() {
       this.isDropdownActive = !this.isDropdownActive
     },
 
-    toggleLangSelect () {
+    toggleLangSelect() {
       this.isDropdownActive = !this.isDropdownActive
       this.isLangSelectActive = !this.isLangSelectActive
     },
 
-    updateUser (language) {
-      axios.put(`/users/${this.currentUser.id}`, { user: { language: language } })
-           .then(response => {
-             this.$router.go()
-           })
+    updateUser(language) {
+      axios.put(`/users/${this.currentUser.id}`, { user: { language: language } }).then(response => {
+        this.$router.go()
+      })
     }
   },
 
   computed: {
-    ...mapState('initialStates', [
-      'currentCompany',
-      'meta'
-    ])
+    ...mapState('initialStates', ['currentCompany', 'meta'])
   }
 }
 </script>

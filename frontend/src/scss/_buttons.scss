@@ -7,7 +7,7 @@
 
   svg {
     color: $gray-color-dark;
-    margin-right: .2rem;
+    margin-right: 0.2rem;
   }
 
   &:focus {
@@ -20,12 +20,14 @@
     background: $bg-color-light;
     color: $gray-color-dark;
   }
+
   &:active,
   &.active {
     background: $bg-color-light;
     border-color: darken($gray-color, 50%);
     color: $gray-color-dark;
   }
+
   &[disabled],
   &:disabled,
   &.disabled {

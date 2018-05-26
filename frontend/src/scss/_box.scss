@@ -1,6 +1,6 @@
 .box {
-  @include shadow-variant(.05rem);
-  padding: .8rem;
+  @include shadow-variant(0.05rem);
+  padding: 0.8rem;
   background-color: $light-color;
   border-radius: $border-radius;
 
@@ -9,7 +9,7 @@
   }
 
   &-setting {
-    @include shadow-variant(.05rem);
+    @include shadow-variant(0.05rem);
     padding: 1.2rem;
     background-color: $light-color;
     border-radius: $border-radius;
@@ -24,7 +24,7 @@
 
     .box-title {
       cursor: pointer;
-      margin-bottom: .2rem;
+      margin-bottom: 0.2rem;
       line-height: 1;
 
       &:hover {
@@ -33,7 +33,7 @@
     }
 
     .tile-content {
-      padding-left: .6rem;
+      padding-left: 0.6rem;
     }
 
     .group-avatar {
@@ -41,7 +41,7 @@
     }
 
     .group-description {
-      margin-bottom: .2rem;
+      margin-bottom: 0.2rem;
       line-height: 1.2;
     }
 
@@ -67,7 +67,7 @@
     .box-content-img {
       .avatar {
         &:not(:first-child) {
-          margin-left: .2rem;
+          margin-left: 0.2rem;
         }
       }
     }

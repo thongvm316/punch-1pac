@@ -11,24 +11,24 @@
     background-color: $light-color;
     background-image: url('../assets/ico-calendar.svg');
     background-repeat: no-repeat;
-    background-position: calc(100% - .4rem) 50%;
-    background-size: .8rem .8rem;
+    background-position: calc(100% - 0.4rem) 50%;
+    background-size: 0.8rem 0.8rem;
   }
 }
 
 .vdp-datepicker.datepicker .datepicker-input {
-  background: $light-color url('../assets/ico-calendar.svg') calc(100% - .4rem) center / .8rem .8rem no-repeat;
+  background: $light-color url('../assets/ico-calendar.svg') calc(100% - 0.4rem) center / 0.8rem 0.8rem no-repeat;
 }
 
 input[type=search] {
-  background: $light-color url('../assets/ico-search.svg') calc(100% - .4rem) center / .8rem .8rem  no-repeat;
+  background: $light-color url('../assets/ico-search.svg') calc(100% - 0.4rem) center / 0.8rem 0.8rem  no-repeat;
 }
 
 .v-select {
   background-color: $light-color;
   background-image: url('../assets/ico-search.svg');
-  background-position: right .4rem center;
-  background-size: .8rem;
+  background-position: right 0.4rem center;
+  background-size: 0.8rem;
   background-repeat: no-repeat;
 
   &.loading {
@@ -37,7 +37,7 @@ input[type=search] {
 }
 
 .form-select:not([multiple]):not([size]) {
-  background: $light-color url('../assets/ico-down.svg') calc(100% - .4rem) center / .8rem .8rem  no-repeat;
+  background: $light-color url('../assets/ico-down.svg') calc(100% - 0.4rem) center / 0.8rem 0.8rem  no-repeat;
 }
 
 .dropdown.v-select {
@@ -94,6 +94,7 @@ input[type=search] {
 .has-error .form-select,
 .form-select.is-error {
   border-color: $error-color;
+
   &:focus {
     box-shadow: none;
   }

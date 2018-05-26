@@ -67,7 +67,7 @@ import modal from '../mixins/modal'
 import { mapState, mapGetters, mapActions } from 'vuex'
 
 export default {
-  data () {
+  data() {
     return {
       email: '',
       selectedUser: null
@@ -82,30 +82,21 @@ export default {
   },
 
   methods: {
-    ...mapActions('companyUsers', [
-      'deleteUser',
-      'fetchUsers',
-      'deactivateUser',
-      'activateUser'
-    ]),
+    ...mapActions('companyUsers', ['deleteUser', 'fetchUsers', 'deactivateUser', 'activateUser']),
 
-    toggleEditModal (user) {
+    toggleEditModal(user) {
       this.selectedUser = user
       this.isEditModalOpen = !this.isEditModalOpen
     }
   },
 
   computed: {
-    ...mapState('companyUsers', [
-      'users'
-    ]),
+    ...mapState('companyUsers', ['users']),
 
-    ...mapGetters('companyUsers', [
-      'filterByEmail'
-    ])
+    ...mapGetters('companyUsers', ['filterByEmail'])
   },
 
-  created () {
+  created() {
     this.fetchUsers({ include_deactivated: true })
   }
 }

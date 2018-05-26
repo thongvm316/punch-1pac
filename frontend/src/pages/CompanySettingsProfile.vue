@@ -63,7 +63,7 @@ import SettingLayout from '../layouts/Setting.vue'
 import { mapState, mapActions } from 'vuex'
 
 export default {
-  data () {
+  data() {
     return {
       params: {
         logo: '',
@@ -85,38 +85,30 @@ export default {
   },
 
   computed: {
-    ...mapState('initialStates', [
-      'meta',
-      'currentCompany',
-      'companyErrors'
-    ])
+    ...mapState('initialStates', ['meta', 'currentCompany', 'companyErrors'])
   },
 
   methods: {
-    ...mapActions('flash', [
-      'setFlashMsg'
-    ]),
+    ...mapActions('flash', ['setFlashMsg']),
 
-    ...mapActions('initialStates', [
-      'clearCompanyErrors',
-      'updateCompany'
-    ]),
+    ...mapActions('initialStates', ['clearCompanyErrors', 'updateCompany']),
 
-    setLogoFile (e) {
+    setLogoFile(e) {
       const files = e.target.files || e.dataTransfer.files
       if (!files.length) return
       this.params.logo = files[0]
     },
 
-    localUpdateCompany () {
-      this.updateCompany(this.params)
-          .then(response => this.setFlashMsg({ message: this.$t('messages.company.updateSuccess') }))
+    localUpdateCompany() {
+      this.updateCompany(this.params).then(response => this.setFlashMsg({ message: this.$t('messages.company.updateSuccess') }))
     }
   },
 
-  created () {
+  created() {
     this.clearCompanyErrors()
-    Object.keys(this.params).forEach(key => { if (key !== 'logo') this.params[key] = this.currentCompany[key] })
+    Object.keys(this.params).forEach(key => {
+      if (key !== 'logo') this.params[key] = this.currentCompany[key]
+    })
   }
 }
 </script>

@@ -25,19 +25,19 @@ export default {
 
   props: ['title', 'modalOpen', 'deleteObject', 'objectId'],
 
-  data () {
+  data() {
     return {
       open: this.modalOpen
     }
   },
 
   methods: {
-    toggle () {
+    toggle() {
       this.open = !this.open
       this.$emit('update:modalOpen', this.open)
     },
 
-    confirm () {
+    confirm() {
       this.deleteObject(this.objectId).then(() => {
         this.open = false
         this.$emit('update:modalOpen', this.open)
@@ -46,7 +46,7 @@ export default {
   },
 
   watch: {
-    modalOpen () {
+    modalOpen() {
       this.open = this.modalOpen
     }
   }

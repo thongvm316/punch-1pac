@@ -45,7 +45,7 @@ import SettingLayout from '../layouts/Setting.vue'
 import { mapState, mapActions } from 'vuex'
 
 export default {
-  data () {
+  data() {
     return {
       isInfoOpen: false
     }
@@ -54,22 +54,14 @@ export default {
     SettingLayout
   },
   methods: {
-    ...mapActions('userSessions', [
-      'fetchSessions',
-      'deleteSession'
-    ])
+    ...mapActions('userSessions', ['fetchSessions', 'deleteSession'])
   },
   computed: {
-    ...mapState('initialStates', [
-      'currentUser'
-    ]),
+    ...mapState('initialStates', ['currentUser']),
 
-    ...mapState('userSessions', [
-      'sessions',
-      'currentSession'
-    ])
+    ...mapState('userSessions', ['sessions', 'currentSession'])
   },
-  created () {
+  created() {
     this.fetchSessions()
   }
 }

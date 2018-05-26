@@ -105,16 +105,27 @@ export default {
 
   mixins: [modal, flatpickrLocale],
 
-  data () {
+  data() {
     return {
-      dateRange: [this.$moment().startOf('month').format('YYYY-MM-DD'), this.$moment().endOf('month').format('YYYY-MM-DD')],
+      dateRange: [
+        this.$moment()
+          .startOf('month')
+          .format('YYYY-MM-DD'),
+        this.$moment()
+          .endOf('month')
+          .format('YYYY-MM-DD')
+      ],
       params: {
         self: null,
         status: this.$route.query.status || '',
         kind: '',
         group_id: this.$route.params.id,
-        from_date: this.$moment().startOf('month').format('YYYY-MM-DD'),
-        to_date: this.$moment().endOf('month').format('YYYY-MM-DD')
+        from_date: this.$moment()
+          .startOf('month')
+          .format('YYYY-MM-DD'),
+        to_date: this.$moment()
+          .endOf('month')
+          .format('YYYY-MM-DD')
       },
       requestParams: {
         admin: null,
@@ -132,23 +143,15 @@ export default {
   },
 
   computed: {
-    ...mapState('initialStates', [
-      'meta'
-    ]),
+    ...mapState('initialStates', ['meta']),
 
-    ...mapState('groupRequests', [
-      'pager',
-      'requests',
-      'errors'
-    ]),
+    ...mapState('groupRequests', ['pager', 'requests', 'errors']),
 
-    ...mapState('group', [
-      'group'
-    ])
+    ...mapState('group', ['group'])
   },
 
   methods: {
-    getStatusClass (status) {
+    getStatusClass(status) {
       switch (status) {
         case 'pending':
           return 'label-warning'
@@ -159,7 +162,7 @@ export default {
       }
     },
 
-    toggleEditModal (requestId) {
+    toggleEditModal(requestId) {
       this.clearRejectRequestErrors()
       this.requestParams.requestId = requestId
       this.requestParams.admin = this.currentUser
@@ -167,32 +170,25 @@ export default {
       this.isEditModalOpen = !this.isEditModalOpen
     },
 
-    ...mapActions('groupRequests', [
-      'getRequests',
-      'approveRequest',
-      'rejectRequest',
-      'clearRejectRequestErrors'
-    ]),
+    ...mapActions('groupRequests', ['getRequests', 'approveRequest', 'rejectRequest', 'clearRejectRequestErrors']),
 
-    ...mapActions('group', [
-      'getGroup'
-    ])
+    ...mapActions('group', ['getGroup'])
   },
 
-  created () {
+  created() {
     if (!this.group) this.getGroup(this.$route.params.id)
     this.getRequests(this.params)
   },
 
   watch: {
     params: {
-      handler: function () {
+      handler: function() {
         this.getRequests(Object.assign({ page: 1 }, this.params))
       },
       deep: true
     },
 
-    dateRange: function () {
+    dateRange: function() {
       const dates = this.dateRange.split(' ')
       this.params.from_date = dates[0]
       this.params.to_date = dates[2]

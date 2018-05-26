@@ -7,33 +7,39 @@ const state = {
 }
 
 const mutations = {
-  [types.READ_ANNOUNCEMENT] (state, id) {
+  [types.READ_ANNOUNCEMENT](state, id) {
     const index = state.headerAnnouncements.findIndex(announcement => announcement.id === id)
     state.headerAnnouncements.splice(index, 1)
   },
 
-  [types.RECEIVE_HEADER_ANNOUNCEMENTS] (state, payload) {
+  [types.RECEIVE_HEADER_ANNOUNCEMENTS](state, payload) {
     state.headerAnnouncements = payload.announcements
   }
 }
 
 const actions = {
-  readAnnouncement ({ commit }, id) {
-    return axios.post(`/announcements/${id}/read`)
-                .then(response => {
-                  commit(types.READ_ANNOUNCEMENT, id)
-                  return response
-                })
-                .catch(error => { throw error })
+  readAnnouncement({ commit }, id) {
+    return axios
+      .post(`/announcements/${id}/read`)
+      .then(response => {
+        commit(types.READ_ANNOUNCEMENT, id)
+        return response
+      })
+      .catch(error => {
+        throw error
+      })
   },
 
-  getHeaderAnnouncements ({ commit }) {
-    return axios.get('/announcements', { params: { per_page: 200, read_status: 'unread' } })
-                .then(response => {
-                  commit(types.RECEIVE_HEADER_ANNOUNCEMENTS, response.data)
-                  return response
-                })
-                .catch(error => { throw error })
+  getHeaderAnnouncements({ commit }) {
+    return axios
+      .get('/announcements', { params: { per_page: 200, read_status: 'unread' } })
+      .then(response => {
+        commit(types.RECEIVE_HEADER_ANNOUNCEMENTS, response.data)
+        return response
+      })
+      .catch(error => {
+        throw error
+      })
   }
 }
 

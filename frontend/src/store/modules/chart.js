@@ -6,19 +6,22 @@ const state = {
 }
 
 const mutations = {
-  [types.FETCH_CHART_DATA] (state, data) {
+  [types.FETCH_CHART_DATA](state, data) {
     state.chartData = data
   }
 }
 
 const actions = {
-  getChart ({ commit }, month) {
-    return axios.get('/attendances/chart', { params: { date: month } })
-                .then(response => {
-                  commit(types.FETCH_CHART_DATA, response.data)
-                  return response
-                })
-                .catch(error => { throw error })
+  getChart({ commit }, month) {
+    return axios
+      .get('/attendances/chart', { params: { date: month } })
+      .then(response => {
+        commit(types.FETCH_CHART_DATA, response.data)
+        return response
+      })
+      .catch(error => {
+        throw error
+      })
   }
 }
 

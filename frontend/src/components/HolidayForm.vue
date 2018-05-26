@@ -39,71 +39,65 @@
 </template>
 
 <script>
-  import flatPickr from 'vue-flatpickr-component'
-  import flatpickrLocale from '../mixins/flatpickr-locale'
-  import { mapState, mapActions } from 'vuex'
+import flatPickr from 'vue-flatpickr-component'
+import flatpickrLocale from '../mixins/flatpickr-locale'
+import { mapState, mapActions } from 'vuex'
 
-  export default {
-    name: 'holiday-form',
+export default {
+  name: 'holiday-form',
 
-    mixins: [flatpickrLocale],
+  mixins: [flatpickrLocale],
 
-    components: {
-      flatPickr
-    },
+  components: {
+    flatPickr
+  },
 
-    props: ['targetHoliday'],
+  props: ['targetHoliday'],
 
-    data () {
-      return {
-        params: {
-          name: '',
-          started_at: '',
-          ended_at: ''
-        }
-      }
-    },
-
-    methods: {
-      ...mapActions('flash', [
-        'setFlashMsg'
-      ]),
-
-      ...mapActions('companyHolidays', [
-        'createHoliday',
-        'updateHoliday',
-        'clearHolidayErrors'
-      ]),
-
-      localAddHoliday () {
-        this.createHoliday(this.params)
-            .then(response => {
-              Object.keys(this.params).forEach(key => { this.params[key] = '' })
-              this.setFlashMsg({ message: this.$t('messages.holiday.createSuccess') })
-              this.$emit('afterModify')
-            })
-      },
-
-      localEditHoliday () {
-        this.updateHoliday({ holidayID: this.targetHoliday.id, updateParams: this.params })
-            .then(response => {
-              this.setFlashMsg({ message: this.$t('messages.holiday.updateSuccess') })
-              this.$emit('afterModify')
-            })
-      }
-    },
-
-    computed: {
-      ...mapState('companyHolidays', [
-        'errors'
-      ])
-    },
-
-    created () {
-      this.clearHolidayErrors()
-      if (this.targetHoliday) {
-        Object.keys(this.params).forEach(k => { this.params[k] = this.targetHoliday[k] })
+  data() {
+    return {
+      params: {
+        name: '',
+        started_at: '',
+        ended_at: ''
       }
     }
+  },
+
+  methods: {
+    ...mapActions('flash', ['setFlashMsg']),
+
+    ...mapActions('companyHolidays', ['createHoliday', 'updateHoliday', 'clearHolidayErrors']),
+
+    localAddHoliday() {
+      this.createHoliday(this.params).then(response => {
+        Object.keys(this.params).forEach(key => {
+          this.params[key] = ''
+        })
+        this.setFlashMsg({ message: this.$t('messages.holiday.createSuccess') })
+        this.$emit('afterModify')
+      })
+    },
+
+    localEditHoliday() {
+      this.updateHoliday({ holidayID: this.targetHoliday.id, updateParams: this.params }).then(response => {
+        this.setFlashMsg({ message: this.$t('messages.holiday.updateSuccess') })
+        this.$emit('afterModify')
+      })
+    }
+  },
+
+  computed: {
+    ...mapState('companyHolidays', ['errors'])
+  },
+
+  created() {
+    this.clearHolidayErrors()
+    if (this.targetHoliday) {
+      Object.keys(this.params).forEach(k => {
+        this.params[k] = this.targetHoliday[k]
+      })
+    }
   }
+}
 </script>

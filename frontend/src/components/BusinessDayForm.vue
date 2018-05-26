@@ -48,68 +48,58 @@
 </template>
 
 <script>
-  import { mapState, mapActions } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
-  export default {
-    name: 'business-day-form',
+export default {
+  name: 'business-day-form',
 
-    props: ['targetBusinessDay'],
+  props: ['targetBusinessDay'],
 
-    data () {
-      return {
-        params: {
-          weekday: '',
-          morning_started_at: '',
-          morning_ended_at: '',
-          afternoon_started_at: '',
-          afternoon_ended_at: ''
-        }
-      }
-    },
-
-    methods: {
-      ...mapActions('flash', [
-        'setFlashMsg'
-      ]),
-
-      ...mapActions('companyBusinessDays', [
-        'addBusinessDay',
-        'updateBusinessDay',
-        'clearBusinessDayErrors'
-      ]),
-
-      localAddBusinessDay () {
-        this.addBusinessDay(this.params)
-            .then(response => {
-              this.setFlashMsg({ message: this.$t('messages.businessDay.createSuccess') })
-              this.$emit('afterModify')
-            })
-      },
-
-      localEditBusinessDay () {
-        this.updateBusinessDay({ businessDayId: this.targetBusinessDay.id, updateParams: this.params })
-            .then(response => {
-              this.setFlashMsg({ message: this.$t('messages.businessDay.updateSuccess') })
-              this.$emit('afterModify')
-            })
-      }
-    },
-
-    computed: {
-      ...mapState('initialStates', [
-        'meta'
-      ]),
-
-      ...mapState('companyBusinessDays', [
-        'errors'
-      ])
-    },
-
-    created () {
-      this.clearBusinessDayErrors()
-      if (this.targetBusinessDay) {
-        Object.keys(this.params).forEach(key => { this.params[key] = this.targetBusinessDay[key] })
+  data() {
+    return {
+      params: {
+        weekday: '',
+        morning_started_at: '',
+        morning_ended_at: '',
+        afternoon_started_at: '',
+        afternoon_ended_at: ''
       }
     }
+  },
+
+  methods: {
+    ...mapActions('flash', ['setFlashMsg']),
+
+    ...mapActions('companyBusinessDays', ['addBusinessDay', 'updateBusinessDay', 'clearBusinessDayErrors']),
+
+    localAddBusinessDay() {
+      this.addBusinessDay(this.params).then(response => {
+        this.setFlashMsg({ message: this.$t('messages.businessDay.createSuccess') })
+        this.$emit('afterModify')
+      })
+    },
+
+    localEditBusinessDay() {
+      this.updateBusinessDay({ businessDayId: this.targetBusinessDay.id, updateParams: this.params }).then(response => {
+        this.setFlashMsg({ message: this.$t('messages.businessDay.updateSuccess') })
+        this.$emit('afterModify')
+      })
+    }
+  },
+
+  computed: {
+    ...mapState('initialStates', ['meta']),
+
+    ...mapState('companyBusinessDays', ['errors'])
+  },
+
+  created() {
+    this.clearBusinessDayErrors()
+    if (this.targetBusinessDay) {
+      Object.keys(this.params).forEach(key => {
+        this.params[key] = this.targetBusinessDay[key]
+      })
+    }
   }
+}
 </script>

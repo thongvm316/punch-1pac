@@ -59,14 +59,9 @@ import { mapState, mapActions } from 'vuex'
 
 export default {
   methods: {
-    ...mapActions('activities', [
-      'getActivities',
-      'getMoreActivities'
-    ]),
+    ...mapActions('activities', ['getActivities', 'getMoreActivities']),
 
-    ...mapActions('groupPendingRequests', [
-      'getGroupPendingRequests'
-    ])
+    ...mapActions('groupPendingRequests', ['getGroupPendingRequests'])
   },
 
   components: {
@@ -75,20 +70,15 @@ export default {
     StatusCards
   },
 
-  created () {
+  created() {
     this.getActivities()
     if (this.$auth('Page', this.currentUser).canViewPendingBlock()) this.getGroupPendingRequests()
   },
 
   computed: {
-    ...mapState('activities', [
-      'pager',
-      'activities'
-    ]),
+    ...mapState('activities', ['pager', 'activities']),
 
-    ...mapState('groupPendingRequests', [
-      'pendingRequests'
-    ])
+    ...mapState('groupPendingRequests', ['pendingRequests'])
   }
 }
 </script>

@@ -1,7 +1,7 @@
 import Abstract from './abstract'
 
 export default class User extends Abstract {
-  canEdit () {
+  canEdit() {
     if (this.currentUser.owner) return true
     if (this.currentUser.role === 'superadmin' && !this.record.owner) return true
     if (this.currentUser.role === 'admin' && this.record.role === 'member') return true
@@ -9,7 +9,7 @@ export default class User extends Abstract {
     return false
   }
 
-  canDelete () {
+  canDelete() {
     if (this.record.owner) return false
     if (this.currentUser.owner) return true
     if (this.currentUser.role === 'superadmin') return true
@@ -17,7 +17,7 @@ export default class User extends Abstract {
     return false
   }
 
-  canActivate () {
+  canActivate() {
     if (this.record.owner) return false
     if (this.currentUser.owner) return true
     if (this.currentUser.role === 'superadmin') return true
@@ -25,7 +25,7 @@ export default class User extends Abstract {
     return false
   }
 
-  canDeactivate () {
+  canDeactivate() {
     if (this.record.owner) return false
     if (this.currentUser.owner) return true
     if (this.currentUser.role === 'superadmin') return true

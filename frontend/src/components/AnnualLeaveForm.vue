@@ -33,7 +33,7 @@ import { mapActions } from 'vuex'
 export default {
   name: 'annual-leave',
 
-  data () {
+  data() {
     return {
       errors: {},
       params: {
@@ -50,38 +50,40 @@ export default {
   },
 
   methods: {
-    ...mapActions('flash', [
-      'setFlashMsg'
-    ]),
+    ...mapActions('flash', ['setFlashMsg']),
 
-    create () {
-      axios.post('/requests', Object.assign(this.params, { kind: 'annual_leave' }))
-           .then(response => {
-             this.setFlashMsg({ message: this.$t('annualLeave.createSuccessMsg') })
-             this.$emit('finishRequest')
-           })
-           .catch(error => {
-             if (error.response && error.response.status === 422) this.errors = error.response.data.errors
-           })
+    create() {
+      axios
+        .post('/requests', Object.assign(this.params, { kind: 'annual_leave' }))
+        .then(response => {
+          this.setFlashMsg({ message: this.$t('annualLeave.createSuccessMsg') })
+          this.$emit('finishRequest')
+        })
+        .catch(error => {
+          if (error.response && error.response.status === 422) this.errors = error.response.data.errors
+        })
     },
 
-    update () {
-      axios.put(`/requests/${this.request.id}`, Object.assign(this.params, { kind: 'annual_leave' }))
-           .then(response => {
-             this.setFlashMsg({ message: this.$t('annualLeave.updateSuccessMsg') })
-             this.$emit('finishRequest')
-           })
-           .catch(error => {
-             if (error.response && error.response.status === 422) this.errors = error.response.data.errors
-           })
+    update() {
+      axios
+        .put(`/requests/${this.request.id}`, Object.assign(this.params, { kind: 'annual_leave' }))
+        .then(response => {
+          this.setFlashMsg({ message: this.$t('annualLeave.updateSuccessMsg') })
+          this.$emit('finishRequest')
+        })
+        .catch(error => {
+          if (error.response && error.response.status === 422) this.errors = error.response.data.errors
+        })
     }
   },
 
   mixins: [flatpickrLocale],
 
-  created () {
+  created() {
     if (this.request) {
-      Object.keys(this.params).forEach(key => { this.params[key] = this.request[key] })
+      Object.keys(this.params).forEach(key => {
+        this.params[key] = this.request[key]
+      })
     }
 
     if (this.annualDay) {

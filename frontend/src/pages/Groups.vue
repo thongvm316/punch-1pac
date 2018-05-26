@@ -47,18 +47,18 @@ import { mapState, mapGetters, mapActions } from 'vuex'
 export default {
   mixins: [modal],
 
-  data () {
+  data() {
     return {
       name: ''
     }
   },
 
   filters: {
-    filterUserNum (userNum) {
+    filterUserNum(userNum) {
       return userNum > 5 ? `+ ${userNum - 5}` : ''
     },
 
-    limitedLengthDescription (description) {
+    limitedLengthDescription(description) {
       return description.length > 80 ? `${description.trim().substring(0, 80)}...` : description
     }
   },
@@ -69,32 +69,25 @@ export default {
   },
 
   computed: {
-    ...mapState('groups', [
-      'groups'
-    ]),
+    ...mapState('groups', ['groups']),
 
-    ...mapGetters('groups', [
-      'filterGroups'
-    ])
+    ...mapGetters('groups', ['filterGroups'])
   },
 
   methods: {
-    ...mapActions('groups', [
-      'clearGroupsErrors',
-      'getGroups'
-    ]),
+    ...mapActions('groups', ['clearGroupsErrors', 'getGroups']),
 
-    toggleAddModal () {
+    toggleAddModal() {
       this.clearGroupsErrors()
       this.isAddModalOpen = !this.isAddModalOpen
     },
 
-    getGroupAdmins (group) {
+    getGroupAdmins(group) {
       return group.users.filter(user => user.role === 'admin' || user.role === 'superadmin')
     }
   },
 
-  created () {
+  created() {
     this.getGroups()
   }
 }

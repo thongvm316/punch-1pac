@@ -32,7 +32,7 @@ import { mapState } from 'vuex'
 export default {
   name: 'calendar-date',
 
-  data () {
+  data() {
     return {
       localAttendance: this.calendarAttendance
     }
@@ -41,20 +41,20 @@ export default {
   props: ['calendarAttendance', 'today'],
 
   computed: {
-    ...mapState('punch', [
-      'attendance'
-    ]),
+    ...mapState('punch', ['attendance']),
 
-    ...mapState('initialStates', [
-      'currentCompany',
-      'meta'
-    ]),
+    ...mapState('initialStates', ['currentCompany', 'meta']),
 
-    isWeekend () {
-      return this.currentCompany.breakdays.includes(this.$moment(this.localAttendance.day).locale('en').format('dddd').toLowerCase())
+    isWeekend() {
+      return this.currentCompany.breakdays.includes(
+        this.$moment(this.localAttendance.day)
+          .locale('en')
+          .format('dddd')
+          .toLowerCase()
+      )
     },
 
-    tooltip () {
+    tooltip() {
       if (this.localAttendance.holiday) {
         return this.localAttendance.holiday.name
       } else {
@@ -68,7 +68,7 @@ export default {
 
   watch: {
     attendance: {
-      handler: function (newAttendance) {
+      handler: function(newAttendance) {
         if (newAttendance.day === this.localAttendance.day) this.localAttendance = newAttendance
       },
       deep: true

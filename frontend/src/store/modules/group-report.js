@@ -7,20 +7,23 @@ const state = {
 }
 
 const mutations = {
-  [types.FETCH_GROUP_REPORT] (state, payload) {
+  [types.FETCH_GROUP_REPORT](state, payload) {
     state.results = payload.results
     state.reportMeta = payload.meta
   }
 }
 
 const actions = {
-  getReport ({ commit }, params) {
-    return axios.get(`/groups/${params.group_id}/report`, { params: { date: params.date, date_type: params.type } })
-                .then(response => {
-                  commit(types.FETCH_GROUP_REPORT, response.data)
-                  return response
-                })
-                .catch(error => { throw error })
+  getReport({ commit }, params) {
+    return axios
+      .get(`/groups/${params.group_id}/report`, { params: { date: params.date, date_type: params.type } })
+      .then(response => {
+        commit(types.FETCH_GROUP_REPORT, response.data)
+        return response
+      })
+      .catch(error => {
+        throw error
+      })
   }
 }
 

@@ -15,21 +15,15 @@ export default {
   name: 'flash',
 
   computed: {
-    ...mapState('flash', [
-      'message',
-      'type',
-      'timeout'
-    ])
+    ...mapState('flash', ['message', 'type', 'timeout'])
   },
 
   methods: {
-    ...mapActions('flash', [
-      'setFlashMsg'
-    ])
+    ...mapActions('flash', ['setFlashMsg'])
   },
 
   watch: {
-    message: function (newMsg) {
+    message: function(newMsg) {
       if (newMsg) setTimeout(() => { this.setFlashMsg({ message: null }) }, this.timeout)
     }
   }

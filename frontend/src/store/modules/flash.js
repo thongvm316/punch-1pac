@@ -7,7 +7,7 @@ const state = {
 }
 
 const mutations = {
-  [types.SET_FLASH_MESSAGE] (state, flash) {
+  [types.SET_FLASH_MESSAGE](state, flash) {
     state.message = flash.message
     state.type = flash.type || 'success'
     state.timeout = flash.timeout || 2000
@@ -15,7 +15,7 @@ const mutations = {
 }
 
 const actions = {
-  setFlashMsg ({ commit }, flash) {
+  setFlashMsg({ commit }, flash) {
     commit(types.SET_FLASH_MESSAGE, flash)
   }
 }

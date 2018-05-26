@@ -6,8 +6,8 @@
     top: 48px;
     right: -72px;
     width: 400px;
-    font-size: .6rem;
-    animation: slide-down .15s ease 1;
+    font-size: 0.6rem;
+    animation: slide-down 0.15s ease 1;
   }
 
   &.triangle-top {
@@ -21,7 +21,7 @@
   }
 
   .notification-header {
-    padding: .4rem .8rem;
+    padding: 0.4rem 0.8rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -50,7 +50,7 @@
 
   li {
     margin: 0;
-    padding: .4rem .8rem;
+    padding: 0.4rem 0.8rem;
     border-bottom: 1px solid $border-color;
     cursor: pointer;
 
@@ -70,7 +70,7 @@
   }
 
   .no-notification-msg {
-    padding: .8rem;
+    padding: 0.8rem;
     border-bottom: 1px solid $border-color;
   }
 }

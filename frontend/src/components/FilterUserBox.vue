@@ -25,7 +25,7 @@ import vSelect from 'vue-select'
 import debounce from 'lodash.debounce'
 
 export default {
-  data () {
+  data() {
     return {
       optionUsers: [],
       selectedUser: null
@@ -39,27 +39,30 @@ export default {
   },
 
   methods: {
-    filterUsers: debounce(function (search, loading) {
+    filterUsers: debounce(function(search, loading) {
       loading(true)
       this.search(search, loading)
     }, 350),
 
-    search (search, loading) {
-      axios.get('/users', { params: Object.assign({ name_or_email: search }, this.queryParams) })
-            .then(response => {
-              loading(false)
-              this.optionUsers = response.data.users
-            })
-            .catch(error => { throw error })
+    search(search, loading) {
+      axios
+        .get('/users', { params: Object.assign({ name_or_email: search }, this.queryParams) })
+        .then(response => {
+          loading(false)
+          this.optionUsers = response.data.users
+        })
+        .catch(error => {
+          throw error
+        })
     },
 
-    updateSelectedUser () {
+    updateSelectedUser() {
       this.$emit('update:user', this.selectedUser)
     }
   },
 
   watch: {
-    user: function () {
+    user: function() {
       this.optionUsers = []
       this.selectedUser = this.user
     }

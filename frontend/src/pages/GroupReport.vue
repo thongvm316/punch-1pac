@@ -50,7 +50,7 @@ import { mapState, mapActions } from 'vuex'
 import axios from 'axios'
 
 export default {
-  data () {
+  data() {
     return {
       selectedUser: null,
       dateData: {
@@ -70,24 +70,15 @@ export default {
   },
 
   computed: {
-    ...mapState('groupAttendances', [
-      'usersInGroup'
-    ]),
+    ...mapState('groupAttendances', ['usersInGroup']),
 
-    ...mapState('group', [
-      'group'
-    ]),
+    ...mapState('group', ['group']),
 
-    ...mapState('initialStates', [
-      'meta'
-    ]),
+    ...mapState('initialStates', ['meta']),
 
-    ...mapState('groupReport', [
-      'results',
-      'reportMeta'
-    ]),
+    ...mapState('groupReport', ['results', 'reportMeta']),
 
-    tmpResults () {
+    tmpResults() {
       let results = this.results
 
       if (this.sortKey) {
@@ -116,46 +107,45 @@ export default {
   },
 
   methods: {
-    ...mapActions('groupAttendances', [
-      'getUsersInGroup'
-    ]),
+    ...mapActions('groupAttendances', ['getUsersInGroup']),
 
-    ...mapActions('group', [
-      'getGroup'
-    ]),
+    ...mapActions('group', ['getGroup']),
 
-    ...mapActions('groupReport', [
-      'getReport'
-    ]),
+    ...mapActions('groupReport', ['getReport']),
 
-    sortBy (key) {
+    sortBy(key) {
       this.sortKey = key
       this.sortOrders = this.sortOrders === 'asc' ? 'desc' : 'asc'
     },
 
-    exportCsvFile () {
-      axios.get(`/groups/${this.$route.params.id}/report.csv`, {
-        headers: { 'Accept': 'application/csv' },
-        params: { date: this.dateData.date, date_type: this.dateData.type },
-        responseType: 'blob'
-      }).then(response => {
-        const downloadLink = document.createElement('a')
-        downloadLink.href = window.URL.createObjectURL(new Blob([response.data]))
-        downloadLink.setAttribute('download', 'report.csv')
-        document.body.appendChild(downloadLink)
-        downloadLink.click()
-      }).catch(error => { throw error })
+    exportCsvFile() {
+      axios
+        .get(`/groups/${this.$route.params.id}/report.csv`, {
+          headers: { Accept: 'application/csv' },
+          params: { date: this.dateData.date, date_type: this.dateData.type },
+          responseType: 'blob'
+        })
+        .then(response => {
+          const downloadLink = document.createElement('a')
+          downloadLink.href = window.URL.createObjectURL(new Blob([response.data]))
+          downloadLink.setAttribute('download', 'report.csv')
+          document.body.appendChild(downloadLink)
+          downloadLink.click()
+        })
+        .catch(error => {
+          throw error
+        })
     }
   },
 
-  created () {
+  created() {
     this.getReport({ group_id: this.$route.params.id, ...this.dateData })
     if (!this.group) this.getGroup(this.$route.params.id)
   },
 
   watch: {
     dateData: {
-      handler: function () {
+      handler: function() {
         this.getReport({ group_id: this.$route.params.id, ...this.dateData })
       },
       deep: true

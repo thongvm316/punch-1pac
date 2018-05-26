@@ -21,7 +21,7 @@ export default {
 
   props: ['title', 'modalOpen'],
 
-  data () {
+  data() {
     return {
       open: this.modalOpen,
       titleModal: this.title
@@ -29,18 +29,18 @@ export default {
   },
 
   methods: {
-    toggle () {
+    toggle() {
       this.open = !this.open
       this.$emit('update:modalOpen', this.open)
     }
   },
 
   watch: {
-    modalOpen () {
+    modalOpen() {
       this.open = this.modalOpen
     },
 
-    title () {
+    title() {
       this.titleModal = this.title
     }
   }
