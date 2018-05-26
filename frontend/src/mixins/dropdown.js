@@ -1,5 +1,5 @@
 export default {
-  data () {
+  data() {
     return {
       isDropdownActive: false,
       isLangSelectActive: false
@@ -7,21 +7,21 @@ export default {
   },
 
   methods: {
-    closeDropdown (e) {
+    closeDropdown(e) {
       const el = this.$refs.dropdownMenu
       const target = e.target
-      if ((el !== target) && (!el.contains(target))) {
+      if (el !== target && !el.contains(target)) {
         this.isDropdownActive = false
         this.isLangSelectActive = false
       }
     }
   },
 
-  created () {
+  created() {
     document.addEventListener('click', this.closeDropdown)
   },
 
-  destroyed () {
+  destroyed() {
     document.removeEventListener('click', this.closeDropdown)
   }
 }

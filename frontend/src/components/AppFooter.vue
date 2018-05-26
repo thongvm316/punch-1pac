@@ -23,9 +23,7 @@ export default {
   name: 'app-footer',
 
   computed: {
-    ...mapState('initialStates', [
-      'meta'
-    ])
+    ...mapState('initialStates', ['meta'])
   }
 }
 </script>

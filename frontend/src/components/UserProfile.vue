@@ -52,7 +52,7 @@ import axios from 'axios'
 import 'formdata-polyfill'
 
 export default {
-  data () {
+  data() {
     return {
       params: {
         avatar: '',
@@ -69,50 +69,49 @@ export default {
   props: ['targetUser', 'self'],
 
   computed: {
-    ...mapState('initialStates', [
-      'meta'
-    ])
+    ...mapState('initialStates', ['meta'])
   },
 
   methods: {
-    ...mapActions('flash', [
-      'setFlashMsg'
-    ]),
+    ...mapActions('flash', ['setFlashMsg']),
 
-    ...mapMutations('initialStates', [
-      types.INITIAL_STATES_UPDATE_USER
-    ]),
+    ...mapMutations('initialStates', [types.INITIAL_STATES_UPDATE_USER]),
 
-    ...mapMutations('companyUsers', [
-      types.UPDATE_USER
-    ]),
+    ...mapMutations('companyUsers', [types.UPDATE_USER]),
 
-    updateUser () {
+    updateUser() {
       let formData = new FormData()
       Object.keys(this.params).forEach(key => formData.set(`user[${key}]`, this.params[key] || ''))
 
-      axios.put(`/users/${this.targetUser.id}`, formData, { headers: { 'Content-Type': 'multipart/form-data' } })
-           .then(response => {
-             this.self ? this[types.INITIAL_STATES_UPDATE_USER](response.data) : this[types.UPDATE_USER](response.data)
-             this.setFlashMsg({ message: this.$t('messages.user.updateProfileSuccess') })
-           })
-           .catch(error => { if (error.response && error.response.status === 422) this.errors = error.response.data })
+      axios
+        .put(`/users/${this.targetUser.id}`, formData, { headers: { 'Content-Type': 'multipart/form-data' } })
+        .then(response => {
+          this.self ? this[types.INITIAL_STATES_UPDATE_USER](response.data) : this[types.UPDATE_USER](response.data)
+          this.setFlashMsg({ message: this.$t('messages.user.updateProfileSuccess') })
+        })
+        .catch(error => {
+          if (error.response && error.response.status === 422) this.errors = error.response.data
+        })
     },
 
-    setAvatarFile (e) {
+    setAvatarFile(e) {
       const files = e.target.files || e.dataTransfer.files
       if (!files.length) return
       this.params.avatar = files[0]
     }
   },
 
-  created () {
-    Object.keys(this.params).forEach(key => { this.params[key] = this.targetUser[key] })
+  created() {
+    Object.keys(this.params).forEach(key => {
+      this.params[key] = this.targetUser[key]
+    })
   },
 
   watch: {
-    targetUser: function () {
-      Object.keys(this.params).forEach(key => { this.params[key] = this.targetUser[key] })
+    targetUser: function() {
+      Object.keys(this.params).forEach(key => {
+        this.params[key] = this.targetUser[key]
+      })
     }
   }
 }

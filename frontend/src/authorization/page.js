@@ -1,15 +1,15 @@
 import Abstract from './abstract'
 
 export default class Page extends Abstract {
-  canViewGroups () {
+  canViewGroups() {
     return this.currentUser.role === 'superadmin' || this.currentUser.role === 'admin'
   }
 
-  canViewCompanySettings () {
+  canViewCompanySettings() {
     return this.canViewGroups()
   }
 
-  canViewPendingBlock () {
+  canViewPendingBlock() {
     return this.canViewGroups()
   }
 }

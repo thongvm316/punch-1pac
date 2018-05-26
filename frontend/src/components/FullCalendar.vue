@@ -73,7 +73,7 @@ export default {
 
   mixins: [modal],
 
-  data () {
+  data() {
     return {
       attendance: {},
       today: this.$moment(),
@@ -94,50 +94,50 @@ export default {
   },
 
   computed: {
-    year () {
+    year() {
       return this.dateContext.format('YYYY')
     },
 
-    month () {
+    month() {
       return this.dateContext.format('MMMM')
     },
 
-    initialDate () {
+    initialDate() {
       return this.today.get('date')
     },
 
-    initialMonth () {
+    initialMonth() {
       return this.today.format('MMMM')
     },
 
-    initialYear () {
+    initialYear() {
       return this.today.format('YYYY')
     },
 
-    daysInMonth () {
+    daysInMonth() {
       return this.dateContext.daysInMonth()
     },
 
-    daysInNextMonth () {
+    daysInNextMonth() {
       const previousMonth = this.$moment(this.dateContext).add(1, 'month')
       return previousMonth.daysInMonth()
     },
 
-    daysInPreviousMonth () {
+    daysInPreviousMonth() {
       const nextMonth = this.$moment(this.dateContext).subtract(1, 'month')
       return nextMonth.daysInMonth()
     },
 
-    firstDayOfMonth () {
+    firstDayOfMonth() {
       const startDate = this.dateContext.clone().startOf('month')
       return startDate.day()
     },
 
-    currentDate () {
+    currentDate() {
       return this.dateContext.get('date')
     },
 
-    lastDaysPreviousMonth () {
+    lastDaysPreviousMonth() {
       const start = this.firstDayOfMonth
       const previousDaysInMonth = this.daysInPreviousMonth
       let previousDays = []
@@ -148,7 +148,7 @@ export default {
       return previousDays
     },
 
-    firstDaysNextMonth () {
+    firstDaysNextMonth() {
       const start = this.firstDayOfMonth
       const daysNow = this.daysInMonth
       const nextDaysInMonth = this.daysInNextMonth
@@ -157,7 +157,7 @@ export default {
       for (let i = 1; i <= nextDaysInMonth; i++) {
         nextDays.push(i)
       }
-      if ((start < 5 || daysNow < 30) || (start === 5 && daysNow === 30)) {
+      if (start < 5 || daysNow < 30 || (start === 5 && daysNow === 30)) {
         daysNextMonth = 35 - daysNow - start
       } else {
         daysNextMonth = 42 - daysNow - start
@@ -166,33 +166,31 @@ export default {
       return nextDays
     },
 
-    ...mapState('initialStates', [
-      'currentCompany'
-    ])
+    ...mapState('initialStates', ['currentCompany'])
   },
 
   methods: {
-    nextMonth () {
+    nextMonth() {
       this.dateContext = this.$moment(this.dateContext).add(1, 'month')
       this.getCalendarAttendances(this.dateContext.locale('en').format('YYYY-MM-DD')).then(response => this.formatAttendances(response.data))
     },
 
-    lastMonth () {
+    lastMonth() {
       this.dateContext = this.$moment(this.dateContext).subtract(1, 'month')
       this.getCalendarAttendances(this.dateContext.locale('en').format('YYYY-MM-DD')).then(response => this.formatAttendances(response.data))
     },
 
-    currentMonth () {
+    currentMonth() {
       this.dateContext = this.$moment(this.today)
       this.getCalendarAttendances(this.dateContext.locale('en').format('YYYY-MM-DD')).then(response => this.formatAttendances(response.data))
     },
 
-    formatAttendances (response) {
+    formatAttendances(response) {
       this.attendances = []
       let attendances = []
       const date = response.attendances[0] ? this.$moment(response.attendances[0].day).locale('en') : this.dateContext
       const userJoinDate = this.$moment(this.currentUser.created_at)
-      const findHolidayByDay = function (currentDay) {
+      const findHolidayByDay = function(currentDay) {
         return response.holidays.find(holiday => {
           return currentDay.isBetween(holiday.started_at, holiday.ended_at, null, '[]')
         })
@@ -235,39 +233,37 @@ export default {
       this.attendances = attendances
     },
 
-    isInDeactivatedTime (currentDay) {
+    isInDeactivatedTime(currentDay) {
       if (currentDay.isBetween(this.currentUser.deactivated_at, this.currentUser.activated_at, null, '[]')) return true
       if (!this.currentUser.activated && currentDay.isSameOrAfter(this.currentUser.deactivated_at, 'day')) return true
       return false
     },
 
-    ...mapActions('calendar', [
-      'getCalendarAttendances'
-    ]),
+    ...mapActions('calendar', ['getCalendarAttendances']),
 
-    toggleConfirmModal (data) {
+    toggleConfirmModal(data) {
       this.selectedRequestKind = ''
       this.titleModal = this.$t('dashboard.request.title')
       this.annualLeaveDay = data.day
       this.attendance = data
 
       if (this.today.isSameOrAfter(data.day)) {
-        data.attended_at === '' ? this.isRequestModalOpen = !this.isRequestModalOpen : this.isEditModalOpen = !this.isEditModalOpen
+        data.attended_at === '' ? (this.isRequestModalOpen = !this.isRequestModalOpen) : (this.isEditModalOpen = !this.isEditModalOpen)
       } else {
         this.isAddModalOpen = !this.isAddModalOpen
       }
     },
 
-    changeTitleConfirmModal () {
+    changeTitleConfirmModal() {
       if (this.selectedRequestKind === '') {
         this.titleModal = this.$t('dashboard.request.title')
       } else {
-        this.selectedRequestKind === 'attendance' ? this.titleModal = this.$t('attendances.modal.addTitle') : this.titleModal = this.$t('annualLeave.title')
+        this.selectedRequestKind === 'attendance' ? (this.titleModal = this.$t('attendances.modal.addTitle')) : (this.titleModal = this.$t('annualLeave.title'))
       }
     }
   },
 
-  created () {
+  created() {
     this.getCalendarAttendances().then(response => this.formatAttendances(response.data))
   }
 }

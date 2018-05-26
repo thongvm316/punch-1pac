@@ -40,7 +40,7 @@ import axios from 'axios'
 import { mapState, mapActions } from 'vuex'
 
 export default {
-  data () {
+  data() {
     return {
       errors: {},
       params: {
@@ -53,9 +53,7 @@ export default {
   },
 
   computed: {
-    ...mapState('initialStates', [
-      'meta'
-    ])
+    ...mapState('initialStates', ['meta'])
   },
 
   components: {
@@ -64,17 +62,16 @@ export default {
   },
 
   methods: {
-    ...mapActions('flash', [
-      'setFlashMsg'
-    ]),
+    ...mapActions('flash', ['setFlashMsg']),
 
-    create (params) {
-      axios.post('/users', { user: params }, { headers: { 'Content-Type': 'application/json' } })
-           .then(response => this.setFlashMsg({ message: this.$t('messages.user.addSuccess') }))
-           .catch(error => {
-             if (error.response && error.response.status === 422) this.errors = error.response.data.errors
-             else throw error
-           })
+    create(params) {
+      axios
+        .post('/users', { user: params }, { headers: { 'Content-Type': 'application/json' } })
+        .then(response => this.setFlashMsg({ message: this.$t('messages.user.addSuccess') }))
+        .catch(error => {
+          if (error.response && error.response.status === 422) this.errors = error.response.data.errors
+          else throw error
+        })
     }
   }
 }

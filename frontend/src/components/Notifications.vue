@@ -80,7 +80,7 @@ export default {
   name: 'notifications',
   mixins: [dropdown, modal, flatpickrLocale],
 
-  data () {
+  data() {
     return {
       notification: '',
       rejectReason: ''
@@ -92,20 +92,13 @@ export default {
   },
 
   computed: {
-    ...mapState('notifications', [
-      'hasIntervalFetchNotifications',
-      'unreadNotificationsCount',
-      'headerNotifications',
-      'pager'
-    ]),
+    ...mapState('notifications', ['hasIntervalFetchNotifications', 'unreadNotificationsCount', 'headerNotifications', 'pager']),
 
-    ...mapGetters('notifications', [
-      'displayNotificationsCount'
-    ])
+    ...mapGetters('notifications', ['displayNotificationsCount'])
   },
 
   methods: {
-    loadMoreOnScroll () {
+    loadMoreOnScroll() {
       let el = this.$refs.notiList
 
       if (el.scrollTop + el.offsetHeight === el.scrollHeight && this.pager.next_page) {
@@ -113,7 +106,7 @@ export default {
       }
     },
 
-    toggleDropdown () {
+    toggleDropdown() {
       let el = this.$refs.notiList
 
       this.isDropdownActive = !this.isDropdownActive
@@ -134,28 +127,23 @@ export default {
       'rejectNotificationRequest'
     ]),
 
-    ...mapMutations('notifications', [
-      SET_INTERVAL_FETCH_NOTIFICATIONS
-    ]),
+    ...mapMutations('notifications', [SET_INTERVAL_FETCH_NOTIFICATIONS]),
 
-    openRequestModal (notification) {
+    openRequestModal(notification) {
       this.isAddModalOpen = !this.isAddModalOpen
       this.notification = notification
     },
 
-    isEditable (notification) {
-      return ['create', 'update'].includes(notification.kind) &&
-             notification.activitable_type === 'Request' &&
-             !['approved', 'rejected'].includes(notification.activitable.status)
+    isEditable(notification) {
+      return ['create', 'update'].includes(notification.kind) && notification.activitable_type === 'Request' && !['approved', 'rejected'].includes(notification.activitable.status)
     }
   },
 
-  created () {
+  created() {
     if (!this.hasIntervalFetchNotifications) {
-      this.getHeaderNotifications()
-          .then(() => {
-            this[SET_INTERVAL_FETCH_NOTIFICATIONS](setInterval(this.getNewHeaderNotifications, 10000))
-          })
+      this.getHeaderNotifications().then(() => {
+        this[SET_INTERVAL_FETCH_NOTIFICATIONS](setInterval(this.getNewHeaderNotifications, 10000))
+      })
     }
   }
 }

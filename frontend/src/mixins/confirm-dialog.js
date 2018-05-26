@@ -1,7 +1,7 @@
 import ConfirmDialog from '../components/ConfirmDialog.vue'
 
 export default {
-  data () {
+  data() {
     return {
       isOpenConfirmDialog: false,
       selectedObject: {}
@@ -13,7 +13,7 @@ export default {
   },
 
   methods: {
-    openConfirmDialog (object = {}) {
+    openConfirmDialog(object = {}) {
       this.selectedObject = object
       this.isOpenConfirmDialog = !this.isOpenConfirmDialog
     }

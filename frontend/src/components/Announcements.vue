@@ -16,15 +16,11 @@ export default {
   name: 'announcements',
 
   computed: {
-    ...mapState('announcements', [
-      'headerAnnouncements'
-    ])
+    ...mapState('announcements', ['headerAnnouncements'])
   },
 
   methods: {
-    ...mapActions('announcements', [
-      'readAnnouncement'
-    ])
+    ...mapActions('announcements', ['readAnnouncement'])
   }
 }
 </script>

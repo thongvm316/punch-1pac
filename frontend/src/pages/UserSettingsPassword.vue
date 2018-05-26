@@ -28,7 +28,7 @@ import SettingLayout from '../layouts/Setting.vue'
 import { mapState, mapActions } from 'vuex'
 
 export default {
-  data () {
+  data() {
     return {
       updateParams: {
         current_password: '',
@@ -39,40 +39,32 @@ export default {
   },
 
   methods: {
-    ...mapActions('userPassword', [
-      'updatePassword',
-      'clearUserPasswordErrors'
-    ]),
+    ...mapActions('userPassword', ['updatePassword', 'clearUserPasswordErrors']),
 
-    ...mapActions('flash', [
-      'setFlashMsg'
-    ]),
+    ...mapActions('flash', ['setFlashMsg']),
 
-    localUpdatePassword () {
-      this.updatePassword(this.updateParams)
-          .then(response => {
-            this.setFlashMsg({ message: this.$t('messages.user.updatePwdSuccess') })
-            this.updateParams = {
-              current_password: '',
-              password: '',
-              password_confirmation: ''
-            }
-            this.clearUserPasswordErrors()
-          })
+    localUpdatePassword() {
+      this.updatePassword(this.updateParams).then(response => {
+        this.setFlashMsg({ message: this.$t('messages.user.updatePwdSuccess') })
+        this.updateParams = {
+          current_password: '',
+          password: '',
+          password_confirmation: ''
+        }
+        this.clearUserPasswordErrors()
+      })
     }
   },
 
   computed: {
-    ...mapState('userPassword', [
-      'errors'
-    ])
+    ...mapState('userPassword', ['errors'])
   },
 
   components: {
     SettingLayout
   },
 
-  created () {
+  created() {
     this.clearUserPasswordErrors()
   }
 }

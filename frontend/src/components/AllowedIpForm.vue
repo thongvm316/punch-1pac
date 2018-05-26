@@ -26,49 +26,41 @@ export default {
 
   props: ['targetIp'],
 
-  data () {
+  data() {
     return {
       params: ''
     }
   },
 
   methods: {
-    ...mapActions('companyAllowedIPs', [
-      'createIP',
-      'updateIP',
-      'clearIPErrors'
-    ]),
+    ...mapActions('companyAllowedIPs', ['createIP', 'updateIP', 'clearIPErrors']),
 
-    ...mapActions('flash', [
-      'setFlashMsg'
-    ]),
+    ...mapActions('flash', ['setFlashMsg']),
 
-    localAddIp () {
-      this.createIP({ ip_address: this.params })
-          .then(response => {
-            this.setFlashMsg({ message: this.$t('messages.ip.createSuccess') })
-            this.$emit('afterModify')
-          })
+    localAddIp() {
+      this.createIP({ ip_address: this.params }).then(response => {
+        this.setFlashMsg({ message: this.$t('messages.ip.createSuccess') })
+        this.$emit('afterModify')
+      })
     },
 
-    localEditIp () {
-      this.updateIP({ id: this.targetIp.id, ip_address: this.params })
-          .then(response => {
-            this.setFlashMsg({ message: this.$t('messages.ip.updateSuccess') })
-            this.$emit('afterModify')
-          })
+    localEditIp() {
+      this.updateIP({ id: this.targetIp.id, ip_address: this.params }).then(response => {
+        this.setFlashMsg({ message: this.$t('messages.ip.updateSuccess') })
+        this.$emit('afterModify')
+      })
     }
   },
 
   computed: {
-    ...mapState('companyAllowedIPs', [
-      'errors'
-    ])
+    ...mapState('companyAllowedIPs', ['errors'])
   },
 
-  created () {
+  created() {
     this.clearIPErrors()
-    if (this.targetIp) { this.params = this.targetIp.ip_address }
+    if (this.targetIp) {
+      this.params = this.targetIp.ip_address
+    }
   }
 }
 </script>

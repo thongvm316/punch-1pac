@@ -24,66 +24,66 @@
 </template>
 
 <script>
-  import { mapActions } from 'vuex'
+import { mapActions } from 'vuex'
 
-  export default {
-    name: 'group-form',
+export default {
+  name: 'group-form',
 
-    props: ['targetGroup'],
+  props: ['targetGroup'],
 
-    data () {
-      return {
-        params: {
-          name: '',
-          description: '',
-          image: ''
-        },
-        errors: {}
-      }
+  data() {
+    return {
+      params: {
+        name: '',
+        description: '',
+        image: ''
+      },
+      errors: {}
+    }
+  },
+
+  methods: {
+    ...mapActions('flash', ['setFlashMsg']),
+
+    ...mapActions('groups', ['addGroup']),
+
+    ...mapActions('group', ['updateGroup']),
+
+    localAddGroup() {
+      this.addGroup(this.params)
+        .then(response => {
+          this.setFlashMsg({ message: this.$t('messages.group.createSuccess') })
+          this.$emit('afterModify')
+        })
+        .catch(error => {
+          if (error.response && error.response.status === 422) this.errors = error.response.data.errors
+        })
     },
 
-    methods: {
-      ...mapActions('flash', [
-        'setFlashMsg'
-      ]),
-
-      ...mapActions('groups', [
-        'addGroup'
-      ]),
-
-      ...mapActions('group', [
-        'updateGroup'
-      ]),
-
-      localAddGroup () {
-        this.addGroup(this.params)
-            .then(response => {
-              this.setFlashMsg({ message: this.$t('messages.group.createSuccess') })
-              this.$emit('afterModify')
-            })
-            .catch(error => { if (error.response && error.response.status === 422) this.errors = error.response.data.errors })
-      },
-
-      localEditGroup () {
-        this.updateGroup({ groupId: this.targetGroup.id, editParams: this.params })
-            .then(response => {
-              this.setFlashMsg({ message: this.$t('messages.group.updateSuccess') })
-              this.$emit('afterModify')
-            })
-            .catch(error => { if (error.response && error.response.status === 422) this.errors = error.response.data.errors })
-      },
-
-      setImageFile (e) {
-        const files = e.target.files || e.dataTransfer.files
-        if (!files.length) return
-        this.params.image = files[0]
-      }
+    localEditGroup() {
+      this.updateGroup({ groupId: this.targetGroup.id, editParams: this.params })
+        .then(response => {
+          this.setFlashMsg({ message: this.$t('messages.group.updateSuccess') })
+          this.$emit('afterModify')
+        })
+        .catch(error => {
+          if (error.response && error.response.status === 422) this.errors = error.response.data.errors
+        })
     },
 
-    created () {
-      if (this.targetGroup) {
-        Object.keys(this.params).forEach(key => { this.params[key] = this.targetGroup[key] })
-      }
+    setImageFile(e) {
+      const files = e.target.files || e.dataTransfer.files
+      if (!files.length) return
+      this.params.image = files[0]
+    }
+  },
+
+  created() {
+    if (this.targetGroup) {
+      Object.keys(this.params).forEach(key => {
+        this.params[key] = this.targetGroup[key]
+      })
     }
   }
+}
 </script>

@@ -2,7 +2,7 @@ import Modal from '../components/Modal.vue'
 import { mapActions } from 'vuex'
 
 export default {
-  data () {
+  data() {
     return {
       isAddModalOpen: false,
       isEditModalOpen: false
@@ -14,26 +14,24 @@ export default {
   },
 
   methods: {
-    ...mapActions('flash', [
-      'setFlashMsg'
-    ]),
+    ...mapActions('flash', ['setFlashMsg']),
 
-    toggleAddModal () {
+    toggleAddModal() {
       this.isAddModalOpen = !this.isAddModalOpen
     },
 
-    toggleEditModal () {
+    toggleEditModal() {
       this.isEditModalOpen = !this.isEditModalOpen
     },
 
-    submitAddModal (params, callback, msg = '') {
+    submitAddModal(params, callback, msg = '') {
       callback(params).then(response => {
         this.isAddModalOpen = false
         if (msg) this.setFlashMsg({ message: msg })
       })
     },
 
-    saveEditModal (params, callback, msg = '') {
+    saveEditModal(params, callback, msg = '') {
       callback(params).then(response => {
         this.isEditModalOpen = false
         if (msg) this.setFlashMsg({ message: msg })

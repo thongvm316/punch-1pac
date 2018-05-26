@@ -13,22 +13,27 @@ export default {
 
   props: ['value'],
 
-  data () {
+  data() {
     return {
       groups: []
     }
   },
 
   methods: {
-    updateValue (e) {
+    updateValue(e) {
       this.$emit('input', e.target.value)
     }
   },
 
-  created () {
-    axios.get('/groups')
-         .then(response => { this.groups = response.data })
-         .catch(error => { throw error })
+  created() {
+    axios
+      .get('/groups')
+      .then(response => {
+        this.groups = response.data
+      })
+      .catch(error => {
+        throw error
+      })
   }
 }
 </script>

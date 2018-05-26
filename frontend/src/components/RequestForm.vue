@@ -41,7 +41,7 @@ export default {
 
   props: ['attendance', 'request'],
 
-  data () {
+  data() {
     return {
       day: '',
       params: {
@@ -58,48 +58,42 @@ export default {
   },
 
   computed: {
-    ...mapState('requests', [
-      'errors'
-    ])
+    ...mapState('requests', ['errors'])
   },
 
   methods: {
-    ...mapActions('requests', [
-      'addRequest',
-      'updateRequest',
-      'clearRequestErrors'
-    ]),
+    ...mapActions('requests', ['addRequest', 'updateRequest', 'clearRequestErrors']),
 
-    ...mapActions('flash', [
-      'setFlashMsg'
-    ]),
+    ...mapActions('flash', ['setFlashMsg']),
 
-    localAddRequest () {
-      this.addRequest(this.params)
-          .then(response => {
-            this.setFlashMsg({ message: this.$t('messages.request.createSuccess') })
-            this.$emit('afterModify')
-          })
+    localAddRequest() {
+      this.addRequest(this.params).then(response => {
+        this.setFlashMsg({ message: this.$t('messages.request.createSuccess') })
+        this.$emit('afterModify')
+      })
     },
 
-    localEditRequest () {
-      this.updateRequest({ id: this.request.id, params: this.params })
-          .then(response => {
-            this.setFlashMsg({ message: this.$t('messages.request.updateSuccess') })
-            this.$emit('afterModify')
-          })
+    localEditRequest() {
+      this.updateRequest({ id: this.request.id, params: this.params }).then(response => {
+        this.setFlashMsg({ message: this.$t('messages.request.updateSuccess') })
+        this.$emit('afterModify')
+      })
     }
   },
 
-  created () {
+  created() {
     this.clearRequestErrors()
     if (this.attendance) {
       this.day = this.params.attendance_day = this.attendance.day
       const statuses = ['attended_at', 'left_at']
-      statuses.forEach(key => { this.params[key] = this.attendance[key] })
+      statuses.forEach(key => {
+        this.params[key] = this.attendance[key]
+      })
     } else if (this.request) {
       this.day = this.request.attendance_day
-      Object.keys(this.params).forEach(key => { this.params[key] = this.request[key] })
+      Object.keys(this.params).forEach(key => {
+        this.params[key] = this.request[key]
+      })
     }
   }
 }

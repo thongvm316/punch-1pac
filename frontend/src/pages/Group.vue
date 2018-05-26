@@ -78,7 +78,7 @@ import { mapState, mapActions } from 'vuex'
 export default {
   mixins: [confirmDialog, modal],
 
-  data () {
+  data() {
     return {
       groupUsers: [],
       selectedUser: null,
@@ -95,47 +95,43 @@ export default {
   },
 
   computed: {
-    ...mapState('group', [
-      'group'
-    ])
+    ...mapState('group', ['group'])
   },
 
   methods: {
-    toggleAddModal (user) {
+    toggleAddModal(user) {
       this.editUser = user
       this.isAddModalOpen = !this.isAddModalOpen
     },
 
-    toggleEditModal () {
+    toggleEditModal() {
       this.clearGroupErrors()
       this.isEditModalOpen = !this.isEditModalOpen
     },
 
-    ...mapActions('group', [
-      'getGroup',
-      'addGroupUser',
-      'activateGroupUser',
-      'deactivateGroupUser',
-      'removeGroupUser',
-      'clearGroupErrors'
-    ]),
+    ...mapActions('group', ['getGroup', 'addGroupUser', 'activateGroupUser', 'deactivateGroupUser', 'removeGroupUser', 'clearGroupErrors']),
 
-    localAddGroupUser () {
-      this.addGroupUser({ groupId: this.$route.params.id, user: this.selectedUser })
-          .then(() => { this.selectedUser = null })
+    localAddGroupUser() {
+      this.addGroupUser({ groupId: this.$route.params.id, user: this.selectedUser }).then(() => {
+        this.selectedUser = null
+      })
     }
   },
 
-  created () {
-    this.getGroup(this.$route.params.id, { include_deactivated: true }).then(response => { this.groupUsers = response.data.users })
+  created() {
+    this.getGroup(this.$route.params.id, { include_deactivated: true }).then(response => {
+      this.groupUsers = response.data.users
+    })
   },
 
   watch: {
-    '$route': function (val) {
-      this.getGroup(this.$route.params.id).then(response => { this.groupUsers = response.data.users })
+    $route: function(val) {
+      this.getGroup(this.$route.params.id).then(response => {
+        this.groupUsers = response.data.users
+      })
     },
 
-    'group.users': function () {
+    'group.users': function() {
       this.groupUsers = this.group.users
     }
   }

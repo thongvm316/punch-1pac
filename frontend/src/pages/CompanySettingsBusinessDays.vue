@@ -53,7 +53,7 @@ import { mapState, mapActions } from 'vuex'
 export default {
   mixins: [modal],
 
-  data () {
+  data() {
     return {
       editBusinessDay: null
     }
@@ -65,28 +65,23 @@ export default {
   },
 
   methods: {
-    ...mapActions('companyBusinessDays', [
-      'fetchBusinessDays',
-      'deleteBusinessDay'
-    ]),
+    ...mapActions('companyBusinessDays', ['fetchBusinessDays', 'deleteBusinessDay']),
 
-    toggleAddModal () {
+    toggleAddModal() {
       this.isAddModalOpen = !this.isAddModalOpen
     },
 
-    toggleEditModal (businessDay) {
+    toggleEditModal(businessDay) {
       this.editBusinessDay = businessDay
       this.isEditModalOpen = !this.isEditModalOpen
     }
   },
 
   computed: {
-    ...mapState('companyBusinessDays', [
-      'businessDays'
-    ])
+    ...mapState('companyBusinessDays', ['businessDays'])
   },
 
-  created () {
+  created() {
     this.fetchBusinessDays()
   }
 }

@@ -63,7 +63,7 @@ import { mapState, mapActions } from 'vuex'
 export default {
   mixins: [flatpickrLocale],
 
-  data () {
+  data() {
     return {
       selectedUser: null,
       dateRange: [this.$moment().format('YYYY-MM-DD'), this.$moment().format('YYYY-MM-DD')],
@@ -88,48 +88,37 @@ export default {
   },
 
   computed: {
-    ...mapState('groupAttendances', [
-      'pager',
-      'attendances',
-      'usersInGroup'
-    ]),
+    ...mapState('groupAttendances', ['pager', 'attendances', 'usersInGroup']),
 
-    ...mapState('group', [
-      'group'
-    ])
+    ...mapState('group', ['group'])
   },
 
   methods: {
-    ...mapActions('groupAttendances', [
-      'getAttendances',
-      'getUsersInGroup'
-    ]),
+    ...mapActions('groupAttendances', ['getAttendances', 'getUsersInGroup']),
 
-    ...mapActions('group', [
-      'getGroup'
-    ])
+    ...mapActions('group', ['getGroup'])
   },
 
-  created () {
+  created() {
     if (!this.group) this.getGroup(this.$route.params.id)
     this.getAttendances(this.params)
   },
 
   watch: {
     params: {
-      handler: function (after, before) {
+      handler: function(after, before) {
         this.getAttendances(Object.assign({ page: 1 }, this.params))
       },
       deep: true
     },
 
-    dateRange: function () {
+    dateRange: function() {
       const dates = this.dateRange.split(' ')
       this.params.from_date = dates[0]
       this.params.to_date = dates[2]
     },
 
-    selectedUser: function () {
+    selectedUser: function() {
       this.params.user_id = this.selectedUser ? this.selectedUser.id : ''
     }
   }

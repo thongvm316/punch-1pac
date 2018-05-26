@@ -47,7 +47,7 @@ import AllowedIpForm from '../components/AllowedIpForm.vue'
 export default {
   mixins: [modal],
 
-  data () {
+  data() {
     return {
       editIp: ''
     }
@@ -59,28 +59,23 @@ export default {
   },
 
   methods: {
-    ...mapActions('companyAllowedIPs', [
-      'fetchIPs',
-      'deleteIP'
-    ]),
+    ...mapActions('companyAllowedIPs', ['fetchIPs', 'deleteIP']),
 
-    toggleAddModal () {
+    toggleAddModal() {
       this.isAddModalOpen = !this.isAddModalOpen
     },
 
-    toggleEditModal (ip) {
+    toggleEditModal(ip) {
       this.editIp = ip
       this.isEditModalOpen = !this.isEditModalOpen
     }
   },
 
   computed: {
-    ...mapState('companyAllowedIPs', [
-      'allowedIPs'
-    ])
+    ...mapState('companyAllowedIPs', ['allowedIPs'])
   },
 
-  created () {
+  created() {
     this.fetchIPs()
   }
 }

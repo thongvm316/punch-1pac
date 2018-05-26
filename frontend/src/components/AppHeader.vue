@@ -63,32 +63,30 @@ export default {
   },
 
   methods: {
-    logout () {
-      axios.post('/logout', {}, { baseURL: '' }).then(() => { window.location.href = '/' })
+    logout() {
+      axios.post('/logout', {}, { baseURL: '' }).then(() => {
+        window.location.href = '/'
+      })
     },
 
-    toggleDropdown () {
+    toggleDropdown() {
       this.isDropdownActive = !this.isDropdownActive
     },
 
-    toggleLangSelect () {
+    toggleLangSelect() {
       this.isDropdownActive = !this.isDropdownActive
       this.isLangSelectActive = !this.isLangSelectActive
     },
 
-    updateUser (language) {
-      axios.put(`/users/${this.currentUser.id}`, { user: { language: language } })
-           .then(response => {
-             this.$router.go()
-           })
+    updateUser(language) {
+      axios.put(`/users/${this.currentUser.id}`, { user: { language: language } }).then(response => {
+        this.$router.go()
+      })
     }
   },
 
   computed: {
-    ...mapState('initialStates', [
-      'currentCompany',
-      'meta'
-    ])
+    ...mapState('initialStates', ['currentCompany', 'meta'])
   }
 }
 </script>

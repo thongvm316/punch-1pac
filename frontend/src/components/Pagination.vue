@@ -18,7 +18,7 @@ export default {
 
   props: ['action', 'namespace'],
 
-  data () {
+  data() {
     return {
       step: 2,
       items: []
@@ -26,24 +26,24 @@ export default {
   },
 
   computed: {
-    pager () {
+    pager() {
       return this.$store.state[this.namespace].pager
     }
   },
 
   methods: {
-    go (n) {
+    go(n) {
       document.activeElement.blur()
       this.$store.dispatch(`${this.namespace}/${this.action}`, { page: n, per_page: this.pager.per_page })
     },
 
-    buildItems () {
+    buildItems() {
       let items = []
       let first = 1
       let last = this.pager.total_pages
       if (this.pager.current_page > this.step) {
         first = this.pager.current_page - this.step
-        last = (this.pager.current_page + this.step <= this.pager.total_pages) ? this.pager.current_page + this.step : this.pager.total_pages
+        last = this.pager.current_page + this.step <= this.pager.total_pages ? this.pager.current_page + this.step : this.pager.total_pages
       }
       for (let i = first; i <= last; i++) {
         items.push(i)
@@ -54,14 +54,14 @@ export default {
 
   watch: {
     pager: {
-      handler: function () {
+      handler: function() {
         this.items = this.buildItems()
       },
       deep: true
     }
   },
 
-  mounted () {
+  mounted() {
     this.items = this.buildItems()
   }
 }

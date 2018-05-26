@@ -13,11 +13,9 @@ export default {
   name: 'remind-punch-in',
 
   computed: {
-    ...mapState('remindPunchIn', [
-      'open'
-    ]),
+    ...mapState('remindPunchIn', ['open']),
 
-    formatDays () {
+    formatDays() {
       if (this.currentUser.forgot_punch_in_days_in_month.length > 0) {
         return this.currentUser.forgot_punch_in_days_in_month.map(day => this.$moment(day).format('L')).join(' , ')
       }
@@ -25,11 +23,9 @@ export default {
   },
 
   methods: {
-    ...mapMutations('remindPunchIn', [
-      UPDATE_REMIND_PUNCH_IN
-    ]),
+    ...mapMutations('remindPunchIn', [UPDATE_REMIND_PUNCH_IN]),
 
-    close () {
+    close() {
       this[UPDATE_REMIND_PUNCH_IN](false)
     }
   }

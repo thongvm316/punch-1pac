@@ -7,20 +7,23 @@ const state = {
 }
 
 const mutations = {
-  [types.FETCH_CALENDAR_ATTENDANCES] (state, payload) {
+  [types.FETCH_CALENDAR_ATTENDANCES](state, payload) {
     state.attendances = payload.attendances
     state.holidays = payload.holidays
   }
 }
 
 const actions = {
-  getCalendarAttendances ({ commit }, day) {
-    return axios.get('/attendances/calendar', { params: { day: day } })
+  getCalendarAttendances({ commit }, day) {
+    return axios
+      .get('/attendances/calendar', { params: { day: day } })
       .then(response => {
         commit(types.FETCH_CALENDAR_ATTENDANCES, response.data)
         return response
       })
-      .catch(error => { throw error })
+      .catch(error => {
+        throw error
+      })
   }
 }
 

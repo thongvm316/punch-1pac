@@ -58,14 +58,25 @@ import { mapState, mapGetters, mapActions } from 'vuex'
 export default {
   mixins: [modal, flatpickrLocale],
 
-  data () {
+  data() {
     return {
       attendance: {},
-      dateRange: [this.$moment().startOf('month').format('YYYY-MM-DD'), this.$moment().endOf('month').format('YYYY-MM-DD')],
+      dateRange: [
+        this.$moment()
+          .startOf('month')
+          .format('YYYY-MM-DD'),
+        this.$moment()
+          .endOf('month')
+          .format('YYYY-MM-DD')
+      ],
       params: {
         self: true,
-        from_date: this.$moment().startOf('month').format('YYYY-MM-DD'),
-        to_date: this.$moment().endOf('month').format('YYYY-MM-DD'),
+        from_date: this.$moment()
+          .startOf('month')
+          .format('YYYY-MM-DD'),
+        to_date: this.$moment()
+          .endOf('month')
+          .format('YYYY-MM-DD'),
         status: ''
       }
     }
@@ -79,39 +90,33 @@ export default {
   },
 
   computed: {
-    ...mapState('attendances', [
-      'attendances'
-    ]),
+    ...mapState('attendances', ['attendances']),
 
-    ...mapGetters('attendances', [
-      'formattedAttendances'
-    ])
+    ...mapGetters('attendances', ['formattedAttendances'])
   },
 
   methods: {
-    ...mapActions('attendances', [
-      'getAttendances'
-    ]),
+    ...mapActions('attendances', ['getAttendances']),
 
-    toggleAddModal (attendance) {
+    toggleAddModal(attendance) {
       this.isAddModalOpen = !this.isAddModalOpen
       this.attendance = attendance
     }
   },
 
-  created () {
+  created() {
     this.getAttendances(this.params)
   },
 
   watch: {
     params: {
-      handler: function () {
+      handler: function() {
         this.getAttendances(Object.assign({ page: 1 }, this.params))
       },
       deep: true
     },
 
-    dateRange: function () {
+    dateRange: function() {
       const dates = this.dateRange.split(' ')
       this.params.from_date = dates[0]
       this.params.to_date = dates[2]

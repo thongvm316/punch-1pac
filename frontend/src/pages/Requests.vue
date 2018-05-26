@@ -89,17 +89,28 @@ export default {
 
   mixins: [modal, confirmDialog, flatpickrLocale],
 
-  data () {
+  data() {
     return {
       modalTitle: '',
       selectedRequest: {},
-      dateRange: [this.$moment().startOf('month').format('YYYY-MM-DD'), this.$moment().endOf('month').format('YYYY-MM-DD')],
+      dateRange: [
+        this.$moment()
+          .startOf('month')
+          .format('YYYY-MM-DD'),
+        this.$moment()
+          .endOf('month')
+          .format('YYYY-MM-DD')
+      ],
       params: {
         self: true,
         kind: '',
         status: '',
-        from_date: this.$moment().startOf('month').format('YYYY-MM-DD'),
-        to_date: this.$moment().endOf('month').format('YYYY-MM-DD')
+        from_date: this.$moment()
+          .startOf('month')
+          .format('YYYY-MM-DD'),
+        to_date: this.$moment()
+          .endOf('month')
+          .format('YYYY-MM-DD')
       }
     }
   },
@@ -112,23 +123,18 @@ export default {
   },
 
   computed: {
-    ...mapState('requests', [
-      'pager',
-      'requests'
-    ]),
+    ...mapState('requests', ['pager', 'requests']),
 
-    ...mapState('initialStates', [
-      'meta'
-    ])
+    ...mapState('initialStates', ['meta'])
   },
 
   methods: {
-    toggleEditModal (request) {
+    toggleEditModal(request) {
       this.selectedRequest = request
       this.isEditModalOpen = !this.isEditModalOpen
     },
 
-    getStatusClass (status) {
+    getStatusClass(status) {
       switch (status) {
         case 'pending':
           return 'label-warning'
@@ -139,25 +145,22 @@ export default {
       }
     },
 
-    ...mapActions('requests', [
-      'deleteRequest',
-      'getRequests'
-    ])
+    ...mapActions('requests', ['deleteRequest', 'getRequests'])
   },
 
-  created () {
+  created() {
     this.getRequests(this.params)
   },
 
   watch: {
     params: {
-      handler: function () {
+      handler: function() {
         this.getRequests(Object.assign({ page: 1 }, this.params))
       },
       deep: true
     },
 
-    dateRange: function () {
+    dateRange: function() {
       const dates = this.dateRange.split(' ')
       this.params.from_date = dates[0]
       this.params.to_date = dates[2]
