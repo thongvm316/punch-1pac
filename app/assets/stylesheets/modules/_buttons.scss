@@ -33,11 +33,24 @@
     font-size: $font-size-lg;
     font-weight: 600;
 
-    &:hover,
-    &:active,
-    &:focus {
-      background: $primary-color;
-      color: $light-color;
+    @include respond-to-xs-mobile() {
+      width: 100%;
+      .navbar-utilities &.btn-get-started {
+        width: inherit;
+      }
     }
+
+    @include respond-to-pc() {
+      &:hover,
+      &:active,
+      &:focus {
+        background: $primary-color;
+        color: $light-color;
+      }
+    }
+  }
+
+  &.btn-signin {
+    border-radius: .2rem;
   }
 }
