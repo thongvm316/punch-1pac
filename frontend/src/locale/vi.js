@@ -17,7 +17,8 @@ export default {
       name: 'Tên',
       actions: 'Thao tác',
       gender: 'Giới tính',
-      position: 'Chức vụ'
+      position: 'Chức vụ',
+      role: 'Quyền hạn'
     },
     labels: {
       name: 'Tên',

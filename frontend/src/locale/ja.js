@@ -17,7 +17,8 @@ export default {
       name: 'ユーザー名',
       actions: '操作',
       gender: '性別',
-      position: '役職'
+      position: '役職',
+      role: 'ロール'
     },
     labels: {
       name: 'グループ名',
