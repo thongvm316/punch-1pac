@@ -84,7 +84,7 @@ export default {
       leave_ok: '定刻退勤',
       unpaid_leave: '無給休暇',
       annual_leave: '年次休暇',
-      leave: '欠勤日数',
+      leave: '欠勤',
       working_hours: '総勤務時間'
     },
     request_statuses: {
