@@ -63,7 +63,7 @@ class ForgotPunchInDaysService
   end
 
   def from_date
-    @date_type == 'year' ? @query_time.end_of_month.to_i : @query_time.beginning_of_month.to_i
+    @date_type == 'year' ? @query_time.beginning_of_year.to_i : @query_time.beginning_of_month.to_i
   end
 
   def punch_in_days
