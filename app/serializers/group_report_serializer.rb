@@ -24,7 +24,7 @@ class GroupReportSerializer < ApplicationSerializer
   end
 
   def leave
-    instance_options[:leave_days].size + object&.annual_leave.to_i
+    ForgotPunchInDaysService.new(object, object.company, instance_options[:params][:date], instance_options[:params][:date_type]).execute.size
   end
 
   def working_hours

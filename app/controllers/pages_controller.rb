@@ -5,7 +5,9 @@ class PagesController < ApplicationController
 
   def top; end
 
+  # rubocop:disable Naming/AccessorMethodName
   def get_started; end
+  # rubocop:enable Naming/AccessorMethodName
 
   def help; end
 

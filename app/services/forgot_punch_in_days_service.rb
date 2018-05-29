@@ -1,11 +1,12 @@
 # frozen_string_literal: true
 
 class ForgotPunchInDaysService
-  def initialize(current_user, current_company, date = nil)
+  def initialize(current_user, current_company, date = nil, date_type = nil)
     @current_user = current_user
     @now = Time.current
     @query_time = date.present? ? Time.zone.parse(date) : @now
     @current_company = current_company
+    @date_type = date_type
   end
 
   def execute
@@ -54,11 +55,15 @@ class ForgotPunchInDaysService
   end
 
   def to_date
-    @query_time.month < @now.month ? @query_time.end_of_month.to_i : (@now - 1.day).to_i
+    if @date_type == 'year'
+      @query_time.end_of_year.to_i
+    else
+      @query_time.month < @now.month ? @query_time.end_of_month.to_i : (@now - 1.day).to_i
+    end
   end
 
   def from_date
-    @query_time.beginning_of_month.to_i
+    @date_type == 'year' ? @query_time.end_of_month.to_i : @query_time.beginning_of_month.to_i
   end
 
   def punch_in_days
