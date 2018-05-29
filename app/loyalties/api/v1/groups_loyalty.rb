@@ -27,4 +27,9 @@ class Api::V1::GroupsLoyalty < ApplicationLoyalty
   def report?
     update?
   end
+
+  def destroy?
+    return true if user.owner? || user.superadmin?
+    false
+  end
 end
