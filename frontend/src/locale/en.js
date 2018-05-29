@@ -17,7 +17,8 @@ export default {
       name: 'Name',
       actions: 'Actions',
       gender: 'Gender',
-      position: 'Position'
+      position: 'Position',
+      role: 'Role'
     },
     labels: {
       name: 'Name',
@@ -63,8 +64,8 @@ export default {
     punchOutSuccess: 'You punched out at {at}',
     punchOutTitle: 'Punch Out',
     punchOutConfirm: 'Do you intent to punch out at {at} ?',
-    btnAnnualLeave: 'Annual leave',
-    btnLeave: 'Leave',
+    btnAnnualLeave: 'Day Off',
+    btnLeave: 'Day Off',
     changeLanguage: 'Change Language',
     languages: 'Languages'
   },
@@ -82,8 +83,8 @@ export default {
       leave_early: 'Leave Early',
       leave_ok: 'Leave OK',
       unpaid_leave: 'Unpaid leave',
-      annual_leave: 'Leave',
-      leave: 'Leave',
+      annual_leave: 'Day Off',
+      leave: 'Day Off',
       working_hours: 'Working hours'
     },
     request_statuses: {
@@ -157,7 +158,7 @@ export default {
       label: 'Kind',
       kind: {
         attendance: 'Request for editing attendance',
-        annual_leave: 'Request an annual leave'
+        annual_leave: 'Request a day off'
       }
     }
   },
@@ -257,7 +258,7 @@ export default {
       deleteMsg: 'Are you sure to delete this request permanently ?'
     },
     kinds: {
-      annual_leave: 'Leave',
+      annual_leave: 'Day Off',
       attendance: 'Attendance'
     }
   },
@@ -598,11 +599,11 @@ export default {
   annualLeave: {
     title: 'Request a leave',
     labels: {
-      annualLeaveDay: 'Leave day',
+      annualLeaveDay: 'Day Off',
       reason: 'Reason'
     },
-    createSuccessMsg: 'A leave request is created',
-    updateSuccessMsg: 'Your leave request is updated',
+    createSuccessMsg: 'A day off request is created',
+    updateSuccessMsg: 'Your day off request is updated',
     submit: 'Submit',
     save: 'Save'
   },
