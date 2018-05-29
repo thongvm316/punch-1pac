@@ -9,7 +9,8 @@ export default {
     btn: {
       addUser: 'Add',
       edit: 'Edit Group',
-      save: 'Save'
+      save: 'Save',
+      delete: 'Delete Group'
     },
     explain: "Add a member to this group, then manager of this group can see the user's activities",
     tableHeader: {
@@ -41,8 +42,10 @@ export default {
       removeUser: 'Remove user'
     },
     confirmDialog: {
-      deactivateUserTitle: 'Deactivate User',
-      deactivateUserMsg: 'Are you sure to deactivate <span class="text-bold-600">{name}</span> ?'
+      deactivateUserTitle: 'Deactivate user',
+      deactivateUserMsg: 'Are you sure to deactivate <span class="text-bold-600">{name}</span> ?',
+      deleteGroupTitle: 'Delete group',
+      deleteGroupMsg: 'Are you sure to delete <span class="text-bold-600">{name}</span> group permanently?'
     }
   },
   header: {

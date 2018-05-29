@@ -9,6 +9,9 @@
     <p class="form-input-hint text-dark">{{ $t('group.explain') }}</p>
 
     <div class="toolbar mt-5 text-right" v-if="$auth('Group', currentUser, group.id).canEdit()">
+      <button type="button" class="btn btn-error" @click="openDeleteGroupConfirmDialog" v-if="$auth('Group', currentUser, group).canDelete()">
+        {{ $t('group.btn.delete') }}
+      </button>
       <button type="button" class="btn btn-success" @click="toggleEditModal">{{ $t('group.btn.edit') }}</button>
     </div>
 
@@ -57,6 +60,13 @@
       <p v-html="$t('group.confirmDialog.deactivateUserMsg', { name: selectedObject.name })"></p>
     </confirm-dialog>
 
+    <confirm-dialog :title="$t('group.confirmDialog.deleteGroupTitle')" :modal-open.sync="isOpenDeleteGroupConfirmDialog">
+      <p v-html="$t('group.confirmDialog.deleteGroupMsg', { name: selectedObject.name })"></p>
+      <template slot="confirm-btn">
+        <button type="button" class="btn btn-error" @click="localDeleteGroup">{{ $t('confirmDialog.yes') }}</button>
+      </template>
+    </confirm-dialog>
+
     <modal :title="$t('group.modal.editUserTitle')" :modal-open.sync="isAddModalOpen">
       <user-profile :target-user="editUser" :self="false" v-if="editUser"/>
     </modal>
@@ -73,7 +83,7 @@ import modal from '../mixins/modal'
 import confirmDialog from '../mixins/confirm-dialog'
 import UserProfile from '../components/UserProfile'
 import GroupTab from '../components/GroupTab'
-import GroupForm from '../components/GroupForm.vue'
+import GroupForm from '../components/GroupForm'
 import FilterUserBox from '../components/FilterUserBox'
 import { mapState, mapActions } from 'vuex'
 
@@ -84,7 +94,8 @@ export default {
     return {
       groupUsers: [],
       selectedUser: null,
-      editUser: null
+      editUser: null,
+      isOpenDeleteGroupConfirmDialog: false
     }
   },
 
@@ -101,6 +112,15 @@ export default {
   },
 
   methods: {
+    openDeleteGroupConfirmDialog() {
+      this.selectedObject = this.group
+      this.isOpenDeleteGroupConfirmDialog = !this.isOpenDeleteGroupConfirmDialog
+    },
+
+    localDeleteGroup() {
+      this.deleteGroup(this.selectedObject.id).then(() => this.$router.push({ name: 'groups' }))
+    },
+
     toggleAddModal(user) {
       this.editUser = user
       this.isAddModalOpen = !this.isAddModalOpen
@@ -111,7 +131,7 @@ export default {
       this.isEditModalOpen = !this.isEditModalOpen
     },
 
-    ...mapActions('group', ['getGroup', 'addGroupUser', 'activateGroupUser', 'deactivateGroupUser', 'removeGroupUser', 'clearGroupErrors']),
+    ...mapActions('group', ['getGroup', 'addGroupUser', 'activateGroupUser', 'deactivateGroupUser', 'removeGroupUser', 'clearGroupErrors', 'deleteGroup']),
 
     localAddGroupUser() {
       this.addGroupUser({ groupId: this.$route.params.id, user: this.selectedUser }).then(() => {
@@ -121,9 +141,13 @@ export default {
   },
 
   created() {
-    this.getGroup(this.$route.params.id, { include_deactivated: true }).then(response => {
-      this.groupUsers = response.data.users
-    })
+    this.getGroup(this.$route.params.id, { include_deactivated: true })
+      .then(response => {
+        this.groupUsers = response.data.users
+      })
+      .catch(error => {
+        if (error.response && error.response.status === 404) this.$router.push({ name: 'error-404' })
+      })
   },
 
   watch: {

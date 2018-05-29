@@ -23,4 +23,9 @@ export default class Group extends Abstract {
   canRemoveUser() {
     return this.canEdit()
   }
+
+  canDelete() {
+    if (this.currentUser.owner || this.currentUser.role === 'superadmin') return true
+    return false
+  }
 }

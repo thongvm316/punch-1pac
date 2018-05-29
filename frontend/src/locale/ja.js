@@ -9,7 +9,8 @@ export default {
     btn: {
       addUser: '追加',
       edit: '編集',
-      save: '保存'
+      save: '保存',
+      delete: 'Delete Group'
     },
     explain: 'このグループにメンバーを追加すると、グループの管理者はメンバーの勤務状況を見ることができます。',
     tableHeader: {
@@ -42,7 +43,9 @@ export default {
     },
     confirmDialog: {
       deactivateUserTitle: 'ユーザーを停止する',
-      deactivateUserMsg: '<span class="text-bold-600">{name}</span>を停止しますか？'
+      deactivateUserMsg: '<span class="text-bold-600">{name}</span>を停止しますか？',
+      deleteGroupTitle: 'Delete group',
+      deleteGroupMsg: 'Are you sure to delete <span class="text-bold-600">{name}</span> group permanently?'
     }
   },
   header: {

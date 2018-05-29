@@ -9,7 +9,8 @@ export default {
     btn: {
       addUser: 'Thêm',
       edit: 'Chỉnh sửa Nhóm',
-      save: 'Lưu'
+      save: 'Lưu',
+      delete: 'Xoá nhóm'
     },
     explain: 'Thêm thành viên vào nhóm, quản trị viên của nhóm sẽ thấy được hoạt động của thành viên.',
     tableHeader: {
@@ -42,7 +43,9 @@ export default {
     },
     confirmDialog: {
       deactivateUserTitle: 'Huỷ kích hoạt thành viên',
-      deactivateUserMsg: 'Bạn có muốn huỷ kích hoạt <span class="text-bold-600">{name}</span> ?'
+      deactivateUserMsg: 'Bạn có muốn huỷ kích hoạt <span class="text-bold-600">{name}</span>?',
+      deleteGroupTitle: 'Xoá nhóm',
+      deleteGroupMsg: 'Bạn có chắc muốn xoá nhóm <span class="text-bold-600">{name}</span> vĩnh viễn không?'
     }
   },
   header: {
