@@ -39,8 +39,8 @@
 </template>
 
 <script>
-import MainLayout from '../layouts/Main.vue'
-import GroupForm from '../components/GroupForm.vue'
+import MainLayout from '../layouts/Main'
+import GroupForm from '../components/GroupForm'
 import modal from '../mixins/modal'
 import { mapState, mapGetters, mapActions } from 'vuex'
 

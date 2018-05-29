@@ -140,6 +140,17 @@ const actions = {
 
   clearGroupErrors({ commit }) {
     commit(types.CLEAR_GROUP_ERRORS)
+  },
+
+  deleteGroup({ commit }, groupId) {
+    return axios
+      .delete(`/groups/${groupId}`)
+      .then(response => {
+        return response
+      })
+      .catch(error => {
+        throw error
+      })
   }
 }
 

@@ -12,7 +12,9 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-error" @click="confirm">{{ $t('confirmDialog.yes') }}</button>
+        <slot name="confirm-btn">
+          <button type="button" class="btn btn-error" @click="confirm">{{ $t('confirmDialog.yes') }}</button>
+        </slot>
         <button type="button" class="btn" @click="toggle">{{ $t('confirmDialog.no') }}</button>
       </div>
     </div>
