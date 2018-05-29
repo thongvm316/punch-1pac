@@ -83,7 +83,7 @@ export default {
       leave_early: 'Về sớm',
       leave_ok: 'Về đúng giờ',
       unpaid_leave: 'Vắng ko phép',
-      annual_leave: 'Vắng có phép',
+      annual_leave: 'Vắng',
       leave: 'Vắng',
       working_hours: 'Số giờ làm việc'
     },
