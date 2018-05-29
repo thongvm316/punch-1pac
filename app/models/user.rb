@@ -101,12 +101,7 @@ class User < ApplicationRecord
 
   def self.count_attendance_status(date, date_type)
     select(
-      :id,
-      :name,
-      :email,
-      :avatar_data,
-      :company_id,
-      :created_at,
+      :id, :name, :email, :avatar_data, :company_id, :created_at, :deactivated_at, :activated_at, :activated,
       "(#{Attendance.status_count_on_month('attend_ok', 'attending_status', date, date_type).where('attendances.user_id = users.id').to_sql})",
       "(#{Attendance.status_count_on_month('attend_late', 'attending_status', date, date_type).where('attendances.user_id = users.id').to_sql})",
       "(#{Attendance.status_count_on_month('leave_ok', 'leaving_status', date, date_type).where('attendances.user_id = users.id').to_sql})",
