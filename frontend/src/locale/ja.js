@@ -18,7 +18,7 @@ export default {
       actions: '操作',
       gender: '性別',
       position: '役職',
-      role: 'ロール'
+      role: '権限'
     },
     labels: {
       name: 'グループ名',
@@ -28,7 +28,7 @@ export default {
     placeholder: {
       description: '説明',
       filterByEmail: 'メールアドレスで検索',
-      searchByNameEmail: 'Search user by name or email'
+      searchByNameEmail: 'ユーザー名またはメールアドレスでユーザーを検索'
     },
     modal: {
       editUserTitle: 'ユーザー情報の編集',
@@ -59,11 +59,11 @@ export default {
     in: '出勤時間',
     out: '退勤時間',
     punchIn: '出勤',
-    punchInSuccess: 'あなたは{at}に出勤しました',
+    punchInSuccess: '{at}に出勤しました',
     punchOut: '退勤',
-    punchOutSuccess: 'あなたは{at}に退勤しました',
+    punchOutSuccess: '{at}に退勤しました',
     punchOutTitle: '退勤時間を確認する',
-    punchOutConfirm: 'あなたは{at}に退勤しますか？',
+    punchOutConfirm: '{at}に退勤しますか？',
     btnAnnualLeave: '年次休暇',
     btnLeave: '休憩入り',
     changeLanguage: 'Change Language',
@@ -90,7 +90,7 @@ export default {
     request_statuses: {
       pending: '承認待ち',
       approved: '承認済',
-      rejected: '却下済'
+      rejected: '却下'
     },
     gender: {
       male: '男性',
@@ -120,11 +120,11 @@ export default {
       japan: '日本'
     },
     industries: {
-      hr_agency: 'HR会社',
+      hr_agency: '人材紹介会社',
       restaurant: 'レストラン',
       cafe_shop: 'カフェショップ',
       software_company: 'ソフトウェア会社',
-      startup: '新興企業'
+      startup: 'スタートアップ企業'
     }
   },
   sidebar: {
@@ -148,17 +148,17 @@ export default {
     calendarToday: '今日',
     chart: 'チャート',
     chartNoData: '今月のデータはありません',
-    recentActivities: '最近の活動',
-    emptyActivity: '活動はありません',
-    pendingRequests: '承認待ちの一覧',
+    recentActivities: '最近のアクティビティ',
+    emptyActivity: 'アクティビティはありません',
+    pendingRequests: '承認待ち一覧',
     havePendingRequests: '以下のグループにユーザーからの申請が届いています。',
     emptyPendingRequests: '現在新しい申請はありません。',
     request: {
-      title: 'どのような申請を送信しますか？',
-      label: '種別',
+      title: '何を申請しますか？',
+      label: '以下から選択してください',
       kind: {
-        attendance: '勤怠の修正申請',
-        annual_leave: '休暇・欠勤の申請'
+        attendance: '勤怠の修正',
+        annual_leave: '休暇・欠勤'
       }
     }
   },
@@ -173,10 +173,10 @@ export default {
       punch_out: '<span class="text-bold-600">{name}</span>は退勤しました'
     },
     request: {
-      create: '<span class="text-bold-600">{name}</span>は申請を提出しました',
-      update: '<span class="text-bold-600">{name}</span>は依頼を更新しました',
-      approve: '<span class="text-bold-600">{name}</span>はあなたの申請を承認しました',
-      reject: '<span class="text-bold-600">{name}</span>はあなたの申請を却下しました'
+      create: '<span class="text-bold-600">{name}</span>が申請を提出しました',
+      update: '<span class="text-bold-600">{name}</span>が申請を更新しました',
+      approve: '<span class="text-bold-600">{name}</span>があなたの申請を承認しました',
+      reject: '<span class="text-bold-600">{name}</span>があなたの申請を却下しました'
     },
     labels: {
       date: '日付',
@@ -190,8 +190,8 @@ export default {
     title: 'グループ一覧',
     btn: {
       add: 'グループの追加',
-      leave: '抜け',
-      submit: '提出',
+      leave: 'グループから退出',
+      submit: '保存',
       export: 'CSV出力'
     },
     member: ' | 1名 | {count}名',
@@ -214,8 +214,8 @@ export default {
     groupTitle: '{name}グループの申請',
     placeholder: {
       filterByGroup: 'グループ名で検索',
-      filterByStatus: '状態で絞り込み',
-      filterByKind: '種別で絞り込み'
+      filterByStatus: 'ステータスで検索',
+      filterByKind: '申請内容で検索'
     },
     labels: {
       date: '日付',
@@ -229,7 +229,7 @@ export default {
       email: 'メールアドレス',
       date: '日付',
       attendedAt: '出勤時間',
-      status: '申請状態',
+      status: 'ステータス',
       leftAt: '退勤時間',
       reason: '理由',
       actions: '操作',
@@ -268,7 +268,7 @@ export default {
     placeholder: {
       fromDate: '日付から',
       toDate: '日付まで',
-      filterByStatus: '状態で絞り込み',
+      filterByStatus: 'ステータスで検索',
       filterByGroup: 'グループ名で検索',
       filterByUser: 'ユーザー名で検索'
     },
@@ -278,24 +278,24 @@ export default {
       date: '日付',
       attendedAt: '出勤時間',
       leftAt: '退勤時間',
-      status: '状態',
+      status: 'ステータス',
       actions: '操作'
     },
     labels: {
       date: '日付',
       attendedAt: '出勤時間',
       leftAt: '退勤時間',
-      reason: '理由'
+      reason: '参考'
     },
     btn: {
       save: '保存',
       add: '追加'
     },
     modal: {
-      addTitle: '申請を提出する'
+      addTitle: '修正を依頼する'
     },
     tooltip: {
-      addRequest: '申請を提出する'
+      addRequest: '修正を依頼する'
     }
   },
   user: {
@@ -309,7 +309,7 @@ export default {
         gender: '性別',
         position: '役職',
         language: '言語',
-        role: 'ロール'
+        role: '権限'
       },
       btn: {
         save: '保存'
@@ -373,11 +373,11 @@ export default {
         morningStartAt: '勤務開始',
         morningEndAt: '休憩開始',
         afternoonStartAt: '休憩終了',
-        afternoonEndAt: '勤務定時'
+        afternoonEndAt: '勤務終了'
       },
       btn: {
         add: '営業日の追加',
-        submit: '追加',
+        submit: '保存',
         save: '保存'
       },
       modal: {
@@ -404,7 +404,7 @@ export default {
       },
       btn: {
         add: 'IPアドレスの追加',
-        submit: '追加',
+        submit: '保存',
         save: '保存'
       },
       modal: {
@@ -419,27 +419,27 @@ export default {
     timezoneAndLanguage: {
       title: '時刻',
       labels: {
-        timezone: '時刻',
+        timezone: 'タイムゾーン',
         breaktime: '休憩時間'
       },
       btn: {
         save: '保存'
       },
       msg: {
-        success: '組織の言語と時刻の情報が更新さレました'
+        success: '組織の「時刻と言語」が更新されました'
       }
     },
     holidays: {
       title: '休日',
-      explain: 'あなたの組織の祝日を追加すると、休日としてカウントされます',
+      explain: '組織の祝日を追加すると、休日としてカウントされます',
       tableHeader: {
-        name: '休日名',
+        name: '名称',
         startAt: '開始',
         endAt: '終了',
         actions: '操作'
       },
       labels: {
-        name: '休日名',
+        name: '名称',
         startAt: '開始',
         endAt: '終了'
       },
@@ -450,9 +450,9 @@ export default {
         toDate: '日付まで'
       },
       btn: {
-        import: '取り込む',
+        import: 'インポート',
         add: '休日の追加',
-        submit: '追加',
+        submit: '保存',
         save: '保存'
       },
       modal: {
@@ -464,8 +464,8 @@ export default {
         delete: '削除する'
       },
       msg: {
-        importSuccess: '{country}の祝日を取り込みました',
-        blankOrAlreadyImported: '{country}の祝日は既に取り込みました、または存在していません'
+        importSuccess: '{country}の祝日をインポートしました',
+        blankOrAlreadyImported: '{country}の祝日は既にインポートされているか、または存在していません'
       }
     },
     users: {
@@ -473,11 +473,11 @@ export default {
       add: {
         title: 'ユーザーの追加',
         successMsg: '新しいユーザーが登録されました',
-        note: 'ログイン情報が含まれたメールはユーザーに送信されました。メールボックスをチェックしてください',
+        note: 'ログイン情報が含まれたメールを送信しました。メールボックスをチェックしてください',
         labels: {
           name: 'ユーザー名',
           email: 'メールアドレス',
-          role: 'ロール',
+          role: '権限',
           group: 'グループ'
         },
         placeholder: {
@@ -491,9 +491,9 @@ export default {
       },
       addMulti: {
         title: 'ユーザーの一括追加',
-        successCSVMsg: 'CSVファイルに指定されたユーザーの全ては追加しました',
-        note: 'ログイン情報が含まれたメールはユーザーに送信されました。メールボックスをチェックしてください',
-        errorMsg: '{rows}に不正な情報があります',
+        successCSVMsg: 'CSVファイルに指定された全てのユーザーを追加しました',
+        note: 'ログイン情報が含まれたメールを送信しました。メールボックスをチェックしてください',
+        errorMsg: '{rows}に不正情報があります',
         download: 'ユーザ一括追加用CSVテンプレート',
         templateGuide: '上記のCSVテンプレートをダウンロードしてください. 内容を編集後、CSVファイルをアップロードしてください',
         labels: {
@@ -511,7 +511,7 @@ export default {
         email: 'メールアドレス',
         position: '役職',
         group: 'グループ',
-        role: 'ロール',
+        role: '権限',
         actions: '操作'
       },
       btn: {
@@ -539,9 +539,9 @@ export default {
       updateTimeSuccess: '組織の時刻と休憩時間を更新しました'
     },
     user: {
-      addSuccess: '新しいユーザーを登録しました。ログイン情報が含まれたメールはユーザーに送信されました。',
+      addSuccess: '新しいユーザーを登録しました。ログイン情報が含まれたメールをユーザーに送信しました',
       updatePwdSuccess: 'パスワードを更新しました',
-      addMultiSuccess: 'ユーザーを一括登録しました。ログイン情報が含まれたメールはユーザーに送信されました。',
+      addMultiSuccess: 'ユーザーを一括登録しました。ログイン情報が含まれたメールをユーザーに送信しました',
       updateProfileSuccess: 'あなたのプロフィールを更新しました'
     },
     ip: {
@@ -574,7 +574,7 @@ export default {
       punch_out: '<span class="text-bold-600">{name}</span>が退勤しました'
     },
     request: {
-      create: '<span class="text-bold-600">{name}</span>が新しい申請を提出しました',
+      create: '<span class="text-bold-600">{name}</span>が新しい修正を依頼しました',
       update: '<span class="text-bold-600">{name}</span>が申請を更新しました',
       approve: '<span class="text-bold-600">{name}</span>が申請を承認しました',
       reject: '<span class="text-bold-600">{name}</span>が申請を却下しました'
@@ -583,9 +583,9 @@ export default {
   popup: {
     changePassword: {
       title: 'あなたのパスワードは保護されていません',
-      description: 'あなたはシステムによって生成されたパスワードを使用していますが、安全ではありません。新しいパスワードを変更してください',
+      description: '現在のパスワードはシステムが自動生成したものですが、安全ではありません。あなた自身の新しいパスワードを設定してください',
       btnChange: 'パスワードの変更',
-      btnRemind: '後でリマインド'
+      btnRemind: 'あとでリマインド'
     }
   },
   confirmDialog: {
@@ -604,24 +604,24 @@ export default {
     },
     createSuccessMsg: '新しい休暇申請を提出しました',
     updateSuccessMsg: 'あなたの休暇申請が更新しました',
-    submit: '提出',
+    submit: '保存',
     save: '保存'
   },
   page404: {
     title: 'お探しのページが見つかりましせんでした',
     content: '申し訳ございません。お探しのページが見つかりませんでした。',
-    instruction: '下のボタンを押すと、ホームページに戻ります。',
+    instruction: '下のボタンを押すと、ホームに戻ります。',
     btn: {
-      goHome: 'ホームページに戻る'
+      goHome: 'ホームに戻る'
     }
   },
   flatpickr: {
     rangeSeparator: ' - '
   },
   remind: {
-    message: 'あなたは{days}に出勤登録を忘れました. 当日は出席者を編集するために管理者に申請を提出してください。'
+    message: 'あなたは{days}の勤怠記録をしていません。該当日の勤怠状況を編集するには、管理者に申請してください。'
   },
   filterUserBox: {
-    noOptions: 'No user matching. Please type user name or email for searching'
+    noOptions: '一致するユーザーはいません。正しいユーザー名またはメールアドレスを入力してください'
   }
 }
