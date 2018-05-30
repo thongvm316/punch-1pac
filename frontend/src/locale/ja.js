@@ -10,7 +10,7 @@ export default {
       addUser: '追加',
       edit: '編集',
       save: '保存',
-      delete: 'Delete Group'
+      delete: 'グループの削除'
     },
     explain: 'このグループにメンバーを追加すると、グループの管理者はメンバーの勤務状況を見ることができます。',
     tableHeader: {
@@ -44,8 +44,8 @@ export default {
     confirmDialog: {
       deactivateUserTitle: 'ユーザーを停止する',
       deactivateUserMsg: '<span class="text-bold-600">{name}</span>を停止しますか？',
-      deleteGroupTitle: 'Delete group',
-      deleteGroupMsg: 'Are you sure to delete <span class="text-bold-600">{name}</span> group permanently?'
+      deleteGroupTitle: 'グループの削除',
+      deleteGroupMsg: '<span class="text-bold-600">{name}</span> グループを削除してよろしいですか？'
     }
   },
   header: {
@@ -69,8 +69,8 @@ export default {
     punchOutConfirm: '{at}に退勤しますか？',
     btnAnnualLeave: '年次休暇',
     btnLeave: '休憩入り',
-    changeLanguage: 'Change Language',
-    languages: 'Languages'
+    changeLanguage: '言語を変更',
+    languages: '言語'
   },
   footer: {
     terms: 'プライバシーポリシー',
