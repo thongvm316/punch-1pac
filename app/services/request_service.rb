@@ -26,7 +26,7 @@ class RequestService
   def approve_request
     if @req.attendance?
       @attendance ? @attendance.update!(attendance_params) : Attendance.create!(attendance_params.merge(day: @req.attendance_day, user: @req.user))
-    elsif @req.annual_leave?
+    elsif @req.annual_leave? && !Attendance.exists?(user: @req.user, day: @req.attendance_day)
       Attendance.create(user: @req.user, day: @req.attendance_day, off_status: 'annual_leave')
     end
   end

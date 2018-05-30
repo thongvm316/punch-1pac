@@ -77,6 +77,8 @@ export default {
 
     ...mapMutations('initialStates', [types.INITIAL_STATES_UPDATE_USER]),
 
+    ...mapMutations('group', [types.UPDATE_GROUP_USER]),
+
     ...mapMutations('companyUsers', [types.UPDATE_USER]),
 
     updateUser() {
@@ -87,7 +89,9 @@ export default {
         .put(`/users/${this.targetUser.id}`, formData, { headers: { 'Content-Type': 'multipart/form-data' } })
         .then(response => {
           this.self ? this[types.INITIAL_STATES_UPDATE_USER](response.data) : this[types.UPDATE_USER](response.data)
+          this[types.UPDATE_GROUP_USER](response.data)
           this.setFlashMsg({ message: this.$t('messages.user.updateProfileSuccess') })
+          this.$emit('afterUserProfileUpdated')
         })
         .catch(error => {
           if (error.response && error.response.status === 422) this.errors = error.response.data

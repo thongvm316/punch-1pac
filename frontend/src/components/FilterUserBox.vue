@@ -48,7 +48,7 @@ export default {
       axios
         .get('/users', { params: Object.assign({ name_or_email: search }, this.queryParams) })
         .then(response => {
-          loading(false)
+          if (loading) loading(false)
           this.optionUsers = response.data.users
         })
         .catch(error => {
@@ -59,6 +59,10 @@ export default {
     updateSelectedUser() {
       this.$emit('update:user', this.selectedUser)
     }
+  },
+
+  created() {
+    this.search('', false)
   },
 
   watch: {

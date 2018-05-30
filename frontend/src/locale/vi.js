@@ -625,6 +625,6 @@ export default {
     message: 'Bạn quên bấm đến rồi vào các ngày {days}. Vui lòng tạo yêu cầu chỉnh sửa thông tin hiện diện các ngày hôm đó'
   },
   filterUserBox: {
-    noOptions: 'Không tìm thấy thành viên. Chỉ có thể mời quản trị viên hoặc thành viên chưa vào nhóm nào cả'
+    noOptions: 'Không tìm thấy thành viên'
   }
 }

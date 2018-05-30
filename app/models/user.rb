@@ -39,6 +39,7 @@ class User < ApplicationRecord
   RESET_PASSWORD_TOKEN_EXPIRY = 1800.0
 
   before_create { self.activated_at = created_at }
+  after_save { groups.find_each(&:touch) }
 
   enum role: { member: 0, admin: 1, superadmin: 2 }
   enum gender: { male: 0, female: 1 }
