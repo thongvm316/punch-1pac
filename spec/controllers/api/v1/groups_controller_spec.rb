@@ -167,7 +167,7 @@ RSpec.describe Api::V1::GroupsController, type: :controller do
     end
 
     context 'when log in user is admin' do
-      let(:login_user) { create :user, company: company, role: 'admin' }
+      let(:login_user) { create :user, company: company, role: 'superadmin' }
 
       context 'when valid params' do
         subject { delete :destroy, params: { id: group.id } }
