@@ -625,6 +625,6 @@ export default {
     message: 'You forgot to punch in on {days}. Please send request to admin for editing attendances on those days !!!'
   },
   filterUserBox: {
-    noOptions: 'No user matching. You only can invite admin or user that not in any group yet'
+    noOptions: 'No user matching'
   }
 }

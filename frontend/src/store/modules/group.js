@@ -32,6 +32,11 @@ const mutations = {
     state.group.users[index].activated = true
   },
 
+  [types.UPDATE_GROUP_USER](state, user) {
+    const index = state.group.users.findIndex(u => u.id === user.id)
+    state.group.users[index] = user
+  },
+
   [types.REMOVE_GROUP_USER](state, payload) {
     state.group.users = state.group.users.filter(user => user.id !== payload)
   },

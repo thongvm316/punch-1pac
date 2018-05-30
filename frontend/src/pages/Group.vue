@@ -68,7 +68,7 @@
     </confirm-dialog>
 
     <modal :title="$t('group.modal.editUserTitle')" :modal-open.sync="isAddModalOpen">
-      <user-profile :target-user="editUser" :self="false" v-if="editUser"/>
+      <user-profile :target-user="editUser" :self="false" @afterUserProfileUpdated="isAddModalOpen = false" v-if="editUser"/>
     </modal>
 
     <modal :title="$t('group.modal.editTitle')" :modal-open.sync="isEditModalOpen">
