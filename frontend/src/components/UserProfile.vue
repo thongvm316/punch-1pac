@@ -91,7 +91,7 @@ export default {
           if (this.targetUser.id === this.currentUser.id) {
             this[types.INITIAL_STATES_UPDATE_USER](response.data)
           }
-          this[types.UPDATE_USER](response.data)
+          if (this.objectType === 'company') this[types.UPDATE_USER](response.data)
           if (this.objectType === 'group') this[types.UPDATE_GROUP_USER](response.data)
           this.setFlashMsg({ message: this.$t('messages.user.updateProfileSuccess') })
           this.$emit('afterUserProfileUpdated')
