@@ -29,4 +29,12 @@ namespace :punch do
     # 3. Clear 'Processed' and 'Failed' jobs statistics (OPTIONAL)
     Sidekiq::Stats.new.reset
   end
+
+  task :create_user_groups_namespace_1 do
+    user_groups = []
+    User.where.not(id: UserGroup.select(:user_id).all).where(company_id: 1).find_each do |user|
+      user_groups << UserGroup.new(user_id: user.id, group_id: 1)
+    end
+    UserGroup.import(user_groups)
+  end
 end
