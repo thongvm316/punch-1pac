@@ -31,7 +31,6 @@ namespace :punch do
   end
 
   task :create_user_groups_namespace_1 do
-    Rails.initialize! unless Rails.env.development?
     user_groups = []
     User.where.not(id: UserGroup.select(:user_id).all).where(company_id: 1).find_each do |user|
       user_groups << UserGroup.new(user_id: user.id, group_id: 1)
