@@ -44,7 +44,7 @@ class User < ApplicationRecord
   enum role: { member: 0, admin: 1, superadmin: 2 }
   enum gender: { male: 0, female: 1 }
 
-  belongs_to :company
+  belongs_to :company, touch: true
   has_many :attendances, dependent: :destroy
   has_many :sessions, dependent: :destroy
   has_many :requests, dependent: :destroy
