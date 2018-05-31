@@ -42,7 +42,7 @@
           </div>
           <p class="mb-0" v-else>{{ $t('dashboard.emptyActivity') }}</p>
           <div class="text-center" v-if="pager.next_page">
-            <a href="#" @click="getMoreActivities({ page: pager.next_page })">{{ $t('activity.showMore') }}</a>
+            <button type="button" class="btn btn-block" @click="getMoreActivities({ page: pager.next_page })">{{ $t('activity.showMore') }}</button>
           </div>
         </div>
 

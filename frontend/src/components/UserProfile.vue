@@ -66,7 +66,7 @@ export default {
     }
   },
 
-  props: ['targetUser', 'self'],
+  props: ['targetUser', 'objectType'],
 
   computed: {
     ...mapState('initialStates', ['meta'])
@@ -88,8 +88,11 @@ export default {
       axios
         .put(`/users/${this.targetUser.id}`, formData, { headers: { 'Content-Type': 'multipart/form-data' } })
         .then(response => {
-          this.self ? this[types.INITIAL_STATES_UPDATE_USER](response.data) : this[types.UPDATE_USER](response.data)
-          this[types.UPDATE_GROUP_USER](response.data)
+          if (this.targetUser.id === this.currentUser.id) {
+            this[types.INITIAL_STATES_UPDATE_USER](response.data)
+          }
+          this[types.UPDATE_USER](response.data)
+          if (this.objectType === 'group') this[types.UPDATE_GROUP_USER](response.data)
           this.setFlashMsg({ message: this.$t('messages.user.updateProfileSuccess') })
           this.$emit('afterUserProfileUpdated')
         })
