@@ -110,7 +110,7 @@ namespace :deploy do
   after 'yarn:install', 'deploy:yarn:build'
 
   desc 'Generate test data'
-  task generate_test_data: fetch(:stage) do
+  task :generate_test_data do
     on roles(:app) do
       within current_path do
         with(rails_env: fetch(:stage)) do
