@@ -108,4 +108,14 @@ namespace :deploy do
     end
   end
   after 'yarn:install', 'deploy:yarn:build'
+
+  task :generate_test_data do
+    on roles(:app) do
+      within current_path do
+        with(rails_env: fetch(:stage)) do
+          execute :bundle, :exec, :rake, 'punch:create_user_groups_namespace_1'
+        end
+      end
+    end
+  end
 end
