@@ -8,11 +8,14 @@
     </div>
     <p class="form-input-hint text-dark">{{ $t('group.explain') }}</p>
 
-    <div class="toolbar mt-5 text-right" v-if="$auth('Group', currentUser, group.id).canEdit()">
-      <button type="button" class="btn btn-error" @click="openDeleteGroupConfirmDialog" v-if="$auth('Group', currentUser, group).canDelete()">
+    <div class="toolbar mt-5 clearfix" v-if="$auth('Group', currentUser, group.id).canEdit()">
+      <filter-user-box :queryParams="{ group_id: this.$route.params.id, type: 'users_in_group', per_page: 1000 }" :placeholder="$t('attendances.placeholder.filterByUser')" :user.sync="filteredUser"/>
+      <div class="float-right">
+        <button type="button" class="btn btn-error" @click="openDeleteGroupConfirmDialog" v-if="$auth('Group', currentUser, group).canDelete()">
         {{ $t('group.btn.delete') }}
-      </button>
-      <button type="button" class="btn btn-success" @click="toggleEditModal">{{ $t('group.btn.edit') }}</button>
+        </button>
+        <button type="button" class="btn btn-success" @click="toggleEditModal">{{ $t('group.btn.edit') }}</button>
+      </div>
     </div>
 
     <table class="table bg-light mt-5">
@@ -25,7 +28,7 @@
         <th>{{ $t('group.tableHeader.actions') }}</th>
       </thead>
       <tbody>
-        <tr v-for="user in group.users" :class="{ 'deactivated': !user.activated }">
+        <tr v-for="user in tmpGroupUsers" :class="{ 'deactivated': !user.activated }">
           <td>
             <div class="tile tile-centered">
               <div class="tile-icon">
@@ -94,6 +97,7 @@ export default {
     return {
       groupUsers: [],
       selectedUser: null,
+      filteredUser: null,
       editUser: null,
       isOpenDeleteGroupConfirmDialog: false
     }
@@ -108,7 +112,17 @@ export default {
   },
 
   computed: {
-    ...mapState('group', ['group'])
+    ...mapState('group', ['group']),
+
+    tmpGroupUsers: function() {
+      let filteredGroupUsers = this.group.users
+
+      if (this.filteredUser) {
+        filteredGroupUsers = filteredGroupUsers.filter(user => user.id === this.filteredUser.id)
+      }
+
+      return filteredGroupUsers
+    }
   },
 
   methods: {
