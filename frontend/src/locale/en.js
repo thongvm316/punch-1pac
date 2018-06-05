@@ -76,7 +76,7 @@ export default {
     terms: 'Terms',
     privacy: 'Privacy',
     help: 'Help',
-    contact: 'Contact',
+    contact: 'Contact us',
     about: 'About'
   },
   meta: {

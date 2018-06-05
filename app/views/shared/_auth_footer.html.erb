@@ -1,6 +1,6 @@
 <div class="auth-footer text-center">
-  <a href="<%= help_url %>">Help</a>
-  <a href="mailto:1pac.info@1pac.vn">Contact Us</a>
-  <a href="<%= terms_url %>">Terms</a>
-  <a href="<%= privacy_url %>">Privacy</a>
+  <%= link_to "Help", url_for(action: 'help', controller: 'pages', only_path: false, subdomain: nil) %>
+  <%= link_to "Contact us", url_for(action: 'contact', controller: 'pages', only_path: false, subdomain: nil) %>
+  <%= link_to "Terms", url_for(action: 'terms', controller: 'pages', only_path: false, subdomain: nil) %>
+  <%= link_to "Privacy", url_for(action: 'privacy', controller: 'pages', only_path: false, subdomain: nil) %>
 </div>
