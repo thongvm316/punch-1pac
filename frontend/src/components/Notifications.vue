@@ -15,7 +15,8 @@
           <li v-for="notification in headerNotifications"
               :key="notification.id"
               @click="openRequestModal(notification)"
-              v-if="notification.activitable">
+              v-if="notification.activitable"
+              :class="{ 'notification-pending': notification.activitable.status === 'pending' }">
             <div class="tile tile-centered tile-activity">
               <div class="tile-icon">
                 <img :src="notification.user.avatar_url" class="avatar avatar-md" :alt="notification.user.name">
