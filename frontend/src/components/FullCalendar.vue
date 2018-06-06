@@ -221,7 +221,7 @@ export default {
               attendance = tmpAttendance
             } else if (!holiday) {
               attendance = Object.assign({}, attendance, {
-                off_status: this.today.isAfter(currentDay, 'day') ? 'leave' : ''
+                off_status: this.today.isAfter(currentDay, 'day') && !this.currentCompany.breakdays.includes(currentDay.format('dddd').toLowerCase()) ? 'leave' : ''
               })
             }
           }
