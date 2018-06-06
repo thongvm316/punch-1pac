@@ -113,3 +113,5 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
     resource '/', headers: :any, methods: %i[get]
   end
 end
+
+ActiveModelSerializers.logger = ActiveSupport::TaggedLogging.new(ActiveSupport::Logger.new('/dev/null'))
