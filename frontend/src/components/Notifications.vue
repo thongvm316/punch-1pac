@@ -73,8 +73,7 @@ import flatPickr from 'vue-flatpickr-component'
 import flatpickrLocale from '../mixins/flatpickr-locale'
 import dropdown from '../mixins/dropdown'
 import modal from '../mixins/modal'
-import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
-import { SET_INTERVAL_FETCH_NOTIFICATIONS } from '../store/mutation-types'
+import { mapState, mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'notifications',
@@ -83,7 +82,8 @@ export default {
   data() {
     return {
       notification: '',
-      rejectReason: ''
+      rejectReason: '',
+      fetchingNotifications: null
     }
   },
 
@@ -92,7 +92,7 @@ export default {
   },
 
   computed: {
-    ...mapState('notifications', ['hasIntervalFetchNotifications', 'unreadNotificationsCount', 'headerNotifications', 'pager']),
+    ...mapState('notifications', ['unreadNotificationsCount', 'headerNotifications', 'pager']),
 
     ...mapGetters('notifications', ['displayNotificationsCount'])
   },
@@ -127,8 +127,6 @@ export default {
       'rejectNotificationRequest'
     ]),
 
-    ...mapMutations('notifications', [SET_INTERVAL_FETCH_NOTIFICATIONS]),
-
     openRequestModal(notification) {
       this.isAddModalOpen = !this.isAddModalOpen
       this.notification = notification
@@ -140,11 +138,13 @@ export default {
   },
 
   created() {
-    if (!this.hasIntervalFetchNotifications) {
-      this.getHeaderNotifications().then(() => {
-        this[SET_INTERVAL_FETCH_NOTIFICATIONS](setInterval(this.getNewHeaderNotifications, 10000))
-      })
-    }
+    this.getHeaderNotifications().then(() => {
+      this.fetchingNotifications = setInterval(this.getNewHeaderNotifications, 10000)
+    })
+  },
+
+  destroyed() {
+    clearInterval(this.fetchingNotifications)
   }
 }
 </script>

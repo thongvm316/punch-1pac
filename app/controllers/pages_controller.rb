@@ -19,9 +19,5 @@ class PagesController < ApplicationController
 
   def contact; end
 
-  def page_404; end
-
   def page_403; end
-
-  def page_500; end
 end

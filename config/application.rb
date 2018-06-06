@@ -46,6 +46,7 @@ module Punch
 
     config.assets.paths << Rails.root.join('app', 'assets', 'files')
     config.assets.paths << Rails.root.join('frontend', 'node_modules')
+    config.assets.precompile += %w[pghero/favicon.png]
     config.assets.enabled = true
     config.assets.gzip = false
     config.assets.css_compressor = :sass
