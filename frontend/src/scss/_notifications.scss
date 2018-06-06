@@ -62,8 +62,7 @@
       border-bottom: 0;
     }
 
-    &.notification-pending,
-    &:hover {
+    &.notification-pending:hover {
       cursor: pointer;
       background-color: $bg-color;
     }
