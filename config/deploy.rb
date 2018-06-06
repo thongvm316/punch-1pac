@@ -119,4 +119,15 @@ namespace :deploy do
       end
     end
   end
+
+  desc 'pghero track query stats over time'
+  task :track_query_stats do
+    on roles(:app) do
+      within current_path do
+        with(rails_env: fetch(:stage)) do
+          execute :bundle, :exec, :rake, 'pghero:capture_query_stats'
+        end
+      end
+    end
+  end
 end
