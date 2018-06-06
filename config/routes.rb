@@ -77,7 +77,20 @@ Rails.application.routes.draw do
     get '*path' => 'dashboard#index'
   end
 
-  root to: 'pages#top'
+  require 'sidekiq/web'
+  Sidekiq::Web.set :sessions, false
+  Sidekiq::Web.set :session_secret, Rails.application.secrets[:secret_key_base]
+  authenticate :admin do
+    mount Sidekiq::Web => '/sidekiq'
+  end
+
+  authenticate :admin do
+    mount PgHero::Engine, at: 'pghero'
+  end
+
+  devise_for :admins, ActiveAdmin::Devise.config
+  ActiveAdmin.routes(self)
+
   get 'get-started' => 'pages#get_started'
   get 'help'        => 'pages#help'
   get 'terms'       => 'pages#terms'
@@ -85,9 +98,8 @@ Rails.application.routes.draw do
   get 'contact'     => 'pages#contact'
   get 'features'    => 'pages#features'
   get '403'         => 'pages#page_403' if Rails.env.development?
-  get '500'         => 'pages#page_500' if Rails.env.development?
-  devise_for :admins, ActiveAdmin::Devise.config
-  ActiveAdmin.routes(self)
+
+  root to: 'pages#top'
 
   get '*path' => 'pages#page_404'
 end
