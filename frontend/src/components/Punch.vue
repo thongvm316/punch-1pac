@@ -26,7 +26,8 @@ export default {
   data() {
     return {
       isPunching: false,
-      currentTime: null
+      currentTime: null,
+      timer: null
     }
   },
 
@@ -66,7 +67,11 @@ export default {
   created() {
     if (!this.isInited) this.initAttendance(window.initialStates().attendance)
     this.updateCurrentTime()
-    setInterval(this.updateCurrentTime, 1 * 1000)
+    this.timer = setInterval(this.updateCurrentTime, 1 * 1000)
+  },
+
+  destroyed() {
+    clearInterval(this.timer)
   }
 }
 </script>
