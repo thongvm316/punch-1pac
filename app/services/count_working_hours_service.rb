@@ -8,7 +8,9 @@ class CountWorkingHoursService
   end
 
   def execute
-    return 0 if !@business_day || !@left_at || !@attended_at
+    return 0 if !@left_at || !@attended_at
+
+    return @left_at - @attended_at unless @business_day
 
     @ts_business_day = convert_business_day_to_timestamp
 
