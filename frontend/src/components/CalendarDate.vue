@@ -46,6 +46,8 @@ export default {
     ...mapState('initialStates', ['currentCompany', 'meta']),
 
     isWeekend() {
+      if (this.localAttendance.attending_status) return false
+
       return this.currentCompany.breakdays.includes(
         this.$moment(this.localAttendance.day)
           .locale('en')
