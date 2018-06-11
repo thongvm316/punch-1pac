@@ -18,7 +18,7 @@ class Api::V1::UsersController < Api::V1::BaseController
 
   def today_attendances
     authorize!
-    users = current_company.groups.find(params[:group_id]).users.with_today_attendance
+    users = current_company.groups.find(params[:group_id]).users.with_today_attendance.order(name: :asc)
     render json: users, each_serializer: UserTodayAttendanceSerializer, status: :ok
   end
 
