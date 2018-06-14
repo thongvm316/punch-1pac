@@ -4,7 +4,7 @@ FactoryBot.define do
   factory :user do
     association(:company, factory: :company, strategy: :build)
     role 'member'
-    name { Faker::Name.name }
+    name 'John Kenedy'
     gender 'male'
     position 'Backend Developer'
     language 'en'
