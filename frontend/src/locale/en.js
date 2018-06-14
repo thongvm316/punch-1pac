@@ -553,7 +553,8 @@ export default {
     },
     group: {
       createSuccess: 'Group is created',
-      updateSuccess: 'Group is updated'
+      updateSuccess: 'Group is updated',
+      addMemberSuccess: 'New member has been added'
     },
     request: {
       createSuccess: 'Request is created',

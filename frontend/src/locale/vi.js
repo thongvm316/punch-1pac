@@ -553,7 +553,8 @@ export default {
     },
     group: {
       createSuccess: 'Nhóm đã được tạo',
-      updateSuccess: 'Thông tin nhóm đã được cập nhật'
+      updateSuccess: 'Thông tin nhóm đã được cập nhật',
+      addMemberSuccess: 'Đã thêm thành viên mới'
     },
     request: {
       createSuccess: 'Yêu cầu mới đã được tạo',

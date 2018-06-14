@@ -147,9 +147,12 @@ export default {
 
     ...mapActions('group', ['getGroup', 'addGroupUser', 'activateGroupUser', 'deactivateGroupUser', 'removeGroupUser', 'clearGroupErrors', 'deleteGroup']),
 
+    ...mapActions('flash', ['setFlashMsg']),
+
     localAddGroupUser() {
       this.addGroupUser({ groupId: this.$route.params.id, user: this.selectedUser }).then(() => {
         this.selectedUser = null
+        this.setFlashMsg({ message: this.$t('messages.group.addMemberSuccess') })
       })
     }
   },
