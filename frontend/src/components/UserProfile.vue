@@ -97,7 +97,7 @@ export default {
           this.$emit('afterUserProfileUpdated')
         })
         .catch(error => {
-          if (error.response && error.response.status === 422) this.errors = error.response.data
+          if (error.response && error.response.status === 422) this.errors = error.response.data.errors
         })
     },
 
