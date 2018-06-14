@@ -19,12 +19,13 @@ RSpec.describe User, type: :model do
     subject { build :user }
     it { should validate_presence_of(:name) }
     it { should validate_length_of(:name).is_at_most(100) }
+    it { should allow_values('nguyễn ABC', 'nguyen abc').for(:name) }
+    it { should_not allow_values('明母', 'ははへへ', 'ケケカカ').for(:name) }
     it { should validate_presence_of(:email) }
     it { should validate_length_of(:email).is_at_most(100) }
     it { should validate_uniqueness_of(:email).ignoring_case_sensitivity }
     it { should validate_presence_of(:language) }
     it { should validate_inclusion_of(:language).in_array(I18n.available_locales.map(&:to_s)) }
-    # it { should validate_presence_of(:user_permissions) }
   end
 
   describe '#forgot_punch_in_days_in_month' do

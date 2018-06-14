@@ -35,6 +35,7 @@
 class User < ApplicationRecord
   has_secure_password
 
+  REGEX_VALID_NAME = /\A[a-z\s]+\z/i
   REGEX_VALID_EMAIL = /\A([\w+\-].?)+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i
   RESET_PASSWORD_TOKEN_EXPIRY = 1800.0
 
@@ -60,6 +61,7 @@ class User < ApplicationRecord
   validates :email, presence: true, uniqueness: true, length: { maximum: 100 }, format: { with: REGEX_VALID_EMAIL }
   validates :password, length: { minimum: 6, maximum: 32 }, allow_nil: true
   validates :language, presence: true, inclusion: { in: I18n.available_locales.map(&:to_s) }
+  validate :name_must_be_latin
 
   include ImageUploader::Attachment.new(:avatar)
 
@@ -146,5 +148,30 @@ class User < ApplicationRecord
   def current_session(request)
     client = DeviceDetector.new(request.user_agent)
     sessions.find_by(client: client.name, device_type: client.device_type, ip_address: request.remote_ip, os: "#{client.os_name}_#{client.os_full_version}")
+  end
+
+  def name_must_be_latin
+    return unless self.name_changed?
+    name = User.vi_to_latin(self.name)
+    errors.add(:name, :invalid) unless REGEX_VALID_NAME.match?(name)
+  end
+
+  def self.vi_to_latin(str)
+    str.gsub!(/(à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ)/, 'a')
+    str.gsub!(/(è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ)/, 'e')
+    str.gsub!(/(ì|í|ị|ỉ|ĩ)/, 'i')
+    str.gsub!(/(ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ)/, 'o')
+    str.gsub!(/(ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ)/, 'u')
+    str.gsub!(/(ỳ|ý|ỵ|ỷ|ỹ)/, 'y')
+    str.gsub!(/(đ)/, 'd')
+
+    str.gsub!(/(À|Á|Ạ|Ả|Ã|Â|Ầ|Ấ|Ậ|Ẩ|Ẫ|Ă|Ằ|Ắ|Ặ|Ẳ|Ẵ)/, 'A')
+    str.gsub!(/(È|É|Ẹ|Ẻ|Ẽ|Ê|Ề|Ế|Ệ|Ể|Ễ)/, 'E')
+    str.gsub!(/(Ì|Í|Ị|Ỉ|Ĩ)/, 'I')
+    str.gsub!(/(Ò|Ó|Ọ|Ỏ|Õ|Ô|Ồ|Ố|Ộ|Ổ|Ỗ|Ơ|Ờ|Ớ|Ợ|Ở|Ỡ)/, 'O')
+    str.gsub!(/(Ù|Ú|Ụ|Ủ|Ũ|Ư|Ừ|Ứ|Ự|Ử|Ữ)/, 'U')
+    str.gsub!(/(Ỳ|Ý|Ỵ|Ỷ|Ỹ)/, 'Y')
+    str.gsub!(/(Đ)/, 'D')
+    str
   end
 end
