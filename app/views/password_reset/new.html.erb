@@ -20,16 +20,16 @@
 
   <div class="panel">
     <div class="panel-header text-center">
-      <h1 class="panel-title h3 mt-10"><%= t('password_reset.new.title') %></h1>
-      <p class="panel-subtitle"><%= t('password_reset.new.description') %></p>
+      <h1 class="panel-title h3 mt-10"><%= t('.title') %></h1>
+      <p class="panel-subtitle"><%= t('.description') %></p>
     </div>
     <div class="panel-body">
       <%= form_with(model: @user, url: password_reset_url, method: :post, local: true) do |f| %>
         <div class="form-group">
-          <%= f.email_field :email, class: 'form-input', placeholder: t('password_reset.new.email') %>
+          <%= f.email_field :email, class: 'form-input', placeholder: t('.email') %>
         </div>
         <div class="form-group">
-          <%= f.submit t('password_reset.new.send_link'), class: 'btn btn-block' %>
+          <%= f.submit t('.send_link'), class: 'btn btn-block' %>
         </div>
       <% end %>
     </div>
