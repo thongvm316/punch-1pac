@@ -25,6 +25,16 @@ ja:
       password: Password
       password_confirmation: Password Confirmation
       reset_password: Reset Password
+  group:
+    report:
+      name: Name
+      email: Email
+      attend_ok: Attend Ok
+      attend_late: Attend Late
+      leave_ok: Leave Ok
+      leave_early: Leave Early
+      annual_leave: Annual Leave
+      working_hours: Working Hours
   activerecord:
     errors:
       messages:
@@ -159,6 +169,7 @@ ja:
       wrong_length: は%{count}文字で入力してください
       other_than: は%{count}以外の値にしてください
       incorrect: is incorrect
+      existed_attendance: は不正な値です. Because you already punched on this day
     template:
       body: 次の項目を確認してください
       header:
@@ -229,13 +240,3 @@ ja:
       long: "%Y年%m月%d日(%a) %H時%M分%S秒 %z"
       short: "%y/%m/%d %H:%M"
     pm: 午後
-  group:
-    report:
-      name: Name
-      email: Email
-      attend_ok: Attend Ok
-      attend_late: Attend Late
-      leave_ok: Leave Ok
-      leave_early: Leave Early
-      annual_leave: Annual Leave
-      working_hours: Working Hours

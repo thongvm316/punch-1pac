@@ -18,6 +18,7 @@
 #
 # Indexes
 #
+#  index_attendances_on_day              (day)
 #  index_attendances_on_user_id          (user_id)
 #  index_attendances_on_user_id_and_day  (user_id,day) UNIQUE
 #

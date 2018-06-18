@@ -214,12 +214,13 @@ export default {
           if (tmpAttendance && tmpAttendance.off_status === 'annual_leave') attendance = Object.assign({}, attendance, tmpAttendance)
 
           // A valid day is a day before today and after current user's join date
-          if (this.today.isSameOrAfter(currentDay, 'day') && currentDay.isSameOrAfter(userJoinDate, 'day')) {
+          if (this.today.isSameOrAfter(currentDay, 'day')) {
             // If current user already attended on current day then set attendance information
             // Else if current user did not attend on current day then check if current day is weekend or unpaid leave day
+            // Only display when currentDay is same or after user created date
             if (tmpAttendance) {
               attendance = tmpAttendance
-            } else if (!holiday) {
+            } else if (!holiday && currentDay.isSameOrAfter(userJoinDate, 'day')) {
               attendance = Object.assign({}, attendance, {
                 off_status: this.today.isAfter(currentDay, 'day') && !this.currentCompany.breakdays.includes(currentDay.format('dddd').toLowerCase()) ? 'leave' : ''
               })

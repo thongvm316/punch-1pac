@@ -19,11 +19,11 @@
 #
 # Indexes
 #
-#  index_requests_on_user_id  (user_id)
+#  index_requests_on_attendance_day  (attendance_day)
+#  index_requests_on_user_id         (user_id)
 #
 
 class Request < ApplicationRecord
-  belongs_to :attendance, optional: true
   belongs_to :user, class_name: 'User', foreign_key: 'user_id'
   belongs_to :admin, class_name: 'User', foreign_key: 'admin_id', optional: true
   has_one :activity, as: :activitable, dependent: :destroy
@@ -37,6 +37,7 @@ class Request < ApplicationRecord
   validates :reason, presence: true, length: { maximum: 500 }
   validate :both_attended_at_left_at_cannot_be_blank, if: -> { attendance? }
   validate :attended_at_cannot_be_greater_than_left_at, if: -> { attendance? }
+  validate :cannot_request_day_off_on_punched_day, if: -> { annual_leave? }
 
   scope :for_user, ->(user, pself = nil) {
     return user.requests if pself
@@ -62,6 +63,10 @@ class Request < ApplicationRecord
   end
 
   private
+
+  def cannot_request_day_off_on_punched_day
+    errors.add(:attendance_day, :existed_attendance) if Attendance.exists?(day: attendance_day)
+  end
 
   def attended_at_cannot_be_greater_than_left_at
     errors.add(:attended_at, :less_than, count: 'left at') if attended_at && left_at && attended_at.strftime('%H:%M') > left_at.strftime('%H:%M')

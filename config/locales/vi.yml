@@ -25,6 +25,16 @@ vi:
       password: Password
       password_confirmation: Password Confirmation
       reset_password: Reset Password
+  group:
+    report:
+      name: Họ tên
+      email: Địa chỉ email
+      attend_ok: Đến đúng giờ
+      attend_late: Đến trễ
+      leave_ok: Về đúng giờ
+      leave_early: Về sớm
+      annual_leave: Nghỉ phép
+      working_hours: Số giờ làm việc
   activerecord:
     errors:
       messages:
@@ -154,6 +164,7 @@ vi:
       wrong_length: độ dài không đúng (phải là %{count} ký tự)
       other_than: cần phải khác %{count}
       incorrect: không đúng
+      existed_attendance: không hợp lệ. Tại vì bạn đã điểm danh vào ngày này
     template:
       body: 'Có lỗi với các mục sau:'
       header:
@@ -226,13 +237,3 @@ vi:
       long: "%d %B, %Y %H:%M"
       short: "%d %b %H:%M"
     pm: chiều
-  group:
-    report:
-      name: Họ tên
-      email: Địa chỉ email
-      attend_ok: Đến đúng giờ
-      attend_late: Đến trễ
-      leave_ok: Về đúng giờ
-      leave_early: Về sớm
-      annual_leave: Nghỉ phép
-      working_hours: Số giờ làm việc

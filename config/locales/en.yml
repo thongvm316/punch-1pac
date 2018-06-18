@@ -25,6 +25,16 @@ en:
       password: Password
       password_confirmation: Password Confirmation
       reset_password: Reset Password
+  group:
+    report:
+      name: Name
+      email: Email
+      attend_ok: Attend Ok
+      attend_late: Attend Late
+      leave_ok: Leave Ok
+      leave_early: Leave Early
+      annual_leave: Annual Leave
+      working_hours: Working Hours
   activerecord:
     errors:
       messages:
@@ -165,6 +175,7 @@ en:
         other: is the wrong length (should be %{count} characters)
       other_than: must be other than %{count}
       incorrect: is incorrect
+      existed_attendance: is invalid. Because you already punched on this day
     template:
       body: 'There were problems with the following fields:'
       header:
@@ -237,13 +248,3 @@ en:
       long: "%B %d, %Y %H:%M"
       short: "%d %b %H:%M"
     pm: pm
-  group:
-    report:
-      name: Name
-      email: Email
-      attend_ok: Attend Ok
-      attend_late: Attend Late
-      leave_ok: Leave Ok
-      leave_early: Leave Early
-      annual_leave: Annual Leave
-      working_hours: Working Hours
