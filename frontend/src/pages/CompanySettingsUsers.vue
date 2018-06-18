@@ -1,7 +1,7 @@
 <template>
   <setting-layout sidebar-type="company" :title="$t('company.title')" :subtitle="$t('company.users.title')">
     <div class="toolbar mt-5 clearfix">
-      <input type="search" class="form-input" :placeholder="$t('company.users.placeholder.filterByEmail')" v-model="email">
+      <input type="search" class="form-input" :placeholder="$t('attendances.placeholder.filterByUser')" v-model="searchText">
       <router-link to="/company/settings/users/add" tag="button" class="btn btn-success float-right">
         {{ $t('company.users.btn.add') }}
       </router-link>
@@ -19,7 +19,7 @@
         <th>{{ $t('company.users.tableHeader.actions') }}</th>
       </thead>
       <tbody>
-        <tr v-for="user in filterByEmail(email)" :class="{ 'deactivated': !user.activated }">
+        <tr v-for="user in filterByEmail(searchText)" :class="{ 'deactivated': !user.activated }">
           <td>
             <div class="tile tile-centered">
               <div class="tile-icon">
@@ -69,7 +69,7 @@ import { mapState, mapGetters, mapActions } from 'vuex'
 export default {
   data() {
     return {
-      email: '',
+      searchText: '',
       selectedUser: null
     }
   },

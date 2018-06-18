@@ -8,6 +8,15 @@ const state = {
   usersNotInGroup: []
 }
 
+const getters = {
+  filterUsers(state) {
+    return function(query) {
+      const regex = new RegExp(`${query.trim()}`, 'gi')
+      return query ? state.group.users.filter(user => (user.name.match(regex) || user.email.match(regex))) : state.group.users
+    }
+  }
+}
+
 const mutations = {
   [types.RECEIVE_GROUP](state, payload) {
     state.group = payload
@@ -162,6 +171,7 @@ const actions = {
 export default {
   namespaced: true,
   state,
+  getters,
   mutations,
   actions
 }

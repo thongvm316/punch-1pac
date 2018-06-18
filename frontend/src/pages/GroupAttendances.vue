@@ -11,7 +11,7 @@
         <option slot="placeholder" value="">{{ $t('attendances.placeholder.filterByStatus') }}</option>
       </attendance-status-select>
 
-      <filter-user-box :queryParams="{ group_id: this.$route.params.id, type: 'users_in_group', per_page: 1000 }" :placeholder="$t('attendances.placeholder.filterByUser')" :user.sync="selectedUser"/>
+      <input type="search" class="form-input filter-input" :placeholder="$t('attendances.placeholder.filterByUser')" v-model="searchText">
     </div>
 
     <table class="table bg-light mt-5">
@@ -24,7 +24,7 @@
         <th>{{ $t('attendances.tableHeader.status') }}</th>
       </thead>
       <tbody>
-        <tr v-for="attendance in attendances">
+        <tr v-for="attendance in filterAttendances(searchText)">
           <td>
             <div class="tile tile-centered">
               <div class="tile-icon">
@@ -54,18 +54,17 @@
 import MainLayout from '../layouts/Main'
 import Pagination from '../components/Pagination'
 import GroupTab from '../components/GroupTab'
-import FilterUserBox from '../components/FilterUserBox'
 import AttendanceStatusSelect from '../components/AttendanceStatusSelect'
 import flatPickr from 'vue-flatpickr-component'
 import flatpickrLocale from '../mixins/flatpickr-locale'
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapActions, mapGetters } from 'vuex'
 
 export default {
   mixins: [flatpickrLocale],
 
   data() {
     return {
-      selectedUser: null,
+      searchText: '',
       dateRange: [this.$moment().format('YYYY-MM-DD'), this.$moment().format('YYYY-MM-DD')],
       params: {
         self: null,
@@ -79,7 +78,6 @@ export default {
   },
 
   components: {
-    FilterUserBox,
     MainLayout,
     GroupTab,
     AttendanceStatusSelect,
@@ -90,7 +88,9 @@ export default {
   computed: {
     ...mapState('groupAttendances', ['pager', 'attendances', 'usersInGroup']),
 
-    ...mapState('group', ['group'])
+    ...mapState('group', ['group']),
+
+    ...mapGetters('groupAttendances', ['filterAttendances'])
   },
 
   methods: {
@@ -116,10 +116,6 @@ export default {
       const dates = this.dateRange.split(' ')
       this.params.from_date = dates[0]
       this.params.to_date = dates[2]
-    },
-
-    selectedUser: function() {
-      this.params.user_id = this.selectedUser ? this.selectedUser.id : ''
     }
   }
 }
