@@ -13,8 +13,8 @@
 <div class="main main-mt-0">
   <div class="contact bg-linear-blue">
     <div class="container contact-container">
-      <h1 class="text-center">Get Started</h1>
-      <p class="text-center">Interested in our production, want to give it a try.<br>Let's talk with us</p>
+      <h1 class="text-center"><%= t('.title') %></h1>
+      <p class="text-center"><%= t('.instruction_html') %></p>
 
       <div class="contact-form">
         <form class="form" action="https://docs.google.com/forms/u/1/d/e/1FAIpQLSdzeEiBKj54pi8nmXX7wJK8MKuyYzDRddJimTNpLRTKFJSW0Q/formResponse" target="_self" method="POST" id="mG61Hd">
@@ -24,27 +24,27 @@
           <input type="hidden" name="fbzx" value="3698132909207194506">
 
           <div class="form-group">
-            <label class="form-label">Company Name</label>
+            <label class="form-label"><%= t('.label.company_name') %></label>
             <input type="text" class="form-input" autocomplete="off" name="entry.11265794" value="" required>
           </div>
 
           <div class="form-group">
-            <label class="form-label">Email</label>
+            <label class="form-label"><%= t('.label.email') %></label>
             <input type="email" class="form-input" autocomplete="off" name="entry.1853574392" value="" required>
           </div>
 
           <div class="form-group">
-            <label class="form-label">Phone Number</label>
+            <label class="form-label"><%= t('.label.phone_number') %></label>
             <input type="text" class="form-input" autocomplete="off" name="entry.477376212" value="" required>
           </div>
 
           <div class="form-group">
-            <label class="form-label">Message</label>
+            <label class="form-label"><%= t('.label.message') %></label>
             <textarea class="form-input" name="entry.1627838314" required></textarea>
           </div>
 
           <div class="form-group">
-            <button type="submit" class="btn">Submit</button>
+            <button type="submit" class="btn"><%= t('.submit') %></button>
           </div>
         </form>
       </div>

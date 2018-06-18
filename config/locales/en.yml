@@ -277,4 +277,25 @@ en:
       contact_us: Contact us
       terms: Terms
       privacy: Privacy
-
+    get_started_block:
+      title: Free trial up to 30 days sign up now !
+      get_started: Get Started
+  pages:
+    contact:
+      title: Contact Us
+      instruction: Have a question, found a bug, or wish us did something more? Let us know! Also, be sure to check out our
+      features_link: Features page.
+      label:
+        name: Name
+        email: Email
+        message: Message
+      submit: Submit
+    get_started:
+      title: Get Started
+      instruction_html: Interested in our production, want to give it a try.<br>Let's talk with us
+      label:
+        comapny_name: Company Name
+        email: Email
+        phone_number: Phone Number
+        message: Message
+      submit: Submit
