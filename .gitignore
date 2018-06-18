@@ -39,6 +39,7 @@ Thumbs.db
 .idea
 *.bak
 
+/bundle
 coverage
 config/secrets.yml
 config/database.yml
