@@ -4,8 +4,8 @@
 
       <div class="toolbar mt-5 clearfix">
         <month-year-picker v-model="dateData"/>
-          <filter-user-box :queryParams="{ group_id: this.$route.params.id, type: 'users_in_group', per_page: 1000 }" :placeholder="$t('attendances.placeholder.filterByUser')" :user.sync="selectedUser"/>
-            <button class="btn btn-success float-right" @click="exportCsvFile">{{ $t('groups.btn.export') }}</button>
+        <input type="search" class="form-input filter-input" :placeholder="$t('attendances.placeholder.filterByUser')" v-model="searchText">
+        <button class="btn btn-success float-right" @click="exportCsvFile">{{ $t('groups.btn.export') }}</button>
       </div>
       <table class="table sortable-table bg-light mt-5">
         <thead>
@@ -45,14 +45,13 @@
 import MonthYearPicker from '../components/MonthYearPicker'
 import MainLayout from '../layouts/Main'
 import GroupTab from '../components/GroupTab'
-import FilterUserBox from '../components/FilterUserBox'
 import { mapState, mapActions } from 'vuex'
 import axios from 'axios'
 
 export default {
   data() {
     return {
-      selectedUser: null,
+      searchText: '',
       dateData: {
         date: this.$moment().format('YYYY-MM-DD'),
         type: 'month'
@@ -65,8 +64,7 @@ export default {
   components: {
     MainLayout,
     GroupTab,
-    MonthYearPicker,
-    FilterUserBox
+    MonthYearPicker
   },
 
   computed: {
@@ -98,11 +96,8 @@ export default {
         })
       }
 
-      if (this.selectedUser) {
-        results = results.filter(result => result.id === this.selectedUser.id)
-      }
-
-      return results
+      const regex = new RegExp(`${this.searchText.trim()}`, 'gi')
+      return this.name ? results.filter(result => (result.name.match(regex)) || result.email.match(regex)) : results
     }
   },
 
