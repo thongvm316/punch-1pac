@@ -4,6 +4,7 @@ AllCops:
     - 'db/schema.rb'
     - 'doc/**/*'
     - 'frontend/**/*'
+    - 'bundle/**/*'
   DisplayCopNames: true
   DisplayStyleGuide: true
   ExtraDetails: true
