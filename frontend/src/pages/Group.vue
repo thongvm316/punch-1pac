@@ -9,7 +9,7 @@
     <p class="form-input-hint text-dark">{{ $t('group.explain') }}</p>
 
     <div class="toolbar mt-5 clearfix" v-if="$auth('Group', currentUser, group.id).canEdit()">
-      <filter-user-box :queryParams="{ group_id: this.$route.params.id, type: 'users_in_group', per_page: 1000 }" :placeholder="$t('attendances.placeholder.filterByUser')" :user.sync="filteredUser"/>
+      <input type="search" class="form-input filter-input" :placeholder="$t('attendances.placeholder.filterByUser')" v-model="searchText">
       <div class="float-right">
         <button type="button" class="btn btn-error" @click="openDeleteGroupConfirmDialog" v-if="$auth('Group', currentUser, group).canDelete()">
         {{ $t('group.btn.delete') }}
@@ -28,7 +28,7 @@
         <th>{{ $t('group.tableHeader.actions') }}</th>
       </thead>
       <tbody>
-        <tr v-for="user in tmpGroupUsers" :class="{ 'deactivated': !user.activated }">
+        <tr v-for="user in filterUsers(searchText)" :class="{ 'deactivated': !user.activated }">
           <td>
             <div class="tile tile-centered">
               <div class="tile-icon">
@@ -88,13 +88,14 @@ import UserProfile from '../components/UserProfile'
 import GroupTab from '../components/GroupTab'
 import GroupForm from '../components/GroupForm'
 import FilterUserBox from '../components/FilterUserBox'
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapActions, mapGetters } from 'vuex'
 
 export default {
   mixins: [confirmDialog, modal],
 
   data() {
     return {
+      searchText: '',
       groupUsers: [],
       selectedUser: null,
       filteredUser: null,
@@ -114,15 +115,7 @@ export default {
   computed: {
     ...mapState('group', ['group']),
 
-    tmpGroupUsers: function() {
-      let filteredGroupUsers = this.group.users
-
-      if (this.filteredUser) {
-        filteredGroupUsers = filteredGroupUsers.filter(user => user.id === this.filteredUser.id)
-      }
-
-      return filteredGroupUsers
-    }
+    ...mapGetters('group', ['filterUsers'])
   },
 
   methods: {
@@ -172,10 +165,6 @@ export default {
       this.getGroup(this.$route.params.id).then(response => {
         this.groupUsers = response.data.users
       })
-    },
-
-    'group.users': function() {
-      this.groupUsers = this.group.users
     }
   }
 }
