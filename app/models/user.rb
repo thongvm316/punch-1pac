@@ -151,7 +151,7 @@ class User < ApplicationRecord
   end
 
   def name_must_be_latin
-    return unless self.name_changed?
+    return unless name_changed?
     name = User.vi_to_latin(self.name)
     errors.add(:name, :invalid) unless REGEX_VALID_NAME.match?(name)
   end

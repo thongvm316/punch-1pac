@@ -22,5 +22,16 @@ RSpec.describe Request, type: :model do
 
       it { should validate_presence_of(:admin) }
     end
+
+    context 'when request.kind = annual_leave and request.attendance_day is punched' do
+      let!(:attendance) { create :attendance, user: create(:user) }
+
+      subject { build :request, kind: :annual_leave, attendance_day: attendance.day, status: 'pending' }
+
+      it do
+        expect(subject.valid?).to be_falsey
+        expect(subject.errors.messages.to_json).to be_json_including(attendance_day: Array)
+      end
+    end
   end
 end

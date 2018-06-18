@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180606065703) do
+ActiveRecord::Schema.define(version: 20180618042056) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -77,6 +77,7 @@ ActiveRecord::Schema.define(version: 20180606065703) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "working_hours", default: 0, null: false
+    t.index ["day"], name: "index_attendances_on_day"
     t.index ["user_id", "day"], name: "index_attendances_on_user_id_and_day", unique: true
     t.index ["user_id"], name: "index_attendances_on_user_id"
   end
@@ -200,6 +201,7 @@ ActiveRecord::Schema.define(version: 20180606065703) do
     t.bigint "admin_id"
     t.integer "kind", default: 0, null: false
     t.date "attendance_day", null: false
+    t.index ["attendance_day"], name: "index_requests_on_attendance_day"
     t.index ["user_id"], name: "index_requests_on_user_id"
   end
 
