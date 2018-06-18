@@ -1,6 +1,6 @@
 <div class="auth-footer text-center">
-  <%= link_to "Help", url_for(action: 'help', controller: 'pages', only_path: false, subdomain: nil) %>
-  <%= link_to "Contact us", url_for(action: 'contact', controller: 'pages', only_path: false, subdomain: nil) %>
-  <%= link_to "Terms", url_for(action: 'terms', controller: 'pages', only_path: false, subdomain: nil) %>
-  <%= link_to "Privacy", url_for(action: 'privacy', controller: 'pages', only_path: false, subdomain: nil) %>
+  <%= link_to t('.help'), url_for(action: 'help', controller: 'pages', only_path: false, subdomain: nil) %>
+  <%= link_to t('.contact_us'), url_for(action: 'contact', controller: 'pages', only_path: false, subdomain: nil) %>
+  <%= link_to t('.terms'), url_for(action: 'terms', controller: 'pages', only_path: false, subdomain: nil) %>
+  <%= link_to t('.privacy'), url_for(action: 'privacy', controller: 'pages', only_path: false, subdomain: nil) %>
 </div>

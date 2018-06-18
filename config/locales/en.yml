@@ -20,11 +20,20 @@ en:
       description: Enter the email address you use to sign in, and we’ll send you a link to reset your password.
       email: Email
       send_link: Send Link
+    create:
+      valid_email: A password reset email has been sent to %{email}.
+      invalid_email: Invalid email. Please try another.
     edit:
       title: Reset your password
       password: Password
       password_confirmation: Password Confirmation
       reset_password: Reset Password
+      reset_token_expired: This reset password token is expired. Please try again.
+      reset_token_invalid: Invalid reset password token. Please try again.
+    update:
+      reset_token_expired: This reset password token is expired. Please try again.
+      reset_token_invalid: Invalid reset password token. Please try again.
+      password_reset_success: Password has been reset
   group:
     report:
       name: Name
@@ -248,3 +257,24 @@ en:
       long: "%B %d, %Y %H:%M"
       short: "%d %b %H:%M"
     pm: pm
+  shared:
+    header:
+      instruction: Please enter your company's namespace
+      errors: Company namespace is not found
+      go: Go
+      features: Features
+      sign_in: Sign In
+      help: Help
+      get_started: Get Started
+    footer:
+      help: Help
+      contact_us: Contact us
+      terms: Terms
+      privacy: Privacy
+      about: About
+    auth_footer:
+      help: Help
+      contact_us: Contact us
+      terms: Terms
+      privacy: Privacy
+

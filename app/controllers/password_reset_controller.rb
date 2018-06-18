@@ -15,12 +15,12 @@ class PasswordResetController < ApplicationController
         @user.init_password_reset_token!
         PasswordResetMailer.create(@user.id).deliver_later
         f.html do
-          flash[:notice] = "A password reset email has been sent to #{@user.email}."
+          flash[:notice] = t('.valid_email', email: @user.email)
           redirect_to login_url
         end
         f.json { head(200) }
       else
-        msg = 'Invalid email. Please try another.'
+        msg = t('.invalid_email')
         f.html do
           flash.now[:alert] = msg
           @user = User.new
@@ -34,26 +34,26 @@ class PasswordResetController < ApplicationController
   def edit
     @user = User.reset_password_token_valid?(params[:token])
   rescue AppErrors::ExpiredResetPwdToken
-    flash[:alert] = 'This reset password token is expired. Please try again.'
+    flash[:alert] = t('.reset_token_expired')
     redirect_to password_reset_url
   rescue AppErrors::InvalidResetPwdToken
-    flash[:alert] = 'Invalid reset password token. Please try again.'
+    flash[:alert] = t('.reset_token_invalid')
     redirect_to password_reset_url
   end
 
   def update
     @user = User.reset_password_token_valid?(params[:token])
     if @user.update(user_params.merge(reset_password_token: nil, password_changed: true))
-      flash[:notice] = 'Password has been reset'
+      flash[:notice] = t('.password_reset_success')
       redirect_to login_url
     else
       render :edit
     end
   rescue AppErrors::ExpiredResetPwdToken
-    flash[:alert] = 'This reset password token is expired. Please try again.'
+    flash[:alert] = t('.reset_token_expired')
     redirect_to password_reset_url
   rescue AppErrors::InvalidResetPwdToken
-    flash[:alert] = 'Invalid reset password token. Please try again.'
+    flash[:alert] = t('.reset_token_invalid')
     redirect_to password_reset_url
   end
 
