@@ -5,7 +5,7 @@ class GroupSerializer < ApplicationSerializer
   has_many :users, serializer: UserTodayAttendanceSerializer
 
   def users
-    object.users.unscope(where: :activated).with_today_attendance
+    object.users.unscope(where: :activated).with_today_attendance.order(name: :asc)
   end
 
   def image_url
