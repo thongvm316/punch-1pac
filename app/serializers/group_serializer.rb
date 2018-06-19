@@ -2,10 +2,10 @@
 
 class GroupSerializer < ApplicationSerializer
   attributes :id, :name, :image_url, :description
-  has_many :users, serializer: UserSerializer
+  has_many :users, serializer: UserTodayAttendanceSerializer
 
   def users
-    object.users.unscope(where: :activated)
+    object.users.unscope(where: :activated).with_today_attendance
   end
 
   def image_url

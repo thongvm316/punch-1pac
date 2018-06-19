@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 class UserTodayAttendanceSerializer < ActiveModel::Serializer
-  attributes :id, :name, :email, :avatar_url, :position, :gender, :left_at, :attended_at, :attendance_id
+  attributes :id, :email, :name, :avatar_url, :gender, :position, :owner, :role, :language, :password_changed,
+             :activated, :activated_at, :deactivated_at, :created_at, :left_at, :attended_at, :attendance_id
 
   def avatar_url
     ActionController::Base.helpers.asset_url(object.avatar_url)

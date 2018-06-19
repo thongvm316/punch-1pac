@@ -116,8 +116,16 @@ module JsonResponseHelper
       email: String,
       name: String,
       avatar_url: String,
-      position: nullable_response(String),
       gender: String,
+      position: nullable_response(String),
+      owner: boolean_response,
+      role: String,
+      language: String,
+      password_changed: boolean_response,
+      activated: boolean_response,
+      activated_at: date_response,
+      deactivated_at: nullable_response(date_response),
+      created_at: date_response,
       left_at: nullable_response(hour_min_response),
       attended_at: nullable_response(hour_min_response),
       attendance_id: nullable_response(Integer)
@@ -225,7 +233,7 @@ module JsonResponseHelper
       name:        String,
       image_url:   String,
       description: String,
-      users:       Array.new(users) { response_user }
+      users:       Array.new(users) { response_user_with_attendance }
     }
   end
 
