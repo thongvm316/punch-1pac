@@ -10,6 +10,7 @@ abort('The Rails environment is running in production mode!') if Rails.env.produ
 if ENV['RAILS_ENV'] == 'test'
   require 'simplecov'
   SimpleCov.start 'rails' do
+    add_filter '/bundle'
     add_group 'Controllers',  'app/controllers'
     add_group 'Models',       'app/models'
     add_group 'Serializers',  'app/serializers'
