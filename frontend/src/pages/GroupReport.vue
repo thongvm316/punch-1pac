@@ -5,7 +5,7 @@
       <div class="toolbar mt-5 clearfix">
         <month-year-picker v-model="dateData"/>
         <input type="search" class="form-input filter-input" :placeholder="$t('attendances.placeholder.filterByUser')" v-model="searchText">
-        <button class="btn btn-success float-right" @click="exportCsvFile">{{ $t('groups.btn.export') }}</button>
+        <button class="btn btn-success float-right" @click="exportCsvFile" :disabled="isDisable">{{ $t('groups.btn.export') }}</button>
       </div>
       <table class="table sortable-table bg-light mt-5">
         <thead>
@@ -51,6 +51,7 @@ import axios from 'axios'
 export default {
   data() {
     return {
+      isDisable: false,
       searchText: '',
       dateData: {
         date: this.$moment().format('YYYY-MM-DD'),
@@ -114,6 +115,7 @@ export default {
     },
 
     exportCsvFile() {
+      this.isDisable = true
       axios
         .get(`/groups/${this.$route.params.id}/report.csv`, {
           headers: { Accept: 'application/csv' },
@@ -126,8 +128,10 @@ export default {
           downloadLink.setAttribute('download', 'report.csv')
           document.body.appendChild(downloadLink)
           downloadLink.click()
+          this.isDisable = false
         })
         .catch(error => {
+          this.isDisable = false
           throw error
         })
     }

@@ -33,14 +33,16 @@
         type="button"
         class="btn btn-success btn-submit"
         v-if="!targetBusinessDay"
-        @click="localAddBusinessDay">
+        @click="localAddBusinessDay"
+        :disabled="isDisable">
         {{ $t('company.businessDays.btn.submit') }}
       </button>
       <button
         type="button"
         class="btn btn-success btn-submit"
         v-if="targetBusinessDay"
-        @click="localEditBusinessDay">
+        @click="localEditBusinessDay"
+        :disabled="isDisable">
         {{ $t('company.businessDays.btn.save') }}
       </button>
     </div>
@@ -57,6 +59,7 @@ export default {
 
   data() {
     return {
+      isDisable: false,
       params: {
         weekday: '',
         morning_started_at: '',
@@ -73,17 +76,23 @@ export default {
     ...mapActions('companyBusinessDays', ['addBusinessDay', 'updateBusinessDay', 'clearBusinessDayErrors']),
 
     localAddBusinessDay() {
+      this.isDisable = true
       this.addBusinessDay(this.params).then(response => {
         this.setFlashMsg({ message: this.$t('messages.businessDay.createSuccess') })
         this.$emit('afterModify')
+        this.isDisable = false
       })
+      .catch(() => { this.isDisable = false })
     },
 
     localEditBusinessDay() {
+      this.isDisable = true
       this.updateBusinessDay({ businessDayId: this.targetBusinessDay.id, updateParams: this.params }).then(response => {
         this.setFlashMsg({ message: this.$t('messages.businessDay.updateSuccess') })
         this.$emit('afterModify')
+        this.isDisable = false
       })
+      .catch(() => { this.isDisable = false })
     }
   },
 

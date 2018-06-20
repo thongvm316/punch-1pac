@@ -14,10 +14,10 @@
       <p class="form-input-hint" v-if="errors.reason">{{ $t('annualLeave.labels.reason') }} {{ errors.reason[0] }}</p>
     </div>
     <div class="form-group">
-      <button type="button" class="btn btn-success btn-submit" @click="create()" v-if="!request">
+      <button type="button" class="btn btn-success btn-submit" @click="create()" v-if="!request" :disabled="isDisable">
         {{ $t('annualLeave.submit') }}
       </button>
-      <button type="button" class="btn btn-success btn-submit" @click="update()" v-if="request">
+      <button type="button" class="btn btn-success btn-submit" @click="update()" v-if="request" :disabled="isDisable">
         {{ $t('annualLeave.save') }}
       </button>
     </div>
@@ -35,6 +35,7 @@ export default {
 
   data() {
     return {
+      isDisable: false,
       errors: {},
       params: {
         attendance_day: '',
@@ -53,25 +54,31 @@ export default {
     ...mapActions('flash', ['setFlashMsg']),
 
     create() {
+      this.isDisable = true
       axios
         .post('/requests', Object.assign(this.params, { kind: 'annual_leave' }))
         .then(response => {
           this.setFlashMsg({ message: this.$t('annualLeave.createSuccessMsg') })
           this.$emit('finishRequest')
+          this.isDisable = false
         })
         .catch(error => {
+          this.isDisable = false
           if (error.response && error.response.status === 422) this.errors = error.response.data.errors
         })
     },
 
     update() {
+      this.isDisable = true
       axios
         .put(`/requests/${this.request.id}`, Object.assign(this.params, { kind: 'annual_leave' }))
         .then(response => {
           this.setFlashMsg({ message: this.$t('annualLeave.updateSuccessMsg') })
           this.$emit('finishRequest')
+          this.isDisable = false
         })
         .catch(error => {
+          this.isDisable = false
           if (error.response && error.response.status === 422) this.errors = error.response.data.errors
         })
     }

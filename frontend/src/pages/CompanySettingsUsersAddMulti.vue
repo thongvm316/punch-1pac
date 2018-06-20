@@ -13,7 +13,7 @@
         <p class="form-input-hint text-error">{{ $t('company.users.addMulti.errorMsg', { lines: errors.lines.join(', ') }) }}</p>
       </div>
       <div class="form-group">
-        <button type="button" class="btn btn-success btn-submit" @click="upload(params)">{{ $t('company.users.addMulti.btn.submit') }}</button>
+        <button type="button" class="btn btn-success btn-submit" @click="upload(params)" :disabled="isDisable">{{ $t('company.users.addMulti.btn.submit') }}</button>
       </div>
     </form>
   </setting-layout>
@@ -28,6 +28,7 @@ import 'formdata-polyfill'
 export default {
   data() {
     return {
+      isDisable: false,
       errors: {},
       params: {
         csv_file: null
@@ -47,6 +48,8 @@ export default {
     ...mapActions('flash', ['setFlashMsg']),
 
     upload(params) {
+      this.isDisable = true
+
       if (!params.csv_file) return
       let formData = new FormData()
       formData.append('csv_file', params.csv_file)
@@ -55,8 +58,10 @@ export default {
         .then(response => {
           this.setFlashMsg({ message: this.$t('messages.user.addMultiSuccess') })
           this.errors = response.data.errors
+          this.isDisable = false
         })
         .catch(error => {
+          this.isDisable = false
           if (error.response && error.response.status === 422) this.errors = error.response.data.errors
           else throw error
         })

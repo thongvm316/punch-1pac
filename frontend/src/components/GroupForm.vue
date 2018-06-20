@@ -17,8 +17,8 @@
       <p class="form-input-hint" v-if="errors.description">{{ $t('group.labels.description') }} {{ errors.description[0] }}</p>
     </div>
     <div class="form-group">
-      <button type="button" class="btn btn-success btn-submit" @click="localAddGroup" v-if="!targetGroup">{{ $t('groups.btn.submit') }}</button>
-      <button type="button" class="btn btn-success btn-submit" @click="localEditGroup" v-if="targetGroup">{{ $t('group.btn.save') }}</button>
+      <button type="button" class="btn btn-success btn-submit" @click="localAddGroup" v-if="!targetGroup" :disabled="isDisable">{{ $t('groups.btn.submit') }}</button>
+      <button type="button" class="btn btn-success btn-submit" @click="localEditGroup" v-if="targetGroup" :disable="isDisable">{{ $t('group.btn.save') }}</button>
     </div>
   </div>
 </template>
@@ -33,6 +33,7 @@ export default {
 
   data() {
     return {
+      isDisable: false,
       params: {
         name: '',
         description: '',
@@ -50,23 +51,29 @@ export default {
     ...mapActions('group', ['updateGroup']),
 
     localAddGroup() {
+      this.isDisable = true
       this.addGroup(this.params)
         .then(response => {
           this.setFlashMsg({ message: this.$t('messages.group.createSuccess') })
           this.$emit('afterModify')
+          this.isDisable = false
         })
         .catch(error => {
+          this.isDisable = false
           if (error.response && error.response.status === 422) this.errors = error.response.data.errors
         })
     },
 
     localEditGroup() {
+      this.isDisable = true
       this.updateGroup({ groupId: this.targetGroup.id, editParams: this.params })
         .then(response => {
           this.setFlashMsg({ message: this.$t('messages.group.updateSuccess') })
           this.$emit('afterModify')
+          this.isDisable = false
         })
         .catch(error => {
+          this.isDisable = false
           if (error.response && error.response.status === 422) this.errors = error.response.data.errors
         })
     },

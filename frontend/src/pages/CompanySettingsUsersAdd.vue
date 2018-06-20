@@ -27,7 +27,7 @@
         <p class="form-input-hint" v-if="errors.group">{{ $t('company.users.add.labels.group') }} {{ errors.group[0] }}</p>
       </div>
       <div class="form-group">
-        <button type="button" class="btn btn-success btn-submit" @click="create(params)">{{ $t('company.users.add.btn.submit') }}</button>
+        <button type="button" class="btn btn-success btn-submit" @click="create(params)" :disabled="isDisable">{{ $t('company.users.add.btn.submit') }}</button>
       </div>
     </form>
   </setting-layout>
@@ -42,6 +42,7 @@ import { mapState, mapActions } from 'vuex'
 export default {
   data() {
     return {
+      isDisable: false,
       errors: {},
       params: {
         name: '',
@@ -65,10 +66,15 @@ export default {
     ...mapActions('flash', ['setFlashMsg']),
 
     create(params) {
+      this.isDisable = false
       axios
         .post('/users', { user: params }, { headers: { 'Content-Type': 'application/json' } })
-        .then(response => this.setFlashMsg({ message: this.$t('messages.user.addSuccess') }))
+        .then(response => {
+          this.setFlashMsg({ message: this.$t('messages.user.addSuccess') })
+          this.isDisable = false
+        })
         .catch(error => {
+          this.isDisable = false
           if (error.response && error.response.status === 422) this.errors = error.response.data.errors
           else throw error
         })

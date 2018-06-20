@@ -52,7 +52,7 @@
         <p class="form-input-hint" v-if="companyErrors.timezone">{{ $t('company.timezoneAndLanguage.labels.timezone') }} {{ companyErrors.timezone[0] }}</p>
       </div>
       <div class="form-group">
-        <button type="button" class="btn btn-success btn-submit" @click="localUpdateCompany">{{ $t('company.profile.btn.save') }}</button>
+        <button type="button" class="btn btn-success btn-submit" @click="localUpdateCompany" :disabled="isDisable">{{ $t('company.profile.btn.save') }}</button>
       </div>
     </form>
   </setting-layout>
@@ -65,6 +65,7 @@ import { mapState, mapActions } from 'vuex'
 export default {
   data() {
     return {
+      isDisable: false,
       params: {
         logo: '',
         name: '',
@@ -100,7 +101,12 @@ export default {
     },
 
     localUpdateCompany() {
-      this.updateCompany(this.params).then(response => this.setFlashMsg({ message: this.$t('messages.company.updateSuccess') }))
+      this.isDisable = true
+      this.updateCompany(this.params).then(response => {
+        this.setFlashMsg({ message: this.$t('messages.company.updateSuccess') })
+        this.isDisable = false
+      })
+      .catch(() => { this.isDisable = false })
     }
   },
 

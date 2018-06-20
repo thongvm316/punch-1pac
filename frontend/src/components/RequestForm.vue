@@ -23,8 +23,8 @@
       <p class="form-input-hint" v-if="errors.reason">{{ $t('attendances.labels.reason') }} {{ errors.reason[0] }}</p>
     </div>
     <div class="form-group">
-      <button type="button" class="btn btn-success btn-submit" @click="localAddRequest" v-if="attendance">{{ $t('attendances.btn.add') }}</button>
-      <button type="button" class="btn btn-success btn-submit" @click="localEditRequest" v-else>{{ $t('requests.btn.save') }}</button>
+      <button type="button" class="btn btn-success btn-submit" @click="localAddRequest" v-if="attendance" :disabled="isDisable">{{ $t('attendances.btn.add') }}</button>
+      <button type="button" class="btn btn-success btn-submit" @click="localEditRequest" v-else :disabled="isDisable">{{ $t('requests.btn.save') }}</button>
     </div>
   </div>
 </template>
@@ -43,6 +43,7 @@ export default {
 
   data() {
     return {
+      isDisable: false,
       day: '',
       params: {
         attendance_day: '',
@@ -67,17 +68,23 @@ export default {
     ...mapActions('flash', ['setFlashMsg']),
 
     localAddRequest() {
+      this.isDisable = true
       this.addRequest(this.params).then(response => {
         this.setFlashMsg({ message: this.$t('messages.request.createSuccess') })
         this.$emit('afterModify')
+        this.isDisable = false
       })
+      .catch(() => { this.isDisable = false })
     },
 
     localEditRequest() {
+      this.isDisable = true
       this.updateRequest({ id: this.request.id, params: this.params }).then(response => {
         this.setFlashMsg({ message: this.$t('messages.request.updateSuccess') })
         this.$emit('afterModify')
+        this.isDisable = false
       })
+      .catch(() => { this.isDisable = false })
     }
   },
 
