@@ -40,7 +40,7 @@
       <p class="form-input-hint" v-if="errors.role">{{ $t('user.profile.labels.role') }} {{ errors.role[0] }}</p>
     </div>
     <div class="form-group">
-      <button type="button" class="btn btn-success btn-submit" @click="updateUser">{{ $t('user.profile.btn.save') }}</button>
+      <button type="button" class="btn btn-success btn-submit" @click="updateUser" :disabled="isDisable">{{ $t('user.profile.btn.save') }}</button>
     </div>
   </form>
 </template>
@@ -54,6 +54,7 @@ import 'formdata-polyfill'
 export default {
   data() {
     return {
+      isDisable: false,
       params: {
         avatar: '',
         gender: '',
@@ -82,6 +83,7 @@ export default {
     ...mapMutations('companyUsers', [types.UPDATE_USER]),
 
     updateUser() {
+      this.isDisable = true
       let formData = new FormData()
       Object.keys(this.params).forEach(key => formData.set(`user[${key}]`, this.params[key] || ''))
 
@@ -95,8 +97,10 @@ export default {
           if (this.objectType === 'group') this[types.UPDATE_GROUP_USER](response.data)
           this.setFlashMsg({ message: this.$t('messages.user.updateProfileSuccess') })
           this.$emit('afterUserProfileUpdated')
+          this.isDisable = false
         })
         .catch(error => {
+          this.isDisable = false
           if (error.response && error.response.status === 422) this.errors = error.response.data.errors
         })
     },

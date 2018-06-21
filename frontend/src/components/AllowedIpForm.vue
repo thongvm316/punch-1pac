@@ -9,11 +9,13 @@
       <button
         class="btn btn-success btn-submit"
         @click="localAddIp"
-        v-if="!targetIp">{{ $t('company.allowedIPs.btn.submit') }}</button>
+        v-if="!targetIp"
+        :disabled="isDisable">{{ $t('company.allowedIPs.btn.submit') }}</button>
       <button
         class="btn btn-success btn-submit"
         @click="localEditIp"
-        v-if="targetIp">{{ $t('company.allowedIPs.btn.save') }}</button>
+        v-if="targetIp"
+        :disabled="isDisable">{{ $t('company.allowedIPs.btn.save') }}</button>
     </div>
   </div>
 </template>
@@ -28,6 +30,7 @@ export default {
 
   data() {
     return {
+      isDisable: false,
       params: ''
     }
   },
@@ -38,17 +41,23 @@ export default {
     ...mapActions('flash', ['setFlashMsg']),
 
     localAddIp() {
+      this.isDisable = true
       this.createIP({ ip_address: this.params }).then(response => {
         this.setFlashMsg({ message: this.$t('messages.ip.createSuccess') })
         this.$emit('afterModify')
+        this.isDisable = false
       })
+      .catch(() => { this.isDisable = false })
     },
 
     localEditIp() {
+      this.isDisable = true
       this.updateIP({ id: this.targetIp.id, ip_address: this.params }).then(response => {
         this.setFlashMsg({ message: this.$t('messages.ip.updateSuccess') })
         this.$emit('afterModify')
+        this.isDisable = false
       })
+      .catch(() => { this.isDisable = false })
     }
   },
 

@@ -17,7 +17,7 @@
         <p class="form-input-hint" v-if="errors.password_confirmation">{{ $t('user.password.labels.confirmNewPassword') }} {{ errors.password_confirmation[0] }}</p>
       </div>
       <div class="form-group">
-        <button type="button" class="btn btn-success btn-submit" @click="localUpdatePassword">{{ $t('user.password.btn.save') }}</button>
+        <button type="button" class="btn btn-success btn-submit" @click="localUpdatePassword" :disabled="isDisable">{{ $t('user.password.btn.save') }}</button>
       </div>
     </form>
   </setting-layout>
@@ -30,6 +30,7 @@ import { mapState, mapActions } from 'vuex'
 export default {
   data() {
     return {
+      isDisable: false,
       updateParams: {
         current_password: '',
         password: '',
@@ -44,6 +45,7 @@ export default {
     ...mapActions('flash', ['setFlashMsg']),
 
     localUpdatePassword() {
+      this.isDisable = true
       this.updatePassword(this.updateParams).then(response => {
         this.setFlashMsg({ message: this.$t('messages.user.updatePwdSuccess') })
         this.updateParams = {
@@ -52,7 +54,9 @@ export default {
           password_confirmation: ''
         }
         this.clearUserPasswordErrors()
+        this.isDisable = false
       })
+      .catch(() => { this.isDisable = false })
     }
   },
 

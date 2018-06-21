@@ -25,13 +25,15 @@
       <button
         class="btn btn-success btn-submit"
         @click="localAddHoliday"
-        v-if="!targetHoliday">
+        v-if="!targetHoliday"
+        :disabled="isDisable">
         {{ $t('company.holidays.btn.submit') }}
       </button>
       <button
         class="btn btn-success btn-submit"
         @click="localEditHoliday"
-        v-if="targetHoliday">
+        v-if="targetHoliday"
+        :disabled="isDisable">
         {{ $t('company.holidays.btn.save') }}
       </button>
     </div>
@@ -56,6 +58,7 @@ export default {
 
   data() {
     return {
+      isDisable: false,
       params: {
         name: '',
         started_at: '',
@@ -70,20 +73,26 @@ export default {
     ...mapActions('companyHolidays', ['createHoliday', 'updateHoliday', 'clearHolidayErrors']),
 
     localAddHoliday() {
+      this.isDisable = true
       this.createHoliday(this.params).then(response => {
         Object.keys(this.params).forEach(key => {
           this.params[key] = ''
         })
         this.setFlashMsg({ message: this.$t('messages.holiday.createSuccess') })
         this.$emit('afterModify')
+        this.isDisable = false
       })
+      .catch(() => { this.isDisable = false })
     },
 
     localEditHoliday() {
+      this.isDisable = true
       this.updateHoliday({ holidayID: this.targetHoliday.id, updateParams: this.params }).then(response => {
         this.setFlashMsg({ message: this.$t('messages.holiday.updateSuccess') })
         this.$emit('afterModify')
+        this.isDisable = false
       })
+      .catch(() => { this.isDisable = false })
     }
   },
 
