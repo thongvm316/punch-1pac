@@ -8,7 +8,7 @@ class Api::V1::RequestsController < Api::V1::BaseController
     authorize!
     requests = Request.for_user(current_user, params['self'])
                       .search_by(params)
-                      .includes(:admin, :user)
+                      .preload(:admin, :user)
                       .page(params[:page])
                       .per(params[:per_page])
                       .order('requests.id DESC')

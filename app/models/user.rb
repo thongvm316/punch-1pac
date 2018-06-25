@@ -67,6 +67,7 @@ class User < ApplicationRecord
 
   default_scope -> { where(activated: true) }
 
+  scope :by_name_or_email, ->(text) { where('lower(users.email) LIKE ? OR lower(users.name) LIKE ?', "%#{text.downcase}%", "%#{text.downcase}%") }
   scope :with_today_attendance, -> {
     sanitized_today_cond = sanitize_sql("attendances.day = '#{Time.current}'")
     select('users.*', 'attendances.id as attendance_id, attendances.attended_at as attended_at, attendances.left_at as left_at')
@@ -95,7 +96,7 @@ class User < ApplicationRecord
     q = q.not_in_group(params[:not_in_group_id]) if params[:not_in_group_id].present?
     q = q.where.not(id: params[:exclude_user_ids]) if params[:exclude_user_ids].present?
     q = q.by_group(current_user, params[:group_id]) if params[:type] && params[:type] == 'users_in_group'
-    q = q.where('lower(email) LIKE ? OR lower(name) LIKE ?', "%#{params[:name_or_email].downcase}%", "%#{params[:name_or_email].downcase}%") if params[:name_or_email].present?
+    q = q.by_name_or_email(params[:name_or_email]) if params[:name_or_email].present?
     q
   }
 

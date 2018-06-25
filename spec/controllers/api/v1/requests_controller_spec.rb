@@ -35,7 +35,7 @@ RSpec.describe Api::V1::RequestsController, type: :controller do
       context 'when params have group_id' do
         let!(:requests) { create_list :request, 3, user: request_creator }
 
-        subject { get :index, params: { group_id: group.id } }
+        subject { get :index, params: { group_id: group.id, name_or_email: request_creator.name } }
 
         its(:code) { is_expected.to eq '200' }
         its(:body) { is_expected.to be_json_as(requests: Array.new(result_count) { response_request }, meta: response_pagination) }
