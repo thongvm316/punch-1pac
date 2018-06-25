@@ -59,11 +59,11 @@ export default {
     },
 
     limitedLengthTitle(title) {
-      return `${title.trim().substring(0, 60)}...`
+      return title.length > 60 ? `${title.trim().substring(0, 60)}...` : title
     },
 
     limitedLengthDescription(description) {
-      return `${description.trim().substring(0, 80)}...`
+      return description > 80 ? `${description.trim().substring(0, 80)}...` : description
     }
   },
 
