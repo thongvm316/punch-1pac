@@ -16,7 +16,7 @@
                 <img class="group-avatar" :src="group.image_url" :alt="group.name">
               </div>
               <div class="tile-content">
-                <router-link tag="h2" :to="`/groups/${group.id}`" class="box-title">{{ group.name }}</router-link>
+                <router-link tag="h2" :to="`/groups/${group.id}`" class="box-title">{{ group.name | limitedLengthTitle }}</router-link>
                 <p class="group-description" v-if="group.description">{{ group.description | limitedLengthDescription }}</p>
                 <span>{{ $tc('groups.member', group.users.length, { count: group.users.length }) }}</span>
               </div>
@@ -58,8 +58,12 @@ export default {
       return userNum > 5 ? `+ ${userNum - 5}` : ''
     },
 
+    limitedLengthTitle(title) {
+      return `${title.trim().substring(0, 60)}...`
+    },
+
     limitedLengthDescription(description) {
-      return description.length > 80 ? `${description.trim().substring(0, 80)}...` : description
+      return `${description.trim().substring(0, 80)}...`
     }
   },
 
