@@ -43,8 +43,8 @@ export default {
       let last = this.pager.total_pages
       if (this.pager.current_page > this.step) {
         first = this.pager.current_page - this.step
-        last = this.pager.current_page + this.step <= this.pager.total_pages ? this.pager.current_page + this.step : this.pager.total_pages
       }
+      last = this.pager.current_page + this.step <= this.pager.total_pages ? this.pager.current_page + this.step : this.pager.total_pages
       for (let i = first; i <= last; i++) {
         items.push(i)
       }
