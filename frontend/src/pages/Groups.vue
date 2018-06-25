@@ -63,7 +63,7 @@ export default {
     },
 
     limitedLengthDescription(description) {
-      return description > 80 ? `${description.trim().substring(0, 80)}...` : description
+      return description.length > 80 ? `${description.trim().substring(0, 80)}...` : description
     }
   },
 
