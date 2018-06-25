@@ -26,7 +26,7 @@ RSpec.describe Request, type: :model do
     context 'when request.kind = annual_leave and request.attendance_day is punched' do
       let!(:attendance) { create :attendance, user: create(:user) }
 
-      subject { build :request, kind: :annual_leave, attendance_day: attendance.day, status: 'pending' }
+      subject { build :request, user: attendance.user, kind: :annual_leave, attendance_day: attendance.day, status: 'pending' }
 
       it do
         expect(subject.valid?).to be_falsey

@@ -65,7 +65,7 @@ class Request < ApplicationRecord
   private
 
   def cannot_request_day_off_on_punched_day
-    errors.add(:attendance_day, :existed_attendance) if Attendance.exists?(day: attendance_day)
+    errors.add(:attendance_day, :existed_attendance) if Attendance.exists?(user: user, day: attendance_day)
   end
 
   def attended_at_cannot_be_greater_than_left_at
