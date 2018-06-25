@@ -15,6 +15,8 @@
         <option value="">{{ $t('requests.placeholder.filterByKind') }}</option>
         <option :value="kind" v-for="kind in ['annual_leave', 'attendance']">{{ $t(`requests.kinds.${kind}`) }}</option>
       </select>
+
+      <input type="search" class="form-input filter-input" :placeholder="$t('requests.placeholder.filterByUser')" v-model="params.name_or_email">
     </div>
 
     <table class="table bg-light mt-5">
@@ -99,6 +101,7 @@ import modal from '../mixins/modal'
 import flatPickr from 'vue-flatpickr-component'
 import flatpickrLocale from '../mixins/flatpickr-locale'
 import { mapState, mapActions } from 'vuex'
+import debounce from 'lodash.debounce'
 
 export default {
   name: 'group-requests',
@@ -120,6 +123,7 @@ export default {
         status: this.$route.query.status || '',
         kind: '',
         group_id: this.$route.params.id,
+        name_or_email: '',
         from_date: this.$moment()
           .startOf('month')
           .format('YYYY-MM-DD'),
@@ -172,7 +176,11 @@ export default {
 
     ...mapActions('groupRequests', ['getRequests', 'approveRequest', 'rejectRequest', 'clearRejectRequestErrors']),
 
-    ...mapActions('group', ['getGroup'])
+    ...mapActions('group', ['getGroup']),
+
+    debouncedGetRequests: debounce(function() {
+      this.getRequests(Object.assign({ page: 1 }, this.params))
+    }, 350)
   },
 
   created() {
@@ -183,7 +191,7 @@ export default {
   watch: {
     params: {
       handler: function() {
-        this.getRequests(Object.assign({ page: 1 }, this.params))
+        this.debouncedGetRequests()
       },
       deep: true
     },

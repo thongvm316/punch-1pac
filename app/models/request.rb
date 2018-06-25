@@ -57,6 +57,7 @@ class Request < ApplicationRecord
     q = q.where(status: params[:status]) if params[:status].present?
     q = q.where(kind: params[:kind]) if params[:kind].present?
     q = q.where(attendance_day: Date.parse(params[:from_date])..Date.parse(params[:to_date])) if params[:from_date].present? && params[:to_date].present?
+    q = q.joins(:user).merge(User.by_name_or_email(params[:name_or_email])) if params[:name_or_email].present?
     q
   rescue TypeError, ArgumentError
     none

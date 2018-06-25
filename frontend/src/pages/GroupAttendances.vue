@@ -11,7 +11,7 @@
         <option slot="placeholder" value="">{{ $t('attendances.placeholder.filterByStatus') }}</option>
       </attendance-status-select>
 
-      <input type="search" class="form-input filter-input" :placeholder="$t('attendances.placeholder.filterByUser')" v-model="searchText">
+      <input type="search" class="form-input filter-input" :placeholder="$t('attendances.placeholder.filterByUser')" v-model="params.name_or_email">
     </div>
 
     <table class="table bg-light mt-5">
@@ -24,7 +24,7 @@
         <th>{{ $t('attendances.tableHeader.status') }}</th>
       </thead>
       <tbody>
-        <tr v-for="attendance in filterAttendances(searchText)">
+        <tr v-for="attendance in attendances">
           <td>
             <div class="tile tile-centered">
               <div class="tile-icon">
@@ -58,13 +58,13 @@ import AttendanceStatusSelect from '../components/AttendanceStatusSelect'
 import flatPickr from 'vue-flatpickr-component'
 import flatpickrLocale from '../mixins/flatpickr-locale'
 import { mapState, mapActions, mapGetters } from 'vuex'
+import debounce from 'lodash.debounce'
 
 export default {
   mixins: [flatpickrLocale],
 
   data() {
     return {
-      searchText: '',
       dateRange: [this.$moment().format('YYYY-MM-DD'), this.$moment().format('YYYY-MM-DD')],
       params: {
         self: null,
@@ -72,6 +72,7 @@ export default {
         from_date: this.$moment().format('YYYY-MM-DD'),
         to_date: this.$moment().format('YYYY-MM-DD'),
         group_id: this.$route.params.id,
+        name_or_email: '',
         status: ''
       }
     }
@@ -96,7 +97,11 @@ export default {
   methods: {
     ...mapActions('groupAttendances', ['getAttendances', 'getUsersInGroup']),
 
-    ...mapActions('group', ['getGroup'])
+    ...mapActions('group', ['getGroup']),
+
+    debouncedGetAttendances: debounce(function() {
+      this.getAttendances(Object.assign({ page: 1 }, this.params))
+    }, 350)
   },
 
   created() {
@@ -106,8 +111,8 @@ export default {
 
   watch: {
     params: {
-      handler: function(after, before) {
-        this.getAttendances(Object.assign({ page: 1 }, this.params))
+      handler: function() {
+        this.debouncedGetAttendances()
       },
       deep: true
     },
