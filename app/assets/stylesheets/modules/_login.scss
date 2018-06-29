@@ -5,6 +5,7 @@
   @include respond-to-mobile() {
     width: 100%;
     margin-top: .8rem;
+    padding: 0 .8rem;
   }
 
   img {
@@ -43,10 +44,6 @@
       background-color: $red-color-lightest;
       color: $red-color;
       border-color: $red-color;
-
-      @include respond-to-mobile() {
-        margin: 0 .8rem;
-      }
     }
   }
 
