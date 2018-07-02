@@ -76,7 +76,7 @@ RSpec.describe Api::V1::AttendancesController, type: :controller do
       subject { get :index, params: params }
 
       its(:code) { is_expected.to eq '200' }
-      its(:body) { is_expected.to be_json_as(attendances: Array.new(2) { response_attendance }, meta: response_pagination) }
+      its(:body) { is_expected.to be_json_as(attendances: Array.new(2) { response_attendance }, meta: response_pagination.merge(forgot_punch_in_days: Array)) }
     end
 
     context 'when have no search params' do
@@ -86,7 +86,7 @@ RSpec.describe Api::V1::AttendancesController, type: :controller do
       subject { get :index }
 
       its(:code) { is_expected.to eq '200' }
-      its(:body) { is_expected.to be_json_as(attendances: Array.new(2) { response_attendance }, meta: response_pagination) }
+      its(:body) { is_expected.to be_json_as(attendances: Array.new(2) { response_attendance }, meta: response_pagination.merge(forgot_punch_in_days: Array)) }
     end
   end
 
