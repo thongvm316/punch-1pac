@@ -233,7 +233,7 @@ module JsonResponseHelper
       name:        String,
       image_url:   String,
       description: String,
-      users:       Array.new(users) { response_user_with_attendance }
+      users_count: Integer
     }
   end
 

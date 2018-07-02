@@ -1,11 +1,10 @@
 # frozen_string_literal: true
 
 class GroupSerializer < ApplicationSerializer
-  attributes :id, :name, :image_url, :description
-  has_many :users, serializer: UserTodayAttendanceSerializer
+  attributes :id, :name, :image_url, :description, :users_count
 
-  def users
-    object.users.unscope(where: :activated).with_today_attendance.order(name: :asc)
+  def users_count
+    object.users.unscope(where: :activated).count
   end
 
   def image_url
