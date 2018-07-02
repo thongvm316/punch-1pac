@@ -18,14 +18,8 @@
               <div class="tile-content">
                 <router-link tag="h2" :to="`/groups/${group.id}`" class="box-title">{{ group.name | limitedLengthTitle }}</router-link>
                 <p class="group-description" v-if="group.description">{{ group.description | limitedLengthDescription }}</p>
-                <span>{{ $tc('groups.member', group.users.length, { count: group.users.length }) }}</span>
+                <span>{{ $tc('groups.member', group.users_count, { count: group.users_count }) }}</span>
               </div>
-            </div>
-          </div>
-          <div class="box-content box-content-flex" v-if="group.users.length > 0">
-            <div class="box-content-img">
-              <img :src="user.avatar_url" :alt="user.name" class="avatar avatar-md" v-for="user in group.users.slice(0, 5)">
-              <span>{{ group.users.length | filterUserNum }}</span>
             </div>
           </div>
         </div>

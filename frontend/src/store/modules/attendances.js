@@ -3,7 +3,8 @@ import axios from 'axios'
 
 const state = {
   params: {},
-  attendances: []
+  attendances: [],
+  forgotPunchInDays: null
 }
 
 const getters = {
@@ -11,7 +12,7 @@ const getters = {
     if (state.params.status && state.params.status !== 'annual_leave') return state.attendances
 
     let attendances = state.attendances
-    let forgotPunchInDays = rootState.initialStates.currentUser.forgot_punch_in_days_in_month
+    let forgotPunchInDays = state.forgotPunchInDays || rootState.initialStates.currentUser.forgot_punch_in_days_in_month
 
     const insertSorted = function(forgotDate) {
       let i
@@ -42,6 +43,7 @@ const getters = {
 const mutations = {
   [types.RECEIVE_ATTENDANCES](state, payload) {
     state.attendances = payload.attendances
+    state.forgotPunchInDays = payload.meta.forgot_punch_in_days
   }
 }
 

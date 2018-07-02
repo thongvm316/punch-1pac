@@ -14,6 +14,13 @@ const getters = {
       const regex = new RegExp(`${query.trim()}`, 'gi')
       return query ? state.attendances.filter(attendance => (attendance.user.name.match(regex)) || (attendance.user.email.match(regex))) : state.attendances
     }
+  },
+
+  filterUsers(state) {
+    return function(query) {
+      const regex = new RegExp(`${query.trim()}`, 'gi')
+      return query ? state.usersInGroup.filter(user => (user.name.match(regex) || user.email.match(regex))) : state.usersInGroup
+    }
   }
 }
 

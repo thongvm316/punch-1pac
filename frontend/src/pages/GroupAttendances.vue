@@ -95,7 +95,7 @@ export default {
   },
 
   methods: {
-    ...mapActions('groupAttendances', ['getAttendances', 'getUsersInGroup']),
+    ...mapActions('groupAttendances', ['getAttendances']),
 
     ...mapActions('group', ['getGroup']),
 

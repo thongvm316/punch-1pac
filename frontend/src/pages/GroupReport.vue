@@ -103,8 +103,6 @@ export default {
   },
 
   methods: {
-    ...mapActions('groupAttendances', ['getUsersInGroup']),
-
     ...mapActions('group', ['getGroup']),
 
     ...mapActions('groupReport', ['getReport']),
