@@ -1,10 +1,16 @@
 <template>
   <main-layout :title="$t('requests.title')">
     <div class="toolbar mt-5">
-      <flat-pickr
-        :config="{mode: 'range', locale: flatpickrLocaleMapper[currentUser.language]}"
-        class="form-input daterange-picker"
-        v-model="dateRange"/>
+      <datepicker
+        :language="currentUser.language"
+        :format="function (date) { return $moment(date).format('LLL') }"
+        :minimumView="'month'"
+        :maximumView="'month'"
+        :input-class="'datepicker-input form-input'"
+        :calendar-class="'datepicker-calendar'"
+        :wrapper-class="'datepicker'"
+        @input="onInputDatepicker"
+        v-model="params.date"/>
       <select class="form-select" v-model="params.status">
         <option value="">{{ $t('requests.placeholder.filterByStatus') }}</option>
         <option :value="status" v-for="status in meta.request_statuses">{{ $t(`meta.request_statuses.${status}`) }}</option>
@@ -80,35 +86,23 @@ import confirmDialog from '../mixins/confirm-dialog'
 import AnnualLeaveForm from '../components/AnnualLeaveForm'
 import RequestForm from '../components/RequestForm'
 import modal from '../mixins/modal'
-import flatPickr from 'vue-flatpickr-component'
-import flatpickrLocale from '../mixins/flatpickr-locale'
+import Datepicker from 'vuejs-datepicker'
 import { mapState, mapActions } from 'vuex'
 
 export default {
   name: 'requests',
 
-  mixins: [modal, confirmDialog, flatpickrLocale],
+  mixins: [modal, confirmDialog],
 
   data() {
     return {
       modalTitle: '',
       selectedRequest: {},
-      dateRange: [
-        this.$moment()
-          .startOf('month')
-          .format('YYYY-MM-DD'),
-        this.$moment()
-          .endOf('month')
-          .format('YYYY-MM-DD')
-      ],
       params: {
         self: true,
         kind: '',
         status: '',
-        from_date: this.$moment()
-          .startOf('month')
-          .format('YYYY-MM-DD'),
-        to_date: this.$moment()
+        date: this.$moment()
           .endOf('month')
           .format('YYYY-MM-DD')
       }
@@ -119,7 +113,7 @@ export default {
     MainLayout,
     AnnualLeaveForm,
     RequestForm,
-    flatPickr
+    Datepicker
   },
 
   computed: {
@@ -145,7 +139,11 @@ export default {
       }
     },
 
-    ...mapActions('requests', ['deleteRequest', 'getRequests'])
+    ...mapActions('requests', ['deleteRequest', 'getRequests']),
+
+    onInputDatepicker() {
+      this.params.date = this.$moment(this.params.date).format('YYYY-MM-DD')
+    }
   },
 
   created() {
@@ -158,12 +156,6 @@ export default {
         this.getRequests(Object.assign({ page: 1 }, this.params))
       },
       deep: true
-    },
-
-    dateRange: function() {
-      const dates = this.dateRange.split(' ')
-      this.params.from_date = dates[0]
-      this.params.to_date = dates[2]
     }
   }
 }

@@ -1,10 +1,16 @@
 <template>
   <main-layout :title="$t('attendances.title')">
     <div class="toolbar mt-5">
-      <flat-pickr
-        :config="{mode: 'range', locale: flatpickrLocaleMapper[currentUser.language]}"
-        class="form-input daterange-picker"
-        v-model="dateRange"/>
+      <datepicker
+        :language="currentUser.language"
+        :format="function (date) { return $moment(date).format('LLL') }"
+        :minimumView="'month'"
+        :maximumView="'month'"
+        :input-class="'datepicker-input form-input'"
+        :calendar-class="'datepicker-calendar'"
+        :wrapper-class="'datepicker'"
+        @input="onInputDatepicker"
+        v-model="params.date"/>
 
       <attendance-status-select v-model="params.status">
         <option slot="placeholder" value="">{{ $t('attendances.placeholder.filterByStatus') }}</option>
@@ -47,36 +53,22 @@
 </template>
 
 <script>
-import flatPickr from 'vue-flatpickr-component'
+import Datepicker from 'vuejs-datepicker'
 import MainLayout from '../layouts/Main'
 import AttendanceStatusSelect from '../components/AttendanceStatusSelect'
 import RequestForm from '../components/RequestForm'
 import modal from '../mixins/modal'
-import flatpickrLocale from '../mixins/flatpickr-locale'
 import { mapState, mapGetters, mapActions } from 'vuex'
 
 export default {
-  mixins: [modal, flatpickrLocale],
+  mixins: [modal],
 
   data() {
     return {
       attendance: {},
-      dateRange: [
-        this.$moment()
-          .startOf('month')
-          .format('YYYY-MM-DD'),
-        this.$moment()
-          .endOf('month')
-          .format('YYYY-MM-DD')
-      ],
       params: {
         self: true,
-        from_date: this.$moment()
-          .startOf('month')
-          .format('YYYY-MM-DD'),
-        to_date: this.$moment()
-          .endOf('month')
-          .format('YYYY-MM-DD'),
+        date: this.$moment().locale('en').format('LL'),
         status: ''
       }
     }
@@ -86,7 +78,7 @@ export default {
     MainLayout,
     AttendanceStatusSelect,
     RequestForm,
-    flatPickr
+    Datepicker
   },
 
   computed: {
@@ -101,6 +93,10 @@ export default {
     toggleAddModal(attendance) {
       this.isAddModalOpen = !this.isAddModalOpen
       this.attendance = attendance
+    },
+
+    onInputDatepicker() {
+      this.params.date = this.$moment(this.params.date).format('YYYY-MM-DD')
     }
   },
 
@@ -114,12 +110,6 @@ export default {
         this.getAttendances(Object.assign({ page: 1 }, this.params))
       },
       deep: true
-    },
-
-    dateRange: function() {
-      const dates = this.dateRange.split(' ')
-      this.params.from_date = dates[0]
-      this.params.to_date = dates[2]
     }
   }
 }
