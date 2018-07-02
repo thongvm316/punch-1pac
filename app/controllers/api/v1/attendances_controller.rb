@@ -43,18 +43,12 @@ class Api::V1::AttendancesController < Api::V1::BaseController
                             .per(params[:per_page])
                             .order(day: :desc)
 
-    forgot_punch_in_days = if params['self']
-                             ForgotPunchInDaysService.new(current_user, current_company, params[:from_date]).execute + ForgotPunchInDaysService.new(current_user, current_company, params[:to_date]).execute
-                           else
-                             []
-                           end
-
     if stale?(attendances)
       render json: attendances,
              root: 'attendances',
              each_serializer: AttendanceSerializer,
              adapter: :json,
-             meta: pager(attendances).merge(forgot_punch_in_days: forgot_punch_in_days),
+             meta: pager(attendances).merge(forgot_punch_in_days: ForgotPunchInDaysService.new(current_user, current_company, params[:date]).execute),
              status: :ok
     end
   end
