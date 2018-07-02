@@ -98,6 +98,7 @@ export default {
           this.setFlashMsg({ message: this.$t('messages.user.updateProfileSuccess') })
           this.$emit('afterUserProfileUpdated')
           this.isDisable = false
+          this.errors = {}
         })
         .catch(error => {
           this.isDisable = false
