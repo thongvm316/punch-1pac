@@ -11,6 +11,8 @@ class ForgotPunchInDaysService
 
   def execute
     return [] if @query_time.blank?
+    return [] if @query_time > @now
+
     @days = []
 
     (from_date..to_date).step(1.day) do |timestamp|
