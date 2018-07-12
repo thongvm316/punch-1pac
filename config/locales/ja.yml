@@ -258,6 +258,7 @@ ja:
       sign_in: Sign In
       help: Help
       get_started: Get Started
+      namespace: Namespace
     footer:
       help: Help
       contact_us: Contact us
