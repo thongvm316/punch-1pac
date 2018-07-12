@@ -78,10 +78,6 @@ export default {
     toggleAddModal() {
       this.clearGroupsErrors()
       this.isAddModalOpen = !this.isAddModalOpen
-    },
-
-    getGroupAdmins(group) {
-      return group.users.filter(user => user.role === 'admin' || user.role === 'superadmin')
     }
   },
 

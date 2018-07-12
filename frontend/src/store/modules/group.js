@@ -5,7 +5,16 @@ import 'formdata-polyfill'
 const state = {
   errors: {},
   group: {},
-  usersNotInGroup: []
+  usersInGroup: []
+}
+
+const getters = {
+  filterUsers(state) {
+    return function(query) {
+      const regex = new RegExp(`${query.trim()}`, 'gi')
+      return query ? state.usersInGroup.filter(user => (user.name.match(regex) || user.email.match(regex))) : state.usersInGroup
+    }
+  }
 }
 
 const mutations = {
@@ -18,27 +27,26 @@ const mutations = {
   },
 
   [types.ADD_GROUP_USER](state, user) {
-    state.group.users.push(user)
-    state.usersNotInGroup = state.usersNotInGroup.filter(u => u.id !== user.id)
+    state.usersInGroup.push(user)
   },
 
   [types.DEACTIVATE_GROUP_USER](state, userId) {
-    const index = state.group.users.findIndex(user => user.id === userId)
-    state.group.users[index].activated = false
+    const index = state.usersInGroup.findIndex(user => user.id === userId)
+    state.usersInGroup[index].activated = false
   },
 
   [types.ACTIVATE_GROUP_USER](state, userId) {
-    const index = state.group.users.findIndex(user => user.id === userId)
-    state.group.users[index].activated = true
+    const index = state.usersInGroup.findIndex(user => user.id === userId)
+    state.usersInGroup[index].activated = true
   },
 
   [types.UPDATE_GROUP_USER](state, user) {
-    const index = state.group.users.findIndex(u => u.id === user.id)
-    state.group.users[index] = user
+    const index = state.usersInGroup.findIndex(u => u.id === user.id)
+    state.usersInGroup[index] = user
   },
 
   [types.REMOVE_GROUP_USER](state, payload) {
-    state.group.users = state.group.users.filter(user => user.id !== payload)
+    state.usersInGroup = state.usersInGroup.filter(user => user.id !== payload)
   },
 
   [types.UPDATE_GROUP_ERRORS](state, payload) {
@@ -49,8 +57,8 @@ const mutations = {
     state.errors = {}
   },
 
-  [types.FETCH_USERS_NOT_IN_GROUP](state, payload) {
-    state.usersNotInGroup = payload.users
+  [types.FETCH_USERS_IN_GROUP](state, payload) {
+    state.usersInGroup = payload.users
   }
 }
 
@@ -131,18 +139,6 @@ const actions = {
       })
   },
 
-  getUsersNotInGroup({ commit }, groupId) {
-    return axios
-      .get(`/users`, { params: { not_in_group_id: groupId, per_page: 1000 } })
-      .then(response => {
-        commit(types.FETCH_USERS_NOT_IN_GROUP, response.data)
-        return response
-      })
-      .catch(error => {
-        throw error
-      })
-  },
-
   clearGroupErrors({ commit }) {
     commit(types.CLEAR_GROUP_ERRORS)
   },
@@ -156,12 +152,25 @@ const actions = {
       .catch(error => {
         throw error
       })
+  },
+
+  getUsersInGroup({ commit, state }, groupId) {
+    return axios
+      .get('/users', { params: { group_id: groupId, type: 'users_in_group', per_page: 1000 } })
+      .then(response => {
+        commit(types.FETCH_USERS_IN_GROUP, response.data)
+        return response
+      })
+      .catch(error => {
+        throw error
+      })
   }
 }
 
 export default {
   namespaced: true,
   state,
+  getters,
   mutations,
   actions
 }

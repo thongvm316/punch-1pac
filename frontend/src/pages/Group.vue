@@ -112,11 +112,9 @@ export default {
   },
 
   computed: {
-    ...mapState('group', ['group']),
+    ...mapState('group', ['group', 'usersInGroup']),
 
-    ...mapState('groupAttendances', ['usersInGroup']),
-
-    ...mapGetters('groupAttendances', ['filterUsers'])
+    ...mapGetters('group', ['filterUsers'])
   },
 
   methods: {
@@ -139,9 +137,7 @@ export default {
       this.isEditModalOpen = !this.isEditModalOpen
     },
 
-    ...mapActions('group', ['getGroup', 'addGroupUser', 'activateGroupUser', 'deactivateGroupUser', 'removeGroupUser', 'clearGroupErrors', 'deleteGroup']),
-
-    ...mapActions('groupAttendances', ['getUsersInGroup']),
+    ...mapActions('group', ['getGroup', 'addGroupUser', 'activateGroupUser', 'deactivateGroupUser', 'removeGroupUser', 'clearGroupErrors', 'deleteGroup', 'getUsersInGroup']),
 
     ...mapActions('flash', ['setFlashMsg']),
 
