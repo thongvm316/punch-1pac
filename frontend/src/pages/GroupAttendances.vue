@@ -87,7 +87,7 @@ export default {
   },
 
   computed: {
-    ...mapState('groupAttendances', ['pager', 'attendances', 'usersInGroup']),
+    ...mapState('groupAttendances', ['pager', 'attendances']),
 
     ...mapState('group', ['group']),
 
