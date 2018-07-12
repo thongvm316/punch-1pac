@@ -139,7 +139,7 @@ export default {
       this.isEditModalOpen = !this.isEditModalOpen
     },
 
-    ...mapActions('group', ['addGroupUser', 'activateGroupUser', 'deactivateGroupUser', 'removeGroupUser', 'clearGroupErrors', 'deleteGroup']),
+    ...mapActions('group', ['getGroup', 'addGroupUser', 'activateGroupUser', 'deactivateGroupUser', 'removeGroupUser', 'clearGroupErrors', 'deleteGroup']),
 
     ...mapActions('groupAttendances', ['getUsersInGroup']),
 
@@ -155,11 +155,13 @@ export default {
 
   created() {
     this.getUsersInGroup(this.$route.params.id)
+    this.getGroup(this.$route.params.id)
   },
 
   watch: {
     $route: function(val) {
       this.getUsersInGroup(this.$route.params.id)
+      this.getGroup(this.$route.params.id)
     }
   }
 }
