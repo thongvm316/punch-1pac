@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Api::V1::CompaniesController, type: :controller do
-  let(:company) { create :company }
+  let(:company) { create :company, name: '91E35B8F57E0' }
 
   before do
     in_namespace(company)
@@ -14,15 +14,17 @@ RSpec.describe Api::V1::CompaniesController, type: :controller do
     context 'when params are valid' do
       context 'when login user is super admin' do
         let(:login_user) { create :user, company: company, role: 'superadmin' }
-        let(:params) { attributes_for(:company, logo: fixture_file_upload('images/image.png', 'image/png')) }
+        let(:params) { attributes_for(:company, name: 'AF200F52', logo: fixture_file_upload('images/image.png', 'image/png'), punch_method: 'qrcode_scan') }
 
         subject { patch :update, params: { company: params } }
 
         its(:code) { is_expected.to eq '200' }
         its(:body) { is_expected.to be_json_as(response_company) }
-        it 'changes company.name' do
+        it 'changes company.name && company.punch_method' do
           is_expected
-          expect(Company.find(company.id).name).to eq params[:name]
+          expect { company.reload }
+            .to change { company.name }.from('91E35B8F57E0').to('AF200F52')
+                                       .and change { company.punch_method }.from('normal').to('qrcode_scan')
         end
       end
 
