@@ -12,7 +12,7 @@ FactoryBot.define do
     tax_code { Faker::Internet.password }
     activated 1
     timezone 'Asia/Bangkok'
-
+    punch_method 'normal'
     trait :with_default_group do
       after(:create) do |company|
         company.groups << create(:group, name: 'default')

@@ -19,6 +19,7 @@
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
 #  app_blocked_by_ip :boolean          default(FALSE), not null
+#  punch_method      :integer          default("normal"), not null
 #
 # Indexes
 #
@@ -28,6 +29,8 @@
 class Company < ApplicationRecord
   INDUSTRIES = %w[hr_agency cafe_shop restaurant software_company startup].freeze
   TIMEZONES = ActiveSupport::TimeZone.all.map { |tz| tz.tzinfo.name }.uniq
+
+  enum punch_method: { normal: 0, qrcode_scan: 1 }
 
   has_many :users, dependent: :destroy
   has_many :allowed_ips, dependent: :destroy

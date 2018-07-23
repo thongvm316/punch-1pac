@@ -75,7 +75,8 @@ module JsonResponseHelper
       activated: boolean_response,
       timezone: String,
       logo_url: String,
-      breakdays: nullable_response(Array)
+      breakdays: nullable_response(Array),
+      punch_method: String
     }
   end
 
@@ -227,7 +228,7 @@ module JsonResponseHelper
     }
   end
 
-  def response_group(users = 0)
+  def response_group(_users = 0)
     {
       id:          Integer,
       name:        String,

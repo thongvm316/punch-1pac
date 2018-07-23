@@ -10,11 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180618042056) do
+ActiveRecord::Schema.define(version: 20180723051746) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-  enable_extension "pg_stat_statements"
 
   create_table "activities", force: :cascade do |t|
     t.bigint "user_id", null: false
@@ -109,6 +108,7 @@ ActiveRecord::Schema.define(version: 20180618042056) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "app_blocked_by_ip", default: false, null: false
+    t.integer "punch_method", default: 0, null: false
     t.index ["namespace"], name: "index_companies_on_namespace", unique: true
   end
 

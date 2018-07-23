@@ -23,6 +23,7 @@ ActiveAdmin.register Company do
     column :tax_code
     column :activated
     column :timezone
+    column :punch_method
     actions
   end
 
@@ -41,7 +42,7 @@ ActiveAdmin.register Company do
       row :tax_code
       row :activated
       row :timezone
-      row :breaktime
+      row :punch_method
       row :created_at
       row :updated_at
     end
@@ -59,7 +60,7 @@ ActiveAdmin.register Company do
       f.input :postal_code
       f.input :tax_code
       f.input :timezone, as: :select, collection: Company::TIMEZONES
-      f.input :breaktime
+      f.input :punch_method
     end
     f.actions
   end
