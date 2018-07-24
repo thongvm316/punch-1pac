@@ -218,7 +218,8 @@ export default {
     placeholder: {
       filterByGroup: 'Filter by group',
       filterByStatus: 'Filter by status',
-      filterByKind: 'Filter by kind'
+      filterByKind: 'Filter by kind',
+      filterByUser: 'Filter by user'
     },
     labels: {
       date: 'Date',

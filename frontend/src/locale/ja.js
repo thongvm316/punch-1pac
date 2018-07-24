@@ -218,7 +218,8 @@ export default {
     placeholder: {
       filterByGroup: 'グループ名で検索',
       filterByStatus: 'ステータスで検索',
-      filterByKind: '申請内容で検索'
+      filterByKind: '申請内容で検索',
+      filterByUser: 'ユーザーで検索'
     },
     labels: {
       date: '日付',
