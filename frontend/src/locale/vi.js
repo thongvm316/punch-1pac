@@ -218,7 +218,8 @@ export default {
     placeholder: {
       filterByGroup: 'Lọc theo nhóm',
       filterByStatus: 'Lọc theo trạng thái',
-      filterByKind: 'Lọc theo loại'
+      filterByKind: 'Lọc theo loại',
+      filterByUser: 'Lọc theo thành viên'
     },
     labels: {
       date: 'Ngày',
