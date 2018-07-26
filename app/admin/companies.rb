@@ -2,7 +2,7 @@
 
 ActiveAdmin.register Company do
   permit_params do
-    %i[name namespace timezone country industry address phone_number postal_code tax_code logo]
+    %i[name namespace timezone country industry address phone_number postal_code tax_code logo punch_method]
   end
 
   menu priority: 1
