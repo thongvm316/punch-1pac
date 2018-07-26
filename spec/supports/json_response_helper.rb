@@ -129,8 +129,7 @@ module JsonResponseHelper
       created_at: date_response,
       left_at: nullable_response(hour_min_response),
       attended_at: nullable_response(hour_min_response),
-      attendance_id: nullable_response(Integer),
-      company: response_company
+      attendance_id: nullable_response(Integer)
     }
   end
 
