@@ -35,7 +35,7 @@ RSpec.describe Api::V1::UsersController, type: :controller do
         subject { get :today_attendances, params: { group_id: group.id } }
 
         its(:code) { is_expected.to eq '200' }
-        its(:body) { is_expected.to be_json_as(Array.new(3) { response_user_with_attendance }) }
+        its(:body) { is_expected.to be_json_as({users: Array.new(3) { response_user_with_attendance }, company: response_company}) }
       end
       context 'when group not found' do
         let(:login_user) { create :user, company: company, role: 'superadmin' }
