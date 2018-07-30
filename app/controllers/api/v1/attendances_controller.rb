@@ -18,7 +18,13 @@ class Api::V1::AttendancesController < Api::V1::BaseController
   def today
     authorize!
     attendance = current_user.attendances.find_by(day: Time.current)
-    attendance ? render(json: attendance, serializer: AttendanceSerializer, status: :ok) : head(:ok)
+    if attendance
+      attendance_json = ActiveModelSerializers::SerializableResource.new(attendance, serializer: AttendanceSerializer).as_json
+      company_json = ActiveModelSerializers::SerializableResource.new(current_company, serializer: CompanySerializer).as_json
+      render json: { attendance: attendance_json, company: company_json }, status: :ok
+    else
+      head(:ok)
+    end
   end
 
   def chart

@@ -23,7 +23,7 @@ RSpec.describe Api::V1::AttendancesController, type: :controller do
       subject { get :today }
 
       its(:code) { is_expected.to eq '200' }
-      its(:body) { is_expected.to be_json_as(response_attendance) }
+      its(:body) { is_expected.to be_json_as({ attendance: response_attendance, company: response_company}) }
     end
   end
 
