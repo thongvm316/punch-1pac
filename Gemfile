@@ -71,13 +71,13 @@ group :development do
   gem 'rails_best_practices', require: false
   gem 'brakeman', require: false
 
-  gem 'capistrano', '~> 3.6.0'
-  gem 'capistrano-rails', '~> 1.1'
-  gem 'capistrano-rbenv', '~> 2.0'
-  gem 'capistrano-bundler', '~> 1.2'
-  gem 'capistrano3-puma'
-  gem 'capistrano-sidekiq'
-  gem 'capistrano-yarn'
+  gem 'capistrano', '~> 3.6.0', require: false
+  gem 'capistrano-rails', '~> 1.1', require: false
+  gem 'capistrano-rbenv', '~> 2.0', require: false
+  gem 'capistrano-bundler', '~> 1.2', require: false
+  gem 'capistrano3-puma', require: false
+  gem 'capistrano-sidekiq', require: false
+  gem 'capistrano-yarn', require: false
 
   gem 'foreman'
 
