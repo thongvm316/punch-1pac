@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+rbenv_ruby = File.read('.ruby-version').strip
+
 set :stage, :production
 server '206.189.145.80', user: 'rails', roles: %w[app web]
 
@@ -24,7 +26,7 @@ set :keep_assets, 3
 
 # capistrano-rbenv
 set :rbenv_type, :user
-set :rbenv_ruby, '2.5.0'
+set :rbenv_ruby, rbenv_ruby
 set :rbenv_prefix, "RBENV_ROOT=#{fetch(:rbenv_path)} RBENV_VERSION=#{fetch(:rbenv_ruby)} #{fetch(:rbenv_path)}/bin/rbenv exec"
 set :rbenv_map_bins, %w[rake gem bundle ruby rails puma pumactl sidekiq sidekiqctl]
 set :rbenv_roles, :all # default value
