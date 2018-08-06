@@ -21,8 +21,6 @@ gem 'rack-cors'
 
 # Background job
 gem 'sidekiq'
-gem 'sidekiq-scheduler'
-gem 'redis-namespace'
 
 # Authentication and Authorization
 gem 'bcrypt'
