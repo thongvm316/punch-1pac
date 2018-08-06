@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
 redis_params = {
-  url: ENV['REDIS_URL'],
-  namespace: ENV['REDIS_NAMESPACE']
+  url: ENV['REDIS_URL']
 }
 
 # Stats:

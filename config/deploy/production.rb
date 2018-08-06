@@ -1,56 +1,53 @@
 # frozen_string_literal: true
-# server-based syntax
-# ======================
-# Defines a single server with a list of roles and multiple properties.
-# You can define all roles on a single server, or split them:
 
-# server 'example.com', user: 'deploy', roles: %w{app db web}, my_property: :my_value
-# server 'example.com', user: 'deploy', roles: %w{app web}, other_property: :other_value
-# server 'db.example.com', user: 'deploy', roles: %w{db}
+set :stage, :production
+server '206.189.145.80', user: 'rails', roles: %w[app web]
 
-# role-based syntax
-# ==================
+set :application, 'punch.ooo'
+set :repo_url, 'git@github.com:1PACVietnam/1punch.git'
 
-# Defines a role with one or multiple servers. The primary server in each
-# group is considered to be the first unless any  hosts have the primary
-# property set. Specify the username and a domain or IP for the server.
-# Don't use `:all`, it's a meta role.
+# Default branch is :master
+set :branch, 'master'
 
-# role :app, %w{deploy@example.com}, my_property: :my_value
-# role :web, %w{user1@primary.com user2@additional.com}, other_property: :other_value
-# role :db,  %w{deploy@example.com}
+# Default deploy_to directory is /var/www/my_app_name
+set :deploy_to, '/var/www/punch.ooo/public_html'
 
-# Configuration
-# =============
-# You can set any configuration variable like in config/deploy.rb
-# These variables are then only loaded and set in this stage.
-# For available Capistrano configuration variables see the documentation page.
-# http://capistranorb.com/documentation/getting-started/configuration/
-# Feel free to add new variables to customise your setup.
+# capistrano-rails
+set :rails_env, :production
+set :migration_role, :web
 
-# Custom SSH Options
-# ==================
-# You may pass any option but keep in mind that net/ssh understands a
-# limited set of options, consult the Net::SSH documentation.
-# http://net-ssh.github.io/net-ssh/classes/Net/SSH.html#method-c-start
-#
+set :assets_prefix, 'static'
+set :rails_assets_groups, :assets
+# If you need to touch public/images, public/javascripts, and public/stylesheets on each deploy
+set :normalize_asset_timestamps, ['public/static']
+set :keep_assets, 3
+
+# capistrano-rbenv
+set :rbenv_type, :user
+set :rbenv_ruby, '2.5.0'
+set :rbenv_prefix, "RBENV_ROOT=#{fetch(:rbenv_path)} RBENV_VERSION=#{fetch(:rbenv_ruby)} #{fetch(:rbenv_path)}/bin/rbenv exec"
+set :rbenv_map_bins, %w[rake gem bundle ruby rails puma pumactl sidekiq sidekiqctl]
+set :rbenv_roles, :all # default value
+
+# capistrano/bundler
+set :bundle_binstubs, -> { shared_path.join('bin') }
+set :bundle_path, -> { shared_path.join('bundle') }
+set :bundle_without, %w[development test].join(' ')
+set :bundle_jobs, 4
+set :bundle_flags, '--deployment --quiet'
+
+# capistrano/puma
+set :puma_user, fetch(:user)
+set :puma_conf, -> { "#{shared_path}/config/puma/punch.ooo.rb" }
+set :puma_role, :web
+
+# capistrano/sidekiq
+set :sidekiq_config, 'config/sidekiq.yml'
+
+# capistrano/yarn
+set :yarn_flags, ''
+set :yarn_target_path, -> { release_path.join('frontend') }
+
 # Global options
 # --------------
-#  set :ssh_options, {
-#    keys: %w(/home/rlisowski/.ssh/id_rsa),
-#    forward_agent: false,
-#    auth_methods: %w(password)
-#  }
-#
-# The server-based syntax can be used to override options:
-# ------------------------------------
-# server 'example.com',
-#   user: 'user_name',
-#   roles: %w{web app},
-#   ssh_options: {
-#     user: 'user_name', # overrides user setting above
-#     keys: %w(/home/user_name/.ssh/id_rsa),
-#     forward_agent: false,
-#     auth_methods: %w(publickey password)
-#     # password: 'please use keys'
-#   }
+set :ssh_options, forward_agent: true

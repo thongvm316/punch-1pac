@@ -8,7 +8,7 @@ jobs:
     parallelism: 1
     working_directory: ~/Projects/1punch-api
     docker:
-       - image: circleci/ruby:2.5.0-node
+       - image: circleci/ruby:2.5.1-node
          environment:
            PGHOST: 127.0.0.1
            PGUSER: punch

@@ -4,7 +4,7 @@ set :stage, :staging
 server '13.230.252.221', user: 'rails', roles: %w[app web]
 
 set :application, '1punch-stg.1pac.vn'
-set :repo_url, 'git@github.com:1PACVietnam/1punch-api.git'
+set :repo_url, 'git@github.com:1PACVietnam/1punch.git'
 
 # Default branch is :master
 set :branch, 'master'
