@@ -33,6 +33,7 @@
 <link rel="apple-touch-icon" sizes="76x76" href="<%= asset_url('icon_76x76.png') %>">
 <link rel="icon" sizes="192x192" href="<%= asset_url('icon_192x192.png') %>">
 
+<%= render 'shared/google_analytic' %>
 <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
 
 <%= stylesheet_link_tag('application', media: 'all') %>
@@ -49,7 +50,6 @@ window.LANG = '<%= I18n.locale %>'
 <%= yield(:footer) %>
 
 <%= javascript_include_tag('application') %>
-<%= render 'shared/google_analytic' %>
 <%= yield(:js) %>
 </body>
 </html>
