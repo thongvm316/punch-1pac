@@ -49,6 +49,7 @@ window.LANG = '<%= I18n.locale %>'
 <%= yield(:footer) %>
 
 <%= javascript_include_tag('application') %>
+<%= render 'shared/google_analytic' %>
 <%= yield(:js) %>
 </body>
 </html>
