@@ -40,7 +40,7 @@ set :bundle_flags, '--deployment --quiet'
 
 # capistrano/puma
 set :puma_user, fetch(:user)
-set :puma_conf, -> { "#{shared_path}/config/puma/1punch-stg.1pac.vn.rb" }
+set :puma_conf, -> { "#{current_path}/config/puma/1punch-stg.1pac.vn.rb" }
 set :puma_role, :web
 
 # capistrano/sidekiq
