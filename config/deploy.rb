@@ -40,13 +40,10 @@ namespace :deploy do
   desc 'Upload yml file.'
   task :upload_yml do
     on roles(:app) do
-      execute "mkdir -p #{shared_path}/config/puma"
       execute "mkdir -p #{shared_path}/public/static"
+      upload!(".env.#{fetch(:stage)}", "#{shared_path}/.env.#{fetch(:stage)}")
       upload!('config/database.yml', "#{shared_path}/config/database.yml")
       upload!('config/secrets.yml', "#{shared_path}/config/secrets.yml")
-      upload!('public/static/500.png', "#{shared_path}/public/static/500.png")
-      upload!(".env.#{fetch(:stage)}", "#{shared_path}/.env.#{fetch(:stage)}")
-      upload!('config/puma/1punch-stg.1pac.vn.rb', "#{shared_path}/config/puma/1punch-stg.1pac.vn.rb")
     end
   end
   before 'deploy:check', 'deploy:upload_yml'
