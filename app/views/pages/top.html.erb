@@ -32,6 +32,7 @@
     </div>
   </div>
 
+  <% unless Rails.env.production? %>
   <div class="bg-white">
     <div class="container scroller">
       <div class="scroller-control">
@@ -77,6 +78,8 @@
       </div>
     </div>
   </div>
+  <% end %>
+
 
   <div class="features bg-white">
     <div class="container">
@@ -178,6 +181,7 @@
     </div>
   </div>
 
+  <% unless Rails.env.production? %>
   <div class="comment bg-linear-gray">
     <h2 class="comment-title">What customer think <br>about us!</h2>
     <div class="comment-group scroller">
@@ -235,6 +239,7 @@
       </div>
     </div>
   </div>
+  <% end %>
 
   <%= render 'shared/get_started_block' %>
 </div>
