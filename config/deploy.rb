@@ -41,6 +41,7 @@ namespace :deploy do
   task :upload_yml do
     on roles(:app) do
       execute "mkdir -p #{shared_path}/public/static"
+      upload!(".env.#{fetch(:stage)}", "#{shared_path}/.env.#{fetch(:stage)}")
       upload!('config/database.yml', "#{shared_path}/config/database.yml")
       upload!('config/secrets.yml', "#{shared_path}/config/secrets.yml")
     end
