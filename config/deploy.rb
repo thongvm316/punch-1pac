@@ -23,10 +23,10 @@ set :format_options, command_output: true, log_file: 'log/capistrano.log', color
 set :pty, false
 
 # Default value for :linked_files is []
-append :linked_files, 'config/database.yml', 'config/secrets.yml', '.env.staging', 'public/static/500.png'
+append :linked_files, 'config/database.yml', 'config/secrets.yml', '.env.staging', '.env.production'
 
 # Default value for linked_dirs is []
-append :linked_dirs, 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'bundle', 'public/uploads', 'config/puma', 'public/app'
+append :linked_dirs, 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'bundle', 'public/uploads', 'public/app'
 
 # Default value for default_env is {}
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
@@ -41,7 +41,8 @@ namespace :deploy do
   task :upload_yml do
     on roles(:app) do
       execute "mkdir -p #{shared_path}/public/static"
-      upload!(".env.#{fetch(:stage)}", "#{shared_path}/.env.#{fetch(:stage)}")
+      upload!('.env.staging', "#{shared_path}/.env.staging")
+      upload!('.env.production', "#{shared_path}/.env.production")
       upload!('config/database.yml', "#{shared_path}/config/database.yml")
       upload!('config/secrets.yml', "#{shared_path}/config/secrets.yml")
     end
