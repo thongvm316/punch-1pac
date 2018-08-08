@@ -1,10 +1,4 @@
 User-Agent: *
-Allow: /$
-Allow: /privacy
-Allow: /terms
-Allow: /features
-Allow: /help
-Allow: /sitemap.xml.gz
-Disallow: /
+Disallow:
 
 Sitemap: https://punch.ooo/sitemap.xml.gz
