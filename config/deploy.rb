@@ -23,7 +23,7 @@ set :format_options, command_output: true, log_file: 'log/capistrano.log', color
 set :pty, false
 
 # Default value for :linked_files is []
-append :linked_files, 'config/database.yml', 'config/secrets.yml', ".env.staging", ".env.production"
+append :linked_files, 'config/database.yml', 'config/secrets.yml', '.env.staging', '.env.production'
 
 # Default value for linked_dirs is []
 append :linked_dirs, 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'bundle', 'public/uploads', 'public/app'
@@ -41,8 +41,8 @@ namespace :deploy do
   task :upload_yml do
     on roles(:app) do
       execute "mkdir -p #{shared_path}/public/static"
-      upload!(".env.staging", "#{shared_path}/.env.staging")
-      upload!(".env.production", "#{shared_path}/.env.production")
+      upload!('.env.staging', "#{shared_path}/.env.staging")
+      upload!('.env.production', "#{shared_path}/.env.production")
       upload!('config/database.yml', "#{shared_path}/config/database.yml")
       upload!('config/secrets.yml', "#{shared_path}/config/secrets.yml")
     end

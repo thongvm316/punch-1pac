@@ -6,7 +6,7 @@ class AwsSnsController < ApplicationController
     logger.info "bounce callback from AWS with #{json}"
     aws_needs_url_confirmed = json['SubscribeURL']
     if aws_needs_url_confirmed
-      logger.info "AWS is requesting confirmation of the bounce handler URL"
+      logger.info 'AWS is requesting confirmation of the bounce handler URL'
       uri = URI.parse(aws_needs_url_confirmed)
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = true
