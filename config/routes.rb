@@ -91,6 +91,8 @@ Rails.application.routes.draw do
   devise_for :admins, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
 
+  post 'aws_sns/bounce' => 'aws_sns#bounce'
+
   get 'get-started' => 'pages#get_started'
   get 'help'        => 'pages#help'
   get 'terms'       => 'pages#terms'
