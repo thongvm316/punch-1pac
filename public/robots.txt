@@ -4,6 +4,7 @@ Allow: /privacy
 Allow: /terms
 Allow: /features
 Allow: /help
+Allow: /sitemap.xml.gz
 Disallow: /
 
 Sitemap: https://punch.ooo/sitemap.xml.gz
