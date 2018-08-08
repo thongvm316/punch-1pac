@@ -6,6 +6,10 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1">
 
+<% if ENV['GOOGLE_SITE_VERIFICATION'] %>
+<meta name="google-site-verification" content="<%= ENV['GOOGLE_SITE_VERIFICATION'] %>">
+<% end %>
+
 <title><%= yield(:page_title) %></title>
 <meta name="description" content="<%= yield(:page_description) %>">
 
