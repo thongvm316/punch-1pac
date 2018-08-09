@@ -41,6 +41,8 @@ environment 'production'
 # daemonize
 daemonize true
 
+restart_command 'bundle exec puma'
+
 # Store the pid of the server in the file at "path".
 #
 pidfile "#{app_path}/shared/tmp/pids/puma.pid"
@@ -55,7 +57,7 @@ state_path "#{app_path}/shared/tmp/pids/puma.state"
 # "false".
 #
 # stdout_redirect '/u/apps/lolcat/log/stdout', '/u/apps/lolcat/log/stderr'
-stdout_redirect "#{app_path}/shared/log/stdout", "#{app_path}/shared/log/stderr", true
+stdout_redirect "#{app_path}/shared/log/puma_stdout", "#{app_path}/shared/log/puma_stderr", true
 
 # Disable request logging.
 #
@@ -68,7 +70,7 @@ stdout_redirect "#{app_path}/shared/log/stdout", "#{app_path}/shared/log/stderr"
 #
 # The default is "0, 16".
 #
-threads 5, ENV.fetch('RAILS_MAX_THREADS') { 5 }
+threads 5, 10
 
 # Bind the server to "url". "tcp://", "unix://" and "ssl://" are the only
 # accepted protocols.
@@ -107,6 +109,10 @@ end
 #
 # restart_command '/u/app/lolcat/bin/restart_puma'
 
+before_fork do
+  ActiveRecord::Base.connection_pool.disconnect!
+end
+
 # === Cluster mode ===
 
 # How many worker processes to run.  Typically this is set to
@@ -114,7 +120,7 @@ end
 #
 # The default is "0".
 #
-workers ENV['WEB_CONCURRENCY'].to_i
+workers 3
 
 # Code to run immediately before the master starts workers.
 
