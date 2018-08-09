@@ -110,7 +110,7 @@ end
 # restart_command '/u/app/lolcat/bin/restart_puma'
 
 before_fork do
-  ActiveRecord::Base.connection_pool.disconnect!
+  defined?(ActiveRecord::Base) && ActiveRecord::Base.connection_pool.disconnect!
 end
 
 # === Cluster mode ===
@@ -129,7 +129,7 @@ workers 3
 # This is called everytime a worker is to be started.
 #
 on_worker_boot do
-  defined?(ActionRecord::Base) && ActionRecord::Base.establish_connection
+  defined?(ActiveRecord::Base) && ActiveRecord::Base.establish_connection
 end
 
 # Code to run in a worker right before it exits.
@@ -163,12 +163,12 @@ end
 # is preserved across a phased-restart. (incompatible with preload_app)
 # (off by default)
 
-# prune_bundler
+prune_bundler
 
 # Preload the application before starting the workers; this conflicts with
 # phased restart feature. (off by default)
 
-preload_app!
+# preload_app!
 
 # Additional text to display in process listing
 #
