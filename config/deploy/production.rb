@@ -42,6 +42,7 @@ set :bundle_flags, '--deployment --quiet'
 set :puma_user, fetch(:user)
 set :puma_conf, -> { "#{shared_path}/config/puma/production.rb" }
 set :puma_role, :web
+set :puma_workers, 3
 
 # capistrano/sidekiq
 set :sidekiq_config, 'config/sidekiq.yml'

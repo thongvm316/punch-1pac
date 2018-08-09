@@ -41,8 +41,6 @@ environment 'production'
 # daemonize
 daemonize true
 
-restart_command 'bundle exec puma'
-
 # Store the pid of the server in the file at "path".
 #
 pidfile "#{app_path}/shared/tmp/pids/puma.pid"
