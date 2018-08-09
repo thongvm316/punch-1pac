@@ -15,7 +15,7 @@ import pageAuthorization from './mixins/page-authorization'
 import './scss/main.scss'
 
 axios.defaults.baseURL = 'http://namespace_1.localhost:3000/api/v1'
-axios.defaults.headers.common['Authorization'] = 'Bear eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1MzE1NDIwNzMsImp0aSI6ImY0NDkzODQ2LTdmNTItNGI4Mi05ZjI4LTU5ZWI0NTFjYjhiMiIsInN1YiI6Mn0.AV8MNcgUdJOLIVCwBCoZmWt_LqTeRGjQ64917cP6W0s'
+axios.defaults.headers.common['Authorization'] = 'Bear eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1MzYzOTE0MzksImp0aSI6IjM5YjhhMTdkLWIxYTQtNDJjOS05NTdlLTkwNzY5NzU0NTU1NyIsInN1YiI6Mn0.STP1IcFfmjYg241kQI_V50rtp4d1A9bupZTv5s93dqI'
 axios.defaults.headers.common['Accept'] = 'application/json'
 
 Vue.prototype.$moment = moment
