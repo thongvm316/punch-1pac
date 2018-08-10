@@ -5,6 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1">
+<link rel="manifest" href="manifest.json">
 
 <% if ENV['GOOGLE_SITE_VERIFICATION'] %>
 <meta name="google-site-verification" content="<%= ENV['GOOGLE_SITE_VERIFICATION'] %>">
@@ -36,12 +37,11 @@
 <link rel="apple-touch-icon" sizes="120x120" href="<%= asset_url('icon_120x120.png') %>">
 <link rel="apple-touch-icon" sizes="76x76" href="<%= asset_url('icon_76x76.png') %>">
 <link rel="icon" sizes="192x192" href="<%= asset_url('icon_192x192.png') %>">
+<%= csrf_meta_tags %>
 
 <%= render 'shared/google_analytic' %>
-<link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
-
+<%= render 'shared/webfont_loader' %>
 <%= stylesheet_link_tag('application', media: 'all') %>
-<%= csrf_meta_tags %>
 <script>
 window.LANG = '<%= I18n.locale %>'
 </script>
