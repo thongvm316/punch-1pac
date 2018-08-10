@@ -44,7 +44,6 @@ gem 'kaminari'
 gem 'oj'
 gem 'shrine'
 gem 'virtus'
-gem 'fast_blank'
 
 group :staging, :production do
   gem 'logglier'

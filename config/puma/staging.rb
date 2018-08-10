@@ -68,7 +68,7 @@ stdout_redirect "#{app_path}/shared/log/puma_stdout", "#{app_path}/shared/log/pu
 #
 # The default is "0, 16".
 #
-threads 5, 10
+threads 5, ENV.fetch('RAILS_MAX_THREADS') { 5 }
 
 # Bind the server to "url". "tcp://", "unix://" and "ssl://" are the only
 # accepted protocols.
@@ -118,7 +118,7 @@ end
 #
 # The default is "0".
 #
-workers 2
+workers ENV['WEB_CONCURRENCY'].to_i
 
 # Code to run immediately before the master starts workers.
 
@@ -161,12 +161,12 @@ end
 # is preserved across a phased-restart. (incompatible with preload_app)
 # (off by default)
 
-prune_bundler
+# prune_bundler
 
 # Preload the application before starting the workers; this conflicts with
 # phased restart feature. (off by default)
 
-# preload_app!
+preload_app!
 
 # Additional text to display in process listing
 #

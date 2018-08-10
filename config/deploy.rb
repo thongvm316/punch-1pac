@@ -141,4 +141,4 @@ before 'deploy:check', 'deploy:upload_yml'
 
 after 'deploy:upload_yml', 'yarn:install'
 
-before('deploy:assets:precompile', 'yarn:build') if ENV['SKIP_YARN']
+before('deploy:assets:precompile', 'yarn:build')
