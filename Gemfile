@@ -10,7 +10,7 @@ end
 
 # Core
 gem 'rails', '5.1.5'
-gem 'puma', '~> 3.10.0'
+gem 'puma', '~> 3.11'
 gem 'pg', '~> 0.18'
 gem 'pg_query'
 gem 'pghero'
