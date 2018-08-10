@@ -139,13 +139,7 @@ export default {
   },
 
   created() {
-    this.getHeaderNotifications().then(() => {
-      this.fetchingNotifications = setInterval(this.getNewHeaderNotifications, 10000)
-    })
-  },
-
-  destroyed() {
-    clearInterval(this.fetchingNotifications)
+    this.getHeaderNotifications()
   }
 }
 </script>
