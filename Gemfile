@@ -44,6 +44,7 @@ gem 'kaminari'
 gem 'oj'
 gem 'shrine'
 gem 'virtus'
+gem 'fast_blank'
 
 group :staging, :production do
   gem 'logglier'
@@ -85,6 +86,8 @@ group :development do
   gem 'spring-watcher-listen', '~> 2.0.0'
 
   gem 'sitemap_generator'
+  gem 'image_optim'
+  gem 'image_optim_pack'
 end
 
 group :test do
