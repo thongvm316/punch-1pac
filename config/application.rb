@@ -44,6 +44,9 @@ module Punch
 
     config.active_job.queue_adapter = :sidekiq
 
+    # compatiable when upgrade to 5.2
+    config.action_dispatch.use_authenticated_cookie_encryption = false
+
     config.assets.paths << Rails.root.join('app', 'assets', 'files')
     config.assets.paths << Rails.root.join('frontend', 'node_modules')
     config.assets.precompile += %w[pghero/favicon.png]

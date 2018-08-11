@@ -83,25 +83,25 @@ Rails.application.configure do
     config.logger    = ActiveSupport::TaggedLogging.new(logger)
   end
 
-  config.logger = Logglier.new("https://logs-01.loggly.com/inputs/#{ENV['LOGGLY_TOKEN']}/tag/rails/", threaded: false)
+  #config.logger = Logglier.new("https://logs-01.loggly.com/inputs/#{ENV['LOGGLY_TOKEN']}/tag/rails/", threaded: false)
   config.lograge.enabled = true
   config.lograge.formatter = Lograge::Formatters::Json.new
   config.lograge.custom_options = ->(event) do
     event.payload[:params].except('controller', 'action')
   end
 
-  config.action_mailer.default_options = { from: 'PUNCH <no-reply@buildcauhinh.com>' }
-  config.action_mailer.delivery_method = :smtp
-  config.action_mailer.default_url_options = { host: 'buildcauhinh.com', protocol: 'http' }
-  config.action_mailer.smtp_settings = {
-    address:              ENV['MAILGUN_HOST'],
-    domain:               ENV['MAILGUN_DOMAIN'],
-    port:                 587,
-    user_name:            ENV['MAILGUN_USERNAME'],
-    password:             ENV['MAILGUN_PASSWORD'],
-    authentication:       :plain,
-    enable_starttls_auto: true
-  }
+  #config.action_mailer.default_options = { from: 'PUNCH <no-reply@buildcauhinh.com>' }
+  #config.action_mailer.delivery_method = :smtp
+  #config.action_mailer.default_url_options = { host: 'buildcauhinh.com', protocol: 'http' }
+  #config.action_mailer.smtp_settings = {
+    #address:              ENV['MAILGUN_HOST'],
+    #domain:               ENV['MAILGUN_DOMAIN'],
+    #port:                 587,
+    #user_name:            ENV['MAILGUN_USERNAME'],
+    #password:             ENV['MAILGUN_PASSWORD'],
+    #authentication:       :plain,
+    #enable_starttls_auto: true
+  #}
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
