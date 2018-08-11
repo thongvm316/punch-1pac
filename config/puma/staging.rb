@@ -107,10 +107,6 @@ end
 #
 # restart_command '/u/app/lolcat/bin/restart_puma'
 
-before_fork do
-  defined?(ActiveRecord::Base) && ActiveRecord::Base.connection_pool.disconnect!
-end
-
 # === Cluster mode ===
 
 # How many worker processes to run.  Typically this is set to

@@ -10,7 +10,7 @@ end
 
 # Core
 gem 'rails', '5.1.5'
-gem 'puma', '~> 3.11'
+gem 'puma', '~> 3.11.4'
 gem 'pg', '~> 0.18'
 gem 'pg_query'
 gem 'pghero'
@@ -44,6 +44,7 @@ gem 'kaminari'
 gem 'oj'
 gem 'shrine'
 gem 'virtus'
+gem 'fast_blank'
 
 group :staging, :production do
   gem 'logglier'
