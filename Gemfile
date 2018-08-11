@@ -9,7 +9,7 @@ git_source(:github) do |repo_name|
 end
 
 # Core
-gem 'rails', '5.1.5'
+gem 'rails', '5.2.0'
 gem 'puma', '~> 3.11.4'
 gem 'pg', '~> 0.18'
 gem 'pg_query'
