@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class ChangeRequestsColumns < ActiveRecord::Migration[5.1]
-  def change
+  change_table :requests, bulk: true do
     add_column :requests, :annual_leave_day, :date
     add_column :requests, :kind, :integer, null: false, default: 0
     change_column :requests, :attendance_id, :bigint, null: true

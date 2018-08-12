@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class RemoveAttendanceIdOfRequests < ActiveRecord::Migration[5.1]
-  def change
+  change_table :requests, bulk: true do
     add_column :requests, :attendance_day, :date
 
     Request.find_in_batches do |requests|
