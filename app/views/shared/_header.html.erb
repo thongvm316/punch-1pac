@@ -20,7 +20,7 @@
           <p class="text-bold"><%= t('.instruction') %></p>
           <div class="input-group">
             <input type="text" placeholder="<%= t('.namespace') %>" class="form-input namespace-input">
-            <span>.punch.com</span>
+            <span>.<%= ENV['APP_DOMAIN'] %></span>
             <button class="btn btn-primary btn-submit"><%= t('.go') %></button>
           </div>
           <span class="text-error mt-8"><%= t('.errors') %></span>

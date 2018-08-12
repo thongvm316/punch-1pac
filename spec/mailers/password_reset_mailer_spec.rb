@@ -11,9 +11,9 @@ RSpec.describe PasswordResetMailer, type: :mailer do
     before { user.init_password_reset_token! }
 
     it 'render the headers' do
-      expect(mail.subject).to eq('[1Punch] Please reset your password')
+      expect(mail.subject).to eq('Please reset your password')
       expect(mail.to).to eq([user.email])
-      expect(mail.from).to eq(['no-reply@buildcauhinh.com'])
+      expect(mail.from).to eq(["no-reply@#{ENV['APP_DOMAIN']}"])
     end
 
     it 'render the body' do

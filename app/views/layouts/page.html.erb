@@ -44,6 +44,8 @@
 <%= stylesheet_link_tag('application', media: 'all') %>
 <script>
 window.LANG = '<%= I18n.locale %>'
+window.protocol = '<%= request.protocol %>'
+window.domain = '<%= ENV["APP_DOMAIN"] %>'
 </script>
 </head>
 

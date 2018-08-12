@@ -435,7 +435,7 @@ export default {
     },
     holidays: {
       title: 'Holidays',
-      explain: "Import country's holidays for your company, then 1Punch will not count a holiday as leaving day",
+      explain: "Import country's holidays for your company, then system will not count a holiday as leaving day",
       tableHeader: {
         name: 'Name',
         startAt: 'Start at',

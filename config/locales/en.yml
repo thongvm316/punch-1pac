@@ -266,7 +266,7 @@ en:
       sign_in: Sign In
       help: Help
       get_started: Get Started
-      namespace: your-company-url
+      namespace: namespace
     footer:
       help: Help
       contact_us: Contact us
