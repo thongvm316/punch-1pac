@@ -10,9 +10,9 @@ RSpec.describe UserMailer, type: :mailer do
     let(:mail) { UserMailer.create(user.id, company.id, password) }
 
     it 'render the headers' do
-      expect(mail.subject).to eq("[1Punch] Invitation from #{company.name}")
+      expect(mail.subject).to eq("Invitation from #{company.name}")
       expect(mail.to).to eq([user.email])
-      expect(mail.from).to eq(['no-reply@buildcauhinh.com'])
+      expect(mail.from).to eq(["no-reply@#{ENV['APP_DOMAIN']}"])
     end
 
     it 'render the body' do

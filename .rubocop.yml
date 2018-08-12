@@ -5,6 +5,7 @@ AllCops:
     - 'doc/**/*'
     - 'frontend/**/*'
     - 'bundle/**/*'
+    - 'config/puma/*'
   DisplayCopNames: true
   DisplayStyleGuide: true
   ExtraDetails: true
@@ -30,6 +31,9 @@ Rails/ReversibleMigration:
   Exclude:
     - 'db/migrate/20180511092012_remove_attendance_id_of_requests.rb'
     - 'db/migrate/20180511093242_drop_table_read_requests.rb'
+
+Rails/CreateTableWithTimestamps:
+  Enabled: false
 
 Style/GuardClause:
   Enabled: false

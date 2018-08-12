@@ -10,6 +10,10 @@
 <%= render 'shared/footer' %>
 <% end %>
 
+<% content_for(:js) do %>
+<%= render 'shared/crisp' %>
+<% end %>
+
 <div class="main main-mt-0">
   <div class="contact bg-linear-blue">
     <div class="container contact-container">

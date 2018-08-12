@@ -1,6 +1,6 @@
 Hi <%= @user.name %>,
 
-<%= @company.name %> company invites you to join 1Punch
+<%= @company.name %> company invites you to join <%= ENV['APP_NAME'] %>
 
 Please login with following information:
 
@@ -9,4 +9,4 @@ Email: <%= @user.email %>
 Password: <%= @password %>
 
 Thanks,
-1Punch team
+<%= ENV['APP_NAME'] %> team

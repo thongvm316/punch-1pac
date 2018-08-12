@@ -16,6 +16,7 @@ class DashboardController < ApplicationController
       announcements: ActiveModelSerializers::SerializableResource.new(announcements, each_serializer: AnnouncementSerializer, current_user: current_user).as_json,
       pending_requests: current_user.groups.pending_requests,
       meta: {
+        app_name: ENV['APP_NAME'],
         attendance_statuses: [].concat(Attendance::ATTENDING_STATUSES).concat(Attendance::LEAVING_STATUSES).concat(Attendance::OFF_STATUSES),
         request_statuses: Request.statuses.keys,
         languages: I18n.available_locales.map(&:to_s),

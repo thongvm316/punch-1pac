@@ -35,7 +35,7 @@ Rails.application.configure do
   # `config.assets.precompile` and `config.assets.version` have moved to config/initializers/assets.rb
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
-  config.action_controller.asset_host = 'https://punch.ooo'
+  config.action_controller.asset_host = "https://#{ENV['APP_DOMAIN']}"
 
   # Specifies the header that your server uses for sending files.
   # config.action_dispatch.x_sendfile_header = 'X-Sendfile' # for Apache
@@ -43,6 +43,7 @@ Rails.application.configure do
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
   config.force_ssl = true
+  config.ssl_options = { hsts: { subdomains: true, preload: true, expires: 1.year } }
 
   # Use the lowest log level to ensure availability of diagnostic information
   # when problems arise.
@@ -83,23 +84,23 @@ Rails.application.configure do
     config.logger    = ActiveSupport::TaggedLogging.new(logger)
   end
 
-  config.logger = Logglier.new("https://logs-01.loggly.com/inputs/#{ENV['LOGGLY_TOKEN']}/tag/rails/", threaded: false)
+  config.logger = Logglier.new("https://logs-01.loggly.com/inputs/#{ENV['LOGGLY_TOKEN']}/tag/rails/", threaded: true)
   config.lograge.enabled = true
   config.lograge.formatter = Lograge::Formatters::Json.new
   config.lograge.custom_options = ->(event) do
     event.payload[:params].except('controller', 'action')
   end
 
-  config.action_mailer.default_options = { from: 'PUNCH <no-reply@punch.ooo>' }
+  config.action_mailer.default_options = { from: "#{ENV['APP_NAME']} <no-reply@#{ENV['APP_DOMAIN']}>" }
   config.action_mailer.delivery_method = :smtp
-  config.action_mailer.default_url_options = { host: 'punch.ooo', protocol: 'https' }
+  config.action_mailer.default_url_options = { host: ENV['APP_DOMAIN'], protocol: 'https' }
   config.action_mailer.smtp_settings = {
-    address:              ENV['MAILGUN_HOST'],
-    domain:               ENV['MAILGUN_DOMAIN'],
+    address:              ENV['SMTP_HOST'],
+    domain:               ENV['APP_DOMAIN'],
     port:                 587,
-    user_name:            ENV['MAILGUN_USERNAME'],
-    password:             ENV['MAILGUN_PASSWORD'],
-    authentication:       :plain,
+    user_name:            ENV['SMTP_USERNAME'],
+    password:             ENV['SMTP_PASSWORD'],
+    authentication:       :login,
     enable_starttls_auto: true
   }
 
@@ -109,7 +110,7 @@ end
 
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
-    origins 'punch.ooo'
+    origins ENV['APP_DOMAIN']
     resource '/', headers: :any, methods: %i[get]
   end
 end

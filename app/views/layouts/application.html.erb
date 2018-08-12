@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <link rel="manifest" href="manifest.json">
 
-<title>1Punch</title>
+<title><%= ENV['APP_NAME'] %></title>
 <meta name="description" content="Punch description">
 
 <meta property="og:title" content="Punch">
@@ -37,7 +37,7 @@
 </div>
 
 <script>
-window.initialStates = function () { return <%= raw @initial_state.to_json %> }
+window.initialStates = function () { return <%= raw json_escape(@initial_state.to_json) %> }
 </script>
 <script type="text/javascript" src="<%= @webpack_assets['manifest.js'] %>"></script>
 <script type="text/javascript" src="<%= @webpack_assets['vendor.js'] %>"></script>
