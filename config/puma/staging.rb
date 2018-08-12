@@ -68,7 +68,7 @@ stdout_redirect "#{app_path}/shared/log/puma_stdout", "#{app_path}/shared/log/pu
 #
 # The default is "0, 16".
 #
-threads 5, ENV.fetch('RAILS_MAX_THREADS') { 5 }
+threads 5, 5
 
 # Bind the server to "url". "tcp://", "unix://" and "ssl://" are the only
 # accepted protocols.
@@ -114,9 +114,20 @@ end
 #
 # The default is "0".
 #
-workers ENV['WEB_CONCURRENCY'].to_i
+workers 2
 
 # Code to run immediately before the master starts workers.
+#
+before_fork do
+  PumaWorkerKiller.config do |config|
+    config.ram           = 600 # mb
+    config.frequency     = 5 # seconds
+    config.percent_usage = 0.98
+    config.rolling_restart_frequency = false
+    config.pre_term = ->(worker) { puts "Worker #{worker.inspect} being killed" }
+  end
+  PumaWorkerKiller.start
+end
 
 # Code to run in a worker before it starts serving requests.
 #
@@ -151,18 +162,12 @@ end
 # after_worker_fork do
 #   puts 'After worker fork...'
 # end
-
-# Allow workers to reload bundler context when master process is issued
-# a USR1 signal. This allows proper reloading of gems while the master
-# is preserved across a phased-restart. (incompatible with preload_app)
-# (off by default)
-
-# prune_bundler
+# Allow workers to reload bundler context when master process is issued a USR1 signal. This allows proper reloading of gems while the master is preserved across a phased-restart. (incompatible with preload_app) (off by default) prune_bundler
 
 # Preload the application before starting the workers; this conflicts with
 # phased restart feature. (off by default)
 
-preload_app!
+# preload_app!
 
 # Additional text to display in process listing
 #

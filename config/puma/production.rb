@@ -68,7 +68,7 @@ stdout_redirect "#{app_path}/shared/log/puma_stdout", "#{app_path}/shared/log/pu
 #
 # The default is "0, 16".
 #
-threads 5, 10
+threads 5, 5
 
 # Bind the server to "url". "tcp://", "unix://" and "ssl://" are the only
 # accepted protocols.
@@ -109,6 +109,14 @@ end
 
 before_fork do
   defined?(ActiveRecord::Base) && ActiveRecord::Base.connection_pool.disconnect!
+  PumaWorkerKiller.config do |config|
+    config.ram           = 1024 # mb
+    config.frequency     = 5    # seconds
+    config.percent_usage = 0.98
+    config.rolling_restart_frequency = false
+    config.pre_term = ->(worker) { puts "Worker #{worker.inspect} being killed" }
+  end
+  PumaWorkerKiller.start
 end
 
 # === Cluster mode ===
