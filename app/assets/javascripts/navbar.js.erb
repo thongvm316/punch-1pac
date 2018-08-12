@@ -66,13 +66,16 @@ function checkNamespace () {
   var xhr = new XMLHttpRequest();
   var namespace = nav.querySelector('.namespace-input').value;
   var textError = nav.querySelector('.text-error');
+  var namespaceUrl = (function (namespace) {
+    return window.protocol + namespace + "." + window.domain
+  })(namespace)
 
-  xhr.open("GET", "http://" + namespace + ".buildcauhinh.com");
+  xhr.open("GET", namespaceUrl);
   xhr.setRequestHeader('Accept', 'application/json');
   xhr.onload = function(e) {
     if (xhr.status === 200) {
       nav.querySelector('.namespace-input').value = '';
-      window.location.href = "http://" + namespace + ".buildcauhinh.com";
+      window.location.href = namespaceUrl;
     } else if (xhr.status === 404) {
       textError.classList.add('show');
       nav.querySelector('.namespace-input').value = '';
