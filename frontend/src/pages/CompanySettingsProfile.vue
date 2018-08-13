@@ -51,6 +51,18 @@
         </select>
         <p class="form-input-hint" v-if="companyErrors.timezone">{{ $t('company.timezoneAndLanguage.labels.timezone') }} {{ companyErrors.timezone[0] }}</p>
       </div>
+      <div class="form-group" :class="{ 'has-error': companyErrors.punch_method }">
+        <label class="form-label">{{ $t('company.profile.labels.punchMethod') }}</label>
+        <label class="form-radio">
+          <input type="radio" value="default" v-model="params.punch_method">
+          <i class="form-icon"></i> {{ $t('company.punchMethod.default') }}
+        </label>
+        <label class="form-radio">
+          <input type="radio" value="qrcode_scan" v-model="params.punch_method">
+          <i class="form-icon"></i> {{ $t('company.punchMethod.qrcode') }}
+        </label>
+        <p class="form-input-hint" v-if="companyErrors.punch_method">{{ $t('company.profile.labels.punchMethod') }} {{ companyErrors.punch_method[0] }}</p>
+      </div>
       <div class="form-group">
         <button type="button" class="btn btn-success btn-submit" @click="localUpdateCompany" :disabled="isDisable">{{ $t('company.profile.btn.save') }}</button>
       </div>
@@ -76,7 +88,8 @@ export default {
         phone_number: '',
         postal_code: '',
         tax_code: '',
-        timezone: ''
+        timezone: '',
+        punch_method: 'default'
       }
     }
   },

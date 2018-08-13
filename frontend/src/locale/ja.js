@@ -356,11 +356,16 @@ export default {
         address: '所在地（住所）',
         phoneNum: '電話番号',
         postalCode: '郵便番号',
-        taxCode: '納税者番号'
+        taxCode: '納税者番号',
+        punchMethod: '打刻方法'
       },
       btn: {
         save: '保存'
       }
+    },
+    punchMethod: {
+      default: 'デフォルト',
+      qrcode: 'QRコード'
     },
     businessDays: {
       title: '営業日',
