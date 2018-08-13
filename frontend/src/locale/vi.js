@@ -356,11 +356,16 @@ export default {
         address: 'Địa chỉ',
         phoneNum: 'Điện thoại',
         postalCode: 'Mã vùng',
-        taxCode: 'Mã số thuế'
+        taxCode: 'Mã số thuế',
+        punchMethod: 'Phương thức chấm công'
       },
       btn: {
         save: 'Lưu'
       }
+    },
+    punchMethod: {
+      default: 'Mặc định',
+      qrcode: 'Mã QR'
     },
     businessDays: {
       title: 'Ngày đi làm',

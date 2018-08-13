@@ -356,11 +356,16 @@ export default {
         address: 'Address',
         phoneNum: 'Phone number',
         postalCode: 'Postal code',
-        taxCode: 'Tax code'
+        taxCode: 'Tax code',
+        punchMethod: 'Punch method'
       },
       btn: {
         save: 'Save'
       }
+    },
+    punchMethod: {
+      default: 'Default',
+      qrcode: 'QRCode'
     },
     businessDays: {
       title: 'Business days',

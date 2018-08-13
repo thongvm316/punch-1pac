@@ -24,7 +24,7 @@ RSpec.describe Api::V1::CompaniesController, type: :controller do
           is_expected
           expect { company.reload }
             .to change { company.name }.from('91E35B8F57E0').to('AF200F52')
-                                       .and change { company.punch_method }.from('normal').to('qrcode_scan')
+                                       .and change { company.punch_method }.from('default').to('qrcode_scan')
         end
       end
 
