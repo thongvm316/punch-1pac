@@ -91,7 +91,7 @@ Rails.application.configure do
     event.payload[:params].except('controller', 'action')
   end
 
-  config.action_mailder.perform_deliveries = true
+  config.action_mailer.perform_deliveries = true
   config.action_mailer.default_options = { from: "#{ENV['APP_NAME']} <no-reply@#{ENV['APP_DOMAIN']}>" }
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.default_url_options = { host: ENV['APP_DOMAIN'], protocol: 'https' }
