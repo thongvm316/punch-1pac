@@ -14,9 +14,6 @@ class AwsSnsController < ApplicationController
       http.get(uri.request_uri)
     else
       logger.info "AWS has sent us the following bounce notification(s): #{json}"
-      json['bounce']['bouncedRecipients'].each do |recipient|
-        logger.info "AWS SES received a bounce on an email send attempt to #{recipient['emailAddress']}"
-      end
     end
     head(200)
   end

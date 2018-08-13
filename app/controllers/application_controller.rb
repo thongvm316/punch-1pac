@@ -18,8 +18,8 @@ class ApplicationController < ActionController::Base
 
   def not_found
     respond_to do |f|
-      f.json { render json: { message: 'Not Found' }, status: :not_found }
       f.any { render file: 'pages/page_404', status: :not_found, layout: 'page' }
+      f.json { render json: { message: 'Not Found' }, status: :not_found }
     end
   end
 
