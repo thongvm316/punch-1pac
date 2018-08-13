@@ -119,14 +119,18 @@ workers 2
 # Code to run immediately before the master starts workers.
 #
 before_fork do
-  PumaWorkerKiller.config do |config|
-    config.ram           = 600 # mb
-    config.frequency     = 5 # seconds
-    config.percent_usage = 0.98
-    config.rolling_restart_frequency = false
-    config.pre_term = ->(worker) { puts "Worker #{worker.inspect} being killed" }
+  defined?(ActiveRecord::Base) && ActiveRecord::Base.connection_pool.disconnect!
+  require 'puma_worker_killer'
+  if defined?(PumaWorkerKiller)
+    PumaWorkerKiller.config do |config|
+      config.ram           = 1024 # mb
+      config.frequency     = 5    # seconds
+      config.percent_usage = 0.98
+      config.rolling_restart_frequency = false
+      config.pre_term = ->(worker) { puts "Worker #{worker.inspect} being killed" }
+    end
+    PumaWorkerKiller.start
   end
-  PumaWorkerKiller.start
 end
 
 # Code to run in a worker before it starts serving requests.
@@ -162,7 +166,12 @@ end
 # after_worker_fork do
 #   puts 'After worker fork...'
 # end
-# Allow workers to reload bundler context when master process is issued a USR1 signal. This allows proper reloading of gems while the master is preserved across a phased-restart. (incompatible with preload_app) (off by default) prune_bundler
+# Allow workers to reload bundler context when master process is issued
+# a USR1 signal. This allows proper reloading of gems while the master
+# is preserved across a phased-restart. (incompatible with preload_app)
+# (off by default)
+
+prune_bundler
 
 # Preload the application before starting the workers; this conflicts with
 # phased restart feature. (off by default)
