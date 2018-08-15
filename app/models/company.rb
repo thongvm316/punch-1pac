@@ -19,7 +19,7 @@
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
 #  app_blocked_by_ip :boolean          default(FALSE), not null
-#  punch_method      :integer          default("normal"), not null
+#  punch_method      :integer          default("default"), not null
 #
 # Indexes
 #
