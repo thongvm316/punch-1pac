@@ -41,13 +41,12 @@
     .scroller-slider {
       padding: 1.6rem 0 0;
       align-items: flex-end;
+      justify-content: center;
+      min-width: inherit;
 
       @include respond-to-mobile() {
         padding-bottom: 1.6rem;
-      }
-
-      @media (max-width: 1023px) {
-        min-width: 1023px;
+        min-width: 680px;
       }
     }
   }
