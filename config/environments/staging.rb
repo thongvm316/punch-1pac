@@ -91,7 +91,7 @@ Rails.application.configure do
   end
 
   config.action_mailer.perform_deliveries = true
-  config.action_mailer.default_options = { from: "PUNCH <no-reply@punch.ooo>" }
+  config.action_mailer.default_options = { from: 'PUNCH <no-reply@punch.ooo>' }
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.default_url_options = { host: ENV['APP_DOMAIN'], protocol: 'http' }
   config.action_mailer.smtp_settings = {

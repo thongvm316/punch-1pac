@@ -47,6 +47,7 @@ gem 'virtus'
 gem 'fast_blank'
 gem 'puma_worker_killer'
 gem 'rack-timeout'
+gem 'sendgrid-ruby'
 
 group :staging, :production do
   gem 'logglier'
