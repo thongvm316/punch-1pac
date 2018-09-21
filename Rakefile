@@ -38,4 +38,18 @@ namespace :punch do
     end
     UserGroup.import(user_groups)
   end
+
+  task :seed_test_company do
+    Rails.initialize! unless Rails.env.development?
+    company = FactoryBot.create(:company, namespace: 'test')
+    user = FactoryBot.create(:user, email: 'test@example.com', password: 'password', password_confirmation: 'password', company: company, created_at: Time.current.beginning_of_year)
+    group = FactoryBot.create(:group, name: 'default', company: company)
+    user_group = FactoryBot.create(:user_group, user: user, group: group)
+    prev_month = Time.current - 1.month
+    next_month = Time.current + 1.month
+    (prev_month.to_i..next_month.to_i).step(1.day) do |t|
+      day = Time.zone.at(t)
+      attendance = FactoryBot.create(:attendance, day: day, user: user)
+    end
+  end
 end
