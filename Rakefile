@@ -43,13 +43,17 @@ namespace :punch do
     Rails.initialize! unless Rails.env.development?
     company = FactoryBot.create(:company, namespace: 'test')
     user = FactoryBot.create(:user, email: 'test@example.com', password: 'password', password_confirmation: 'password', company: company, created_at: Time.current.beginning_of_year)
+    users = [user]
+    10.times.each do |i|
+      users << FactoryBot.create(:user, email: "test#{i}@example.com", password: 'password', password_confirmation: 'password', company: company, created_at: Time.current.beginning_of_year)
+    end
     group = FactoryBot.create(:group, name: 'default', company: company)
-    user_group = FactoryBot.create(:user_group, user: user, group: group)
-    prev_month = Time.current - 1.month
-    next_month = Time.current + 1.month
+    users.each { |user| FactoryBot.create(:user_group, user: user, group: group) }
+    prev_month = Time.current - 2.month
+    next_month = Time.current - 1.day
     (prev_month.to_i..next_month.to_i).step(1.day) do |t|
       day = Time.zone.at(t)
-      attendance = FactoryBot.create(:attendance, day: day, user: user)
+      users.each { |user| FactoryBot.create(:attendance, day: day, user: user) }
     end
   end
 end
