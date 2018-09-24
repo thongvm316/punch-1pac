@@ -119,7 +119,7 @@ namespace :deploy do
     on roles(:app) do
       within current_path do
         with(rails_env: fetch(:stage)) do
-          execute :bundle, :exec, :rake, 'punch:create_user_groups_namespace_1'
+          execute :bundle, :exec, :rake, 'punch:seed_test_company'
         end
       end
     end
