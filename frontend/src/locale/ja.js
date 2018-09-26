@@ -172,14 +172,14 @@ export default {
       reject: '却下'
     },
     attendance: {
-      punch_in: '<span class="text-bold-600">{name}</span>は出勤しました',
-      punch_out: '<span class="text-bold-600">{name}</span>は退勤しました'
+      punch_in: '<span class="text-bold-600">{name}</span>さんは出勤しました',
+      punch_out: '<span class="text-bold-600">{name}</span>さんは退勤しました'
     },
     request: {
-      create: '<span class="text-bold-600">{name}</span>が申請を提出しました',
-      update: '<span class="text-bold-600">{name}</span>が申請を更新しました',
-      approve: '<span class="text-bold-600">{name}</span>があなたの申請を承認しました',
-      reject: '<span class="text-bold-600">{name}</span>があなたの申請を却下しました'
+      create: '<span class="text-bold-600">{name}</span>さんが申請を提出しました',
+      update: '<span class="text-bold-600">{name}</span>さんが申請を更新しました',
+      approve: '<span class="text-bold-600">{name}</span>さんがあなたの申請を承認しました',
+      reject: '<span class="text-bold-600">{name}</span>さんがあなたの申請を却下しました'
     },
     labels: {
       date: '日付',
@@ -580,14 +580,14 @@ export default {
   activity: {
     showMore: '詳細を見る',
     attendance: {
-      punch_in: '<span class="text-bold-600">{name}</span>が出勤しました',
-      punch_out: '<span class="text-bold-600">{name}</span>が退勤しました'
+      punch_in: '<span class="text-bold-600">{name}</span>さんが出勤しました',
+      punch_out: '<span class="text-bold-600">{name}</span>さんが退勤しました'
     },
     request: {
-      create: '<span class="text-bold-600">{name}</span>が新しい修正を依頼しました',
-      update: '<span class="text-bold-600">{name}</span>が申請を更新しました',
-      approve: '<span class="text-bold-600">{name}</span>が申請を承認しました',
-      reject: '<span class="text-bold-600">{name}</span>が申請を却下しました'
+      create: '<span class="text-bold-600">{name}</span>さんが新しい修正を依頼しました',
+      update: '<span class="text-bold-600">{name}</span>さんが申請を更新しました',
+      approve: '<span class="text-bold-600">{name}</span>さんが申請を承認しました',
+      reject: '<span class="text-bold-600">{name}</span>さんが申請を却下しました'
     }
   },
   popup: {
