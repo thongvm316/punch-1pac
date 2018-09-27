@@ -54,7 +54,7 @@ export default {
     requests: '申請一覧',
     groups: 'グループ一覧',
     notifications: 'お知らせ',
-    noNotificationMsg: '現在新しいお知らせはありません',
+    noNotificationMsg: '現在新しいお知らせはありません。',
     settings: '個人設定',
     companySettings: '組織の設定',
     seeAll: '全て見る',
@@ -62,9 +62,9 @@ export default {
     in: '出勤時間',
     out: '退勤時間',
     punchIn: '出勤',
-    punchInSuccess: '{at}に出勤しました',
+    punchInSuccess: '{at}に出勤しました。',
     punchOut: '退勤',
-    punchOutSuccess: '{at}に退勤しました',
+    punchOutSuccess: '{at}に退勤しました。',
     punchOutTitle: '退勤時間を確認する',
     punchOutConfirm: '{at}に退勤しますか？',
     btnAnnualLeave: '年次休暇',
@@ -150,9 +150,9 @@ export default {
     calendar: 'カレンダー',
     calendarToday: '今日',
     chart: 'チャート',
-    chartNoData: '今月のデータはありません',
+    chartNoData: '今月のデータはありません。',
     recentActivities: '最近のアクティビティ',
-    emptyActivity: 'アクティビティはありません',
+    emptyActivity: 'アクティビティはありません。',
     pendingRequests: '承認待ち一覧',
     havePendingRequests: '以下のグループにユーザーからの申請が届いています。',
     emptyPendingRequests: '現在新しい申請はありません。',
@@ -172,14 +172,14 @@ export default {
       reject: '却下'
     },
     attendance: {
-      punch_in: '<span class="text-bold-600">{name}</span>さんは出勤しました',
-      punch_out: '<span class="text-bold-600">{name}</span>さんは退勤しました'
+      punch_in: '<span class="text-bold-600">{name}</span>さんは出勤しました。',
+      punch_out: '<span class="text-bold-600">{name}</span>さんは退勤しました。'
     },
     request: {
-      create: '<span class="text-bold-600">{name}</span>さんが申請を提出しました',
-      update: '<span class="text-bold-600">{name}</span>さんが申請を更新しました',
-      approve: '<span class="text-bold-600">{name}</span>さんがあなたの申請を承認しました',
-      reject: '<span class="text-bold-600">{name}</span>さんがあなたの申請を却下しました'
+      create: '<span class="text-bold-600">{name}</span>さんが申請を提出しました。',
+      update: '<span class="text-bold-600">{name}</span>さんが申請を更新しました。',
+      approve: '<span class="text-bold-600">{name}</span>さんがあなたの申請を承認しました。',
+      reject: '<span class="text-bold-600">{name}</span>さんがあなたの申請を却下しました。'
     },
     labels: {
       date: '日付',
@@ -435,12 +435,12 @@ export default {
         save: '保存'
       },
       msg: {
-        success: '組織の「時刻と言語」が更新されました'
+        success: '組織の「時刻と言語」が更新されました。'
       }
     },
     holidays: {
       title: '休日',
-      explain: '組織の祝日を追加すると、休日としてカウントされます',
+      explain: '組織の祝日を追加すると、休日としてカウントされます。',
       tableHeader: {
         name: '名称',
         startAt: '開始',
@@ -473,16 +473,16 @@ export default {
         delete: '削除する'
       },
       msg: {
-        importSuccess: '{country}の祝日をインポートしました',
-        blankOrAlreadyImported: '{country}の祝日は既にインポートされているか、または存在していません'
+        importSuccess: '{country}の祝日をインポートしました。',
+        blankOrAlreadyImported: '{country}の祝日は既にインポートされているか、または存在していません。'
       }
     },
     users: {
       title: 'ユーザー',
       add: {
         title: 'ユーザーの追加',
-        successMsg: '新しいユーザーが登録されました',
-        note: 'ログイン情報が含まれたメールを送信しました。メールボックスをチェックしてください',
+        successMsg: '新しいユーザーが登録されました。',
+        note: 'ログイン情報が含まれたメールを送信しました。メールボックスをチェックしてください。',
         labels: {
           name: 'ユーザー名',
           email: 'メールアドレス',
@@ -500,11 +500,11 @@ export default {
       },
       addMulti: {
         title: 'ユーザーの一括追加',
-        successCSVMsg: 'CSVファイルに指定された全てのユーザーを追加しました',
-        note: 'ログイン情報が含まれたメールを送信しました。メールボックスをチェックしてください',
+        successCSVMsg: 'CSVファイルに指定された全てのユーザーを追加しました。',
+        note: 'ログイン情報が含まれたメールを送信しました。メールボックスをチェックしてください。',
         errorMsg: '{rows}に不正情報があります',
         download: 'ユーザ一括追加用CSVテンプレート',
-        templateGuide: '上記のCSVテンプレートをダウンロードしてください. 内容を編集後、CSVファイルをアップロードしてください',
+        templateGuide: '上記のCSVテンプレートをダウンロードしてください。内容を編集後、CSVファイルをアップロードしてください。',
         labels: {
           csvFile: 'CSVファイル'
         },
@@ -544,56 +544,56 @@ export default {
   },
   messages: {
     company: {
-      updateSuccess: '組織情報を更新しました',
-      updateTimeSuccess: '組織の時刻と休憩時間を更新しました'
+      updateSuccess: '組織情報を更新しました。',
+      updateTimeSuccess: '組織の時刻と休憩時間を更新しました。'
     },
     user: {
-      addSuccess: '新しいユーザーを登録しました。ログイン情報が含まれたメールをユーザーに送信しました',
-      updatePwdSuccess: 'パスワードを更新しました',
-      addMultiSuccess: 'ユーザーを一括登録しました。ログイン情報が含まれたメールをユーザーに送信しました',
-      updateProfileSuccess: 'あなたのプロフィールを更新しました'
+      addSuccess: '新しいユーザーを登録しました。ログイン情報が含まれたメールをユーザーに送信しました。',
+      updatePwdSuccess: 'パスワードを更新しました。',
+      addMultiSuccess: 'ユーザーを一括登録しました。ログイン情報が含まれたメールをユーザーに送信しました。',
+      updateProfileSuccess: 'あなたのプロフィールを更新しました。'
     },
     ip: {
-      createSuccess: '許可されたIPアドレスを追加ました',
-      updateSuccess: '許可されたIPアドレスを更新ました'
+      createSuccess: '許可されたIPアドレスを追加ました。',
+      updateSuccess: '許可されたIPアドレスを更新ました。'
     },
     group: {
-      createSuccess: 'グループを追加しました',
-      updateSuccess: 'グループの情報を更新しました',
-      addMemberSuccess: '新しいメンバーを追加しました'
+      createSuccess: 'グループを追加しました。',
+      updateSuccess: 'グループの情報を更新しました。',
+      addMemberSuccess: '新しいメンバーを追加しました。'
     },
     request: {
-      createSuccess: '申請を提出しました',
-      updateSuccess: '申請を更新しました',
-      approvedSuccess: 'あなたの申請が承認されました',
-      rejectedSuccess: 'あなたの申請が却下されました'
+      createSuccess: '申請を提出しました。',
+      updateSuccess: '申請を更新しました。',
+      approvedSuccess: 'あなたが申請が承認しました。',
+      rejectedSuccess: 'あなたが申請を却下しました。'
     },
     holiday: {
-      createSuccess: '休日を追加しました',
-      updateSuccess: '休日を更新しました'
+      createSuccess: '休日を追加しました。',
+      updateSuccess: '休日を更新しました。'
     },
     businessDay: {
-      createSuccess: '営業日を追加しました',
-      updateSuccess: '営業日を更新しました'
+      createSuccess: '営業日を追加しました。',
+      updateSuccess: '営業日を更新しました。'
     }
   },
   activity: {
     showMore: '詳細を見る',
     attendance: {
-      punch_in: '<span class="text-bold-600">{name}</span>さんが出勤しました',
-      punch_out: '<span class="text-bold-600">{name}</span>さんが退勤しました'
+      punch_in: '<span class="text-bold-600">{name}</span>さんが出勤しました。',
+      punch_out: '<span class="text-bold-600">{name}</span>さんが退勤しました。'
     },
     request: {
-      create: '<span class="text-bold-600">{name}</span>さんが新しい修正を依頼しました',
-      update: '<span class="text-bold-600">{name}</span>さんが申請を更新しました',
-      approve: '<span class="text-bold-600">{name}</span>さんが申請を承認しました',
-      reject: '<span class="text-bold-600">{name}</span>さんが申請を却下しました'
+      create: '<span class="text-bold-600">{name}</span>さんが新しい修正を依頼しました。',
+      update: '<span class="text-bold-600">{name}</span>さんが申請を更新しました。',
+      approve: '<span class="text-bold-600">{name}</span>さんが申請を承認しました。',
+      reject: '<span class="text-bold-600">{name}</span>さんが申請を却下しました。'
     }
   },
   popup: {
     changePassword: {
       title: 'あなたのパスワードは保護されていません',
-      description: '現在のパスワードはシステムが自動生成したものですが、安全ではありません。あなた自身の新しいパスワードを設定してください',
+      description: '現在のパスワードはシステムが自動生成したものですが、安全ではありません。あなた自身の新しいパスワードを設定してください。',
       btnChange: 'パスワードの変更',
       btnRemind: 'あとでリマインド'
     }
@@ -612,8 +612,8 @@ export default {
       annualLeaveDay: '休暇',
       reason: '理由'
     },
-    createSuccessMsg: '新しい休暇申請を提出しました',
-    updateSuccessMsg: 'あなたの休暇申請が更新しました',
+    createSuccessMsg: '新しい休暇申請を提出しました。',
+    updateSuccessMsg: 'あなたが休暇申を更新しました。',
     submit: '保存',
     save: '保存'
   },
@@ -632,6 +632,6 @@ export default {
     message: 'あなたは{days}の勤怠記録をしていません。該当日の勤怠状況を編集するには、管理者に申請してください。'
   },
   filterUserBox: {
-    noOptions: '一致するユーザーはいません'
+    noOptions: '一致するユーザーはいません。'
   }
 }
