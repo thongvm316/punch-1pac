@@ -9,6 +9,11 @@ export default class User extends Abstract {
     return false
   }
 
+  canEditRole() {
+    if (this.currentUser.role === 'superadmin' && this.record.role !== 'superadmin') return true
+    return false
+  }
+
   canDelete() {
     if (this.record.owner) return false
     if (this.currentUser.owner) return true
