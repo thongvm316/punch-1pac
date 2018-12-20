@@ -24,7 +24,7 @@
         <th>{{ $t('attendances.tableHeader.status') }}</th>
       </thead>
       <tbody>
-        <tr v-for="attendance in attendances">
+        <tr v-for="attendance in attendances" :key="attendance.id">
           <td>
             <div class="tile tile-centered">
               <div class="tile-icon">

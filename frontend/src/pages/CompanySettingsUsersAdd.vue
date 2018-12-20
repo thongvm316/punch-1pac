@@ -15,7 +15,7 @@
       <div class="form-group" :class="{ 'has-error': errors.role }">
         <label class="form-label">{{ $t('company.users.add.labels.role') }}</label>
         <select class="form-select" v-model="params.role">
-          <option :value="role" v-for="role in meta.roles">{{ $t(`meta.roles.${role}`) }}</option>
+          <option :value="role" v-for="(role, key) in meta.roles" :key="key">{{ $t(`meta.roles.${role}`) }}</option>
         </select>
         <p class="form-input-hint" v-if="errors.role">{{ $t('company.users.add.labels.role') }} {{ errors.role[0] }}</p>
       </div>

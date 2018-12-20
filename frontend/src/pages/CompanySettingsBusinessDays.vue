@@ -16,7 +16,7 @@
         <th>{{ $t('company.businessDays.tableHeader.actions') }}</th>
       </thead>
       <tbody>
-        <tr v-for="businessDay in businessDays">
+        <tr v-for="businessDay in businessDays" :key="businessDay.id">
           <td>{{ $t(`meta.weekdays.${businessDay.weekday}`) }}</td>
           <td>{{ businessDay.morning_started_at }}</td>
           <td>{{ businessDay.morning_ended_at }}</td>

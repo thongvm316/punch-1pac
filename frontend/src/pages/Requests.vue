@@ -13,11 +13,11 @@
         v-model="params.date"/>
       <select class="form-select" v-model="params.status">
         <option value="">{{ $t('requests.placeholder.filterByStatus') }}</option>
-        <option :value="status" v-for="status in meta.request_statuses">{{ $t(`meta.request_statuses.${status}`) }}</option>
+        <option :value="status" v-for="(status, key) in meta.request_statuses" :key="key">{{ $t(`meta.request_statuses.${status}`) }}</option>
       </select>
       <select class="form-select" v-model="params.kind">
         <option value="">{{ $t('requests.placeholder.filterByKind') }}</option>
-        <option :value="kind" v-for="kind in ['annual_leave', 'attendance']">{{ $t(`requests.kinds.${kind}`) }}</option>
+        <option :value="kind" v-for="(kind, key) in ['annual_leave', 'attendance']" :key="key">{{ $t(`requests.kinds.${kind}`) }}</option>
       </select>
     </div>
 
@@ -36,7 +36,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="request in requests">
+        <tr v-for="request in requests" :key="request.id">
           <td class="w-cell-date">{{ request.attendance_day | moment_l }}</td>
           <td>{{ request.attended_at }}</td>
           <td>{{ request.left_at }}</td>

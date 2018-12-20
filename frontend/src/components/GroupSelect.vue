@@ -1,7 +1,7 @@
 <template>
   <select class="form-select" @change="updateValue($event)">
     <slot name="placeholder"></slot>
-    <option :value="group.id" v-for="group in groups">{{ group.name }}</option>
+    <option :value="group.id" v-for="group in groups" :key="group.id">{{ group.name }}</option>
   </select>
 </template>
 

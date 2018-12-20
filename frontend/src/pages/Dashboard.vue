@@ -27,7 +27,7 @@
           <h2 class="subtitle">{{ $t('dashboard.recentActivities') }}</h2>
           <div class="notifications" v-if="activities.length > 0">
             <ul>
-              <li class="px-0" v-for="activity in activities">
+              <li class="px-0" v-for="activity in activities" :key="activity.id">
                 <div class="tile tile-centered tile-activity">
                   <div class="tile-icon">
                     <img :src="activity.user.avatar_url" class="avatar avatar-md" :alt="activity.user.name">

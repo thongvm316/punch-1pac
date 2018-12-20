@@ -28,7 +28,7 @@
         <th>{{ $t('group.tableHeader.actions') }}</th>
       </thead>
       <tbody>
-        <tr v-for="user in filterUsers(searchText)" :class="{ 'deactivated': !user.activated }">
+        <tr v-for="user in filterUsers(searchText)" :key="user.id" :class="{ 'deactivated': !user.activated }">
           <td>
             <div class="tile tile-centered">
               <div class="tile-icon">

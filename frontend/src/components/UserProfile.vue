@@ -35,7 +35,7 @@
     <div class="form-group" :class="{ 'has-error': errors.role }">
       <label class="form-label">{{ $t('user.profile.labels.role') }}</label>
       <select class="form-select" v-model="params.role" :disabled="!$auth('User', currentUser, targetUser).canEditRole()">
-        <option :value="role" v-for="role in meta.roles">{{ $t(`meta.roles.${role}`) }}</option>
+        <option :value="role" v-for="(role, key) in meta.roles" :key="key">{{ $t(`meta.roles.${role}`) }}</option>
       </select>
       <p class="form-input-hint" v-if="errors.role">{{ $t('user.profile.labels.role') }} {{ errors.role[0] }}</p>
     </div>

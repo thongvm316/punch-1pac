@@ -35,7 +35,7 @@
                 <a class="btn-back" @click="toggleLangSelect"></a>
                 <p>{{ $t('header.languages') }}</p>
               </li>
-              <li class="menu-item" v-for="language in meta.languages"><a  @click="updateUser(language)">{{ $t(`meta.languages.${language}`) }}</a></li>
+              <li class="menu-item" v-for="(language, key) in meta.languages" :key="key"><a @click="updateUser(language)">{{ $t(`meta.languages.${language}`) }}</a></li>
             </ul>
           </div>
         </section>

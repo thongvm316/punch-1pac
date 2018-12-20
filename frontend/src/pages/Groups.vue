@@ -8,7 +8,7 @@
     </div>
 
     <div class="columns mt-5">
-      <div class="column col-3 mb-4" v-for="group in filterGroups(name)">
+      <div class="column col-3 mb-4" v-for="group in filterGroups(name)" :key="group.id">
         <div class="box box-group">
           <div class="box-header">
             <div class="tile">

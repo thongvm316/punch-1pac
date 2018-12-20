@@ -19,7 +19,7 @@
         <th>{{ $t('company.users.tableHeader.actions') }}</th>
       </thead>
       <tbody>
-        <tr v-for="user in filterByEmail(searchText)" :class="{ 'deactivated': !user.activated }">
+        <tr v-for="user in filterByEmail(searchText)" :key="user.id" :class="{ 'deactivated': !user.activated }">
           <td>
             <div class="tile tile-centered">
               <div class="tile-icon">

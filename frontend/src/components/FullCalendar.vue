@@ -25,14 +25,14 @@
 
       <div class="calendar-container">
         <div class="calendar-header">
-          <div class="calendar-date h5 text-dark" v-for="day in days">{{ day }}</div>
+          <div class="calendar-date h5 text-dark" v-for="day in days" :key="day">{{ day }}</div>
         </div>
         <div class="calendar-body">
-          <div class="calendar-date prev-month disabled" v-for="date in lastDaysPreviousMonth">
+          <div class="calendar-date prev-month disabled" v-for="date in lastDaysPreviousMonth" :key="date">
             <button class="date-item">{{ date }}</button>
           </div>
           <calendar-date :calendar-attendance="attendance" :today="today" v-for="attendance in attendances" :key="attendance.day" @click.native="toggleConfirmModal(attendance)"/>
-          <div class="calendar-date next-month disabled" v-for="date in firstDaysNextMonth">
+          <div class="calendar-date next-month disabled" v-for="date in firstDaysNextMonth" :key="date">
             <button class="date-item">{{ date }}</button>
           </div>
         </div>
@@ -44,11 +44,11 @@
         <label class="form-label">{{ $t('dashboard.request.label') }}</label>
         <select class="form-select" v-model="selectedRequestKind" @change="changeTitleConfirmModal">
           <option value=""></option>
-          <option :value="kind" v-for="kind in ['attendance', 'annual_leave']">{{ $t(`dashboard.request.kind.${kind}`) }}</option>}
+          <option :value="kind" v-for="(kind, key) in ['attendance', 'annual_leave']" :key="key">{{ $t(`dashboard.request.kind.${kind}`) }}</option>}
         </select>
       </div>
       <request-form v-if="this.selectedRequestKind === 'attendance'" :attendance="attendance" @afterModify="isRequestModalOpen = false"></request-form>
-      <annual-leave-form v-if="this.selectedRequestKind === 'annual_leave'" :annual-day="annualLeaveDay" @finishRequest="isRequestModalOpen = false"/></annual-leave-form>
+      <annual-leave-form v-if="this.selectedRequestKind === 'annual_leave'" :annual-day="annualLeaveDay" @finishRequest="isRequestModalOpen = false"></annual-leave-form>
     </modal>
 
     <modal :title="$t('attendances.modal.addTitle')" :modal-open.sync="isEditModalOpen">
@@ -56,7 +56,7 @@
     </modal>
 
     <modal :title="$t('annualLeave.title')" :modal-open.sync="isAddModalOpen">
-      <annual-leave-form v-if="isAddModalOpen" :annual-day="annualLeaveDay" @finishRequest="isAddModalOpen = false"/></annual-leave-form>
+      <annual-leave-form v-if="isAddModalOpen" :annual-day="annualLeaveDay" @finishRequest="isAddModalOpen = false"></annual-leave-form>
     </modal>
   </div>
 </template>
