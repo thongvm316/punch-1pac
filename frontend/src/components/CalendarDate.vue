@@ -1,5 +1,5 @@
 <template>
-  <div class="calendar-date current-month" :data-tooltip="tooltip" :class="{'disabled': isWeekend, 'tooltip': tooltip}">
+  <div class="calendar-date current-month" :data-tooltip="tooltip" :class="{'disabled': isWeekend || localAttendance.holiday, 'tooltip': tooltip}">
     <button class="date-item" :class="{ 'date-today': localAttendance.day === today.format('YYYY-MM-DD') }">
       {{ localAttendance.day.split('-')[2] }}
     </button>
