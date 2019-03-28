@@ -39,6 +39,8 @@ Rails.application.routes.draw do
         end
         resources :permissions, only: %i[index]
 
+        resources :device_tokens, only: %i[create destroy], param: :device_token
+
         resources :sessions, only: %i[index destroy]
 
         resource :company, only: %i[update destroy] do

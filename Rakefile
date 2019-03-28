@@ -49,7 +49,7 @@ namespace :punch do
     end
     group = FactoryBot.create(:group, name: 'default', company: company)
     users.each { |user| FactoryBot.create(:user_group, user: user, group: group) }
-    prev_month = Time.current - 2.month
+    prev_month = Time.current - 2.months
     next_month = Time.current - 1.day
     (prev_month.to_i..next_month.to_i).step(1.day) do |t|
       day = Time.zone.at(t)
