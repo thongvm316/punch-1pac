@@ -46,6 +46,7 @@ class User < ApplicationRecord
   enum gender: { male: 0, female: 1 }
 
   belongs_to :company, touch: true
+  has_many :device_tokens, dependent: :destroy
   has_many :attendances, dependent: :destroy
   has_many :sessions, dependent: :destroy
   has_many :requests, dependent: :destroy
