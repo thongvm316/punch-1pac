@@ -184,7 +184,7 @@ module JsonResponseHelper
       id:               Integer,
       device_token:     String,
       device_type:      String,
-      user:             response_user
+      user_id:          Integer
     }
   end
 

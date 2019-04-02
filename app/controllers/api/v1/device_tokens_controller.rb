@@ -2,7 +2,7 @@
 
 class Api::V1::DeviceTokensController < Api::V1::BaseController
   def create
-    authorize! current_user
+    authorize!
     device_token = current_user.device_tokens.build(token_params)
     if device_token.save
       render json: device_token, serializer: DeviceTokenSerializer, status: :created

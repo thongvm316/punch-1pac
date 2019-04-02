@@ -10,6 +10,6 @@ class PushNotificationService
     fcm = FCM.new(ENV['SERVER_KEY'])
 
     device_tokens =  DeviceToken.where(user_id: @user_id).pluck(:device_token)
-    fcm.send(device_tokens, notification: @body)
+    fcm.send(device_tokens, @body)
   end
 end

@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "365944929785",
+    "firebase_url": "https://punch-production-be6ef.firebaseio.com",
+    "project_id": "punch-production-be6ef",
+    "storage_bucket": "punch-production-be6ef.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:365944929785:android:5920de3503a2d18c",
+        "android_client_info": {
+          "package_name": "com.google.firebase.quickstart.fcm"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyARfcmkzOBYLtQnRlbbc79BPbgJ9MWsUJk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "365944929785-s8bqa25qgi0jiajbvrce2dgeed3ktbef.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "365944929785-6n0t5pqg96qei7q18olubnqtia42jbl1.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "vn.1pac.mobile.punch"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

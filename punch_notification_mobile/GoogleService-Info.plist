@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>365944929785-6n0t5pqg96qei7q18olubnqtia42jbl1.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.365944929785-6n0t5pqg96qei7q18olubnqtia42jbl1</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCMSi8-30Q0F_OH-0lA1rrxi7Z801-spD4</string>
+	<key>GCM_SENDER_ID</key>
+	<string>365944929785</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>vn.1pac.mobile.punch</string>
+	<key>PROJECT_ID</key>
+	<string>punch-production-be6ef</string>
+	<key>STORAGE_BUCKET</key>
+	<string>punch-production-be6ef.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:365944929785:ios:6a13065aff495b10</string>
+	<key>DATABASE_URL</key>
+	<string>https://punch-production-be6ef.firebaseio.com</string>
+</dict>
+</plist>

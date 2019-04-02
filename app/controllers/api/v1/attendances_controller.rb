@@ -8,9 +8,9 @@ class Api::V1::AttendancesController < Api::V1::BaseController
     authorize! @user
     attendance = AttendanceService.new(@user, request.remote_ip).attend
     if attendance
-      body = { title: 'attendance', body: 'punch ok' }
+      body = { notification: { title: 'attendance', body: 'punch in' } }
       TrackAndNotifyActivityWorker.perform_async(current_user.id, attendance.id, attendance.class.to_s, 'punch_in')
-      PushNotificationService.new(@user.id, body).execute
+      PushNotificationService.new(current_user.id, body).execute
       render json: attendance, serializer: AttendanceSerializer, status: :created
     else
       head(200)
@@ -78,9 +78,9 @@ class Api::V1::AttendancesController < Api::V1::BaseController
   def update
     authorize! @user
     attendance = AttendanceService.new(@user, request.remote_ip).leave
-    body       = { title: 'attendance', body: 'punch out' }
+    body       = { notification: { title: 'attendance', body: 'punch out' } }
     TrackAndNotifyActivityWorker.perform_async(current_user.id, attendance.id, attendance.class.to_s, 'punch_out') if attendance
-    PushNotificationService.new(@user.id, body).execute
+    PushNotificationService.new(current_user.id, body).execute
     render json: attendance, serializer: AttendanceSerializer, status: :ok
   end
 
