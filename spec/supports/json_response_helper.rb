@@ -179,6 +179,15 @@ module JsonResponseHelper
     }
   end
 
+  def response_device_token
+    {
+      id:               Integer,
+      device_token:     String,
+      device_type:      String,
+      user_id:          Integer
+    }
+  end
+
   def response_attendance_chart
     {
       statuses: {

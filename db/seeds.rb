@@ -52,3 +52,9 @@ end
     FactoryBot.create(:attendance, user: superadmin, attending_status: 'attend_late', day: Date.new(Date.current.year, month, day + 1))
   end
 end
+
+ios     = "eXM5cHxe1Q8:APA91bHP6v6Ojqvmh_j0n2vw4SSrXZLwNJ5q5kJZ78yUmlULSNBivjxXVBFe70n-R487Jo62qQZ67ezBNz90DqfpW8Wlfbn2s45vlaPtaaRUKRABmIZrQyeRTYvrt4RjskZb_Z7lKbRa"
+android = "dynH2OQNuOg:APA91bECEgI_KpyAScppRn86rYpyL6MO5GBe-8Fxwzex7Gdq6Y7EaFlXJaj45hc7lRb3xzfHdmXPl7naKEGiMubKGt46ULrrqQ8aIWY8zCuay3nZMa-sVyYYcUaoG2FaWJ9UN20n6Crj"
+
+FactoryBot.create(:device_token, user_id: 1, device_token: ios, device_type: 'ios')
+FactoryBot.create(:device_token, user_id: 2, device_token: android, device_type: 'android')

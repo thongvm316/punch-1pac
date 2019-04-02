@@ -22,6 +22,9 @@ gem 'rack-cors'
 # Background job
 gem 'sidekiq'
 
+# Firebase cloud message
+gem 'fcm'
+
 # Authentication and Authorization
 gem 'bcrypt'
 gem 'jwt'

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_23_051746) do
+ActiveRecord::Schema.define(version: 2019_03_27_075233) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -110,6 +110,17 @@ ActiveRecord::Schema.define(version: 2018_07_23_051746) do
     t.boolean "app_blocked_by_ip", default: false, null: false
     t.integer "punch_method", default: 0, null: false
     t.index ["namespace"], name: "index_companies_on_namespace", unique: true
+  end
+
+  create_table "device_tokens", force: :cascade do |t|
+    t.string "device_token", null: false
+    t.string "device_type", null: false
+    t.boolean "permission"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["device_token"], name: "index_device_tokens_on_device_token"
+    t.index ["user_id"], name: "index_device_tokens_on_user_id"
   end
 
   create_table "group_permissions", force: :cascade do |t|
