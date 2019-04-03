@@ -1,0 +1,8 @@
+<%= semantic_form_for 'send', builder: ActiveAdmin::FormBuilder, url: send_notification_admin_user_path(@user) do |f| %>
+  <% f.inputs @user.email do %>
+    <%= f.input :token, as: :select, collection: @user.device_tokens.pluck(:device_token) %>
+    <%= f.input :title %>
+    <%= f.input :message %>
+    <%= f.button 'send notification now' %>
+  <% end %>
+<% end %>

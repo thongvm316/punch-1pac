@@ -10,6 +10,23 @@ ActiveAdmin.register User do
     permitted
   end
 
+  member_action :send_notification, method: %i[get post] do
+    if request.post?
+      firebase = FCM.new(ENV['SERVER_KEY'])
+      body     = { notification: { title: noti_params[:title], body: noti_params[:message] } }
+      response = firebase.send(noti_params[:token], body)
+
+      redirect_to admin_user_path(params[:id]), notice: 'send notification success'
+    else
+      @user = User.find(params[:id])
+      render :send_notification
+    end
+  end
+
+  action_item :view, only: :show do
+    link_to 'Send Notification', send_notification_admin_user_path(resource) if resource.device_tokens.count > 0
+  end
+
   index do
     selectable_column
     column :avatar do |user|
@@ -38,6 +55,9 @@ ActiveAdmin.register User do
       row :gender
       row :owner
       row :language
+      row :device_tokens do |user|
+        user.device_tokens.pluck(:device_token).join(', ')
+      end
       row :created_at
       row :updated_at
     end
@@ -70,6 +90,10 @@ ActiveAdmin.register User do
       yield
     ensure
       Bullet.enable = true
+    end
+
+    def noti_params
+      params.require(:send).permit(:token, :title, :message)
     end
   end
 end
