@@ -14,6 +14,8 @@
 <%= render 'shared/crisp' %>
 <% end %>
 
+<script async src="https://www.youtube.com/iframe_api"></script>
+
 <div class="main main-mt-0">
   <div class="hero bg-linear-blue">
     <div class="container">
@@ -26,6 +28,12 @@
           </div>
         </div>
         <div class="hero-img">
+          <button class="btn-link" id="btn-open-modal">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 350 350" width="64px" height="64px">
+              <path d="M175 .5C78.3.5 0 78.8 0 175.5s78.3 175 175 175 175-78.3 175-175S271.7.5 175 .5z" fill="currentColor"/>
+              <path d="M236.8 189.6l-104.4 71.8c-2.9 2-6.3 3-9.7 3-2.7 0-5.4-.6-7.9-2-5.6-3-9.1-8.8-9.1-15.1V103.7c0-6.3 3.5-12.1 9.1-15.1 5.6-2.9 12.4-2.5 17.6 1.1l104.4 71.8c4.6 3.2 7.4 8.4 7.4 14.1 0 5.5-2.7 10.8-7.4 14z" fill="#fff"/>
+            </svg>
+          </button>
           <img src="<%= asset_url('img_hero_01.png') %>" alt="Punch screenshot">
         </div>
       </div>
@@ -139,7 +147,7 @@
         </div>
       </div>
       <div class="text-center mt-24">
-        <a href="#" class="btn">See All Features</a>
+        <%= link_to "See All Features", features_path, class: "btn" %>
       </div>
     </div>
   </div>
@@ -239,4 +247,15 @@
   <% end %>
 
   <%= render 'shared/get_started_block' %>
+
+  <div class="modal-wrapper" id="punch-modal">
+    <div class="modal">
+      <button class="btn-link modal-close">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 28"><defs><path id="a" d="M13.786 12l8.058-8.057a1.263 1.263 0 0 0-1.787-1.787L12 10.214 3.786 2A1.263 1.263 0 1 0 2 3.786L10.214 12 2 20.214A1.263 1.263 0 1 0 3.786 22L12 13.786 20.214 22A1.263 1.263 0 0 0 22 20.214L13.786 12z"/></defs><g fill="none" fill-rule="evenodd"><mask id="b" fill="#fff"><use xlink:href="#a"/></mask><use fill="#000" fill-rule="nonzero" xlink:href="#a"/><g fill="#6C777E" mask="url(#b)"><path d="M0 0h24v24H0z"/></g></g></svg>
+      </button>
+      <div class="modal-body">
+        <div id="punch-video"></div>
+      </div>
+    </div>
+  </div>
 </div>

@@ -13,5 +13,6 @@
 //= require ./lazyload
 //= require_self
 //= require ./navbar
+//= require ./common
 
 var myLazyLoad = new LazyLoad();

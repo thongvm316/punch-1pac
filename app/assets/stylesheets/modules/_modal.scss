@@ -1,0 +1,59 @@
+.modal-wrapper {
+  @include flexbox-content(center);
+  align-items: center;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, .8);
+  z-index: 200;
+  display: none;
+
+  &.is-active {
+    display: flex;
+  }
+}
+
+.modal {
+  width: 80%;
+  max-width: 1000px;
+  position: relative;
+  background: asset-url('img_logo.png') center / contain no-repeat;
+
+  .modal-body {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%;
+
+    iframe {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 10;
+    }
+  }
+
+  .modal-close {
+    width: 32px;
+    height: 32px;
+    position: absolute;
+    border-radius: 50%;
+    top: -32px;
+    right: -64px;
+    background-color: $light-color;
+
+    @include respond-to-mobile() {
+      width: 24px;
+      height: 24px;
+      top: -24px;
+      right: -32px;
+    }
+
+    svg {
+      vertical-align: middle;
+    }
+  }
+}

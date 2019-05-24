@@ -81,6 +81,7 @@
 
   .hero-img {
     text-align: center;
+    position: relative;
 
     @include respond-to-smaller-tablet() {
       margin-top: 2rem;
