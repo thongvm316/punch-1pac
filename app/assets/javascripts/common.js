@@ -7,7 +7,8 @@ window.addEventListener('load', function () {
       'punch-video', {
       videoId: '5TUmZTMZxM8',
       events: {
-        'onReady': onPlayerReady
+        'onReady': onPlayerReady,
+        'onStateChange': onPlayerStateChange
       }
     });
 
@@ -17,6 +18,12 @@ window.addEventListener('load', function () {
       }
 
       event.target.playVideo();
+    }
+
+    function onPlayerStateChange(event) {
+      if (event.data == YT.PlayerState.PLAYING) {
+        event.target.unMute();
+      }
     }
   }
 
