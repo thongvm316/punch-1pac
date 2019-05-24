@@ -12,6 +12,10 @@ window.addEventListener('load', function () {
     });
 
     function onPlayerReady(event) {
+      if(navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/iPad/i) || navigator.userAgent.match(/iPod/i)) {
+        event.target.mute();
+      }
+
       event.target.playVideo();
     }
   }
