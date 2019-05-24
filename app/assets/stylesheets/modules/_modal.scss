@@ -19,7 +19,7 @@
   width: 80%;
   max-width: 1000px;
   position: relative;
-  background: asset-url('img_logo.png') center / contain no-repeat;
+  background: asset-url('img_logo.png') $light-color center / 25% no-repeat;
 
   .modal-body {
     position: relative;
@@ -37,19 +37,27 @@
   }
 
   .modal-close {
-    width: 32px;
-    height: 32px;
+    width: 1.6rem;
+    height: 1.6rem;
     position: absolute;
     border-radius: 50%;
-    top: -32px;
-    right: -64px;
+    top: -1.6rem;
+    right: -3.2rem;
     background-color: $light-color;
 
+    &:hover {
+      background-color: $color-blue-ribbon;
+
+      svg {
+        color: $light-color;
+      }
+    }
+
     @include respond-to-mobile() {
-      width: 24px;
-      height: 24px;
-      top: -24px;
-      right: -32px;
+      width: 1.2rem;
+      height: 1.2rem;
+      top: -1.2rem;
+      right: -1.6rem;
     }
 
     svg {

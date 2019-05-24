@@ -27,7 +27,6 @@
   .hero-img {
     display: table-cell;
     vertical-align: middle;
-    width: 50%;
     padding: 0 .8rem;
 
     @include respond-to-smaller-tablet() {
@@ -38,7 +37,8 @@
   }
 
   .hero-introduction-text {
-    max-width: 22.8rem;
+    max-width: 100%;
+    width: 22.8rem;
 
     @include respond-to-smaller-tablet() {
       text-align: center;

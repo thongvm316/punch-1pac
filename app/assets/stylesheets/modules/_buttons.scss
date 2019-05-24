@@ -64,8 +64,8 @@
 }
 
 #btn-open-modal {
-  width: 64px;
-  height: 64px;
+  width: 3.2rem;
+  height: 3.2rem;
   border-radius: 50%;
   position: absolute;
   top: 50%;
@@ -73,15 +73,15 @@
   transform: translate(-50%, -50%);
   z-index: 10;
 
-  svg {
-    color: $color-blue-ribbon;
-  }
-
   &:hover {
-    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+    box-shadow: 0 .1rem .2rem 0 rgba(0, 0, 0, 0.5);
 
     svg {
       color: $color-true-blue;
     }
+  }
+
+  svg {
+    color: $color-blue-ribbon;
   }
 }
