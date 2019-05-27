@@ -1,6 +1,7 @@
 window.addEventListener('load', function () {
   onOpenModal(initYoutubeVideo);
   onCloseModal();
+  isEnableSubmitFormBtn();
 
   function initYoutubeVideo() {
     var punchVideo = new YT.Player(
@@ -58,5 +59,20 @@ window.addEventListener('load', function () {
     youtubeWrapper.id = 'punch-video';
 
     document.querySelector('.modal-body').appendChild(youtubeWrapper);
+  }
+
+  function isEnableSubmitFormBtn() {
+    var btnSubmitForm = document.querySelector('.btn-submit-form');
+    if (!btnSubmitForm) return;
+    btnSubmitForm.addEventListener('click', function(e) {
+      if (!validateCapcha()) e.preventDefault();
+    })
+  }
+
+  function validateCapcha() {
+    var response = grecaptcha.getResponse();
+
+    if (response.length === 0) return false;
+    return true;
   }
 })
