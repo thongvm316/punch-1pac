@@ -9,7 +9,8 @@
 
   &:hover,
   &:active,
-  &:focus {
+  &:focus,
+  &:visited {
     background: $primary-color;
     border: $primary-color;
     color: $light-color;
