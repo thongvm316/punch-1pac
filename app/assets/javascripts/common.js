@@ -1,7 +1,7 @@
 window.addEventListener('load', function () {
   onOpenModal(initYoutubeVideo);
   onCloseModal();
-  isEnableSubmitFormBtn();
+  onHandleBeforeSubmitForm();
 
   function initYoutubeVideo() {
     var punchVideo = new YT.Player(
@@ -61,11 +61,37 @@ window.addEventListener('load', function () {
     document.querySelector('.modal-body').appendChild(youtubeWrapper);
   }
 
-  function isEnableSubmitFormBtn() {
+  function isFilled() {
+    var formContact = document.querySelector('.js-form');
+    if (!formContact) return;
+
+    var inputFieldRequired = Array.prototype.slice.call(formContact.querySelectorAll('[required]'));
+    var inputFilledCount = 0;
+    var flag = null;
+
+    for (var i = 0; i < inputFieldRequired.length; i++) {
+      if (inputFieldRequired[i].value !== '') inputFilledCount++;
+    }
+
+    flag = inputFieldRequired.length === inputFilledCount ? true : false;
+    return flag;
+  }
+
+  function onHandleBeforeSubmitForm() {
     var btnSubmitForm = document.querySelector('.btn-submit-form');
     if (!btnSubmitForm) return;
+
+    var errorMessage = {
+      filled: 'Please fill out required field!',
+      capcha: 'Please verify to continue!'
+    }
+
     btnSubmitForm.addEventListener('click', function(e) {
-      if (!validateCapcha()) e.preventDefault();
+      if (!isFilled() || !validateCapcha()) {
+        !isFilled() ? alert(errorMessage.filled) : alert(errorMessage.capcha);
+        e.preventDefault();
+        return;
+      }
     })
   }
 
