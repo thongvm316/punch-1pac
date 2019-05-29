@@ -93,4 +93,19 @@
   margin-bottom: 1rem;
 }
 
-.description-link { font-size: 1.2rem; }
+.description-link {
+  font-size: 1.2rem;
+}
+
+.g-recaptcha {
+  -webkit-transform: scale(.77);
+     -moz-transform: scale(.77);
+      -ms-transform: scale(.77);
+       -o-transform: scale(.77);
+          transform: scale(.77);
+   -webkit-transform-origin: 0 0;
+      -moz-transform-origin: 0 0;
+       -ms-transform-origin: 0 0;
+        -o-transform-origin: 0 0;
+           transform-origin: 0 0;
+}
