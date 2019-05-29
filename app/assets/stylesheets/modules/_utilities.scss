@@ -17,10 +17,6 @@
   }
 }
 
-.text-blue {
-  color: $primary-color;
-}
-
 .bg-linear-gray {
   background: linear-gradient(180deg, $light-color 0%, $color-gray-lightest 100%);
 }
@@ -74,6 +70,10 @@
   padding-top: 2rem;
 }
 
+.text-red {
+  color: $color-error;
+}
+
 .text-error {
   color: $color-error;
   display: none;
@@ -81,6 +81,10 @@
   &.show {
     display: block;
   }
+}
+
+.text-blue {
+  color: $primary-color;
 }
 
 .img-error {
