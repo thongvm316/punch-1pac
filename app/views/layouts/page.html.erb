@@ -47,6 +47,8 @@ window.LANG = '<%= I18n.locale %>'
 window.protocol = '<%= request.protocol %>'
 window.domain = '<%= ENV["APP_DOMAIN"] %>'
 </script>
+
+<%= yield(:adsense) if content_for?(:adsense) %>
 </head>
 
 <body class="bg-gray">
