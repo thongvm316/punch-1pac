@@ -14,6 +14,16 @@
 <%= render 'shared/crisp' %>
 <% end %>
 
+<% content_for(:adsense) do %>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-9120110473458005",
+    enable_page_level_ads: true
+  });
+</script>
+<% end %>
+
 <script async src="https://www.youtube.com/iframe_api"></script>
 
 <div class="main main-mt-0">
@@ -36,7 +46,7 @@
               </g>
             </svg>
           </button>
-          
+
           <img src="<%= asset_url('img_hero_01.png') %>" alt="Punch screenshot">
         </div>
       </div>
