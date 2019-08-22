@@ -127,7 +127,7 @@ export default {
       restaurant: 'Nhà hàng',
       cafe_shop: 'Quán cafe',
       software_company: 'Công ty phần mềm',
-      startup: 'Startup'
+      startup: 'Startup',
       interior_design: 'Thiết kế nội thất'
     }
   },
