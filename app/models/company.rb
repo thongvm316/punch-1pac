@@ -27,7 +27,7 @@
 #
 
 class Company < ApplicationRecord
-  INDUSTRIES = %w[hr_agency cafe_shop restaurant software_company startup].freeze
+  INDUSTRIES = %w[hr_agency cafe_shop restaurant software_company startup interior_design].freeze
   TIMEZONES = ActiveSupport::TimeZone.all.map { |tz| tz.tzinfo.name }.uniq
 
   enum punch_method: { default: 0, qrcode_scan: 1 }

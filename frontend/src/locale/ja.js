@@ -128,6 +128,7 @@ export default {
       cafe_shop: 'カフェショップ',
       software_company: 'ソフトウェア会社',
       startup: 'スタートアップ企業'
+      interior_design: 'インテリア・デザイン'
     }
   },
   sidebar: {
