@@ -128,6 +128,7 @@ export default {
       cafe_shop: 'Quán cafe',
       software_company: 'Công ty phần mềm',
       startup: 'Startup'
+      interior_design: 'Thiết kế nội thất'
     }
   },
   sidebar: {

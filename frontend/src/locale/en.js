@@ -127,7 +127,8 @@ export default {
       restaurant: 'Restaurant',
       cafe_shop: 'Cafe shop',
       software_company: 'Software Company',
-      startup: 'Startup'
+      startup: 'Startup',
+      interior_design: 'Interior Design'
     }
   },
   sidebar: {
