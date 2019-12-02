@@ -43,7 +43,9 @@ export default {
     },
     confirmDialog: {
       deactivateUserTitle: 'Huỷ kích hoạt thành viên',
+      removeUserTitle: 'Xoá thành viên ra khỏi nhóm',
       deactivateUserMsg: 'Bạn có muốn huỷ kích hoạt <span class="text-bold-600">{name}</span>?',
+      removeUserMsg: 'Bạn có muốn xoá <span class="text-bold-600">{name}</span> ra khỏi nhóm?',
       deleteGroupTitle: 'Xoá nhóm',
       deleteGroupMsg: 'Bạn có chắc muốn xoá nhóm <span class="text-bold-600">{name}</span> vĩnh viễn không?'
     }

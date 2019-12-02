@@ -43,7 +43,9 @@ export default {
     },
     confirmDialog: {
       deactivateUserTitle: 'ユーザーを停止する',
+      removeUserTitle: 'Remove user out of here',
       deactivateUserMsg: '<span class="text-bold-600">{name}</span>を停止しますか？',
+      removeUserMsg: 'Are you sure to remove <span class="text-bold-600">{name}</span> out of here ?',
       deleteGroupTitle: 'グループの削除',
       deleteGroupMsg: '<span class="text-bold-600">{name}</span> グループを削除してよろしいですか？'
     }
