@@ -131,7 +131,8 @@ export default {
         .then(response => {
           const downloadLink = document.createElement('a')
           downloadLink.href = window.URL.createObjectURL(new Blob([response.data]))
-          downloadLink.setAttribute('download', 'report.csv')
+          let fileName = `report_${this.group.name}_${this.dateData.date}.csv`
+          downloadLink.setAttribute('download', fileName)
           document.body.appendChild(downloadLink)
           downloadLink.click()
 
