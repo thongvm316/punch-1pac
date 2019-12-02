@@ -1,7 +1,7 @@
 <template>
   <select class="form-select" @change="updateValue($event)">
     <slot name="placeholder"></slot>
-    <option :value="status" v-for="status in meta.attendance_statuses">{{ $t(`meta.attendance_statuses.${status}`) }}</option>
+    <option :value="status" v-for="(status, key) in meta.attendance_statuses" :key="key">{{ $t(`meta.attendance_statuses.${status}`) }}</option>
   </select>
 </template>
 

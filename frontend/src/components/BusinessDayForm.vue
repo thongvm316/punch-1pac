@@ -4,7 +4,7 @@
       <label class="form-label">{{ $t('company.businessDays.labels.weekday') }}</label>
       <select class="form-select" v-model="params.weekday">
         <option value="">{{ $t('company.businessDays.placeholder.chooseWeekday') }}</option>
-        <option :value="weekday" v-for="weekday in meta.weekdays">{{ $t(`meta.weekdays.${weekday}`) }}</option>
+        <option :value="weekday" v-for="(weekday, key) in meta.weekdays" :key="key">{{ $t(`meta.weekdays.${weekday}`) }}</option>
       </select>
       <p class="form-input-hint" v-if="errors.weekday">{{ $t('company.businessDays.labels.weekday') }} {{ errors.weekday[0] }}</p>
     </div>

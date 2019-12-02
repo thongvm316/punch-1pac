@@ -15,7 +15,7 @@
       <div class="form-group" :class="{ 'has-error': companyErrors.industry }">
         <label class="form-label">{{ $t('company.profile.labels.industry') }}</label>
         <select class="form-select" v-model="params.industry">
-          <option :value="industry" v-for="industry in meta.industries">{{ $t(`meta.industries.${industry}`) }}</option>
+          <option :value="industry" v-for="(industry, key) in meta.industries" :key="key">{{ $t(`meta.industries.${industry}`) }}</option>
         </select>
         <p class="form-input-hint" v-if="companyErrors.industry">{{ $t('company.profile.labels.industry') }} {{ companyErrors.industry[0] }}</p>
       </div>
@@ -47,7 +47,7 @@
       <div class="form-group" :class="{ 'has-error': companyErrors.timezone }">
         <label class="form-label">{{ $t('company.timezoneAndLanguage.labels.timezone') }}</label>
         <select class="form-select" v-model="params.timezone">
-          <option :value="timezone" v-for="timezone in meta.timezones">{{ timezone }}</option>
+          <option :value="timezone" v-for="(timezone, key) in meta.timezones" :key="key">{{ timezone }}</option>
         </select>
         <p class="form-input-hint" v-if="companyErrors.timezone">{{ $t('company.timezoneAndLanguage.labels.timezone') }} {{ companyErrors.timezone[0] }}</p>
       </div>

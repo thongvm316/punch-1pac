@@ -32,8 +32,17 @@
       }
     }
 
-    &.disabled .date-item.date-today {
-      opacity: 1;
+    &.disabled {
+      cursor: default;
+      pointer-events: none;
+
+      .date-item.date-today {
+        opacity: 1;
+      }
+
+      .calendar-event {
+        opacity: 1;
+      }
     }
   }
 }

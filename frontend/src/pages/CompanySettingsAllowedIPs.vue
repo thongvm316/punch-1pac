@@ -13,7 +13,7 @@
         <th>{{ $t('company.allowedIPs.tableHeader.actions') }}</th>
       </thead>
       <tbody>
-        <tr v-for="ip in allowedIPs">
+        <tr v-for="ip in allowedIPs" :key="ip.id">
           <td>{{ ip.ip_address }}</td>
           <td>{{ ip.created_at | moment_llll }}</td>
           <td>
