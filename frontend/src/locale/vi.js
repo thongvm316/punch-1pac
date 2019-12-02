@@ -198,7 +198,9 @@ export default {
       add: 'Tạo nhóm',
       leave: 'Rời nhóm',
       submit: 'Xác nhận',
-      export: 'Xuất file CSV'
+      export: 'Xuất file CSV',
+      exportCSVGroupReport: 'Xuất dữ liệu tóm tắt',
+      exportZIPGroupReport: 'Xuất tất cả dữ liệu cá nhân'
     },
     member: ' | 1 thành viên | {count} thành viên',
     labels: {

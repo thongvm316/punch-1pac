@@ -198,7 +198,9 @@ export default {
       add: 'グループの追加',
       leave: 'グループから退出',
       submit: '保存',
-      export: 'CSV出力'
+      export: 'CSV出力',
+      exportCSVGroupReport: '月別サマリーデータダウンロード',
+      exportZIPGroupReport: '個人データ一括ダウンロード'
     },
     member: ' | 1名 | {count}名',
     labels: {
