@@ -198,7 +198,9 @@ export default {
       add: 'Add Group',
       leave: 'Leave',
       submit: 'Submit',
-      export: 'Export CSV'
+      export: 'Export CSV',
+      exportCSVGroupReport: 'Export summarized data',
+      exportZIPGroupReport: 'Export all individual data'
     },
     member: ' | 1 member | {count} members',
     labels: {
