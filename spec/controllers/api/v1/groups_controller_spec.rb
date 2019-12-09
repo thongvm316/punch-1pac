@@ -397,4 +397,16 @@ RSpec.describe Api::V1::GroupsController, type: :controller do
       end
     end
   end
+
+  describe 'GET #personal_report' do
+    context 'when login_user.role = member' do
+      let(:group) { create :group, company: company }
+      let(:login_user) { create :user, company: company, role: 'member', groups: [group] }
+
+      subject { get :report, params: { id: group.id, user_id: login_user.id } }
+
+      its(:code) { is_expected.to eq '401' }
+      its(:body) { is_expected.to be_json_as(response_401) }
+    end
+  end
 end

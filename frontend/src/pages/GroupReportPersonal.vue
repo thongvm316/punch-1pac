@@ -4,38 +4,32 @@
 
     <div class="toolbar mt-5 clearfix">
       <month-year-picker v-model="dateData"/>
-      <input type="search" class="form-input filter-input" :placeholder="$t('attendances.placeholder.filterByUser')" v-model="searchText">
-      <button class="btn btn-success float-right" @click="exportCsvFile" :disabled="isDisable">{{ $t('groups.btn.export') }}</button>
+      <select class="form-select" :selected="$route.params.user_id" @change="onChangeUser">
+        <option v-for="user in usersInGroup" :key="user.id" :value="user.id">{{ user.email }}</option>
+      </select>
+
+      <button class="btn btn-success float-right" @click="exportCsvFile" :disabled="isDisable">{{ $t('groups.btn.exportCSVGroupReport') }}</button>
     </div>
 
-    <table class="table sortable-table bg-light mt-5">
+    <table class="table bg-light mt-5">
       <thead>
-        <th @click="sortBy('name')">{{ $t('attendances.tableHeader.name') }}
-          <svg :class="[{ sorted: sortOrders === 'desc' && sortKey === 'name' }, { show: sortKey === 'name' }]" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 292.362 292.362" fillrule="evenodd"><path d="M286.935,69.377c-3.614-3.617-7.898-5.424-12.848-5.424H18.274c-4.952,0-9.233,1.807-12.85,5.424 C1.807,72.998,0,77.279,0,82.228c0,4.948,1.807,9.229,5.424,12.847l127.907,127.907c3.621,3.617,7.902,5.428,12.85,5.428 s9.233-1.811,12.847-5.428L286.935,95.074c3.613-3.617,5.427-7.898,5.427-12.847C292.362,77.279,290.548,72.998,286.935,69.377z"/></svg>
-        </th>
-        <th v-for="(meta, key) in meta.attendance_statuses" :key="key" @click="sortBy(meta)">{{ $t(`meta.attendance_statuses.${meta}`) }}
-          <svg :class="[{ sorted: sortOrders === 'desc' && sortKey === meta }, { show: sortKey === meta }]" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 292.362 292.362" fillrule="evenodd"><path d="M286.935,69.377c-3.614-3.617-7.898-5.424-12.848-5.424H18.274c-4.952,0-9.233,1.807-12.85,5.424 C1.807,72.998,0,77.279,0,82.228c0,4.948,1.807,9.229,5.424,12.847l127.907,127.907c3.621,3.617,7.902,5.428,12.85,5.428  s9.233-1.811,12.847-5.428L286.935,95.074c3.613-3.617,5.427-7.898,5.427-12.847C292.362,77.279,290.548,72.998,286.935,69.377z"/></svg>
-        </th>
-        <th @click="sortBy('working_hours')">{{ $t('meta.attendance_statuses.working_hours') }}
-          <svg :class="[{ sorted: sortOrders === 'desc' && sortKey === 'working_hours' }, { show: sortKey === 'working_hours' }]" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 292.362 292.362" fillrule="evenodd"><path d="M286.935,69.377c-3.614-3.617-7.898-5.424-12.848-5.424H18.274c-4.952,0-9.233,1.807-12.85,5.424 C1.807,72.998,0,77.279,0,82.228c0,4.948,1.807,9.229,5.424,12.847l127.907,127.907c3.621,3.617,7.902,5.428,12.85,5.428  s9.233-1.811,12.847-5.428L286.935,95.074c3.613-3.617,5.427-7.898,5.427-12.847C292.362,77.279,290.548,72.998,286.935,69.377z"/></svg>
-        </th>
+        <th>Date</th>
+        <th>Check in</th>
+        <th>Check out</th>
+        <th>Late</th>
+        <th>Leave early</th>
+        <th>Day off</th>
+        <th>Working hours</th>
       </thead>
       <tbody>
-        <tr v-for="result in tmpResults" :key="result.id">
-          <td>
-            <div class="tile tile-centered">
-              <div class="tile-icon">
-                <img :src="result.avatar_url" class="avatar avatar-md" :alt="result.name">
-              </div>
-              <div class="tile-content">{{ result.name }}</div>
-            </div>
-          </td>
-          <td><span class="text-lg text-bold-600">{{ result.attend_ok }}</span> / {{ reportMeta.company_total_working_days_in_month }}</td>
-          <td><span class="text-lg text-bold-600">{{ result.attend_late }}</span> / {{ reportMeta.company_total_working_days_in_month }}</td>
-          <td><span class="text-lg text-bold-600">{{ result.leave_ok }}</span> / {{ reportMeta.company_total_working_days_in_month }}</td>
-          <td><span class="text-lg text-bold-600">{{ result.leave_early }}</span> / {{ reportMeta.company_total_working_days_in_month }}</td>
-          <td><span class="text-lg text-bold-600">{{ result.leave }}</span> / {{ reportMeta.company_total_working_days_in_month }}</td>
-          <td><span class="text-lg text-bold-600">{{ `${result.working_hours.hours}h${result.working_hours.mins}m` }}</span> / {{ `${reportMeta.company_total_working_hours_on_month}h` }}</td>
+        <tr v-for="date in attendances">
+          <td>{{ date.day }}</td>
+          <td>{{ date.attended_at ? date.attended_at : '-' }}</td>
+          <td>{{ date.left_at ? date.left_at : '-' }}</td>
+          <td>{{ date.attending_status === 'attend_late' ? '1' : '-' }}</td>
+          <td>{{ date.leaving_status === 'leave_early' ? '1' : '-' }}</td>
+          <td>{{ date.off_status ? '1' : '-' }}</td>
+          <td>{{ !date.off_status ? 0 : date.working_hours }}</td>
         </tr>
       </tbody>
     </table>
@@ -53,13 +47,14 @@ export default {
   data() {
     return {
       isDisable: false,
-      searchText: '',
+      attendances: [],
       dateData: {
         date: this.$moment().format('YYYY-MM-DD'),
         type: 'month'
       },
-      sortKey: 'name',
-      sortOrders: 'asc'
+      userId: this.$route.params.user_id,
+      dateContext: this.$moment().locale('en'),
+      today: this.$moment()
     }
   },
 
@@ -70,47 +65,33 @@ export default {
   },
 
   computed: {
-    ...mapState('groupAttendances', ['usersInGroup']),
+    ...mapState('group', ['group', 'usersInGroup']),
 
-    ...mapState('group', ['group']),
+    // ...mapState('groupReport', ['singleReport']),
 
     ...mapState('initialStates', ['meta']),
 
-    ...mapState('groupReport', ['results', 'reportMeta']),
-
-    tmpResults() {
-      let results = this.results
-
-      if (this.sortKey) {
-        results = results.slice().sort((a, b) => {
-          let modifier = 1
-          if (this.sortOrders === 'desc') modifier = -1
-          if (this.sortKey === 'working_hours') {
-            const atimestamp = a[this.sortKey].hours * 3600 + a[this.sortKey].mins * 60
-            const btimestamp = b[this.sortKey].hours * 3600 + b[this.sortKey].mins * 60
-            if (atimestamp < btimestamp) return -1 * modifier
-            if (atimestamp > btimestamp) return 1 * modifier
-          } else {
-            if (a[this.sortKey] < b[this.sortKey]) return -1 * modifier
-            if (a[this.sortKey] > b[this.sortKey]) return 1 * modifier
-          }
-          return 0
-        })
-      }
-
-      const regex = new RegExp(`${this.searchText.trim()}`, 'gi')
-      return this.name ? results.filter(result => (result.name.match(regex)) || result.email.match(regex)) : results
+    daysInMonth() {
+      return this.dateContext.daysInMonth()
     }
   },
 
   methods: {
-    ...mapActions('group', ['getGroup']),
+    ...mapActions('group', ['getGroup', 'getUsersInGroup']),
 
-    ...mapActions('groupReport', ['getReport']),
+    ...mapActions('groupReport', ['getPersonalReport']),
 
-    sortBy(key) {
-      this.sortKey = key
-      this.sortOrders = this.sortOrders === 'asc' ? 'desc' : 'asc'
+    ...mapActions('calendar', ['getCalendarAttendances']),
+
+    onChangeUser(e) {
+      this.$router.push({ params: { user_id: e.target.value } })
+      this.userId = this.$route.params.user_id
+    },
+
+    isInDeactivatedTime(currentDay) {
+      if (currentDay.isBetween(this.currentUser.deactivated_at, this.currentUser.activated_at, null, '[]')) return true
+      if (!this.currentUser.activated && currentDay.isSameOrAfter(this.currentUser.deactivated_at, 'day')) return true
+      return false
     },
 
     exportCsvFile() {
@@ -133,20 +114,79 @@ export default {
           this.isDisable = false
           throw error
         })
+    },
+
+    formatAttendances(response) {
+      this.attendances = []
+      let attendances = []
+      const date = response.attendances[0] ? this.$moment(response.attendances[0].day).locale('en') : this.dateContext
+      const userJoinDate = this.$moment(this.currentUser.created_at)
+      const findHolidayByDay = function(currentDay) {
+        return response.holidays.find(holiday => {
+          return currentDay.isBetween(holiday.started_at, holiday.ended_at, null, '[]')
+        })
+      }
+
+      // Loop render day in month
+      for (let day = 1; day <= date.daysInMonth(); day++) {
+        const currentDay = this.$moment(`${date.year()}-${date.format('MM')}-${day}`, 'YYYY-MM-D').locale('en')
+        let attendance = { id: null, day: currentDay.format('YYYY-MM-DD'), attended_at: '', left_at: '', attending_status: '', leaving_status: '', off_status: '', holiday: null }
+        let holiday = null
+        const tmpAttendance = response.attendances.find(item => currentDay.format('YYYY-MM-DD') === item.day)
+
+        // Check if current rendering day is a holiday
+        if (response.holidays) holiday = findHolidayByDay.call(this, currentDay)
+
+        // If currentDay is a holiday, set holiday object into attendance object
+        if (holiday) attendance = Object.assign({}, attendance, { holiday: holiday })
+
+        if (!this.isInDeactivatedTime(currentDay)) {
+          // If currentDay is an annual leave day
+          if (tmpAttendance && tmpAttendance.off_status === 'annual_leave') attendance = Object.assign({}, attendance, tmpAttendance)
+
+          // A valid day is a day before today and after current user's join date
+          if (this.today.isSameOrAfter(currentDay, 'day')) {
+            // If current user already attended on current day then set attendance information
+            // Else if current user did not attend on current day then check if current day is weekend or unpaid leave day
+            // Only display when currentDay is same or after user created date
+            if (tmpAttendance) {
+              attendance = tmpAttendance
+            } else if (!holiday && currentDay.isSameOrAfter(userJoinDate, 'day')) {
+              attendance = Object.assign({}, attendance, {
+                off_status: this.today.isAfter(currentDay, 'day') && !this.currentCompany.breakdays.includes(currentDay.format('dddd').toLowerCase()) ? 'leave' : ''
+              })
+            }
+          }
+        }
+
+        attendances.push(attendance)
+      }
+
+      this.attendances = attendances
     }
   },
 
   created() {
-    this.getReport({ group_id: this.$route.params.id, ...this.dateData })
+    // this.getPersonalReport({ group_id: this.$route.params.id, user_id: this.userId, ...this.dateData })
+    //   .then(response => {
+    //     this.formatAttendances(response.data.attendances)
+    //   })
+    this.getCalendarAttendances().then(response => this.formatAttendances(response.data))
+    this.getUsersInGroup(this.$route.params.id)
     if (!this.group) this.getGroup(this.$route.params.id)
   },
 
   watch: {
     dateData: {
       handler: function() {
-        this.getReport({ group_id: this.$route.params.id, ...this.dateData })
+        this.getPersonalReport({ group_id: this.$route.params.id, user_id: this.userId, ...this.dateData })
+        this.dateContext = this.$moment(this.dateData.date)
       },
       deep: true
+    },
+
+    userId() {
+      this.getPersonalReport({ group_id: this.$route.params.id, user_id: this.userId, ...this.dateData })
     }
   }
 }
