@@ -4,6 +4,7 @@ export default {
     attendances: 'Hiện diện',
     requests: 'Yêu cầu',
     report: 'Thống kê',
+    reportPersonal: 'Thống kê theo cá nhân',
     month: 'Tháng',
     year: 'Năm',
     btn: {
