@@ -4,6 +4,7 @@ export default {
     attendances: 'Attendances',
     requests: 'Requests',
     report: 'Report',
+    reportPersonal: 'Report Personal',
     month: 'Month',
     year: 'Year',
     btn: {

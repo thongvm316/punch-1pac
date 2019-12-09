@@ -4,6 +4,7 @@ export default {
     attendances: '勤怠管理',
     requests: '申請一覧',
     report: 'レポート',
+    reportPersonal: 'Report Personal',
     month: '月',
     year: '年',
     btn: {
