@@ -83,6 +83,7 @@ export const FETCH_USERS_IN_GROUP = 'FETCH_USERS_IN_GROUP'
 
 // group-report
 export const FETCH_GROUP_REPORT = 'FETCH_GROUP_REPORT'
+export const FETCH_PERSONAL_REPORT = 'FETCH_PERSONAL_REPORT'
 
 // groups
 export const RECEIVE_GROUPS = 'RECEIVE_GROUPS'

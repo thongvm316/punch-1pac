@@ -17,7 +17,7 @@
     </router-link>
     <router-link tag="li"
       class="tab-item"
-      :to="`/groups/${groupId}/report`">
+      :to="`/groups/${groupId}/report`" exact>
       <a href="#">{{ $t('group.report') }}</a>
     </router-link>
   </ul>

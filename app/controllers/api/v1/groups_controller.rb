@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Api::V1::GroupsController < Api::V1::BaseController
-  before_action :set_group, only: %i[show update destroy add_user remove_user report]
+  before_action :set_group, only: %i[show update destroy add_user remove_user report personal_report]
 
   def index
     authorize!
@@ -76,6 +76,18 @@ class Api::V1::GroupsController < Api::V1::BaseController
       end
       format.csv { send_data(Group.report_csv(results), type: 'text/csv; charset=utf-8; header=present', filename: 'report.csv', disposition: 'attachment') }
       format.zip { send_data(Group.report_zip(results), type: 'text/zip; charset=utf-8; header=present', filename: 'report.zip', disposition: 'attachment') }
+    end
+  end
+
+  def personal_report
+    authorize! @group
+    attendances = current_company.users.find(params[:user_id]).attendances.in_period(params[:day]).order(day: :asc)
+    if stale?(attendances)
+      render json: attendances,
+             root: 'attendances',
+             each_serializer: AttendanceSerializer,
+             adapter: :json,
+             status: :ok
     end
   end
 

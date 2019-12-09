@@ -28,6 +28,10 @@ class Api::V1::GroupsLoyalty < ApplicationLoyalty
     update?
   end
 
+  def personal_report?
+    update?
+  end
+
   def destroy?
     return true if user.owner? || user.superadmin?
     false
