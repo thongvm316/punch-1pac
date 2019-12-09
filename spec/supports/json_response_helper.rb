@@ -217,7 +217,10 @@ module JsonResponseHelper
       attending_status: nullable_response(String),
       leaving_status:   nullable_response(String),
       off_status:       nullable_response(String),
-      working_hours:    Integer,
+      working_hours:    {
+        hours: Integer,
+        mins: Integer
+      },
       user:             response_user
     }
   end
