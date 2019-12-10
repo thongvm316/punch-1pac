@@ -403,10 +403,61 @@ RSpec.describe Api::V1::GroupsController, type: :controller do
       let(:group) { create :group, company: company }
       let(:login_user) { create :user, company: company, role: 'member', groups: [group] }
 
-      subject { get :report, params: { id: group.id, user_id: login_user.id } }
+      subject { get :personal_report, params: { id: group.id, user_id: login_user.id } }
 
       its(:code) { is_expected.to eq '401' }
       its(:body) { is_expected.to be_json_as(response_401) }
+    end
+
+    context 'when login_user.role = admin' do
+      let(:groups) { create_list :group, 2, company: company }
+      let(:login_user) { create :user, company: company, role: 'admin', groups: [groups.first] }
+      let!(:user) { create :user, company: company, role: 'member', groups: [groups.first] }
+
+      context 'when group in login_user.groups' do
+        subject { get :personal_report, params: { id: groups.first.id, user_id: user.id }, format: :json }
+
+        its(:code) { is_expected.to eq '200' }
+        its(:body) { is_expected.to be_json_as(attendances: Array.new() { response_attendance }, report: Array.new(1) { response_group_report }, holidays: Array.new { response_holiday }) }
+      end
+
+      context 'when group not in login_user.groups' do
+        let(:group) { create :group, company: company }
+
+        subject { get :personal_report, params: { id: group.id, user_id: user.id } }
+
+        its(:code) { is_expected.to eq '401' }
+        its(:body) { is_expected.to be_json_as(response_401) }
+      end
+
+      context 'when user not in group' do
+        let!(:user2) { create :user, company: company, role: 'member', groups: [groups.last] }
+
+        subject { get :personal_report, params: { id: groups.first.id, user_id: user2.id } }
+
+        its(:code) { is_expected.to eq '404' }
+      end
+    end
+
+    context 'when login_user.role = superadmin' do
+      let(:groups) { create_list :group, 2, company: company }
+      let(:login_user) { create :user, company: company, role: 'superadmin', groups: [groups.first] }
+      let!(:user) { create :user, company: company, role: 'member', groups: [groups.first] }
+
+      context 'when group in login_user.groups' do
+        subject { get :personal_report, params: { id: groups.first.id, user_id: user.id }, format: :json }
+
+        its(:code) { is_expected.to eq '200' }
+        its(:body) { is_expected.to be_json_as(attendances: Array.new() { response_attendance }, report: Array.new(1) { response_group_report }, holidays: Array.new { response_holiday }) }
+      end
+
+      context 'when user not in group' do
+        let!(:user2) { create :user, company: company, role: 'member', groups: [groups.last] }
+
+        subject { get :personal_report, params: { id: groups.first.id, user_id: user2.id } }
+
+        its(:code) { is_expected.to eq '404' }
+      end
     end
   end
 end
