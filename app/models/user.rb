@@ -119,6 +119,17 @@ class User < ApplicationRecord
     count_attendance_status(params[:date], params[:date_type]).where(id: UserGroup.with_group(params[:group_id]))
   end
 
+  def single_report(params)
+    {
+      attend_ok: attendances.single_status_count_on_month('attend_ok', 'attending_status', params[:date], params[:date_type]),
+      attend_late: attendances.single_status_count_on_month('attend_late', 'attending_status', params[:date], params[:date_type]),
+      leave_ok: attendances.single_status_count_on_month('leave_ok', 'leaving_status', params[:date], params[:date_type]),
+      leave_early: attendances.single_status_count_on_month('leave_early', 'leaving_status', params[:date], params[:date_type]),
+      leave: attendances.single_status_count_on_month('annual_leave', 'off_status', params[:date], params[:date_type]),
+      working_hours: attendances.single_sum_working_hours_on_month(params[:date], params[:date_type]),
+    }
+  end
+
   def self.reset_password_token_valid?(token)
     user = find_by(reset_password_token: token)
     raise AppErrors::InvalidResetPwdToken unless user

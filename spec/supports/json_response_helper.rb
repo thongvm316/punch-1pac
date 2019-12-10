@@ -291,6 +291,17 @@ module JsonResponseHelper
     }
   end
 
+  def response_user_report
+    {
+      attend_ok: Integer,
+      attend_late: Integer,
+      leave_ok: Integer,
+      leave_early: Integer,
+      leave: Integer,
+      working_hours: Integer
+    }
+  end
+
   private
 
   def nullable_response(expected_response)

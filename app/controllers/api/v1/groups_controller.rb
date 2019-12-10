@@ -84,14 +84,13 @@ class Api::V1::GroupsController < Api::V1::BaseController
     user = @group.users.find(params[:user_id])
     if user
       attendances = user.attendances.in_period(params[:day]).order(day: :asc)
-      report = @group.users.where(id: params[:user_id]).report(params.merge(group_id: params[:id])).order(name: :asc)
+      report = user.single_report(params)
       holidays = current_company.holidays.in_month(params[:day])
 
       attendances_json = ActiveModelSerializers::SerializableResource.new(attendances, each_serializer: AttendanceSerializer).as_json
-      report_json = ActiveModelSerializers::SerializableResource.new(report, each_serializer: GroupReportSerializer, params: params).as_json
       holidays_json = ActiveModelSerializers::SerializableResource.new(holidays, each_serializer: HolidaySerializer).as_json
 
-      render json: { attendances: attendances_json, holidays: holidays_json, report: report_json }, status: :ok
+      render json: { attendances: attendances_json, holidays: holidays_json, report: report }, status: :ok
     end
   end
 
