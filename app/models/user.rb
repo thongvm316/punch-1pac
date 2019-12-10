@@ -121,12 +121,12 @@ class User < ApplicationRecord
 
   def single_report(params)
     {
-      attend_ok: attendances.single_status_count_on_month('attend_ok', 'attending_status', params[:date], params[:date_type]),
-      attend_late: attendances.single_status_count_on_month('attend_late', 'attending_status', params[:date], params[:date_type]),
-      leave_ok: attendances.single_status_count_on_month('leave_ok', 'leaving_status', params[:date], params[:date_type]),
-      leave_early: attendances.single_status_count_on_month('leave_early', 'leaving_status', params[:date], params[:date_type]),
-      leave: attendances.single_status_count_on_month('annual_leave', 'off_status', params[:date], params[:date_type]),
-      working_hours: attendances.single_sum_working_hours_on_month(params[:date], params[:date_type]),
+      attend_ok: attendances.single_status_count_on_month('attend_ok', 'attending_status', params),
+      attend_late: attendances.single_status_count_on_month('attend_late', 'attending_status', params),
+      leave_ok: attendances.single_status_count_on_month('leave_ok', 'leaving_status', params),
+      leave_early: attendances.single_status_count_on_month('leave_early', 'leaving_status', params),
+      leave: attendances.single_status_count_on_month('annual_leave', 'off_status', params),
+      working_hours: attendances.single_sum_working_hours_on_month(params),
     }
   end
 
