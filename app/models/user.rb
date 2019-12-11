@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-
 # == Schema Information
 #
 # Table name: users
@@ -38,6 +37,8 @@ class User < ApplicationRecord
   REGEX_VALID_NAME = /\A[a-z\s]+\z/i
   REGEX_VALID_EMAIL = /\A([\w+\-].?)+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i
   RESET_PASSWORD_TOKEN_EXPIRY = 1800.0
+  CSVHeader = I18n.t(['user.report.day', 'user.report.checkin', 'user.report.checkout', 'user.report.late',
+                      'user.report.leave_early', 'user.report.working_hours'])
 
   before_create { self.activated_at = created_at }
   after_save { groups.find_each(&:touch) }
@@ -80,6 +81,7 @@ class User < ApplicationRecord
       .merge(UserGroup.not_in_group(group_id))
       .merge(User.where('users.role != ? OR users.role = ? AND user_groups.group_id IS NULL', User.roles[:member], User.roles[:member]))
   }
+
   scope :by_group, ->(current_user, group_id = nil) {
     q = all
     if current_user.role == 'superadmin'
@@ -90,6 +92,7 @@ class User < ApplicationRecord
     q = q.where(id: UserGroup.with_group(group_id)) if group_id.present?
     q
   }
+
   scope :search_by, ->(params, current_user) {
     q = all
     q = q.unscope(where: :activated) if params[:include_deactivated].present?
@@ -126,8 +129,34 @@ class User < ApplicationRecord
       leave_ok: attendances.single_status_count_on_month('leave_ok', 'leaving_status', params),
       leave_early: attendances.single_status_count_on_month('leave_early', 'leaving_status', params),
       leave: attendances.single_status_count_on_month('annual_leave', 'off_status', params),
-      working_hours: attendances.single_sum_working_hours_on_month(params),
+      working_hours: attendances.single_sum_working_hours_on_month(params)
     }
+  end
+
+  def self.report_csv(data, day)
+    csv_data = []
+    day = Date.parse(day)
+    (day.beginning_of_month..day.end_of_month).to_a.each do |date|
+      obj = data.find_by(day: date)
+      csv_data <<
+        if obj
+          [
+            obj.day,
+            obj.attended_at.strftime('%H:%M'),
+            obj.left_at.strftime('%H:%M'),
+            obj.attending_status == 'attend_late' ? 1 : '-',
+            obj.leaving_status == 'leave_early' ? 1 : '-',
+            "#{obj.working_hours.to_i / 3600}h#{obj.working_hours.to_i % 3600 / 60}m"
+          ]
+        else
+          [date]
+        end
+    end
+
+    working_hours = data.single_sum_working_hours_on_month(date: day)
+    csv_footer = ['Total', '', '', '', '', "#{working_hours.to_i / 3600}h#{working_hours.to_i % 3600 / 60}m"]
+
+    CreateCSV.export_csv(CSVHeader, csv_data, csv_footer)
   end
 
   def self.reset_password_token_valid?(token)

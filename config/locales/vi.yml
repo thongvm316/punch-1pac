@@ -44,6 +44,14 @@ vi:
       leave_early: Về sớm
       annual_leave: Nghỉ phép
       working_hours: Số giờ làm việc
+  user:
+    report:
+      day: Ngày
+      checkin: Đến lúc
+      checkout: Về lúc
+      late: Trễ
+      leave_early: Về sớm
+      working_hours: Thời gian làm việc
   activerecord:
     errors:
       messages:

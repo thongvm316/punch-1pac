@@ -97,15 +97,15 @@ export default {
     exportCsvFile() {
       this.isDisable = true
       axios
-        .get(`/groups/${this.$route.params.id}/report.csv`, {
+        .get(`/groups/${this.$route.params.id}/report/${this.$route.params.user_id}.csv`, {
           headers: { Accept: 'application/csv' },
-          params: { date: this.dateData.date, date_type: this.dateData.type },
+          params: { date: this.dateData.date, user_id: this.$route.params.user_id },
           responseType: 'blob'
         })
         .then(response => {
           const downloadLink = document.createElement('a')
           downloadLink.href = window.URL.createObjectURL(new Blob([response.data]))
-          downloadLink.setAttribute('download', 'report.csv')
+          downloadLink.setAttribute('download', this.$route.params.user_id + '.csv')
           document.body.appendChild(downloadLink)
           downloadLink.click()
           this.isDisable = false
