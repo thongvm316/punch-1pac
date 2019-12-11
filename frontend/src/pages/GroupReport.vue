@@ -8,8 +8,8 @@
         <input type="search" class="form-input filter-input" :placeholder="$t('attendances.placeholder.filterByUser')" v-model="searchText">
       </div>
       <div class="float-right">
-        <button class="btn btn-success mx-2" @click="exportCsvFile" :disabled="isDisable">{{ $t('groups.btn.exportZIPGroupReport') }}</button>
-        <button class="btn btn-success" @click="exportCsvFile" :disabled="isDisable">{{ $t('groups.btn.exportCSVGroupReport') }}</button>
+        <button class="btn btn-success mx-2" @click="exportFile({ type: 'zip' })">{{ $t('groups.btn.exportZIPGroupReport') }}</button>
+        <button class="btn btn-success" @click="exportFile({ type: 'csv' })" :disabled="isDisable">{{ $t('groups.btn.exportCSVGroupReport') }}</button>
       </div>
     </div>
 
@@ -123,18 +123,18 @@ export default {
       this.sortOrders = this.sortOrders === 'asc' ? 'desc' : 'asc'
     },
 
-    exportCsvFile() {
+    exportFile(data) {
       this.isDisable = true
       axios
-        .get(`/groups/${this.$route.params.id}/report.csv`, {
-          headers: { Accept: 'application/csv' },
+        .get(`/groups/${this.$route.params.id}/report.${data.type}`, {
+          headers: { Accept: `application/${data.type}` },
           params: { date: this.dateData.date, date_type: this.dateData.type },
           responseType: 'blob'
         })
         .then(response => {
           const downloadLink = document.createElement('a')
           downloadLink.href = window.URL.createObjectURL(new Blob([response.data]))
-          let fileName = `report_${this.group.name}_${this.dateData.date}.csv`
+          let fileName = `report_${this.group.name}_${this.dateData.date}.${data.type}`
           downloadLink.setAttribute('download', fileName)
           document.body.appendChild(downloadLink)
           downloadLink.click()
@@ -150,8 +150,8 @@ export default {
   },
 
   created() {
-    this.getGroupReport({ group_id: this.$route.params.id, ...this.dateData })
-    if (!this.group) this.getGroup(this.$route.params.id)
+    this.getReport({ group_id: this.$route.params.id, ...this.dateData })
+    this.getGroup(this.$route.params.id)
   },
 
   watch: {
