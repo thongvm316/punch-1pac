@@ -75,6 +75,7 @@ class Api::V1::GroupsController < Api::V1::BaseController
                 status: :ok
       end
       format.csv { send_data(Group.report_csv(results), type: 'text/csv; charset=utf-8; header=present', filename: 'report.csv', disposition: 'attachment') }
+      format.zip { send_data(Group.report_zip(results), type: 'text/zip; charset=utf-8; header=present', filename: 'report.zip', disposition: 'attachment') }
     end
   end
 

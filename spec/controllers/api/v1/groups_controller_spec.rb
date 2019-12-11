@@ -366,7 +366,7 @@ RSpec.describe Api::V1::GroupsController, type: :controller do
       its(:body) { is_expected.to be_json_as(results: Array.new(3) { response_group_report }, meta: Hash) }
     end
 
-    context 'when report has data' do
+    context 'when report csv has data' do
       let(:groups) { create_list :group, 2, company: company }
       let(:login_user) { create :user, company: company, role: 'superadmin', groups: groups }
       let!(:users) { create_list :user, 2, company: company, role: 'member', groups: [groups.first] }
@@ -382,7 +382,7 @@ RSpec.describe Api::V1::GroupsController, type: :controller do
       end
     end
 
-    context 'when superadmin export report of empty member group' do
+    context 'when superadmin export report csv of empty member group' do
       let(:group) { create :group, company: company }
       let(:login_user) { create :user, company: company, role: 'superadmin' }
 
@@ -394,6 +394,20 @@ RSpec.describe Api::V1::GroupsController, type: :controller do
         expect(headers.first).to include 'Email,Name,Attend Ok,Attend Late,Leave Ok,Leave Early,Annual Leave,Working Hours'
         expect(response.header['Content-Type']).to eql 'text/csv; charset=utf-8; header=present'
         expect(headers.size).to eq(1)
+      end
+    end
+
+    context 'when report zip has data' do
+      let(:group) { create :group, company: company }
+      let(:login_user) { create :user, company: company, role: 'superadmin', groups: [group] }
+      let!(:users) { create_list :user, 2, company: company, role: 'member', groups: [group] }
+
+      subject { get :report, params: { id: group.id }, format: :zip }
+
+      it do
+        is_expected
+        expect(response.header['Content-Type']).to eql 'text/zip; charset=utf-8; header=present'
+        expect(response.code).to eq '200'
       end
     end
   end
