@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: users
@@ -133,27 +134,26 @@ class User < ApplicationRecord
     }
   end
 
-  def self.report_csv(data, day)
+  def self.create_csv(data)
+    [
+      data.day,
+      data.attended_at.strftime('%H:%M'),
+      data.left_at.strftime('%H:%M'),
+      data.attending_status == 'attend_late' ? 1 : '-',
+      data.leaving_status == 'leave_early' ? 1 : '-',
+      "#{data.working_hours.to_i / 3600}h#{data.working_hours.to_i % 3600 / 60}m"
+    ]
+  end
+
+  def self.report_csv(data, date)
     csv_data = []
-    day = Date.parse(day)
-    (day.beginning_of_month..day.end_of_month).to_a.each do |date|
-      obj = data.find_by(day: date)
-      csv_data <<
-        if obj
-          [
-            obj.day,
-            obj.attended_at.strftime('%H:%M'),
-            obj.left_at.strftime('%H:%M'),
-            obj.attending_status == 'attend_late' ? 1 : '-',
-            obj.leaving_status == 'leave_early' ? 1 : '-',
-            "#{obj.working_hours.to_i / 3600}h#{obj.working_hours.to_i % 3600 / 60}m"
-          ]
-        else
-          [date]
-        end
+    date = Date.parse(date)
+    (date.beginning_of_month..date.end_of_month).to_a.each do |day|
+      obj = data.find_by(day: day)
+      csv_data.push(obj ? create_csv(obj) : [day])
     end
 
-    working_hours = data.single_sum_working_hours_on_month(date: day)
+    working_hours = data.single_sum_working_hours_on_month(date: date)
     csv_footer = ['Total', '', '', '', '', "#{working_hours.to_i / 3600}h#{working_hours.to_i % 3600 / 60}m"]
 
     CreateCSV.export_csv(CSVHeader, csv_data, csv_footer)

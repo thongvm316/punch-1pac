@@ -28,10 +28,6 @@ class Api::V1::GroupsLoyalty < ApplicationLoyalty
     update?
   end
 
-  def group_report?
-    update?
-  end
-
   def personal_report?
     update?
   end

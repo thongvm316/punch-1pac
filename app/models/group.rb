@@ -64,12 +64,12 @@ class Group < ApplicationRecord
     CreateCSV.export_csv(CSVHeader, csv_data)
   end
 
-  def self.report_zip(data, day)
+  def self.report_zip(data, date)
     compressed_filestream = Zip::OutputStream.write_buffer do |zos|
       data.each do |d|
         zos.put_next_entry "#{d.name}_#{d.email}.csv"
-        obj = d.attendances.in_period(day).order(day: :asc)
-        content = User.report_csv(obj, day)
+        obj = d.attendances.in_period(date).order(day: :asc)
+        content = User.report_csv(obj, date)
         zos.print content
       end
     end
