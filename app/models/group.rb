@@ -56,20 +56,16 @@ class Group < ApplicationRecord
   end
 
   def self.report_csv(data)
-    csv_data = []
-    data.each do |obj|
-      csv_data << create_csv(obj)
-    end
-
+    csv_data = data.each_with_object([]) { |v, arr| arr << create_csv(v) }
     CreateCSV.export_csv(CSVHeader, csv_data)
   end
 
   def self.report_zip(data, date)
     compressed_filestream = Zip::OutputStream.write_buffer do |zos|
-      data.each do |d|
-        zos.put_next_entry "#{d.name}_#{d.email}.csv"
-        obj = d.attendances.in_period(date).order(day: :asc)
-        content = User.report_csv(obj, date)
+      data.each do |user|
+        zos.put_next_entry "#{user.name}_#{user.email}.csv"
+        attendances = user.attendances.in_period(date).order(day: :asc)
+        content = User.report_csv(attendances, date)
         zos.print content
       end
     end

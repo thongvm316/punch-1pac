@@ -109,4 +109,8 @@ class Attendance < ApplicationRecord
   rescue TypeError, ArgumentError
     none
   end
+
+  def format_export_time(time)
+    send(time).strftime('%H:%M')
+  end
 end

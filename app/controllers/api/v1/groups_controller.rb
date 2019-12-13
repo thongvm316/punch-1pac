@@ -92,9 +92,7 @@ class Api::V1::GroupsController < Api::V1::BaseController
       holidays_json = ActiveModelSerializers::SerializableResource.new(holidays, each_serializer: HolidaySerializer).as_json
 
       respond_to do |format|
-        format.json do
-          render json: { attendances: attendances_json, holidays: holidays_json, report: report }, status: :ok
-        end
+        format.json { render json: { attendances: attendances_json, holidays: holidays_json, report: report }, status: :ok }
         format.csv { send_data(User.report_csv(attendances, params[:date]), type: 'text/csv; charset=utf-8; header=present', filename: "#{params[:user_id]}.csv", disposition: 'attachment') }
       end
     end

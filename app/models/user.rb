@@ -76,13 +76,11 @@ class User < ApplicationRecord
     select('users.*', 'attendances.id as attendance_id, attendances.attended_at as attended_at, attendances.left_at as left_at')
       .joins("LEFT JOIN attendances ON users.id = attendances.user_id AND #{sanitized_today_cond}")
   }
-
   scope :not_in_group, ->(group_id) {
     left_outer_joins(:user_groups)
       .merge(UserGroup.not_in_group(group_id))
       .merge(User.where('users.role != ? OR users.role = ? AND user_groups.group_id IS NULL', User.roles[:member], User.roles[:member]))
   }
-
   scope :by_group, ->(current_user, group_id = nil) {
     q = all
     if current_user.role == 'superadmin'
@@ -93,7 +91,6 @@ class User < ApplicationRecord
     q = q.where(id: UserGroup.with_group(group_id)) if group_id.present?
     q
   }
-
   scope :search_by, ->(params, current_user) {
     q = all
     q = q.unscope(where: :activated) if params[:include_deactivated].present?
@@ -104,7 +101,6 @@ class User < ApplicationRecord
     q = q.by_name_or_email(params[:name_or_email]) if params[:name_or_email].present?
     q
   }
-
   scope :pending_requests, -> { joins(:requests).merge(Request.where(status: :pending)) }
 
   def self.count_attendance_status(date, date_type)
@@ -146,11 +142,10 @@ class User < ApplicationRecord
   end
 
   def self.report_csv(data, date)
-    csv_data = []
     date = Date.parse(date)
-    (date.beginning_of_month..date.end_of_month).to_a.each do |day|
-      obj = data.find_by(day: day)
-      csv_data.push(obj ? create_csv(obj) : [day])
+    csv_data = (date.beginning_of_month..date.end_of_month).to_a.each_with_object([]) do |day, arr|
+      attendance = data.find_by(day: day)
+      arr << (attendance ? create_csv(attendance) : [day])
     end
 
     working_hours = data.single_sum_working_hours_on_month(date: date)

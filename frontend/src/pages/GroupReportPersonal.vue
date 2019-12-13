@@ -69,7 +69,7 @@ export default {
 
     // ...mapState('groupReport', ['singleReport']),
 
-    ...mapState('initialStates', ['meta']),
+    ...mapState('initialStates', ['meta', 'currentCompany']),
 
     daysInMonth() {
       return this.dateContext.daysInMonth()
