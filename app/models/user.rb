@@ -133,16 +133,13 @@ class User < ApplicationRecord
       data.day,
       data.attended_time,
       data.left_time,
-      data.attending_status == 'attend_late' ? 1 : '-',
-      data.leaving_status == 'leave_early' ? 1 : '-',
+      data.attending_status == 'attend_late' ? '✓' : '-',
+      data.leaving_status == 'leave_early' ? '✓' : '-',
       "#{data.working_hours.to_i / 3600}h#{data.working_hours.to_i % 3600 / 60}m"
     ]
   end
 
   def self.report_csv(data, date)
-    CreateCSV.header = I18n.t(['user.report.day', 'user.report.checkin', 'user.report.checkout', 'user.report.late',
-                               'user.report.leave_early', 'user.report.working_hours'])
-
     date = Date.parse(date)
     csv_data = (date.beginning_of_month..date.end_of_month).to_a.each_with_object([]) do |day, arr|
       attendance = data.find_by(day: day)
@@ -150,7 +147,7 @@ class User < ApplicationRecord
     end
 
     CreateCSV.write_footer(data.single_sum_working_hours_on_month(date: date))
-    CreateCSV.export_csv(csv_data, true)
+    CreateCSV.export_csv('HEADER_USER_REPORT', csv_data, true)
   end
 
   def self.reset_password_token_valid?(token)

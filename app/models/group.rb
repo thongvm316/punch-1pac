@@ -54,10 +54,8 @@ class Group < ApplicationRecord
   end
 
   def self.report_csv(attendances)
-    CreateCSV.header = I18n.t(['group.report.email', 'group.report.name', 'group.report.attend_ok', 'group.report.attend_late',
-                               'group.report.leave_ok', 'group.report.leave_early', 'group.report.annual_leave', 'group.report.working_hours'])
     csv_data = attendances.each_with_object([]) { |v, arr| arr << create_csv(v) }
-    CreateCSV.export_csv(csv_data, false)
+    CreateCSV.export_csv('HEADER_GROUP_REPORT', csv_data, false)
   end
 
   def self.report_zip(data, date)
