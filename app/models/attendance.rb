@@ -110,7 +110,11 @@ class Attendance < ApplicationRecord
     none
   end
 
-  def format_export_time(time)
-    send(time).strftime('%H:%M')
+  def attended_time
+    attended_at.strftime('%H:%M')
+  end
+
+  def left_time
+    left_at.strftime('%H:%M')
   end
 end

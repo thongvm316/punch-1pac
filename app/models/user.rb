@@ -38,8 +38,6 @@ class User < ApplicationRecord
   REGEX_VALID_NAME = /\A[a-z\s]+\z/i
   REGEX_VALID_EMAIL = /\A([\w+\-].?)+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i
   RESET_PASSWORD_TOKEN_EXPIRY = 1800.0
-  CSVHeader = I18n.t(['user.report.day', 'user.report.checkin', 'user.report.checkout', 'user.report.late',
-                      'user.report.leave_early', 'user.report.working_hours'])
 
   before_create { self.activated_at = created_at }
   after_save { groups.find_each(&:touch) }
@@ -133,8 +131,8 @@ class User < ApplicationRecord
   def self.create_csv(data)
     [
       data.day,
-      data.format_export_time('attended_at'),
-      data.format_export_time('left_at'),
+      data.attended_time,
+      data.left_time,
       data.attending_status == 'attend_late' ? 1 : '-',
       data.leaving_status == 'leave_early' ? 1 : '-',
       "#{data.working_hours.to_i / 3600}h#{data.working_hours.to_i % 3600 / 60}m"
@@ -142,16 +140,17 @@ class User < ApplicationRecord
   end
 
   def self.report_csv(data, date)
+    CreateCSV.header = I18n.t(['user.report.day', 'user.report.checkin', 'user.report.checkout', 'user.report.late',
+                               'user.report.leave_early', 'user.report.working_hours'])
+
     date = Date.parse(date)
     csv_data = (date.beginning_of_month..date.end_of_month).to_a.each_with_object([]) do |day, arr|
       attendance = data.find_by(day: day)
       arr << (attendance ? create_csv(attendance) : [day])
     end
 
-    working_hours = data.single_sum_working_hours_on_month(date: date)
-    csv_footer = ['Total', '', '', '', '', "#{working_hours.to_i / 3600}h#{working_hours.to_i % 3600 / 60}m"]
-
-    CreateCSV.export_csv(CSVHeader, csv_data, csv_footer)
+    CreateCSV.write_footer(data.single_sum_working_hours_on_month(date: date))
+    CreateCSV.export_csv(csv_data, true)
   end
 
   def self.reset_password_token_valid?(token)
