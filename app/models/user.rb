@@ -133,8 +133,8 @@ class User < ApplicationRecord
   def self.create_csv(data)
     [
       data.day,
-      data.attended_at.strftime('%H:%M'),
-      data.left_at.strftime('%H:%M'),
+      data.format_export_time('attended_at'),
+      data.format_export_time('left_at'),
       data.attending_status == 'attend_late' ? 1 : '-',
       data.leaving_status == 'leave_early' ? 1 : '-',
       "#{data.working_hours.to_i / 3600}h#{data.working_hours.to_i % 3600 / 60}m"
