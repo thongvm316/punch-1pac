@@ -74,7 +74,6 @@ class User < ApplicationRecord
     select('users.*', 'attendances.id as attendance_id, attendances.attended_at as attended_at, attendances.left_at as left_at')
       .joins("LEFT JOIN attendances ON users.id = attendances.user_id AND #{sanitized_today_cond}")
   }
-
   scope :not_in_group, ->(group_id) {
     left_outer_joins(:user_groups)
       .merge(UserGroup.not_in_group(group_id))
@@ -100,7 +99,6 @@ class User < ApplicationRecord
     q = q.by_name_or_email(params[:name_or_email]) if params[:name_or_email].present?
     q
   }
-
   scope :pending_requests, -> { joins(:requests).merge(Request.where(status: :pending)) }
 
   def self.count_attendance_status(date, date_type)
@@ -126,8 +124,30 @@ class User < ApplicationRecord
       leave_ok: attendances.single_status_count_on_month('leave_ok', 'leaving_status', params),
       leave_early: attendances.single_status_count_on_month('leave_early', 'leaving_status', params),
       leave: attendances.single_status_count_on_month('annual_leave', 'off_status', params),
-      working_hours: attendances.single_sum_working_hours_on_month(params),
+      working_hours: attendances.single_sum_working_hours_on_month(params)
     }
+  end
+
+  def self.create_csv(data)
+    [
+      data.day,
+      data.attended_time,
+      data.left_time,
+      data.attending_status == 'attend_late' ? '✓' : '-',
+      data.leaving_status == 'leave_early' ? '✓' : '-',
+      "#{data.working_hours.to_i / 3600}h#{data.working_hours.to_i % 3600 / 60}m"
+    ]
+  end
+
+  def self.report_csv(data, date)
+    date = Date.parse(date)
+    csv_data = (date.beginning_of_month..date.end_of_month).to_a.each_with_object([]) do |day, arr|
+      attendance = data.find_by(day: day)
+      arr << (attendance ? create_csv(attendance) : [day])
+    end
+
+    CreateCSV.write_footer(data.single_sum_working_hours_on_month(date: date))
+    CreateCSV.export_csv('HEADER_USER_REPORT', csv_data, true)
   end
 
   def self.reset_password_token_valid?(token)

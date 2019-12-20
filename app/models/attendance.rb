@@ -109,4 +109,12 @@ class Attendance < ApplicationRecord
   rescue TypeError, ArgumentError
     none
   end
+
+  def attended_time
+    attended_at.strftime('%H:%M')
+  end
+
+  def left_time
+    left_at.strftime('%H:%M')
+  end
 end

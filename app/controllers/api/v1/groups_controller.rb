@@ -74,8 +74,9 @@ class Api::V1::GroupsController < Api::V1::BaseController
                 adapter: :json,
                 status: :ok
       end
-      format.csv { send_data(Group.report_csv(results), type: 'text/csv; charset=utf-8; header=present', filename: 'report.csv', disposition: 'attachment') }
-      format.zip { send_data(Group.report_zip(results), type: 'text/zip; charset=utf-8; header=present', filename: 'report.zip', disposition: 'attachment') }
+
+      format.csv { send_data(Group.report_csv(results), type: CreateCSV::CSV_TYPE, filename: 'report.csv', disposition: 'attachment') }
+      format.zip { send_data(Group.report_zip(@group.users, params[:date]), type: CreateCSV::ZIP_TYPE, filename: 'report.zip', disposition: 'attachment') }
     end
   end
 
@@ -83,14 +84,17 @@ class Api::V1::GroupsController < Api::V1::BaseController
     authorize! @group
     user = @group.users.find(params[:user_id])
     if user
-      attendances = user.attendances.in_period(params[:day]).order(day: :asc)
+      attendances = user.attendances.in_period(params[:date]).order(day: :asc)
       report = user.single_report(params)
-      holidays = current_company.holidays.in_month(params[:day])
+      holidays = current_company.holidays.in_month(params[:date])
 
       attendances_json = ActiveModelSerializers::SerializableResource.new(attendances, each_serializer: AttendanceSerializer).as_json
       holidays_json = ActiveModelSerializers::SerializableResource.new(holidays, each_serializer: HolidaySerializer).as_json
 
-      render json: { attendances: attendances_json, holidays: holidays_json, report: report }, status: :ok
+      respond_to do |format|
+        format.json { render json: { attendances: attendances_json, holidays: holidays_json, report: report }, status: :ok }
+        format.csv { send_data(User.report_csv(attendances, params[:date]), type: CreateCSV::CSV_TYPE, filename: "#{params[:user_id]}.csv", disposition: 'attachment') }
+      end
     end
   end
 
