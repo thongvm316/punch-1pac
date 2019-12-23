@@ -8,8 +8,8 @@
         <input type="search" class="form-input filter-input" :placeholder="$t('attendances.placeholder.filterByUser')" v-model="searchText">
       </div>
       <div class="float-right">
-        <button class="btn btn-success mx-2" @click="exportFile({ type: 'zip' })">{{ $t('groups.btn.exportZIPGroupReport') }}</button>
-        <button class="btn btn-success" @click="exportFile({ type: 'csv' })" :disabled="isDisable">{{ $t('groups.btn.exportCSVGroupReport') }}</button>
+        <button class="btn btn-success mx-2" @click="exportFile({ type: 'zip', fileName: `report_${group.name}_${dateData.date}` })">{{ $t('groups.btn.exportZIPGroupReport') }}</button>
+        <button class="btn btn-success" @click="exportFile({ type: 'csv', fileName: `report_${group.name}_${dateData.date}` })" :disabled="isDisable">{{ $t('groups.btn.exportCSVGroupReport') }}</button>
       </div>
     </div>
 
@@ -56,10 +56,12 @@
 import MonthYearPicker from '../components/MonthYearPicker'
 import MainLayout from '../layouts/Main'
 import GroupTab from '../components/GroupTab'
+import exportFile from '../mixins/export-file'
 import { mapState, mapActions } from 'vuex'
-import axios from 'axios'
 
 export default {
+  mixins: [exportFile],
+
   data() {
     return {
       isDisable: false,
@@ -121,31 +123,6 @@ export default {
     sortBy(key) {
       this.sortKey = key
       this.sortOrders = this.sortOrders === 'asc' ? 'desc' : 'asc'
-    },
-
-    exportFile(data) {
-      this.isDisable = true
-      axios
-        .get(`/groups/${this.$route.params.id}/report.${data.type}`, {
-          headers: { Accept: `application/${data.type}` },
-          params: { date: this.dateData.date, date_type: this.dateData.type },
-          responseType: 'blob'
-        })
-        .then(response => {
-          const downloadLink = document.createElement('a')
-          downloadLink.href = window.URL.createObjectURL(new Blob([response.data]))
-          let fileName = `report_${this.group.name}_${this.dateData.date}.${data.type}`
-          downloadLink.setAttribute('download', fileName)
-          document.body.appendChild(downloadLink)
-          downloadLink.click()
-
-          this.isDisable = false
-          downloadLink.remove()
-        })
-        .catch(error => {
-          this.isDisable = false
-          throw error
-        })
     }
   },
 

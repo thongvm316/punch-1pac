@@ -4,7 +4,11 @@ import axios from 'axios'
 const state = {
   results: [],
   reportMeta: {},
-  singleReport: []
+  personalReport: {
+    report: {},
+    totalWorkingDays: null,
+    totalWorkingHours: null
+  }
 }
 
 const mutations = {
@@ -14,7 +18,11 @@ const mutations = {
   },
 
   [types.FETCH_PERSONAL_REPORT](state, payload) {
-    state.singleReport = payload
+    state.personalReport = {
+      report: payload.report,
+      totalWorkingDays: payload.meta.company_total_working_days_in_month,
+      totalWorkingHours: payload.meta.company_total_working_hours_on_month
+    }
   }
 }
 

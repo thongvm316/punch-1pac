@@ -216,6 +216,12 @@ export default {
     },
     modal: {
       addTitle: 'グループの追加'
+    },
+    report: {
+      total: 'Total',
+      day_off: '欠勤',
+      attend_late: '遅刻',
+      leave_early: '早退'
     }
   },
   requests: {

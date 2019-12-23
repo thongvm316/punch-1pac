@@ -216,6 +216,12 @@ export default {
     },
     modal: {
       addTitle: 'Add group'
+    },
+    report: {
+      total: 'Total',
+      day_off: 'Day Off',
+      attend_late: 'Attend Late',
+      leave_early: 'Leave Early'
     }
   },
   requests: {

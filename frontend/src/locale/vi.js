@@ -216,6 +216,12 @@ export default {
     },
     modal: {
       addTitle: 'Tạo nhóm'
+    },
+    report: {
+      total: 'Tổng cộng',
+      day_off: 'Vắng',
+      attend_late: 'Đến trễ',
+      leave_early: 'Về sớm'
     }
   },
   requests: {
