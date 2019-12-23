@@ -8,10 +8,10 @@
         <option v-for="user in usersInGroup" :key="user.id" :value="user.id">{{ user.email }}</option>
       </select>
 
-      <button class="btn btn-success float-right" @click="exportFile($event, { type: 'csv', requestPath: `/groups/${$route.params.id}/users/${$route.params.user_id}/report`, fileName: fileExportedName })">{{ $t('groups.btn.exportCSVGroupReport') }}</button>
+      <button v-if="isValidTime" class="btn btn-success float-right" @click="exportFile($event, { type: 'csv', requestPath: `/groups/${$route.params.id}/users/${$route.params.user_id}/report`, fileName: fileExportedName })">{{ $t('groups.btn.exportCSVGroupReport') }}</button>
     </div>
 
-    <table class="table table-bordered has-fixed-head bg-light mt-5">
+    <table v-if="isValidTime" class="table table-bordered has-fixed-head bg-light mt-5">
       <thead>
         <th>{{ $t('groups.report.date') }}</th>
         <th>{{ $t('groups.report.check_in') }}</th>
@@ -42,6 +42,7 @@
         </tr>
       </tbody>
     </table>
+    <p v-else class="mt-5">{{ $t('groups.report.no_data') }}</p>
   </main-layout>
 </template>
 
@@ -94,6 +95,10 @@ export default {
 
     fileExportedName() {
       return `report_${this.usersInGroup.find(user => user.id === parseInt(this.userId)).name.replace(/\s/g, '')}_${this.$moment(this.dateData.date).format('YYYY-MM')}`
+    },
+
+    isValidTime() {
+      return this.attendances.length > 0 && this.$moment(this.dateData.date).isSameOrAfter(this.currentUser.created_at, 'month')
     }
   },
 

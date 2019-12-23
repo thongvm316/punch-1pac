@@ -226,6 +226,7 @@ export default {
       attend_late: '遅刻',
       leave_early: '早退',
       day_off: '欠勤',
+      no_data: 'データなし',
       total: '合計'
     }
   },

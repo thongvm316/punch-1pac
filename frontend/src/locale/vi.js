@@ -219,14 +219,15 @@ export default {
     },
     report: {
       date: 'Ngày',
-      check_in: 'Giờ Vô',
+      check_in: 'Giờ vô',
       check_out: 'Giờ ra',
       late: 'Trễ',
-      working_hours: 'Thời Gian Làm',
-      attend_late: 'Đến Trễ',
-      leave_early: 'Về Sớm',
+      working_hours: 'Thời gian làm',
+      attend_late: 'Đến trễ',
+      leave_early: 'Về sớm',
       day_off: 'Vắng',
-      total: 'Tổng Cộng'
+      no_data: 'Không có dữ liệu',
+      total: 'Tổng cộng'
     }
   },
   requests: {

@@ -226,6 +226,7 @@ export default {
       attend_late: 'Attend Late',
       leave_early: 'Leave Early',
       day_off: 'Day Off',
+      no_data: 'No Data',
       total: 'Total'
     }
   },
