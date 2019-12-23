@@ -218,10 +218,15 @@ export default {
       addTitle: 'グループの追加'
     },
     report: {
-      total: 'Total',
-      day_off: '欠勤',
+      date: '日付',
+      check_in: 'チェックイン',
+      check_out: 'チェックアウト',
+      late: '遅刻',
+      working_hours: '総勤務時間',
       attend_late: '遅刻',
-      leave_early: '早退'
+      leave_early: '早退',
+      day_off: '欠勤',
+      total: '合計'
     }
   },
   requests: {

@@ -218,10 +218,15 @@ export default {
       addTitle: 'Add group'
     },
     report: {
-      total: 'Total',
-      day_off: 'Day Off',
+      date: 'Date',
+      check_in: 'Check In',
+      check_out: 'Check Out',
+      late: 'Late',
+      working_hours: 'Working hours',
       attend_late: 'Attend Late',
-      leave_early: 'Leave Early'
+      leave_early: 'Leave Early',
+      day_off: 'Day Off',
+      total: 'Total'
     }
   },
   requests: {

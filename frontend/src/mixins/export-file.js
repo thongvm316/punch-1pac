@@ -2,10 +2,10 @@ import axios from 'axios'
 
 export default {
   methods: {
-    exportFile(data) {
-      this.isDisable = true
+    exportFile(event, data) {
+      event.target.disabled = true
       axios
-        .get(`/groups/${this.$route.params.id}/report.${data.type}`, {
+        .get(`${data.requestPath}.${data.type}`, {
           headers: { Accept: `application/${data.type}` },
           params: { date: this.dateData.date, date_type: this.dateData.type },
           responseType: 'blob'
@@ -18,11 +18,11 @@ export default {
           document.body.appendChild(downloadLink)
           downloadLink.click()
 
-          this.isDisable = false
+          event.target.disabled = false
           downloadLink.remove()
         })
         .catch(error => {
-          this.isDisable = false
+          event.target.disabled = false
           throw error
         })
     }

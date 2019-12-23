@@ -8,8 +8,8 @@
         <input type="search" class="form-input filter-input" :placeholder="$t('attendances.placeholder.filterByUser')" v-model="searchText">
       </div>
       <div class="float-right">
-        <button class="btn btn-success mx-2" @click="exportFile({ type: 'zip', fileName: `report_${group.name}_${dateData.date}` })">{{ $t('groups.btn.exportZIPGroupReport') }}</button>
-        <button class="btn btn-success" @click="exportFile({ type: 'csv', fileName: `report_${group.name}_${dateData.date}` })" :disabled="isDisable">{{ $t('groups.btn.exportCSVGroupReport') }}</button>
+        <button class="btn btn-success mx-2" @click="exportFile($event,{ type: 'zip', requestPath: `/groups/${$route.params.id}/report`, fileName: `report_${group.name}_${dateData.date}` })">{{ $t('groups.btn.exportZIPGroupReport') }}</button>
+        <button class="btn btn-success" @click="exportFile($event, { type: 'csv', requestPath: `/groups/${$route.params.id}/report`, fileName: `report_${group.name}_${dateData.date}` })">{{ $t('groups.btn.exportCSVGroupReport') }}</button>
       </div>
     </div>
 
@@ -64,7 +64,6 @@ export default {
 
   data() {
     return {
-      isDisable: false,
       searchText: '',
       dateData: {
         date: this.$moment().format('YYYY-MM-DD'),

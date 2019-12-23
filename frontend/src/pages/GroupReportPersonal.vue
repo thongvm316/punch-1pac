@@ -8,18 +8,18 @@
         <option v-for="user in usersInGroup" :key="user.id" :value="user.id">{{ user.email }}</option>
       </select>
 
-      <button class="btn btn-success float-right" @click="exportFile({ type: 'csv', fileName: `report_${ currentPersonName }_${ $moment(dateData.date).format('YYYY-MM')}` })" :disabled="isDisable">{{ $t('groups.btn.exportCSVGroupReport') }}</button>
+      <button class="btn btn-success float-right" @click="exportFile($event, { type: 'csv', requestPath: `/groups/${$route.params.id}/users/${$route.params.user_id}/report`, fileName: fileExportedName })">{{ $t('groups.btn.exportCSVGroupReport') }}</button>
     </div>
 
     <table class="table table-bordered has-fixed-head bg-light mt-5">
       <thead>
-        <th>Date</th>
-        <th>Check in</th>
-        <th>Check out</th>
-        <th>Late</th>
-        <th>Leave early</th>
-        <th>Day off</th>
-        <th>Working hours</th>
+        <th>{{ $t('groups.report.date') }}</th>
+        <th>{{ $t('groups.report.check_in') }}</th>
+        <th>{{ $t('groups.report.check_out') }}</th>
+        <th>{{ $t('groups.report.late') }}</th>
+        <th>{{ $t('groups.report.leave_early') }}</th>
+        <th>{{ $t('groups.report.day_off') }}</th>
+        <th>{{ $t('groups.report.working_hours') }}</th>
       </thead>
       <tbody>
         <tr v-for="attendance in attendances" :key="attendance.id" :class="{'is-holiday': attendance.holiday, 'is-breakday': isBreakday(attendance)}">
@@ -57,7 +57,6 @@ export default {
 
   data() {
     return {
-      isDisable: false,
       attendances: [],
       dateData: {
         date: this.$moment().format('YYYY-MM-DD'),
@@ -93,8 +92,8 @@ export default {
       return `${Math.trunc(totalWorkingMinutes / 60)}h${totalWorkingMinutes % 60}m`
     },
 
-    currentPersonName() {
-      return this.usersInGroup.find(user => user.id === parseInt(this.userId)).name.replace(/\s/g, '')
+    fileExportedName() {
+      return `report_${this.usersInGroup.find(user => user.id === parseInt(this.userId)).name.replace(/\s/g, '')}_${this.$moment(this.dateData.date).format('YYYY-MM')}`
     }
   },
 

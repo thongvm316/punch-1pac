@@ -41,7 +41,7 @@ const actions = {
 
   getPersonalReport({ commit }, params) {
     return axios
-      .get(`/groups/${params.group_id}/report/${params.user_id}`, { params: { date: params.date, date_type: params.type } })
+      .get(`/groups/${params.group_id}/users/${params.user_id}/report`, { params: { date: params.date, date_type: params.type } })
       .then(response => {
         commit(types.FETCH_PERSONAL_REPORT, response.data)
         return response

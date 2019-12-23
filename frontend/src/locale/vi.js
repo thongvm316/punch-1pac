@@ -218,10 +218,15 @@ export default {
       addTitle: 'Tạo nhóm'
     },
     report: {
-      total: 'Tổng cộng',
+      date: 'Ngày',
+      check_in: 'Giờ Vô',
+      check_out: 'Giờ ra',
+      late: 'Trễ',
+      working_hours: 'Thời Gian Làm',
+      attend_late: 'Đến Trễ',
+      leave_early: 'Về Sớm',
       day_off: 'Vắng',
-      attend_late: 'Đến trễ',
-      leave_early: 'Về sớm'
+      total: 'Tổng Cộng'
     }
   },
   requests: {
