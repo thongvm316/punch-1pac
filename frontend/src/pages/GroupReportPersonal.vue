@@ -90,7 +90,7 @@ export default {
 
     totalWorkingHours() {
       const totalWorkingMinutes = this.personalReport.report.working_hours / 60
-      return `${Math.trunc(totalWorkingMinutes / 60)}h${totalWorkingMinutes % 60}m`
+      return `${Math.trunc(totalWorkingMinutes / 60)}h${Math.trunc(totalWorkingMinutes % 60)}m`
     },
 
     fileExportedName() {
