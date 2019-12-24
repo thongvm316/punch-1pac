@@ -94,11 +94,14 @@ export default {
     },
 
     fileExportedName() {
-      return `report_${this.usersInGroup.find(user => user.id === parseInt(this.userId)).name.replace(/\s/g, '')}_${this.$moment(this.dateData.date).format('YYYY-MM')}`
+      const targetUserExportedName = this.usersInGroup.find(user => user.id === parseInt(this.userId)).name.replace(/\s/g, '')
+      const dateExported = this.$moment(this.dateData.date).format('YYYY-MM')
+
+      return `report_${targetUserExportedName}_${dateExported}`
     },
 
     isValidTime() {
-      return this.attendances.length > 0 && this.$moment(this.dateData.date).isSameOrAfter(this.currentUser.created_at, 'month')
+      return this.$moment(this.dateData.date).isBetween(this.currentUser.created_at, this.today , 'month', [])
     }
   },
 
