@@ -432,7 +432,7 @@ RSpec.describe Api::V1::GroupsController, type: :controller do
         subject { get :personal_report, params: { id: groups.first.id, user_id: user.id }, format: :json }
 
         its(:code) { is_expected.to eq '200' }
-        its(:body) { is_expected.to be_json_as(attendances: Array.new { response_attendance }, holidays: Array.new { response_holiday }, report: response_user_report) }
+        its(:body) { is_expected.to be_json_as(attendances: Array.new { response_attendance }, holidays: Array.new { response_holiday }, report: response_user_report, meta: response_meta) }
       end
 
       context 'when group not in login_user.groups' do
@@ -462,7 +462,7 @@ RSpec.describe Api::V1::GroupsController, type: :controller do
         subject { get :personal_report, params: { id: groups.first.id, user_id: user.id }, format: :json }
 
         its(:code) { is_expected.to eq '200' }
-        its(:body) { is_expected.to be_json_as(attendances: Array.new { response_attendance }, holidays: Array.new { response_holiday }, report: response_user_report) }
+        its(:body) { is_expected.to be_json_as(attendances: Array.new { response_attendance }, holidays: Array.new { response_holiday }, report: response_user_report, meta: response_meta) }
       end
 
       context 'when user not in group' do
