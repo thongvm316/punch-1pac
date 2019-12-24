@@ -101,7 +101,7 @@ export default {
     },
 
     isValidTime() {
-      return this.$moment(this.dateData.date).isBetween(this.currentUser.created_at, this.today , 'month', [])
+      return this.$moment(this.dateData.date).isBetween(this.currentUser.created_at, this.today, 'month', [])
     }
   },
 
