@@ -4,7 +4,11 @@ import axios from 'axios'
 const state = {
   results: [],
   reportMeta: {},
-  singleReport: []
+  personalReport: {
+    report: {},
+    totalWorkingDays: null,
+    totalWorkingHours: null
+  }
 }
 
 const mutations = {
@@ -14,7 +18,11 @@ const mutations = {
   },
 
   [types.FETCH_PERSONAL_REPORT](state, payload) {
-    state.singleReport = payload
+    state.personalReport = {
+      report: payload.report,
+      totalWorkingDays: payload.meta.company_total_working_days_in_month,
+      totalWorkingHours: payload.meta.company_total_working_hours_on_month
+    }
   }
 }
 
@@ -33,7 +41,7 @@ const actions = {
 
   getPersonalReport({ commit }, params) {
     return axios
-      .get(`/groups/${params.group_id}/report/${params.user_id}`, { params: { date: params.date, date_type: params.type } })
+      .get(`/groups/${params.group_id}/users/${params.user_id}/report`, { params: { date: params.date, date_type: params.type } })
       .then(response => {
         commit(types.FETCH_PERSONAL_REPORT, response.data)
         return response

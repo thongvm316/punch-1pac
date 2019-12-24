@@ -2,37 +2,47 @@
   <main-layout :title="$t('attendances.groupTitle', { name: group.name })">
     <group-tab :group-id="$route.params.id"/>
 
-    <div class="toolbar mt-5 clearfix">
+    <div class="toolbar z-index-10 mt-5 clearfix">
       <month-year-picker v-model="dateData"/>
-      <select class="form-select" :selected="$route.params.user_id" @change="onChangeUser">
+      <select class="form-select" v-model="userId">
         <option v-for="user in usersInGroup" :key="user.id" :value="user.id">{{ user.email }}</option>
       </select>
 
-      <button class="btn btn-success float-right" @click="exportCsvFile" :disabled="isDisable">{{ $t('groups.btn.exportCSVGroupReport') }}</button>
+      <button v-if="isValidTime" class="btn btn-success float-right" @click="exportFile($event, { type: 'csv', requestPath: `/groups/${$route.params.id}/users/${$route.params.user_id}/report`, fileName: fileExportedName })">{{ $t('groups.btn.exportCSVGroupReport') }}</button>
     </div>
 
-    <table class="table bg-light mt-5">
+    <table v-if="isValidTime" class="table table-bordered has-fixed-head bg-light mt-5">
       <thead>
-        <th>Date</th>
-        <th>Check in</th>
-        <th>Check out</th>
-        <th>Late</th>
-        <th>Leave early</th>
-        <th>Day off</th>
-        <th>Working hours</th>
+        <th>{{ $t('groups.report.date') }}</th>
+        <th>{{ $t('groups.report.check_in') }}</th>
+        <th>{{ $t('groups.report.check_out') }}</th>
+        <th>{{ $t('groups.report.late') }}</th>
+        <th>{{ $t('groups.report.leave_early') }}</th>
+        <th>{{ $t('groups.report.day_off') }}</th>
+        <th>{{ $t('groups.report.working_hours') }}</th>
       </thead>
       <tbody>
-        <tr v-for="date in attendances">
-          <td>{{ date.day }}</td>
-          <td>{{ date.attended_at ? date.attended_at : '-' }}</td>
-          <td>{{ date.left_at ? date.left_at : '-' }}</td>
-          <td>{{ date.attending_status === 'attend_late' ? '1' : '-' }}</td>
-          <td>{{ date.leaving_status === 'leave_early' ? '1' : '-' }}</td>
-          <td>{{ date.off_status ? '1' : '-' }}</td>
-          <td>{{ !date.off_status ? 0 : date.working_hours }}</td>
+        <tr v-for="attendance in attendances" :key="attendance.id" :class="{'is-holiday': attendance.holiday, 'is-breakday': isBreakday(attendance)}">
+          <td>{{ getFormatedDate(attendance.day) }}</td>
+          <td><span :class="{'label label-warning w-full text-bold-700': attendance.attending_status === 'attend_late'}">{{ attendance.attended_at ? attendance.attended_at : handleEmptyData(attendance) }}</span></td>
+          <td><span :class="{'label label-error w-full text-bold-700': attendance.leaving_status === 'leave_early'}">{{ attendance.left_at ? attendance.left_at : handleEmptyData(attendance) }}</span></td>
+          <td>{{ attendance.attending_status === 'attend_late' ? $t('groups.report.attend_late') : handleEmptyData(attendance) }}</td>
+          <td>{{ attendance.leaving_status === 'leave_early' ? $t('groups.report.leave_early') : handleEmptyData(attendance) }}</td>
+          <td :class="{'is-overflow tooltip': getDayOffStatus(attendance).length > 1}" :data-tooltip="getDayOffStatus(attendance)"><span :class="{'text-notice text-bold-700' : attendance.off_status || attendance.holiday}">{{ getDayOffStatus(attendance) }}</span></td>
+          <td>{{ getFormatedWorkingHours(attendance) }}</td>
+        </tr>
+        <tr>
+          <td>{{ $t('groups.report.total') }}</td>
+          <td>{{ personalReport.report.attend_ok }}/{{ personalReport.totalWorkingDays }}</td>
+          <td>{{ personalReport.report.leave_ok }}/{{ personalReport.totalWorkingDays }}</td>
+          <td>{{ personalReport.report.attend_late }}/{{ personalReport.totalWorkingDays }}</td>
+          <td>{{ personalReport.report.leave_early }}/{{ personalReport.totalWorkingDays }}</td>
+          <td>{{ personalReport.report.leave }}/{{ personalReport.totalWorkingDays }}</td>
+          <td>{{ totalWorkingHours }}/{{ `${personalReport.totalWorkingHours}h` }}</td>
         </tr>
       </tbody>
     </table>
+    <p v-else class="mt-5">{{ $t('groups.report.no_data') }}</p>
   </main-layout>
 </template>
 
@@ -40,13 +50,14 @@
 import MonthYearPicker from '../components/MonthYearPicker'
 import MainLayout from '../layouts/Main'
 import GroupTab from '../components/GroupTab'
+import exportFile from '../mixins/export-file'
 import { mapState, mapActions } from 'vuex'
-import axios from 'axios'
 
 export default {
+  mixins: [exportFile],
+
   data() {
     return {
-      isDisable: false,
       attendances: [],
       dateData: {
         date: this.$moment().format('YYYY-MM-DD'),
@@ -67,12 +78,30 @@ export default {
   computed: {
     ...mapState('group', ['group', 'usersInGroup']),
 
-    // ...mapState('groupReport', ['singleReport']),
-
     ...mapState('initialStates', ['meta', 'currentCompany']),
 
-    daysInMonth() {
-      return this.dateContext.daysInMonth()
+    ...mapState('groupReport', ['personalReport']),
+
+    validDaysOfMonth() {
+      const startDateOfMonth = this.dateContext.startOf('month')
+      if (this.today.month() === startDateOfMonth.month()) return this.today.diff(startDateOfMonth, 'days') + 1
+      return startDateOfMonth.daysInMonth()
+    },
+
+    totalWorkingHours() {
+      const totalWorkingMinutes = this.personalReport.report.working_hours / 60
+      return `${Math.trunc(totalWorkingMinutes / 60)}h${totalWorkingMinutes % 60}m`
+    },
+
+    fileExportedName() {
+      const targetUserExportedName = this.usersInGroup.find(user => user.id === parseInt(this.userId)).name.replace(/\s/g, '')
+      const dateExported = this.$moment(this.dateData.date).format('YYYY-MM')
+
+      return `report_${targetUserExportedName}_${dateExported}`
+    },
+
+    isValidTime() {
+      return this.$moment(this.dateData.date).isBetween(this.currentUser.created_at, this.today , 'month', [])
     }
   },
 
@@ -83,95 +112,100 @@ export default {
 
     ...mapActions('calendar', ['getCalendarAttendances']),
 
-    onChangeUser(e) {
-      this.$router.push({ params: { user_id: e.target.value } })
-      this.userId = this.$route.params.user_id
-    },
-
     isInDeactivatedTime(currentDay) {
       if (currentDay.isBetween(this.currentUser.deactivated_at, this.currentUser.activated_at, null, '[]')) return true
       if (!this.currentUser.activated && currentDay.isSameOrAfter(this.currentUser.deactivated_at, 'day')) return true
       return false
     },
 
-    exportCsvFile() {
-      this.isDisable = true
-      axios
-        .get(`/groups/${this.$route.params.id}/report/${this.$route.params.user_id}.csv`, {
-          headers: { Accept: 'application/csv' },
-          params: { date: this.dateData.date, user_id: this.$route.params.user_id },
-          responseType: 'blob'
-        })
-        .then(response => {
-          const downloadLink = document.createElement('a')
-          downloadLink.href = window.URL.createObjectURL(new Blob([response.data]))
-          downloadLink.setAttribute('download', this.$route.params.user_id + '.csv')
-          document.body.appendChild(downloadLink)
-          downloadLink.click()
-          this.isDisable = false
-        })
-        .catch(error => {
-          this.isDisable = false
-          throw error
-        })
+    isBreakday(date) {
+      return this.currentCompany.breakdays.includes(this.getDayOfWeek(date.day))
+    },
+
+    handleEmptyData(attendance) {
+      return attendance.holiday || this.isBreakday(attendance) ? '' : '-'
     },
 
     formatAttendances(response) {
-      this.attendances = []
       let attendances = []
       const date = response.attendances[0] ? this.$moment(response.attendances[0].day).locale('en') : this.dateContext
       const userJoinDate = this.$moment(this.currentUser.created_at)
-      const findHolidayByDay = function(currentDay) {
-        return response.holidays.find(holiday => {
-          return currentDay.isBetween(holiday.started_at, holiday.ended_at, null, '[]')
-        })
-      }
+      const findHolidayByDay = currentDay => response.holidays.find(holiday => currentDay.isBetween(holiday.started_at, holiday.ended_at, null, '[]'))
 
       // Loop render day in month
-      for (let day = 1; day <= date.daysInMonth(); day++) {
+      for (let day = 1; day <= this.validDaysOfMonth; day++) {
         const currentDay = this.$moment(`${date.year()}-${date.format('MM')}-${day}`, 'YYYY-MM-D').locale('en')
-        let attendance = { id: null, day: currentDay.format('YYYY-MM-DD'), attended_at: '', left_at: '', attending_status: '', leaving_status: '', off_status: '', holiday: null }
-        let holiday = null
-        const tmpAttendance = response.attendances.find(item => currentDay.format('YYYY-MM-DD') === item.day)
 
-        // Check if current rendering day is a holiday
-        if (response.holidays) holiday = findHolidayByDay.call(this, currentDay)
+        // A valid day is a day before today and after current user's join date
+        if (this.today.isSameOrAfter(currentDay, 'day')) {
+          const tmpAttendance = response.attendances.find(item => currentDay.format('YYYY-MM-DD') === item.day)
+          let attendance = { id: null, day: currentDay.format('YYYY-MM-DD'), attended_at: '', left_at: '', attending_status: '', leaving_status: '', off_status: '', holiday: null }
 
-        // If currentDay is a holiday, set holiday object into attendance object
-        if (holiday) attendance = Object.assign({}, attendance, { holiday: holiday })
+          // Check if current rendering day is a holiday
+          const holiday = findHolidayByDay(currentDay)
 
-        if (!this.isInDeactivatedTime(currentDay)) {
-          // If currentDay is an annual leave day
-          if (tmpAttendance && tmpAttendance.off_status === 'annual_leave') attendance = Object.assign({}, attendance, tmpAttendance)
+          // If currentDay is a holiday, set holiday object into attendance object
+          if (holiday) attendance = { ...attendance, holiday }
 
-          // A valid day is a day before today and after current user's join date
-          if (this.today.isSameOrAfter(currentDay, 'day')) {
+          if (!this.isInDeactivatedTime(currentDay)) {
+            // If currentDay is an annual leave day
+            if (tmpAttendance && tmpAttendance.off_status === 'annual_leave') attendance = { ...attendance, ...tmpAttendance }
+
             // If current user already attended on current day then set attendance information
             // Else if current user did not attend on current day then check if current day is weekend or unpaid leave day
             // Only display when currentDay is same or after user created date
             if (tmpAttendance) {
               attendance = tmpAttendance
             } else if (!holiday && currentDay.isSameOrAfter(userJoinDate, 'day')) {
-              attendance = Object.assign({}, attendance, {
+              attendance = {
+                ...attendance,
                 off_status: this.today.isAfter(currentDay, 'day') && !this.currentCompany.breakdays.includes(currentDay.format('dddd').toLowerCase()) ? 'leave' : ''
-              })
+              }
             }
           }
-        }
 
-        attendances.push(attendance)
+          attendances.push(attendance)
+        }
       }
 
       this.attendances = attendances
+    },
+
+    getDayOfWeek(date) {
+      return this.$moment(date)
+        .format('dddd')
+        .toLowerCase()
+    },
+
+    getFormatedDate(date) {
+      return this.$moment(date).format('dddd ( D/MM )')
+    },
+
+    getFormatedWorkingHours(date) {
+      if (!date.working_hours) {
+        if (date.holiday || this.isBreakday(date)) return ''
+        return '-'
+      }
+
+      const formatedWorkingHour = {
+        hours: `${date.working_hours.hours}h`,
+        mins: date.working_hours.mins ? `${date.working_hours.mins}m` : ''
+      }
+      return `${formatedWorkingHour.hours}${formatedWorkingHour.mins}`
+    },
+
+    getDayOffStatus(date) {
+      if (date.holiday) return date.holiday.name
+      if (date.off_status) return this.$t('groups.report.day_off')
+      if (this.isBreakday(date)) return ''
+      return '-'
     }
   },
 
   created() {
-    // this.getPersonalReport({ group_id: this.$route.params.id, user_id: this.userId, ...this.dateData })
-    //   .then(response => {
-    //     this.formatAttendances(response.data.attendances)
-    //   })
-    this.getCalendarAttendances().then(response => this.formatAttendances(response.data))
+    this.getPersonalReport({ group_id: this.$route.params.id, user_id: this.userId, ...this.dateData }).then(response => {
+      this.formatAttendances(response.data)
+    })
     this.getUsersInGroup(this.$route.params.id)
     if (!this.group) this.getGroup(this.$route.params.id)
   },
@@ -179,14 +213,19 @@ export default {
   watch: {
     dateData: {
       handler: function() {
-        this.getPersonalReport({ group_id: this.$route.params.id, user_id: this.userId, ...this.dateData })
+        this.getPersonalReport({ group_id: this.$route.params.id, user_id: this.userId, ...this.dateData }).then(response => {
+          this.formatAttendances(response.data)
+        })
         this.dateContext = this.$moment(this.dateData.date)
       },
       deep: true
     },
 
     userId() {
-      this.getPersonalReport({ group_id: this.$route.params.id, user_id: this.userId, ...this.dateData })
+      this.$router.push({ params: { user_id: this.userId } })
+      this.getPersonalReport({ group_id: this.$route.params.id, user_id: this.userId, ...this.dateData }).then(response => {
+        this.formatAttendances(response.data)
+      })
     }
   }
 }

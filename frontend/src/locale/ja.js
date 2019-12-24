@@ -216,6 +216,18 @@ export default {
     },
     modal: {
       addTitle: 'グループの追加'
+    },
+    report: {
+      date: '日付',
+      check_in: 'チェックイン',
+      check_out: 'チェックアウト',
+      late: '遅刻',
+      working_hours: '総勤務時間',
+      attend_late: '遅刻',
+      leave_early: '早退',
+      day_off: '欠勤',
+      no_data: 'データなし',
+      total: '合計'
     }
   },
   requests: {
