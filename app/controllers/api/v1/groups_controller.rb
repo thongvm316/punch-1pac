@@ -76,7 +76,7 @@ class Api::V1::GroupsController < Api::V1::BaseController
       end
 
       format.csv { send_data(Group.report_csv(results), type: CreateCSV::CSV_TYPE, filename: 'report.csv', disposition: 'attachment') }
-      format.zip { send_data(Group.report_zip(@group.users, params[:date]), type: CreateCSV::ZIP_TYPE, filename: 'report.zip', disposition: 'attachment') }
+      format.zip { send_data(Group.report_zip(@group.users, params), type: CreateCSV::ZIP_TYPE, filename: 'report.zip', disposition: 'attachment') }
     end
   end
 
@@ -97,7 +97,7 @@ class Api::V1::GroupsController < Api::V1::BaseController
 
       respond_to do |format|
         format.json { render json: { attendances: attendances_json, holidays: holidays_json, report: report, meta: meta_json }, status: :ok }
-        format.csv { send_data(User.report_csv(attendances, params[:date]), type: CreateCSV::CSV_TYPE, filename: "#{params[:user_id]}.csv", disposition: 'attachment') }
+        format.csv { send_data(User.report_csv(attendances, params), type: CreateCSV::CSV_TYPE, filename: "#{params[:user_id]}.csv", disposition: 'attachment') }
       end
     end
   end

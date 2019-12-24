@@ -33,7 +33,7 @@ Rails.application.routes.draw do
         resources :groups, only: %i[index show create update destroy] do
           member do
             get 'report'
-            get 'users/:user_id/report', action: :personal_report
+            get 'users/:user_id/report' => 'groups#personal_report'
             post 'add_user'
             delete 'remove_user'
           end

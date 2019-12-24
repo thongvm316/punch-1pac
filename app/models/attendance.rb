@@ -111,10 +111,12 @@ class Attendance < ApplicationRecord
   end
 
   def attended_time
+    return '-' if attended_at.nil?
     attended_at.strftime('%H:%M')
   end
 
   def left_time
+    return '-' if left_at.nil?
     left_at.strftime('%H:%M')
   end
 end

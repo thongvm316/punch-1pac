@@ -139,14 +139,14 @@ class User < ApplicationRecord
     ]
   end
 
-  def self.report_csv(data, date)
-    date = Date.parse(date)
+  def self.report_csv(data, params)
+    date = Date.parse(params[:date])
     csv_data = (date.beginning_of_month..date.end_of_month).to_a.each_with_object([]) do |day, arr|
       attendance = data.find_by(day: day)
       arr << (attendance ? create_csv(attendance) : [day])
     end
 
-    CreateCSV.write_footer(data.single_sum_working_hours_on_month(date: date))
+    CreateCSV.write_footer(data.single_sum_working_hours_on_month(params))
     CreateCSV.export_csv('HEADER_USER_REPORT', csv_data, true)
   end
 
