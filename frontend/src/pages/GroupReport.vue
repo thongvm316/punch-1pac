@@ -35,7 +35,7 @@
                 <img :src="result.avatar_url" class="avatar avatar-md" :alt="result.name">
               </div>
               <div class="tile-content">
-                <router-link :to="`/groups/${$route.params.id}/report/${result.id}`">{{ result.name }}</router-link>
+                <router-link :to="`/groups/${$route.params.id}/users/${result.id}/report`">{{ result.name }}</router-link>
               </div>
             </div>
           </td>
