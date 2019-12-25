@@ -128,28 +128,6 @@ class User < ApplicationRecord
     }
   end
 
-  def self.create_csv(data)
-    [
-      data.day,
-      data.attended_time,
-      data.left_time,
-      data.attending_status == 'attend_late' ? '✓' : '-',
-      data.leaving_status == 'leave_early' ? '✓' : '-',
-      "#{data.working_hours.to_i / 3600}h#{data.working_hours.to_i % 3600 / 60}m"
-    ]
-  end
-
-  def self.report_csv(data, params)
-    date = Date.parse(params[:date])
-    csv_data = (date.beginning_of_month..date.end_of_month).to_a.each_with_object([]) do |day, arr|
-      attendance = data.find_by(day: day)
-      arr << (attendance ? create_csv(attendance) : [day])
-    end
-
-    CreateCSV.write_footer(data.single_sum_working_hours_on_month(params))
-    CreateCSV.export_csv('HEADER_USER_REPORT', csv_data, true)
-  end
-
   def self.reset_password_token_valid?(token)
     user = find_by(reset_password_token: token)
     raise AppErrors::InvalidResetPwdToken unless user

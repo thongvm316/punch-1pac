@@ -60,7 +60,8 @@ class Api::V1::GroupsController < Api::V1::BaseController
 
   def report
     authorize! @group
-    results = current_company.users.report(params.merge(group_id: params[:id])).order(name: :asc)
+    results  = current_company.users.report(params.merge(group_id: params[:id])).order(name: :asc)
+    document = DocumentService.new('Group', params)
     respond_to do |format|
       format.json do
         render  json: results,
@@ -75,17 +76,19 @@ class Api::V1::GroupsController < Api::V1::BaseController
                 status: :ok
       end
 
-      format.csv { send_data(Group.report_csv(results), type: CreateCSV::CSV_TYPE, filename: 'report.csv', disposition: 'attachment') }
-      format.zip { send_data(Group.report_zip(@group.users, params), type: CreateCSV::ZIP_TYPE, filename: 'report.zip', disposition: 'attachment') }
+      format.csv { send_data(document.export_csv(results),      document.option('report.csv', 'CSV_TYPE')) }
+      format.zip { send_data(document.export_zip(@group.users), document.option('report.zip', 'ZIP_TYPE')) }
     end
   end
 
   def personal_report
     authorize! @group
     user = @group.users.find(params[:user_id])
+
     if user
       attendances = user.attendances.in_period(params[:date]).order(day: :asc)
       report = user.single_report(params)
+      document = DocumentService.new('User', params)
       holidays = current_company.holidays.in_month(params[:date])
 
       attendances_json = ActiveModelSerializers::SerializableResource.new(attendances, each_serializer: AttendanceSerializer).as_json
@@ -97,7 +100,7 @@ class Api::V1::GroupsController < Api::V1::BaseController
 
       respond_to do |format|
         format.json { render json: { attendances: attendances_json, holidays: holidays_json, report: report, meta: meta_json }, status: :ok }
-        format.csv { send_data(User.report_csv(attendances, params), type: CreateCSV::CSV_TYPE, filename: "#{params[:user_id]}.csv", disposition: 'attachment') }
+        format.csv { send_data(document.export_csv(attendances), document.option("#{params[:user_id]}.csv", 'CSV_TYPE')) }
       end
     end
   end

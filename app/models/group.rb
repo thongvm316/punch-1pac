@@ -39,36 +39,4 @@ class Group < ApplicationRecord
       all
     end
   end
-
-  def self.create_csv(data)
-    [
-      data.email,
-      data.name,
-      data.attend_ok.to_i,
-      data.attend_late.to_i,
-      data.leave_ok.to_i,
-      data.leave_early.to_i,
-      data.annual_leave.to_i,
-      "#{data.working_hours.to_i / 3600}h#{data.working_hours.to_i % 3600 / 60}m"
-    ]
-  end
-
-  def self.report_csv(attendances)
-    csv_data = attendances.each_with_object([]) { |v, arr| arr << create_csv(v) }
-    CreateCSV.export_csv('HEADER_GROUP_REPORT', csv_data, false)
-  end
-
-  def self.report_zip(data, params)
-    compressed_filestream = Zip::OutputStream.write_buffer do |zos|
-      data.each do |user|
-        zos.put_next_entry "#{user.name}_#{user.email}.csv"
-        attendances = user.attendances.in_period(params[:date]).order(day: :asc)
-        content = User.report_csv(attendances, params)
-        zos.print content
-      end
-    end
-
-    compressed_filestream.rewind
-    compressed_filestream.read
-  end
 end
