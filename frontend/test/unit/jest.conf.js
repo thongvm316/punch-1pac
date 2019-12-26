@@ -19,7 +19,7 @@ module.exports = {
   ],
   snapshotSerializers: ['<rootDir>/node_modules/jest-serializer-vue'],
   setupFiles: [
-    '<rootDir>/test/unit/setup',
+    '<rootDir>/test/unit/jest.setup.js',
     '<rootDir>/test/unit/jest.init.js'
   ],
   mapCoverage: true,
