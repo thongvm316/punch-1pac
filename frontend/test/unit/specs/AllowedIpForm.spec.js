@@ -51,6 +51,7 @@ describe('AllowedIpForm.vue', () => {
     it('should display error text', async () => {
       wrapper.setData({ errors: { ip_address: ['cant be blank'] } })
       await wrapper.vm.$nextTick()
+
       expect(wrapper.find({ ref: 'text-error' }).exists()).toBe(true)
     })
   })
