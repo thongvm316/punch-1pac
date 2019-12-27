@@ -3,7 +3,7 @@
     <div class="form-group" :class="{ 'has-error': errors.ip_address}">
       <label class="form-label">{{ $t('company.allowedIPs.labels.ipAddress') }}</label>
       <input class="form-input" type="text" v-model="params">
-      <p class="form-input-hint" v-if="errors.ip_address">{{ $t('company.allowedIPs.labels.ipAddress') }} {{ errors.ip_address[0] }}</p>
+      <p ref="text-error" class="form-input-hint" v-if="errors.ip_address">{{ $t('company.allowedIPs.labels.ipAddress') }} {{ errors.ip_address[0] }}</p>
     </div>
     <div class="form-group">
       <button
