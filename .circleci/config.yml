@@ -91,13 +91,12 @@ jobs:
       - run:
           name: Run Unit Tests
           command: |
-            mkdir /tmp/unit/test-results
             cd frontend/
             yarn run unit
 
       # collect reports
       - store_test_results:
-          path: /tmp/unit/test-results
+          path: /tmp/test-results
       - store_artifacts:
-          path: /tmp/unit/test-results
-          destination: unit-test-results
+          path: /tmp/test-results
+          destination: test-results
