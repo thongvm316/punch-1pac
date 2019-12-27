@@ -9,6 +9,8 @@ const wrapper = shallowMount(AllowedIpForm, {
   store
 })
 
+const { vm } = wrapper
+
 describe('AllowedIpForm.vue', () => {
   it('should display AllowedIpForm Component', () => {
     expect(wrapper.exists()).toBe(true)
@@ -21,7 +23,7 @@ describe('AllowedIpForm.vue', () => {
 
   it('should display update allowed ip button', async () => {
     wrapper.setProps({ targetIp: '192.168.110.1' })
-    await wrapper.vm.$forceUpdate()
+    await vm.$forceUpdate()
 
     expect(wrapper.props().targetIp).toBe('192.168.110.1')
     expect(wrapper.find({ ref: 'createAllowedIpButton' }).exists()).toBe(false)
