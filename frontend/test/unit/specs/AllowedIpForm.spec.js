@@ -67,9 +67,8 @@ describe('AllowedIpForm.vue', () => {
       expect(wrapper.find({ ref: 'editAllowedIpButton' }).exists()).toBe(true)
     })
 
-    it('should call localEditIp method', async () => {
+    it('should call localEditIp method', () => {
       wrapper.find({ ref: 'editAllowedIpButton' }).trigger('click')
-      await wrapper.vm.$nextTick()
 
       expect(localEditIp).toHaveBeenCalled()
     })

@@ -33,7 +33,6 @@ describe('AnnualLeave.vue', () => {
     const toggleAddModal = jest.fn()
     wrapper.setMethods({ toggleAddModal })
     wrapper.find('button').trigger('click')
-    wrapper.vm.$nextTick()
 
     expect(toggleAddModal).toHaveBeenCalled()
   })
