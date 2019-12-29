@@ -14,10 +14,10 @@
       <p class="form-input-hint" v-if="errors.reason">{{ $t('annualLeave.labels.reason') }} {{ errors.reason[0] }}</p>
     </div>
     <div class="form-group">
-      <button type="button" class="btn btn-success btn-submit" @click="create()" v-if="!request" :disabled="isDisable">
+      <button ref="createAnnualLeaveBtn" type="button" class="btn btn-success btn-submit" @click="create()" v-if="!request" :disabled="isDisable">
         {{ $t('annualLeave.submit') }}
       </button>
-      <button type="button" class="btn btn-success btn-submit" @click="update()" v-if="request" :disabled="isDisable">
+      <button ref="updateAnnualLeaveBtn" type="button" class="btn btn-success btn-submit" @click="update()" v-if="request" :disabled="isDisable">
         {{ $t('annualLeave.save') }}
       </button>
     </div>
