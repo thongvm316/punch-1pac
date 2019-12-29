@@ -6,8 +6,6 @@ import AnnualLeave from '@/components/AnnualLeave'
 import Modal from '@/components/Modal'
 import modal from '@/mixins/modal'
 
-import setComputed from '../util/set-computed'
-
 const localVue = createLocalVue()
 localVue.use(modal)
 
