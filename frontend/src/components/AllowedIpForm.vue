@@ -3,7 +3,7 @@
     <div class="form-group" :class="{ 'has-error': errors.ip_address}">
       <label class="form-label">{{ $t('company.allowedIPs.labels.ipAddress') }}</label>
       <input class="form-input" type="text" v-model="params">
-      <p ref="text-error" class="form-input-hint" v-if="errors.ip_address">{{ $t('company.allowedIPs.labels.ipAddress') }} {{ errors.ip_address[0] }}</p>
+      <p class="form-input-hint" v-if="errors.ip_address">{{ $t('company.allowedIPs.labels.ipAddress') }} {{ errors.ip_address[0] }}</p>
     </div>
     <div class="form-group">
       <button
@@ -28,7 +28,9 @@ import { mapState, mapActions } from 'vuex'
 export default {
   name: 'allowed-ip-form',
 
-  props: ['targetIp'],
+  props: {
+    targetIp: String
+  },
 
   data() {
     return {
