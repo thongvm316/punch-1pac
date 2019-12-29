@@ -44,7 +44,11 @@ export default {
     }
   },
 
-  props: ['request', 'type', 'annualDay'],
+  props: {
+    request: Object,
+    type: String,
+    annualDay: String
+  },
 
   components: {
     flatPickr
