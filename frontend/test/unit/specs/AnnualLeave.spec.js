@@ -25,7 +25,9 @@ describe('AnnualLeave.vue', () => {
     })
 
     it('should render sub components', () => {
+      expect(wrapper.find(AnnualLeaveForm).isVueInstance()).toBe(true)
       expect(wrapper.find(AnnualLeaveForm).exists()).toBe(true)
+      expect(wrapper.find(Modal).isVueInstance()).toBe(true)
       expect(wrapper.find(Modal).exists()).toBe(true)
     })
   })
