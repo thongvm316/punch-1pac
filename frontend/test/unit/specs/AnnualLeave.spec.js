@@ -7,7 +7,6 @@ import Modal from '@/components/Modal'
 import modal from '@/mixins/modal'
 
 const localVue = createLocalVue()
-localVue.use(modal)
 
 const wrapper = shallowMount(AnnualLeave, {
   i18n,
