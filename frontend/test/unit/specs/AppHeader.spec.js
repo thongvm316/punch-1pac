@@ -22,9 +22,9 @@ const toggleDropdown = jest.spyOn(AppHeader.methods, 'toggleDropdown')
 const toggleLangSelect = jest.spyOn(AppHeader.methods, 'toggleLangSelect')
 const updateUser = jest.fn()
 
-let wrapper
-
 describe('AppHeader.vue', () => {
+  let wrapper
+
   beforeEach(() => {
     wrapper = shallowMount(AppHeader, {
       i18n,

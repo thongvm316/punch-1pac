@@ -15,17 +15,23 @@ const store = new Vuex.Store({
 const localAddIp  = jest.fn()
 const localEditIp = jest.fn()
 
-const wrapper = shallowMount(AllowedIpForm, {
-  i18n,
-  store,
-  methods: {
-    localAddIp,
-    localEditIp
-  },
-  localVue
-})
-
 describe('AllowedIpForm.vue', () => {
+  let wrapper
+
+  beforeEach(() => {
+    wrapper = shallowMount(AllowedIpForm, {
+      i18n,
+      store,
+      methods: {
+        localAddIp,
+        localEditIp
+      },
+      localVue
+    })
+  })
+
+  afterEach(() => { wrapper.vm.$destroy() })
+
   describe('when AllowedIpForm was mounted', () => {
     it('should display AllowedIpForm Component', () => {
       expect(wrapper.isVueInstance()).toBe(true)
@@ -34,10 +40,12 @@ describe('AllowedIpForm.vue', () => {
   })
 
   describe('validation prop data', () => {
-    const { targetIp } = wrapper.vm.$options.props
+    it('should validate props data', () => {
+      const { targetIp } = wrapper.vm.$options.props
 
-    expect(targetIp.required).toBeFalsy()
-    expect(targetIp.type).toBe(String)
+      expect(targetIp.required).toBeFalsy()
+      expect(targetIp.type).toBe(String)
+    })
   })
 
   describe('create allowed ip button', () => {

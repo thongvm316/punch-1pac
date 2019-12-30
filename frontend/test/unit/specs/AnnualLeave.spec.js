@@ -8,13 +8,19 @@ import modal from '@/mixins/modal'
 
 const localVue = createLocalVue()
 
-const wrapper = shallowMount(AnnualLeave, {
-  i18n,
-  mixins: [modal],
-  localVue
-})
-
 describe('AnnualLeave.vue', () => {
+  let wrapper
+
+  beforeEach(() => {
+    wrapper = shallowMount(AnnualLeave, {
+      i18n,
+      mixins: [modal],
+      localVue
+    })
+  })
+
+  afterEach(() => { wrapper.vm.$destroy() })
+
   describe('when AnnualLeave was mounted', () => {
     it('should render correctly', () => {
       expect(wrapper.isVueInstance()).toBe(true)
@@ -30,10 +36,12 @@ describe('AnnualLeave.vue', () => {
   })
 
   describe('when click toggle add modal', () => {
-    const toggleAddModal = jest.fn()
-    wrapper.setMethods({ toggleAddModal })
-    wrapper.find('button').trigger('click')
+    it('should call method', () => {
+      const toggleAddModal = jest.fn()
+      wrapper.setMethods({ toggleAddModal })
+      wrapper.find('button').trigger('click')
 
-    expect(toggleAddModal).toHaveBeenCalled()
+      expect(toggleAddModal).toHaveBeenCalled()
+    })
   })
 })
