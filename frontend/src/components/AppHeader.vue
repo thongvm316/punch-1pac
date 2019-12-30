@@ -26,8 +26,8 @@
             <ul class="menu triangle-top" v-if="!isLangSelectActive">
               <li class="menu-item"><router-link to="/settings">{{ $t('header.settings') }}</router-link></li>
               <li class="menu-item"><router-link to="/company/settings" v-if="$auth('Page', currentUser).canViewCompanySettings()">{{ $t('header.companySettings') }}</router-link></li>
-              <li class="menu-item"><a @click="toggleLangSelect">{{ $t('header.changeLanguage') }}...</a></li>
-              <li class="menu-item"><a href="#" @click="logout($event)">{{ $t('header.logout') }}</a></li>
+              <li class="menu-item"><a @click="toggleLangSelect" ref="toggleLangSelectBtn">{{ $t('header.changeLanguage') }}...</a></li>
+              <li class="menu-item"><a href="#" @click="logout($event)" ref="logoutBtn">{{ $t('header.logout') }}</a></li>
             </ul>
 
             <ul class="menu triangle-top lang-select" v-else>
