@@ -22,6 +22,8 @@ describe('AnnualLeaveForm.vue', () => {
     })
   })
 
+  afterEach(() => { wrapper.vm.$destroy() })
+
   describe('when AnnualLeaveForm was mounted', () => {
     it('should render correctly', () => {
       expect(wrapper.isVueInstance()).toBe(true)
