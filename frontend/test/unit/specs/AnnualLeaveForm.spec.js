@@ -1,5 +1,4 @@
 import { shallowMount, createLocalVue } from '@vue/test-utils'
-import Vuex from 'vuex'
 
 import store from '@/store'
 import i18n from '@/locale'
@@ -8,7 +7,6 @@ import flatPickr from 'vue-flatpickr-component'
 import currentUser from '@/mixins/current-user'
 
 const localVue = createLocalVue()
-localVue.use(Vuex)
 localVue.mixin(currentUser)
 
 describe('AnnualLeaveForm.vue', () => {
