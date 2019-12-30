@@ -20,6 +20,7 @@ localVue.mixin(currentUser)
 const logout = jest.fn()
 const toggleDropdown = jest.spyOn(AppHeader.methods, 'toggleDropdown')
 const toggleLangSelect = jest.spyOn(AppHeader.methods, 'toggleLangSelect')
+const updateUser = jest.fn()
 
 let wrapper
 
@@ -32,7 +33,8 @@ describe('AppHeader.vue', () => {
       methods: {
         logout,
         toggleDropdown,
-        toggleLangSelect
+        toggleLangSelect,
+        updateUser
       },
       localVue
     })
@@ -74,6 +76,8 @@ describe('AppHeader.vue', () => {
 
       expect(toggleLangSelect).toHaveBeenCalled()
       expect(wrapper.vm.isLangSelectActive).toEqual(true)
+      expect(wrapper.findAll('.triangle-top').length).toEqual(1)
+      expect(wrapper.find('.lang-select').exists()).toBe(true)
     })
   })
 
@@ -86,4 +90,17 @@ describe('AppHeader.vue', () => {
       expect(wrapper.find({ ref: 'logoutBtn' }).exists()).toBe(true)
     })
   })
+
+  //describe('when user set language', () => {
+    //beforeEach(async () => {
+      //wrapper.find({ ref: 'toggleLangSelectBtn' }).trigger('click')
+      //await wrapper.vm.$nextTick()
+    //})
+
+    //it('should call updateUser method', () => {
+      //expect(wrapper.vm.isLangSelectActive).toEqual(true)
+      //expect(wrapper.find({ ref: 'updateUserBtn' }).exists()).toBe(true)
+      //expect(updateUser).toHaveBeenCalled()
+    //})
+  //})
 })
