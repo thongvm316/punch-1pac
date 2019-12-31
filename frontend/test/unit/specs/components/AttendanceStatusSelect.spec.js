@@ -4,7 +4,7 @@ import store from '@/store'
 import i18n from '@/locale'
 import AttendanceStatusSelect from '@/components/AttendanceStatusSelect'
 
-import setComputed from '../util/set-computed'
+import setComputed from '../../supports/set-computed'
 
 const localVue = createLocalVue()
 const updateValue = jest.spyOn(AttendanceStatusSelect.methods, 'updateValue')

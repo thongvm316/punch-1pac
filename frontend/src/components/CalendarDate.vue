@@ -38,7 +38,17 @@ export default {
     }
   },
 
-  props: ['calendarAttendance', 'today'],
+  props: {
+    calendarAttendance: {
+      type: Object,
+      required: true
+    },
+
+    today: {
+      type: Object,
+      required: true
+    }
+  },
 
   computed: {
     ...mapState('punch', ['attendance']),

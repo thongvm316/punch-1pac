@@ -1,12 +1,12 @@
-import { shallowMount, createLocalVue } from '@vue/test-utils'
+import { shallowMount } from '@vue/test-utils'
+
+import localVue from '../../supports/local-vue'
 
 import i18n from '@/locale'
 import AnnualLeaveForm from '@/components/AnnualLeaveForm'
 import AnnualLeave from '@/components/AnnualLeave'
 import Modal from '@/components/Modal'
 import modal from '@/mixins/modal'
-
-const localVue = createLocalVue()
 
 describe('AnnualLeave.vue', () => {
   let wrapper
