@@ -11,6 +11,10 @@
   font-weight: 600;
 }
 
+.text-bold-700 {
+  font-weight: 700;
+}
+
 .border-bottom {
   border-bottom: 1px solid $border-color-dark;
   padding-bottom: 0.3rem;
@@ -59,6 +63,15 @@
     transform: rotate(45deg);
     width: 0.8rem;
   }
+}
+
+.w-full {
+  width: 100%;
+}
+
+.z-index-10 {
+  position: relative;
+  z-index: 10;
 }
 
 @include margin-variant(4, $unit-4); //Margin variant .8rem

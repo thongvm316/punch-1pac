@@ -15,8 +15,6 @@
 
 class Group < ApplicationRecord
   DEFAULT_NAME = 'default'
-  CSVHeader = I18n.t(['group.report.email', 'group.report.name', 'group.report.attend_ok', 'group.report.attend_late',
-                      'group.report.leave_ok', 'group.report.leave_early', 'group.report.annual_leave', 'group.report.working_hours'])
 
   belongs_to :company
   has_many :group_permissions, dependent: :destroy
@@ -40,44 +38,5 @@ class Group < ApplicationRecord
     else
       all
     end
-  end
-
-  def self.create_csv(data)
-    [
-      data.email,
-      data.name,
-      data.attend_ok.to_i,
-      data.attend_late.to_i,
-      data.leave_ok.to_i,
-      data.leave_early.to_i,
-      data.annual_leave.to_i,
-      "#{data.working_hours.to_i / 3600}h#{data.working_hours.to_i % 3600 / 60}m"
-    ]
-  end
-
-
-  def self.report_csv(data)
-    CSV.generate(headers: true) do |csv|
-      csv << CSVHeader
-      data.each do |obj|
-        csv << create_csv(obj)
-      end
-    end
-  end
-
-  def self.report_zip(data)
-    compressed_filestream = Zip::OutputStream.write_buffer do |zos|
-      data.each do |d|
-        zos.put_next_entry "#{d.name}_#{d.email}.csv"
-        content = CSV.generate(headers: true) do |csv|
-          csv << CSVHeader
-          csv << create_csv(d)
-        end
-        zos.print content
-      end
-    end
-
-    compressed_filestream.rewind
-    compressed_filestream.read
   end
 end

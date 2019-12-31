@@ -1,6 +1,7 @@
 // Core colors
 $primary-color: #439aff; // primary
 $primary-color-dark: darken($primary-color, 3%);
+$primary-color-darker: #005cff;
 $primary-color-darkest: #0052ac;
 $primary-color-light: lighten($primary-color, 3%);
 $secondary-color: #dcecff; //primary-light
@@ -8,12 +9,14 @@ $secondary-color-dark: darken($secondary-color, 3%);
 $secondary-color-light: lighten($secondary-color, 3%);
 
 // Gray colors
+$black-color: #000;
 $dark-color: #2e3e48; // grayscale-5
 $light-color: #fff; // grayscale-0
 $gray-color: #abb2b6; // grayscale-3
 $gray-color-dark: #6c777e; // grayscale-4
 $gray-color-light: #e3e3e7; // grayscale-2
 $gray-color-lightest: #f0f3f7; // grayscale-1
+$gray-color-crayzola: #768087;
 
 $border-color: $gray-color-light;
 $border-color-dark: $gray-color;
@@ -33,7 +36,6 @@ $error-color-light: #fedee1;  //secondary-2-light
 $warning-color-light: #feedd0;  //secondary-3-light
 $info-color-light: #ecddff; //secondary-4-light
 $notice-color-light: #ffe5fe; //secondary-5-light
-
 
 // Other colors
 $code-color: #e06870;

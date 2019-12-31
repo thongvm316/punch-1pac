@@ -74,9 +74,17 @@ class Attendance < ApplicationRecord
       .group(status_type)
   end
 
+  def self.single_status_count_on_month(status_value, status_type, params)
+    in_period(params[:date], params[:date_type]).where("#{status_type}": status_value).size
+  end
+
   def self.sum_working_hours_on_month(date, date_type = nil)
     select('sum(working_hours) as working_hours')
       .in_period(date, date_type)
+  end
+
+  def self.single_sum_working_hours_on_month(params)
+    in_period(params[:date], params[:date_type]).sum(:working_hours)
   end
 
   def self.chart(str_date = nil)
@@ -100,5 +108,15 @@ class Attendance < ApplicationRecord
     q
   rescue TypeError, ArgumentError
     none
+  end
+
+  def attended_time
+    return '-' if attended_at.nil?
+    attended_at.strftime('%H:%M')
+  end
+
+  def left_time
+    return '-' if left_at.nil?
+    left_at.strftime('%H:%M')
   end
 end

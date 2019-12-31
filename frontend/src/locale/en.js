@@ -4,6 +4,7 @@ export default {
     attendances: 'Attendances',
     requests: 'Requests',
     report: 'Report',
+    reportPersonal: 'Report Personal',
     month: 'Month',
     year: 'Year',
     btn: {
@@ -215,6 +216,18 @@ export default {
     },
     modal: {
       addTitle: 'Add group'
+    },
+    report: {
+      date: 'Date',
+      check_in: 'Check In',
+      check_out: 'Check Out',
+      late: 'Late',
+      working_hours: 'Working hours',
+      attend_late: 'Attend Late',
+      leave_early: 'Leave Early',
+      day_off: 'Day Off',
+      no_data: 'No Data',
+      total: 'Total'
     }
   },
   requests: {

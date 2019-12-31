@@ -44,6 +44,14 @@ ja:
       leave_early: Leave Early
       annual_leave: Annual Leave
       working_hours: Working Hours
+  user:
+    report:
+      day: Day
+      checkin: Check in
+      checkout: Check out
+      late: Late
+      leave_early: Leave early
+      working_hours: Working hours
   activerecord:
     errors:
       messages:

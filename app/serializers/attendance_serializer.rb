@@ -15,4 +15,11 @@ class AttendanceSerializer < ApplicationSerializer
   def left_at
     object&.left_at&.strftime('%H:%M')
   end
+
+  def working_hours
+    {
+      hours: object.working_hours.to_i / 3600,
+      mins: object.working_hours.to_i % 3600 / 60
+    }
+  end
 end

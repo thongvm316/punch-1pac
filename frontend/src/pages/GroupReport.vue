@@ -7,13 +7,13 @@
         <month-year-picker v-model="dateData"/>
         <input type="search" class="form-input filter-input" :placeholder="$t('attendances.placeholder.filterByUser')" v-model="searchText">
       </div>
-      <div class="float-right">
-        <button class="btn btn-success mx-2" @click="exportFile({ type: 'zip' })">{{ $t('groups.btn.exportZIPGroupReport') }}</button>
-        <button class="btn btn-success" @click="exportFile({ type: 'csv' })" :disabled="isDisable">{{ $t('groups.btn.exportCSVGroupReport') }}</button>
+      <div v-if="isValidTime" class="float-right">
+        <button class="btn btn-success mx-2" @click="exportFile($event,{ type: 'zip', requestPath: `/groups/${$route.params.id}/report`, fileName: `report_${group.name}_${dateData.date}` })">{{ $t('groups.btn.exportZIPGroupReport') }}</button>
+        <button class="btn btn-success" @click="exportFile($event, { type: 'csv', requestPath: `/groups/${$route.params.id}/report`, fileName: `report_${group.name}_${dateData.date}` })">{{ $t('groups.btn.exportCSVGroupReport') }}</button>
       </div>
     </div>
 
-    <table class="table sortable-table bg-light mt-5">
+    <table v-if="isValidTime" class="table sortable-table bg-light mt-5">
       <thead>
         <th @click="sortBy('name')">{{ $t('attendances.tableHeader.name') }}
           <svg :class="[{ sorted: sortOrders === 'desc' && sortKey === 'name' }, { show: sortKey === 'name' }]" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 292.362 292.362" fillrule="evenodd"><path d="M286.935,69.377c-3.614-3.617-7.898-5.424-12.848-5.424H18.274c-4.952,0-9.233,1.807-12.85,5.424 C1.807,72.998,0,77.279,0,82.228c0,4.948,1.807,9.229,5.424,12.847l127.907,127.907c3.621,3.617,7.902,5.428,12.85,5.428 s9.233-1.811,12.847-5.428L286.935,95.074c3.613-3.617,5.427-7.898,5.427-12.847C292.362,77.279,290.548,72.998,286.935,69.377z"/></svg>
@@ -26,6 +26,7 @@
           <svg :class="[{ sorted: sortOrders === 'desc' && sortKey === 'working_hours' }, { show: sortKey === 'working_hours' }]" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 292.362 292.362" fillrule="evenodd"><path d="M286.935,69.377c-3.614-3.617-7.898-5.424-12.848-5.424H18.274c-4.952,0-9.233,1.807-12.85,5.424 C1.807,72.998,0,77.279,0,82.228c0,4.948,1.807,9.229,5.424,12.847l127.907,127.907c3.621,3.617,7.902,5.428,12.85,5.428  s9.233-1.811,12.847-5.428L286.935,95.074c3.613-3.617,5.427-7.898,5.427-12.847C292.362,77.279,290.548,72.998,286.935,69.377z"/></svg>
         </th>
       </thead>
+
       <tbody>
         <tr v-for="result in tmpResults" :key="result.id">
           <td>
@@ -34,7 +35,7 @@
                 <img :src="result.avatar_url" class="avatar avatar-md" :alt="result.name">
               </div>
               <div class="tile-content">
-                <router-link :to="`/groups/${$route.params.id}/report/${result.id}`">{{ result.name }}</router-link>
+                <router-link :to="`/groups/${$route.params.id}/users/${result.id}/report`">{{ result.name }}</router-link>
               </div>
             </div>
           </td>
@@ -48,6 +49,7 @@
         </tr>
       </tbody>
     </table>
+    <p v-else class="mt-5">{{ $t('groups.report.no_data') }}</p>
   </main-layout>
 </template>
 
@@ -55,13 +57,14 @@
 import MonthYearPicker from '../components/MonthYearPicker'
 import MainLayout from '../layouts/Main'
 import GroupTab from '../components/GroupTab'
+import exportFile from '../mixins/export-file'
 import { mapState, mapActions } from 'vuex'
-import axios from 'axios'
 
 export default {
+  mixins: [exportFile],
+
   data() {
     return {
-      isDisable: false,
       searchText: '',
       dateData: {
         date: this.$moment().format('YYYY-MM-DD'),
@@ -109,54 +112,33 @@ export default {
 
       const regex = new RegExp(`${this.searchText.trim()}`, 'gi')
       return this.name ? results.filter(result => (result.name.match(regex)) || result.email.match(regex)) : results
+    },
+
+    isValidTime() {
+      return this.$moment(this.dateData.date).isSameOrBefore(this.$moment(), 'month')
     }
   },
 
   methods: {
     ...mapActions('group', ['getGroup']),
 
-    ...mapActions('groupReport', ['getReport']),
+    ...mapActions('groupReport', ['getGroupReport']),
 
     sortBy(key) {
       this.sortKey = key
       this.sortOrders = this.sortOrders === 'asc' ? 'desc' : 'asc'
-    },
-
-    exportFile(data) {
-      this.isDisable = true
-      axios
-        .get(`/groups/${this.$route.params.id}/report.${data.type}`, {
-          headers: { Accept: `application/${data.type}` },
-          params: { date: this.dateData.date, date_type: this.dateData.type },
-          responseType: 'blob'
-        })
-        .then(response => {
-          const downloadLink = document.createElement('a')
-          downloadLink.href = window.URL.createObjectURL(new Blob([response.data]))
-          let fileName = `report_${this.group.name}_${this.dateData.date}.${data.type}`
-          downloadLink.setAttribute('download', fileName)
-          document.body.appendChild(downloadLink)
-          downloadLink.click()
-
-          this.isDisable = false
-          downloadLink.remove()
-        })
-        .catch(error => {
-          this.isDisable = false
-          throw error
-        })
     }
   },
 
   created() {
-    this.getReport({ group_id: this.$route.params.id, ...this.dateData })
+    this.getGroupReport({ group_id: this.$route.params.id, ...this.dateData })
     this.getGroup(this.$route.params.id)
   },
 
   watch: {
     dateData: {
       handler: function() {
-        this.getReport({ group_id: this.$route.params.id, ...this.dateData })
+        this.getGroupReport({ group_id: this.$route.params.id, ...this.dateData })
       },
       deep: true
     }

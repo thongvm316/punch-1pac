@@ -217,7 +217,10 @@ module JsonResponseHelper
       attending_status: nullable_response(String),
       leaving_status:   nullable_response(String),
       off_status:       nullable_response(String),
-      working_hours:    Integer,
+      working_hours:    {
+        hours: Integer,
+        mins: Integer
+      },
       user:             response_user
     }
   end
@@ -285,6 +288,24 @@ module JsonResponseHelper
         hours: Integer,
         mins: Integer
       }
+    }
+  end
+
+  def response_user_report
+    {
+      attend_ok: Integer,
+      attend_late: Integer,
+      leave_ok: Integer,
+      leave_early: Integer,
+      leave: Integer,
+      working_hours: Integer
+    }
+  end
+
+  def response_meta
+    {
+      company_total_working_hours_on_month: Integer,
+      company_total_working_days_in_month: Integer
     }
   end
 

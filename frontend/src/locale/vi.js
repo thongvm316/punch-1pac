@@ -4,6 +4,7 @@ export default {
     attendances: 'Hiện diện',
     requests: 'Yêu cầu',
     report: 'Thống kê',
+    reportPersonal: 'Thống kê theo cá nhân',
     month: 'Tháng',
     year: 'Năm',
     btn: {
@@ -215,6 +216,18 @@ export default {
     },
     modal: {
       addTitle: 'Tạo nhóm'
+    },
+    report: {
+      date: 'Ngày',
+      check_in: 'Giờ vô',
+      check_out: 'Giờ ra',
+      late: 'Trễ',
+      working_hours: 'Thời gian làm',
+      attend_late: 'Đến trễ',
+      leave_early: 'Về sớm',
+      day_off: 'Vắng',
+      no_data: 'Không có dữ liệu',
+      total: 'Tổng cộng'
     }
   },
   requests: {

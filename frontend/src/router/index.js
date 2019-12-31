@@ -2,11 +2,13 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 import Dashboard from '../pages/Dashboard'
-import GroupAttendances from '../pages/GroupAttendances'
 import Attendances from '../pages/Attendances'
-import GroupRequests from '../pages/GroupRequests'
-import GroupReport from '../pages/GroupReport'
 import Requests from '../pages/Requests'
+
+import GroupRequests from '../pages/GroupRequests'
+import GroupAttendances from '../pages/GroupAttendances'
+import GroupReport from '../pages/GroupReport'
+import GroupReportPersonal from '../pages/GroupReportPersonal'
 import Groups from '../pages/Groups'
 import Group from '../pages/Group'
 
@@ -37,6 +39,7 @@ const router = new Router({
     { path: '/groups/:id/requests', name: 'group-requests', component: GroupRequests, meta: { title: `Group Requests - ${appName}` } },
     { path: '/groups/:id/attendances', name: 'group-attendances', component: GroupAttendances, meta: { title: `Group Attendances - ${appName}` } },
     { path: '/groups/:id/report', name: 'group-report', component: GroupReport, meta: { title: `Group Report - ${appName}` } },
+    { path: '/groups/:id/users/:user_id/report', name: 'group-report-personal', component: GroupReportPersonal, meta: { title: `Group Report Personal - ${appName}` } },
     { path: '/groups/:id/users', name: 'group', component: Group, meta: { title: `Group - ${appName}` } },
     { path: '/groups/:id', redirect: '/groups/:id/users' },
     { path: '/groups', name: 'groups', component: Groups, meta: { title: `Groups - ${appName}` } },
