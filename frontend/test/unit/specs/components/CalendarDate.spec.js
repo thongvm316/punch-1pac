@@ -53,6 +53,7 @@ describe('CalendarDate.vue', () => {
 
   afterEach(() => { wrapper.vm.$destroy() })
 
+  // Normal date
   describe('Normal date', () => {
     beforeEach(() => {
       wrapper = shallowMount(CalendarDate, {
@@ -145,6 +146,81 @@ describe('CalendarDate.vue', () => {
       it('should display calendar event', () => {
         expect(calendarEventEls).toHaveLength(1)
         expect(calendarEventEls.at(0).text()).toEqual('Day Off')
+      })
+    })
+  })
+
+  // Special day
+  describe('Special day', () => {
+    beforeEach(() => {
+      wrapper = shallowMount(CalendarDate, {
+        i18n,
+        store,
+        propsData: propsData.specialDay,
+        computed: {
+          currentCompany: () => {
+            return { breakdays: ['saturday', 'sunday'] }
+          }
+        },
+        localVue
+      })
+    })
+
+    describe('when tooltip', () => {
+      let calendarDateEl
+      let calendarEventEls
+
+      beforeEach(() => {
+        calendarDateEl = wrapper.find('.calendar-date')
+        calendarEventEls = wrapper.findAll('.calendar-event')
+      })
+
+      it('should display holiday tooltip', () => {
+        expect(calendarDateEl.classes()).toContain('tooltip')
+        expect(calendarDateEl.attributes('data-tooltip')).toEqual('Tet holiday')
+      })
+
+      it('should display calendar event', () => {
+        expect(calendarEventEls).toHaveLength(1)
+        expect(calendarEventEls.at(0).text()).toEqual('Tet holiday')
+      })
+    })
+  })
+
+  // Weekend day
+  describe('Weekend day', () => {
+    beforeEach(() => {
+      wrapper = shallowMount(CalendarDate, {
+        i18n,
+        store,
+        propsData: propsData.weekendDay,
+        computed: {
+          currentCompany: () => {
+            return { breakdays: ['saturday', 'sunday'] }
+          }
+        },
+
+        localVue
+      })
+    })
+
+    describe('when tooltip', () => {
+      let calendarDateEl
+      let calendarEventEls
+
+      beforeEach(() => {
+        calendarDateEl = wrapper.find('.calendar-date')
+        calendarEventEls = wrapper.findAll('.calendar-event')
+      })
+
+      it('should display holiday tooltip', () => {
+        expect(calendarDateEl.classes()).not.toContain('tooltip')
+        expect(calendarDateEl.classes()).toContain('disabled')
+        expect(calendarDateEl.attributes('data-tooltip')).toEqual('')
+      })
+
+      it('should display calendar event', () => {
+        expect(calendarEventEls).toHaveLength(0)
       })
     })
   })
