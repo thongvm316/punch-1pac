@@ -1,22 +1,11 @@
-import { shallowMount, createLocalVue } from '@vue/test-utils'
-import Vuex from 'vuex'
+import { shallowMount } from '@vue/test-utils'
 
-import companyBusinessDays from '@/store/modules/company-business-days'
-import flash from '@/store/modules/flash'
-import initialStates from '@/store/modules/initial-states'
+import localVue from '../../supports/local-vue'
+import setComputed from '../../supports/set-computed'
+
+import store from '@/store'
 import i18n from '@/locale'
 import BusinessDayForm from '@/components/BusinessDayForm'
-
-const localVue = createLocalVue()
-localVue.use(Vuex)
-
-const store = new Vuex.Store({
-  modules: {
-    companyBusinessDays,
-    flash,
-    initialStates
-  }
-})
 
 const localAddBusinessDay = jest.fn()
 const localEditBusinessDay = jest.fn()
@@ -47,7 +36,6 @@ describe('BusinessDayForm.vue', () => {
 
     it('validation prop data', () => {
       const { targetBusinessDay } = wrapper.vm.$options.props
-
       expect(targetBusinessDay.required).toBeFalsy()
       expect(targetBusinessDay.type).toBe(Object)
     })
@@ -65,7 +53,7 @@ describe('BusinessDayForm.vue', () => {
     })
 
     it('should show error text', async () => {
-      wrapper.setData({
+      setComputed(wrapper, {
         errors: {
           weekday: ['can\'t be empty'],
           morning_started_at: ['can\'t be empty'],
