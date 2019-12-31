@@ -1,26 +1,22 @@
-import { shallowMount, createLocalVue } from '@vue/test-utils'
+import { shallowMount } from '@vue/test-utils'
+
+import localVue from '../../supports/local-vue'
 
 import store from '@/store'
 import i18n from '@/locale'
-import moment from 'moment-timezone'
 import CalendarDate from '@/components/CalendarDate'
-
-import setComputed from '../../util/set-computed'
-
-const localVue = createLocalVue()
-localVue.prototype.$moment = moment
 
 const propsData = {
   normalDay: {
     calendarAttendance: {
       attended_at: '08:13',
       attending_status: 'attend_ok',
-      day: moment().format('YYYY-MM-DD'),
+      day: localVue.prototype.$moment().format('YYYY-MM-DD'),
       leaving_status: 'leave_early',
       left_at: '08:13'
     },
 
-    today: moment()
+    today: localVue.prototype.$moment()
   },
 
   offDay: {
@@ -29,7 +25,7 @@ const propsData = {
       off_status: 'annual_leave'
     },
 
-    today: moment()
+    today: localVue.prototype.$moment()
   },
 
   weekendDay: {
@@ -37,7 +33,7 @@ const propsData = {
       day: '2019-12-08',
     },
 
-    today: moment()
+    today: localVue.prototype.$moment()
   },
 
   specialDay: {
@@ -48,7 +44,7 @@ const propsData = {
       }
     },
 
-    today: moment()
+    today: localVue.prototype.$moment()
   }
 }
 

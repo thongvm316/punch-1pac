@@ -1,18 +1,13 @@
-import { shallowMount, createLocalVue } from '@vue/test-utils'
-import Vuex from 'vuex'
+import { shallowMount } from '@vue/test-utils'
 
-import companyAllowedIPs from '@/store/modules/company-allowed-ips'
+import localVue from '../../supports/local-vue'
+import setComputed from '../../supports/set-computed'
+
+import store from '@/store'
 import i18n from '@/locale'
 import AllowedIpForm from '@/components/AllowedIpForm'
 
-const localVue = createLocalVue()
-localVue.use(Vuex)
-
-const store = new Vuex.Store({
-  modules: { companyAllowedIPs }
-})
-
-const localAddIp  = jest.fn()
+const localAddIp = jest.fn()
 const localEditIp = jest.fn()
 
 describe('AllowedIpForm.vue', () => {
@@ -88,7 +83,7 @@ describe('AllowedIpForm.vue', () => {
     })
 
     it('should display error text', async () => {
-      wrapper.setData({ errors: { ip_address: ['cant be blank'] } })
+      setComputed(wrapper, { errors: { ip_address: ['cant be blank'] } })
       await wrapper.vm.$nextTick()
 
       expect(wrapper.find('.form-group:first-of-type').classes()).toContain('has-error')

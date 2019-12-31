@@ -1,20 +1,14 @@
-import { shallowMount, createLocalVue } from '@vue/test-utils'
+import { shallowMount } from '@vue/test-utils'
+
+import localVue from '../../supports/local-vue'
 
 import store from '@/store'
 import router from '@/router'
-import authorization from '@/authorization'
-import currentUser from '@/mixins/current-user'
 import i18n from '@/locale'
 import AppHeader from '@/components/AppHeader'
-import dropdown from '@/mixins/dropdown'
 import Notifications from '@/components/Notifications'
 import Punch from '@/components/Punch'
 import AnnualLeave from '@/components/AnnualLeave'
-
-const localVue = createLocalVue()
-localVue.prototype.$auth = authorization
-localVue.mixin(dropdown)
-localVue.mixin(currentUser)
 
 const logout = jest.fn()
 const toggleDropdown = jest.spyOn(AppHeader.methods, 'toggleDropdown')
