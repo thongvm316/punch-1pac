@@ -1,13 +1,11 @@
-import { shallowMount, createLocalVue } from '@vue/test-utils'
+import { shallowMount } from '@vue/test-utils'
+
+import localVue from '../../supports/local-vue'
 
 import store from '@/store'
 import i18n from '@/locale'
 import AnnualLeaveForm from '@/components/AnnualLeaveForm'
 import flatPickr from 'vue-flatpickr-component'
-import currentUser from '@/mixins/current-user'
-
-const localVue = createLocalVue()
-localVue.mixin(currentUser)
 
 describe('AnnualLeaveForm.vue', () => {
   let wrapper
