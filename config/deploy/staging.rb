@@ -9,7 +9,8 @@ set :application, '1punch-stg.1pac.vn'
 set :repo_url, 'git@github.com:1PACVietnam/1punch.git'
 
 # Default branch is :master
-set :branch, 'master'
+branch = ENV['BRANCH'] || 'develop'
+set :branch, branch
 
 # Default deploy_to directory is /var/www/my_app_name
 set :deploy_to, '/var/www/1punch-stg.1pac.vn/public_html'
