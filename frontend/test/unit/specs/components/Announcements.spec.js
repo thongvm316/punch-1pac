@@ -5,7 +5,7 @@ import announcements from '@/store/modules/announcements'
 import i18n from '@/locale'
 import Announcements from '@/components/Announcements'
 
-import setComputed from '../util/set-computed'
+import setComputed from '../../util/set-computed'
 
 const localVue = createLocalVue()
 localVue.use(Vuex)
