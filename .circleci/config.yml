@@ -6,7 +6,7 @@ version: 2
 jobs:
   build:
     parallelism: 1
-    working_directory: ~/Projects/punch
+    working_directory: ~/Projects/1punch-api
     docker:
        - image: circleci/ruby:2.5.1-node
          environment:
