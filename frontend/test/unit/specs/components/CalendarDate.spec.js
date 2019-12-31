@@ -1,6 +1,7 @@
 import { shallowMount } from '@vue/test-utils'
 
 import localVue from '../../supports/local-vue'
+import setComputed from '../../supports/set-computed'
 
 import store from '@/store'
 import i18n from '@/locale'
@@ -108,6 +109,32 @@ describe('CalendarDate.vue', () => {
       it('should display today', () => {
         expect(wrapper.find('button.date-item').classes()).toContain('date-today')
         expect(wrapper.find('button.date-item').text()).toEqual(wrapper.vm.localAttendance.day.split('-')[2])
+      })
+    })
+
+    describe('when watcher attendance', () => {
+      let calendarDateEl
+      let calendarEventEls
+
+      beforeEach(() => {
+        calendarDateEl = wrapper.find('.calendar-date')
+        calendarEventEls = wrapper.findAll('.calendar-event')
+      })
+
+      it('should render new attendance', () => {
+        setComputed(wrapper, { attendance: {
+          attended_at: '08:13',
+          attending_status: 'attend_late',
+          day: localVue.prototype.$moment().format('YYYY-MM-DD'),
+          leaving_status: 'leave_ok',
+          left_at: '10:13'
+        } })
+
+        expect(calendarEventEls).toHaveLength(2)
+        expect(calendarEventEls.at(0).classes()).toContain('text-warning')
+        expect(calendarEventEls.at(0).text()).toEqual('Attend Late')
+        expect(calendarEventEls.at(1).classes()).toContain('text-success')
+        expect(calendarEventEls.at(1).text()).toEqual('Leave OK')
       })
     })
   })
