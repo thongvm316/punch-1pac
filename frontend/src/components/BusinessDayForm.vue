@@ -30,6 +30,7 @@
     </div>
     <div class="form-group">
       <button
+        ref="createBusinessDayButton"
         type="button"
         class="btn btn-success btn-submit"
         v-if="!targetBusinessDay"
@@ -38,6 +39,7 @@
         {{ $t('company.businessDays.btn.submit') }}
       </button>
       <button
+        ref="editBusinessDayButton"
         type="button"
         class="btn btn-success btn-submit"
         v-if="targetBusinessDay"
@@ -55,7 +57,9 @@ import { mapState, mapActions } from 'vuex'
 export default {
   name: 'business-day-form',
 
-  props: ['targetBusinessDay'],
+  props: {
+    targetBusinessDay: Object
+  },
 
   data() {
     return {
