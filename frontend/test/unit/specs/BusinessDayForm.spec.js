@@ -65,18 +65,21 @@ describe('BusinessDayForm.vue', () => {
     })
 
     it('should show error text', async () => {
-      wrapper.setData({ errors: {
-        weekday: ['can\'t be empty'],
-        morning_started_at: ['can\'t be empty'],
-        morning_ended_at: ['can\'t be empty'],
-        afternoon_started_at: ['can\'t be empty'],
-        afternoon_ended_at: ['can\'t be empty']
-      } })
+      wrapper.setData({
+        errors: {
+          weekday: ['can\'t be empty'],
+          morning_started_at: ['can\'t be empty'],
+          morning_ended_at: ['can\'t be empty'],
+          afternoon_started_at: ['can\'t be empty'],
+          afternoon_ended_at: ['can\'t be empty']
+        }
+      })
       await wrapper.vm.$nextTick()
 
       const formGroups = wrapper.findAll('.form-group')
+      const formInputErrors = wrapper.findAll('.form-group > .form-input-hint')
 
-      for (let i = 0; i < formGroups.length - 1; i++) {
+      for (let i = 0; i < formInputErrors.length; i++) {
         expect(formGroups.at(i).classes()).toContain('has-error')
         expect(formGroups.at(i).find('.form-input-hint').exists()).toBe(true)
         expect(formGroups.at(i).find('.form-input-hint').text()).toContain('can\'t be empty')
