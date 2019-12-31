@@ -9,7 +9,8 @@ set :application, 'punch.ooo'
 set :repo_url, 'git@github.com:1PACVietnam/1punch.git'
 
 # Default branch is :master
-set :branch, 'master'
+branch = ENV['BRANCH'] || 'master'
+set :branch, branch
 
 # Default deploy_to directory is /var/www/my_app_name
 set :deploy_to, '/var/www/punch.ooo/public_html'
