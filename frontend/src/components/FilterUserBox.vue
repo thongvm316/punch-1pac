@@ -33,20 +33,12 @@ export default {
   },
 
   props: {
-    placeholder: {
-      type: String,
-      required: false
-    },
-
-    user: {
-      type: Object,
-      required: false
-    },
-
     queryParams: {
-      required: false,
-      type: Object
-    }
+      type: Object,
+      required: true
+    },
+    placeholder: String,
+    user: Object
   },
 
   components: {
@@ -72,7 +64,7 @@ export default {
     },
 
     updateSelectedUser() {
-      this.$emit('update:user', this.selectedUser)
+      this.$emit('src/components/FilterUserBox.vuesrc/components/FilterUserBox.vue', this.selectedUser)
     }
   },
 

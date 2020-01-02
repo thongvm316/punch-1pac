@@ -7,6 +7,12 @@ import store from '@/store'
 import i18n from '@/locale'
 import FilterUserBox from '@/components/FilterUserBox'
 
+const queryParams = {
+  email: 'example@1pac.vn',
+  name: 'Tuan',
+  avatar_url: '/'
+}
+
 const search = jest.fn()
 
 describe('FilterUserBox.vue', () => {
@@ -17,6 +23,9 @@ describe('FilterUserBox.vue', () => {
       i18n,
       store,
       localVue,
+      propsData: {
+        queryParams
+      },
       methods: {
         search
       }
@@ -36,13 +45,10 @@ describe('FilterUserBox.vue', () => {
     it('should validate its props', () => {
       const { placeholder, queryParams, user } = wrapper.vm.$options.props
 
-      expect(placeholder.required).toBeFalsy()
-      expect(placeholder.type).toBe(String)
-
-      expect(queryParams.required).toBeFalsy()
+      expect(queryParams.required).toBeTruthy()
       expect(queryParams.type).toBe(Object)
 
-      expect(user.required).toBeFalsy()
+      expect(placeholder.type).toBe(String)
       expect(user.type).toBe(Object)
     })
 
@@ -54,16 +60,30 @@ describe('FilterUserBox.vue', () => {
       expect(search).toHaveBeenCalled()
     })
 
-    it('selectedUser should have user data from props', () => {
-      const testUser = {
+    describe('when passing props user', () => {
+      const user = {
         email: 'example@1pac.vn',
         name: 'Tuan',
         avatar_url: '/'
       }
 
-      wrapper.setProps({ user: testUser })
-      wrapper.vm.$nextTick(() => {
-        expect(wrapper.vm.$data.selectedUser).toEqual(testUser)
+      beforeEach(() => {
+        wrapper.setProps({ user })
+      })
+
+      it('selectedUser should have user data from props', () => {
+        wrapper.vm.$nextTick(() => {
+          expect(wrapper.vm.$data.selectedUser).toEqual(user)
+        })
+      })
+
+      it('should emit update:user with user data', () => {
+        wrapper.vm.$nextTick(() => {
+          wrapper.vm.updateSelectedUser()
+          expect(wrapper.emitted('update:user')).toBeTruthy()
+          expect(wrapper.emitted('update:user')).toHaveLength(1)
+          expect(wrapper.emitted('update:user')[0]).toEqual([user])
+        })
       })
     })
   })
