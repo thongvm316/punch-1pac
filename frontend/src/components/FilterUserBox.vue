@@ -56,6 +56,7 @@ export default {
         .get('/users', { params: Object.assign({ name_or_email: search }, this.queryParams) })
         .then(response => {
           if (loading) loading(false)
+          console.log(response.data.users)
           this.optionUsers = response.data.users
         })
         .catch(error => {
@@ -64,7 +65,7 @@ export default {
     },
 
     updateSelectedUser() {
-      this.$emit('src/components/FilterUserBox.vuesrc/components/FilterUserBox.vue', this.selectedUser)
+      this.$emit('update:user', this.selectedUser)
     }
   },
 
