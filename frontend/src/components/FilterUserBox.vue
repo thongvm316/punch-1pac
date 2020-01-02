@@ -56,7 +56,6 @@ export default {
         .get('/users', { params: Object.assign({ name_or_email: search }, this.queryParams) })
         .then(response => {
           if (loading) loading(false)
-          console.log(response.data.users)
           this.optionUsers = response.data.users
         })
         .catch(error => {
