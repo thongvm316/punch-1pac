@@ -22,7 +22,7 @@ module.exports = {
     '<rootDir>/test/unit/jest.setup.js',
     '<rootDir>/test/unit/jest.init.js'
   ],
-  mapCoverage: true,
+  clearMocks: true,
   coverageDirectory: '<rootDir>/test/unit/coverage',
   collectCoverage: true,
   collectCoverageFrom: [
@@ -30,6 +30,9 @@ module.exports = {
     '!src/main.js',
     '!src/router/index.js',
     '!**/node_modules/**'
+  ],
+  coveragePathIgnorePatterns: [
+    '/node_modules/'
   ],
   coverageReporters: [
     'html',
