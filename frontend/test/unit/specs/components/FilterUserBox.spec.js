@@ -63,7 +63,7 @@ describe('FilterUserBox.vue', () => {
 
       wrapper.setProps({ user: testUser })
       wrapper.vm.$nextTick(() => {
-        expect(wrapper.vm.$data.selectedUser).toBe(testUser)
+        expect(wrapper.vm.$data.selectedUser).toEqual(testUser)
       })
     })
   })
