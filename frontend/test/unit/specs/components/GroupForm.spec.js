@@ -1,7 +1,6 @@
 import { shallowMount } from '@vue/test-utils'
 
 import localVue from '../../supports/local-vue'
-import setComputed from '../../supports/set-computed'
 
 import store from '@/store'
 import i18n from '@/locale'
