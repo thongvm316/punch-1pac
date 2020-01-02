@@ -26,6 +26,11 @@
 <script>
 export default {
   name: 'group-tab',
-  props: ['groupId']
+  props: {
+    groupId: {
+      type: String,
+      required: true
+    }
+  }
 }
 </script>
