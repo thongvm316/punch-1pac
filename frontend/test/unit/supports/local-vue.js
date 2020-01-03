@@ -16,5 +16,6 @@ localVue.prototype.$auth = authorization
 localVue.prototype.$axios = axios
 localVue.mixin(currentUser)
 localVue.mixin(pageAuthorization)
+localVue.filter('moment_lll', val => val)
 
 export default localVue
