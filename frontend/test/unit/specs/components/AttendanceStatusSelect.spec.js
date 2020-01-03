@@ -1,24 +1,18 @@
 import { shallowMount } from '@vue/test-utils'
 
-import localVue from '../../supports/local-vue'
+import wrapperOps from '../../supports/wrapper'
 import setComputed from '../../supports/set-computed'
 
-import store from '@/store'
-import i18n from '@/locale'
 import AttendanceStatusSelect from '@/components/AttendanceStatusSelect'
 
 const updateValue = jest.spyOn(AttendanceStatusSelect.methods, 'updateValue')
+Object.assign(wrapperOps, { methods: { updateValue } })
 
 describe('AttendanceStatusSelect.vue', () => {
   let wrapper
 
   beforeEach(() => {
-    wrapper = shallowMount(AttendanceStatusSelect, {
-      store,
-      i18n,
-      methods: { updateValue },
-      localVue
-    })
+    wrapper = shallowMount(AttendanceStatusSelect, wrapperOps)
   })
 
   afterEach(() => { wrapper.vm.$destroy() })

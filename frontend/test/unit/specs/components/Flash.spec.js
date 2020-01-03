@@ -1,21 +1,15 @@
 import { shallowMount } from '@vue/test-utils'
 
-import localVue from '../../supports/local-vue'
+import wrapperOps from '../../supports/wrapper'
 import setComputed from '../../supports/set-computed'
 
-import store from '@/store'
-import i18n from '@/locale'
 import Flash from '@/components/Flash'
 
 describe('Flash.vue', () => {
   let wrapper
 
   beforeEach(() => {
-    wrapper = shallowMount(Flash, {
-      i18n,
-      store,
-      localVue
-    })
+    wrapper = shallowMount(Flash, wrapperOps)
   })
 
   afterEach(() => { wrapper.vm.$destroy() })

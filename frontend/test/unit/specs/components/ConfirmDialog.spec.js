@@ -1,37 +1,34 @@
 import { shallowMount } from '@vue/test-utils'
 
-import localVue from '../../supports/local-vue'
+import wrapperOps from '../../supports/wrapper'
 
-import i18n from '@/locale'
 import ConfirmDialog from '@/components/ConfirmDialog'
 
 const propsData = {
   title: 'Confirm Dialog',
   modalOpen: false
 }
-
 const toggle = jest.spyOn(ConfirmDialog.methods, 'toggle')
 const methods = {
   toggle,
   confirm: jest.fn()
 }
-
 const scopedSlots = {
   default: '<p class="default-scoped">Scope slot</p>',
   confirmBtn: '<p class="confirm-btn-scoped">Confirm Btn Slot</p>'
 }
 
+Object.assign(wrapperOps, {
+  propsData,
+  methods,
+  scopedSlots
+})
+
 describe('ConfirmDialog.vue', () => {
   let wrapper
 
   beforeEach(() => {
-    wrapper = shallowMount(ConfirmDialog, {
-      i18n,
-      propsData,
-      methods,
-      scopedSlots,
-      localVue
-    })
+    wrapper = shallowMount(ConfirmDialog, wrapperOps)
   })
 
   afterEach(() => { wrapper.vm.$destroy() })

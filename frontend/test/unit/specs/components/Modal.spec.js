@@ -1,34 +1,29 @@
 import { shallowMount } from '@vue/test-utils'
 
-import localVue from '../../supports/local-vue'
+import wrapperOps from '../../supports/wrapper'
 
-import store from '@/store'
-import i18n from '@/locale'
 import Modal from '@/components/Modal'
 
 const propsData = {
   title: 'Title',
   modalOpen: false
 }
-
 const scopedSlots = {
   default: '<p class="default-slot">Default slot</p>'
 }
-
 const toggle = jest.spyOn(Modal.methods, 'toggle')
+
+Object.assign(wrapperOps, {
+  propsData,
+  methods: { toggle },
+  scopedSlots,
+})
 
 describe('Modal.vue', () => {
   let wrapper
 
   beforeEach(() => {
-    wrapper = shallowMount(Modal, {
-      i18n,
-      store,
-      propsData,
-      methods: { toggle },
-      scopedSlots,
-      localVue
-    })
+    wrapper = shallowMount(Modal, wrapperOps)
   })
 
   afterEach(() => { wrapper.vm.$destroy() })

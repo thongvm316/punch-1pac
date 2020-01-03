@@ -1,22 +1,19 @@
 import { shallowMount } from '@vue/test-utils'
 
-import localVue from '../../supports/local-vue'
+import wrapperOps from '../../supports/wrapper'
 
-import i18n from '@/locale'
 import AnnualLeaveForm from '@/components/AnnualLeaveForm'
 import AnnualLeave from '@/components/AnnualLeave'
 import Modal from '@/components/Modal'
 import modal from '@/mixins/modal'
 
+Object.assign(wrapperOps, { mixins: [modal] })
+
 describe('AnnualLeave.vue', () => {
   let wrapper
 
   beforeEach(() => {
-    wrapper = shallowMount(AnnualLeave, {
-      i18n,
-      mixins: [modal],
-      localVue
-    })
+    wrapper = shallowMount(AnnualLeave, wrapperOps)
   })
 
   afterEach(() => { wrapper.vm.$destroy() })

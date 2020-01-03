@@ -1,12 +1,11 @@
 import { shallowMount } from '@vue/test-utils'
 
-import localVue from '../../supports/local-vue'
+import wrapperOps from '../../supports/wrapper'
 
 import GroupSelect from '@/components/GroupSelect'
 
 const fetchAllGroups = jest.fn()
 const updateValue = jest.spyOn(GroupSelect.methods, 'updateValue')
-
 const groups = [
   {
     id: 0,
@@ -17,23 +16,23 @@ const groups = [
     name: 'gumi'
   }
 ]
-
 const scopedSlots = {
-  placeholder: '<option>Choose a group</options>'
+  placeholder: '<option>Choose a group</option>'
 }
+
+Object.assign(wrapperOps, {
+  methods: {
+    fetchAllGroups,
+    updateValue
+  },
+  scopedSlots
+})
 
 describe('GroupSelect.vue', () => {
   let wrapper
 
   beforeEach(() => {
-    wrapper = shallowMount(GroupSelect, {
-      methods: {
-        fetchAllGroups,
-        updateValue
-      },
-      scopedSlots,
-      localVue
-    })
+    wrapper = shallowMount(GroupSelect, wrapperOps)
   })
 
   afterEach(() => { wrapper.vm.$destroy() })
