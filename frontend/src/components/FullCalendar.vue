@@ -44,11 +44,11 @@
         <label class="form-label">{{ $t('dashboard.request.label') }}</label>
         <select class="form-select" v-model="selectedRequestKind" @change="changeTitleConfirmModal">
           <option value=""></option>
-          <option :value="kind" v-for="(kind, key) in ['attendance', 'annual_leave']" :key="key">{{ $t(`dashboard.request.kind.${kind}`) }}</option>}
+          <option :value="kind" v-for="kind in ['attendance', 'annual_leave']" :key="kind">{{ $t(`dashboard.request.kind.${kind}`) }}</option>}
         </select>
       </div>
       <request-form v-if="this.selectedRequestKind === 'attendance'" :attendance="attendance" @afterModify="isRequestModalOpen = false"></request-form>
-      <annual-leave-form v-if="this.selectedRequestKind === 'annual_leave'" :annual-day="annualLeaveDay" @finishRequest="isRequestModalOpen = false"></annual-leave-form>
+      <annual-leave-form v-if="this.selectedRequestKind === 'annual_leave'" :annual-day="annualLeaveDay" @finishRequest="isRequestModalOpen = false"/>
     </modal>
 
     <modal :title="$t('attendances.modal.addTitle')" :modal-open.sync="isEditModalOpen">
@@ -56,7 +56,7 @@
     </modal>
 
     <modal :title="$t('annualLeave.title')" :modal-open.sync="isAddModalOpen">
-      <annual-leave-form v-if="isAddModalOpen" :annual-day="annualLeaveDay" @finishRequest="isAddModalOpen = false"></annual-leave-form>
+      <annual-leave-form v-if="isAddModalOpen" :annual-day="annualLeaveDay" @finishRequest="isAddModalOpen = false"/>
     </modal>
   </div>
 </template>
@@ -94,24 +94,10 @@ export default {
   },
 
   computed: {
-    year() {
-      return this.dateContext.format('YYYY')
-    },
+    ...mapState('initialStates', ['currentCompany']),
 
-    month() {
-      return this.dateContext.format('MMMM')
-    },
-
-    initialDate() {
-      return this.today.get('date')
-    },
-
-    initialMonth() {
-      return this.today.format('MMMM')
-    },
-
-    initialYear() {
-      return this.today.format('YYYY')
+    formattedDateContext() {
+      return this.dateContext.format('YYYY-MM-DD')
     },
 
     daysInMonth() {
@@ -131,10 +117,6 @@ export default {
     firstDayOfMonth() {
       const startDate = this.dateContext.clone().startOf('month')
       return startDate.day()
-    },
-
-    currentDate() {
-      return this.dateContext.get('date')
     },
 
     lastDaysPreviousMonth() {
@@ -164,25 +146,22 @@ export default {
       }
       nextDays.splice(daysNextMonth)
       return nextDays
-    },
-
-    ...mapState('initialStates', ['currentCompany'])
+    }
   },
 
   methods: {
+    ...mapActions('calendar', ['getCalendarAttendances']),
+
     nextMonth() {
       this.dateContext = this.$moment(this.dateContext).add(1, 'month')
-      this.getCalendarAttendances(this.dateContext.locale('en').format('YYYY-MM-DD')).then(response => this.formatAttendances(response.data))
     },
 
     lastMonth() {
       this.dateContext = this.$moment(this.dateContext).subtract(1, 'month')
-      this.getCalendarAttendances(this.dateContext.locale('en').format('YYYY-MM-DD')).then(response => this.formatAttendances(response.data))
     },
 
     currentMonth() {
       this.dateContext = this.$moment(this.today)
-      this.getCalendarAttendances(this.dateContext.locale('en').format('YYYY-MM-DD')).then(response => this.formatAttendances(response.data))
     },
 
     formatAttendances(response) {
@@ -240,8 +219,6 @@ export default {
       return false
     },
 
-    ...mapActions('calendar', ['getCalendarAttendances']),
-
     toggleConfirmModal(data) {
       this.selectedRequestKind = ''
       this.titleModal = this.$t('dashboard.request.title')
@@ -265,7 +242,13 @@ export default {
   },
 
   created() {
-    this.getCalendarAttendances().then(response => this.formatAttendances(response.data))
+    this.getCalendarAttendances(this.formattedDateContext).then(response => this.formatAttendances(response.data))
+  },
+
+  watch: {
+    dateContext() {
+      this.getCalendarAttendances(this.formattedDateContext).then(response => this.formatAttendances(response.data))
+    }
   }
 }
 </script>
