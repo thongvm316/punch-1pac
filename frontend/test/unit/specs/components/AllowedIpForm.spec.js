@@ -1,28 +1,25 @@
 import { shallowMount } from '@vue/test-utils'
 
-import localVue from '../../supports/local-vue'
+import wrapperOps from '../../supports/wrapper'
 import setComputed from '../../supports/set-computed'
 
-import store from '@/store'
-import i18n from '@/locale'
 import AllowedIpForm from '@/components/AllowedIpForm'
 
 const localAddIp = jest.fn()
 const localEditIp = jest.fn()
 
+Object.assign(wrapperOps, {
+  methods: {
+    localAddIp,
+    localEditIp
+  }
+})
+
 describe('AllowedIpForm.vue', () => {
   let wrapper
 
   beforeEach(() => {
-    wrapper = shallowMount(AllowedIpForm, {
-      i18n,
-      store,
-      methods: {
-        localAddIp,
-        localEditIp
-      },
-      localVue
-    })
+    wrapper = shallowMount(AllowedIpForm, wrapperOps)
   })
 
   afterEach(() => { wrapper.vm.$destroy() })
