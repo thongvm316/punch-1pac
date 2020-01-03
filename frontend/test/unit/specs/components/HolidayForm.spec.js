@@ -135,4 +135,3 @@ describe('HolidayForm.vue', () => {
     })
   })
 })
-
