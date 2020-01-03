@@ -1,21 +1,15 @@
 import { shallowMount } from '@vue/test-utils'
 
-import localVue from '../../supports/local-vue'
+import wrapperOps from '../../supports/wrapper'
 import setComputed from '../../supports/set-computed'
 
-import store from '@/store'
-import i18n from '@/locale'
 import Announcements from '@/components/Announcements'
 
 describe('Announcements.vue', () => {
   let wrapper
 
   beforeEach(() => {
-    wrapper = shallowMount(Announcements, {
-      i18n,
-      store,
-      localVue
-    })
+    wrapper = shallowMount(Announcements, wrapperOps)
   })
 
   afterEach(() => { wrapper.vm.$destroy() })

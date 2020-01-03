@@ -1,9 +1,7 @@
 import { shallowMount } from '@vue/test-utils'
 
-import localVue from '../../supports/local-vue'
+import wrapperOps from '../../supports/wrapper'
 
-import store from '@/store'
-import i18n from '@/locale'
 import AnnualLeaveForm from '@/components/AnnualLeaveForm'
 import flatPickr from 'vue-flatpickr-component'
 
@@ -11,11 +9,7 @@ describe('AnnualLeaveForm.vue', () => {
   let wrapper
 
   beforeEach(() => {
-    wrapper = shallowMount(AnnualLeaveForm, {
-      i18n,
-      store,
-      localVue
-    })
+    wrapper = shallowMount(AnnualLeaveForm, wrapperOps)
   })
 
   afterEach(() => { wrapper.vm.$destroy() })

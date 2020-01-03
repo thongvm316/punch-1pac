@@ -1,10 +1,7 @@
 import { shallowMount } from '@vue/test-utils'
 
-import localVue from '../../supports/local-vue'
+import wrapperOps from '../../supports/wrapper'
 
-import store from '@/store'
-import router from '@/router'
-import i18n from '@/locale'
 import AppHeader from '@/components/AppHeader'
 import Notifications from '@/components/Notifications'
 import Punch from '@/components/Punch'
@@ -15,22 +12,20 @@ const toggleDropdown = jest.spyOn(AppHeader.methods, 'toggleDropdown')
 const toggleLangSelect = jest.spyOn(AppHeader.methods, 'toggleLangSelect')
 const updateUser = jest.fn()
 
+Object.assign(wrapperOps, {
+  methods: {
+    logout,
+    toggleDropdown,
+    toggleLangSelect,
+    updateUser
+  }
+})
+
 describe('AppHeader.vue', () => {
   let wrapper
 
   beforeEach(() => {
-    wrapper = shallowMount(AppHeader, {
-      i18n,
-      router,
-      store,
-      methods: {
-        logout,
-        toggleDropdown,
-        toggleLangSelect,
-        updateUser
-      },
-      localVue
-    })
+    wrapper = shallowMount(AppHeader, wrapperOps)
   })
 
   afterEach(() => { wrapper.vm.$destroy() })

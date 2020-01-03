@@ -1,10 +1,9 @@
 import { shallowMount } from '@vue/test-utils'
 
 import localVue from '../../supports/local-vue'
+import wrapperOps from '../../supports/wrapper'
 import setComputed from '../../supports/set-computed'
 
-import store from '@/store'
-import i18n from '@/locale'
 import CalendarDate from '@/components/CalendarDate'
 
 const propsData = {
@@ -57,12 +56,8 @@ describe('CalendarDate.vue', () => {
   // Normal date
   describe('Normal date', () => {
     beforeEach(() => {
-      wrapper = shallowMount(CalendarDate, {
-        i18n,
-        store,
-        propsData: propsData.normalDay,
-        localVue
-      })
+      Object.assign(wrapperOps, { propsData: propsData.normalDay })
+      wrapper = shallowMount(CalendarDate, wrapperOps)
     })
 
     describe('when CalendarDate was mounted', () => {
@@ -142,18 +137,15 @@ describe('CalendarDate.vue', () => {
   // Off date
   describe('when off date', () => {
     beforeEach(() => {
-      wrapper = shallowMount(CalendarDate, {
-        i18n,
-        store,
+      Object.assign(wrapperOps, {
         propsData: propsData.offDay,
         computed: {
           currentCompany: () => {
             return { breakdays: ['saturday', 'sunday'] }
           }
-        },
-
-        localVue
+        }
       })
+      wrapper = shallowMount(CalendarDate, wrapperOps)
     })
 
     describe('when tooltip', () => {
@@ -180,17 +172,15 @@ describe('CalendarDate.vue', () => {
   // Special day
   describe('Special day', () => {
     beforeEach(() => {
-      wrapper = shallowMount(CalendarDate, {
-        i18n,
-        store,
+      Object.assign(wrapperOps, {
         propsData: propsData.specialDay,
         computed: {
           currentCompany: () => {
             return { breakdays: ['saturday', 'sunday'] }
           }
-        },
-        localVue
+        }
       })
+      wrapper = shallowMount(CalendarDate, wrapperOps)
     })
 
     describe('when tooltip', () => {
@@ -217,18 +207,15 @@ describe('CalendarDate.vue', () => {
   // Weekend day
   describe('Weekend day', () => {
     beforeEach(() => {
-      wrapper = shallowMount(CalendarDate, {
-        i18n,
-        store,
+      Object.assign(wrapperOps, {
         propsData: propsData.weekendDay,
         computed: {
           currentCompany: () => {
             return { breakdays: ['saturday', 'sunday'] }
           }
-        },
-
-        localVue
+        }
       })
+      wrapper = shallowMount(CalendarDate, wrapperOps)
     })
 
     describe('when tooltip', () => {
