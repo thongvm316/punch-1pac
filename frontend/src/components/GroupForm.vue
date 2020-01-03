@@ -25,9 +25,12 @@
 
 <script>
 import { mapActions } from 'vuex'
+import handleSuccess from '../mixins/handle-success'
 
 export default {
   name: 'group-form',
+
+  mixins: [handleSuccess],
 
   props: {
     targetGroup: Object
@@ -41,13 +44,15 @@ export default {
         description: '',
         image: ''
       },
-      errors: {}
+      errors: {},
+      data: {
+        emitType: 'afterModify',
+        message: ''
+      }
     }
   },
 
   methods: {
-    ...mapActions('flash', ['setFlashMsg']),
-
     ...mapActions('groups', ['addGroup']),
 
     ...mapActions('group', ['updateGroup']),
@@ -56,9 +61,8 @@ export default {
       this.isDisable = true
       this.addGroup(this.params)
         .then(response => {
-          this.setFlashMsg({ message: this.$t('messages.group.createSuccess') })
-          this.$emit('afterModify')
-          this.isDisable = false
+          this.data.message = this.$t('messages.group.createSuccess')
+          this.handleSuccess(this.data)
         })
         .catch(error => {
           this.isDisable = false
@@ -70,9 +74,8 @@ export default {
       this.isDisable = true
       this.updateGroup({ groupId: this.targetGroup.id, editParams: this.params })
         .then(response => {
-          this.setFlashMsg({ message: this.$t('messages.group.updateSuccess') })
-          this.$emit('afterModify')
-          this.isDisable = false
+          this.data.message = this.$t('messages.group.updateSuccess')
+          this.handleSuccess(this.data)
         })
         .catch(error => {
           this.isDisable = false

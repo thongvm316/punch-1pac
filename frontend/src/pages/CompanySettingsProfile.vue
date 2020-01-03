@@ -72,6 +72,7 @@
 
 <script>
 import SettingLayout from '../layouts/Setting.vue'
+import handleSuccess from '../mixins/handle-success'
 import { mapState, mapActions } from 'vuex'
 
 export default {
@@ -94,6 +95,8 @@ export default {
     }
   },
 
+  mixins: [handleSuccess],
+
   components: {
     SettingLayout
   },
@@ -103,8 +106,6 @@ export default {
   },
 
   methods: {
-    ...mapActions('flash', ['setFlashMsg']),
-
     ...mapActions('initialStates', ['clearCompanyErrors', 'updateCompany']),
 
     setLogoFile(e) {
@@ -116,8 +117,8 @@ export default {
     localUpdateCompany() {
       this.isDisable = true
       this.updateCompany(this.params).then(response => {
-        this.setFlashMsg({ message: this.$t('messages.company.updateSuccess') })
-        this.isDisable = false
+        const message = this.$t('messages.company.updateSuccess')
+        this.handleSuccess({ message })
       })
       .catch(() => { this.isDisable = false })
     }

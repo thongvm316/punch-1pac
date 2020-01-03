@@ -45,12 +45,13 @@
 <script>
 import flatPickr from 'vue-flatpickr-component'
 import flatpickrLocale from '../mixins/flatpickr-locale'
+import handleSuccess from '../mixins/handle-success'
 import { mapState, mapActions } from 'vuex'
 
 export default {
   name: 'holiday-form',
 
-  mixins: [flatpickrLocale],
+  mixins: [flatpickrLocale, handleSuccess],
 
   components: {
     flatPickr
@@ -67,13 +68,15 @@ export default {
         name: '',
         started_at: '',
         ended_at: ''
+      },
+      data: {
+        emitType: 'afterModify',
+        message: ''
       }
     }
   },
 
   methods: {
-    ...mapActions('flash', ['setFlashMsg']),
-
     ...mapActions('companyHolidays', ['createHoliday', 'updateHoliday', 'clearHolidayErrors']),
 
     localAddHoliday() {
@@ -82,9 +85,8 @@ export default {
         Object.keys(this.params).forEach(key => {
           this.params[key] = ''
         })
-        this.setFlashMsg({ message: this.$t('messages.holiday.createSuccess') })
-        this.$emit('afterModify')
-        this.isDisable = false
+        this.data.message = this.$t('messages.holiday.createSuccess')
+        this.handleSuccess(this.data)
       })
       .catch(() => { this.isDisable = false })
     },
@@ -92,9 +94,8 @@ export default {
     localEditHoliday() {
       this.isDisable = true
       this.updateHoliday({ holidayID: this.targetHoliday.id, updateParams: this.params }).then(response => {
-        this.setFlashMsg({ message: this.$t('messages.holiday.updateSuccess') })
-        this.$emit('afterModify')
-        this.isDisable = false
+        this.data.message = this.$t('messages.holiday.updateSuccess')
+        this.handleSuccess(this.data)
       })
       .catch(() => { this.isDisable = false })
     }

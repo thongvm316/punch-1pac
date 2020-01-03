@@ -32,12 +32,13 @@
 <script>
 import flatPickr from 'vue-flatpickr-component'
 import flatpickrLocale from '../mixins/flatpickr-locale'
+import handleSuccess from '../mixins/handle-success'
 import { mapState, mapActions } from 'vuex'
 
 export default {
   name: 'request-form',
 
-  mixins: [flatpickrLocale],
+  mixins: [flatpickrLocale, handleSuccess],
 
   props: ['attendance', 'request'],
 
@@ -50,6 +51,10 @@ export default {
         attended_at: '',
         left_at: '',
         reason: ''
+      },
+      data: {
+        emitType: 'afterModify',
+        message: ''
       }
     }
   },
@@ -65,14 +70,11 @@ export default {
   methods: {
     ...mapActions('requests', ['addRequest', 'updateRequest', 'clearRequestErrors']),
 
-    ...mapActions('flash', ['setFlashMsg']),
-
     localAddRequest() {
       this.isDisable = true
       this.addRequest(this.params).then(response => {
-        this.setFlashMsg({ message: this.$t('messages.request.createSuccess') })
-        this.$emit('afterModify')
-        this.isDisable = false
+        this.data.message = this.$t('messages.request.createSuccess')
+        this.handleSuccess(this.data)
       })
       .catch(() => { this.isDisable = false })
     },
@@ -80,9 +82,8 @@ export default {
     localEditRequest() {
       this.isDisable = true
       this.updateRequest({ id: this.request.id, params: this.params }).then(response => {
-        this.setFlashMsg({ message: this.$t('messages.request.updateSuccess') })
-        this.$emit('afterModify')
-        this.isDisable = false
+        this.data.message = this.$t('messages.request.updateSuccess')
+        this.handleSuccess(this.data)
       })
       .catch(() => { this.isDisable = false })
     }

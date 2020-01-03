@@ -22,8 +22,9 @@
 <script>
 import SettingLayout from '../layouts/Setting.vue'
 import axios from 'axios'
-import { mapState, mapActions } from 'vuex'
+import { mapState } from 'vuex'
 import 'formdata-polyfill'
+import handleSuccess from '../mixins/handle-success'
 
 export default {
   data() {
@@ -36,6 +37,8 @@ export default {
     }
   },
 
+  mixins: [handleSuccess],
+
   components: {
     SettingLayout
   },
@@ -45,8 +48,6 @@ export default {
   },
 
   methods: {
-    ...mapActions('flash', ['setFlashMsg']),
-
     upload(params) {
       this.isDisable = true
 
@@ -56,9 +57,9 @@ export default {
       axios
         .post('/users/create_multi', formData, { headers: { 'Content-Type': 'multipart/form-data' } })
         .then(response => {
-          this.setFlashMsg({ message: this.$t('messages.user.addMultiSuccess') })
+          const message = this.$t('messages.user.addMultiSuccess')
+          this.handleSuccess({ message })
           this.errors = response.data.errors
-          this.isDisable = false
         })
         .catch(error => {
           this.isDisable = false

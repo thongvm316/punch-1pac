@@ -26,6 +26,7 @@
 <script>
 import SettingLayout from '../layouts/Setting.vue'
 import { mapState, mapActions } from 'vuex'
+import handleSuccess from '../mixins/handle-success'
 
 export default {
   data() {
@@ -39,22 +40,22 @@ export default {
     }
   },
 
+  mixins: [handleSuccess],
+
   methods: {
     ...mapActions('userPassword', ['updatePassword', 'clearUserPasswordErrors']),
-
-    ...mapActions('flash', ['setFlashMsg']),
 
     localUpdatePassword() {
       this.isDisable = true
       this.updatePassword(this.updateParams).then(response => {
-        this.setFlashMsg({ message: this.$t('messages.user.updatePwdSuccess') })
+        const message = this.$t('messages.user.updatePwdSuccess')
+        this.handleSuccess({ message })
         this.updateParams = {
           current_password: '',
           password: '',
           password_confirmation: ''
         }
         this.clearUserPasswordErrors()
-        this.isDisable = false
       })
       .catch(() => { this.isDisable = false })
     }
