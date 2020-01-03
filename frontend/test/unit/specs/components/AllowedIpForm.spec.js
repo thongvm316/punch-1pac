@@ -7,11 +7,13 @@ import AllowedIpForm from '@/components/AllowedIpForm'
 
 const localAddIp = jest.fn()
 const localEditIp = jest.fn()
+const handleSuccess = jest.spyOn(AllowedIpForm.methods, 'handleSuccess')
 
 Object.assign(wrapperOps, {
   methods: {
     localAddIp,
-    localEditIp
+    localEditIp,
+    handleSuccess
   }
 })
 
@@ -28,15 +30,6 @@ describe('AllowedIpForm.vue', () => {
     it('should display AllowedIpForm Component', () => {
       expect(wrapper.isVueInstance()).toBe(true)
       expect(wrapper.exists()).toBe(true)
-    })
-  })
-
-  describe('validation prop data', () => {
-    it('should validate props data', () => {
-      const { targetIp } = wrapper.vm.$options.props
-
-      expect(targetIp.required).toBeFalsy()
-      expect(targetIp.type).toBe(String)
     })
   })
 
@@ -71,6 +64,16 @@ describe('AllowedIpForm.vue', () => {
       wrapper.find({ ref: 'editAllowedIpButton' }).trigger('click')
 
       expect(localEditIp).toHaveBeenCalled()
+    })
+  })
+
+  describe('when handleSuccess method', () => {
+    it('should createSuccess', async () => {
+      wrapper.vm.handleSuccess()
+      await wrapper.vm.$nextTick()
+
+      expect(wrapper.vm.isDisable).toEqual(false)
+      expect(wrapper.emitted('afterModify')).toBeTruthy()
     })
   })
 
