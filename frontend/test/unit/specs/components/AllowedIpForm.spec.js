@@ -1,7 +1,6 @@
 import { shallowMount } from '@vue/test-utils'
 
 import wrapperOps from '../../supports/wrapper'
-import localVue from '../../supports/local-vue'
 import setComputed from '../../supports/set-computed'
 
 import AllowedIpForm from '@/components/AllowedIpForm'
