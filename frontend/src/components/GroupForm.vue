@@ -17,8 +17,8 @@
       <p class="form-input-hint" v-if="errors.description">{{ $t('group.labels.description') }} {{ errors.description[0] }}</p>
     </div>
     <div class="form-group">
-      <button type="button" class="btn btn-success btn-submit" @click="localAddGroup" v-if="!targetGroup" :disabled="isDisable">{{ $t('groups.btn.submit') }}</button>
-      <button type="button" class="btn btn-success btn-submit" @click="localEditGroup" v-if="targetGroup" :disable="isDisable">{{ $t('group.btn.save') }}</button>
+      <button ref="localAddGroupButton" type="button" class="btn btn-success btn-submit" @click="localAddGroup" v-if="!targetGroup" :disabled="isDisable">{{ $t('groups.btn.submit') }}</button>
+      <button ref="localEditGroupButton" type="button" class="btn btn-success btn-submit" @click="localEditGroup" v-if="targetGroup" :disable="isDisable">{{ $t('group.btn.save') }}</button>
     </div>
   </div>
 </template>
@@ -29,7 +29,9 @@ import { mapActions } from 'vuex'
 export default {
   name: 'group-form',
 
-  props: ['targetGroup'],
+  props: {
+    targetGroup: Object
+  },
 
   data() {
     return {

@@ -7,11 +7,13 @@
     </div>
     <div class="form-group">
       <button
+        ref="createAllowedIpButton"
         class="btn btn-success btn-submit"
         @click="localAddIp"
         v-if="!targetIp"
         :disabled="isDisable">{{ $t('company.allowedIPs.btn.submit') }}</button>
       <button
+        ref="editAllowedIpButton"
         class="btn btn-success btn-submit"
         @click="localEditIp"
         v-if="targetIp"
@@ -26,7 +28,9 @@ import { mapState, mapActions } from 'vuex'
 export default {
   name: 'allowed-ip-form',
 
-  props: ['targetIp'],
+  props: {
+    targetIp: String
+  },
 
   data() {
     return {

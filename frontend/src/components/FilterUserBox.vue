@@ -32,7 +32,14 @@ export default {
     }
   },
 
-  props: ['placeholder', 'queryParams', 'user'],
+  props: {
+    queryParams: {
+      type: Object,
+      required: true
+    },
+    placeholder: String,
+    user: Object
+  },
 
   components: {
     vSelect

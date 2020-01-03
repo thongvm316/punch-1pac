@@ -12,7 +12,7 @@
         </div>
       </div>
       <div class="modal-footer">
-        <slot name="confirm-btn">
+        <slot name="confirmBtn">
           <button type="button" class="btn btn-error" @click="confirm">{{ $t('confirmDialog.yes') }}</button>
         </slot>
         <button type="button" class="btn" @click="toggle">{{ $t('confirmDialog.no') }}</button>
@@ -25,7 +25,18 @@
 export default {
   name: 'confirm-dialog',
 
-  props: ['title', 'modalOpen', 'deleteObject', 'objectId'],
+  props: {
+    title: {
+      type: String,
+      required: true
+    },
+    modalOpen: {
+      type: Boolean,
+      required: true
+    },
+    deleteObject: Function,
+    objectId: Number
+  },
 
   data() {
     return {

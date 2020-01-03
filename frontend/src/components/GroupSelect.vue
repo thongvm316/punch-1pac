@@ -11,7 +11,9 @@ import axios from 'axios'
 export default {
   name: 'group-select',
 
-  props: ['value'],
+  props: {
+    value: String
+  },
 
   data() {
     return {
@@ -20,20 +22,24 @@ export default {
   },
 
   methods: {
+    fetchAllGroups() {
+      axios
+        .get('/groups')
+        .then(response => {
+          this.groups = response.data
+        })
+        .catch(error => {
+          throw error
+        })
+    },
+
     updateValue(e) {
       this.$emit('input', e.target.value)
     }
   },
 
   created() {
-    axios
-      .get('/groups')
-      .then(response => {
-        this.groups = response.data
-      })
-      .catch(error => {
-        throw error
-      })
+    this.fetchAllGroups()
   }
 }
 </script>

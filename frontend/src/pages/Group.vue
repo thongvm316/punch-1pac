@@ -65,7 +65,7 @@
 
     <confirm-dialog :title="$t('group.confirmDialog.deleteGroupTitle')" :modal-open.sync="isOpenDeleteGroupConfirmDialog">
       <p v-html="$t('group.confirmDialog.deleteGroupMsg', { name: selectedObject.name })"></p>
-      <template slot="confirm-btn">
+      <template slot="confirmBtn">
         <button type="button" class="btn btn-error" @click="localDeleteGroup">{{ $t('confirmDialog.yes') }}</button>
       </template>
     </confirm-dialog>

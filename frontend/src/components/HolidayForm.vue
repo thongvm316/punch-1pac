@@ -24,6 +24,7 @@
     <div class="form-group">
       <button
         class="btn btn-success btn-submit"
+        ref="localAddHolidayBtn"
         @click="localAddHoliday"
         v-if="!targetHoliday"
         :disabled="isDisable">
@@ -31,6 +32,7 @@
       </button>
       <button
         class="btn btn-success btn-submit"
+        ref="localEditHolidayBtn"
         @click="localEditHoliday"
         v-if="targetHoliday"
         :disabled="isDisable">
@@ -54,7 +56,9 @@ export default {
     flatPickr
   },
 
-  props: ['targetHoliday'],
+  props: {
+    targetHoliday: Object
+  },
 
   data() {
     return {
