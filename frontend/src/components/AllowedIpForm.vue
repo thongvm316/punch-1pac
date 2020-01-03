@@ -29,7 +29,7 @@ export default {
   name: 'allowed-ip-form',
 
   props: {
-    targetIp: String
+    targetIp: Object
   },
 
   data() {
@@ -47,9 +47,7 @@ export default {
     localAddIp() {
       this.isDisable = true
       this.createIP({ ip_address: this.params }).then(response => {
-        this.setFlashMsg({ message: this.$t('messages.ip.createSuccess') })
-        this.$emit('afterModify')
-        this.isDisable = false
+        this.handleSuccess()
       })
       .catch(() => { this.isDisable = false })
     },
@@ -57,11 +55,15 @@ export default {
     localEditIp() {
       this.isDisable = true
       this.updateIP({ id: this.targetIp.id, ip_address: this.params }).then(response => {
-        this.setFlashMsg({ message: this.$t('messages.ip.updateSuccess') })
-        this.$emit('afterModify')
-        this.isDisable = false
+        this.handleSuccess('updateSuccess')
       })
       .catch(() => { this.isDisable = false })
+    },
+
+    handleSuccess(msgType = 'createSuccess') {
+      this.setFlashMsg({ message: this.$t(`messages.ip.${msgType}`) })
+      this.$emit('afterModify')
+      this.isDisable = false
     }
   },
 
