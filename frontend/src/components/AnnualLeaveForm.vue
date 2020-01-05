@@ -27,8 +27,8 @@
 <script>
 import flatPickr from 'vue-flatpickr-component'
 import flatpickrLocale from '../mixins/flatpickr-locale'
+import handleSuccess from '../mixins/handle-success'
 import axios from 'axios'
-import { mapActions } from 'vuex'
 
 export default {
   name: 'annual-leave',
@@ -40,6 +40,10 @@ export default {
       params: {
         attendance_day: '',
         reason: ''
+      },
+      data: {
+        emitType: 'finishRequest',
+        message: ''
       }
     }
   },
@@ -55,16 +59,13 @@ export default {
   },
 
   methods: {
-    ...mapActions('flash', ['setFlashMsg']),
-
     create() {
       this.isDisable = true
       axios
         .post('/requests', Object.assign(this.params, { kind: 'annual_leave' }))
         .then(response => {
-          this.setFlashMsg({ message: this.$t('annualLeave.createSuccessMsg') })
-          this.$emit('finishRequest')
-          this.isDisable = false
+          this.data.message = this.$t('annualLeave.createSuccessMsg')
+          this.handleSuccess(this.data)
         })
         .catch(error => {
           this.isDisable = false
@@ -77,9 +78,8 @@ export default {
       axios
         .put(`/requests/${this.request.id}`, Object.assign(this.params, { kind: 'annual_leave' }))
         .then(response => {
-          this.setFlashMsg({ message: this.$t('annualLeave.updateSuccessMsg') })
-          this.$emit('finishRequest')
-          this.isDisable = false
+          this.data.message = this.$t('annualLeave.updateSuccessMsg')
+          this.handleSuccess(this.data)
         })
         .catch(error => {
           this.isDisable = false
@@ -88,7 +88,7 @@ export default {
     }
   },
 
-  mixins: [flatpickrLocale],
+  mixins: [flatpickrLocale, handleSuccess],
 
   created() {
     if (this.request) {

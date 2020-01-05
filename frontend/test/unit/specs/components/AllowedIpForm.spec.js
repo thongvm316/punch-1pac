@@ -4,17 +4,17 @@ import wrapperOps from '../../supports/wrapper'
 import setComputed from '../../supports/set-computed'
 
 import AllowedIpForm from '@/components/AllowedIpForm'
+import handleSuccess from '@/mixins/handle-success'
 
 const localAddIp = jest.fn()
 const localEditIp = jest.fn()
-const handleSuccess = jest.spyOn(AllowedIpForm.methods, 'handleSuccess')
 
 Object.assign(wrapperOps, {
   methods: {
     localAddIp,
-    localEditIp,
-    handleSuccess
-  }
+    localEditIp
+  },
+  mixins: [handleSuccess]
 })
 
 describe('AllowedIpForm.vue', () => {
@@ -67,16 +67,6 @@ describe('AllowedIpForm.vue', () => {
     })
   })
 
-  describe('when handleSuccess method', () => {
-    it('should createSuccess', async () => {
-      wrapper.vm.handleSuccess()
-      await wrapper.vm.$nextTick()
-
-      expect(wrapper.vm.isDisable).toEqual(false)
-      expect(wrapper.emitted('afterModify')).toBeTruthy()
-    })
-  })
-
   describe('form input hint text', () => {
     it('should no display error text', () => {
       expect(wrapper.find('.form-group > .form-input-hint').exists()).toBe(false)
@@ -86,7 +76,6 @@ describe('AllowedIpForm.vue', () => {
       setComputed(wrapper, { errors: { ip_address: ['cant be blank'] } })
       await wrapper.vm.$nextTick()
 
-      expect(wrapper.find('.form-group:first-of-type').classes()).toContain('has-error')
       expect(wrapper.find('.form-group > .form-input-hint').exists()).toBe(true)
       expect(wrapper.find('.form-group > .form-input-hint').text()).toEqual('IP address cant be blank')
     })
