@@ -74,7 +74,13 @@ export default {
 
   mixins: [handleSuccess],
 
-  props: ['targetUser', 'objectType'],
+  props: {
+    targetUser: {
+      type: Object,
+      required: true
+    },
+    objectType: Object
+  },
 
   computed: {
     ...mapState('initialStates', ['meta'])
