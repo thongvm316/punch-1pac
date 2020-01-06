@@ -1,10 +1,8 @@
 import { shallowMount } from '@vue/test-utils'
 
-import localVue from '../../supports/local-vue'
 import wrapperOps from '../../supports/wrapper'
 import setComputed from '../../supports/set-computed'
 
-import flatPickr from 'vue-flatpickr-component'
 import flatpickrLocale from '@/mixins/flatpickr-locale'
 import dropdown from '@/mixins/dropdown'
 import modal from '@/mixins/modal'
@@ -14,10 +12,12 @@ const headerNotifications = [
   {
     id: 0,
     activitable: {
-      status: 'pending'
+      status: 'pending',
+      type: 'Request'
     },
+    user: {},
     activitable_type: 'Request',
-    kind: 'create',
+    kind: 'update',
     create_at: '2019-12-02'
   },
   {
@@ -25,7 +25,9 @@ const headerNotifications = [
     activitable: {
       status: 'approved'
     },
+    user: {},
     kind: 'update',
+    activitable_type: 'Request',
     create_at: '2019-12-04'
   }
 ]
@@ -66,13 +68,11 @@ describe('Notifications.vue', () => {
       dropdownMenu.trigger('click')
       await wrapper.vm.$nextTick()
 
-      expect(toggleDropdown).toHaveBeenCalled()
-      expect(wrapper.vm.isDropdownActive).toBe(true)
-      expect(dropdownMenu.classes()).toContain('active')
+      expect(dropdownMenu.isVisible()).toBeTruthy()
     })
   })
 
-  describe('when headerNotifications', () => {
+  describe('when dont have headerNotifications', () => {
     it('should render no header notifications', async () => {
       setComputed(wrapper, { headerNotifications: [] })
       await wrapper.vm.$nextTick()
@@ -80,13 +80,44 @@ describe('Notifications.vue', () => {
       expect(wrapper.vm.headerNotifications).toHaveLength(0)
       expect(wrapper.find({ ref: 'notiList' }).exists()).toBeFalsy()
     })
+  })
 
-    it('should render header notifications', async () => {
+  describe('when have headerNotifications', () => {
+    let editableNoti, uneditableNoti
+
+    beforeEach(async () => {
       setComputed(wrapper, { headerNotifications })
       await wrapper.vm.$nextTick()
 
+      editableNoti = wrapper.find({ ref: 'notiList' }).find('li:first-child')
+      uneditableNoti = wrapper.find({ ref: 'notiList' }).find('li:last-child')
+    })
+
+    it('should render header notifications', () => {
       expect(wrapper.vm.headerNotifications).toHaveLength(2)
       expect(wrapper.find({ ref: 'notiList' }).exists()).toBeTruthy()
+    })
+
+    it('editable noti should show pending label', () => {
+      expect(editableNoti.find('.label-warning').exists()).toBeTruthy()
+    })
+
+    it('should show modal when click on editable request notification', async () => {
+      editableNoti.trigger('click')
+      await wrapper.vm.$nextTick()
+
+      expect(wrapper.find({ ref: 'requestModal' }).isVisible()).toBeTruthy()
+    })
+
+    it('uneditable noti should show pending label', () => {
+      expect(uneditableNoti.find('.label-warning').exists()).toBeFalsy()
+    })
+
+    it('modal should not exist when click on uneditable request notification', async () => {
+      uneditableNoti.trigger('click')
+      await wrapper.vm.$nextTick()
+
+      expect(wrapper.find({ ref: 'requestModal' }).exists()).toBeFalsy()
     })
   })
 })

@@ -11,11 +11,10 @@
         <div class="notification-header">
           <h4>{{ $t('header.notifications') }}</h4>
         </div>
-        <ul v-if="headerNotifications.length > 0" ref="notiList">
+        <ul v-if="headerNotifications.length" ref="notiList">
           <li v-for="notification in headerNotifications"
               :key="notification.id"
               @click="openRequestModal(notification)"
-              v-if="notification.activitable"
               :class="{ 'notification-pending': notification.activitable.status === 'pending' }">
             <div class="tile tile-centered tile-activity">
               <div class="tile-icon">
@@ -36,7 +35,7 @@
         </p>
       </div>
     </div>
-    <modal :title="$t('notifications.title')" :modal-open.sync="isAddModalOpen" v-if="isEditable(notification)">
+    <modal ref="requestModal" :title="$t('notifications.title')" :modal-open.sync="isAddModalOpen" v-if="isEditable(notification)">
       <div class="form-group">
         <label class="form-label">{{ $t('notifications.labels.date') }}</label>
         <flat-pickr
@@ -82,9 +81,8 @@ export default {
 
   data() {
     return {
-      notification: '',
-      rejectReason: '',
-      fetchingNotifications: null
+      notification: {},
+      rejectReason: ''
     }
   },
 

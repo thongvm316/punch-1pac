@@ -18,4 +18,6 @@ localVue.mixin(currentUser)
 localVue.mixin(pageAuthorization)
 localVue.filter('moment_lll', val => val)
 
+localVue.filter('moment_activity', val => val)
+
 export default localVue
