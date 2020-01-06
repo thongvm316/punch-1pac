@@ -1,14 +1,10 @@
 import { shallowMount } from '@vue/test-utils'
 
-import localVue from '../../supports/local-vue'
+import wrapperOps from '../../supports/wrapper'
 
-import store from '@/store'
-import i18n from '@/locale'
 import moment from '@/moment'
 import FullCalendar from '@/components/FullCalendar'
 import CalendarDate from '@/components/CalendarDate'
-import RequestForm from '@/components/RequestForm'
-import AnnualLeaveForm from '@/components/AnnualLeaveForm'
 import modal from '@/mixins/modal'
 import { fakeJanAttendances, fakeFebAttendances, fakeMarAttendances } from '../../supports/api/calendar'
 
@@ -29,9 +25,7 @@ describe('FullCalendar.vue', () => {
   let wrapper
 
   beforeEach(async () => {
-    wrapper = shallowMount(FullCalendar, {
-      i18n,
-      store,
+    wrapper = shallowMount(FullCalendar, Object.assign(wrapperOps, {
       methods: {
         getCalendarAttendances,
         nextMonth,
@@ -39,9 +33,8 @@ describe('FullCalendar.vue', () => {
         currentMonth,
         toggleConfirmModal
       },
-      mixins: [modal],
-      localVue
-    })
+      mixins: [modal]
+    }))
 
     wrapper.setData({
       dateContext: moment(fakeToday),
@@ -59,25 +52,11 @@ describe('FullCalendar.vue', () => {
       expect(wrapper.vm.attendances).toHaveLength(28)
     })
 
-    describe('when click on day 1', () => {
-      // const editModal = wrapper.find({ ref: 'editModal' })
+    it('should open modal Edit Attendance when click on day 1', async () => {
+      wrapper.findAll(CalendarDate).at(0).trigger('click')
+      await wrapper.vm.$nextTick()
 
-      beforeEach(async () => {
-        wrapper.findAll(CalendarDate).at(0).trigger('click')
-        await wrapper.vm.$nextTick()
-      })
-
-      it('should open modal Edit Attendance when click on day 1', () => {
-        expect(wrapper.find({ ref: 'editModal' }).isVisible()).toBeTruthy()
-      })
-
-      it('should close modal after modify', async () => {
-        // wrapper.find({ ref: 'editModal' }).find(RequestForm).trigger('afterModify')
-        console.log(wrapper.find({ ref: 'editModal' }).find(RequestForm).vm)
-        // await wrapper.vm.$nextTick()
-
-        // expect(wrapper.find({ ref: 'editModal' }).isVisible()).toBeFalsy()
-      })
+      expect(wrapper.find({ ref: 'editModal' }).isVisible()).toBeTruthy()
     })
 
     it('should open modal Request when click on day 4', async () => {
