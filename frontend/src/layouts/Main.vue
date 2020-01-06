@@ -27,11 +27,7 @@ export default {
   name: 'main-layout',
 
   props: {
-    title: {
-      type: String,
-      required: true
-    },
-
+    title: String,
     isOpenAnnoucement: Boolean
   },
 
