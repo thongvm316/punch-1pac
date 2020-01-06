@@ -23,8 +23,8 @@
       <p class="form-input-hint" v-if="errors.reason">{{ $t('attendances.labels.reason') }} {{ errors.reason[0] }}</p>
     </div>
     <div class="form-group">
-      <button type="button" class="btn btn-success btn-submit" @click="localAddRequest" v-if="attendance" :disabled="isDisable">{{ $t('attendances.btn.add') }}</button>
-      <button type="button" class="btn btn-success btn-submit" @click="localEditRequest" v-else :disabled="isDisable">{{ $t('requests.btn.save') }}</button>
+      <button ref="localAddRequestButton" type="button" class="btn btn-success btn-submit" @click="localAddRequest" v-if="attendance" :disabled="isDisable">{{ $t('attendances.btn.add') }}</button>
+      <button ref="localEditRequestButton" type="button" class="btn btn-success btn-submit" @click="localEditRequest" v-else :disabled="isDisable">{{ $t('requests.btn.save') }}</button>
     </div>
   </div>
 </template>
@@ -40,7 +40,10 @@ export default {
 
   mixins: [flatpickrLocale, handleSuccess],
 
-  props: ['attendance', 'request'],
+  props: {
+    attendance: Object,
+    request: Object
+  },
 
   data() {
     return {
