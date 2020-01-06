@@ -48,6 +48,8 @@ export default {
     }
   },
 
+  mixins: [flatpickrLocale, handleSuccess],
+
   props: {
     request: Object,
     type: String,
@@ -87,8 +89,6 @@ export default {
         })
     }
   },
-
-  mixins: [flatpickrLocale, handleSuccess],
 
   created() {
     if (this.request) {
