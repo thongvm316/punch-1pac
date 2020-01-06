@@ -122,5 +122,13 @@ describe('Notifications.vue', () => {
 
       expect(wrapper.find({ ref: 'requestModal' }).exists()).toBeFalsy()
     })
+
+    it('should call loadMoreOnScroll when user open noti list and trigger scroll', async () => {
+      wrapper.find({ ref: 'dropdownMenu' }).trigger('click')
+      wrapper.find({ ref: 'notiList' }).trigger('scroll')
+      await wrapper.vm.$nextTick()
+
+      expect(loadMoreOnScroll).toHaveBeenCalled()
+    })
   })
 })

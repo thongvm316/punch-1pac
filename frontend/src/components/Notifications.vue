@@ -110,9 +110,9 @@ export default {
 
       this.isDropdownActive = !this.isDropdownActive
       if (this.isDropdownActive && this.headerNotifications[0]) this.readNotifications(this.headerNotifications[0].id)
-      if (this.isDropdownActive && el !== undefined) {
+      if (this.isDropdownActive && el) {
         el.addEventListener('scroll', this.loadMoreOnScroll)
-      } else if (!this.isDropdownActive && el !== undefined) {
+      } else if (!this.isDropdownActive && el) {
         el.removeEventListener('scroll', this.loadMoreOnScroll)
       }
     },
