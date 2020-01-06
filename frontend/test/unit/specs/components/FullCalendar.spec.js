@@ -21,26 +21,28 @@ const getCalendarAttendances = jest.fn().mockImplementation(day => {
   else return Promise.resolve(fakeFebAttendances)
 })
 
+Object.assign(wrapperOps, {
+  data: function() {
+    return {
+      dateContext: moment(fakeToday),
+      today: moment(fakeToday)
+    }
+  },
+  methods: {
+    getCalendarAttendances,
+    nextMonth,
+    lastMonth,
+    currentMonth,
+    toggleConfirmModal
+  },
+  mixins: [modal]
+})
+
 describe('FullCalendar.vue', () => {
   let wrapper
 
-  beforeEach(async () => {
-    wrapper = shallowMount(FullCalendar, Object.assign(wrapperOps, {
-      methods: {
-        getCalendarAttendances,
-        nextMonth,
-        lastMonth,
-        currentMonth,
-        toggleConfirmModal
-      },
-      mixins: [modal]
-    }))
-
-    wrapper.setData({
-      dateContext: moment(fakeToday),
-      today: moment(fakeToday)
-    })
-    await wrapper.vm.$nextTick()
+  beforeEach(() => {
+    wrapper = shallowMount(FullCalendar, wrapperOps)
   })
 
   afterEach(() => { wrapper.vm.$destroy() })

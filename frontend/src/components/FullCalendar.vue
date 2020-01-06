@@ -248,13 +248,6 @@ export default {
   watch: {
     dateContext(value) {
       this.getCalendarAttendances(value).then(response => this.formatAttendances(response.data))
-    },
-
-    attendance: {
-      deep: true,
-      handler() {
-        this.getCalendarAttendances(this.formattedDateContext).then(response => this.formatAttendances(response.data))
-      }
     }
   }
 }
