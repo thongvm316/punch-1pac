@@ -68,6 +68,8 @@ describe('Notifications.vue', () => {
       dropdownMenu.trigger('click')
       await wrapper.vm.$nextTick()
 
+      expect(toggleDropdown).toHaveBeenCalled()
+      expect(wrapper.vm.isDropdownActive).toBe(true)
       expect(dropdownMenu.isVisible()).toBeTruthy()
     })
   })
@@ -106,6 +108,7 @@ describe('Notifications.vue', () => {
       editableNoti.trigger('click')
       await wrapper.vm.$nextTick()
 
+      expect(wrapper.find({ ref: 'requestModal' }).exists()).toBeTruthy()
       expect(wrapper.find({ ref: 'requestModal' }).isVisible()).toBeTruthy()
     })
 
