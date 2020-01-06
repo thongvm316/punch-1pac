@@ -33,8 +33,8 @@ describe('Pagination.vue', () => {
 
   beforeEach(() => {
     wrapper = shallowMount(Pagination, wrapperOps)
-    prevPageButton = wrapper.find('[name=page-prev]')
-    nextPageButton = wrapper.find('[name=page-next]')
+    prevPageButton = wrapper.find({ ref: 'pagePrev' })
+    nextPageButton = wrapper.find({ ref: 'pageNext' })
   })
 
   afterEach(() => { wrapper.vm.$destroy() })
@@ -47,7 +47,7 @@ describe('Pagination.vue', () => {
 
     it('should display 3 page', () => {
       expect(wrapper.vm.items).toHaveLength(3)
-      expect(wrapper.findAll('[name=page-number]')).toHaveLength(3)
+      expect(wrapper.findAll({ ref: 'pageNumber' })).toHaveLength(3)
     })
 
     it('should called buildItems first time', () => {
@@ -58,12 +58,12 @@ describe('Pagination.vue', () => {
       setComputed(wrapper, { pager })
       await wrapper.vm.$nextTick()
 
-      expect(wrapper.findAll('[name=page-number]').at(1).classes()).toContain('active')
+      expect(wrapper.findAll({ ref: 'pageNumber' }).at(1).classes()).toContain('active')
     })
 
     describe('when click on page item', () => {
       it('should call go method when click page 2', async () => {
-        wrapper.findAll('[name=page-number] a').at(1).trigger('click')
+        wrapper.findAll({ ref: 'pageNumber' }).at(1).find('a').trigger('click')
         await wrapper.vm.$nextTick()
 
         expect(go).toHaveBeenCalledWith(2)
@@ -78,7 +78,7 @@ describe('Pagination.vue', () => {
       })
 
       it('page 2 should be actived', () => {
-        expect(wrapper.findAll('[name=page-number]').at(1).classes()).toContain('active')
+        expect(wrapper.findAll({ ref: 'pageNumber' }).at(1).classes()).toContain('active')
       })
 
       it('should show button prev page and next page', () => {

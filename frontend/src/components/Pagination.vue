@@ -1,12 +1,12 @@
 <template>
   <ul class="pagination mt-4">
-    <li class="page-item" name="page-prev" v-show="pager.current_page > 1">
+    <li ref="pagePrev" class="page-item" v-show="pager.current_page > 1">
       <a @click="go(pager.current_page - 1)"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M16.67 0l2.83 2.829-9.339 9.175 9.339 9.167-2.83 2.829-12.17-11.996z"/></svg></a>
     </li>
-    <li class="page-item" :class="{ active: n === pager.current_page }" name="page-number" v-for="(n, key) in items" :key="key">
+    <li ref="pageNumber" class="page-item" :class="{ active: n === pager.current_page }" v-for="(n, key) in items" :key="key">
       <a href="#" @click.prevent="go(n)">{{ n }}</a>
     </li>
-    <li class="page-item" name="page-next" v-show="pager.current_page + 1 <= pager.total_pages">
+    <li ref="pageNext" class="page-item" v-show="pager.current_page + 1 <= pager.total_pages">
       <a @click="go(pager.current_page + 1)"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M7.33 24l-2.83-2.829 9.339-9.175-9.339-9.167 2.83-2.829 12.17 11.996z"/></svg></a>
     </li>
   </ul>
