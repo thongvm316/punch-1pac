@@ -432,7 +432,9 @@ export default {
         actions: 'Thao tác'
       },
       labels: {
-        ipAddress: 'Địa chỉ IP'
+        ipAddress: 'Địa chỉ IP',
+        blank: 'không thể để trắng',
+        invalid: 'không hợp lệ'
       },
       btn: {
         add: 'Tạo địa chỉ IP',

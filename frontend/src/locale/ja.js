@@ -432,7 +432,9 @@ export default {
         actions: '操作'
       },
       labels: {
-        ipAddress: 'IPアドレス'
+        ipAddress: 'IPアドレス',
+        blank: 'を入力してください',
+        invalid: 'is invalid'
       },
       btn: {
         add: 'IPアドレスの追加',
