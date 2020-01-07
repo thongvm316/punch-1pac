@@ -15,7 +15,7 @@ const mutations = {
 
 const actions = {
   getCalendarAttendances({ commit }, day) {
-    callApi({ method: 'get', url: '/attendances/calendar', params: { day: day }})
+    callApi({ method: 'get', url: '/attendances/calendar', params: { day }})
       .then(response => {
         commit(types.FETCH_CALENDAR_ATTENDANCES, response.data)
         return response
