@@ -20,7 +20,7 @@ const mutations = {
 
 const actions = {
   getActivities({ commit }, params = {}) {
-    callApi({ method: 'get', url: '/activities', params: Object.assign({ per_page: 10 }, params) })
+    return callApi({ method: 'get', url: '/activities', params: Object.assign({ per_page: 10 }, params) })
       .then(response => commit(types.FETCH_ACTIVITIES, response.data))
       .catch(error => {
         throw error
@@ -28,7 +28,7 @@ const actions = {
   },
 
   getMoreActivities({ commit }, params = {}) {
-    callApi({ method: 'get', url: '/activities', params: Object.assign({ per_page: 10 }, params) })
+    return callApi({ method: 'get', url: '/activities', params: Object.assign({ per_page: 10 }, params) })
       .then(response => commit(types.FETCH_MORE_ACTIVITIES, response.data))
       .catch(error => {
         throw error

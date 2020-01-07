@@ -19,7 +19,7 @@ const mutations = {
 
 const actions = {
   readAnnouncement({ commit }, id) {
-    callApi({ method: 'post', url: `/announcements/${id}/read` })
+    return callApi({ method: 'post', url: `/announcements/${id}/read` })
       .then(response => {
         commit(types.READ_ANNOUNCEMENT, id)
         return response
@@ -30,7 +30,7 @@ const actions = {
   },
 
   getHeaderAnnouncements({ commit }) {
-    callApi({ method: 'get', url: '/announcements', params: { per_page: 200, read_status: 'unread' } })
+    return callApi({ method: 'get', url: '/announcements', params: { per_page: 200, read_status: 'unread' } })
       .then(response => {
         commit(types.RECEIVE_HEADER_ANNOUNCEMENTS, response.data)
         return response
