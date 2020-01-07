@@ -3,7 +3,7 @@
     <span class="modal-overlay" @click="remind"></span>
     <div class="modal-container">
       <div class="modal-header">
-        <span ref="btnCloseModal" class="btn btn-clear float-right" @click="remind"></span>
+        <button ref="btnCloseModal" class="btn btn-clear float-right" @click="remind"></button>
         <h3 class="modal-title">{{ $t('popup.changePassword.title') }}</h3>
       </div>
       <div class="modal-body">
