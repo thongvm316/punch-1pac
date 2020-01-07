@@ -49,7 +49,7 @@ const mutations = {
 
 const actions = {
   getAttendances({ commit, state }, params = {}) {
-    callApi({ method: 'get', url: '/attendances', params: Object.assign(state.params, params, { per_page: 1000 }) })
+    return callApi({ method: 'get', url: '/attendances', params: Object.assign(state.params, params, { per_page: 1000 }) })
       .then(response => {
         commit(types.RECEIVE_ATTENDANCES, response.data)
         return response
