@@ -5,17 +5,18 @@ import wrapperOps from '../../supports/wrapper'
 import ConfirmDialog from '@/components/ConfirmDialog'
 import Punch from '@/components/Punch'
 
-const fakePunchInResponse = {
-  data: {
-    attended_at: '14:30',
-    left_at: null
-  }
-}
-
-const fakePunchOutResponse = {
-  data: {
-    attended_at: '14:30',
-    left_at: '17:30'
+const fakePunchResponse = {
+  in: {
+    data: {
+      attended_at: '14:30',
+      left_at: null
+    }
+  },
+  out: {
+    data: {
+      attended_at: '14:30',
+      left_at: '17:30'
+    }
   }
 }
 
@@ -24,8 +25,8 @@ const debouncePunchOut = jest.spyOn(Punch.methods, 'debouncePunchOut')
 const setFlashMsg = jest.spyOn(Punch.methods, 'setFlashMsg')
 const updateCurrentTime = jest.fn()
 const initAttendance = jest.fn()
-const punchIn = jest.fn().mockResolvedValue(fakePunchInResponse)
-const punchOut = jest.fn().mockResolvedValue(fakePunchOutResponse)
+const punchIn = jest.fn().mockResolvedValue(fakePunchResponse.in)
+const punchOut = jest.fn().mockResolvedValue(fakePunchResponse.out)
 
 describe('PopupChangePassword.vue', () => {
   let wrapper
@@ -66,10 +67,9 @@ describe('PopupChangePassword.vue', () => {
       expect(initAttendance).toHaveBeenCalled()
     })
 
-    it('should not show timeIn, timeOut, punchOut btn', () => {
-      expect(wrapper.find({ ref: 'timeIn' }).exists()).toBeFalsy()
-      expect(wrapper.find({ ref: 'timeDivider' }).exists()).toBeFalsy()
-      expect(wrapper.find({ ref: 'timeOut' }).exists()).toBeFalsy()
+    it('should show punchIn btn, display timer', () => {
+      expect(wrapper.findAll('.punch span').length).toBe(1)
+
       expect(wrapper.find({ ref: 'btnPunchIn' }).exists()).toBeTruthy()
       expect(wrapper.find({ ref: 'btnPunchOut' }).exists()).toBeFalsy()
     })
@@ -95,20 +95,21 @@ describe('PopupChangePassword.vue', () => {
         },
         computed: {
           isInited() { return true },
-          attendance() { return fakePunchInResponse.data }
+          attendance() { return fakePunchResponse.in.data }
         }
       })
     })
 
-    it('should show timeIn, timeDivider, PunchOut btn', () => {
-      expect(wrapper.find({ ref: 'timeIn' }).exists()).toBeTruthy()
-      expect(wrapper.find({ ref: 'timeDivider' }).exists()).toBeTruthy()
+    it('should display correct timer', () => {
+      expect(wrapper.findAll('.punch span').length).toBe(3)
+    })
+
+    it('should show PunchOut btn', () => {
       expect(wrapper.find({ ref: 'btnPunchOut' }).exists()).toBeTruthy()
     })
 
-    it('should not show timeOut, btn Punch In', () => {
+    it('should not show btn Punch In', () => {
       expect(wrapper.find({ ref: 'timeOut' }).exists()).toBeFalsy()
-      expect(wrapper.find({ ref: 'btnPunchIn' }).exists()).toBeFalsy()
     })
 
     describe('when click punchOut btn', () => {
@@ -139,15 +140,13 @@ describe('PopupChangePassword.vue', () => {
         ...wrapperOps,
         computed: {
           isInited() { return true },
-          attendance() { return fakePunchOutResponse.data }
+          attendance() { return fakePunchResponse.out.data }
         }
       })
     })
 
-    it('should show timeIn, timeOut, timeDivider', () => {
-      expect(wrapper.find({ ref: 'timeIn' }).exists()).toBeTruthy()
-      expect(wrapper.find({ ref: 'timeDivider' }).exists()).toBeTruthy()
-      expect(wrapper.find({ ref: 'timeOut' }).exists()).toBeTruthy()
+    it('should display correct timer', () => {
+      expect(wrapper.findAll('.punch span').length).toBe(3)
     })
 
     it('should not show btn PunchIn, btn PunchOut', () => {

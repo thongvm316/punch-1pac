@@ -1,9 +1,9 @@
 <template>
   <div>
     <div class="punch">
-      <span ref="timeIn" v-if="attendance.attended_at">{{ $t('header.in') }}: {{ attendance.attended_at }}</span>
-      <span ref="timeDivider" class="mx-2" v-if="attendance.attended_at">-</span>
-      <span ref="timeOut" class="mr-5" v-if="attendance.left_at">{{ $t('header.out') }}: {{ attendance.left_at }}</span>
+      <span v-if="attendance.attended_at">{{ $t('header.in') }}: {{ attendance.attended_at }}</span>
+      <span class="mx-2" v-if="attendance.attended_at">-</span>
+      <span class="mr-5" v-if="attendance.left_at">{{ $t('header.out') }}: {{ attendance.left_at }}</span>
       <span class="mr-5" v-else>{{ currentTime }}</span>
       <button ref="btnPunchIn" class="btn btn-primary mr-5" @click="debouncePunchIn()" v-if="!attendance.attended_at">{{ $t('header.punchIn') }}</button>
       <button ref="btnPunchOut" class="btn btn-primary mr-5" @click="openConfirmDialog()" v-if="attendance.attended_at && !attendance.left_at">{{ $t('header.punchOut') }}</button>
