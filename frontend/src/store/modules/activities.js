@@ -1,5 +1,5 @@
 import * as types from '../mutation-types.js'
-import axios from 'axios'
+import callApi from '../api-caller'
 
 const state = {
   activities: [],
@@ -20,8 +20,7 @@ const mutations = {
 
 const actions = {
   getActivities({ commit }, params = {}) {
-    return axios
-      .get('/activities', { params: Object.assign({ per_page: 10 }, params) })
+    callApi('get', '/activities', Object.assign({ per_page: 10 }, params))
       .then(response => commit(types.FETCH_ACTIVITIES, response.data))
       .catch(error => {
         throw error
@@ -29,8 +28,7 @@ const actions = {
   },
 
   getMoreActivities({ commit }, params = {}) {
-    return axios
-      .get('/activities', { params: Object.assign({ per_page: 10 }, params) })
+    callApi('get', '/activities', Object.assign({ per_page: 10 }, params))
       .then(response => commit(types.FETCH_MORE_ACTIVITIES, response.data))
       .catch(error => {
         throw error
