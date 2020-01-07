@@ -1,41 +1,15 @@
 import announcements from '@/store/modules/announcements'
 import callApi from '@/store/api-caller'
+import { announcementsData } from '../api-data/annoucements.api.js'
 jest.mock('@/store/api-caller')
 
 const { state, mutations, actions } = announcements
 
 describe('mutations', () => {
   it('RECEIVE_HEADER_ANNOUNCEMENTS', () => {
-    const payload = {
-      announcements: [
-        {
-          id: 0,
-          due_date: '2019-01-01',
-          target: 'group',
-          content: 'new announcement',
-          status: 'new',
-          created_at: '2019-01-01'
-        },
-        {
-          id: 1,
-          due_date: '2019-03-01',
-          target: 'users',
-          content: 'new announcement',
-          status: 'new',
-          created_at: '2019-01-01'
-        },
-        {
-          id: 2,
-          due_date: '2019-03-01',
-          target: 'users',
-          content: 'new announcement',
-          status: 'new',
-          created_at: '2019-01-01'
-        }
-      ]
-    }
-
+    const payload = announcementsData()
     mutations.RECEIVE_HEADER_ANNOUNCEMENTS(state, payload)
+
     expect(state.headerAnnouncements).toEqual(payload.announcements)
   })
 
@@ -54,34 +28,7 @@ describe('actions', () => {
 
   it('getHeaderAnnouncements', async () => {
     const response = {
-      data: {
-        announcements: [
-          {
-            id: 0,
-            due_date: '2019-01-01',
-            target: 'group',
-            content: 'new announcement',
-            status: 'new',
-            created_at: '2019-01-01'
-          },
-          {
-            id: 1,
-            due_date: '2019-03-01',
-            target: 'users',
-            content: 'new announcement',
-            status: 'new',
-            created_at: '2019-01-01'
-          },
-          {
-            id: 2,
-            due_date: '2019-03-01',
-            target: 'users',
-            content: 'new announcement',
-            status: 'new',
-            created_at: '2019-01-01'
-          }
-        ]
-      }
+      data: announcementsData()
     }
 
     callApi.mockResolvedValue(response)
