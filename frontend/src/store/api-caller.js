@@ -1,9 +1,12 @@
 import axios from 'axios'
 
-export default function callApi(method = 'get', endpoint, data = null) {
+export default function callApi(payload = { params: null, data: null }) {
+  const { method, url, params, data } = payload
+
   return axios({
-    method: method,
-    url: endpoint,
-    data: data
+    method,
+    url,
+    params,
+    data
   })
 }
