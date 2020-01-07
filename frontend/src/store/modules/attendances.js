@@ -1,5 +1,5 @@
 import * as types from '../mutation-types.js'
-import axios from 'axios'
+import callApi from '../api-caller'
 
 const state = {
   params: {},
@@ -9,7 +9,7 @@ const state = {
 
 const getters = {
   formattedAttendances(state, getters, rootState) {
-    if (state.params.status && state.params.status !== 'annual_leave') return state.attendances
+    if (!state.params.status || (state.params.status && state.params.status !== 'annual_leave')) return state.attendances
 
     let attendances = state.attendances
     let forgotPunchInDays = state.forgotPunchInDays || rootState.initialStates.currentUser.forgot_punch_in_days_in_month
@@ -49,8 +49,7 @@ const mutations = {
 
 const actions = {
   getAttendances({ commit, state }, params = {}) {
-    return axios
-      .get('/attendances', { params: Object.assign(state.params, params, { per_page: 1000 }) })
+    callApi({ method: 'get', url: '/attendances', params: Object.assign(state.params, params, { per_page: 1000 }) })
       .then(response => {
         commit(types.RECEIVE_ATTENDANCES, response.data)
         return response
