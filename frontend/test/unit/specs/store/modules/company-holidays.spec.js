@@ -1,6 +1,6 @@
 import companyHolidays from '@/store/modules/company-holidays'
 import callApi from '@/store/api-caller'
-import { holidaysData } from '../api-data/holidays.js'
+import { holidaysData } from '../api-data/holidays.api.js'
 jest.mock('@/store/api-caller')
 
 const { state, mutations, actions, getters } = companyHolidays
@@ -34,7 +34,7 @@ describe('mutations', () => {
           ended_at: '2020-01-09',
           id: 4,
           name: 'quo',
-          started_at: '2020-01-05',
+          started_at: '2020-01-05'
         }
         mutations.CREATE_HOLIDAY(state, payload)
 
@@ -47,7 +47,7 @@ describe('mutations', () => {
           ended_at: '2020-01-09',
           id: 2,
           name: 'Tet Holiday',
-          started_at: '2020-01-05',
+          started_at: '2020-01-05'
         }
         mutations.UPDATE_HOLIDAY(state, payload)
 
@@ -60,13 +60,13 @@ describe('mutations', () => {
             ended_at: '2020-01-09',
             id: 4,
             name: 'Tet Holiday',
-            started_at: '2020-01-05',
+            started_at: '2020-01-05'
           },
           {
             ended_at: '2020-01-09',
             id: 5,
             name: 'Quoc Khanh',
-            started_at: '2020-01-05',
+            started_at: '2020-01-05'
           }
         ]
 
@@ -104,7 +104,7 @@ describe('actions', () => {
       response = { data: holidaysData() }
       callApi.mockResolvedValue(response)
       const year = 2020
-      await actions.fetchHolidays({ commit }, 2020)
+      await actions.fetchHolidays({ commit }, year)
 
       expect(commit).toHaveBeenCalledWith('FETCH_HOLIDAYS', response.data)
     })
