@@ -4,7 +4,6 @@ import wrapperOps from '../../supports/wrapper'
 import { fakeFebAttendances } from '../../supports/api/calendar'
 
 import Datepicker from 'vuejs-datepicker'
-import moment from '@/moment'
 import MainLayout from '@/layouts/Main'
 import AttendanceStatusSelect from '@/components/AttendanceStatusSelect'
 import RequestForm from '@/components/RequestForm'
@@ -51,10 +50,6 @@ describe('Attendances.vue', () => {
       expect(getAttendances).toHaveBeenCalledTimes(1)
     })
 
-    it('should display 2 record', () => {
-      expect(wrapper.findAll('tbody tr').length).toBe(2)
-    })
-
     describe('when click Add Request btn on first record', () => {
       beforeEach(async () => {
         wrapper.find('tbody .btn-action').trigger('click')
@@ -62,7 +57,8 @@ describe('Attendances.vue', () => {
       })
 
       it('should show RequestForm', () => {
-        expect(wrapper.find(RequestForm).isVisible()).toBeTruthy()
+        expect(wrapper.vm.isAddModalOpen).toBeTruthy()
+        expect(wrapper.find(RequestForm).exists()).toBeTruthy()
       })
 
       it('should call toggleAddModal with correct props', () => {
@@ -88,7 +84,7 @@ describe('Attendances.vue', () => {
     })
 
     it('should change params date data', () => {
-      expect(wrapper.vm.params.date).toBe(moment(mockDateData).format('YYYY-MM-DD'))
+      expect(wrapper.vm.params.date).toBe(wrapper.vm.$moment(mockDateData).format('YYYY-MM-DD'))
     })
 
     it('should call getAttendances', () => {
