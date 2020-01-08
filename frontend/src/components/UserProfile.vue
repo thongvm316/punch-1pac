@@ -79,7 +79,7 @@ export default {
       type: Object,
       required: true
     },
-    objectType: Object
+    objectType: String
   },
 
   computed: {
