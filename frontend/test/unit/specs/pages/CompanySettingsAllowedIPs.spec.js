@@ -34,7 +34,7 @@ describe('CompanySettingsAllowedIPs.vue', () => {
 
   afterEach(() => { wrapper.vm.$destroy() })
 
-  describe('when Attendances mounted', () => {
+  describe('when CompanySettingsAllowedIPs mounted', () => {
     it('should render correctly', () => {
       expect(wrapper.exists()).toBeTruthy()
       expect(wrapper.isVueInstance()).toBeTruthy()
@@ -74,8 +74,8 @@ describe('CompanySettingsAllowedIPs.vue', () => {
     beforeEach(async () => {
       wrapper.find('tbody button:first-child').trigger('click')
       await wrapper.vm.$nextTick()
-    }
-    )
+    })
+
     it('should open modal edit ip address with AllowedIpForm', () => {
       expect(toggleEditModal).toHaveBeenCalledWith(fakeAllowedIps[0])
       expect(wrapper.vm.isEditModalOpen).toBeTruthy()
