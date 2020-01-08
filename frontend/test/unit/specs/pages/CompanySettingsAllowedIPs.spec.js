@@ -34,7 +34,7 @@ describe('CompanySettingsAllowedIPs.vue', () => {
 
   afterEach(() => { wrapper.vm.$destroy() })
 
-  describe('when Attendances mounted', () => {
+  describe('when CompanySettingsAllowedIPs mounted', () => {
     it('should render correctly', () => {
       expect(wrapper.exists()).toBeTruthy()
       expect(wrapper.isVueInstance()).toBeTruthy()
