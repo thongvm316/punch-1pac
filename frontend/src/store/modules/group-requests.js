@@ -1,9 +1,8 @@
 import * as types from '../mutation-types.js'
-import axios from 'axios'
+import callApi from '../api-caller'
 
 const state = {
   errors: {},
-  params: {},
   pager: {},
   requests: []
 }
@@ -38,9 +37,8 @@ const mutations = {
 }
 
 const actions = {
-  getRequests({ commit, state }, params = {}) {
-    return axios
-      .get('/requests', { params: Object.assign(state.params, params) })
+  getRequests({ commit }, params = {}) {
+    return callApi({ method: 'get', url: '/requests', params })
       .then(response => {
         commit(types.RECEIVE_GROUP_REQUESTS, response.data)
         return response
@@ -51,8 +49,7 @@ const actions = {
   },
 
   approveRequest({ commit }, requestId) {
-    return axios
-      .post(`/requests/${requestId}/approve`)
+    return callApi({ method: 'post', url: `/requests/${requestId}/approve` })
       .then(response => {
         commit(types.APPROVE_GROUP_REQUEST, requestId)
         return response
@@ -63,16 +60,21 @@ const actions = {
   },
 
   rejectRequest({ commit }, params) {
-    return axios
-      .post(`/requests/${params.requestId}/reject`, { request: { admin_reason: params.admin_reason } })
-      .then(response => {
-        commit(types.REJECT_GROUP_REQUEST, params)
-        return response
-      })
-      .catch(error => {
-        if (error.response && error.response.status === 422) commit(types.REJECT_GROUP_REQUEST_ERRORS, error.response.data)
-        throw error
-      })
+    return callApi({
+      method: 'post',
+      url: `/requests/${params.requestId}/reject`,
+      data: {
+        request: { admin_reason: params.admin_reason }
+      }
+    })
+    .then(response => {
+      commit(types.REJECT_GROUP_REQUEST, params)
+      return response
+    })
+    .catch(error => {
+      if (error.response && error.response.status === 422) commit(types.REJECT_GROUP_REQUEST_ERRORS, error.response.data)
+      throw error
+    })
   },
 
   clearRejectRequestErrors({ commit }) {
