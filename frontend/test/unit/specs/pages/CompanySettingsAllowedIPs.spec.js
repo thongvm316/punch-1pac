@@ -1,24 +1,14 @@
 import { shallowMount } from '@vue/test-utils'
 
 import wrapperOps from '../../supports/wrapper'
+import { allowedIPsData } from '../store/api-data/allowed-ips.api'
 
 import SettingLayout from '@/layouts/Setting'
 import AllowedIpForm from '@/components/AllowedIpForm'
 import CompanySettingsAllowedIPs from '@/pages/CompanySettingsAllowedIPs'
 import Modal from '@/components/Modal.vue'
 
-const fakeAllowedIps = [
-  {
-    id: 1,
-    ip_address: '127.0.0.1',
-    created_at: '2019-12-24T11:32:33+07:00'
-  },
-  {
-    id: 2,
-    ip_address: '50.148.96.60',
-    created_at: '2019-12-24T11:32:33+07:00'
-  }
-]
+const fakeAllowedIps = allowedIPsData()
 const deleteIP = jest.fn()
 const fetchIPs = jest.fn()
 const toggleAddModal = jest.spyOn(CompanySettingsAllowedIPs.methods, 'toggleAddModal')
