@@ -82,8 +82,6 @@ export default {
   },
 
   computed: {
-    ...mapState('attendances', ['attendances']),
-
     ...mapGetters('attendances', ['formattedAttendances'])
   },
 

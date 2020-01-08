@@ -35,13 +35,15 @@ const getHeaderNotifications = jest.fn()
 const toggleDropdown = jest.spyOn(Notifications.methods, 'toggleDropdown')
 const isEditable = jest.spyOn(Notifications.methods, 'isEditable')
 const loadMoreOnScroll = jest.fn()
+const readNotifications = jest.fn()
 
 Object.assign(wrapperOps, {
   methods: {
     getHeaderNotifications,
     toggleDropdown,
     loadMoreOnScroll,
-    isEditable
+    isEditable,
+    readNotifications
   },
   mixins: [dropdown, modal, flatpickrLocale]
 })
