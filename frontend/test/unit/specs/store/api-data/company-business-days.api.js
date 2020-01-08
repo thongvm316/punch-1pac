@@ -26,3 +26,16 @@ export const companyBusinessDaysData = () => {
     }
   ]
 }
+export const companyBusinessDaysError = () => {
+  return {
+    response: {
+      status: 422,
+      data: {
+        message: 'Unprocessable Entity',
+        errors: {
+          weekday: [ 'can\'t be blank' ]
+        }
+      }
+    }
+  }
+}

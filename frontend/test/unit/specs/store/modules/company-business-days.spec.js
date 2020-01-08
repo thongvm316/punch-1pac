@@ -1,6 +1,6 @@
 import companyBusinessDays from '@/store/modules/company-business-days'
 import callApi from '@/store/api-caller'
-import { companyBusinessDaysData } from '../api-data/company-business-days.api.js'
+import { companyBusinessDaysData, companyBusinessDaysError } from '../api-data/company-business-days.api.js'
 import * as types from '@/store/mutation-types.js'
 
 jest.mock('@/store/api-caller')
@@ -100,22 +100,34 @@ describe('actions', () => {
   })
 
   describe('when addBusinessDay', () => {
-    it('resolve: should commit ADD_BUSINESS_DAY', async () => {
-      const response = {
-        data: {
-          id: 4,
-          weekday: 'sunday',
-          morning_started_at: '08:00',
-          morning_ended_at: '12:00',
-          afternoon_started_at: '13:30',
-          afternoon_ended_at: '17:30',
-        }
+    const response = {
+      data: {
+        id: 4,
+        weekday: 'sunday',
+        morning_started_at: '08:00',
+        morning_ended_at: '12:00',
+        afternoon_started_at: '13:30',
+        afternoon_ended_at: '17:30',
       }
+    }
+
+    it('resolve: should commit ADD_BUSINESS_DAY', async () => {
       callApi.mockResolvedValue(response)
 
       await actions.addBusinessDay({ commit }, response.data)
 
       expect(commit).toHaveBeenCalledWith(types.ADD_BUSINESS_DAY, response.data)
+    })
+
+    it('reject: should commit UPDATE_BUSINESS_DAY_ERRORS', async () => {
+      const mockError = companyBusinessDaysError()
+
+      callApi.mockRejectedValue(mockError)
+
+      await actions.addBusinessDay({ commit }, response.data).catch(error => {
+        expect(error).toEqual(mockError)
+        expect(commit).toHaveBeenCalledWith(types.UPDATE_BUSINESS_DAY_ERRORS, error.response.data)
+      })
     })
   })
 
@@ -131,13 +143,14 @@ describe('actions', () => {
   })
 
   describe('when updateBusinessDay', () => {
-    it('resolve: should commit UPDATE_BUSINESS_DAY', async () => {
-      const params = {
-        businessDayId: 1,
-        updateParams: {
-          weekday: 'sunday'
-        }
+    const params = {
+      businessDayId: 1,
+      updateParams: {
+        weekday: 'sunday'
       }
+    }
+
+    it('resolve: should commit UPDATE_BUSINESS_DAY', async () => {
       const response = {
         data: {
           id: 1,
@@ -153,6 +166,17 @@ describe('actions', () => {
       await actions.updateBusinessDay({ commit }, params)
 
       expect(commit).toHaveBeenCalledWith(types.UPDATE_BUSINESS_DAY, response.data)
+    })
+
+    it('reject: should commit UPDATE_BUSINESS_DAY_ERRORS', async () => {
+      const mockError = companyBusinessDaysError()
+
+      callApi.mockRejectedValue(mockError)
+
+      await actions.updateBusinessDay({ commit }, params).catch(error => {
+        expect(error).toEqual(mockError)
+        expect(commit).toHaveBeenCalledWith(types.UPDATE_BUSINESS_DAY_ERRORS, error.response.data)
+      })
     })
   })
 
