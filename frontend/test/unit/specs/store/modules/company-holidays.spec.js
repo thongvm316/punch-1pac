@@ -1,6 +1,6 @@
 import companyHolidays from '@/store/modules/company-holidays'
 import callApi from '@/store/api-caller'
-import { holidaysData } from '../api-data/holidays.js'
+import { holidaysData } from '../api-data/holidays.api.js'
 jest.mock('@/store/api-caller')
 
 const { state, mutations, actions, getters } = companyHolidays
