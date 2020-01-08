@@ -1,5 +1,5 @@
 import * as types from '../mutation-types.js'
-import axios from 'axios'
+import callApi from '../api-caller'
 
 const state = {
   errors: {},
@@ -35,8 +35,10 @@ const mutations = {
 
 const actions = {
   fetchBusinessDays({ commit }) {
-    return axios
-      .get('/business_days')
+    return callApi({
+      method: 'get',
+      url: '/business_days'
+    })
       .then(response => {
         commit(types.FETCH_BUSINESS_DAYS, response.data)
         return response
@@ -47,8 +49,11 @@ const actions = {
   },
 
   addBusinessDay({ commit }, params) {
-    return axios
-      .post('/business_days', { business_day: params }, { headers: { 'Content-Type': 'application/json' } })
+    return callApi({
+      method: 'post',
+      url: '/business_days',
+      data: { business_day: params }
+    })
       .then(response => {
         commit(types.ADD_BUSINESS_DAY, response.data)
         return response
@@ -60,8 +65,10 @@ const actions = {
   },
 
   deleteBusinessDay({ commit }, businessDayId) {
-    return axios
-      .delete(`/business_days/${businessDayId}`)
+    return callApi({
+      method: 'delete',
+      url: `/business_days/${businessDayId}`
+    })
       .then(response => {
         commit(types.DELETE_BUSINESS_DAY, businessDayId)
         return response
@@ -72,8 +79,11 @@ const actions = {
   },
 
   updateBusinessDay({ commit }, params) {
-    return axios
-      .put(`/business_days/${params.businessDayId}`, { business_day: params.updateParams }, { headers: { 'Content-Type': 'application/json' } })
+    return callApi({
+      method: 'put',
+      url: `/business_days/${params.businessDayId}`,
+      data: { business_day: params.updateParams }
+    })
       .then(response => {
         commit(types.UPDATE_BUSINESS_DAY, response.data)
         return response
