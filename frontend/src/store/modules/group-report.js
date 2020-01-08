@@ -1,5 +1,5 @@
 import * as types from '../mutation-types'
-import axios from 'axios'
+import callApi from '../api-caller'
 
 const state = {
   results: [],
@@ -28,27 +28,33 @@ const mutations = {
 
 const actions = {
   getGroupReport({ commit }, params) {
-    return axios
-      .get(`/groups/${params.group_id}/report`, { params: { date: params.date, date_type: params.type } })
-      .then(response => {
-        commit(types.FETCH_GROUP_REPORT, response.data)
-        return response
-      })
-      .catch(error => {
-        throw error
-      })
+    return callApi({
+      method: 'get',
+      url: `/groups/${params.group_id}/report`,
+      params: { date: params.date, date_type: params.type }
+    })
+    .then(response => {
+      commit(types.FETCH_GROUP_REPORT, response.data)
+      return response
+    })
+    .catch(error => {
+      throw error
+    })
   },
 
   getPersonalReport({ commit }, params) {
-    return axios
-      .get(`/groups/${params.group_id}/users/${params.user_id}/report`, { params: { date: params.date, date_type: params.type } })
-      .then(response => {
-        commit(types.FETCH_PERSONAL_REPORT, response.data)
-        return response
-      })
-      .catch(error => {
-        throw error
-      })
+    return callApi({
+      method: 'get',
+      url: `/groups/${params.group_id}/users/${params.user_id}/report`,
+      params: { date: params.date, date_type: params.type }
+    })
+    .then(response => {
+      commit(types.FETCH_PERSONAL_REPORT, response.data)
+      return response
+    })
+    .catch(error => {
+      throw error
+    })
   }
 }
 
