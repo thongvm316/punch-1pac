@@ -74,8 +74,8 @@ describe('CompanySettingsBusinessDays.vue', () => {
     beforeEach(async () => {
       wrapper.find('tbody button:first-child').trigger('click')
       await wrapper.vm.$nextTick()
-    }
-    )
+    })
+
     it('should open modal edit Business Day with BusinessDayForm', () => {
       expect(toggleEditModal).toHaveBeenCalledWith(fakeBusinessDays[0])
       expect(wrapper.vm.isEditModalOpen).toBeTruthy()

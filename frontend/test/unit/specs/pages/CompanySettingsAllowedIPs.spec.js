@@ -74,8 +74,8 @@ describe('CompanySettingsAllowedIPs.vue', () => {
     beforeEach(async () => {
       wrapper.find('tbody button:first-child').trigger('click')
       await wrapper.vm.$nextTick()
-    }
-    )
+    })
+
     it('should open modal edit ip address with AllowedIpForm', () => {
       expect(toggleEditModal).toHaveBeenCalledWith(fakeAllowedIps[0])
       expect(wrapper.vm.isEditModalOpen).toBeTruthy()
