@@ -6,7 +6,7 @@ export const companyBusinessDaysData = () => {
       morning_started_at: '08:00',
       morning_ended_at: '12:00',
       afternoon_started_at: '13:30',
-      afternoon_ended_at: '17:30',
+      afternoon_ended_at: '17:30'
     },
     {
       id: 2,
@@ -14,7 +14,7 @@ export const companyBusinessDaysData = () => {
       morning_started_at: '08:00',
       morning_ended_at: '12:00',
       afternoon_started_at: '13:30',
-      afternoon_ended_at: '17:30',
+      afternoon_ended_at: '17:30'
     },
     {
       id: 3,
@@ -22,7 +22,7 @@ export const companyBusinessDaysData = () => {
       morning_started_at: '08:00',
       morning_ended_at: '12:00',
       afternoon_started_at: '13:30',
-      afternoon_ended_at: '17:30',
+      afternoon_ended_at: '17:30'
     }
   ]
 }

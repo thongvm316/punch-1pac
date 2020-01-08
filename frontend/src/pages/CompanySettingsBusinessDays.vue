@@ -1,7 +1,7 @@
 <template>
   <setting-layout sidebar-type="company" :title="$t('company.title')" :subtitle="$t('company.businessDays.title')">
     <div class="toolbar text-right mt-5">
-      <button type="button" class="btn btn-success" @click="toggleAddModal()">
+      <button ref="btnAddBusinessDay" type="button" class="btn btn-success" @click="toggleAddModal()">
         {{ $t('company.businessDays.btn.add') }}
       </button>
     </div>
