@@ -50,17 +50,3 @@ export const requestErrors = () => {
     admin_reason: 'cant not be nil'
   }
 }
-
-export const promisesErrors = () => {
-  return {
-    response: {
-      status: 422,
-      data: {
-        message: 'Unprocessable Entity',
-        errors: {
-          weekday: [ 'can\'t be blank' ]
-        }
-      }
-    }
-  }
-}

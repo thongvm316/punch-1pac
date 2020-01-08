@@ -1,6 +1,7 @@
 import companyAllowedIPs from '@/store/modules/company-allowed-ips'
 import callApi from '@/store/api-caller'
 import { allowedIPsData } from '../api-data/allowed-ips.api.js'
+import { error422 } from '../api-data/promises-error.js'
 jest.mock('@/store/api-caller')
 
 const { state, mutations, actions } = companyAllowedIPs
@@ -108,7 +109,13 @@ describe('actions', () => {
     })
 
     it('should reject errors', async () => {
-      // not implement yet
+      const mockError = error422()
+      callApi.mockRejectedValue(mockError)
+
+      await actions.createIP({ commit }, response.data).catch(error => {
+        expect(error).toEqual(mockError)
+        expect(commit).toHaveBeenCalledWith('UPDATE_REQUEST_ERRORS', mockError.response.data)
+      })
     })
   })
 
@@ -131,7 +138,13 @@ describe('actions', () => {
     })
 
     it('should reject errors', async () => {
-      // not implement yet
+      const mockError = error422()
+      callApi.mockRejectedValue(mockError)
+
+      await actions.updateIP({ commit }, response.data).catch(error => {
+        expect(error).toEqual(mockError)
+        expect(commit).toHaveBeenCalledWith('UPDATE_REQUEST_ERRORS', mockError.response.data)
+      })
     })
   })
 

@@ -1,6 +1,7 @@
 import companyHolidays from '@/store/modules/company-holidays'
 import callApi from '@/store/api-caller'
 import { holidaysData } from '../api-data/holidays.api.js'
+import { error422 } from '../api-data/promises-error.js'
 jest.mock('@/store/api-caller')
 
 const { state, mutations, actions, getters } = companyHolidays
@@ -133,8 +134,14 @@ describe('actions', () => {
       expect(commit).toHaveBeenCalledWith('CREATE_HOLIDAY', response.data)
     })
 
-    it('should commit UPDATE_HOLIDAY_ERRORS', () => {
-      // not implement yet
+    it('should commit UPDATE_HOLIDAY_ERRORS', async () => {
+      const mockError = error422()
+      callApi.mockRejectedValue(mockError)
+
+      await actions.createHoliday({ commit }, response.data).catch(error => {
+        expect(error).toEqual(mockError)
+        expect(commit).toHaveBeenCalledWith('UPDATE_HOLIDAY_ERRORS', mockError.response.data)
+      })
     })
   })
 
@@ -150,8 +157,14 @@ describe('actions', () => {
       expect(commit).toHaveBeenCalledWith('UPDATE_HOLIDAY', response.data)
     })
 
-    it('should commit UPDATE_HOLIDAY_ERRORS', () => {
-      // not implement yet
+    it('should commit UPDATE_HOLIDAY_ERRORS', async () => {
+      const mockError = error422()
+      callApi.mockRejectedValue(mockError)
+
+      await actions.updateHoliday({ commit }, response.data).catch(error => {
+        expect(error).toEqual(mockError)
+        expect(commit).toHaveBeenCalledWith('UPDATE_HOLIDAY_ERRORS', mockError.response.data)
+      })
     })
   })
 
