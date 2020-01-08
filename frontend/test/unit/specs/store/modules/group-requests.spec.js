@@ -1,6 +1,7 @@
 import groupRequests from '@/store/modules/group-requests.js'
 import callApi from '@/store/api-caller'
-import { groupRequestsData, requestErrors, promisesErrors } from '../api-data/requests.api.js'
+import { groupRequestsData, requestErrors } from '../api-data/requests.api.js'
+import { error422 } from '../api-data/promises-error.js'
 jest.mock('@/store/api-caller')
 
 const { state, mutations, actions } = groupRequests
@@ -97,7 +98,7 @@ describe('actions', () => {
     })
 
     it('shoud commit REJECT_GROUP_REQUEST_ERRORS', async () => {
-      const mockError = promisesErrors()
+      const mockError = error422()
       callApi.mockRejectedValue(mockError)
 
       await actions.rejectRequest({ commit }, params).catch(error => {
