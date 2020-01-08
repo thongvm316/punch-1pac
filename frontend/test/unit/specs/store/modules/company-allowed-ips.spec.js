@@ -68,11 +68,11 @@ describe('mutations', () => {
 })
 
 describe('actions', () => {
+  let response
+
   describe('when fetchIPs', () => {
     it('should commit FETCH_IPS', async () => {
-      const response = {
-        data: allowedIPsData()
-      }
+      response = { data: allowedIPsData() }
       callApi.mockResolvedValue(response)
       await actions.fetchIPs({ commit })
 
@@ -82,7 +82,7 @@ describe('actions', () => {
 
   describe('when deleteIP', () => {
     it('should commit DELETE_IPS', async () => {
-      const response = {
+      response = {
         created_at: '2020-01-07T09:45:14+07:00',
         id: 1,
         ip_address: '127.0.0.1'
@@ -96,9 +96,9 @@ describe('actions', () => {
   })
 
   describe('when createIP', () => {
-    const response = {
-      data: { ip_address: '127.0.0.0' }
-    }
+    beforeEach(() => {
+      response = { data: { ip_address: '127.0.0.0' } }
+    })
 
     it('should resolve response', async () => {
       callApi.mockResolvedValue(response)
@@ -107,18 +107,21 @@ describe('actions', () => {
       expect(commit).toHaveBeenCalledWith('CREATE_IPS', response.data)
     })
 
-    // it('should reject errors', async () => {
-    //   callApi.mockImplementation(() => Promise.reject(new Error('Async error')))
-    //   await actions.createIP({ commit }, response.data)
-
-    //   expect(commit).toHaveBeenCalledWith('UPDATE_REQUEST_ERRORS', 'Async error')
-    // })
+    it('should reject errors', async () => {
+      // not implement yet
+    })
   })
 
   describe('when updateIP', () => {
-    const response = {
-      data: { ip_address: '127.0.0.0' }
-    }
+    beforeEach(() => {
+      response = {
+        data: {
+          created_at: '2020-01-07T09:45:14+07:00',
+          id: 1,
+          ip_address: '127.0.0.1'
+        }
+      }
+    })
 
     it('should resolve response', async () => {
       callApi.mockResolvedValue(response)
@@ -127,12 +130,9 @@ describe('actions', () => {
       expect(commit).toHaveBeenCalledWith('UPDATE_IPS', response.data)
     })
 
-    // it('should reject errors', async () => {
-    //   callApi.mockImplementation(() => Promise.reject(new Error('Async error')))
-    //   await actions.createIP({ commit }, response.data)
-
-    //   expect(commit).toHaveBeenCalledWith('UPDATE_REQUEST_ERRORS', 'Async error')
-    // })
+    it('should reject errors', async () => {
+      // not implement yet
+    })
   })
 
   describe('when clearIPErrors', () => {
