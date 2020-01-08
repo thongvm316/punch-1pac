@@ -17,9 +17,3 @@ export const allowedIPsData = () => {
     }
   ]
 }
-
-export const errors = () => {
-  return {
-    ip_address: [ 'Ip address has been taken' ]
-  }
-}

@@ -1,6 +1,6 @@
 import companyAllowedIPs from '@/store/modules/company-allowed-ips'
 import callApi from '@/store/api-caller'
-import { allowedIPsData, errors } from '../api-data/allowed-ips.api.js'
+import { allowedIPsData } from '../api-data/allowed-ips.api.js'
 jest.mock('@/store/api-caller')
 
 const { state, mutations, actions } = companyAllowedIPs
