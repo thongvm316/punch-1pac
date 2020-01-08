@@ -1,7 +1,5 @@
 import flash from '@/store/modules/flash'
-import callApi from '@/store/api-caller'
 import { flashData } from '../api-data/flash.api.js'
-jest.mock('@/store/api-caller')
 
 const { state, mutations, actions } = flash
 const commit = jest.fn()
