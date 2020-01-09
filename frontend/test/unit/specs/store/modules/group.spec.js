@@ -9,8 +9,37 @@ const { state, getters, mutations, actions } = group
 const commit = jest.fn()
 
 describe('getters', () => {
-  it('should filterUsers by name/email', () => {
-    // missing
+  describe('filterUsers by name/email', () => {
+    beforeEach(() => {
+      state.usersInGroup = usersInGroupData().users
+    })
+
+    it('should return 2 users', () => {
+      const query = 'john'
+      const users = getters.filterUsers(state)(query)
+
+      expect(users).toHaveLength(2)
+      users.forEach(user => {
+        expect(user.name).toEqual(
+          expect.stringMatching(new RegExp(query, 'i'))
+        )
+      })
+    })
+
+    it('should return 0 user', () => {
+      const query = 'oops'
+      const users = getters.filterUsers(state)(query)
+
+      expect(users).toHaveLength(0)
+    })
+
+    it('should return all users', () => {
+      const query = ''
+      const users = getters.filterUsers(state)(query)
+
+      expect(users).toHaveLength(3)
+      expect(users).toEqual(state.usersInGroup)
+    })
   })
 })
 

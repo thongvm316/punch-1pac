@@ -9,11 +9,9 @@ const state = {
 }
 
 const getters = {
-  filterUsers(state) {
-    return function(query) {
-      const regex = new RegExp(`${query.trim()}`, 'gi')
-      return query ? state.usersInGroup.filter(user => (user.name.match(regex) || user.email.match(regex))) : state.usersInGroup
-    }
+  filterUsers: state => query => {
+    const regex = new RegExp(`${query.trim()}`, 'gi')
+    return query ? state.usersInGroup.filter(user => (user.name.match(regex) || user.email.match(regex))) : state.usersInGroup
   }
 }
 
