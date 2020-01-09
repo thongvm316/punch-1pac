@@ -32,7 +32,8 @@ module.exports = {
     '!**/node_modules/**'
   ],
   coveragePathIgnorePatterns: [
-    '/node_modules/'
+    '/node_modules/',
+    '/mixins/'
   ],
   coverageReporters: [
     'html',
