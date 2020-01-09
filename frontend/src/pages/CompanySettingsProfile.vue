@@ -73,7 +73,8 @@
 <script>
 import SettingLayout from '../layouts/Setting.vue'
 import handleSuccess from '../mixins/handle-success'
-import { mapState, mapActions } from 'vuex'
+import { INITIAL_STATES_CLEAR_COMPANY_ERRORS } from '../store/mutation-types'
+import { mapState, mapActions, mapMutations } from 'vuex'
 
 export default {
   data() {
@@ -106,7 +107,9 @@ export default {
   },
 
   methods: {
-    ...mapActions('initialStates', ['clearCompanyErrors', 'updateCompany']),
+    ...mapActions('initialStates', ['updateCompany']),
+
+    ...mapMutations('initialStates', [INITIAL_STATES_CLEAR_COMPANY_ERRORS]),
 
     setLogoFile(e) {
       const files = e.target.files || e.dataTransfer.files
@@ -125,7 +128,8 @@ export default {
   },
 
   created() {
-    this.clearCompanyErrors()
+    this[INITIAL_STATES_CLEAR_COMPANY_ERRORS]()
+
     Object.keys(this.params).forEach(key => {
       if (key !== 'logo') this.params[key] = this.currentCompany[key]
     })

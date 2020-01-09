@@ -5,23 +5,23 @@
 </template>
 
 <script>
-import { mapActions, mapMutations } from 'vuex'
-import { RECEIVE_HEADER_ANNOUNCEMENTS } from './store/mutation-types'
+import { mapMutations } from 'vuex'
+import { INITIAL_STATES_SET_USER, INITIAL_STATES_SET_COMPANY, INITIAL_STATES_SET_META, RECEIVE_HEADER_ANNOUNCEMENTS } from './store/mutation-types'
 
 export default {
   name: 'app',
 
   methods: {
-    ...mapActions('initialStates', ['setCurrentUser', 'setCurrentCompany', 'setAnnouncements', 'setMeta']),
+    ...mapMutations('initialStates', [INITIAL_STATES_SET_USER, INITIAL_STATES_SET_COMPANY, INITIAL_STATES_SET_META]),
 
     ...mapMutations('announcements', [RECEIVE_HEADER_ANNOUNCEMENTS])
   },
 
   created() {
-    this.setCurrentUser(window.initialStates())
-    this.setCurrentCompany(window.initialStates())
+    this[INITIAL_STATES_SET_USER](window.initialStates().user)
+    this[INITIAL_STATES_SET_COMPANY](window.initialStates().company)
     this[RECEIVE_HEADER_ANNOUNCEMENTS](window.initialStates())
-    this.setMeta(window.initialStates())
+    this[INITIAL_STATES_SET_META](window.initialStates().meta)
   }
 }
 </script>
