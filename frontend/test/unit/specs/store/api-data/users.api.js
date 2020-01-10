@@ -44,7 +44,7 @@ export const usersData = () => {
         id: 3,
         language: 'en',
         name: 'Clara Abc',
-        owner: true,
+        owner: false,
         password_changed: false,
         position: 'Backend Developer',
         role: 'admin'

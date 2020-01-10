@@ -64,7 +64,7 @@ import confirmDialog from '../mixins/confirm-dialog'
 import SettingLayout from '../layouts/Setting'
 import UserProfile from '../components/UserProfile'
 import modal from '../mixins/modal'
-import { mapState, mapGetters, mapActions } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   data() {
@@ -91,8 +91,6 @@ export default {
   },
 
   computed: {
-    ...mapState('companyUsers', ['users']),
-
     ...mapGetters('companyUsers', ['filterByEmail'])
   },
 
