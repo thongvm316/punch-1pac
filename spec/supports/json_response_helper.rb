@@ -196,6 +196,14 @@ module JsonResponseHelper
         leave_ok: Integer,
         leave_early: Integer,
         leave: Integer,
+        minutes_leave_early: {
+          hours: Integer,
+          mins: Integer
+        },
+        minutes_attend_late: {
+          hours: Integer,
+          mins: Integer
+        },
         working_hours: {
           hours: Integer,
           mins: Integer
@@ -217,10 +225,9 @@ module JsonResponseHelper
       attending_status: nullable_response(String),
       leaving_status:   nullable_response(String),
       off_status:       nullable_response(String),
-      working_hours:    {
-        hours: Integer,
-        mins: Integer
-      },
+      attend_late:      { hours: Integer, mins: Integer },
+      leave_early:      { hours: Integer, mins: Integer },
+      working_hours:    { hours: Integer, mins: Integer },
       user:             response_user
     }
   end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_27_075233) do
+ActiveRecord::Schema.define(version: 2020_01_10_020744) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -76,6 +76,8 @@ ActiveRecord::Schema.define(version: 2019_03_27_075233) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "working_hours", default: 0, null: false
+    t.integer "minutes_attend_late", default: 0, null: false
+    t.integer "minutes_leave_early", default: 0, null: false
     t.index ["day"], name: "index_attendances_on_day"
     t.index ["user_id", "day"], name: "index_attendances_on_user_id_and_day", unique: true
     t.index ["user_id"], name: "index_attendances_on_user_id"
