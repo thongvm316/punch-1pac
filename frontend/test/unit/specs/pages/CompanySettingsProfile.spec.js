@@ -20,8 +20,8 @@ const mockParamProps = {
   punch_method: 'default'
 }
 const currentCompany = {
-  ...mockParamProps,
-  ...currentCompanyData()
+  ...currentCompanyData(),
+  ...mockParamProps
 }
 const companyErrors = {
   name: 'name error',
