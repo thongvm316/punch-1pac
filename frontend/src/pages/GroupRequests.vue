@@ -100,7 +100,8 @@ import GroupTab from '../components/GroupTab'
 import modal from '../mixins/modal'
 import flatPickr from 'vue-flatpickr-component'
 import flatpickrLocale from '../mixins/flatpickr-locale'
-import { mapState, mapActions } from 'vuex'
+import { CLEAR_REJECT_GROUP_REQUEST_ERRORS } from '../store/mutation-types'
+import { mapState, mapActions, mapMutations } from 'vuex'
 import debounce from 'lodash.debounce'
 
 export default {
@@ -167,14 +168,16 @@ export default {
     },
 
     toggleEditModal(requestId) {
-      this.clearRejectRequestErrors()
+      this[CLEAR_REJECT_GROUP_REQUEST_ERRORS]()
       this.requestParams.requestId = requestId
       this.requestParams.admin = this.currentUser
       this.requestParams.admin_reason = ''
       this.isEditModalOpen = !this.isEditModalOpen
     },
 
-    ...mapActions('groupRequests', ['getRequests', 'approveRequest', 'rejectRequest', 'clearRejectRequestErrors']),
+    ...mapActions('groupRequests', ['getRequests', 'approveRequest', 'rejectRequest']),
+
+    ...mapMutations('groupRequests', [CLEAR_REJECT_GROUP_REQUEST_ERRORS]),
 
     ...mapActions('group', ['getGroup']),
 

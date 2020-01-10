@@ -193,15 +193,15 @@ describe('actions', () => {
     })
 
     it('updateGroup reject: should commit UPDATE_GROUP_ERRORS', async () => {
-        const mockError = { response: groupError() }
-        callApi.mockRejectedValue(mockError)
+      const mockError = { response: groupError() }
+      callApi.mockRejectedValue(mockError)
 
-        await actions.updateGroup({ commit }, params)
-          .catch(error => {
-            expect(error).toEqual(mockError)
-            expect(commit).toHaveBeenCalledWith(types.UPDATE_GROUP_ERRORS, error.response.data)
-          })
-      })
+      await actions.updateGroup({ commit }, params)
+        .catch(error => {
+          expect(error).toEqual(mockError)
+          expect(commit).toHaveBeenCalledWith(types.UPDATE_GROUP_ERRORS, error.response.data)
+        })
+    })
   })
 
   describe('when handle users in group', () => {
@@ -255,14 +255,6 @@ describe('actions', () => {
       await actions.getUsersInGroup({ commit }, groupId)
 
       expect(commit).toHaveBeenCalledWith(types.FETCH_USERS_IN_GROUP, response.data)
-    })
-  })
-
-  describe('when handle errors', () => {
-    it('clearGroupErrors: should commit CLEAR_GROUP_ERRORS', () => {
-      actions.clearGroupErrors({ commit })
-
-      expect(commit).toHaveBeenCalledWith(types.CLEAR_GROUP_ERRORS)
     })
   })
 })

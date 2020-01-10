@@ -1,8 +1,7 @@
 import flash from '@/store/modules/flash'
 import { flashData } from '../api-data/flash.api.js'
 
-const { state, mutations, actions } = flash
-const commit = jest.fn()
+const { state, mutations } = flash
 
 describe('mutations', () => {
   let payload
@@ -23,14 +22,5 @@ describe('mutations', () => {
     expect(state.message).toEqual('Error!!!')
     expect(state.type).toEqual('error')
     expect(state.timeout).toEqual(3000)
-  })
-})
-
-describe('actions', () => {
-  it('should commit SET_FLASH_MESSAGE', () => {
-    const flash = flashData().error
-    actions.setFlashMsg({ commit }, flash)
-
-    expect(commit).toHaveBeenCalledWith('SET_FLASH_MESSAGE', flash)
   })
 })

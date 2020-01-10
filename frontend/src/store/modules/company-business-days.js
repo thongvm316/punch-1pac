@@ -92,10 +92,6 @@ const actions = {
         if (error.response && error.response.status === 422) commit(types.UPDATE_BUSINESS_DAY_ERRORS, error.response.data)
         throw error
       })
-  },
-
-  clearBusinessDayErrors({ commit }) {
-    commit(types.CLEAR_BUSINESS_DAY_ERRORS)
   }
 }
 

@@ -155,10 +155,6 @@ const actions = {
       })
   },
 
-  clearGroupErrors({ commit }) {
-    commit(types.CLEAR_GROUP_ERRORS)
-  },
-
   deleteGroup({ commit }, groupId) {
     return callApi({
       method: 'delete',

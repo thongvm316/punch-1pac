@@ -1,6 +1,6 @@
 import userPassword from '@/store/modules/user-password'
 import { userPasswordError } from '../api-data/user-password.api.js'
-import { UPDATE_USER_PASSWORD_ERRORS, CLEAR_USER_PASSWORD_ERRORS } from '@/store/mutation-types'
+import { UPDATE_USER_PASSWORD_ERRORS } from '@/store/mutation-types'
 import callApi from '@/store/api-caller'
 
 jest.mock('@/store/api-caller')
@@ -41,14 +41,6 @@ describe('actions', () => {
           expect(error).toEqual(mockError)
           expect(commit).toHaveBeenCalledWith(UPDATE_USER_PASSWORD_ERRORS, error.response.data)
         })
-    })
-  })
-
-  describe('clearUserPasswordErrors', () => {
-    it('should commit CLEAR_USER_PASSWORD_ERRORS', () => {
-      actions.clearUserPasswordErrors({ commit })
-
-      expect(commit).toHaveBeenCalledWith(CLEAR_USER_PASSWORD_ERRORS)
     })
   })
 })

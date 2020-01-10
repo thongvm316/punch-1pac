@@ -62,10 +62,6 @@ const actions = {
         if (error.response && error.response.status === 422) commit(types.UPDATE_GROUPS_ERRORS, error.response.data)
         throw error
       })
-  },
-
-  clearGroupsErrors({ commit }) {
-    commit(types.CLEAR_GROUPS_ERRORS)
   }
 }
 

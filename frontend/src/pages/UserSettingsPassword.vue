@@ -25,7 +25,8 @@
 
 <script>
 import SettingLayout from '../layouts/Setting.vue'
-import { mapState, mapActions } from 'vuex'
+import { CLEAR_USER_PASSWORD_ERRORS } from '../store/mutation-types'
+import { mapState, mapActions, mapMutations } from 'vuex'
 import handleSuccess from '../mixins/handle-success'
 
 export default {
@@ -43,7 +44,9 @@ export default {
   mixins: [handleSuccess],
 
   methods: {
-    ...mapActions('userPassword', ['updatePassword', 'clearUserPasswordErrors']),
+    ...mapActions('userPassword', ['updatePassword']),
+
+    ...mapMutations('userPassword', [CLEAR_USER_PASSWORD_ERRORS]),
 
     localUpdatePassword() {
       this.isDisable = true
@@ -55,7 +58,7 @@ export default {
           password: '',
           password_confirmation: ''
         }
-        this.clearUserPasswordErrors()
+        this[CLEAR_USER_PASSWORD_ERRORS]()
       })
       .catch(() => { this.isDisable = false })
     }
@@ -70,7 +73,7 @@ export default {
   },
 
   created() {
-    this.clearUserPasswordErrors()
+    this[CLEAR_USER_PASSWORD_ERRORS]()
   }
 }
 </script>

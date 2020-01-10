@@ -101,7 +101,8 @@ import UserProfile from '../components/UserProfile'
 import GroupTab from '../components/GroupTab'
 import GroupForm from '../components/GroupForm'
 import FilterUserBox from '../components/FilterUserBox'
-import { mapState, mapActions, mapGetters } from 'vuex'
+import { SET_FLASH_MESSAGE, CLEAR_GROUP_ERRORS } from '../store/mutation-types'
+import { mapState, mapActions, mapMutations, mapGetters } from 'vuex'
 
 export default {
   mixins: [confirmDialog, modal],
@@ -159,18 +160,20 @@ export default {
     },
 
     toggleEditModal() {
-      this.clearGroupErrors()
+      this[CLEAR_GROUP_ERRORS]()
       this.isEditModalOpen = !this.isEditModalOpen
     },
 
-    ...mapActions('group', ['getGroup', 'addGroupUser', 'activateGroupUser', 'deactivateGroupUser', 'removeGroupUser', 'clearGroupErrors', 'deleteGroup', 'getUsersInGroup']),
+    ...mapActions('group', ['getGroup', 'addGroupUser', 'activateGroupUser', 'deactivateGroupUser', 'removeGroupUser', 'deleteGroup', 'getUsersInGroup']),
 
-    ...mapActions('flash', ['setFlashMsg']),
+    ...mapMutations('group', [CLEAR_GROUP_ERRORS]),
+
+    ...mapMutations('flash', [SET_FLASH_MESSAGE]),
 
     localAddGroupUser() {
       this.addGroupUser({ groupId: this.$route.params.id, user: this.selectedUser }).then(() => {
         this.selectedUser = null
-        this.setFlashMsg({ message: this.$t('messages.group.addMemberSuccess') })
+        this[SET_FLASH_MESSAGE]({ message: this.$t('messages.group.addMemberSuccess') })
       })
     }
   },

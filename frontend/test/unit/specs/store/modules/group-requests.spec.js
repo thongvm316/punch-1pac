@@ -107,12 +107,4 @@ describe('actions', () => {
       })
     })
   })
-
-  describe('when clearRejectRequestErrors', () => {
-    it('should commit CLEAR_REJECT_GROUP_REQUEST_ERRORS', () => {
-      actions.clearRejectRequestErrors({ commit })
-
-      expect(commit).toHaveBeenCalledWith('CLEAR_REJECT_GROUP_REQUEST_ERRORS')
-    })
-  })
 })

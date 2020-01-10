@@ -22,7 +22,6 @@ const fakePunchResponse = {
 
 const debouncePunchIn = jest.spyOn(Punch.methods, 'debouncePunchIn')
 const debouncePunchOut = jest.spyOn(Punch.methods, 'debouncePunchOut')
-const setFlashMsg = jest.spyOn(Punch.methods, 'setFlashMsg')
 const updateCurrentTime = jest.fn()
 const punchIn = jest.fn().mockResolvedValue(fakePunchResponse.in)
 const punchOut = jest.fn().mockResolvedValue(fakePunchResponse.out)
@@ -46,7 +45,6 @@ describe('PopupChangePassword.vue', () => {
         ...wrapperOps,
         methods: {
           debouncePunchIn,
-          setFlashMsg,
           updateCurrentTime,
           punchIn
         },
@@ -74,7 +72,6 @@ describe('PopupChangePassword.vue', () => {
 
       expect(debouncePunchIn).toHaveBeenCalled()
       expect(punchIn).toHaveBeenCalled()
-      expect(setFlashMsg).toHaveBeenCalled()
     })
   })
 
@@ -84,7 +81,6 @@ describe('PopupChangePassword.vue', () => {
         ...wrapperOps,
         methods: {
           debouncePunchOut,
-          setFlashMsg,
           punchOut
         },
         computed: {
@@ -123,7 +119,6 @@ describe('PopupChangePassword.vue', () => {
         expect(punchOut).toHaveBeenCalled()
         expect(debouncePunchOut).toHaveBeenCalled()
         expect(wrapper.vm.isOpenConfirmDialog).toBeFalsy()
-        expect(setFlashMsg).toHaveBeenCalled()
       })
     })
   })
