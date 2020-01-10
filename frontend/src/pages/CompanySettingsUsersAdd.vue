@@ -67,7 +67,7 @@ export default {
 
   methods: {
     create(params) {
-      this.isDisable = false
+      this.isDisable = true
       axios
         .post('/users', { user: params }, { headers: { 'Content-Type': 'application/json' } })
         .then(response => {
