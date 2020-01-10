@@ -17,7 +17,6 @@ const errors = {
   group: 'group error'
 }
 const create = jest.fn()
-const callApi = jest.fn().mockResolvedValue('something doesnt matter')
 
 describe('CompanySettingsUsersAdd.vue', () => {
   let wrapper
@@ -26,8 +25,7 @@ describe('CompanySettingsUsersAdd.vue', () => {
     wrapper = shallowMount(CompanySettingsUsersAdd, {
       ...wrapperOps,
       methods: {
-        create,
-        callApi
+        create
       },
       data: function() {
         return {

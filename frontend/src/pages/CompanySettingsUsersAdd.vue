@@ -69,12 +69,8 @@ export default {
   methods: {
     create(params) {
       this.isDisable = true
-      callApi({
-        method: 'post',
-        url: '/users',
-        data: { user: params },
-        headers: { 'Content-Type': 'application/json' }
-      })
+      axios 
+        .post('/users', { user: params }, { headers: { 'Content-Type': 'application/json' } })
         .then(response => {
           const message = this.$t('messages.user.addSuccess')
           this.handleSuccess({ message })
