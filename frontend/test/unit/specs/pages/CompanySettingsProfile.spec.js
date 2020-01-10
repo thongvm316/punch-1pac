@@ -1,6 +1,7 @@
 import { shallowMount } from '@vue/test-utils'
 
 import wrapperOps from '../../supports/wrapper'
+import { currentCompanyData } from '../store/api-data/initial-states.api'
 
 import CompanySettingsProfile from '@/pages/CompanySettingsProfile'
 import SettingLayout from '@/layouts/Setting'
@@ -20,10 +21,7 @@ const mockParamProps = {
 }
 const currentCompany = {
   ...mockParamProps,
-  id: 1,
-  logo_url: '/static/logo.png',
-  activated: true,
-  breaktime: 1
+  ...currentCompanyData()
 }
 const companyErrors = {
   name: 'name error',
@@ -32,7 +30,6 @@ const companyErrors = {
   phone_number: 'phone error'
 }
 
-const clearCompanyErrors = jest.fn()
 const handleSuccess = jest.fn()
 const setLogoFile = jest.fn()
 const updateCompany = jest.fn().mockResolvedValue('somthing doesnt matter')
@@ -46,7 +43,6 @@ describe('CompanySettingsProfile.vue', () => {
       ...wrapperOps,
       methods: {
         setLogoFile,
-        clearCompanyErrors,
         handleSuccess,
         updateCompany,
         localUpdateCompany
@@ -59,7 +55,7 @@ describe('CompanySettingsProfile.vue', () => {
 
   afterEach(() => { wrapper.vm.$destroy() })
 
-  describe('when CompanySettingsHolidays mounted', () => {
+  describe('when CompanySettingsProfile mounted', () => {
     it('should render correctly', () => {
       expect(wrapper.exists()).toBeTruthy()
       expect(wrapper.isVueInstance()).toBeTruthy()
@@ -67,10 +63,6 @@ describe('CompanySettingsProfile.vue', () => {
 
     it('should render child components', () => {
       expect(wrapper.find(SettingLayout).exists()).toBeTruthy()
-    })
-
-    it('should call fetchHolidays', () => {
-      expect(clearCompanyErrors).toHaveBeenCalled()
     })
 
     it('should update data params', () => {
