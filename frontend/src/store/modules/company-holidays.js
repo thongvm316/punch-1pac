@@ -91,10 +91,6 @@ const actions = {
       })
   },
 
-  clearHolidayErrors({ commit }) {
-    commit(types.CLEAR_HOLIDAY_ERRORS)
-  },
-
   importNationalHolidays({ commit }, country) {
     if (!country) return
     return callApi({ method: 'post', url: '/holidays/import', data: { country } })

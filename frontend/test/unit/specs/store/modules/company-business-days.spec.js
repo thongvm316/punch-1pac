@@ -10,13 +10,13 @@ const commit = jest.fn()
 
 describe('mutations', () => {
   it('FETCH_BUSINESS_DAYS', () => {
-      const payload = companyBusinessDaysData()
+    const payload = companyBusinessDaysData()
 
-      mutations.FETCH_BUSINESS_DAYS(state, payload)
+    mutations.FETCH_BUSINESS_DAYS(state, payload)
 
-      expect(state.businessDays).toHaveLength(3)
-      expect(state.businessDays).toEqual(payload)
-    })
+    expect(state.businessDays).toHaveLength(3)
+    expect(state.businessDays).toEqual(payload)
+  })
 
   describe('when handle CUD methods', () => {
     beforeEach(() => {
@@ -30,7 +30,7 @@ describe('mutations', () => {
         morning_started_at: '08:00',
         morning_ended_at: '12:00',
         afternoon_started_at: '13:30',
-        afternoon_ended_at: '17:30',
+        afternoon_ended_at: '17:30'
       }
 
       mutations.ADD_BUSINESS_DAY(state, payload)
@@ -107,7 +107,7 @@ describe('actions', () => {
         morning_started_at: '08:00',
         morning_ended_at: '12:00',
         afternoon_started_at: '13:30',
-        afternoon_ended_at: '17:30',
+        afternoon_ended_at: '17:30'
       }
     }
 
@@ -158,7 +158,7 @@ describe('actions', () => {
           morning_started_at: '08:00',
           morning_ended_at: '12:00',
           afternoon_started_at: '13:30',
-          afternoon_ended_at: '17:30',
+          afternoon_ended_at: '17:30'
         }
       }
       callApi.mockResolvedValue(response)
@@ -177,14 +177,6 @@ describe('actions', () => {
         expect(error).toEqual(mockError)
         expect(commit).toHaveBeenCalledWith(types.UPDATE_BUSINESS_DAY_ERRORS, error.response.data)
       })
-    })
-  })
-
-  describe('when clearBusinessDayErrors', () => {
-    it('should commit CLEAR_BUSINESS_DAY_ERRORS', () => {
-      actions.clearBusinessDayErrors({ commit })
-
-      expect(commit).toHaveBeenCalledWith(types.CLEAR_BUSINESS_DAY_ERRORS)
     })
   })
 })

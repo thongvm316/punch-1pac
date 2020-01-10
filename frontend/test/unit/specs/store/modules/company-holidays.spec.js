@@ -168,12 +168,6 @@ describe('actions', () => {
     })
   })
 
-  describe('when clearHolidayErrors', () => {
-    actions.clearHolidayErrors({ commit })
-
-    expect(commit).toHaveBeenCalledWith('CLEAR_HOLIDAY_ERRORS')
-  })
-
   describe('when importNationalHolidays', () => {
     it('should commit nothing', () => {
       actions.importNationalHolidays({ commit }, '')

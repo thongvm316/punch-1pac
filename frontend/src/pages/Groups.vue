@@ -36,7 +36,8 @@
 import MainLayout from '../layouts/Main'
 import GroupForm from '../components/GroupForm'
 import modal from '../mixins/modal'
-import { mapState, mapGetters, mapActions } from 'vuex'
+import { CLEAR_GROUPS_ERRORS } from '../store/mutation-types'
+import { mapState, mapGetters, mapActions, mapMutations } from 'vuex'
 
 export default {
   mixins: [modal],
@@ -73,10 +74,12 @@ export default {
   },
 
   methods: {
-    ...mapActions('groups', ['clearGroupsErrors', 'getGroups']),
+    ...mapActions('groups', ['getGroups']),
+
+    ...mapMutations('groups', [CLEAR_GROUPS_ERRORS]),
 
     toggleAddModal() {
-      this.clearGroupsErrors()
+      this[CLEAR_GROUPS_ERRORS]()
       this.isAddModalOpen = !this.isAddModalOpen
     }
   },

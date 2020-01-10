@@ -16,7 +16,7 @@
 
 <script>
 import confirmDialog from '../mixins/confirm-dialog'
-import { PUNCH_INIT_ATTENDANCE } from '../store/mutation-types'
+import { PUNCH_INIT_ATTENDANCE, SET_FLASH_MESSAGE } from '../store/mutation-types'
 import { mapState, mapActions, mapMutations } from 'vuex'
 
 export default {
@@ -39,16 +39,16 @@ export default {
 
     ...mapMutations('punch', [PUNCH_INIT_ATTENDANCE]),
 
-    ...mapActions('punch', ['punchIn', 'punchOut']),
+    ...mapMutations('flash', [SET_FLASH_MESSAGE]),
 
-    ...mapActions('flash', ['setFlashMsg']),
+    ...mapActions('punch', ['punchIn', 'punchOut']),
 
     debouncePunchIn() {
       if (this.isPunching) return
       this.isPunching = true
       this.punchIn(this.currentUser.id).then(response => {
         this.isPunching = false
-        if (response.data) this.setFlashMsg({ message: this.$t('header.punchInSuccess', { at: response.data.attended_at }) })
+        if (response.data) this[SET_FLASH_MESSAGE]({ message: this.$t('header.punchInSuccess', { at: response.data.attended_at }) })
       })
     },
 
@@ -58,7 +58,7 @@ export default {
       this.punchOut(this.currentUser.id).then(response => {
         this.isPunching = false
         this.isOpenConfirmDialog = false
-        this.setFlashMsg({ message: this.$t('header.punchOutSuccess', { at: response.data.left_at }) })
+        this[SET_FLASH_MESSAGE]({ message: this.$t('header.punchOutSuccess', { at: response.data.left_at }) })
       })
     }
   },

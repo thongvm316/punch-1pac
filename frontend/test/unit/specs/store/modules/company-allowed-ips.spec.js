@@ -147,11 +147,4 @@ describe('actions', () => {
       })
     })
   })
-
-  describe('when clearIPErrors', () => {
-    it('should commit CLEAR_IP_ERRORS', () => {
-      actions.clearIPErrors({ commit })
-      expect(commit).toHaveBeenCalledWith('CLEAR_REQUEST_ERRORS')
-    })
-  })
 })

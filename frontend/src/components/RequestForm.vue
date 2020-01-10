@@ -33,7 +33,8 @@
 import flatPickr from 'vue-flatpickr-component'
 import flatpickrLocale from '../mixins/flatpickr-locale'
 import handleSuccess from '../mixins/handle-success'
-import { mapState, mapActions } from 'vuex'
+import { CLEAR_REQUEST_ERRORS } from '../store/mutation-types'
+import { mapState, mapActions, mapMutations } from 'vuex'
 
 export default {
   name: 'request-form',
@@ -71,7 +72,9 @@ export default {
   },
 
   methods: {
-    ...mapActions('requests', ['addRequest', 'updateRequest', 'clearRequestErrors']),
+    ...mapActions('requests', ['addRequest', 'updateRequest']),
+
+    ...mapMutations('requests', [CLEAR_REQUEST_ERRORS]),
 
     localAddRequest() {
       this.isDisable = true
@@ -93,7 +96,7 @@ export default {
   },
 
   created() {
-    this.clearRequestErrors()
+    this[CLEAR_REQUEST_ERRORS]()
     if (this.attendance) {
       this.day = this.params.attendance_day = this.attendance.day
       const statuses = ['attended_at', 'left_at']

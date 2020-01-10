@@ -46,7 +46,8 @@
 import flatPickr from 'vue-flatpickr-component'
 import flatpickrLocale from '../mixins/flatpickr-locale'
 import handleSuccess from '../mixins/handle-success'
-import { mapState, mapActions } from 'vuex'
+import { CLEAR_HOLIDAY_ERRORS } from '../store/mutation-types'
+import { mapState, mapActions, mapMutations } from 'vuex'
 
 export default {
   name: 'holiday-form',
@@ -77,7 +78,9 @@ export default {
   },
 
   methods: {
-    ...mapActions('companyHolidays', ['createHoliday', 'updateHoliday', 'clearHolidayErrors']),
+    ...mapActions('companyHolidays', ['createHoliday', 'updateHoliday']),
+
+    ...mapMutations('companyHolidays', [CLEAR_HOLIDAY_ERRORS]),
 
     localAddHoliday() {
       this.isDisable = true
@@ -106,7 +109,7 @@ export default {
   },
 
   created() {
-    this.clearHolidayErrors()
+    this[CLEAR_HOLIDAY_ERRORS]()
     if (this.targetHoliday) {
       Object.keys(this.params).forEach(k => {
         this.params[k] = this.targetHoliday[k]

@@ -154,14 +154,4 @@ describe('actions', () => {
       })
     })
   })
-
-  describe('error handlers', () => {
-    describe('clearRequestErrors', () => {
-      it('should commit CLEAR_REQUEST_ERRORS', () => {
-        actions.clearRequestErrors({ commit })
-
-        expect(commit).toHaveBeenCalledWith(types.CLEAR_REQUEST_ERRORS)
-      })
-    })
-  })
 })

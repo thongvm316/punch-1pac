@@ -78,10 +78,6 @@ const actions = {
         if (error.response && error.response.status === 422) commit(types.UPDATE_IP_ERRORS, error.response.data)
         throw error
       })
-  },
-
-  clearIPErrors({ commit }) {
-    commit(types.CLEAR_IP_ERRORS)
   }
 }
 

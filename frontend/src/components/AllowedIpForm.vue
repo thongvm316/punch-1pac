@@ -23,7 +23,8 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { CLEAR_IP_ERRORS } from '../store/mutation-types'
+import { mapState, mapActions, mapMutations } from 'vuex'
 import handleSuccess from '../mixins/handle-success'
 
 export default {
@@ -47,7 +48,9 @@ export default {
   },
 
   methods: {
-    ...mapActions('companyAllowedIPs', ['createIP', 'updateIP', 'clearIPErrors']),
+    ...mapActions('companyAllowedIPs', ['createIP', 'updateIP']),
+
+    ...mapMutations('companyAllowedIPs', [CLEAR_IP_ERRORS]),
 
     localAddIp() {
       this.isDisable = true
@@ -73,7 +76,7 @@ export default {
   },
 
   created() {
-    this.clearIPErrors()
+    this[CLEAR_IP_ERRORS]()
     if (this.targetIp) {
       this.params = this.targetIp.ip_address
     }

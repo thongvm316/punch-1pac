@@ -9,7 +9,8 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { SET_FLASH_MESSAGE } from '../store/mutation-types'
+import { mapState, mapMutations } from 'vuex'
 
 export default {
   name: 'flash',
@@ -19,14 +20,14 @@ export default {
   },
 
   methods: {
-    ...mapActions('flash', ['setFlashMsg'])
+    ...mapMutations('flash', [SET_FLASH_MESSAGE])
   },
 
   watch: {
     message: function(newMsg) {
       if (newMsg) {
         setTimeout(() => {
-          this.setFlashMsg({ message: null })
+          this[SET_FLASH_MESSAGE]({ message: null })
         }, this.timeout)
       }
     }

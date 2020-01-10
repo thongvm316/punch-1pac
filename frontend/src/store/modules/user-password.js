@@ -27,10 +27,6 @@ const actions = {
         if (error.response && error.response.status === 422) commit(types.UPDATE_USER_PASSWORD_ERRORS, error.response.data)
         throw error
       })
-  },
-
-  clearUserPasswordErrors({ commit }) {
-    commit(types.CLEAR_USER_PASSWORD_ERRORS)
   }
 }
 

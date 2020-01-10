@@ -52,7 +52,8 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { CLEAR_BUSINESS_DAY_ERRORS } from '../store/mutation-types'
+import { mapState, mapActions, mapMutations } from 'vuex'
 import handleSuccess from '../mixins/handle-success'
 
 export default {
@@ -82,7 +83,9 @@ export default {
   },
 
   methods: {
-    ...mapActions('companyBusinessDays', ['addBusinessDay', 'updateBusinessDay', 'clearBusinessDayErrors']),
+    ...mapActions('companyBusinessDays', ['addBusinessDay', 'updateBusinessDay']),
+
+    ...mapMutations('companyBusinessDays', [CLEAR_BUSINESS_DAY_ERRORS]),
 
     localAddBusinessDay() {
       this.isDisable = true
@@ -110,7 +113,7 @@ export default {
   },
 
   created() {
-    this.clearBusinessDayErrors()
+    this[CLEAR_BUSINESS_DAY_ERRORS]()
     if (this.targetBusinessDay) {
       Object.keys(this.params).forEach(key => {
         this.params[key] = this.targetBusinessDay[key]

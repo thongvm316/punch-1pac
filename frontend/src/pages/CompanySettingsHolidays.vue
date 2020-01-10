@@ -61,7 +61,8 @@
 </template>
 
 <script>
-import { mapState, mapGetters, mapActions } from 'vuex'
+import { SET_FLASH_MESSAGE } from '../store/mutation-types'
+import { mapState, mapGetters, mapActions, mapMutations } from 'vuex'
 import SettingLayout from '../layouts/Setting'
 import modal from '../mixins/modal'
 import HolidayForm from '../components/HolidayForm.vue'
@@ -90,14 +91,14 @@ export default {
   methods: {
     ...mapActions('companyHolidays', ['fetchHolidays', 'deleteHoliday', 'importNationalHolidays']),
 
-    ...mapActions('flash', ['setFlashMsg']),
+    ...mapMutations('flash', [SET_FLASH_MESSAGE]),
 
     importHolidays() {
       this.importNationalHolidays(this.country)
-        .then(response => this.setFlashMsg({ message: this.$t('company.holidays.msg.importSuccess', { country: this.$t(`meta.holiday_countries.${this.country}`) }) }))
+        .then(response => this[SET_FLASH_MESSAGE]({ message: this.$t('company.holidays.msg.importSuccess', { country: this.$t(`meta.holiday_countries.${this.country}`) }) }))
         .catch(error => {
           if (error.response && error.response.status === 422 && error.response.data.errors === 'blank_or_already_imported') {
-            this.setFlashMsg({
+            this[SET_FLASH_MESSAGE]({
               message: this.$t('company.holidays.msg.blankOrAlreadyImported', { country: this.$t(`meta.holiday_countries.${this.country}`) }),
               type: 'error',
               timeout: 6000

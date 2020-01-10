@@ -75,10 +75,6 @@ const actions = {
       if (error.response && error.response.status === 422) commit(types.REJECT_GROUP_REQUEST_ERRORS, error.response.data)
       throw error
     })
-  },
-
-  clearRejectRequestErrors({ commit }) {
-    commit(types.CLEAR_REJECT_GROUP_REQUEST_ERRORS)
   }
 }
 

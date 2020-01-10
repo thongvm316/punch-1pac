@@ -98,10 +98,6 @@ const actions = {
       .catch(error => {
         throw error
       })
-  },
-
-  clearRequestErrors({ commit }) {
-    commit(types.CLEAR_REQUEST_ERRORS)
   }
 }
 
