@@ -39,6 +39,7 @@ import GroupSelect from '../components/GroupSelect.vue'
 import axios from 'axios'
 import { mapState } from 'vuex'
 import handleSuccess from '../mixins/handle-success'
+import callApi from '../store/api-caller'
 
 export default {
   data() {
@@ -67,9 +68,13 @@ export default {
 
   methods: {
     create(params) {
-      this.isDisable = false
-      axios
-        .post('/users', { user: params }, { headers: { 'Content-Type': 'application/json' } })
+      this.isDisable = true
+      callApi({
+        method: 'post',
+        url: '/users',
+        data: { user: params },
+        headers: { 'Content-Type': 'application/json' }
+      })
         .then(response => {
           const message = this.$t('messages.user.addSuccess')
           this.handleSuccess({ message })
