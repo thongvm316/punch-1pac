@@ -70,10 +70,16 @@
       </template>
     </confirm-dialog>
 
-    <confirm-dialog :title="$t('group.confirmDialog.removeUserTitle')" :modal-open.sync="isOpenRemoveUserConfirmDialog" v-if="isOpenRemoveUserConfirmDialog">
+    <confirm-dialog
+      :title="$t('group.confirmDialog.removeUserTitle')"
+      :modal-open.sync="isOpenRemoveUserConfirmDialog"
+      v-if="isOpenRemoveUserConfirmDialog"
+      :deleteObject="localRemoveUser"
+      :objectId="targetUser.id"
+      >
       <p v-html="$t('group.confirmDialog.removeUserMsg', { name: targetUser.name })"></p>
       <template slot="confirm-btn">
-        <button type="button" class="btn btn-error" @click="localRemoveUser">{{ $t('confirmDialog.yes') }}</button>
+        <button type="button" class="btn btn-error">{{ $t('confirmDialog.yes') }}</button>
       </template>
     </confirm-dialog>
 
@@ -142,7 +148,7 @@ export default {
     },
 
     localRemoveUser() {
-      this.removeGroupUser({ groupId: this.$route.params.id, userId: this.targetUser.id }).then(() => {
+      return this.removeGroupUser({ groupId: this.$route.params.id, userId: this.targetUser.id }).then(() => {
         this.isOpenRemoveUserConfirmDialog = !this.isOpenRemoveUserConfirmDialog
       })
     },
