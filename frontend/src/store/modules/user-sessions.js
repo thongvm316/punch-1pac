@@ -1,5 +1,5 @@
-import * as types from '../mutation-types.js'
-import axios from 'axios'
+import * as types from '../mutation-types'
+import callApi from '../api-caller'
 
 const state = {
   sessions: [],
@@ -20,8 +20,10 @@ const mutations = {
 
 const actions = {
   fetchSessions({ commit }) {
-    return axios
-      .get('/sessions')
+    return callApi({
+      method: 'get',
+      url: '/sessions'
+    })
       .then(response => {
         commit(types.FETCH_SESSIONS, response.data)
         return response
@@ -32,8 +34,10 @@ const actions = {
   },
 
   deleteSession({ commit }, data) {
-    return axios
-      .delete(`/sessions/${data}`)
+    return callApi({
+      method: 'delete',
+      url: `/sessions/${data}`
+    })
       .then(response => {
         commit(types.DELETE_SESSION, data)
         return response
