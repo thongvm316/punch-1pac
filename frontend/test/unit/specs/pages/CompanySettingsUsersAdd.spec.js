@@ -53,6 +53,7 @@ describe('CompanySettingsUsersAdd.vue', () => {
 
     it('should display 4 error', () => {
       expect(wrapper.findAll('.has-error').length).toBe(4)
+      expect(wrapper.findAll('.form-input-hint').length).toBe(4)
     })
   })
 
