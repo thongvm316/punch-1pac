@@ -64,7 +64,7 @@
         <p class="form-input-hint" v-if="companyErrors.punch_method">{{ $t('company.profile.labels.punchMethod') }} {{ companyErrors.punch_method[0] }}</p>
       </div>
       <div class="form-group">
-        <button type="button" class="btn btn-success btn-submit" @click="localUpdateCompany" :disabled="isDisable">{{ $t('company.profile.btn.save') }}</button>
+        <button ref="btnSave" type="button" class="btn btn-success btn-submit" @click="localUpdateCompany" :disabled="isDisable">{{ $t('company.profile.btn.save') }}</button>
       </div>
     </form>
   </setting-layout>
