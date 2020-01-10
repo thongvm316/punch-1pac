@@ -1,5 +1,5 @@
-import * as types from '../mutation-types.js'
-import axios from 'axios'
+import * as types from '../mutation-types'
+import callApi from '../api-caller'
 
 const state = {
   errors: {}
@@ -17,8 +17,11 @@ const mutations = {
 
 const actions = {
   updatePassword({ commit }, params) {
-    return axios
-      .put('/users/change_password', params)
+    return callApi({
+      method: 'put',
+      url: '/users/change_password',
+      data: params
+    })
       .then(response => response)
       .catch(error => {
         if (error.response && error.response.status === 422) commit(types.UPDATE_USER_PASSWORD_ERRORS, error.response.data)
