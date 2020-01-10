@@ -16,7 +16,8 @@
 
 <script>
 import confirmDialog from '../mixins/confirm-dialog'
-import { mapState, mapActions } from 'vuex'
+import { PUNCH_INIT_ATTENDANCE } from '../store/mutation-types'
+import { mapState, mapActions, mapMutations } from 'vuex'
 
 export default {
   name: 'punch',
@@ -36,7 +37,9 @@ export default {
       this.currentTime = this.$moment().format('HH:mm:ss')
     },
 
-    ...mapActions('punch', ['punchIn', 'punchOut', 'initAttendance']),
+    ...mapMutations('punch', [PUNCH_INIT_ATTENDANCE]),
+
+    ...mapActions('punch', ['punchIn', 'punchOut']),
 
     ...mapActions('flash', ['setFlashMsg']),
 
@@ -65,7 +68,7 @@ export default {
   },
 
   created() {
-    if (!this.isInited) this.initAttendance(window.initialStates().attendance)
+    if (!this.isInited) this[PUNCH_INIT_ATTENDANCE](window.initialStates().attendance)
     this.updateCurrentTime()
     this.timer = setInterval(this.updateCurrentTime, 1 * 1000)
   },

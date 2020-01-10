@@ -24,7 +24,6 @@ const debouncePunchIn = jest.spyOn(Punch.methods, 'debouncePunchIn')
 const debouncePunchOut = jest.spyOn(Punch.methods, 'debouncePunchOut')
 const setFlashMsg = jest.spyOn(Punch.methods, 'setFlashMsg')
 const updateCurrentTime = jest.fn()
-const initAttendance = jest.fn()
 const punchIn = jest.fn().mockResolvedValue(fakePunchResponse.in)
 const punchOut = jest.fn().mockResolvedValue(fakePunchResponse.out)
 
@@ -49,7 +48,6 @@ describe('PopupChangePassword.vue', () => {
           debouncePunchIn,
           setFlashMsg,
           updateCurrentTime,
-          initAttendance,
           punchIn
         },
         computed: {
@@ -61,10 +59,6 @@ describe('PopupChangePassword.vue', () => {
 
     it('should call updateCurrentTime', () => {
       expect(updateCurrentTime).toHaveBeenCalled()
-    })
-
-    it('should call initAttendance', () => {
-      expect(initAttendance).toHaveBeenCalled()
     })
 
     it('should show punchIn btn, display timer', () => {
