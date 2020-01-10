@@ -1,5 +1,5 @@
 import * as types from '../mutation-types.js'
-import axios from 'axios'
+import callApi from '../api-caller'
 
 const state = {
   errors: {},
@@ -38,8 +38,11 @@ const mutations = {
 
 const actions = {
   getRequests({ commit, state }, params = {}) {
-    return axios
-      .get('/requests', { params: Object.assign(state.params, params, { per_page: 1000 }) })
+    return callApi({
+      method: 'get',
+      url: '/requests',
+      params: Object.assign(state.params, params, { per_page: 1000 })
+    })
       .then(response => {
         commit(types.RECEIVE_REQUESTS, response.data)
         return response
@@ -50,8 +53,12 @@ const actions = {
   },
 
   addRequest({ commit }, params = {}) {
-    return axios
-      .post('/requests', { request: params }, { headers: { 'Content-Type': 'application/json' } })
+    return callApi({
+      method: 'post',
+      url: '/requests',
+      data: { request: params },
+      headers: { 'Content-Type': 'application/json' }
+    })
       .then(response => {
         commit(types.ADD_REQUEST, response.data)
         return response
@@ -63,8 +70,12 @@ const actions = {
   },
 
   updateRequest({ commit }, request) {
-    return axios
-      .patch(`/requests/${request.id}`, { request: request.params }, { headers: { 'Content-Type': 'application/json' } })
+    return callApi({
+      method: 'patch',
+      url: `/requests/${request.id}`,
+      data: { request: request.params },
+      headers: { 'Content-Type': 'application/json' }
+    })
       .then(response => {
         commit(types.UPDATE_REQUEST, response.data)
         return response
@@ -76,8 +87,10 @@ const actions = {
   },
 
   deleteRequest({ commit }, id) {
-    return axios
-      .delete(`/requests/${id}`)
+    return callApi({
+      method: 'delete',
+      url: `/requests/${id}`
+    })
       .then(response => {
         commit(types.DELETE_REQUEST, id)
         return response

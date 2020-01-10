@@ -1,6 +1,6 @@
 import groupRequests from '@/store/modules/group-requests.js'
 import callApi from '@/store/api-caller'
-import { groupRequestsData, requestErrors } from '../api-data/requests.api.js'
+import { groupRequestsData, requestErrors } from '../api-data/group-requests.api.js'
 import { error422 } from '../api-data/promises-error.js'
 jest.mock('@/store/api-caller')
 
