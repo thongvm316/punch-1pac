@@ -1,5 +1,5 @@
 import * as types from '../mutation-types.js'
-import axios from 'axios'
+import callApi from '../api-caller'
 
 const state = {
   pager: {},
@@ -9,7 +9,7 @@ const state = {
 }
 
 const getters = {
-  displayNotificationsCount(state) {
+  displayNotificationsCount: state => {
     return state.unreadNotificationsCount > 99 ? 99 : state.unreadNotificationsCount
   }
 }
@@ -22,23 +22,12 @@ const mutations = {
     state.pager = payload.meta
   },
 
-  [types.FETCH_NEW_HEADER_NOTIFICATIONS](state, payload) {
-    state.unreadNotificationsCount = payload.meta.unread_notifications_count
-    let newNotificationsCount = state.unreadNotificationsCount - state.lastUnreadNotificationsCount
-
-    if (newNotificationsCount > 0) {
-      let unreadNotifications = payload.notifications.slice(0, newNotificationsCount)
-      unreadNotifications.forEach(notification => state.headerNotifications.unshift(notification))
-      state.lastUnreadNotificationsCount = payload.meta.unread_notifications_count
-    }
-  },
-
   [types.FETCH_MORE_HEADER_NOTIFICATIONS](state, payload) {
     state.headerNotifications = state.headerNotifications.concat(payload.notifications)
     state.pager = payload.meta
   },
 
-  [types.READ_NOTIFICATIONS](state, payload) {
+  [types.READ_NOTIFICATIONS](state) {
     state.unreadNotificationsCount = 0
     state.lastUnreadNotificationsCount = 0
   },
@@ -56,44 +45,49 @@ const mutations = {
 
 const actions = {
   getHeaderNotifications({ commit }, params = {}) {
-    return axios
-      .get('/notifications', { params: Object.assign({ per_page: 20 }, params) })
+    return callApi({
+      method: 'get',
+      url: '/notifications',
+      params: Object.assign({ per_page: 20 }, params)
+    })
       .then(response => commit(types.FETCH_HEADER_NOTIFICATIONS, response.data))
       .catch(error => {
         throw error
       })
   },
 
-  getNewHeaderNotifications({ commit }, params = {}) {
-    return axios
-      .get('/notifications', { params: Object.assign({ per_page: 20 }, params) })
-      .then(response => commit(types.FETCH_NEW_HEADER_NOTIFICATIONS, response.data))
-      .catch(error => {
-        throw error
-      })
-  },
-
   getMoreHeaderNotifications({ commit }, params = {}) {
-    return axios
-      .get('/notifications', { params: Object.assign({ per_page: 20 }, params) })
+    return callApi({
+      method: 'get',
+      url: '/notifications',
+      params: Object.assign({ per_page: 20 }, params)
+    })
       .then(response => commit(types.FETCH_MORE_HEADER_NOTIFICATIONS, response.data))
       .catch(error => {
         throw error
       })
   },
 
-  readNotifications({ commit }, id) {
-    return axios
-      .post(`/notifications/${id}/read`)
-      .then(response => commit(types.READ_NOTIFICATIONS))
+  readNotifications({ commit, state }, id) {
+    if (state.unreadNotificationsCount === 0) return
+
+    return callApi({ method: 'post', url: `/notifications/${id}/read` })
+      .then(response => {
+        commit(types.READ_NOTIFICATIONS)
+        return response
+      })
       .catch(error => {
         throw error
       })
   },
 
   rejectNotificationRequest({ commit }, params) {
-    return axios
-      .post(`/requests/${params.id}/reject`, { admin_reason: params.admin_reason }, { headers: { 'Content-Type': 'application/json' } })
+    return callApi({
+      method: 'post',
+      url: `/requests/${params.id}/reject`,
+      data: { admin_reason: params.admin_reason },
+      headers: { 'Content-Type': 'application/json' }
+    })
       .then(response => {
         commit(types.REJECT_NOTIFICATION_REQUEST, params.id)
         return response
@@ -104,8 +98,10 @@ const actions = {
   },
 
   approveNotificationRequest({ commit }, notificationId) {
-    return axios
-      .post(`/requests/${notificationId}/approve`)
+    return callApi({
+      method: 'post',
+      url: `/requests/${notificationId}/approve`
+    })
       .then(response => {
         commit(types.APPROVE_NOTIFICATION_REQUEST, notificationId)
         return response

@@ -121,7 +121,6 @@ export default {
       'readNotifications',
       'getHeaderNotifications',
       'getMoreHeaderNotifications',
-      'getNewHeaderNotifications',
       'approveNotificationRequest',
       'rejectNotificationRequest'
     ]),
