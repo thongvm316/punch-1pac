@@ -8,6 +8,8 @@ class UserQuery
       attendance.left_time,
       attendance.attending_status == 'attend_late' ? '✓' : '-',
       attendance.leaving_status   == 'leave_early' ? '✓' : '-',
+      "#{attendance.minutes_attend_late.to_i / 3600}h#{attendance.minutes_attend_late.to_i % 3600 / 60}m",
+      "#{attendance.minutes_leave_early.to_i / 3600}h#{attendance.minutes_leave_early.to_i % 3600 / 60}m",
       "#{attendance.working_hours.to_i / 3600}h#{attendance.working_hours.to_i % 3600 / 60}m"
     ]
   end

@@ -4,17 +4,19 @@
 #
 # Table name: attendances
 #
-#  id               :bigint(8)        not null, primary key
-#  user_id          :bigint(8)        not null
-#  day              :date             not null
-#  attended_at      :time
-#  left_at          :time
-#  attending_status :string
-#  leaving_status   :string
-#  off_status       :string
-#  created_at       :datetime         not null
-#  updated_at       :datetime         not null
-#  working_hours    :integer          default(0), not null
+#  id                  :bigint(8)        not null, primary key
+#  user_id             :bigint(8)        not null
+#  day                 :date             not null
+#  attended_at         :time
+#  left_at             :time
+#  attending_status    :string
+#  leaving_status      :string
+#  off_status          :string
+#  created_at          :datetime         not null
+#  updated_at          :datetime         not null
+#  working_hours       :integer          default(0), not null
+#  minutes_attend_late :integer          default(0), not null
+#  minutes_leave_early :integer          default(0), not null
 #
 # Indexes
 #
@@ -83,6 +85,10 @@ class Attendance < ApplicationRecord
       .in_period(date, date_type)
   end
 
+  def self.total_time_of_latency(type, date, date_type = nil)
+    select("sum(#{type}) as #{type}").in_period(date, date_type)
+  end
+
   def self.single_sum_working_hours_on_month(params)
     in_period(params[:date], params[:date_type]).sum(:working_hours)
   end
@@ -94,6 +100,8 @@ class Attendance < ApplicationRecord
       "(#{status_count_on_month('leave_ok', 'leaving_status', str_date).to_sql})",
       "(#{status_count_on_month('leave_early', 'leaving_status', str_date).to_sql})",
       "(#{status_count_on_month('annual_leave', 'off_status', str_date).to_sql})",
+      "(#{total_time_of_latency('minutes_attend_late', str_date).to_sql})",
+      "(#{total_time_of_latency('minutes_leave_early', str_date).to_sql})",
       "(#{sum_working_hours_on_month(str_date).to_sql})"
     ).limit(1)
   end
