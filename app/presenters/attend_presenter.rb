@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AttendPresenter
   def initialize(user, params = {})
     @user        = user
@@ -18,6 +20,10 @@ class AttendPresenter
     ).limit(1)
   end
 
+  def in_month
+    @attendances.relation.in_period(@params[:day]).order(day: :asc)
+  end
+
   def total_working_hours_on_month
     @user.company.total_working_hours_on_month(@params[:date])
   end
@@ -35,7 +41,7 @@ class AttendPresenter
   end
 
   def sum_working_hours_on_month(date, date_type = nil)
-    @attendances.relation.select('sum(working_hours) as working_hours').in_period(date, date_type).to_sql
+    @attendances.relation.sum_working_hours_on_month(date, date_type).to_sql
   end
 
   def total_time_of_latency(type, date, date_type = nil)

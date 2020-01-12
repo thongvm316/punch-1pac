@@ -31,6 +31,7 @@ class Api::V1::AttendancesController < Api::V1::BaseController
 
   def chart
     authorize!
+
     attend = AttendPresenter.new(current_user, params)
     render json: attend.chart.first,
            root: 'statuses',
@@ -64,9 +65,9 @@ class Api::V1::AttendancesController < Api::V1::BaseController
 
   def calendar
     authorize!
-    attendances = current_user.attendances.in_period(params[:day]).order(day: :asc)
-    if stale?(attendances)
-      render json: attendances,
+    attend = AttendPresenter.new(current_user, params).in_month
+    if stale?(attend)
+      render json: attend,
              root: 'attendances',
              meta: ActiveModelSerializers::SerializableResource.new(current_company.holidays.in_month(params[:day]), each_serializer: HolidaySerializer).as_json,
              meta_key: 'holidays',

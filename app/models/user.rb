@@ -101,33 +101,6 @@ class User < ApplicationRecord
   }
   scope :pending_requests, -> { joins(:requests).merge(Request.where(status: :pending)) }
 
-  def self.count_attendance_status(date, date_type)
-    select(
-      :id, :name, :email, :avatar_data, :company_id, :created_at, :deactivated_at, :activated_at, :activated,
-      "(#{Attendance.status_count_on_month('attend_ok', 'attending_status', date, date_type).where('attendances.user_id = users.id').to_sql})",
-      "(#{Attendance.status_count_on_month('attend_late', 'attending_status', date, date_type).where('attendances.user_id = users.id').to_sql})",
-      "(#{Attendance.status_count_on_month('leave_ok', 'leaving_status', date, date_type).where('attendances.user_id = users.id').to_sql})",
-      "(#{Attendance.status_count_on_month('leave_early', 'leaving_status', date, date_type).where('attendances.user_id = users.id').to_sql})",
-      "(#{Attendance.status_count_on_month('annual_leave', 'off_status', date, date_type).where('attendances.user_id = users.id').to_sql})",
-      "(#{Attendance.sum_working_hours_on_month(date, date_type).where('attendances.user_id = users.id').to_sql})"
-    )
-  end
-
-  def self.report(params)
-    count_attendance_status(params[:date], params[:date_type]).where(id: UserGroup.with_group(params[:group_id]))
-  end
-
-  def single_report(params)
-    {
-      attend_ok: attendances.single_status_count_on_month('attend_ok', 'attending_status', params),
-      attend_late: attendances.single_status_count_on_month('attend_late', 'attending_status', params),
-      leave_ok: attendances.single_status_count_on_month('leave_ok', 'leaving_status', params),
-      leave_early: attendances.single_status_count_on_month('leave_early', 'leaving_status', params),
-      leave: attendances.single_status_count_on_month('annual_leave', 'off_status', params),
-      working_hours: attendances.single_sum_working_hours_on_month(params)
-    }
-  end
-
   def self.reset_password_token_valid?(token)
     user = find_by(reset_password_token: token)
     raise AppErrors::InvalidResetPwdToken unless user

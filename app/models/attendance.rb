@@ -57,34 +57,6 @@ class Attendance < ApplicationRecord
     end
   }
 
-  # def self.in_period(str_date, date_type = nil)
-  #   date = str_date.present? ? Date.parse(str_date) : Date.current
-  #   raise ArgumentError if date.blank?
-  #   if date_type == 'year'
-  #     where('extract(year from day) = ?', date.year)
-  #   else
-  #     where(day: date.beginning_of_month..date.end_of_month)
-  #   end
-  # rescue TypeError, ArgumentError
-  #   where(id: nil)
-  # end
-
-  # def self.status_count_on_month(status_value, status_type, date, date_type = nil)
-  #   select("count(id) as #{status_value}")
-  #     .in_period(date, date_type)
-  #     .where("#{status_type}": status_value)
-  #     .group(status_type)
-  # end
-
-  def self.single_status_count_on_month(status_value, status_type, params)
-    in_period(params[:date], params[:date_type]).where("#{status_type}": status_value).size
-  end
-
-  def self.single_sum_working_hours_on_month(params)
-    in_period(params[:date], params[:date_type]).sum(:working_hours)
-  end
-
-
   def self.search_by(params)
     q = all
     q = q.where(user_id: UserGroup.with_group(params[:group_id])) if params[:group_id].present?

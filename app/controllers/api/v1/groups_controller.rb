@@ -60,7 +60,8 @@ class Api::V1::GroupsController < Api::V1::BaseController
 
   def report
     authorize! @group
-    results  = current_company.users.report(params.merge(group_id: params[:id])).order(name: :asc)
+
+    results  = ReportPresenter.new(current_company, params).statific_company_in_month
     document = DocumentService.new('Group', params)
     respond_to do |format|
       format.json do
@@ -69,7 +70,7 @@ class Api::V1::GroupsController < Api::V1::BaseController
                 each_serializer: GroupReportSerializer,
                 meta: {
                   company_total_working_hours_on_month: current_company.total_working_hours_on_month(params[:date], params[:date_type]),
-                  company_total_working_days_in_month: current_company.total_working_days_in_month(params[:date], params[:date_type])
+                  company_total_working_days_in_month:  current_company.total_working_days_in_month(params[:date], params[:date_type])
                 },
                 params: params,
                 adapter: :json,
@@ -86,16 +87,16 @@ class Api::V1::GroupsController < Api::V1::BaseController
     user = @group.users.find(params[:user_id])
 
     if user
-      attendances = user.attendances.in_period(params[:date]).order(day: :asc)
-      report = user.single_report(params)
-      document = DocumentService.new('User', params)
-      holidays = current_company.holidays.in_month(params[:date])
+      attendances = ReportPresenter.new(current_company, params).user_attendances_in_month(user)
+      report      = ReportPresenter.new(current_company, params).statific_personal_in_month(user)
+      document    = DocumentService.new('User', params)
+      holidays    = current_company.holidays.in_month(params[:date])
 
       attendances_json = ActiveModelSerializers::SerializableResource.new(attendances, each_serializer: AttendanceSerializer).as_json
-      holidays_json = ActiveModelSerializers::SerializableResource.new(holidays, each_serializer: HolidaySerializer).as_json
+      holidays_json    = ActiveModelSerializers::SerializableResource.new(holidays, each_serializer: HolidaySerializer).as_json
       meta_json = {
         company_total_working_hours_on_month: current_company.total_working_hours_on_month(params[:date], params[:date_type]),
-        company_total_working_days_in_month: current_company.total_working_days_in_month(params[:date], params[:date_type])
+        company_total_working_days_in_month:  current_company.total_working_days_in_month(params[:date], params[:date_type])
       }
 
       respond_to do |format|

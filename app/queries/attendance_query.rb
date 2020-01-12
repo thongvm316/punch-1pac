@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AttendanceQuery
   attr_reader(:relation, :params)
 
@@ -11,12 +13,13 @@ class AttendanceQuery
       date = str_date.present? ? Date.parse(str_date) : Date.current
       raise ArgumentError if date.blank?
 
-      q = all
-      q = q.where('extract(year from day) = ?', date.year)         if type == 'year'
-      q = q.where(day: date.beginning_of_month..date.end_of_month) if type.nil?
-      q
+      if type == 'year'
+        where('extract(year from day) = ?', date.year)
+      else
+        where(day: date.beginning_of_month..date.end_of_month)
+      end
     rescue TypeError, ArgumentError
-      none
+      where(id: nil)
     end
 
     def status_count_on_month(status_value, status_type, date, date_type = nil)
@@ -27,8 +30,16 @@ class AttendanceQuery
       q
     end
 
-    def single_status_count_on_month(status_value, status_type, params)
-      in_period(params[:date], params[:date_type]).where("#{status_type}": status_value).size
+    def sum_working_hours_on_month(date, date_type = nil)
+      select('sum(working_hours) as working_hours').in_period(date, date_type)
+    end
+
+    def single_status_count_on_month(status_value, status_type, date, date_type = nil)
+      in_period(date, date_type).where("#{status_type}": status_value).size
+    end
+
+    def single_working_hours_on_month(date = nil, date_type = nil)
+      in_period(date, date_type).sum(:working_hours)
     end
   end
 end
