@@ -57,18 +57,6 @@ class Attendance < ApplicationRecord
     end
   }
 
-  def self.search_by(params)
-    q = all
-    q = q.where(user_id: UserGroup.with_group(params[:group_id])) if params[:group_id].present?
-    q = q.with_status(params[:status]) if params[:status].present?
-    q = q.where(day: Date.parse(params[:from_date])..Date.parse(params[:to_date])) if params[:from_date].present? && params[:to_date].present?
-    q = q.joins(:user).merge(User.by_name_or_email(params[:name_or_email])) if params[:name_or_email].present?
-    q = q.in_period(params[:date]) if params[:date].present?
-    q
-  rescue TypeError, ArgumentError
-    none
-  end
-
   def attended_time
     return '-' if attended_at.nil?
     attended_at.strftime('%H:%M')

@@ -47,11 +47,8 @@ class Api::V1::AttendancesController < Api::V1::BaseController
 
   def index
     authorize!
-    attendances = Attendance.for_user(current_user, params['self'])
-                            .search_by(params)
-                            .page(params[:page])
-                            .per(params[:per_page])
-                            .order(day: :desc)
+    relation    = Attendance.for_user(current_user, params['self'])
+    attendances = AttendanceQuery.new(relation, params).search_by
 
     if stale?(attendances)
       render json: attendances,

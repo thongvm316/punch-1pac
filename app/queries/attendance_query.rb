@@ -8,6 +8,19 @@ class AttendanceQuery
     @params   = params
   end
 
+  def search_by
+    q = @relation
+    q = q.where(user_id: UserGroup.with_group(@params[:group_id]))                   if @params[:group_id].present?
+    q = q.with_status(@params[:status])                                              if @params[:status].present?
+    q = q.where(day: Date.parse(@params[:from_date])..Date.parse(@params[:to_date])) if @params[:from_date].present? && @params[:to_date].present?
+    q = q.joins(:user).merge(User.by_name_or_email(@params[:name_or_email]))         if @params[:name_or_email].present?
+    q = q.in_period(@params[:date])                                                  if params[:date].present?
+    q = q.page(params[:page]).per(params[:per_page]).order(day: :desc)
+    q
+  rescue TypeError, ArgumentError
+    none
+  end
+
   module Scopes
     def in_period(str_date, type = nil)
       date = str_date.present? ? Date.parse(str_date) : Date.current
