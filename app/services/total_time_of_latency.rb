@@ -11,6 +11,8 @@ class TotalTimeOfLatency
   def execute
     @business_day = convert_business_day_to_timestamp
     @check_time.between?(@start_day, @business_day[:morning_ended_at]) ? in_morning : in_afternoon
+  rescue NoMethodError
+    0
   end
 
   private

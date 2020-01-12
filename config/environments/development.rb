@@ -59,11 +59,11 @@ Rails.application.configure do
 
   config.action_mailer.default_url_options = { host: 'localhost:3000' }
 
-  config.after_initialize do
-    Bullet.enable = true
-    Bullet.bullet_logger = true
-    Bullet.raise = true
-  end
+  # config.after_initialize do
+  #   Bullet.enable = true
+  #   Bullet.bullet_logger = true
+  #   Bullet.raise = true
+  # end
 
   config.action_dispatch.tld_length = 0
 end

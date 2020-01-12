@@ -4,10 +4,11 @@ class ReportPresenter
   def initialize(company, params = {})
     @company = company
     @params  = params
+    @group   = @company.groups.find(params[:id])
   end
 
   def statific_company_in_month
-    UserPresenter.statific_status_in_month(@company, @params)
+    UserPresenter.statific_status_in_month(@group, @params)
   end
 
   def statific_personal_in_month(user)
