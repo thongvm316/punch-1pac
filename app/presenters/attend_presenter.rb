@@ -21,7 +21,7 @@ class AttendPresenter
   end
 
   def in_month
-    @attendances.relation.in_period(@params[:day]).order(day: :asc)
+    @attendances.relation.in_period(@params[:date], @params[:date_type]).order(day: :asc)
   end
 
   def total_working_hours_on_month

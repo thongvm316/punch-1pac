@@ -66,7 +66,7 @@ class Api::V1::AttendancesController < Api::V1::BaseController
     if stale?(attend)
       render json: attend,
              root: 'attendances',
-             meta: ActiveModelSerializers::SerializableResource.new(current_company.holidays.in_month(params[:day]), each_serializer: HolidaySerializer).as_json,
+             meta: ActiveModelSerializers::SerializableResource.new(current_company.holidays.in_month(params[:date]), each_serializer: HolidaySerializer).as_json,
              meta_key: 'holidays',
              each_serializer: AttendanceSerializer,
              adapter: :json,

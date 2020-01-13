@@ -38,7 +38,7 @@ class DocumentService
   end
 
   def header
-    @model.name == 'UserQuery' ? 'HEADER_USER' : 'HEADER_GROUP'
+    @model.name == 'UserCSV' ? 'HEADER_USER' : 'HEADER_GROUP'
   end
 
   def footer(attend)
