@@ -45,10 +45,10 @@
 </template>
 
 <script>
-import SettingLayout from '../layouts/Setting.vue'
 import modal from '../mixins/modal'
-import BusinessDayForm from '../components/BusinessDayForm.vue'
 import { mapState, mapActions } from 'vuex'
+const SettingLayout = () => import('../layouts/Setting.vue')
+const BusinessDayForm = () => import('../components/BusinessDayForm.vue')
 
 export default {
   mixins: [modal],

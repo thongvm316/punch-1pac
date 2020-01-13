@@ -26,6 +26,7 @@
 <script>
 export default {
   name: 'group-tab',
+
   props: {
     groupId: {
       type: String,

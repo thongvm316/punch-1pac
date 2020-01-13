@@ -61,10 +61,10 @@
 
 <script>
 import confirmDialog from '../mixins/confirm-dialog'
-import SettingLayout from '../layouts/Setting'
-import UserProfile from '../components/UserProfile'
 import modal from '../mixins/modal'
 import { mapGetters, mapActions } from 'vuex'
+const SettingLayout = () => import('../layouts/Setting')
+const UserProfile = () => import('../components/UserProfile')
 
 export default {
   data() {

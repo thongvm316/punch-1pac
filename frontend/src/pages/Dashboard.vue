@@ -52,10 +52,10 @@
 </template>
 
 <script>
-import MainLayout from '../layouts/Main.vue'
-import FullCalendar from '../components/FullCalendar.vue'
-import StatusCards from '../components/StatusCards.vue'
 import { mapState, mapActions } from 'vuex'
+const MainLayout = () => import('../layouts/Main.vue')
+const FullCalendar = () => import('../components/FullCalendar.vue')
+const StatusCards = () => import('../components/StatusCards.vue')
 
 export default {
   methods: {

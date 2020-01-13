@@ -20,11 +20,11 @@
 </template>
 
 <script>
-import SettingLayout from '../layouts/Setting.vue'
 import axios from 'axios'
 import { mapState } from 'vuex'
 import 'formdata-polyfill'
 import handleSuccess from '../mixins/handle-success'
+const SettingLayout = () => import('../layouts/Setting.vue')
 
 export default {
   data() {

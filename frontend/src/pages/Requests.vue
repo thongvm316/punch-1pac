@@ -81,13 +81,13 @@
 </template>
 
 <script>
-import MainLayout from '../layouts/Main'
 import confirmDialog from '../mixins/confirm-dialog'
-import AnnualLeaveForm from '../components/AnnualLeaveForm'
-import RequestForm from '../components/RequestForm'
 import modal from '../mixins/modal'
-import Datepicker from 'vuejs-datepicker'
 import { mapState, mapActions } from 'vuex'
+const MainLayout = () => import('../layouts/Main')
+const Datepicker = () => import('vuejs-datepicker')
+const AnnualLeaveForm = () => import('../components/AnnualLeaveForm')
+const RequestForm = () => import('../components/RequestForm')
 
 export default {
   name: 'requests',

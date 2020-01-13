@@ -71,10 +71,10 @@
 </template>
 
 <script>
-import SettingLayout from '../layouts/Setting.vue'
 import handleSuccess from '../mixins/handle-success'
 import { INITIAL_STATES_CLEAR_COMPANY_ERRORS } from '../store/mutation-types'
 import { mapState, mapActions, mapMutations } from 'vuex'
+const SettingLayout = () => import('../layouts/Setting.vue')
 
 export default {
   data() {

@@ -34,11 +34,11 @@
 </template>
 
 <script>
-import SettingLayout from '../layouts/Setting.vue'
-import GroupSelect from '../components/GroupSelect.vue'
 import axios from 'axios'
 import { mapState } from 'vuex'
 import handleSuccess from '../mixins/handle-success'
+const SettingLayout = () => import('../layouts/Setting.vue')
+const GroupSelect = () => import('../components/GroupSelect.vue')
 
 export default {
   data() {

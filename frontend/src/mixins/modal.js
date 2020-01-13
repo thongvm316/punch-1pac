@@ -1,6 +1,6 @@
-import Modal from '../components/Modal.vue'
 import { SET_FLASH_MESSAGE } from '../store/mutation-types'
 import { mapMutations } from 'vuex'
+const Modal = () => import('../components/Modal.vue')
 
 export default {
   data() {

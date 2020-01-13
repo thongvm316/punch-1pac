@@ -54,11 +54,11 @@
 </template>
 
 <script>
-import MonthYearPicker from '../components/MonthYearPicker'
-import MainLayout from '../layouts/Main'
-import GroupTab from '../components/GroupTab'
 import exportFile from '../mixins/export-file'
 import { mapState, mapActions } from 'vuex'
+const MonthYearPicker = () => import('../components/MonthYearPicker')
+const MainLayout = () => import('../layouts/Main')
+const GroupTab = () => import('../components/GroupTab')
 
 export default {
   mixins: [exportFile],

@@ -51,14 +51,14 @@
 </template>
 
 <script>
-import MainLayout from '../layouts/Main'
-import Pagination from '../components/Pagination'
-import GroupTab from '../components/GroupTab'
-import AttendanceStatusSelect from '../components/AttendanceStatusSelect'
-import flatPickr from 'vue-flatpickr-component'
 import flatpickrLocale from '../mixins/flatpickr-locale'
 import { mapState, mapActions, mapGetters } from 'vuex'
 import debounce from 'lodash.debounce'
+const MainLayout = () => import('../layouts/Main')
+const Pagination = () => import('../components/Pagination')
+const GroupTab = () => import('../components/GroupTab')
+const AttendanceStatusSelect = () => import('../components/AttendanceStatusSelect')
+const flatPickr = () => import('vue-flatpickr-component')
 
 export default {
   mixins: [flatpickrLocale],

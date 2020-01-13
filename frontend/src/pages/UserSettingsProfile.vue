@@ -5,8 +5,8 @@
 </template>
 
 <script>
-import SettingLayout from '../layouts/Setting'
-import UserProfile from '../components/UserProfile'
+const SettingLayout = () => import('../layouts/Setting')
+const UserProfile = () => import('../components/UserProfile')
 
 export default {
   components: {
