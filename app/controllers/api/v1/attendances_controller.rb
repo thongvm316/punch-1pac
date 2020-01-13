@@ -22,7 +22,7 @@ class Api::V1::AttendancesController < Api::V1::BaseController
     attendance = current_user.attendances.find_by(day: Time.current)
     if attendance
       attendance_json = ActiveModelSerializers::SerializableResource.new(attendance, serializer: AttendanceSerializer).as_json
-      company_json = ActiveModelSerializers::SerializableResource.new(current_company, serializer: CompanySerializer).as_json
+      company_json    = ActiveModelSerializers::SerializableResource.new(current_company, serializer: CompanySerializer).as_json
       render json: { attendance: attendance_json, company: company_json }, status: :ok
     else
       head(:ok)
@@ -31,25 +31,24 @@ class Api::V1::AttendancesController < Api::V1::BaseController
 
   def chart
     authorize!
-    render json: current_user.attendances.chart(params[:date]).first,
+
+    attend = AttendPresenter.new(current_user, params)
+    render json: attend.chart.first,
            root: 'statuses',
            serializer: AttendanceChartSerializer,
            meta: {
-             company_total_working_hours_on_month: current_company.total_working_hours_on_month(params[:date]),
-             company_total_working_days_in_month: current_company.total_working_days_in_month(params[:date])
+             company_total_working_hours_on_month: attend.total_working_hours_on_month,
+             company_total_working_days_in_month:  attend.total_working_days_in_month
            },
-           leave_days: ForgotPunchInDaysService.new(current_user, current_company, params[:date]).execute,
+           leave_days: attend.forget_punch_in,
            adapter: :json,
-           status: :ok
+           status:  :ok
   end
 
   def index
     authorize!
-    attendances = Attendance.for_user(current_user, params['self'])
-                            .search_by(params)
-                            .page(params[:page])
-                            .per(params[:per_page])
-                            .order(day: :desc)
+    relation    = Attendance.for_user(current_user, params['self'])
+    attendances = AttendanceQuery.new(relation, params).search_by
 
     if stale?(attendances)
       render json: attendances,
@@ -63,11 +62,11 @@ class Api::V1::AttendancesController < Api::V1::BaseController
 
   def calendar
     authorize!
-    attendances = current_user.attendances.in_period(params[:day]).order(day: :asc)
-    if stale?(attendances)
-      render json: attendances,
+    attend = AttendPresenter.new(current_user, params).in_month
+    if stale?(attend)
+      render json: attend,
              root: 'attendances',
-             meta: ActiveModelSerializers::SerializableResource.new(current_company.holidays.in_month(params[:day]), each_serializer: HolidaySerializer).as_json,
+             meta: ActiveModelSerializers::SerializableResource.new(current_company.holidays.in_month(params[:date]), each_serializer: HolidaySerializer).as_json,
              meta_key: 'holidays',
              each_serializer: AttendanceSerializer,
              adapter: :json,

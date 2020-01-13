@@ -7,7 +7,7 @@ class DocumentService
   ZIP_TYPE     = 'text/zip; charset=utf-8; header=present'
 
   def initialize(model, params = {})
-    @model  = "#{model}Query".constantize
+    @model  = "#{model}CSV".constantize
     @params = params
   end
 
@@ -17,7 +17,7 @@ class DocumentService
     CSV.generate(headers: true) do |csv|
       csv << DocumentService.const_get(header)
       rows.each { |row| csv << row }
-      csv << footer(data) if @model.name == 'UserQuery'
+      csv << footer(data) if @model.name == 'UserCSV'
     end
   end
 
@@ -38,11 +38,11 @@ class DocumentService
   end
 
   def header
-    @model.name == 'UserQuery' ? 'HEADER_USER' : 'HEADER_GROUP'
+    @model.name == 'UserCSV' ? 'HEADER_USER' : 'HEADER_GROUP'
   end
 
   def footer(attend)
-    data = attend.single_sum_working_hours_on_month(@params)
+    data = AttendanceQuery.new(attend).relation.single_working_hours_on_month
     ['Total', '', '', '', '', '', '', "#{data.to_i / 3600}h#{data.to_i % 3600 / 60}m"]
   end
 end

@@ -57,67 +57,6 @@ class Attendance < ApplicationRecord
     end
   }
 
-  def self.in_period(str_date, date_type = nil)
-    date = str_date.present? ? Date.parse(str_date) : Date.current
-    raise ArgumentError if date.blank?
-    if date_type == 'year'
-      where('extract(year from day) = ?', date.year)
-    else
-      where(day: date.beginning_of_month..date.end_of_month)
-    end
-  rescue TypeError, ArgumentError
-    where(id: nil)
-  end
-
-  def self.status_count_on_month(status_value, status_type, date, date_type = nil)
-    select("count(id) as #{status_value}")
-      .in_period(date, date_type)
-      .where("#{status_type}": status_value)
-      .group(status_type)
-  end
-
-  def self.single_status_count_on_month(status_value, status_type, params)
-    in_period(params[:date], params[:date_type]).where("#{status_type}": status_value).size
-  end
-
-  def self.sum_working_hours_on_month(date, date_type = nil)
-    select('sum(working_hours) as working_hours')
-      .in_period(date, date_type)
-  end
-
-  def self.total_time_of_latency(type, date, date_type = nil)
-    select("sum(#{type}) as #{type}").in_period(date, date_type)
-  end
-
-  def self.single_sum_working_hours_on_month(params)
-    in_period(params[:date], params[:date_type]).sum(:working_hours)
-  end
-
-  def self.chart(str_date = nil)
-    select(
-      "(#{status_count_on_month('attend_ok', 'attending_status', str_date).to_sql})",
-      "(#{status_count_on_month('attend_late', 'attending_status', str_date).to_sql})",
-      "(#{status_count_on_month('leave_ok', 'leaving_status', str_date).to_sql})",
-      "(#{status_count_on_month('leave_early', 'leaving_status', str_date).to_sql})",
-      "(#{status_count_on_month('annual_leave', 'off_status', str_date).to_sql})",
-      "(#{total_time_of_latency('minutes_attend_late', str_date).to_sql})",
-      "(#{total_time_of_latency('minutes_leave_early', str_date).to_sql})",
-      "(#{sum_working_hours_on_month(str_date).to_sql})"
-    ).limit(1)
-  end
-
-  def self.search_by(params)
-    q = all
-    q = q.where(user_id: UserGroup.with_group(params[:group_id])) if params[:group_id].present?
-    q = q.with_status(params[:status]) if params[:status].present?
-    q = q.where(day: Date.parse(params[:from_date])..Date.parse(params[:to_date])) if params[:from_date].present? && params[:to_date].present?
-    q = q.joins(:user).merge(User.by_name_or_email(params[:name_or_email])) if params[:name_or_email].present?
-    q = q.in_period(params[:date]) if params[:date].present?
-    q
-  rescue TypeError, ArgumentError
-    none
-  end
-
   def attended_time
     return '-' if attended_at.nil?
     attended_at.strftime('%H:%M')

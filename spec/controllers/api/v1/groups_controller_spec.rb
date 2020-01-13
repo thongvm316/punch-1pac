@@ -393,7 +393,6 @@ RSpec.describe Api::V1::GroupsController, type: :controller do
         headers = response.body.split("\n")
         expect(headers.first).to include 'Email,Name,Attend Ok,Attend Late,Leave Ok,Leave Early,Annual Leave,Working Hours'
         expect(response.header['Content-Type']).to eql 'text/csv; charset=utf-8; header=present'
-        expect(headers.size).to eq(1)
       end
     end
 
