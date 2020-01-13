@@ -11,7 +11,7 @@ export const activitiesData = () => {
       {
         id: 1,
         activitable_id: 0,
-        activitable_type: 'Punch',
+        activitable_type: 'Request',
         kind: 'update',
         created_at: '2019-01-02'
       }
