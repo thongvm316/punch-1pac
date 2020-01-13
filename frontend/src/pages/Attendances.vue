@@ -53,12 +53,12 @@
 </template>
 
 <script>
-import Datepicker from 'vuejs-datepicker'
-import MainLayout from '../layouts/Main'
-import AttendanceStatusSelect from '../components/AttendanceStatusSelect'
-import RequestForm from '../components/RequestForm'
 import modal from '../mixins/modal'
 import { mapGetters, mapActions } from 'vuex'
+const Datepicker = () => import('vuejs-datepicker')
+const MainLayout = () => import('../layouts/Main')
+const AttendanceStatusSelect = () => import('../components/AttendanceStatusSelect')
+const RequestForm = () => import('../components/RequestForm')
 
 export default {
   mixins: [modal],

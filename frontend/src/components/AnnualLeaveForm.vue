@@ -25,10 +25,10 @@
 </template>
 
 <script>
-import flatPickr from 'vue-flatpickr-component'
 import flatpickrLocale from '../mixins/flatpickr-locale'
 import handleSuccess from '../mixins/handle-success'
 import axios from 'axios'
+const flatPickr = () => import('vue-flatpickr-component')
 
 export default {
   name: 'annual-leave',

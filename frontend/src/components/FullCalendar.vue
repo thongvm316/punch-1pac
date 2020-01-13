@@ -62,11 +62,11 @@
 </template>
 
 <script>
-import CalendarDate from '../components/CalendarDate.vue'
-import RequestForm from '../components/RequestForm'
-import AnnualLeaveForm from '../components/AnnualLeaveForm'
 import { mapState, mapActions } from 'vuex'
 import modal from '../mixins/modal'
+const CalendarDate = () => import('../components/CalendarDate.vue')
+const RequestForm = () => import('../components/RequestForm')
+const AnnualLeaveForm = () => import('../components/AnnualLeaveForm')
 
 export default {
   name: 'full-calendar',

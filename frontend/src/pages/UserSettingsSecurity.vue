@@ -41,8 +41,8 @@
 </template>
 
 <script>
-import SettingLayout from '../layouts/Setting.vue'
 import { mapState, mapActions } from 'vuex'
+const SettingLayout = () => import('../layouts/Setting.vue')
 
 export default {
   data() {
@@ -50,17 +50,21 @@ export default {
       isInfoOpen: false
     }
   },
+
   components: {
     SettingLayout
   },
+
   methods: {
     ...mapActions('userSessions', ['fetchSessions', 'deleteSession'])
   },
+
   computed: {
     ...mapState('initialStates', ['currentUser']),
 
     ...mapState('userSessions', ['sessions', 'currentSession'])
   },
+
   created() {
     this.fetchSessions()
   }

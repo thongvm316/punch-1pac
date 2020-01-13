@@ -40,9 +40,9 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
-import SettingLayout from '../layouts/Setting.vue'
 import modal from '../mixins/modal'
-import AllowedIpForm from '../components/AllowedIpForm.vue'
+const AllowedIpForm = () => import('../components/AllowedIpForm.vue')
+const SettingLayout = () => import('../layouts/Setting.vue')
 
 export default {
   mixins: [modal],

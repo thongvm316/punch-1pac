@@ -33,11 +33,11 @@
 </template>
 
 <script>
-import MainLayout from '../layouts/Main'
-import GroupForm from '../components/GroupForm'
 import modal from '../mixins/modal'
 import { CLEAR_GROUPS_ERRORS } from '../store/mutation-types'
 import { mapState, mapGetters, mapActions, mapMutations } from 'vuex'
+const MainLayout = () => import('../layouts/Main')
+const GroupForm = () => import('../components/GroupForm')
 
 export default {
   mixins: [modal],

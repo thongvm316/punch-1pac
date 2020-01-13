@@ -28,8 +28,8 @@
 </template>
 
 <script>
-import Datepicker from 'vuejs-datepicker'
 import { mapState, mapActions } from 'vuex'
+const Datepicker = () => import('vuejs-datepicker')
 
 export default {
   name: 'status-cards',

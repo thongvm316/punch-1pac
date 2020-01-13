@@ -94,15 +94,15 @@
 </template>
 
 <script>
-import MainLayout from '../layouts/Main'
 import modal from '../mixins/modal'
 import confirmDialog from '../mixins/confirm-dialog'
-import UserProfile from '../components/UserProfile'
-import GroupTab from '../components/GroupTab'
-import GroupForm from '../components/GroupForm'
-import FilterUserBox from '../components/FilterUserBox'
 import { SET_FLASH_MESSAGE, CLEAR_GROUP_ERRORS } from '../store/mutation-types'
 import { mapState, mapActions, mapMutations, mapGetters } from 'vuex'
+const MainLayout = () => import('../layouts/Main')
+const UserProfile = () => import('../components/UserProfile')
+const GroupTab = () => import('../components/GroupTab')
+const GroupForm = () => import('../components/GroupForm')
+const FilterUserBox = () => import('../components/FilterUserBox')
 
 export default {
   mixins: [confirmDialog, modal],

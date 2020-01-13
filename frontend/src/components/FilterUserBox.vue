@@ -21,8 +21,8 @@
 
 <script>
 import axios from 'axios'
-import vSelect from 'vue-select'
 import debounce from 'lodash.debounce'
+const vSelect = () => import('vue-select')
 
 export default {
   data() {

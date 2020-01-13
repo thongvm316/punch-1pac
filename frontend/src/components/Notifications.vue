@@ -69,11 +69,11 @@
 </template>
 
 <script>
-import flatPickr from 'vue-flatpickr-component'
 import flatpickrLocale from '../mixins/flatpickr-locale'
 import dropdown from '../mixins/dropdown'
 import modal from '../mixins/modal'
 import { mapState, mapGetters, mapActions } from 'vuex'
+const flatPickr = () => import('vue-flatpickr-component')
 
 export default {
   name: 'notifications',

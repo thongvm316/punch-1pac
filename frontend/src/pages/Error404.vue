@@ -15,8 +15,10 @@
     </div>
   </main-layout>
 </template>
+
 <script>
-import MainLayout from '../layouts/Main'
+const MainLayout = () => import('../layouts/Main')
+
 export default {
   components: {
     MainLayout

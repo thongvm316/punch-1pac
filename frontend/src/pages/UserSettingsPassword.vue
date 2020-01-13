@@ -24,10 +24,10 @@
 </template>
 
 <script>
-import SettingLayout from '../layouts/Setting.vue'
 import { CLEAR_USER_PASSWORD_ERRORS } from '../store/mutation-types'
 import { mapState, mapActions, mapMutations } from 'vuex'
 import handleSuccess from '../mixins/handle-success'
+const SettingLayout = () => import('../layouts/Setting.vue')
 
 export default {
   data() {
@@ -42,6 +42,10 @@ export default {
   },
 
   mixins: [handleSuccess],
+
+  components: {
+    SettingLayout
+  },
 
   methods: {
     ...mapActions('userPassword', ['updatePassword']),
@@ -66,10 +70,6 @@ export default {
 
   computed: {
     ...mapState('userPassword', ['errors'])
-  },
-
-  components: {
-    SettingLayout
   },
 
   created() {

@@ -94,15 +94,15 @@
 </template>
 
 <script>
-import MainLayout from '../layouts/Main'
-import Pagination from '../components/Pagination'
-import GroupTab from '../components/GroupTab'
 import modal from '../mixins/modal'
-import flatPickr from 'vue-flatpickr-component'
 import flatpickrLocale from '../mixins/flatpickr-locale'
 import { CLEAR_REJECT_GROUP_REQUEST_ERRORS } from '../store/mutation-types'
 import { mapState, mapActions, mapMutations } from 'vuex'
 import debounce from 'lodash.debounce'
+const MainLayout = () => import('../layouts/Main')
+const Pagination = () => import('../components/Pagination')
+const GroupTab = () => import('../components/GroupTab')
+const flatPickr = () => import('vue-flatpickr-component')
 
 export default {
   name: 'group-requests',

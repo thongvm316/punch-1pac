@@ -30,11 +30,11 @@
 </template>
 
 <script>
-import flatPickr from 'vue-flatpickr-component'
 import flatpickrLocale from '../mixins/flatpickr-locale'
 import handleSuccess from '../mixins/handle-success'
 import { CLEAR_REQUEST_ERRORS } from '../store/mutation-types'
 import { mapState, mapActions, mapMutations } from 'vuex'
+const flatPickr = () => import('vue-flatpickr-component')
 
 export default {
   name: 'request-form',

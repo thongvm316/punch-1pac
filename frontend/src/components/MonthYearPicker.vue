@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import Datepicker from 'vuejs-datepicker'
+const Datepicker = () => import('vuejs-datepicker')
 
 export default {
   name: 'month-year-picker',

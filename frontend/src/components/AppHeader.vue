@@ -47,10 +47,10 @@
 <script>
 import axios from 'axios'
 import dropdown from '../mixins/dropdown'
-import Notifications from './Notifications'
-import Punch from './Punch'
-import AnnualLeave from './AnnualLeave'
 import { mapState } from 'vuex'
+const Notifications = () => import('./Notifications')
+const Punch = () => import('./Punch')
+const AnnualLeave = () => import('./AnnualLeave')
 
 export default {
   name: 'app-header',

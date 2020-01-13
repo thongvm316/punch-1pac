@@ -1,4 +1,4 @@
-import ConfirmDialog from '../components/ConfirmDialog.vue'
+const ConfirmDialog = () => import('../components/ConfirmDialog.vue')
 
 export default {
   data() {

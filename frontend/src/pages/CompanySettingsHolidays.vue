@@ -63,10 +63,10 @@
 <script>
 import { SET_FLASH_MESSAGE } from '../store/mutation-types'
 import { mapState, mapGetters, mapActions, mapMutations } from 'vuex'
-import SettingLayout from '../layouts/Setting'
 import modal from '../mixins/modal'
-import HolidayForm from '../components/HolidayForm.vue'
-import Datepicker from 'vuejs-datepicker'
+const SettingLayout = () => import('../layouts/Setting')
+const HolidayForm = () => import('../components/HolidayForm.vue')
+const Datepicker = () => import('vuejs-datepicker')
 
 export default {
   mixins: [modal],
