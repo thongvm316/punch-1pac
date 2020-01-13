@@ -23,33 +23,40 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { CLEAR_IP_ERRORS } from '../store/mutation-types'
+import { mapState, mapActions, mapMutations } from 'vuex'
+import handleSuccess from '../mixins/handle-success'
 
 export default {
   name: 'allowed-ip-form',
 
+  mixins: [handleSuccess],
+
   props: {
-    targetIp: String
+    targetIp: Object
   },
 
   data() {
     return {
       isDisable: false,
+      data: {
+        emitType: 'afterModify',
+        message: ''
+      },
       params: ''
     }
   },
 
   methods: {
-    ...mapActions('companyAllowedIPs', ['createIP', 'updateIP', 'clearIPErrors']),
+    ...mapActions('companyAllowedIPs', ['createIP', 'updateIP']),
 
-    ...mapActions('flash', ['setFlashMsg']),
+    ...mapMutations('companyAllowedIPs', [CLEAR_IP_ERRORS]),
 
     localAddIp() {
       this.isDisable = true
       this.createIP({ ip_address: this.params }).then(response => {
-        this.setFlashMsg({ message: this.$t('messages.ip.createSuccess') })
-        this.$emit('afterModify')
-        this.isDisable = false
+        this.data.message = this.$t('messages.ip.createSuccess')
+        this.handleSuccess(this.data)
       })
       .catch(() => { this.isDisable = false })
     },
@@ -57,9 +64,8 @@ export default {
     localEditIp() {
       this.isDisable = true
       this.updateIP({ id: this.targetIp.id, ip_address: this.params }).then(response => {
-        this.setFlashMsg({ message: this.$t('messages.ip.updateSuccess') })
-        this.$emit('afterModify')
-        this.isDisable = false
+        this.data.message = this.$t('messages.ip.updateSuccess')
+        this.handleSuccess(this.data)
       })
       .catch(() => { this.isDisable = false })
     }
@@ -70,7 +76,7 @@ export default {
   },
 
   created() {
-    this.clearIPErrors()
+    this[CLEAR_IP_ERRORS]()
     if (this.targetIp) {
       this.params = this.targetIp.ip_address
     }

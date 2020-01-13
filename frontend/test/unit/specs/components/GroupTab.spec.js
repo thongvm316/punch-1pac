@@ -1,21 +1,20 @@
 import { shallowMount } from '@vue/test-utils'
 
-import localVue from '../../supports/local-vue'
-
-import router from '@/router'
-import i18n from '@/locale'
+import wrapperOps from '../../supports/wrapper'
 
 import GroupTab from '@/components/GroupTab'
+
+const propsData = {
+  groupId: '1'
+}
+
+Object.assign(wrapperOps, { propsData })
 
 describe('GroupTab.vue', () => {
   let wrapper
 
   beforeEach(() => {
-    wrapper = shallowMount(GroupTab, {
-      i18n,
-      router,
-      localVue
-    })
+    wrapper = shallowMount(GroupTab, wrapperOps)
   })
 
   afterEach(() => { wrapper.vm.$destroy() })

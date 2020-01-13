@@ -1,5 +1,5 @@
 import * as types from '../mutation-types.js'
-import axios from 'axios'
+import callApi from '../api-caller'
 
 const state = {
   allowedIPs: [],
@@ -35,8 +35,7 @@ const mutations = {
 
 const actions = {
   fetchIPs({ commit }) {
-    return axios
-      .get('/allowed_ips')
+    return callApi({ method: 'get', url: '/allowed_ips' })
       .then(response => {
         commit(types.FETCH_IPS, response.data)
         return response
@@ -47,8 +46,7 @@ const actions = {
   },
 
   deleteIP({ commit }, id) {
-    return axios
-      .delete(`/allowed_ips/${id}`)
+    return callApi({ method: 'delete', url: `/allowed_ips/${id}` })
       .then(response => {
         commit(types.DELETE_IP, id)
         return response
@@ -59,8 +57,7 @@ const actions = {
   },
 
   createIP({ commit }, data) {
-    return axios
-      .post('/allowed_ips/', { allowed_ip: data }, { headers: { 'Content-Type': 'application/json' } })
+    return callApi({ method: 'post', url: '/allowed_ips/', data: { allowed_ip: data } })
       .then(response => {
         commit(types.CREATE_IP, response.data)
         return response
@@ -72,8 +69,7 @@ const actions = {
   },
 
   updateIP({ commit }, data) {
-    return axios
-      .put(`/allowed_ips/${data.id}`, { allowed_ip: data }, { headers: { 'Content-Type': 'application/json' } })
+    return callApi({ method: 'put', url: `/allowed_ips/${data.id}`, data: { allowed_ip: data } })
       .then(response => {
         commit(types.UPDATE_IP, response.data)
         return response
@@ -82,10 +78,6 @@ const actions = {
         if (error.response && error.response.status === 422) commit(types.UPDATE_IP_ERRORS, error.response.data)
         throw error
       })
-  },
-
-  clearIPErrors({ commit }) {
-    commit(types.CLEAR_IP_ERRORS)
   }
 }
 

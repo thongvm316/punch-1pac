@@ -1,28 +1,27 @@
 import { shallowMount } from '@vue/test-utils'
 
-import localVue from '../../supports/local-vue'
+import wrapperOps from '../../supports/wrapper'
 import setComputed from '../../supports/set-computed'
 
-import store from '@/store'
-import i18n from '@/locale'
 import AllowedIpForm from '@/components/AllowedIpForm'
+import handleSuccess from '@/mixins/handle-success'
 
 const localAddIp = jest.fn()
 const localEditIp = jest.fn()
+
+Object.assign(wrapperOps, {
+  methods: {
+    localAddIp,
+    localEditIp
+  },
+  mixins: [handleSuccess]
+})
 
 describe('AllowedIpForm.vue', () => {
   let wrapper
 
   beforeEach(() => {
-    wrapper = shallowMount(AllowedIpForm, {
-      i18n,
-      store,
-      methods: {
-        localAddIp,
-        localEditIp
-      },
-      localVue
-    })
+    wrapper = shallowMount(AllowedIpForm, wrapperOps)
   })
 
   afterEach(() => { wrapper.vm.$destroy() })
@@ -31,15 +30,6 @@ describe('AllowedIpForm.vue', () => {
     it('should display AllowedIpForm Component', () => {
       expect(wrapper.isVueInstance()).toBe(true)
       expect(wrapper.exists()).toBe(true)
-    })
-  })
-
-  describe('validation prop data', () => {
-    it('should validate props data', () => {
-      const { targetIp } = wrapper.vm.$options.props
-
-      expect(targetIp.required).toBeFalsy()
-      expect(targetIp.type).toBe(String)
     })
   })
 
@@ -86,7 +76,6 @@ describe('AllowedIpForm.vue', () => {
       setComputed(wrapper, { errors: { ip_address: ['cant be blank'] } })
       await wrapper.vm.$nextTick()
 
-      expect(wrapper.find('.form-group:first-of-type').classes()).toContain('has-error')
       expect(wrapper.find('.form-group > .form-input-hint').exists()).toBe(true)
       expect(wrapper.find('.form-group > .form-input-hint').text()).toEqual('IP address cant be blank')
     })

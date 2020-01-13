@@ -1,5 +1,5 @@
 import * as types from '../mutation-types'
-import axios from 'axios'
+import callApi from '../api-caller'
 
 const state = {
   attendances: [],
@@ -15,8 +15,7 @@ const mutations = {
 
 const actions = {
   getCalendarAttendances({ commit }, day) {
-    return axios
-      .get('/attendances/calendar', { params: { day: day } })
+    return callApi({ method: 'get', url: '/attendances/calendar', params: { day: day } })
       .then(response => {
         commit(types.FETCH_CALENDAR_ATTENDANCES, response.data)
         return response

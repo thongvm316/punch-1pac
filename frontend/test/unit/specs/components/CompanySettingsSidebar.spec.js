@@ -1,14 +1,10 @@
 import { shallowMount } from '@vue/test-utils'
 
-import localVue from '../../supports/local-vue'
+import wrapperOps from '../../supports/wrapper'
 
-import i18n from '@/locale'
 import CompanySettingsSidebar from '@/components/CompanySettingsSidebar'
 
-const wrapper = shallowMount(CompanySettingsSidebar, {
-  i18n,
-  localVue
-})
+const wrapper = shallowMount(CompanySettingsSidebar, wrapperOps)
 
 describe('CompanySettingsSidebar.vue', () => {
   it('should render correctly', () => {

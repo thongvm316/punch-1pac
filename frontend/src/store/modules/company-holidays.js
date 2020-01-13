@@ -1,5 +1,5 @@
 import * as types from '../mutation-types.js'
-import axios from 'axios'
+import callApi from '../api-caller'
 
 const state = {
   holidays: [],
@@ -7,11 +7,9 @@ const state = {
 }
 
 const getters = {
-  filterHolidays(state) {
-    return function(query) {
-      const regex = new RegExp(`${query}`, 'gi')
-      return query ? state.holidays.filter(holiday => holiday.name.match(regex)) : state.holidays
-    }
+  filterHolidays: state => query => {
+    const regex = new RegExp(`${query}`, 'gi')
+    return query ? state.holidays.filter(holiday => holiday.name.match(regex)) : state.holidays
   }
 }
 
@@ -48,8 +46,7 @@ const mutations = {
 
 const actions = {
   fetchHolidays({ commit }, year) {
-    return axios
-      .get('/holidays', { params: { year: year } })
+    return callApi({ method: 'get', url: '/holidays', params: { year } })
       .then(response => {
         commit(types.FETCH_HOLIDAYS, response.data)
         return response
@@ -60,8 +57,7 @@ const actions = {
   },
 
   deleteHoliday({ commit }, holidayID) {
-    return axios
-      .delete(`/holidays/${holidayID}`)
+    return callApi({ method: 'delete', url: `/holidays/${holidayID}` })
       .then(response => {
         commit(types.DELETE_HOLIDAY, holidayID)
         return response
@@ -72,8 +68,7 @@ const actions = {
   },
 
   createHoliday({ commit }, data) {
-    return axios
-      .post(`/holidays`, { holiday: data }, { headers: { 'Content-Type': 'application/json' } })
+    return callApi({ method: 'post', url: '/holidays', data: { holiday: data } })
       .then(response => {
         commit(types.CREATE_HOLIDAY, response.data)
         return response
@@ -85,8 +80,7 @@ const actions = {
   },
 
   updateHoliday({ commit }, data) {
-    return axios
-      .put(`/holidays/${data.holidayID}`, { holiday: data.updateParams }, { headers: { 'Content-Type': 'application/json' } })
+    return callApi({ method: 'put', url: `/holidays/${data.holidayID}`, data: { holiday: data.updateParams } })
       .then(response => {
         commit(types.UPDATE_HOLIDAY, response.data)
         return response
@@ -97,14 +91,9 @@ const actions = {
       })
   },
 
-  clearHolidayErrors({ commit }) {
-    commit(types.CLEAR_HOLIDAY_ERRORS)
-  },
-
   importNationalHolidays({ commit }, country) {
     if (!country) return
-    return axios
-      .post('/holidays/import', { country: country }, { headers: { 'Content-Type': 'application/json' } })
+    return callApi({ method: 'post', url: '/holidays/import', data: { country } })
       .then(response => {
         commit(types.IMPORT_NATIONAL_HOLIDAYS, response.data)
         return response

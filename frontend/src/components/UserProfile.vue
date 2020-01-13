@@ -46,7 +46,8 @@
 </template>
 
 <script>
-import { mapState, mapActions, mapMutations } from 'vuex'
+import { mapState, mapMutations } from 'vuex'
+import handleSuccess from '../mixins/handle-success'
 import * as types from '../store/mutation-types'
 import axios from 'axios'
 import 'formdata-polyfill'
@@ -63,19 +64,29 @@ export default {
         email: '',
         role: ''
       },
-      errors: {}
+      errors: {},
+      data: {
+        emitType: 'afterUserProfileUpdated',
+        message: ''
+      }
     }
   },
 
-  props: ['targetUser', 'objectType'],
+  mixins: [handleSuccess],
+
+  props: {
+    targetUser: {
+      type: Object,
+      required: true
+    },
+    objectType: String
+  },
 
   computed: {
     ...mapState('initialStates', ['meta'])
   },
 
   methods: {
-    ...mapActions('flash', ['setFlashMsg']),
-
     ...mapMutations('initialStates', [types.INITIAL_STATES_UPDATE_USER]),
 
     ...mapMutations('group', [types.UPDATE_GROUP_USER]),
@@ -95,9 +106,8 @@ export default {
           }
           if (this.objectType === 'company') this[types.UPDATE_USER](response.data)
           if (this.objectType === 'group') this[types.UPDATE_GROUP_USER](response.data)
-          this.setFlashMsg({ message: this.$t('messages.user.updateProfileSuccess') })
-          this.$emit('afterUserProfileUpdated')
-          this.isDisable = false
+          this.data.message = this.$t('messages.user.updateProfileSuccess')
+          this.handleSuccess(this.data)
           this.errors = {}
         })
         .catch(error => {

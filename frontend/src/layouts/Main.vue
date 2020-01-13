@@ -25,7 +25,12 @@ import PopupChangePassword from '../components/PopupChangePassword'
 
 export default {
   name: 'main-layout',
-  props: ['title', 'isOpenAnnouncement'],
+
+  props: {
+    title: String,
+    isOpenAnnoucement: Boolean
+  },
+
   components: {
     AppHeader,
     AppFooter,

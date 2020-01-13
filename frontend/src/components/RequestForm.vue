@@ -23,8 +23,8 @@
       <p class="form-input-hint" v-if="errors.reason">{{ $t('attendances.labels.reason') }} {{ errors.reason[0] }}</p>
     </div>
     <div class="form-group">
-      <button type="button" class="btn btn-success btn-submit" @click="localAddRequest" v-if="attendance" :disabled="isDisable">{{ $t('attendances.btn.add') }}</button>
-      <button type="button" class="btn btn-success btn-submit" @click="localEditRequest" v-else :disabled="isDisable">{{ $t('requests.btn.save') }}</button>
+      <button ref="localAddRequestButton" type="button" class="btn btn-success btn-submit" @click="localAddRequest" v-if="attendance" :disabled="isDisable">{{ $t('attendances.btn.add') }}</button>
+      <button ref="localEditRequestButton" type="button" class="btn btn-success btn-submit" @click="localEditRequest" v-else :disabled="isDisable">{{ $t('requests.btn.save') }}</button>
     </div>
   </div>
 </template>
@@ -32,14 +32,19 @@
 <script>
 import flatPickr from 'vue-flatpickr-component'
 import flatpickrLocale from '../mixins/flatpickr-locale'
-import { mapState, mapActions } from 'vuex'
+import handleSuccess from '../mixins/handle-success'
+import { CLEAR_REQUEST_ERRORS } from '../store/mutation-types'
+import { mapState, mapActions, mapMutations } from 'vuex'
 
 export default {
   name: 'request-form',
 
-  mixins: [flatpickrLocale],
+  mixins: [flatpickrLocale, handleSuccess],
 
-  props: ['attendance', 'request'],
+  props: {
+    attendance: Object,
+    request: Object
+  },
 
   data() {
     return {
@@ -50,6 +55,10 @@ export default {
         attended_at: '',
         left_at: '',
         reason: ''
+      },
+      data: {
+        emitType: 'afterModify',
+        message: ''
       }
     }
   },
@@ -63,16 +72,15 @@ export default {
   },
 
   methods: {
-    ...mapActions('requests', ['addRequest', 'updateRequest', 'clearRequestErrors']),
+    ...mapActions('requests', ['addRequest', 'updateRequest']),
 
-    ...mapActions('flash', ['setFlashMsg']),
+    ...mapMutations('requests', [CLEAR_REQUEST_ERRORS]),
 
     localAddRequest() {
       this.isDisable = true
       this.addRequest(this.params).then(response => {
-        this.setFlashMsg({ message: this.$t('messages.request.createSuccess') })
-        this.$emit('afterModify')
-        this.isDisable = false
+        this.data.message = this.$t('messages.request.createSuccess')
+        this.handleSuccess(this.data)
       })
       .catch(() => { this.isDisable = false })
     },
@@ -80,16 +88,15 @@ export default {
     localEditRequest() {
       this.isDisable = true
       this.updateRequest({ id: this.request.id, params: this.params }).then(response => {
-        this.setFlashMsg({ message: this.$t('messages.request.updateSuccess') })
-        this.$emit('afterModify')
-        this.isDisable = false
+        this.data.message = this.$t('messages.request.updateSuccess')
+        this.handleSuccess(this.data)
       })
       .catch(() => { this.isDisable = false })
     }
   },
 
   created() {
-    this.clearRequestErrors()
+    this[CLEAR_REQUEST_ERRORS]()
     if (this.attendance) {
       this.day = this.params.attendance_day = this.attendance.day
       const statuses = ['attended_at', 'left_at']

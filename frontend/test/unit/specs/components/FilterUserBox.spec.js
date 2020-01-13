@@ -1,10 +1,8 @@
 import { shallowMount } from '@vue/test-utils'
 
-import localVue from '../../supports/local-vue'
-import vSelect from 'vue-select'
+import wrapperOps from '../../supports/wrapper'
 
-import store from '@/store'
-import i18n from '@/locale'
+import vSelect from 'vue-select'
 import FilterUserBox from '@/components/FilterUserBox'
 
 const queryParams = {
@@ -12,24 +10,22 @@ const queryParams = {
   name: 'Tuan',
   avatar_url: '/'
 }
-
 const search = jest.fn()
+
+Object.assign(wrapperOps, {
+  propsData: {
+    queryParams
+  },
+  methods: {
+    search
+  }
+})
 
 describe('FilterUserBox.vue', () => {
   let wrapper
 
   beforeEach(() => {
-    wrapper = shallowMount(FilterUserBox, {
-      i18n,
-      store,
-      localVue,
-      propsData: {
-        queryParams
-      },
-      methods: {
-        search
-      }
-    })
+    wrapper = shallowMount(FilterUserBox, wrapperOps)
   })
 
   afterEach(() => {

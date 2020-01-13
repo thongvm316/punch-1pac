@@ -14,15 +14,8 @@ const mutations = {
   }
 }
 
-const actions = {
-  setFlashMsg({ commit }, flash) {
-    commit(types.SET_FLASH_MESSAGE, flash)
-  }
-}
-
 export default {
   namespaced: true,
   state,
-  mutations,
-  actions
+  mutations
 }

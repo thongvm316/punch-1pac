@@ -52,10 +52,14 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { CLEAR_BUSINESS_DAY_ERRORS } from '../store/mutation-types'
+import { mapState, mapActions, mapMutations } from 'vuex'
+import handleSuccess from '../mixins/handle-success'
 
 export default {
   name: 'business-day-form',
+
+  mixins: [handleSuccess],
 
   props: {
     targetBusinessDay: Object
@@ -70,21 +74,24 @@ export default {
         morning_ended_at: '',
         afternoon_started_at: '',
         afternoon_ended_at: ''
+      },
+      data: {
+        emitType: 'afterModify',
+        message: ''
       }
     }
   },
 
   methods: {
-    ...mapActions('flash', ['setFlashMsg']),
+    ...mapActions('companyBusinessDays', ['addBusinessDay', 'updateBusinessDay']),
 
-    ...mapActions('companyBusinessDays', ['addBusinessDay', 'updateBusinessDay', 'clearBusinessDayErrors']),
+    ...mapMutations('companyBusinessDays', [CLEAR_BUSINESS_DAY_ERRORS]),
 
     localAddBusinessDay() {
       this.isDisable = true
       this.addBusinessDay(this.params).then(response => {
-        this.setFlashMsg({ message: this.$t('messages.businessDay.createSuccess') })
-        this.$emit('afterModify')
-        this.isDisable = false
+        this.data.message = this.$t('messages.businessDay.createSuccess')
+        this.handleSuccess(this.data)
       })
       .catch(() => { this.isDisable = false })
     },
@@ -92,9 +99,8 @@ export default {
     localEditBusinessDay() {
       this.isDisable = true
       this.updateBusinessDay({ businessDayId: this.targetBusinessDay.id, updateParams: this.params }).then(response => {
-        this.setFlashMsg({ message: this.$t('messages.businessDay.updateSuccess') })
-        this.$emit('afterModify')
-        this.isDisable = false
+        this.data.message = this.$t('messages.businessDay.updateSuccess')
+        this.handleSuccess(this.data)
       })
       .catch(() => { this.isDisable = false })
     }
@@ -107,7 +113,7 @@ export default {
   },
 
   created() {
-    this.clearBusinessDayErrors()
+    this[CLEAR_BUSINESS_DAY_ERRORS]()
     if (this.targetBusinessDay) {
       Object.keys(this.params).forEach(key => {
         this.params[key] = this.targetBusinessDay[key]

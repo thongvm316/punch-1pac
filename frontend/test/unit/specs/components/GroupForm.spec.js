@@ -1,9 +1,7 @@
 import { shallowMount } from '@vue/test-utils'
 
-import localVue from '../../supports/local-vue'
+import wrapperOps from '../../supports/wrapper'
 
-import store from '@/store'
-import i18n from '@/locale'
 import GroupForm from '@/components/GroupForm'
 
 const targetGroup = {
@@ -11,7 +9,6 @@ const targetGroup = {
   description: '1pacvn team',
   image: '/'
 }
-
 const localAddGroup = jest.fn()
 const localEditGroup = jest.fn()
 
@@ -19,12 +16,8 @@ describe('GroupForm.vue', () => {
   let wrapper
 
   beforeEach(() => {
-    wrapper = shallowMount(GroupForm, {
-      i18n,
-      store,
-      methods: { localAddGroup },
-      localVue
-    })
+    Object.assign(wrapperOps, { methods: { localAddGroup } })
+    wrapper = shallowMount(GroupForm, wrapperOps)
   })
 
   afterEach(() => { wrapper.vm.$destroy() })
@@ -86,13 +79,11 @@ describe('when GroupForm have props data', () => {
   let wrapper
 
   beforeEach(() => {
-    wrapper = shallowMount(GroupForm, {
-      i18n,
-      store,
+    Object.assign(wrapperOps, {
       methods: { localEditGroup },
-      propsData: { targetGroup },
-      localVue
+      propsData: { targetGroup }
     })
+    wrapper = shallowMount(GroupForm, wrapperOps)
   })
 
   afterEach(() => { wrapper.vm.$destroy() })

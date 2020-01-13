@@ -58,7 +58,7 @@ import MainLayout from '../layouts/Main'
 import AttendanceStatusSelect from '../components/AttendanceStatusSelect'
 import RequestForm from '../components/RequestForm'
 import modal from '../mixins/modal'
-import { mapState, mapGetters, mapActions } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   mixins: [modal],
@@ -82,8 +82,6 @@ export default {
   },
 
   computed: {
-    ...mapState('attendances', ['attendances']),
-
     ...mapGetters('attendances', ['formattedAttendances'])
   },
 

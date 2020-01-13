@@ -45,12 +45,14 @@
 <script>
 import flatPickr from 'vue-flatpickr-component'
 import flatpickrLocale from '../mixins/flatpickr-locale'
-import { mapState, mapActions } from 'vuex'
+import handleSuccess from '../mixins/handle-success'
+import { CLEAR_HOLIDAY_ERRORS } from '../store/mutation-types'
+import { mapState, mapActions, mapMutations } from 'vuex'
 
 export default {
   name: 'holiday-form',
 
-  mixins: [flatpickrLocale],
+  mixins: [flatpickrLocale, handleSuccess],
 
   components: {
     flatPickr
@@ -67,14 +69,18 @@ export default {
         name: '',
         started_at: '',
         ended_at: ''
+      },
+      data: {
+        emitType: 'afterModify',
+        message: ''
       }
     }
   },
 
   methods: {
-    ...mapActions('flash', ['setFlashMsg']),
+    ...mapActions('companyHolidays', ['createHoliday', 'updateHoliday']),
 
-    ...mapActions('companyHolidays', ['createHoliday', 'updateHoliday', 'clearHolidayErrors']),
+    ...mapMutations('companyHolidays', [CLEAR_HOLIDAY_ERRORS]),
 
     localAddHoliday() {
       this.isDisable = true
@@ -82,9 +88,8 @@ export default {
         Object.keys(this.params).forEach(key => {
           this.params[key] = ''
         })
-        this.setFlashMsg({ message: this.$t('messages.holiday.createSuccess') })
-        this.$emit('afterModify')
-        this.isDisable = false
+        this.data.message = this.$t('messages.holiday.createSuccess')
+        this.handleSuccess(this.data)
       })
       .catch(() => { this.isDisable = false })
     },
@@ -92,9 +97,8 @@ export default {
     localEditHoliday() {
       this.isDisable = true
       this.updateHoliday({ holidayID: this.targetHoliday.id, updateParams: this.params }).then(response => {
-        this.setFlashMsg({ message: this.$t('messages.holiday.updateSuccess') })
-        this.$emit('afterModify')
-        this.isDisable = false
+        this.data.message = this.$t('messages.holiday.updateSuccess')
+        this.handleSuccess(this.data)
       })
       .catch(() => { this.isDisable = false })
     }
@@ -105,7 +109,7 @@ export default {
   },
 
   created() {
-    this.clearHolidayErrors()
+    this[CLEAR_HOLIDAY_ERRORS]()
     if (this.targetHoliday) {
       Object.keys(this.params).forEach(k => {
         this.params[k] = this.targetHoliday[k]

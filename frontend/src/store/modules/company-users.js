@@ -1,16 +1,14 @@
 import * as types from '../mutation-types.js'
-import axios from 'axios'
+import callApi from '../api-caller'
 
 const state = {
   users: []
 }
 
 const getters = {
-  filterByEmail(state) {
-    return function(query) {
-      const regex = new RegExp(`${query.trim()}`, 'gi')
-      return query ? state.users.filter(user => (user.name.match(regex)) || (user.email.match(regex))) : state.users
-    }
+  filterByEmail: state => query => {
+    const regex = new RegExp(`${query.trim()}`, 'gi')
+    return query ? state.users.filter(user => (user.name.match(regex)) || (user.email.match(regex))) : state.users
   }
 }
 
@@ -41,8 +39,7 @@ const mutations = {
 
 const actions = {
   fetchUsers({ commit }, params) {
-    return axios
-      .get('/users', { params: Object.assign({ per_page: 1000 }, params) })
+    return callApi({ method: 'get', url: '/users', params: Object.assign({ per_page: 1000 }, params) })
       .then(response => {
         commit(types.FETCH_USERS, response.data)
         return response
@@ -53,8 +50,7 @@ const actions = {
   },
 
   deleteUser({ commit }, id) {
-    return axios
-      .delete(`/users/${id}`)
+    return callApi({ method: 'delete', url: `/users/${id}` })
       .then(response => {
         commit(types.DELETE_USER, id)
         return response
@@ -65,8 +61,7 @@ const actions = {
   },
 
   deactivateUser({ commit }, userId) {
-    return axios
-      .post(`/users/${userId}/deactivate`, { headers: { 'Content-Type': 'application/json' } })
+    return callApi({ method: 'post', url: `/users/${userId}/deactivate` })
       .then(response => {
         commit(types.DEACTIVATE_USER, userId)
         return response
@@ -77,8 +72,7 @@ const actions = {
   },
 
   activateUser({ commit }, userId) {
-    return axios
-      .post(`/users/${userId}/activate`, { headers: { 'Content-Type': 'application/json' } })
+    return callApi({ method: 'post', url: `/users/${userId}/activate` })
       .then(response => {
         commit(types.ACTIVATE_USER, userId)
         return response

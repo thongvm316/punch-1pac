@@ -19,7 +19,17 @@
 export default {
   name: 'modal',
 
-  props: ['title', 'modalOpen'],
+  props: {
+    title: {
+      type: String,
+      required: true
+    },
+
+    modalOpen: {
+      type: Boolean,
+      required: true
+    }
+  },
 
   data() {
     return {

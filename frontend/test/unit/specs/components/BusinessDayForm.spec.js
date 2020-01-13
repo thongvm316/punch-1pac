@@ -1,10 +1,8 @@
 import { shallowMount } from '@vue/test-utils'
 
-import localVue from '../../supports/local-vue'
+import wrapperOps from '../../supports/wrapper'
 import setComputed from '../../supports/set-computed'
 
-import store from '@/store'
-import i18n from '@/locale'
 import BusinessDayForm from '@/components/BusinessDayForm'
 
 const localAddBusinessDay = jest.fn()
@@ -19,14 +17,8 @@ describe('BusinessDayForm.vue', () => {
 
   describe('when BusinessDayForm was mounted', () => {
     beforeEach(() => {
-      wrapper = shallowMount(BusinessDayForm, {
-        i18n,
-        store,
-        localVue,
-        methods: {
-          localAddBusinessDay
-        }
-      })
+      Object.assign(wrapperOps, { methods: { localAddBusinessDay } })
+      wrapper = shallowMount(BusinessDayForm, wrapperOps)
     })
 
     it('should display AllowedIpForm Component', () => {
@@ -77,10 +69,7 @@ describe('BusinessDayForm.vue', () => {
 
   describe('when BusinessDayForm was mounted with props', () => {
     beforeEach(() => {
-      wrapper = shallowMount(BusinessDayForm, {
-        i18n,
-        store,
-        localVue,
+      Object.assign(wrapperOps, {
         propsData: {
           targetBusinessDay: {
             weekday: 'monday',
@@ -94,6 +83,7 @@ describe('BusinessDayForm.vue', () => {
           localEditBusinessDay
         }
       })
+      wrapper = shallowMount(BusinessDayForm, wrapperOps)
     })
 
     it('should display update business day button', () => {

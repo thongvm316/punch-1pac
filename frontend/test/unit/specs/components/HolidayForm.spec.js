@@ -1,10 +1,8 @@
 import { shallowMount } from '@vue/test-utils'
 
-import localVue from '../../supports/local-vue'
+import wrapperOps from '../../supports/wrapper'
 import setComputed from '../../supports/set-computed'
 
-import store from '@/store'
-import i18n from '@/locale'
 import flatPickr from 'vue-flatpickr-component'
 import flatpickrLocale from '@/mixins/flatpickr-locale'
 import HolidayForm from '@/components/HolidayForm'
@@ -12,7 +10,6 @@ import HolidayForm from '@/components/HolidayForm'
 const localAddHoliday = jest.fn()
 const localEditHoliday = jest.fn()
 const clearHolidayErrors = jest.fn()
-
 const targetHoliday = {
   name: 'Tet Holiday',
   started_at: '2019-23-01',
@@ -24,17 +21,15 @@ describe('HolidayForm.vue', () => {
     let wrapper
 
     beforeEach(() => {
-      wrapper = shallowMount(HolidayForm, {
-        i18n,
-        store,
+      Object.assign(wrapperOps, {
         mixins: [flatpickrLocale],
         methods: {
           localAddHoliday,
           localEditHoliday,
           clearHolidayErrors
-        },
-        localVue
+        }
       })
+      wrapper = shallowMount(HolidayForm, wrapperOps)
     })
 
     afterEach(() => { wrapper.vm.$destroy() })
@@ -106,18 +101,16 @@ describe('HolidayForm.vue', () => {
     let wrapper
 
     beforeEach(() => {
-      wrapper = shallowMount(HolidayForm, {
-        i18n,
-        store,
+      Object.assign(wrapperOps, {
         mixins: [flatpickrLocale],
         propsData: { targetHoliday },
         methods: {
           localAddHoliday,
           localEditHoliday,
           clearHolidayErrors
-        },
-        localVue
+        }
       })
+      wrapper = shallowMount(HolidayForm, wrapperOps)
     })
 
     it('should have params data', () => {

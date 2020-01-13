@@ -34,7 +34,19 @@ import PopupChangePassword from '../components/PopupChangePassword'
 
 export default {
   name: 'setting-layout',
-  props: ['sidebarType', 'title', 'subtitle'],
+
+  props: {
+    sidebarType: {
+      type: String,
+      required: true
+    },
+
+    subtitle: {
+      type: String,
+      required: true
+    }
+  },
+
   components: {
     AppHeader,
     AppFooter,

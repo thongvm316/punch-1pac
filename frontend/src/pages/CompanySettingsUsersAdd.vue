@@ -37,7 +37,8 @@
 import SettingLayout from '../layouts/Setting.vue'
 import GroupSelect from '../components/GroupSelect.vue'
 import axios from 'axios'
-import { mapState, mapActions } from 'vuex'
+import { mapState } from 'vuex'
+import handleSuccess from '../mixins/handle-success'
 
 export default {
   data() {
@@ -53,6 +54,8 @@ export default {
     }
   },
 
+  mixins: [handleSuccess],
+
   computed: {
     ...mapState('initialStates', ['meta'])
   },
@@ -63,15 +66,13 @@ export default {
   },
 
   methods: {
-    ...mapActions('flash', ['setFlashMsg']),
-
     create(params) {
-      this.isDisable = false
+      this.isDisable = true
       axios
         .post('/users', { user: params }, { headers: { 'Content-Type': 'application/json' } })
         .then(response => {
-          this.setFlashMsg({ message: this.$t('messages.user.addSuccess') })
-          this.isDisable = false
+          const message = this.$t('messages.user.addSuccess')
+          this.handleSuccess({ message })
         })
         .catch(error => {
           this.isDisable = false

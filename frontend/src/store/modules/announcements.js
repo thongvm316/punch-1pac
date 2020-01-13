@@ -1,5 +1,5 @@
 import * as types from '../mutation-types.js'
-import axios from 'axios'
+import callApi from '../api-caller'
 
 const state = {
   pager: {},
@@ -19,8 +19,7 @@ const mutations = {
 
 const actions = {
   readAnnouncement({ commit }, id) {
-    return axios
-      .post(`/announcements/${id}/read`)
+    return callApi({ method: 'post', url: `/announcements/${id}/read` })
       .then(response => {
         commit(types.READ_ANNOUNCEMENT, id)
         return response
@@ -31,8 +30,7 @@ const actions = {
   },
 
   getHeaderAnnouncements({ commit }) {
-    return axios
-      .get('/announcements', { params: { per_page: 200, read_status: 'unread' } })
+    return callApi({ method: 'get', url: '/announcements', params: { per_page: 200, read_status: 'unread' } })
       .then(response => {
         commit(types.RECEIVE_HEADER_ANNOUNCEMENTS, response.data)
         return response

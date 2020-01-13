@@ -64,7 +64,7 @@
         <p class="form-input-hint" v-if="companyErrors.punch_method">{{ $t('company.profile.labels.punchMethod') }} {{ companyErrors.punch_method[0] }}</p>
       </div>
       <div class="form-group">
-        <button type="button" class="btn btn-success btn-submit" @click="localUpdateCompany" :disabled="isDisable">{{ $t('company.profile.btn.save') }}</button>
+        <button ref="btnSave" type="button" class="btn btn-success btn-submit" @click="localUpdateCompany" :disabled="isDisable">{{ $t('company.profile.btn.save') }}</button>
       </div>
     </form>
   </setting-layout>
@@ -72,7 +72,9 @@
 
 <script>
 import SettingLayout from '../layouts/Setting.vue'
-import { mapState, mapActions } from 'vuex'
+import handleSuccess from '../mixins/handle-success'
+import { INITIAL_STATES_CLEAR_COMPANY_ERRORS } from '../store/mutation-types'
+import { mapState, mapActions, mapMutations } from 'vuex'
 
 export default {
   data() {
@@ -94,6 +96,8 @@ export default {
     }
   },
 
+  mixins: [handleSuccess],
+
   components: {
     SettingLayout
   },
@@ -103,9 +107,9 @@ export default {
   },
 
   methods: {
-    ...mapActions('flash', ['setFlashMsg']),
+    ...mapActions('initialStates', ['updateCompany']),
 
-    ...mapActions('initialStates', ['clearCompanyErrors', 'updateCompany']),
+    ...mapMutations('initialStates', [INITIAL_STATES_CLEAR_COMPANY_ERRORS]),
 
     setLogoFile(e) {
       const files = e.target.files || e.dataTransfer.files
@@ -116,15 +120,16 @@ export default {
     localUpdateCompany() {
       this.isDisable = true
       this.updateCompany(this.params).then(response => {
-        this.setFlashMsg({ message: this.$t('messages.company.updateSuccess') })
-        this.isDisable = false
+        const message = this.$t('messages.company.updateSuccess')
+        this.handleSuccess({ message })
       })
       .catch(() => { this.isDisable = false })
     }
   },
 
   created() {
-    this.clearCompanyErrors()
+    this[INITIAL_STATES_CLEAR_COMPANY_ERRORS]()
+
     Object.keys(this.params).forEach(key => {
       if (key !== 'logo') this.params[key] = this.currentCompany[key]
     })

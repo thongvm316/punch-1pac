@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="dropdown mr-5" :class="{ active: isDropdownActive }" @click="toggleDropdown" ref="dropdownMenu">
-        <span class="notification" :class="{ badge: unreadNotificationsCount }" :data-badge="displayNotificationsCount">
+      <span class="notification" :class="{ badge: unreadNotificationsCount }" :data-badge="displayNotificationsCount">
         <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path
           d="M15.137 3.945c-.644-.374-1.042-1.07-1.041-1.82v-.003c.001-1.172-.938-2.122-2.096-2.122s-2.097.95-2.097
           2.122v.003c.001.751-.396 1.446-1.041 1.82-4.667 2.712-1.985 11.715-6.862 13.306v1.749h20v-1.749c-4.877-1.591-2.195-10.594-6.863-13.306zm-3.137-2.945c.552
@@ -11,11 +11,10 @@
         <div class="notification-header">
           <h4>{{ $t('header.notifications') }}</h4>
         </div>
-        <ul v-if="headerNotifications.length > 0" ref="notiList">
+        <ul v-if="headerNotifications.length" ref="notiList">
           <li v-for="notification in headerNotifications"
               :key="notification.id"
               @click="openRequestModal(notification)"
-              v-if="notification.activitable"
               :class="{ 'notification-pending': notification.activitable.status === 'pending' }">
             <div class="tile tile-centered tile-activity">
               <div class="tile-icon">
@@ -36,7 +35,7 @@
         </p>
       </div>
     </div>
-    <modal :title="$t('notifications.title')" :modal-open.sync="isAddModalOpen" v-if="isEditable(notification)">
+    <modal ref="requestModal" :title="$t('notifications.title')" :modal-open.sync="isAddModalOpen" v-if="isEditable(notification)">
       <div class="form-group">
         <label class="form-label">{{ $t('notifications.labels.date') }}</label>
         <flat-pickr
@@ -82,9 +81,8 @@ export default {
 
   data() {
     return {
-      notification: '',
-      rejectReason: '',
-      fetchingNotifications: null
+      notification: {},
+      rejectReason: ''
     }
   },
 
@@ -112,9 +110,9 @@ export default {
 
       this.isDropdownActive = !this.isDropdownActive
       if (this.isDropdownActive && this.headerNotifications[0]) this.readNotifications(this.headerNotifications[0].id)
-      if (this.isDropdownActive && el !== undefined) {
+      if (this.isDropdownActive && el) {
         el.addEventListener('scroll', this.loadMoreOnScroll)
-      } else if (!this.isDropdownActive && el !== undefined) {
+      } else if (!this.isDropdownActive && el) {
         el.removeEventListener('scroll', this.loadMoreOnScroll)
       }
     },
@@ -123,7 +121,6 @@ export default {
       'readNotifications',
       'getHeaderNotifications',
       'getMoreHeaderNotifications',
-      'getNewHeaderNotifications',
       'approveNotificationRequest',
       'rejectNotificationRequest'
     ]),

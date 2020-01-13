@@ -1,7 +1,7 @@
 <template>
   <setting-layout sidebar-type="company" :title="$t('company.title')" :subtitle="$t('company.allowedIPs.title')">
     <div class="toolbar clearfix mt-5">
-      <button type="button" class="btn btn-success float-right" @click="toggleAddModal()">
+      <button ref="btnAddIpAddress" type="button" class="btn btn-success float-right" @click="toggleAddModal()">
         {{ $t('company.allowedIPs.btn.add') }}
       </button>
     </div>
