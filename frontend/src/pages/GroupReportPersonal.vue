@@ -84,7 +84,7 @@ export default {
 
     validDaysOfMonth() {
       const startDateOfMonth = this.dateContext.startOf('month')
-      if (this.today.month() === startDateOfMonth.month()) return this.today.diff(startDateOfMonth, 'days') + 1
+      if (this.today.format('MM-YYY') === startDateOfMonth.format('MM-YYYY')) return this.today.diff(startDateOfMonth, 'days') + 1
       return startDateOfMonth.daysInMonth()
     },
 
