@@ -11,7 +11,7 @@
       @input="onInputDatepicker"
       v-model="month"/>
     <div class="columns">
-      <div class="column col-4" v-for="(status, key) in Object.keys(statuses).filter(status => !['working_hours'].includes(status))" :key="key">
+      <div class="column col-4" v-for="(status, key) in i18nStatuses" :key="key">
         <div class="box mt-5">
           <p>{{ $t(`meta.attendance_statuses.${status}`) }}</p>
           <h3>{{ $tc('statusCards.dayNum', statuses[status], { num: statuses[status], companyTotalDays: meta.company_total_working_days_in_month }) }}</h3>
@@ -47,7 +47,11 @@ export default {
   },
 
   computed: {
-    ...mapState('statusCards', ['statuses', 'meta'])
+    ...mapState('statusCards', ['statuses', 'meta']),
+
+    i18nStatuses() {
+      return Object.keys(this.statuses).filter(status => !['working_hours', 'minutes_attend_late', 'minutes_leave_early'].includes(status))
+    }
   },
 
   methods: {
