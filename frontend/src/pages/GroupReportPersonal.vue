@@ -3,7 +3,16 @@
     <group-tab :group-id="$route.params.id"/>
 
     <div class="toolbar z-index-10 mt-5 clearfix">
-      <month-year-picker v-model="dateData"/>
+      <datepicker
+        :language="currentUser.language"
+        :format="function (date) { return $moment(date).format('LLL') }"
+        :minimumView="'month'"
+        :maximumView="'month'"
+        :input-class="'datepicker-input form-input'"
+        :calendar-class="'datepicker-calendar'"
+        :wrapper-class="'datepicker'"
+        @input="onInputMonthPicker"
+        v-model="dateData.date"/>
       <select class="form-select" v-model="userId">
         <option v-for="user in usersInGroup" :key="user.id" :value="user.id">{{ user.email }}</option>
       </select>
@@ -48,6 +57,7 @@
 
 <script>
 import exportFile from '../mixins/export-file'
+import Datepicker from 'vuejs-datepicker'
 import { mapState, mapActions } from 'vuex'
 const MonthYearPicker = () => import('../components/MonthYearPicker')
 const MainLayout = () => import('../layouts/Main')
@@ -60,8 +70,7 @@ export default {
     return {
       attendances: [],
       dateData: {
-        date: this.$moment().format('YYYY-MM-DD'),
-        type: 'month'
+        date: this.$moment().format('YYYY-MM-DD')
       },
       userId: this.$route.params.user_id,
       dateContext: this.$moment().locale('en'),
@@ -72,7 +81,7 @@ export default {
   components: {
     MainLayout,
     GroupTab,
-    MonthYearPicker
+    Datepicker
   },
 
   computed: {
@@ -84,7 +93,7 @@ export default {
 
     validDaysOfMonth() {
       const startDateOfMonth = this.dateContext.startOf('month')
-      if (this.today.month() === startDateOfMonth.month()) return this.today.diff(startDateOfMonth, 'days') + 1
+      if (this.today.format('MM-YYYY') === startDateOfMonth.format('MM-YYYY')) return this.today.diff(startDateOfMonth, 'days') + 1
       return startDateOfMonth.daysInMonth()
     },
 
@@ -111,6 +120,10 @@ export default {
     ...mapActions('groupReport', ['getPersonalReport']),
 
     ...mapActions('calendar', ['getCalendarAttendances']),
+
+    onInputMonthPicker() {
+      this.dateData.date = this.$moment(this.dateData.date).format('YYYY-MM-DD')
+    },
 
     isInDeactivatedTime(currentDay) {
       if (currentDay.isBetween(this.currentUser.deactivated_at, this.currentUser.activated_at, null, '[]')) return true
