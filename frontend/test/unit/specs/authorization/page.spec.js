@@ -4,6 +4,10 @@ import { currUser } from './support/user.js'
 let currentUser = { ...currUser() }
 let page
 
+afterEach(() => {
+  currentUser = { ...currUser() }
+})
+
 describe('when currentUser is superadmin', () => {
   it('should return true', () => {
     currentUser.role = 'superadmin'
