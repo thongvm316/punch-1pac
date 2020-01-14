@@ -1,6 +1,5 @@
 <template>
   <div>
-    <app-header></app-header>
     <main>
       <div class="container grid-xl mt-10">
         <div class="columns">
@@ -18,19 +17,12 @@
         </div>
       </div>
     </main>
-    <app-footer></app-footer>
-    <flash/>
-    <popup-change-password/>
   </div>
 </template>
 
 <script>
-import AppHeader from '../components/AppHeader.vue'
-import AppFooter from '../components/AppFooter.vue'
-import CompanySettingsSidebar from '../components/CompanySettingsSidebar.vue'
-import UserSettingsSidebar from '../components/UserSettingsSidebar.vue'
-import Flash from '../components/Flash.vue'
-import PopupChangePassword from '../components/PopupChangePassword'
+const CompanySettingsSidebar = () => import('../components/CompanySettingsSidebar.vue')
+const UserSettingsSidebar = () => import('../components/UserSettingsSidebar.vue')
 
 export default {
   name: 'setting-layout',
@@ -48,12 +40,8 @@ export default {
   },
 
   components: {
-    AppHeader,
-    AppFooter,
     UserSettingsSidebar,
-    CompanySettingsSidebar,
-    Flash,
-    PopupChangePassword
+    CompanySettingsSidebar
   }
 }
 </script>
