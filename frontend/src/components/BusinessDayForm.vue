@@ -54,6 +54,7 @@
 <script>
 import { CLEAR_BUSINESS_DAY_ERRORS } from '../store/mutation-types'
 import { mapState, mapActions, mapMutations } from 'vuex'
+import { isEmpty } from 'underscore'
 import handleSuccess from '../mixins/handle-success'
 
 export default {
@@ -113,7 +114,7 @@ export default {
   },
 
   created() {
-    if (Object.keys(this.errors).length) this[CLEAR_BUSINESS_DAY_ERRORS]()
+    if (!isEmpty(this.errors)) this[CLEAR_BUSINESS_DAY_ERRORS]()
     if (this.targetBusinessDay) this.params = { ...this.targetBusinessDay }
   }
 }

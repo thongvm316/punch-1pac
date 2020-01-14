@@ -34,6 +34,7 @@ import flatpickrLocale from '../mixins/flatpickr-locale'
 import handleSuccess from '../mixins/handle-success'
 import { CLEAR_REQUEST_ERRORS } from '../store/mutation-types'
 import { mapState, mapActions, mapMutations } from 'vuex'
+import { isEmpty } from 'underscore'
 const flatPickr = () => import('vue-flatpickr-component')
 
 export default {
@@ -96,7 +97,7 @@ export default {
   },
 
   created() {
-    if (Object.keys(this.errors).length) this[CLEAR_REQUEST_ERRORS]()
+    if (!isEmpty(this.errors)) this[CLEAR_REQUEST_ERRORS]()
 
     if (this.attendance) {
       this.day = this.params.attendance_day = this.attendance.day

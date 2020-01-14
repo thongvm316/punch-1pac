@@ -36,6 +36,7 @@
 import modal from '../mixins/modal'
 import { CLEAR_GROUPS_ERRORS } from '../store/mutation-types'
 import { mapState, mapGetters, mapActions, mapMutations } from 'vuex'
+import { isEmpty } from 'underscore'
 const MainLayout = () => import('../layouts/Main')
 const GroupForm = () => import('../components/GroupForm')
 
@@ -79,7 +80,7 @@ export default {
     ...mapMutations('groups', [CLEAR_GROUPS_ERRORS]),
 
     toggleAddModal() {
-      if (Object.keys(this.errors).length) this[CLEAR_GROUPS_ERRORS]()
+      if (!isEmpty(this.errors)) this[CLEAR_GROUPS_ERRORS]()
       this.isAddModalOpen = !this.isAddModalOpen
     }
   },

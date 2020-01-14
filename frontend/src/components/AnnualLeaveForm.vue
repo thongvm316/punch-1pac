@@ -92,7 +92,6 @@ export default {
 
   created() {
     if (this.request) this.params = { ...this.request }
-
     if (this.annualDay) this.params.attendance_day = this.annualDay
   }
 }

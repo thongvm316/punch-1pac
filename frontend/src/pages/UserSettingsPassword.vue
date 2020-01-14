@@ -26,6 +26,7 @@
 <script>
 import { CLEAR_USER_PASSWORD_ERRORS } from '../store/mutation-types'
 import { mapState, mapActions, mapMutations } from 'vuex'
+import { isEmpty } from 'underscore'
 import handleSuccess from '../mixins/handle-success'
 const SettingLayout = () => import('../layouts/Setting.vue')
 
@@ -63,7 +64,7 @@ export default {
           password_confirmation: ''
         }
 
-        if (Object.keys(this.errors).length) this[CLEAR_USER_PASSWORD_ERRORS]()
+        if (!isEmpty(this.errors)) this[CLEAR_USER_PASSWORD_ERRORS]()
       })
       .catch(() => { this.isDisable = false })
     }
@@ -74,7 +75,7 @@ export default {
   },
 
   created() {
-    if (Object.keys(this.errors).length) this[CLEAR_USER_PASSWORD_ERRORS]()
+    if (!isEmpty(this.errors)) this[CLEAR_USER_PASSWORD_ERRORS]()
   }
 }
 </script>
