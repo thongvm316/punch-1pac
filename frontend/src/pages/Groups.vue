@@ -68,7 +68,7 @@ export default {
   },
 
   computed: {
-    ...mapState('groups', ['groups']),
+    ...mapState('groups', ['groups', 'errors']),
 
     ...mapGetters('groups', ['filterGroups'])
   },
@@ -79,7 +79,7 @@ export default {
     ...mapMutations('groups', [CLEAR_GROUPS_ERRORS]),
 
     toggleAddModal() {
-      this[CLEAR_GROUPS_ERRORS]()
+      if (Object.keys(this.errors).length) this[CLEAR_GROUPS_ERRORS]()
       this.isAddModalOpen = !this.isAddModalOpen
     }
   },

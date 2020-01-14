@@ -62,7 +62,8 @@ export default {
           password: '',
           password_confirmation: ''
         }
-        this[CLEAR_USER_PASSWORD_ERRORS]()
+
+        if (Object.keys(this.errors).length) this[CLEAR_USER_PASSWORD_ERRORS]()
       })
       .catch(() => { this.isDisable = false })
     }
@@ -73,7 +74,7 @@ export default {
   },
 
   created() {
-    this[CLEAR_USER_PASSWORD_ERRORS]()
+    if (Object.keys(this.errors).length) this[CLEAR_USER_PASSWORD_ERRORS]()
   }
 }
 </script>
