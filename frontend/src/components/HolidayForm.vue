@@ -110,11 +110,7 @@ export default {
 
   created() {
     if (Object.keys(this.errors).length) this[CLEAR_HOLIDAY_ERRORS]()
-    if (this.targetHoliday) {
-      Object.keys(this.params).forEach(k => {
-        this.params[k] = this.targetHoliday[k]
-      })
-    }
+    if (this.targetHoliday) this.params = { ...this.targetHoliday }
   }
 }
 </script>

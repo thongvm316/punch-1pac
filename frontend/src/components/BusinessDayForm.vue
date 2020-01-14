@@ -114,11 +114,7 @@ export default {
 
   created() {
     if (Object.keys(this.errors).length) this[CLEAR_BUSINESS_DAY_ERRORS]()
-    if (this.targetBusinessDay) {
-      Object.keys(this.params).forEach(key => {
-        this.params[key] = this.targetBusinessDay[key]
-      })
-    }
+    if (this.targetBusinessDay) this.params = { ...this.targetBusinessDay }
   }
 }
 </script>

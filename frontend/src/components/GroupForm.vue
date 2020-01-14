@@ -91,11 +91,7 @@ export default {
   },
 
   created() {
-    if (this.targetGroup) {
-      Object.keys(this.params).forEach(key => {
-        this.params[key] = this.targetGroup[key]
-      })
-    }
+    if (this.targetGroup) this.params = { ...this.targetGroup }
   }
 }
 </script>
