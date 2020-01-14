@@ -168,7 +168,7 @@ export default {
     },
 
     toggleEditModal(requestId) {
-      this[CLEAR_REJECT_GROUP_REQUEST_ERRORS]()
+      if (Object.keys(this.errors).length) this[CLEAR_REJECT_GROUP_REQUEST_ERRORS]()
       this.requestParams.requestId = requestId
       this.requestParams.admin = this.currentUser
       this.requestParams.admin_reason = ''

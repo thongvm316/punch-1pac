@@ -76,7 +76,8 @@ export default {
   },
 
   created() {
-    this[CLEAR_IP_ERRORS]()
+    if (Object.keys(this.errors).length) this[CLEAR_IP_ERRORS]()
+
     if (this.targetIp) {
       this.params = this.targetIp.ip_address
     }

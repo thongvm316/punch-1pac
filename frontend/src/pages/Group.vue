@@ -132,7 +132,7 @@ export default {
   },
 
   computed: {
-    ...mapState('group', ['group', 'usersInGroup']),
+    ...mapState('group', ['group', 'usersInGroup', 'errors']),
 
     ...mapGetters('group', ['filterUsers']),
 
@@ -168,7 +168,7 @@ export default {
     },
 
     toggleEditModal() {
-      this[CLEAR_GROUP_ERRORS]()
+      if (Object.keys(this.errors).length) this[CLEAR_GROUP_ERRORS]()
       this.isEditModalOpen = !this.isEditModalOpen
     },
 

@@ -96,7 +96,8 @@ export default {
   },
 
   created() {
-    this[CLEAR_REQUEST_ERRORS]()
+    if (Object.keys(this.errors).length) this[CLEAR_REQUEST_ERRORS]()
+
     if (this.attendance) {
       this.day = this.params.attendance_day = this.attendance.day
       const statuses = ['attended_at', 'left_at']
