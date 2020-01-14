@@ -71,7 +71,7 @@ class Api::V1::GroupsController < Api::V1::BaseController
                 meta: {
                   company_total_working_hours_on_month: current_company.total_working_hours_on_month(params[:date], params[:date_type]),
                   company_total_working_days_in_month:  current_company.total_working_days_in_month(params[:date], params[:date_type]),
-                  company_monthly_report:               current_company.date_of_monthly_report.min_value
+                  company_monthly_report:               current_company.date_of_monthly_report&.min_value || 1
                 },
                 params: params,
                 adapter: :json,
@@ -98,7 +98,7 @@ class Api::V1::GroupsController < Api::V1::BaseController
       meta_json = {
         company_total_working_hours_on_month: current_company.total_working_hours_on_month(params[:date], params[:date_type]),
         company_total_working_days_in_month:  current_company.total_working_days_in_month(params[:date], params[:date_type]),
-        company_monthly_report:               current_company.date_of_monthly_report.min_value
+        company_monthly_report:               current_company.date_of_monthly_report&.min_value || 1
       }
 
       respond_to do |format|

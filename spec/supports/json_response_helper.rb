@@ -322,7 +322,8 @@ module JsonResponseHelper
   def response_meta
     {
       company_total_working_hours_on_month: Integer,
-      company_total_working_days_in_month: Integer
+      company_total_working_days_in_month: Integer,
+      company_monthly_report: Integer
     }
   end
 
