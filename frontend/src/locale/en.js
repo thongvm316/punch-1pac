@@ -432,7 +432,9 @@ export default {
         actions: 'Actions'
       },
       labels: {
-        ipAddress: 'IP address'
+        ipAddress: 'IP address',
+        blank: 'can\'t be blank',
+        invalid: 'is invalid'
       },
       btn: {
         add: 'Add IP address',
