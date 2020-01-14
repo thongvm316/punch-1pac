@@ -322,6 +322,9 @@ export default {
       addRequest: '修正を依頼する'
     }
   },
+  report: {
+    groupTitle: 'Báo cáo của nhóm {name}'
+  },
   user: {
     title: '{name}の設定',
     profile: {

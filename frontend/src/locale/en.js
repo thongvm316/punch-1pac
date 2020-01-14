@@ -322,6 +322,9 @@ export default {
       addRequest: 'Add request'
     }
   },
+  report: {
+    groupTitle: 'Report of {name} group'
+  },
   user: {
     title: 'Settings for {name}',
     profile: {

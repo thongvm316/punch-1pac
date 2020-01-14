@@ -1,5 +1,5 @@
 <template>
-  <main-layout :title="$t('attendances.groupTitle', { name: group.name })">
+  <main-layout :title="$t('report.groupTitle', { name: group.name })">
     <group-tab :group-id="$route.params.id"/>
 
     <div class="toolbar mt-5 clearfix">
