@@ -497,6 +497,15 @@ export default {
         addTitle: '休日の追加',
         editTitle: '休日の編集'
       },
+      validation: {
+        name: 'Name can\'t be blank',
+        startAt: 'Start date can\'t be blank',
+        endAt: 'End date can\'t be blank'
+      },
+      confirmDialog: {
+        title: 'Remove Holiday',
+        msg: 'Are you sure to remove {name} holiday ?'
+      },
       tooltip: {
         edit: '編集する',
         delete: '削除する'
