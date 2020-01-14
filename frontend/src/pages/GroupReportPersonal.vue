@@ -57,9 +57,8 @@
 
 <script>
 import exportFile from '../mixins/export-file'
-import Datepicker from 'vuejs-datepicker'
 import { mapState, mapActions } from 'vuex'
-const MonthYearPicker = () => import('../components/MonthYearPicker')
+const Datepicker = () => import('vuejs-datepicker')
 const MainLayout = () => import('../layouts/Main')
 const GroupTab = () => import('../components/GroupTab')
 
