@@ -47,16 +47,16 @@
           <option :value="kind" v-for="kind in ['attendance', 'annual_leave']" :key="kind">{{ $t(`dashboard.request.kind.${kind}`) }}</option>}
         </select>
       </div>
-      <request-form v-show="this.selectedRequestKind === 'attendance'" :attendance="attendance" @afterModify="isRequestModalOpen = false"></request-form>
-      <annual-leave-form v-show="this.selectedRequestKind === 'annual_leave'" :annual-day="annualLeaveDay" @finishRequest="isRequestModalOpen = false"/>
+      <request-form v-if="this.selectedRequestKind === 'attendance'" :attendance="attendance" @afterModify="isRequestModalOpen = false"></request-form>
+      <annual-leave-form v-if="this.selectedRequestKind === 'annual_leave'" :annual-day="annualLeaveDay" @finishRequest="isRequestModalOpen = false"/>
     </modal>
 
     <modal ref="editModal" :title="$t('attendances.modal.addTitle')" :modal-open.sync="isEditModalOpen">
-      <request-form v-show="isEditModalOpen" :attendance="attendance" @afterModify="isEditModalOpen = false"></request-form>
+      <request-form v-if="isEditModalOpen" :attendance="attendance" @afterModify="isEditModalOpen = false"></request-form>
     </modal>
 
     <modal ref="addModal" :title="$t('annualLeave.title')" :modal-open.sync="isAddModalOpen">
-      <annual-leave-form v-show="isAddModalOpen" :annual-day="annualLeaveDay" @finishRequest="isAddModalOpen = false"/>
+      <annual-leave-form v-if="isAddModalOpen" :annual-day="annualLeaveDay" @finishRequest="isAddModalOpen = false"/>
     </modal>
   </div>
 </template>

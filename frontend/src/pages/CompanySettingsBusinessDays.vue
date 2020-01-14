@@ -35,11 +35,11 @@
     </table>
 
     <modal :title="$t('company.businessDays.modal.addTitle')" :modal-open.sync="isAddModalOpen">
-      <business-day-form v-show="isAddModalOpen" @afterModify="isAddModalOpen = false"></business-day-form>
+      <business-day-form v-if="isAddModalOpen" @afterModify="isAddModalOpen = false"></business-day-form>
     </modal>
 
     <modal :title="$t('company.businessDays.modal.editTitle')" :modal-open.sync="isEditModalOpen">
-      <business-day-form v-show="isEditModalOpen" :target-business-day="editBusinessDay" @afterModify="isEditModalOpen = false"></business-day-form>
+      <business-day-form v-if="isEditModalOpen" :target-business-day="editBusinessDay" @afterModify="isEditModalOpen = false"></business-day-form>
     </modal>
   </setting-layout>
 </template>
