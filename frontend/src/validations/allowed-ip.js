@@ -1,9 +1,6 @@
 import { required } from 'vuelidate/lib/validators'
-import { validationMixin } from 'vuelidate'
 
 export default {
-  mixins: [validationMixin],
-
   validations: {
     params: {
       required,
