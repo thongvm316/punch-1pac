@@ -448,6 +448,10 @@ export default {
       tooltip: {
         edit: 'Edit IP address',
         delete: 'Delete IP address'
+      },
+      confirmDialog: {
+        title: 'Remove Ip Address',
+        msg: 'Are you sure to remove ip {name}'
       }
     },
     timezoneAndLanguage: {

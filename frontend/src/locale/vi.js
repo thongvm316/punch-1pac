@@ -448,6 +448,10 @@ export default {
       tooltip: {
         edit: 'Chỉnh sửa địa chỉ IP',
         delete: 'Xoá địa chỉ IP'
+      },
+      confirmDialog: {
+        title: 'Remove Ip Address',
+        msg: 'Are you sure to remove ip {name}'
       }
     },
     timezoneAndLanguage: {

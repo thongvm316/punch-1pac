@@ -448,6 +448,10 @@ export default {
       tooltip: {
         edit: '編集する',
         delete: '削除する'
+      },
+      confirmDialog: {
+        title: 'Remove Ip Address',
+        msg: 'Are you sure to remove ip {name}'
       }
     },
     timezoneAndLanguage: {
