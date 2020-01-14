@@ -15,13 +15,13 @@
         class="btn btn-success btn-submit"
         @click="localAddIp"
         v-if="!targetIp"
-        :disabled="$v.params.$error || params === ''">{{ $t('company.allowedIPs.btn.submit') }}</button>
+        :disabled="isDisabled">{{ $t('company.allowedIPs.btn.submit') }}</button>
       <button
         ref="editAllowedIpButton"
         class="btn btn-success btn-submit"
         @click="localEditIp"
         v-if="targetIp"
-        :disabled="$v.params.$error || params === targetIp.ip_address">{{ $t('company.allowedIPs.btn.save') }}</button>
+        :disabled="isDisabled">{{ $t('company.allowedIPs.btn.save') }}</button>
     </div>
   </div>
 </template>
@@ -29,7 +29,7 @@
 <script>
 import { mapActions } from 'vuex'
 import handleSuccess from '../mixins/handle-success'
-import allowedIP from '../validations/allowed-ip'
+import allowedIpValidate from '../validations/allowed-ip-validate'
 
 export default {
   name: 'allowed-ip-form',
@@ -38,11 +38,10 @@ export default {
     targetIp: Object
   },
 
-  mixins: [allowedIP, handleSuccess],
+  mixins: [allowedIpValidate, handleSuccess],
 
   data() {
     return {
-      isDisable: false,
       data: {
         emitType: 'afterModify',
         message: ''
@@ -55,21 +54,31 @@ export default {
     ...mapActions('companyAllowedIPs', ['createIP', 'updateIP']),
 
     localAddIp() {
-      this.isDisable = true
       this.createIP({ ip_address: this.params }).then(response => {
         this.data.message = this.$t('messages.ip.createSuccess')
         this.handleSuccess(this.data)
       })
-      .catch(() => { this.isDisable = false })
     },
 
     localEditIp() {
-      this.isDisable = true
       this.updateIP({ id: this.targetIp.id, ip_address: this.params }).then(response => {
         this.data.message = this.$t('messages.ip.updateSuccess')
         this.handleSuccess(this.data)
       })
-      .catch(() => { this.isDisable = false })
+    }
+  },
+
+  computed: {
+    isDisabled() {
+      let flag = false
+
+      if (this.targetIp) {
+        flag = this.$v.params.$error || this.params === this.targetIp.ip_address
+      } else {
+        flag = this.$v.params.$error || this.params === ''
+      }
+
+      return flag
     }
   },
 
