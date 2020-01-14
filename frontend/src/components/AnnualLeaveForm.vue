@@ -91,15 +91,9 @@ export default {
   },
 
   created() {
-    if (this.request) {
-      Object.keys(this.params).forEach(key => {
-        this.params[key] = this.request[key]
-      })
-    }
+    if (this.request) this.params = { ...this.request }
 
-    if (this.annualDay) {
-      this.params.attendance_day = this.annualDay
-    }
+    if (this.annualDay) this.params.attendance_day = this.annualDay
   }
 }
 </script>

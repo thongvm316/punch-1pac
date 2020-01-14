@@ -124,16 +124,12 @@ export default {
   },
 
   created() {
-    Object.keys(this.params).forEach(key => {
-      this.params[key] = this.targetUser[key]
-    })
+    this.params = this.targetUser
   },
 
   watch: {
     targetUser: function() {
-      Object.keys(this.params).forEach(key => {
-        this.params[key] = this.targetUser[key]
-      })
+      this.params = this.targetUser
     }
   }
 }

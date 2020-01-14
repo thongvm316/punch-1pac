@@ -106,9 +106,7 @@ export default {
       })
     } else if (this.request) {
       this.day = this.request.attendance_day
-      Object.keys(this.params).forEach(key => {
-        this.params[key] = this.request[key]
-      })
+      this.params = { ...this.request }
     }
   }
 }
