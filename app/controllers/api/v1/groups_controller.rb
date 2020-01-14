@@ -61,7 +61,7 @@ class Api::V1::GroupsController < Api::V1::BaseController
   def report
     authorize! @group
 
-    results  = UserPresenter.report_attendances_users_in_month(@group, params)
+    results  = Attendance.report_attendances_users_in_month(@group, params)
     document = DocumentService.new('Group', params)
     respond_to do |format|
       format.json do
@@ -88,8 +88,8 @@ class Api::V1::GroupsController < Api::V1::BaseController
     user = @group.users.find(params[:user_id])
 
     if user
-      attendances = UserPresenter.new(user, params).attendances_in_month
-      chart       = UserPresenter.new(user, params).chart_in_month.first
+      attendances = current_user.attendances.in_period(params).order(day: :asc)
+      chart       = current_user.attendances.chart_in_month(params).first
       document    = DocumentService.new('User', params)
       holidays    = current_company.holidays.in_month(params[:date])
 

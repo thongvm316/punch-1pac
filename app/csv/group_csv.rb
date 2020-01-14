@@ -24,7 +24,7 @@ class GroupCSV
 
       users.each do |user|
         zos.put_next_entry "#{user.name}_#{user.email}.csv"
-        attendances = AttendanceQuery.new(user.attendances).relation.in_period(params).order(day: :asc)
+        attendances = user.attendances.in_period(params).order(day: :asc)
         content     = document.export_csv(attendances)
         zos.print content
       end

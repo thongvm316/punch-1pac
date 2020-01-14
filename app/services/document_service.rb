@@ -42,7 +42,7 @@ class DocumentService
   end
 
   def footer(attend)
-    data = AttendanceQuery.new(attend).relation.single_working_hours_on_month
+    data = attend.single_working_hours_on_month
     ['Total', '', '', '', '', '', '', "#{data.to_i / 3600}h#{data.to_i % 3600 / 60}m"]
   end
 end
