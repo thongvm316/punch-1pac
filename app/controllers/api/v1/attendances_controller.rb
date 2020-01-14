@@ -32,8 +32,8 @@ class Api::V1::AttendancesController < Api::V1::BaseController
   def chart
     authorize!
 
-    user = UserPresenter.new(current_user, params)
-    render json: user.chart_in_month.first,
+    chart = current_user.attendances.chart_in_month(params).first
+    render json: chart,
            root: 'statuses',
            serializer: AttendanceChartSerializer,
            meta: {
@@ -47,8 +47,11 @@ class Api::V1::AttendancesController < Api::V1::BaseController
 
   def index
     authorize!
-    relation    = Attendance.for_user(current_user, params['self'])
-    attendances = AttendanceQuery.new(relation, params).search_by
+    attendances = Attendance.for_user(current_user, params['self'])
+                            .search_by(params)
+                            .page(params[:page])
+                            .per(params[:per_page])
+                            .order(day: :desc)
 
     if stale?(attendances)
       render json: attendances,
@@ -62,7 +65,7 @@ class Api::V1::AttendancesController < Api::V1::BaseController
 
   def calendar
     authorize!
-    attend = UserPresenter.new(current_user, params).attendances_in_month
+    attend = current_user.attendances.in_period(params).order(day: :asc)
     if stale?(attend)
       render json: attend,
              root: 'attendances',
