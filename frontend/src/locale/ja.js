@@ -112,7 +112,7 @@ export default {
       tuesday: '火曜日',
       wednesday: '水曜日',
       thursday: '木曜日',
-      friday: '水曜日',
+      friday: '金曜日',
       saturday: '土曜日',
       sunday: '日曜日'
     },
@@ -225,6 +225,8 @@ export default {
       working_hours: '総勤務時間',
       attend_late: '遅刻',
       leave_early: '早退',
+      mins_attend_late: 'Minutes attend late',
+      mins_leave_early: 'Minutes leave early',
       day_off: '欠勤',
       no_data: 'データなし',
       total: '合計'

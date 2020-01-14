@@ -291,6 +291,14 @@ module JsonResponseHelper
       leave_ok: Integer,
       leave_early: Integer,
       leave: Integer,
+      minutes_attend_late: {
+        hours: Integer,
+        mins: Integer
+      },
+      minutes_leave_early: {
+        hours: Integer,
+        mins: Integer
+      },
       working_hours: {
         hours: Integer,
         mins: Integer
@@ -305,6 +313,8 @@ module JsonResponseHelper
       leave_ok: Integer,
       leave_early: Integer,
       leave: Integer,
+      mins_attend_late: Integer,
+      mins_leave_early: Integer,
       working_hours: Integer
     }
   end
@@ -312,7 +322,8 @@ module JsonResponseHelper
   def response_meta
     {
       company_total_working_hours_on_month: Integer,
-      company_total_working_days_in_month: Integer
+      company_total_working_days_in_month: Integer,
+      company_monthly_report: Integer
     }
   end
 

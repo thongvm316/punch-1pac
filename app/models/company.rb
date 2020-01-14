@@ -27,6 +27,8 @@
 #
 
 class Company < ApplicationRecord
+  include Settingable
+
   INDUSTRIES = %w[hr_agency cafe_shop restaurant software_company startup interior_design].freeze
   TIMEZONES = ActiveSupport::TimeZone.all.map { |tz| tz.tzinfo.name }.uniq
 

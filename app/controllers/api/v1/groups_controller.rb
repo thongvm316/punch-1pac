@@ -61,7 +61,7 @@ class Api::V1::GroupsController < Api::V1::BaseController
   def report
     authorize! @group
 
-    results  = ReportPresenter.new(current_company, params).statific_company_in_month
+    results  = UserPresenter.report_attendances_users_in_month(@group, params)
     document = DocumentService.new('Group', params)
     respond_to do |format|
       format.json do
@@ -70,7 +70,8 @@ class Api::V1::GroupsController < Api::V1::BaseController
                 each_serializer: GroupReportSerializer,
                 meta: {
                   company_total_working_hours_on_month: current_company.total_working_hours_on_month(params[:date], params[:date_type]),
-                  company_total_working_days_in_month:  current_company.total_working_days_in_month(params[:date], params[:date_type])
+                  company_total_working_days_in_month:  current_company.total_working_days_in_month(params[:date], params[:date_type]),
+                  company_monthly_report:               current_company.date_of_monthly_report&.min_value || 1
                 },
                 params: params,
                 adapter: :json,
@@ -87,8 +88,8 @@ class Api::V1::GroupsController < Api::V1::BaseController
     user = @group.users.find(params[:user_id])
 
     if user
-      attendances = ReportPresenter.new(current_company, params).user_attendances_in_month(user)
-      report      = ReportPresenter.new(current_company, params).statific_personal_in_month(user)
+      attendances = UserPresenter.new(user, params).single_personal_attendances
+      report      = UserPresenter.new(user, params).single_report_attendances
       document    = DocumentService.new('User', params)
       holidays    = current_company.holidays.in_month(params[:date])
 
@@ -96,7 +97,8 @@ class Api::V1::GroupsController < Api::V1::BaseController
       holidays_json    = ActiveModelSerializers::SerializableResource.new(holidays, each_serializer: HolidaySerializer).as_json
       meta_json = {
         company_total_working_hours_on_month: current_company.total_working_hours_on_month(params[:date], params[:date_type]),
-        company_total_working_days_in_month:  current_company.total_working_days_in_month(params[:date], params[:date_type])
+        company_total_working_days_in_month:  current_company.total_working_days_in_month(params[:date], params[:date_type]),
+        company_monthly_report:               current_company.date_of_monthly_report&.min_value || 1
       }
 
       respond_to do |format|

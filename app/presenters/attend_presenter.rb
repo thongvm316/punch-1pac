@@ -9,14 +9,14 @@ class AttendPresenter
 
   def chart
     @attendances.relation.select(
-      "(#{status_count_on_month('attend_ok',    'attending_status', @params[:date])})",
-      "(#{status_count_on_month('attend_late',  'attending_status', @params[:date])})",
-      "(#{status_count_on_month('leave_ok',     'leaving_status',   @params[:date])})",
-      "(#{status_count_on_month('leave_early',  'leaving_status',   @params[:date])})",
-      "(#{status_count_on_month('annual_leave', 'off_status',       @params[:date])})",
-      "(#{total_time_of_latency('minutes_attend_late', @params[:date])})",
-      "(#{total_time_of_latency('minutes_leave_early', @params[:date])})",
-      "(#{sum_working_hours_on_month(@params[:date])})"
+      "(#{status_count_on_month('attend_ok',    'attending_status', @params)})",
+      "(#{status_count_on_month('attend_late',  'attending_status', @params)})",
+      "(#{status_count_on_month('leave_ok',     'leaving_status',   @params)})",
+      "(#{status_count_on_month('leave_early',  'leaving_status',   @params)})",
+      "(#{status_count_on_month('annual_leave', 'off_status',       @params)})",
+      "(#{total_time_of_latency('minutes_attend_late', @params)})",
+      "(#{total_time_of_latency('minutes_leave_early', @params)})",
+      "(#{sum_working_hours_on_month(@params)})"
     ).limit(1)
   end
 
@@ -36,15 +36,17 @@ class AttendPresenter
     ForgotPunchInDaysService.new(@user, @user.company, @params[:date]).execute
   end
 
-  def status_count_on_month(status_value, status_type, date, date_type = nil)
-    @attendances.relation.status_count_on_month(status_value, status_type, date, date_type).to_sql
+  private
+
+  def status_count_on_month(status_value, status_type, params)
+    @attendances.relation.status_count_on_month(status_value, status_type, params).to_sql
   end
 
-  def sum_working_hours_on_month(date, date_type = nil)
-    @attendances.relation.sum_working_hours_on_month(date, date_type).to_sql
+  def sum_working_hours_on_month(params)
+    @attendances.relation.sum_working_hours_on_month(params).to_sql
   end
 
-  def total_time_of_latency(type, date, date_type = nil)
-    @attendances.relation.select("sum(#{type}) as #{type}").in_period(date, date_type).to_sql
+  def total_time_of_latency(type, params)
+    @attendances.relation.sum_time_of_latency(type, params).to_sql
   end
 end

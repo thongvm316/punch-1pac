@@ -17,9 +17,7 @@ class UserCSV
 
     def report_csv(attendances, params = {})
       date = Date.parse(params[:date])
-      a = Date.parse('10 Jan 2020')
-      b = Date.parse('20 Jan 2020')
-      (a..b).to_a.each_with_object([]) do |day, arr|
+      (date.beginning_of_month..date.end_of_month).to_a.each_with_object([]) do |day, arr|
         attendance = attendances.find_by(day: day)
         arr << (attendance ? row_data(attendance) : [day])
       end

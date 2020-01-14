@@ -52,7 +52,7 @@ vi:
       late: Trễ
       leave_early: Về sớm
       min_attend_late: Số giờ đi trễ
-      leave_early: Số giờ về sớm
+      min_leave_early: Số giờ về sớm
       working_hours: Thời gian làm việc
   activerecord:
     errors:
