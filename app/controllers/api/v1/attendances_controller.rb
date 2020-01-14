@@ -32,15 +32,15 @@ class Api::V1::AttendancesController < Api::V1::BaseController
   def chart
     authorize!
 
-    attend = AttendPresenter.new(current_user, params)
-    render json: attend.chart.first,
+    user = UserPresenter.new(current_user, params)
+    render json: user.chart_in_month.first,
            root: 'statuses',
            serializer: AttendanceChartSerializer,
            meta: {
-             company_total_working_hours_on_month: attend.total_working_hours_on_month,
-             company_total_working_days_in_month:  attend.total_working_days_in_month
+             company_total_working_hours_on_month: current_company.total_working_hours_on_month(params[:date]),
+             company_total_working_days_in_month:  current_company.total_working_days_in_month(params[:date])
            },
-           leave_days: attend.forget_punch_in,
+           leave_days: ForgotPunchInDaysService.new(current_user, current_company, params[:date]).execute,
            adapter: :json,
            status:  :ok
   end
@@ -62,7 +62,7 @@ class Api::V1::AttendancesController < Api::V1::BaseController
 
   def calendar
     authorize!
-    attend = AttendPresenter.new(current_user, params).in_month
+    attend = UserPresenter.new(current_user, params).attendances_in_month
     if stale?(attend)
       render json: attend,
              root: 'attendances',

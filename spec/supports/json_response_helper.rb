@@ -313,9 +313,18 @@ module JsonResponseHelper
       leave_ok: Integer,
       leave_early: Integer,
       leave: Integer,
-      mins_attend_late: Integer,
-      mins_leave_early: Integer,
-      working_hours: Integer
+      minutes_leave_early: {
+        hours: Integer,
+        mins: Integer
+      },
+      minutes_attend_late: {
+        hours: Integer,
+        mins: Integer
+      },
+      working_hours: {
+        hours: Integer,
+        mins: Integer
+      }
     }
   end
 
