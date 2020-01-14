@@ -322,6 +322,9 @@ export default {
       addRequest: 'Tạo yêu cầu'
     }
   },
+  report: {
+    groupTitle: 'Báo cáo của nhóm {name}'
+  },
   user: {
     title: 'Tuỳ chỉnh của {name}',
     profile: {

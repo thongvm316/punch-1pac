@@ -1,6 +1,6 @@
 <template>
   <main-layout :title="group.name">
-    <group-tab :group-id="$route.params.id"/>
+    <group-tab :group-id="$route.params.id" :hasUser="isShowComponent"/>
 
     <div class="input-group mt-5" v-if="$auth('Group', currentUser, group.id).canAddUser()">
       <filter-user-box :queryParams="{ not_in_group_id: $route.params.id, per_page: 1000, exclude_user_ids: usersInGroup.map(user => user.id) }" :placeholder="$t('group.placeholder.searchByNameEmail')" :user.sync="selectedUser"/>
@@ -9,7 +9,11 @@
     <p class="form-input-hint text-dark">{{ $t('group.explain') }}</p>
 
     <div class="toolbar mt-5 clearfix" v-if="$auth('Group', currentUser, group.id).canEdit()">
-      <input type="search" class="form-input filter-input" :placeholder="$t('attendances.placeholder.filterByUser')" v-model="searchText">
+      <input
+        type="search"
+        class="form-input filter-input"
+        :placeholder="$t('attendances.placeholder.filterByUser')"
+        v-model="searchText" v-show="isShowComponent">
       <div class="float-right">
         <button type="button" class="btn btn-error" @click="openDeleteGroupConfirmDialog" v-if="$auth('Group', currentUser, group).canDelete()">
         {{ $t('group.btn.delete') }}
@@ -18,7 +22,7 @@
       </div>
     </div>
 
-    <table class="table bg-light mt-5">
+    <table class="table bg-light mt-5" v-show="isShowComponent">
       <thead>
         <th>{{ $t('group.tableHeader.name') }}</th>
         <th>{{ $t('group.tableHeader.email') }}</th>
@@ -130,7 +134,11 @@ export default {
   computed: {
     ...mapState('group', ['group', 'usersInGroup']),
 
-    ...mapGetters('group', ['filterUsers'])
+    ...mapGetters('group', ['filterUsers']),
+
+    isShowComponent() {
+      return !!this.usersInGroup.length
+    }
   },
 
   methods: {

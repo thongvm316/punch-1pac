@@ -54,7 +54,7 @@
     </confirm-dialog>
 
     <modal :title="$t('company.users.modal.editTitle')" :modal-open.sync="isEditModalOpen">
-      <user-profile :target-user="selectedUser" object-type="company" @afterUserProfileUpdated="isEditModalOpen = false" v-if="selectedUser"/>
+      <user-profile :target-user="selectedUser" object-type="company" @afterUserProfileUpdated="isEditModalOpen = false" v-show="selectedUser"/>
     </modal>
   </setting-layout>
 </template>
@@ -70,7 +70,7 @@ export default {
   data() {
     return {
       searchText: '',
-      selectedUser: null
+      selectedUser: {}
     }
   },
 
