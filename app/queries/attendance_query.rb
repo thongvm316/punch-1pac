@@ -28,8 +28,8 @@ class AttendanceQuery
 
       if type == 'year'
         where('extract(year from day) = ?', date.year)
-      elsif type == 'option'
-        where(day: TimeInDay.setting_report(date))
+      elsif type == 'range'
+        where(day: TimeInDay.range_date(str_date))
       else
         where(day: date.beginning_of_month..date.end_of_month)
       end
