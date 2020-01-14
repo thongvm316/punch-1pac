@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="form-group">
+    <div class="form-group" :class="{ 'has-error': errors.ip_address}">
       <label class="form-label">{{ $t('company.allowedIPs.labels.ipAddress') }}</label>
       <input class="form-input" type="text" v-model.trim="$v.params.$model" :class="{ 'is-error': $v.params.$error, 'is-success': $v.params.isValid }">
       <p class="form-input-hint text-error" v-if="$v.params.$error">
@@ -28,7 +28,7 @@
 
 <script>
 import { CLEAR_IP_ERRORS } from '../store/mutation-types'
-import { mapActions, mapMutations } from 'vuex'
+import { mapState, mapActions, mapMutations } from 'vuex'
 import handleSuccess from '../mixins/handle-success'
 import { validationMixin } from 'vuelidate'
 import { required } from 'vuelidate/lib/validators'
@@ -36,13 +36,11 @@ import { required } from 'vuelidate/lib/validators'
 export default {
   name: 'allowed-ip-form',
 
-  mixins: [handleSuccess],
-
   props: {
     targetIp: Object
   },
 
-  mixins: [validationMixin],
+  mixins: [validationMixin, handleSuccess],
 
   data() {
     return {
