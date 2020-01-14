@@ -15,13 +15,13 @@
         class="btn btn-success btn-submit"
         @click="localAddIp"
         v-if="!targetIp"
-        :disabled="!$v.params.isValid || params === ''">{{ $t('company.allowedIPs.btn.submit') }}</button>
+        :disabled="$v.params.$error || params === ''">{{ $t('company.allowedIPs.btn.submit') }}</button>
       <button
         ref="editAllowedIpButton"
         class="btn btn-success btn-submit"
         @click="localEditIp"
         v-if="targetIp"
-        :disabled="!$v.params.isValid || params === targetIp.ip_address">{{ $t('company.allowedIPs.btn.save') }}</button>
+        :disabled="$v.params.$error || params === targetIp.ip_address">{{ $t('company.allowedIPs.btn.save') }}</button>
     </div>
   </div>
 </template>
