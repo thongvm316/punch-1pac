@@ -1,4 +1,4 @@
-import * as types from '../mutation-types.js'
+import { PUNCH_INIT_ATTENDANCE, PUNCH_IN, PUNCH_OUT } from '../mutation-types.js'
 import callApi from '../api-caller'
 
 const state = {
@@ -7,16 +7,16 @@ const state = {
 }
 
 const mutations = {
-  [types.PUNCH_INIT_ATTENDANCE](state, attendance) {
+  [PUNCH_INIT_ATTENDANCE](state, attendance) {
     state.attendance = attendance
     state.isInited = true
   },
 
-  [types.PUNCH_IN](state, attendance) {
+  [PUNCH_IN](state, attendance) {
     state.attendance = attendance
   },
 
-  [types.PUNCH_OUT](state, attendance) {
+  [PUNCH_OUT](state, attendance) {
     state.attendance = attendance
   }
 }
@@ -29,7 +29,7 @@ const actions = {
       data: { user_id: userId }
     })
       .then(response => {
-        commit(types.PUNCH_IN, response.data)
+        commit(PUNCH_IN, response.data)
         return response
       })
       .catch(error => {
@@ -44,7 +44,7 @@ const actions = {
       data: { user_id: userId }
     })
       .then(response => {
-        commit(types.PUNCH_OUT, response.data)
+        commit(PUNCH_OUT, response.data)
         return response
       })
       .catch(error => {

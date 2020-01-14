@@ -1,4 +1,4 @@
-import * as types from '../mutation-types'
+import { UPDATE_USER_PASSWORD_ERRORS, CLEAR_USER_PASSWORD_ERRORS } from '../mutation-types'
 import callApi from '../api-caller'
 
 const state = {
@@ -6,11 +6,11 @@ const state = {
 }
 
 const mutations = {
-  [types.UPDATE_USER_PASSWORD_ERRORS](state, payload) {
+  [UPDATE_USER_PASSWORD_ERRORS](state, payload) {
     state.errors = payload.errors
   },
 
-  [types.CLEAR_USER_PASSWORD_ERRORS](state) {
+  [CLEAR_USER_PASSWORD_ERRORS](state) {
     state.errors = {}
   }
 }
@@ -24,7 +24,7 @@ const actions = {
     })
       .then(response => response)
       .catch(error => {
-        if (error.response && error.response.status === 422) commit(types.UPDATE_USER_PASSWORD_ERRORS, error.response.data)
+        if (error.response && error.response.status === 422) commit(UPDATE_USER_PASSWORD_ERRORS, error.response.data)
         throw error
       })
   }

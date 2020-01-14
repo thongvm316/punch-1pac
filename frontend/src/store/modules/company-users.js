@@ -1,4 +1,10 @@
-import * as types from '../mutation-types.js'
+import {
+  DELETE_USER,
+  FETCH_USERS,
+  UPDATE_USER,
+  DEACTIVATE_USER,
+  ACTIVATE_USER
+} from '../mutation-types.js'
 import callApi from '../api-caller'
 
 const state = {
@@ -13,25 +19,25 @@ const getters = {
 }
 
 const mutations = {
-  [types.DELETE_USER](state, id) {
+  [DELETE_USER](state, id) {
     state.users = state.users.filter(user => user.id !== id)
   },
 
-  [types.FETCH_USERS](state, payload) {
+  [FETCH_USERS](state, payload) {
     state.users = payload.users
   },
 
-  [types.UPDATE_USER](state, payload) {
+  [UPDATE_USER](state, payload) {
     const index = state.users.findIndex(user => user.id === payload.id)
     state.users[index] = payload
   },
 
-  [types.DEACTIVATE_USER](state, userId) {
+  [DEACTIVATE_USER](state, userId) {
     const index = state.users.findIndex(user => user.id === userId)
     state.users[index].activated = false
   },
 
-  [types.ACTIVATE_USER](state, userId) {
+  [ACTIVATE_USER](state, userId) {
     const index = state.users.findIndex(user => user.id === userId)
     state.users[index].activated = true
   }
@@ -41,7 +47,7 @@ const actions = {
   fetchUsers({ commit }, params) {
     return callApi({ method: 'get', url: '/users', params: Object.assign({ per_page: 1000 }, params) })
       .then(response => {
-        commit(types.FETCH_USERS, response.data)
+        commit(FETCH_USERS, response.data)
         return response
       })
       .catch(error => {
@@ -52,7 +58,7 @@ const actions = {
   deleteUser({ commit }, id) {
     return callApi({ method: 'delete', url: `/users/${id}` })
       .then(response => {
-        commit(types.DELETE_USER, id)
+        commit(DELETE_USER, id)
         return response
       })
       .catch(error => {
@@ -63,7 +69,7 @@ const actions = {
   deactivateUser({ commit }, userId) {
     return callApi({ method: 'post', url: `/users/${userId}/deactivate` })
       .then(response => {
-        commit(types.DEACTIVATE_USER, userId)
+        commit(DEACTIVATE_USER, userId)
         return response
       })
       .catch(error => {
@@ -74,7 +80,7 @@ const actions = {
   activateUser({ commit }, userId) {
     return callApi({ method: 'post', url: `/users/${userId}/activate` })
       .then(response => {
-        commit(types.ACTIVATE_USER, userId)
+        commit(ACTIVATE_USER, userId)
         return response
       })
       .catch(error => {
