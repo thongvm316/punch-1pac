@@ -98,6 +98,7 @@ import modal from '../mixins/modal'
 import flatpickrLocale from '../mixins/flatpickr-locale'
 import { CLEAR_REJECT_GROUP_REQUEST_ERRORS } from '../store/mutation-types'
 import { mapState, mapActions, mapMutations } from 'vuex'
+import { isEmpty } from 'underscore'
 import debounce from 'lodash.debounce'
 const MainLayout = () => import('../layouts/Main')
 const Pagination = () => import('../components/Pagination')
@@ -168,7 +169,7 @@ export default {
     },
 
     toggleEditModal(requestId) {
-      if (Object.keys(this.errors).length) this[CLEAR_REJECT_GROUP_REQUEST_ERRORS]()
+      if (!isEmpty(this.errors)) this[CLEAR_REJECT_GROUP_REQUEST_ERRORS]()
       this.requestParams.requestId = requestId
       this.requestParams.admin = this.currentUser
       this.requestParams.admin_reason = ''

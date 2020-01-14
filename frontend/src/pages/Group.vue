@@ -102,6 +102,7 @@ import modal from '../mixins/modal'
 import confirmDialog from '../mixins/confirm-dialog'
 import { SET_FLASH_MESSAGE, CLEAR_GROUP_ERRORS } from '../store/mutation-types'
 import { mapState, mapActions, mapMutations, mapGetters } from 'vuex'
+import { isEmpty } from 'underscore'
 const MainLayout = () => import('../layouts/Main')
 const UserProfile = () => import('../components/UserProfile')
 const GroupTab = () => import('../components/GroupTab')
@@ -168,7 +169,7 @@ export default {
     },
 
     toggleEditModal() {
-      if (Object.keys(this.errors).length) this[CLEAR_GROUP_ERRORS]()
+      if (!isEmpty(this.errors)) this[CLEAR_GROUP_ERRORS]()
       this.isEditModalOpen = !this.isEditModalOpen
     },
 
