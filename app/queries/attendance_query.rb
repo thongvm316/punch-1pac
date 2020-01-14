@@ -56,17 +56,8 @@ class AttendanceQuery
       select("sum(#{type}) as #{type}").in_period(params)
     end
 
-    ### for personal
-    def single_status_count_on_month(status_value, status_type, params = {})
-      in_period(params).where("#{status_type}": status_value).size
-    end
-
     def single_working_hours_on_month(params = {})
       in_period(params).sum(:working_hours)
-    end
-
-    def single_time_of_latency(type, params = {})
-      in_period(params).sum(type.to_sym)
     end
   end
 end
