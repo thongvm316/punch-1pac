@@ -7,16 +7,19 @@
     </router-link>
     <router-link tag="li"
       class="tab-item"
+      v-show="hasUser"
       :to="`/groups/${groupId}/attendances`">
       <a href="#">{{ $t('group.attendances') }}</a>
     </router-link>
     <router-link tag="li"
       class="tab-item"
+      v-show="hasUser"
       :to="`/groups/${groupId}/requests`">
       <a href="#">{{ $t('group.requests') }}</a>
     </router-link>
     <router-link tag="li"
       class="tab-item"
+      v-show="hasUser"
       :to="`/groups/${groupId}/report`" exact>
       <a href="#">{{ $t('group.report') }}</a>
     </router-link>
@@ -31,6 +34,10 @@ export default {
     groupId: {
       type: String,
       required: true
+    },
+    hasUser: {
+      type: Boolean,
+      default: true
     }
   }
 }
