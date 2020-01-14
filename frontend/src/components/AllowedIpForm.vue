@@ -89,6 +89,10 @@ export default {
     }
   },
 
+  computed: {
+    ...mapState('companyAllowedIPs', ['errors'])
+  },
+
   created() {
     if (Object.keys(this.errors).length) this[CLEAR_IP_ERRORS]()
 
