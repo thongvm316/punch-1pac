@@ -124,12 +124,12 @@ export default {
   },
 
   created() {
-    this.params = this.targetUser
+    this.params = { ...this.targetUser }
   },
 
   watch: {
     targetUser: function() {
-      this.params = this.targetUser
+      this.params = { ...this.targetUser }
     }
   }
 }
