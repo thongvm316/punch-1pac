@@ -1,4 +1,9 @@
-import * as types from '../mutation-types.js'
+import {
+  RECEIVE_GROUPS,
+  ADD_GROUP,
+  UPDATE_GROUPS_ERRORS,
+  CLEAR_GROUPS_ERRORS
+} from '../mutation-types.js'
 import callApi from '../api-caller'
 import 'formdata-polyfill'
 
@@ -15,19 +20,19 @@ const getters = {
 }
 
 const mutations = {
-  [types.RECEIVE_GROUPS](state, payload) {
+  [RECEIVE_GROUPS](state, payload) {
     state.groups = payload
   },
 
-  [types.ADD_GROUP](state, payload) {
+  [ADD_GROUP](state, payload) {
     state.groups.push(payload)
   },
 
-  [types.UPDATE_GROUPS_ERRORS](state, payload) {
+  [UPDATE_GROUPS_ERRORS](state, payload) {
     state.errors = payload.errors
   },
 
-  [types.CLEAR_GROUPS_ERRORS](state) {
+  [CLEAR_GROUPS_ERRORS](state) {
     state.errors = {}
   }
 }
@@ -36,7 +41,7 @@ const actions = {
   getGroups({ commit }) {
     return callApi({ method: 'get', url: '/groups' })
       .then(response => {
-        commit(types.RECEIVE_GROUPS, response.data)
+        commit(RECEIVE_GROUPS, response.data)
         return response
       })
       .catch(error => {
@@ -55,11 +60,11 @@ const actions = {
       headers: { 'Content-Type': 'multipart/form-data' }
     })
       .then(response => {
-        commit(types.ADD_GROUP, response.data)
+        commit(ADD_GROUP, response.data)
         return response
       })
       .catch(error => {
-        if (error.response && error.response.status === 422) commit(types.UPDATE_GROUPS_ERRORS, error.response.data)
+        if (error.response && error.response.status === 422) commit(UPDATE_GROUPS_ERRORS, error.response.data)
         throw error
       })
   }

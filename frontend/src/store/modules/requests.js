@@ -1,4 +1,11 @@
-import * as types from '../mutation-types.js'
+import {
+  ADD_REQUEST,
+  UPDATE_REQUEST,
+  RECEIVE_REQUESTS,
+  DELETE_REQUEST,
+  UPDATE_REQUEST_ERRORS,
+  CLEAR_REQUEST_ERRORS
+} from '../mutation-types.js'
 import callApi from '../api-caller'
 
 const state = {
@@ -9,29 +16,29 @@ const state = {
 }
 
 const mutations = {
-  [types.ADD_REQUEST](state, payload) {
+  [ADD_REQUEST](state, payload) {
     state.requests.push(payload)
   },
 
-  [types.UPDATE_REQUEST](state, payload) {
+  [UPDATE_REQUEST](state, payload) {
     const index = state.requests.findIndex(request => request.id === payload.id)
     state.requests[index] = payload
   },
 
-  [types.RECEIVE_REQUESTS](state, payload) {
+  [RECEIVE_REQUESTS](state, payload) {
     state.pager = payload.meta
     state.requests = payload.requests
   },
 
-  [types.DELETE_REQUEST](state, requestId) {
+  [DELETE_REQUEST](state, requestId) {
     state.requests = state.requests.filter(req => req.id !== requestId)
   },
 
-  [types.UPDATE_REQUEST_ERRORS](state, payload) {
+  [UPDATE_REQUEST_ERRORS](state, payload) {
     state.errors = payload.errors
   },
 
-  [types.CLEAR_REQUEST_ERRORS](state) {
+  [CLEAR_REQUEST_ERRORS](state) {
     state.errors = {}
   }
 }
@@ -44,7 +51,7 @@ const actions = {
       params: Object.assign(state.params, params, { per_page: 1000 })
     })
       .then(response => {
-        commit(types.RECEIVE_REQUESTS, response.data)
+        commit(RECEIVE_REQUESTS, response.data)
         return response
       })
       .catch(error => {
@@ -60,11 +67,11 @@ const actions = {
       headers: { 'Content-Type': 'application/json' }
     })
       .then(response => {
-        commit(types.ADD_REQUEST, response.data)
+        commit(ADD_REQUEST, response.data)
         return response
       })
       .catch(error => {
-        if (error.response && error.response.status === 422) commit(types.UPDATE_REQUEST_ERRORS, error.response.data)
+        if (error.response && error.response.status === 422) commit(UPDATE_REQUEST_ERRORS, error.response.data)
         throw error
       })
   },
@@ -77,11 +84,11 @@ const actions = {
       headers: { 'Content-Type': 'application/json' }
     })
       .then(response => {
-        commit(types.UPDATE_REQUEST, response.data)
+        commit(UPDATE_REQUEST, response.data)
         return response
       })
       .catch(error => {
-        if (error.response && error.response.status === 422) commit(types.UPDATE_REQUEST_ERRORS, error.response.data)
+        if (error.response && error.response.status === 422) commit(UPDATE_REQUEST_ERRORS, error.response.data)
         throw error
       })
   },
@@ -92,7 +99,7 @@ const actions = {
       url: `/requests/${id}`
     })
       .then(response => {
-        commit(types.DELETE_REQUEST, id)
+        commit(DELETE_REQUEST, id)
         return response
       })
       .catch(error => {

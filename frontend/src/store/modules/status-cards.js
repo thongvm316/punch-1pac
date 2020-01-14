@@ -1,4 +1,4 @@
-import * as types from '../mutation-types.js'
+import { FETCH_STATUS_CARDS } from '../mutation-types.js'
 import callApi from '../api-caller'
 
 const state = {
@@ -7,7 +7,7 @@ const state = {
 }
 
 const mutations = {
-  [types.FETCH_STATUS_CARDS](state, payload) {
+  [FETCH_STATUS_CARDS](state, payload) {
     state.statuses = payload.statuses
     state.meta = payload.meta
   }
@@ -21,7 +21,7 @@ const actions = {
       params: { date: month }
     })
       .then(response => {
-        commit(types.FETCH_STATUS_CARDS, response.data)
+        commit(FETCH_STATUS_CARDS, response.data)
         return response
       })
       .catch(error => {
