@@ -7,7 +7,12 @@ export default {
       axios
         .get(`${data.requestPath}.${data.type}`, {
           headers: { Accept: `application/${data.type}` },
-          params: { date: this.dateData.date, date_type: this.dateData.type || 'month' },
+          params: {
+            date: this.dateData.date,
+            date_type: this.dateData.type || 'month',
+            from_date: this.dateData.from_date,
+            to_date: this.dateData.to_date
+          },
           responseType: 'blob'
         })
         .then(response => {
