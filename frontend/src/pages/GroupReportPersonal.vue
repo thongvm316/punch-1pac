@@ -29,10 +29,10 @@
           <td>{{ getFormattedDate(attendance.day) }}</td>
           <td><span :class="{'label label-warning w-full text-bold-700': attendance.attending_status === 'attend_late'}">{{ attendance.attended_at ? attendance.attended_at : handleEmptyData(attendance) }}</span></td>
           <td><span :class="{'label label-error w-full text-bold-700': attendance.leaving_status === 'leave_early'}">{{ attendance.left_at ? attendance.left_at : handleEmptyData(attendance) }}</span></td>
-          <td>{{ attendance.attending_status === 'attend_late' ? getFormattedHours(attendance.attend_late)  : handleEmptyData(attendance) }}</td>
-          <td>{{ attendance.leaving_status === 'leave_early' ? getFormattedHours(attendance.leave_early)  : handleEmptyData(attendance) }}</td>
+          <td>{{ attendance.attending_status === 'attend_late' ? getFormattedHours(attendance.attend_late) : handleEmptyData(attendance) }}</td>
+          <td>{{ attendance.leaving_status === 'leave_early' ? getFormattedHours(attendance.leave_early) : handleEmptyData(attendance) }}</td>
           <td :class="{'is-overflow tooltip': getDayOffStatus(attendance).length > 1}" :data-tooltip="getDayOffStatus(attendance)"><span :class="{'text-notice text-bold-700' : attendance.off_status || attendance.holiday}">{{ getDayOffStatus(attendance) }}</span></td>
-          <td>{{ attendance.working_hours ? getFormattedHours(attendance.working_hours)  : handleEmptyData(attendance) }}</td>
+          <td>{{ attendance.working_hours ? getFormattedHours(attendance.working_hours) : handleEmptyData(attendance) }}</td>
         </tr>
         <tr>
           <td>{{ $t('groups.report.total') }}</td>
@@ -108,17 +108,16 @@ export default {
     ...mapActions('calendar', ['getCalendarAttendances']),
 
     initDateData() {
-      const defaultCompanyMonthlyReport = 1
+      let defaultMonthlyReportDay = 1
 
-      if (parseInt(this.currentCompany.company_monthly_report) === defaultCompanyMonthlyReport) {
-        this.dateData.from_date = this.$moment().startOf('month').format('YYYY-MM-DD')
-        this.dateData.to_date = this.$moment().endOf('month').format('YYYY-MM-DD')
-        this.dateRange = `${this.$moment().startOf('month').format('YYYY-MM-DD')} to ${this.$moment().endOf('month').format('YYYY-MM-DD')}`
+      if (parseInt(this.currentCompany.company_monthly_report) === defaultMonthlyReportDay) {
+        this.dateRange = `${this.$moment().subtract(1, 'months').startOf('month').format('YYYY-MM-DD')} to ${this.$moment().subtract(1, 'months').endOf('month').format('YYYY-MM-DD')}`
+      } else if (parseInt(this.currentCompany.company_monthly_report) > 28
+        && (this.$moment().month() === 1 || this.$moment().month() === 2)) {
+          this.dateRange = `${this.$moment().startOf('month').format('YYYY-MM-DD')} to ${this.$moment().endOf('month').format('YYYY-MM-DD')}`
       } else {
-        const fromDate = this.$moment().subtract(1, 'months').date(this.currentCompany.company_monthly_report).format('YYYY-MM-DD')
+        const fromDate = this.$moment().subtract(1, 'months').date(this.currentCompany.company_monthly_report).add(1, 'days').format('YYYY-MM-DD')
         const toDate = this.dateContext.date(this.currentCompany.company_monthly_report).format('YYYY-MM-DD')
-        this.dateData.from_date = fromDate
-        this.dateData.to_date = toDate
         this.dateRange = `${fromDate} to ${toDate}`
       }
     },
