@@ -422,6 +422,10 @@ export default {
       tooltip: {
         edit: 'Chỉnh sửa ngày đi làm',
         delete: 'Xoá ngày đi làm'
+      },
+      confirmDialog: {
+        title: 'Remove BusinessDay',
+        msg: 'Are you sure to remove ?'
       }
     },
     allowedIPs: {
