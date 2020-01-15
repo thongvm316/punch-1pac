@@ -129,10 +129,6 @@ class Attendance < ApplicationRecord
     select("sum(#{type}) as #{type}").in_period(params)
   end
 
-  def self.single_working_hours_on_month(params = {})
-    in_period(params).sum(:working_hours)
-  end
-
   def attended_time
     return '-' if attended_at.nil?
     attended_at.strftime('%H:%M')
