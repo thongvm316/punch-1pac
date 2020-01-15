@@ -76,7 +76,8 @@ module JsonResponseHelper
       timezone: String,
       logo_url: String,
       breakdays: nullable_response(Array),
-      punch_method: String
+      punch_method: String,
+      monthly_report: Integer
     }
   end
 
