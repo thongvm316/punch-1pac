@@ -3,16 +3,10 @@
     <group-tab :group-id="$route.params.id"/>
 
     <div class="toolbar z-index-10 mt-5 clearfix">
-      <datepicker
-        :language="currentUser.language"
-        :format="function (date) { return $moment(date).format('LLL') }"
-        :minimumView="'month'"
-        :maximumView="'month'"
-        :input-class="'datepicker-input form-input'"
-        :calendar-class="'datepicker-calendar'"
-        :wrapper-class="'datepicker'"
-        @input="onInputMonthPicker"
-        v-model="dateData.date"/>
+      <flat-pickr
+        :config="{mode: 'range', locale: flatpickrLocaleMapper[currentUser.language]}"
+        class="form-input daterange-picker"
+        v-model="dateRange"/>
       <select class="form-select" v-model="userId">
         <option v-for="user in usersInGroup" :key="user.id" :value="user.id">{{ user.email }}</option>
       </select>
@@ -28,32 +22,26 @@
         <th>{{ $t('groups.report.late') }}</th>
         <th>{{ $t('groups.report.leave_early') }}</th>
         <th>{{ $t('groups.report.day_off') }}</th>
-        <th>{{ $t('groups.report.mins_attend_late') }}</th>
-        <th>{{ $t('groups.report.mins_leave_early') }}</th>
         <th>{{ $t('groups.report.working_hours') }}</th>
       </thead>
       <tbody>
         <tr v-for="attendance in attendances" :key="attendance.id" :class="{'is-holiday': attendance.holiday, 'is-breakday': isBreakday(attendance)}">
-          <td>{{ getFormatedDate(attendance.day) }}</td>
+          <td>{{ getFormattedDate(attendance.day) }}</td>
           <td><span :class="{'label label-warning w-full text-bold-700': attendance.attending_status === 'attend_late'}">{{ attendance.attended_at ? attendance.attended_at : handleEmptyData(attendance) }}</span></td>
           <td><span :class="{'label label-error w-full text-bold-700': attendance.leaving_status === 'leave_early'}">{{ attendance.left_at ? attendance.left_at : handleEmptyData(attendance) }}</span></td>
-          <td>{{ attendance.attending_status === 'attend_late' ? $t('groups.report.attend_late') : handleEmptyData(attendance) }}</td>
-          <td>{{ attendance.leaving_status === 'leave_early' ? $t('groups.report.leave_early') : handleEmptyData(attendance) }}</td>
+          <td>{{ attendance.attending_status === 'attend_late' ? getFormattedHours(attendance.attend_late) : handleEmptyData(attendance) }}</td>
+          <td>{{ attendance.leaving_status === 'leave_early' ? getFormattedHours(attendance.leave_early) : handleEmptyData(attendance) }}</td>
           <td :class="{'is-overflow tooltip': getDayOffStatus(attendance).length > 1}" :data-tooltip="getDayOffStatus(attendance)"><span :class="{'text-notice text-bold-700' : attendance.off_status || attendance.holiday}">{{ getDayOffStatus(attendance) }}</span></td>
-          <td>{{ getFormatedWorkingHours(attendance, attendance.attend_late) }}</td>
-          <td>{{ getFormatedWorkingHours(attendance, attendance.leave_early) }}</td>
-          <td>{{ getFormatedWorkingHours(attendance, attendance.working_hours) }}</td>
+          <td>{{ attendance.working_hours ? getFormattedHours(attendance.working_hours) : handleEmptyData(attendance) }}</td>
         </tr>
         <tr>
           <td>{{ $t('groups.report.total') }}</td>
-          <td>{{ personalReport.report.attend_ok }}/{{ personalReport.totalWorkingDays }}</td>
-          <td>{{ personalReport.report.leave_ok }}/{{ personalReport.totalWorkingDays }}</td>
-          <td>{{ personalReport.report.attend_late }}/{{ personalReport.totalWorkingDays }}</td>
-          <td>{{ personalReport.report.leave_early }}/{{ personalReport.totalWorkingDays }}</td>
-          <td>{{ personalReport.report.leave }}/{{ personalReport.totalWorkingDays }}</td>
-          <td>{{ totalAttendLate }}</td>
-          <td>{{ totalLeaveEarly }}</td>
-          <td>{{ totalWorkingHours }}/{{ `${personalReport.totalWorkingHours}h` }}</td>
+          <td>{{ personalReport.report.attend_ok }} / {{ personalReport.totalWorkingDays }}</td>
+          <td>{{ personalReport.report.leave_ok }} / {{ personalReport.totalWorkingDays }}</td>
+          <td>{{ getFormattedHours(personalReport.report.minutes_attend_late) }} / {{ `${personalReport.totalWorkingHours}h` }}</td>
+          <td>{{ getFormattedHours(personalReport.report.minutes_leave_early) }} / {{ `${personalReport.totalWorkingHours}h` }}</td>
+          <td>{{ personalReport.report.leave }} / {{ personalReport.totalWorkingDays }}</td>
+          <td>{{ getFormattedHours(personalReport.report.working_hours) }} / {{ `${personalReport.totalWorkingHours}h` }}</td>
         </tr>
       </tbody>
     </table>
@@ -62,31 +50,34 @@
 </template>
 
 <script>
+import flatpickrLocale from '../mixins/flatpickr-locale'
 import exportFile from '../mixins/export-file'
 import { mapState, mapActions } from 'vuex'
-const Datepicker = () => import('vuejs-datepicker')
 const MainLayout = () => import('../layouts/Main')
 const GroupTab = () => import('../components/GroupTab')
+const flatPickr = () => import('vue-flatpickr-component')
 
 export default {
-  mixins: [exportFile],
+  mixins: [exportFile, flatpickrLocale],
 
   data() {
     return {
       attendances: [],
       dateData: {
-        date: this.$moment().format('YYYY-MM-DD')
+        from_date: '',
+        to_date: ''
       },
       userId: this.$route.params.user_id,
       dateContext: this.$moment().locale('en'),
-      today: this.$moment()
+      today: this.$moment(),
+      dateRange: ''
     }
   },
 
   components: {
     MainLayout,
     GroupTab,
-    Datepicker
+    flatPickr
   },
 
   computed: {
@@ -96,36 +87,15 @@ export default {
 
     ...mapState('groupReport', ['personalReport']),
 
-    validDaysOfMonth() {
-      const startDateOfMonth = this.dateContext.startOf('month')
-      if (this.today.format('MM-YYYY') === startDateOfMonth.format('MM-YYYY')) return this.today.diff(startDateOfMonth, 'days') + 1
-      return startDateOfMonth.daysInMonth()
-    },
-
-    totalWorkingHours() {
-      const totalWorkingMinutes = this.personalReport.report.working_hours / 60
-      return `${Math.trunc(totalWorkingMinutes / 60)}h${Math.trunc(totalWorkingMinutes % 60)}m`
-    },
-
-    totalAttendLate() {
-      const totalWorkingMinutes = this.personalReport.report.mins_attend_late / 60
-      return `${Math.trunc(totalWorkingMinutes / 60)}h${Math.trunc(totalWorkingMinutes % 60)}m`
-    },
-
-    totalLeaveEarly() {
-      const totalWorkingMinutes = this.personalReport.report.mins_leave_early / 60
-      return `${Math.trunc(totalWorkingMinutes / 60)}h${Math.trunc(totalWorkingMinutes % 60)}m`
-    },
-
     fileExportedName() {
       const targetUserExportedName = this.usersInGroup.find(user => user.id === parseInt(this.userId)).name.replace(/\s/g, '')
-      const dateExported = this.$moment(this.dateData.date).format('YYYY-MM')
+      const dateExported = `${this.$moment(this.dateData.from_date).format('YYYY-MM-DD')}-${this.$moment(this.dateData.to_date).format('YYYY-MM-DD')}`
 
       return `report_${targetUserExportedName}_${dateExported}`
     },
 
     isValidTime() {
-      return this.$moment(this.dateData.date).isBetween(this.currentUser.created_at, this.today, 'month', [])
+      return this.$moment(this.dateData.to_date).isBetween(this.currentUser.created_at, this.today, 'month', [])
     }
   },
 
@@ -136,8 +106,19 @@ export default {
 
     ...mapActions('calendar', ['getCalendarAttendances']),
 
-    onInputMonthPicker() {
-      this.dateData.date = this.$moment(this.dateData.date).format('YYYY-MM-DD')
+    initDateData() {
+      const defaultMonthlyReportDay = 1
+
+      if (parseInt(this.currentCompany.company_monthly_report) === defaultMonthlyReportDay) {
+        this.dateRange = `${this.$moment().subtract(1, 'months').startOf('month').format('YYYY-MM-DD')} to ${this.$moment().subtract(1, 'months').endOf('month').format('YYYY-MM-DD')}`
+      } else if (parseInt(this.currentCompany.company_monthly_report) > 28
+        && (this.$moment().month() === 1 || this.$moment().month() === 2)) {
+          this.dateRange = `${this.$moment().startOf('month').format('YYYY-MM-DD')} to ${this.$moment().endOf('month').format('YYYY-MM-DD')}`
+      } else {
+        const fromDate = this.$moment().subtract(1, 'months').date(this.currentCompany.company_monthly_report).add(1, 'days').format('YYYY-MM-DD')
+        const toDate = this.dateContext.date(this.currentCompany.company_monthly_report).format('YYYY-MM-DD')
+        this.dateRange = `${fromDate} to ${toDate}`
+      }
     },
 
     isInDeactivatedTime(currentDay) {
@@ -154,40 +135,29 @@ export default {
       return attendance.holiday || this.isBreakday(attendance) ? '' : '-'
     },
 
-    formatAttendances(response) {
+    formatAttendances(responseData, dateRange) {
       let attendances = []
-      const date = response.attendances[0] ? this.$moment(response.attendances[0].day).locale('en') : this.dateContext
       const userJoinDate = this.$moment(this.currentUser.created_at)
-      const findHolidayByDay = currentDay => response.holidays.find(holiday => currentDay.isBetween(holiday.started_at, holiday.ended_at, null, '[]'))
+      const findHolidayByDay = currentDay => responseData.holidays.find(holiday => currentDay.isBetween(holiday.started_at, holiday.ended_at, null, '[]'))
 
-      // Loop render day in month
-      for (let day = 1; day <= this.validDaysOfMonth; day++) {
-        const currentDay = this.$moment(`${date.year()}-${date.format('MM')}-${day}`, 'YYYY-MM-D').locale('en')
+      for (let date = this.$moment(dateRange.from_date); date.diff(this.$moment(dateRange.to_date), 'days') <= 0; date.add(1, 'days')) {
+        if (this.today.isSameOrAfter(date, 'day')) {
+          const tmpAttendance = responseData.attendances.find(item => date.format('YYYY-MM-DD') === item.day)
+          let attendance = { id: null, day: date.format('YYYY-MM-DD'), attended_at: '', left_at: '', attending_status: '', leaving_status: '', off_status: '', holiday: null }
 
-        // A valid day is a day before today and after current user's join date
-        if (this.today.isSameOrAfter(currentDay, 'day')) {
-          const tmpAttendance = response.attendances.find(item => currentDay.format('YYYY-MM-DD') === item.day)
-          let attendance = { id: null, day: currentDay.format('YYYY-MM-DD'), attended_at: '', left_at: '', attending_status: '', leaving_status: '', off_status: '', holiday: null }
+          const holiday = findHolidayByDay(date)
 
-          // Check if current rendering day is a holiday
-          const holiday = findHolidayByDay(currentDay)
-
-          // If currentDay is a holiday, set holiday object into attendance object
           if (holiday) attendance = { ...attendance, holiday }
 
-          if (!this.isInDeactivatedTime(currentDay)) {
-            // If currentDay is an annual leave day
+          if (!this.isInDeactivatedTime(date)) {
             if (tmpAttendance && tmpAttendance.off_status === 'annual_leave') attendance = { ...attendance, ...tmpAttendance }
 
-            // If current user already attended on current day then set attendance information
-            // Else if current user did not attend on current day then check if current day is weekend or unpaid leave day
-            // Only display when currentDay is same or after user created date
             if (tmpAttendance) {
               attendance = tmpAttendance
-            } else if (!holiday && currentDay.isSameOrAfter(userJoinDate, 'day')) {
+            } else if (!holiday && date.isSameOrAfter(userJoinDate, 'day')) {
               attendance = {
                 ...attendance,
-                off_status: this.today.isAfter(currentDay, 'day') && !this.currentCompany.breakdays.includes(currentDay.format('dddd').toLowerCase()) ? 'leave' : ''
+                off_status: this.today.isAfter(date, 'day') && !this.currentCompany.breakdays.includes(date.format('dddd').toLowerCase()) ? 'leave' : ''
               }
             }
           }
@@ -205,21 +175,17 @@ export default {
         .toLowerCase()
     },
 
-    getFormatedDate(date) {
+    getFormattedDate(date) {
       return this.$moment(date).format('dddd ( D/MM )')
     },
 
-    getFormatedWorkingHours(attend, date) {
-      if (!attend.working_hours) {
-        if (attend.holiday || this.isBreakday(attend)) return ''
-        return '-'
+    getFormattedHours(data) {
+      if (!data) return
+      const formattedWorkingHours = {
+        hours: `${data.hours}h`,
+        mins: data.mins ? `${data.mins}m` : ''
       }
-
-      const formatedWorkingHour = {
-        hours: `${date.hours}h`,
-        mins: date.mins ? `${date.mins}m` : ''
-      }
-      return `${formatedWorkingHour.hours}${formatedWorkingHour.mins}`
+      return `${formattedWorkingHours.hours}${formattedWorkingHours.mins}`
     },
 
     getDayOffStatus(date) {
@@ -231,9 +197,7 @@ export default {
   },
 
   created() {
-    this.getPersonalReport({ group_id: this.$route.params.id, user_id: this.userId, ...this.dateData }).then(response => {
-      this.formatAttendances(response.data)
-    })
+    this.initDateData()
     this.getUsersInGroup(this.$route.params.id)
     if (!this.group) this.getGroup(this.$route.params.id)
   },
@@ -241,8 +205,8 @@ export default {
   watch: {
     dateData: {
       handler: function() {
-        this.getPersonalReport({ group_id: this.$route.params.id, user_id: this.userId, ...this.dateData }).then(response => {
-          this.formatAttendances(response.data)
+        this.getPersonalReport({ group_id: this.$route.params.id, user_id: this.userId, ...this.dateData, type: 'range' }).then(response => {
+          this.formatAttendances(response.data, this.dateData)
         })
         this.dateContext = this.$moment(this.dateData.date)
       },
@@ -251,9 +215,15 @@ export default {
 
     userId() {
       this.$router.push({ params: { user_id: this.userId } })
-      this.getPersonalReport({ group_id: this.$route.params.id, user_id: this.userId, ...this.dateData }).then(response => {
-        this.formatAttendances(response.data)
+      this.getPersonalReport({ group_id: this.$route.params.id, user_id: this.userId, ...this.dateData, type: 'range' }).then(response => {
+        this.formatAttendances(response.data, this.dateData)
       })
+    },
+
+    dateRange() {
+      const dates = this.dateRange.split(' ')
+      this.dateData.from_date = dates[0]
+      this.dateData.to_date = dates[2]
     }
   }
 }

@@ -46,7 +46,12 @@ const actions = {
     return callApi({
       method: 'get',
       url: `/groups/${params.group_id}/users/${params.user_id}/report`,
-      params: { date: params.date, date_type: 'month' }
+      params: {
+        date: params.date,
+        date_type: params.type || 'month',
+        from_date: params.from_date,
+        to_date: params.to_date
+      }
     })
     .then(response => {
       commit(types.FETCH_PERSONAL_REPORT, response.data)
