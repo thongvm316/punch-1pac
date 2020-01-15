@@ -88,8 +88,8 @@ class Api::V1::GroupsController < Api::V1::BaseController
     user = @group.users.find(params[:user_id])
 
     if user
-      attendances = current_user.attendances.in_period(params).order(day: :asc)
-      chart       = current_user.attendances.chart_in_month(params).first
+      attendances = user.attendances.in_period(params).order(day: :asc)
+      chart       = user.attendances.chart_in_month(params).first
       document    = DocumentService.new('User', params)
       holidays    = current_company.holidays.in_month(params[:date])
 
