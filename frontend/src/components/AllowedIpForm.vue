@@ -70,12 +70,13 @@ export default {
 
   computed: {
     isDisabled() {
-      let flag = false
+      if (this.$v.params.$error) return true
 
+      let flag = false
       if (this.targetIp) {
-        flag = this.$v.params.$error || this.params === this.targetIp.ip_address
+        flag = this.params === this.targetIp.ip_address
       } else {
-        flag = this.$v.params.$error || this.params === ''
+        flag = this.params === ''
       }
 
       return flag
