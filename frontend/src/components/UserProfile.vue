@@ -6,14 +6,21 @@
       <input class="form-input" type="file" @change="setAvatarFile">
       <p class="form-input-hint" v-if="errors.avatar">{{ $t('user.profile.labels.avatar') }} {{ errors.avatar[0] }}</p>
     </div>
-    <div class="form-group" :class="{ 'has-error': errors.email }">
+    <div class="form-group" :class="{ 'has-error': $v.params.email.$anyError || errors.email }">
       <label class="form-label">{{ $t('user.profile.labels.email') }}</label>
-      <input class="form-input" type="text" v-model="params.email">
+      <input class="form-input" type="text" v-model="$v.params.email.$model">
+      <p class="form-input-hint" v-if="$v.params.email.$anyError && !errors.email">
+        <span v-if="!$v.params.email.required">{{ $t('validation.required', { name: $t('user.profile.labels.email') }) }}</span>
+        <span v-if="!$v.params.email.email">{{ $t('validation.invalid', { name: $t('user.profile.labels.email') }) }}</span>
+      </p>
       <p class="form-input-hint" v-if="errors.email">{{ $t('user.profile.labels.email') }} {{ errors.email[0] }}</p>
     </div>
-    <div class="form-group" :class="{ 'has-error': errors.name }">
+    <div class="form-group" :class="{ 'has-error': $v.params.name.$error || errors.name }">
       <label class="form-label">{{ $t('user.profile.labels.name') }}</label>
-      <input class="form-input" type="text" v-model="params.name">
+      <input class="form-input" type="text" v-model="$v.params.name.$model">
+      <p class="form-input-hint" v-if="$v.params.name.$error && !errors.name">
+        {{ $t('validation.required', { name: $t('user.profile.labels.name') }) }}
+      </p>
       <p class="form-input-hint" v-if="errors.name">{{ $t('user.profile.labels.name') }} {{ errors.name[0] }}</p>
     </div>
     <div class="form-group" :class="{ 'has-error': errors.gender }">
@@ -40,7 +47,7 @@
       <p class="form-input-hint" v-if="errors.role">{{ $t('user.profile.labels.role') }} {{ errors.role[0] }}</p>
     </div>
     <div class="form-group">
-      <button type="button" class="btn btn-success btn-submit" @click="updateUser" :disabled="isDisable">{{ $t('user.profile.btn.save') }}</button>
+      <button type="button" class="btn btn-success btn-submit" @click="updateUser" :disabled="isDisabled">{{ $t('user.profile.btn.save') }}</button>
     </div>
   </form>
 </template>
@@ -48,14 +55,15 @@
 <script>
 import { mapState, mapMutations } from 'vuex'
 import handleSuccess from '../mixins/handle-success'
+import userProfileValidate from '../validations/user-profile-validate'
 import * as types from '../store/mutation-types'
 import axios from 'axios'
 import 'formdata-polyfill'
+import { isEqual } from 'underscore'
 
 export default {
   data() {
     return {
-      isDisable: false,
       params: {
         avatar: '',
         gender: '',
@@ -72,7 +80,7 @@ export default {
     }
   },
 
-  mixins: [handleSuccess],
+  mixins: [handleSuccess, userProfileValidate],
 
   props: {
     targetUser: {
@@ -83,7 +91,12 @@ export default {
   },
 
   computed: {
-    ...mapState('initialStates', ['meta'])
+    ...mapState('initialStates', ['meta']),
+
+    isDisabled() {
+      if (this.$v.params.$anyError || isEqual(this.params, this.targetUser)) return true
+      return false
+    }
   },
 
   methods: {
@@ -94,7 +107,6 @@ export default {
     ...mapMutations('companyUsers', [types.UPDATE_USER]),
 
     updateUser() {
-      this.isDisable = true
       let formData = new FormData()
       Object.keys(this.params).forEach(key => formData.set(`user[${key}]`, this.params[key] || ''))
 
@@ -111,7 +123,6 @@ export default {
           this.errors = {}
         })
         .catch(error => {
-          this.isDisable = false
           if (error.response && error.response.status === 422) this.errors = error.response.data.errors
         })
     },
