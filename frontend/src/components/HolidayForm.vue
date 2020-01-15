@@ -108,10 +108,11 @@ export default {
     ...mapState('companyHolidays', ['errors']),
 
     isDisabled() {
-      let flag = false
+      if (this.$v.params.$anyError) return true
 
+      let flag = false
       if (this.targetHoliday) {
-        flag = this.$v.params.$anyError || isEqual(this.params, this.targetHoliday)
+        flag = isEqual(this.params, this.targetHoliday)
       } else {
         let emtyParams = {
           name: '',
@@ -119,7 +120,7 @@ export default {
           ended_at: ''
         }
 
-        flag = this.$v.params.$anyError || isEqual(this.params, emtyParams)
+        flag = isEqual(this.params, emtyParams)
       }
 
       return flag
