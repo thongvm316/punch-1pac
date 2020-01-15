@@ -15,8 +15,15 @@ class TimeInDay
     end
 
     def range_date(params)
-      from_date = Date.parse(params[:from_date])
-      to_date   = Date.parse(params[:to_date])
+      if params[:date]
+        date      = Date.parse(params[:date])
+        from_date = date.beginning_of_month
+        to_date   = date.end_of_month
+      else
+        from_date = Date.parse(params[:from_date])
+        to_date   = Date.parse(params[:to_date])
+      end
+
       (from_date..to_date)
     rescue TypeError, ArgumentError
       date = Date.current
