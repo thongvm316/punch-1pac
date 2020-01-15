@@ -2,11 +2,10 @@
   <div>
     <div class="form-group">
       <label class="form-label">{{ $t('company.allowedIPs.labels.ipAddress') }}</label>
-      <input class="form-input" type="text" v-model.trim="$v.params.$model" :class="{ 'is-error': $v.params.$error, 'is-success': $v.params.isValid && params !== targetIp.ip_address }">
+      <input class="form-input" type="text" v-model.trim="$v.params.$model" :class="{ 'is-error': $v.params.$error }">
       <p class="form-input-hint text-error" v-if="$v.params.$error">
-        {{ $t('company.allowedIPs.labels.ipAddress') }}
-        <span v-if="!$v.params.required">{{ $t('company.allowedIPs.labels.blank') }}</span>
-        <span v-else-if="!$v.params.isValid">{{ $t('company.allowedIPs.labels.invalid') }}</span>
+        <span v-if="!$v.params.required">{{ $t('validation.required', { name: $t('company.allowedIPs.labels.ipAddress') }) }}</span>
+        <span v-else-if="!$v.params.isValid">{{ $t('validation.invalid', { name: $t('company.allowedIPs.labels.ipAddress') }) }}</span>
       </p>
     </div>
     <div class="form-group">
