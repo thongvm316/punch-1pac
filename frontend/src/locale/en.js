@@ -422,6 +422,10 @@ export default {
       tooltip: {
         edit: 'Edit Business day',
         delete: 'Delete Business day'
+      },
+      confirmDialog: {
+        title: 'Remove BusinessDay',
+        msg: 'Are you sure to remove ?'
       }
     },
     allowedIPs: {
