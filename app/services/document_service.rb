@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
 class DocumentService
-  HEADER_GROUP = I18n.t(['group.report.email', 'group.report.name', 'group.report.attend_ok', 'group.report.attend_late', 'group.report.leave_ok', 'group.report.leave_early', 'group.report.annual_leave', 'group.report.working_hours'])
-  HEADER_USER  = I18n.t(['user.report.day', 'user.report.checkin', 'user.report.checkout', 'user.report.late', 'user.report.leave_early', 'user.report.min_attend_late', 'user.report.min_leave_early', 'user.report.working_hours'])
-  CSV_TYPE     = 'text/csv; charset=utf-8; header=present'
-  ZIP_TYPE     = 'text/zip; charset=utf-8; header=present'
+  CSV_TYPE = 'text/csv; charset=utf-8; header=present'
+  ZIP_TYPE = 'text/zip; charset=utf-8; header=present'
 
   def initialize(model, params = {})
     @model  = "#{model}CSV".constantize
@@ -15,9 +13,9 @@ class DocumentService
     rows = @model.report_csv(data, @params)
 
     CSV.generate(headers: true) do |csv|
-      csv << DocumentService.const_get(header)
+      csv << @model::HEADER
       rows.each { |row| csv << row }
-      csv << footer(data) if @model.name == 'UserCSV'
+      csv << @model.footer(data) if @model.name == 'UserCSV'
     end
   end
 
@@ -35,21 +33,5 @@ class DocumentService
     compressed_filestream = Zip::OutputStream.write_buffer { |zos| yield(zos) }
     compressed_filestream.rewind
     compressed_filestream.read
-  end
-
-  def header
-    @model.name == 'UserCSV' ? 'HEADER_USER' : 'HEADER_GROUP'
-  end
-
-  def footer(attend)
-    working_hours = attend.sum(:working_hours)
-    attend_late   = attend.sum(:minutes_attend_late)
-    leave_early   = attend.sum(:minutes_leave_early)
-
-    ['Total', '', '', '', '', time(attend_late), time(leave_early), time(working_hours)]
-  end
-
-  def time(data)
-    "#{data.to_i / 3600}h#{data.to_i % 3600 / 60}m"
   end
 end
