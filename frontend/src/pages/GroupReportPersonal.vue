@@ -29,19 +29,19 @@
           <td>{{ getFormatedDate(attendance.day) }}</td>
           <td><span :class="{'label label-warning w-full text-bold-700': attendance.attending_status === 'attend_late'}">{{ attendance.attended_at ? attendance.attended_at : handleEmptyData(attendance) }}</span></td>
           <td><span :class="{'label label-error w-full text-bold-700': attendance.leaving_status === 'leave_early'}">{{ attendance.left_at ? attendance.left_at : handleEmptyData(attendance) }}</span></td>
-          <td>{{ attendance.attending_status === 'attend_late' ? getFormatHours(attendance.attend_late)  : handleEmptyData(attendance) }}</td>
-          <td>{{ attendance.leaving_status === 'leave_early' ? getFormatHours(attendance.leave_early)  : handleEmptyData(attendance) }}</td>
+          <td>{{ attendance.attending_status === 'attend_late' ? getFormattedHours(attendance.attend_late)  : handleEmptyData(attendance) }}</td>
+          <td>{{ attendance.leaving_status === 'leave_early' ? getFormattedHours(attendance.leave_early)  : handleEmptyData(attendance) }}</td>
           <td :class="{'is-overflow tooltip': getDayOffStatus(attendance).length > 1}" :data-tooltip="getDayOffStatus(attendance)"><span :class="{'text-notice text-bold-700' : attendance.off_status || attendance.holiday}">{{ getDayOffStatus(attendance) }}</span></td>
-          <td>{{ attendance.working_hours ? getFormatHours(attendance.working_hours)  : handleEmptyData(attendance) }}</td>
+          <td>{{ attendance.working_hours ? getFormattedHours(attendance.working_hours)  : handleEmptyData(attendance) }}</td>
         </tr>
         <tr>
           <td>{{ $t('groups.report.total') }}</td>
           <td>{{ personalReport.report.attend_ok }} / {{ personalReport.totalWorkingDays }}</td>
           <td>{{ personalReport.report.leave_ok }} / {{ personalReport.totalWorkingDays }}</td>
-          <td>{{ getFormatHours(personalReport.report.minutes_attend_late) }} / {{ `${personalReport.totalWorkingHours}h` }}</td>
-          <td>{{ getFormatHours(personalReport.report.minutes_leave_early) }} / {{ `${personalReport.totalWorkingHours}h` }}</td>
+          <td>{{ getFormattedHours(personalReport.report.minutes_attend_late) }} / {{ `${personalReport.totalWorkingHours}h` }}</td>
+          <td>{{ getFormattedHours(personalReport.report.minutes_leave_early) }} / {{ `${personalReport.totalWorkingHours}h` }}</td>
           <td>{{ personalReport.report.leave }} / {{ personalReport.totalWorkingDays }}</td>
-          <td>{{ getFormatHours(personalReport.report.working_hours) }} / {{ `${personalReport.totalWorkingHours}h` }}</td>
+          <td>{{ getFormattedHours(personalReport.report.working_hours) }} / {{ `${personalReport.totalWorkingHours}h` }}</td>
         </tr>
       </tbody>
     </table>
@@ -64,17 +64,14 @@ export default {
     return {
       attendances: [],
       dateData: {
-        from_date: this.$moment().startOf('month').format('YYYY-MM-DD'),
-        to_date: this.$moment().endOf('month').format('YYYY-MM-DD'),
+        from_date: '',
+        to_date: '',
         type: 'range'
       },
       userId: this.$route.params.user_id,
       dateContext: this.$moment().locale('en'),
       today: this.$moment(),
-      dateRange: [
-        this.$moment().startOf('month').format('YYYY-MM-DD'),
-        this.$moment().endOf('month').format('YYYY-MM-DD')
-      ]
+      dateRange: ''
     }
   },
 
@@ -111,7 +108,13 @@ export default {
     ...mapActions('calendar', ['getCalendarAttendances']),
 
     initDateData() {
-      if (this.currentCompany.company_monthly_report !== '1') {
+      const defaultCompanyMonthlyReport = 1
+
+      if (parseInt(this.currentCompany.company_monthly_report) === defaultCompanyMonthlyReport) {
+        this.dateData.from_date = this.$moment().startOf('month').format('YYYY-MM-DD')
+        this.dateData.to_date = this.$moment().endOf('month').format('YYYY-MM-DD')
+        this.dateRange = `${this.$moment().startOf('month').format('YYYY-MM-DD')} to ${this.$moment().endOf('month').format('YYYY-MM-DD')}`
+      } else {
         const fromDate = this.$moment().subtract(1, 'months').date(this.currentCompany.company_monthly_report).format('YYYY-MM-DD')
         const toDate = this.dateContext.date(this.currentCompany.company_monthly_report).format('YYYY-MM-DD')
         this.dateData.from_date = fromDate
@@ -178,13 +181,13 @@ export default {
       return this.$moment(date).format('dddd ( D/MM )')
     },
 
-    getFormatHours(data) {
+    getFormattedHours(data) {
       if (!data) return
-      const formatedWorkingHour = {
+      const formattedWorkingHours = {
         hours: `${data.hours}h`,
         mins: data.mins ? `${data.mins}m` : ''
       }
-      return `${formatedWorkingHour.hours}${formatedWorkingHour.mins}`
+      return `${formattedWorkingHours.hours}${formattedWorkingHours.mins}`
     },
 
     getDayOffStatus(date) {
