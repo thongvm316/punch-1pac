@@ -432,9 +432,7 @@ export default {
         actions: 'Actions'
       },
       labels: {
-        ipAddress: 'IP address',
-        blank: 'can\'t be blank',
-        invalid: 'is invalid'
+        ipAddress: 'IP address'
       },
       btn: {
         add: 'Add IP address',
@@ -496,11 +494,6 @@ export default {
       modal: {
         addTitle: 'Add holiday',
         editTitle: 'Edit holiday'
-      },
-      validation: {
-        name: 'Name can\'t be blank',
-        startAt: 'Start date can\'t be blank',
-        endAt: 'End date can\'t be blank'
       },
       confirmDialog: {
         title: 'Remove Holiday',
@@ -671,5 +664,9 @@ export default {
   },
   filterUserBox: {
     noOptions: 'No user matching'
+  },
+  validation: {
+    required: '{name} can\'t be blank',
+    invalid: '{name} is invalid'
   }
 }

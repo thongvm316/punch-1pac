@@ -6,11 +6,17 @@
         :config="{mode: 'single', locale: flatpickrLocaleMapper[currentUser.language]}"
         class="form-input daterange-picker"
         v-model="$v.params.attendance_day.$model"/>
+      <p class="form-input-hint" v-if="$v.params.attendance_day.$error">
+        {{ $t('validation.required', { name: $t('annualLeave.labels.annualLeaveDay') }) }}
+      </p>
       <p class="form-input-hint" v-if="errors.attendance_day">{{ $t('annualLeave.labels.annualLeaveDay') }} {{ errors.attendance_day[0] }}</p>
     </div>
     <div class="form-group" :class="{ 'has-error': $v.params.reason.$error || errors.reason }">
       <label class="form-label">{{ $t('annualLeave.labels.reason') }}</label>
       <textarea class="form-input" v-model="$v.params.reason.$model"></textarea>
+      <p class="form-input-hint" v-if="$v.params.reason.$error">
+        {{ $t('validation.required', { name: $t('annualLeave.labels.reason') }) }}
+      </p>
       <p class="form-input-hint" v-if="errors.reason">{{ $t('annualLeave.labels.reason') }} {{ errors.reason[0] }}</p>
     </div>
     <div class="form-group">
