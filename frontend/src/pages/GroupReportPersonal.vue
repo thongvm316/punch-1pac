@@ -65,8 +65,7 @@ export default {
       attendances: [],
       dateData: {
         from_date: '',
-        to_date: '',
-        type: 'range'
+        to_date: ''
       },
       userId: this.$route.params.user_id,
       dateContext: this.$moment().locale('en'),
@@ -108,7 +107,7 @@ export default {
     ...mapActions('calendar', ['getCalendarAttendances']),
 
     initDateData() {
-      let defaultMonthlyReportDay = 1
+      const defaultMonthlyReportDay = 1
 
       if (parseInt(this.currentCompany.company_monthly_report) === defaultMonthlyReportDay) {
         this.dateRange = `${this.$moment().subtract(1, 'months').startOf('month').format('YYYY-MM-DD')} to ${this.$moment().subtract(1, 'months').endOf('month').format('YYYY-MM-DD')}`
@@ -206,7 +205,7 @@ export default {
   watch: {
     dateData: {
       handler: function() {
-        this.getPersonalReport({ group_id: this.$route.params.id, user_id: this.userId, ...this.dateData }).then(response => {
+        this.getPersonalReport({ group_id: this.$route.params.id, user_id: this.userId, ...this.dateData, type: 'range' }).then(response => {
           this.formatAttendances(response.data, this.dateData)
         })
         this.dateContext = this.$moment(this.dateData.date)
@@ -216,7 +215,7 @@ export default {
 
     userId() {
       this.$router.push({ params: { user_id: this.userId } })
-      this.getPersonalReport({ group_id: this.$route.params.id, user_id: this.userId, ...this.dateData }).then(response => {
+      this.getPersonalReport({ group_id: this.$route.params.id, user_id: this.userId, ...this.dateData, type: 'range' }).then(response => {
         this.formatAttendances(response.data, this.dateData)
       })
     },
