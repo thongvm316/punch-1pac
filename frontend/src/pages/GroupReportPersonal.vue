@@ -53,7 +53,6 @@
 import flatpickrLocale from '../mixins/flatpickr-locale'
 import exportFile from '../mixins/export-file'
 import { mapState, mapActions } from 'vuex'
-const Datepicker = () => import('vuejs-datepicker')
 const MainLayout = () => import('../layouts/Main')
 const GroupTab = () => import('../components/GroupTab')
 const flatPickr = () => import('vue-flatpickr-component')
@@ -82,7 +81,6 @@ export default {
   components: {
     MainLayout,
     GroupTab,
-    Datepicker,
     flatPickr
   },
 
@@ -95,7 +93,7 @@ export default {
 
     fileExportedName() {
       const targetUserExportedName = this.usersInGroup.find(user => user.id === parseInt(this.userId)).name.replace(/\s/g, '')
-      const dateExported = this.$moment(this.dateData.to_date).format('YYYY-MM')
+      const dateExported = `${this.$moment(this.dateData.from_date).format('YYYY-MM-DD')}-${this.$moment(this.dateData.to_date).format('YYYY-MM-DD')}`
 
       return `report_${targetUserExportedName}_${dateExported}`
     },
