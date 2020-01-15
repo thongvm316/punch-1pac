@@ -26,7 +26,7 @@
       </thead>
       <tbody>
         <tr v-for="attendance in attendances" :key="attendance.id" :class="{'is-holiday': attendance.holiday, 'is-breakday': isBreakday(attendance)}">
-          <td>{{ getFormatedDate(attendance.day) }}</td>
+          <td>{{ getFormattedDate(attendance.day) }}</td>
           <td><span :class="{'label label-warning w-full text-bold-700': attendance.attending_status === 'attend_late'}">{{ attendance.attended_at ? attendance.attended_at : handleEmptyData(attendance) }}</span></td>
           <td><span :class="{'label label-error w-full text-bold-700': attendance.leaving_status === 'leave_early'}">{{ attendance.left_at ? attendance.left_at : handleEmptyData(attendance) }}</span></td>
           <td>{{ attendance.attending_status === 'attend_late' ? getFormattedHours(attendance.attend_late)  : handleEmptyData(attendance) }}</td>
@@ -177,7 +177,7 @@ export default {
         .toLowerCase()
     },
 
-    getFormatedDate(date) {
+    getFormattedDate(date) {
       return this.$moment(date).format('dddd ( D/MM )')
     },
 
