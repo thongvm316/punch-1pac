@@ -225,6 +225,8 @@ export default {
       working_hours: 'Thời gian làm',
       attend_late: 'Đến trễ',
       leave_early: 'Về sớm',
+      mins_attend_late: 'Thời gian đi trễ',
+      mins_leave_early: 'Thời gian về sớm',
       day_off: 'Vắng',
       no_data: 'Không có dữ liệu',
       total: 'Tổng cộng'

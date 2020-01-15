@@ -225,6 +225,8 @@ export default {
       working_hours: 'Working hours',
       attend_late: 'Attend Late',
       leave_early: 'Leave Early',
+      mins_attend_late: 'Minutes attend late',
+      mins_leave_early: 'Minutes leave early',
       day_off: 'Day Off',
       no_data: 'No Data',
       total: 'Total'

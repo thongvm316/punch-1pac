@@ -51,6 +51,8 @@ ja:
       checkout: Check out
       late: Late
       leave_early: Leave early
+      min_leave_early: Min leave early
+      min_attend_late: Min attend late
       working_hours: Working hours
   activerecord:
     errors:

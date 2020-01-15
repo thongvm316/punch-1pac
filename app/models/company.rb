@@ -27,6 +27,8 @@
 #
 
 class Company < ApplicationRecord
+  include Settingable
+
   INDUSTRIES = %w[hr_agency cafe_shop restaurant software_company startup interior_design].freeze
   TIMEZONES = ActiveSupport::TimeZone.all.map { |tz| tz.tzinfo.name }.uniq
 
@@ -37,7 +39,6 @@ class Company < ApplicationRecord
   has_many :business_days, dependent: :destroy
   has_many :holidays, dependent: :destroy
   has_many :groups, dependent: :destroy
-  has_many :settings, as: :settingable, dependent: :destroy
 
   validates :namespace, presence: true, uniqueness: true
   validates :name, presence: true

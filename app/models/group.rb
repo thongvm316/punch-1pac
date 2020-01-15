@@ -14,6 +14,8 @@
 #
 
 class Group < ApplicationRecord
+  include Settingable
+
   DEFAULT_NAME = 'default'
 
   belongs_to :company
@@ -21,7 +23,6 @@ class Group < ApplicationRecord
   has_many :permissions, through: :group_permissions
   has_many :user_groups, dependent: :destroy
   has_many :users, through: :user_groups
-  has_many :settings, as: :settingable, dependent: :destroy
 
   validates :name, presence: true
 

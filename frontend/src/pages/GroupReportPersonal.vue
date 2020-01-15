@@ -19,6 +19,8 @@
         <th>{{ $t('groups.report.late') }}</th>
         <th>{{ $t('groups.report.leave_early') }}</th>
         <th>{{ $t('groups.report.day_off') }}</th>
+        <th>{{ $t('groups.report.mins_attend_late') }}</th>
+        <th>{{ $t('groups.report.mins_leave_early') }}</th>
         <th>{{ $t('groups.report.working_hours') }}</th>
       </thead>
       <tbody>
@@ -29,7 +31,9 @@
           <td>{{ attendance.attending_status === 'attend_late' ? $t('groups.report.attend_late') : handleEmptyData(attendance) }}</td>
           <td>{{ attendance.leaving_status === 'leave_early' ? $t('groups.report.leave_early') : handleEmptyData(attendance) }}</td>
           <td :class="{'is-overflow tooltip': getDayOffStatus(attendance).length > 1}" :data-tooltip="getDayOffStatus(attendance)"><span :class="{'text-notice text-bold-700' : attendance.off_status || attendance.holiday}">{{ getDayOffStatus(attendance) }}</span></td>
-          <td>{{ getFormatedWorkingHours(attendance) }}</td>
+          <td>{{ getFormatedWorkingHours(attendance, attendance.attend_late) }}</td>
+          <td>{{ getFormatedWorkingHours(attendance, attendance.leave_early) }}</td>
+          <td>{{ getFormatedWorkingHours(attendance, attendance.working_hours) }}</td>
         </tr>
         <tr>
           <td>{{ $t('groups.report.total') }}</td>
@@ -38,6 +42,8 @@
           <td>{{ personalReport.report.attend_late }}/{{ personalReport.totalWorkingDays }}</td>
           <td>{{ personalReport.report.leave_early }}/{{ personalReport.totalWorkingDays }}</td>
           <td>{{ personalReport.report.leave }}/{{ personalReport.totalWorkingDays }}</td>
+          <td>{{ totalAttendLate }}</td>
+          <td>{{ totalLeaveEarly }}</td>
           <td>{{ totalWorkingHours }}/{{ `${personalReport.totalWorkingHours}h` }}</td>
         </tr>
       </tbody>
@@ -90,6 +96,16 @@ export default {
 
     totalWorkingHours() {
       const totalWorkingMinutes = this.personalReport.report.working_hours / 60
+      return `${Math.trunc(totalWorkingMinutes / 60)}h${Math.trunc(totalWorkingMinutes % 60)}m`
+    },
+
+    totalAttendLate() {
+      const totalWorkingMinutes = this.personalReport.report.mins_attend_late / 60
+      return `${Math.trunc(totalWorkingMinutes / 60)}h${Math.trunc(totalWorkingMinutes % 60)}m`
+    },
+
+    totalLeaveEarly() {
+      const totalWorkingMinutes = this.personalReport.report.mins_leave_early / 60
       return `${Math.trunc(totalWorkingMinutes / 60)}h${Math.trunc(totalWorkingMinutes % 60)}m`
     },
 
@@ -181,15 +197,15 @@ export default {
       return this.$moment(date).format('dddd ( D/MM )')
     },
 
-    getFormatedWorkingHours(date) {
-      if (!date.working_hours) {
-        if (date.holiday || this.isBreakday(date)) return ''
+    getFormatedWorkingHours(attend, date) {
+      if (!attend.working_hours) {
+        if (attend.holiday || this.isBreakday(attend)) return ''
         return '-'
       }
 
       const formatedWorkingHour = {
-        hours: `${date.working_hours.hours}h`,
-        mins: date.working_hours.mins ? `${date.working_hours.mins}m` : ''
+        hours: `${date.hours}h`,
+        mins: date.mins ? `${date.mins}m` : ''
       }
       return `${formatedWorkingHour.hours}${formatedWorkingHour.mins}`
     },
