@@ -2,32 +2,41 @@
   <setting-layout sidebar-type="company" :title="$t('company.title')" :subtitle="$t('company.users.add.title')">
     <p class="mb-2">{{ $t('company.users.add.note') }}</p>
     <form class="setting-form">
-      <div class="form-group" :class="{ 'has-error': errors.name }">
+      <div class="form-group" :class="{ 'has-error': $v.params.name.$error || errors.name }">
         <label class="form-label">{{ $t('company.users.add.labels.name') }}</label>
-        <input class="form-input" type="text" :placeholder="$t('company.users.add.placeholder.name')" v-model="params.name">
+        <input class="form-input" type="text" :placeholder="$t('company.users.add.placeholder.name')" v-model="$v.params.name.$model">
+        <p class="form-input-hint" v-if="$v.params.name.$error && !errors.name">
+          {{ $t('validation.required', { name: $t('company.users.add.labels.name') }) }}
+        </p>
         <p class="form-input-hint" v-if="errors.name">{{ $t('company.users.add.labels.name') }} {{ errors.name[0] }}</p>
       </div>
-      <div class="form-group" :class="{ 'has-error': errors.email }">
+      <div class="form-group" :class="{ 'has-error':  $v.params.email.$anyError || errors.email }">
         <label class="form-label">{{ $t('company.users.add.labels.email') }}</label>
-        <input class="form-input" type="text" :placeholder="$t('company.users.add.placeholder.email')" v-model="params.email">
+        <input class="form-input" type="text" :placeholder="$t('company.users.add.placeholder.email')" v-model="$v.params.email.$model">
+        <p class="form-input-hint" v-if="$v.params.email.$anyError && !errors.email">
+          <span v-if="!$v.params.email.required">{{ $t('validation.required', { name: $t('company.users.add.labels.email') }) }}</span>
+          <span v-if="!$v.params.email.email">{{ $t('validation.invalid', { name: $t('company.users.add.labels.email') }) }}</span>
+        </p>
         <p class="form-input-hint" v-if="errors.email">{{ $t('company.users.add.labels.email') }} {{ errors.email[0] }}</p>
       </div>
-      <div class="form-group" :class="{ 'has-error': errors.role }">
+      <div class="form-group">
         <label class="form-label">{{ $t('company.users.add.labels.role') }}</label>
         <select class="form-select" v-model="params.role">
           <option :value="role" v-for="(role, key) in meta.roles" :key="key">{{ $t(`meta.roles.${role}`) }}</option>
         </select>
-        <p class="form-input-hint" v-if="errors.role">{{ $t('company.users.add.labels.role') }} {{ errors.role[0] }}</p>
       </div>
-      <div class="form-group" :class="{ 'has-error': errors.group }">
+      <div class="form-group" :class="{ 'has-error':  $v.params.group_id.$error || errors.group }">
         <label class="form-label">{{ $t('company.users.add.labels.group') }}</label>
-        <group-select v-model="params.group_id">
+        <group-select v-model="$v.params.group_id.$model">
           <option slot="placeholder" value="">{{ $t('company.users.add.placeholder.chooseGroup') }}</option>
         </group-select>
+        <p class="form-input-hint" v-if="$v.params.group_id.$error && !errors.group">
+          {{ $t('validation.required', { name: $t('company.users.add.labels.group') }) }}
+        </p>
         <p class="form-input-hint" v-if="errors.group">{{ $t('company.users.add.labels.group') }} {{ errors.group[0] }}</p>
       </div>
       <div class="form-group">
-        <button type="button" class="btn btn-success btn-submit" @click="create(params)" :disabled="isDisable">{{ $t('company.users.add.btn.submit') }}</button>
+        <button type="button" class="btn btn-success btn-submit" @click="create(params)" :disabled="isDisabled">{{ $t('company.users.add.btn.submit') }}</button>
       </div>
     </form>
   </setting-layout>
@@ -36,14 +45,15 @@
 <script>
 import axios from 'axios'
 import { mapState } from 'vuex'
+import { isEqual } from 'underscore'
 import handleSuccess from '../mixins/handle-success'
+import userAddValidate from '../validations/user-add-validate'
 const SettingLayout = () => import('../layouts/Setting.vue')
 const GroupSelect = () => import('../components/GroupSelect.vue')
 
 export default {
   data() {
     return {
-      isDisable: false,
       errors: {},
       params: {
         name: '',
@@ -54,10 +64,23 @@ export default {
     }
   },
 
-  mixins: [handleSuccess],
+  mixins: [handleSuccess, userAddValidate],
 
   computed: {
-    ...mapState('initialStates', ['meta'])
+    ...mapState('initialStates', ['meta']),
+
+    isDisabled() {
+      if (this.$v.params.$anyError) return true
+      let emtyParams = {
+        name: '',
+        email: '',
+        role: 'member',
+        group_id: ''
+      }
+      if (isEqual(this.params, emtyParams)) return true
+
+      return false
+    }
   },
 
   components: {
@@ -67,7 +90,6 @@ export default {
 
   methods: {
     create(params) {
-      this.isDisable = true
       axios
         .post('/users', { user: params }, { headers: { 'Content-Type': 'application/json' } })
         .then(response => {
@@ -75,7 +97,6 @@ export default {
           this.handleSuccess({ message })
         })
         .catch(error => {
-          this.isDisable = false
           if (error.response && error.response.status === 422) this.errors = error.response.data.errors
           else throw error
         })
