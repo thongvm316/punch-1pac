@@ -23,7 +23,7 @@
       </p>
       <p class="form-input-hint" v-if="errors.name">{{ $t('user.profile.labels.name') }} {{ errors.name[0] }}</p>
     </div>
-    <div class="form-group" :class="{ 'has-error': errors.gender }">
+    <div class="form-group">
       <label class="form-label">{{ $t('user.profile.labels.gender') }}</label>
       <label class="form-radio">
         <input type="radio" value="male" v-model="params.gender">
@@ -33,18 +33,16 @@
         <input type="radio" value="female" v-model="params.gender">
         <i class="form-icon"></i> {{ $t('meta.gender.female') }}
       </label>
-      <p class="form-input-hint" v-if="errors.gender">{{ $t('user.profile.labels.gender') }} {{ errors.gender[0] }}</p>
     </div>
     <div class="form-group">
       <label class="form-label">{{ $t('user.profile.labels.position') }}</label>
       <input class="form-input" type="text" v-model="params.position">
     </div>
-    <div class="form-group" :class="{ 'has-error': errors.role }">
+    <div class="form-group">
       <label class="form-label">{{ $t('user.profile.labels.role') }}</label>
       <select class="form-select" v-model="params.role" :disabled="!$auth('User', currentUser, targetUser).canEditRole()">
         <option :value="role" v-for="(role, key) in meta.roles" :key="key">{{ $t(`meta.roles.${role}`) }}</option>
       </select>
-      <p class="form-input-hint" v-if="errors.role">{{ $t('user.profile.labels.role') }} {{ errors.role[0] }}</p>
     </div>
     <div class="form-group">
       <button type="button" class="btn btn-success btn-submit" @click="updateUser" :disabled="isDisabled">{{ $t('user.profile.btn.save') }}</button>
