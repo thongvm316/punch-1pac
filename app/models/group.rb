@@ -14,8 +14,6 @@
 #
 
 class Group < ApplicationRecord
-  include Settingable
-
   DEFAULT_NAME = 'default'
 
   belongs_to :company

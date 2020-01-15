@@ -20,6 +20,7 @@
 #  updated_at        :datetime         not null
 #  app_blocked_by_ip :boolean          default(FALSE), not null
 #  punch_method      :integer          default("default"), not null
+#  monthly_report    :integer          default(1), not null
 #
 # Indexes
 #
@@ -27,8 +28,6 @@
 #
 
 class Company < ApplicationRecord
-  include Settingable
-
   INDUSTRIES = %w[hr_agency cafe_shop restaurant software_company startup interior_design].freeze
   TIMEZONES = ActiveSupport::TimeZone.all.map { |tz| tz.tzinfo.name }.uniq
 

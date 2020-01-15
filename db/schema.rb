@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_13_065210) do
+ActiveRecord::Schema.define(version: 2020_01_15_034604) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -111,6 +111,7 @@ ActiveRecord::Schema.define(version: 2020_01_13_065210) do
     t.datetime "updated_at", null: false
     t.boolean "app_blocked_by_ip", default: false, null: false
     t.integer "punch_method", default: 0, null: false
+    t.integer "monthly_report", default: 1, null: false
     t.index ["namespace"], name: "index_companies_on_namespace", unique: true
   end
 
