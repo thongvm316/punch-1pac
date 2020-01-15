@@ -112,7 +112,7 @@ export default {
 
     ...mapActions('calendar', ['getCalendarAttendances']),
 
-    initDateRange() {
+    initDateData() {
       if (this.currentCompany.company_monthly_report !== '1') {
         const fromDate = this.$moment().subtract(1, 'months').date(this.currentCompany.company_monthly_report).format('YYYY-MM-DD')
         const toDate = this.dateContext.date(this.currentCompany.company_monthly_report).format('YYYY-MM-DD')
@@ -198,10 +198,7 @@ export default {
   },
 
   created() {
-    this.initDateRange()
-    this.getPersonalReport({ group_id: this.$route.params.id, user_id: this.userId, ...this.dateData }).then(response => {
-      this.formatAttendances(response.data, this.dateData)
-    })
+    this.initDateData()
     this.getUsersInGroup(this.$route.params.id)
     if (!this.group) this.getGroup(this.$route.params.id)
   },
