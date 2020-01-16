@@ -1,4 +1,4 @@
-import * as types from '../mutation-types'
+import { FETCH_CALENDAR_ATTENDANCES } from '../mutation-types'
 import callApi from '../api-caller'
 
 const state = {
@@ -7,7 +7,7 @@ const state = {
 }
 
 const mutations = {
-  [types.FETCH_CALENDAR_ATTENDANCES](state, payload) {
+  [FETCH_CALENDAR_ATTENDANCES](state, payload) {
     state.attendances = payload.attendances
     state.holidays = payload.holidays
   }
@@ -17,7 +17,7 @@ const actions = {
   getCalendarAttendances({ commit }, day) {
     return callApi({ method: 'get', url: '/attendances/calendar', params: { day: day } })
       .then(response => {
-        commit(types.FETCH_CALENDAR_ATTENDANCES, response.data)
+        commit(FETCH_CALENDAR_ATTENDANCES, response.data)
         return response
       })
       .catch(error => {

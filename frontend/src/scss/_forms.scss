@@ -100,3 +100,10 @@ input[type=search] {
   }
 }
 
+.form-input.is-success {
+  border-color: $success-color;
+
+  &:focus {
+    box-shadow: none;
+  }
+}

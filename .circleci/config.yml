@@ -87,16 +87,16 @@ jobs:
           path: /tmp/test-results
           destination: test-results
 
-      # run unit tests frontend!
-      - run:
-          name: Run Unit Tests
-          command: |
-            cd frontend/
-            yarn run test:unit
+      # # run unit tests frontend!
+      # - run:
+      #     name: Run Unit Tests
+      #     command: |
+      #       cd frontend/
+      #       yarn run test:unit
 
-      # collect reports
-      - store_test_results:
-          path: /tmp/test-results
-      - store_artifacts:
-          path: /tmp/test-results
-          destination: test-results
+      # # collect reports
+      # - store_test_results:
+      #     path: /tmp/test-results
+      # - store_artifacts:
+      #     path: /tmp/test-results
+      #     destination: test-results

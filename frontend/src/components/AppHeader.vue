@@ -6,7 +6,6 @@
           <router-link to="/dashboard" class="navbar-brand mr-4">
             <img :src="currentCompany.logo_url" :alt="currentCompany.name">
           </router-link>
-          <!--<router-link class="mr-5" to="/dashboard">{{ $t('header.dashboard') }}</router-link>-->
           <router-link class="mr-5" to="/attendances">{{ $t('header.attendances') }}</router-link>
           <router-link class="mr-5" to="/requests">{{ $t('header.requests') }}</router-link>
           <router-link class="mr-5" to="/groups" v-if="$auth('Page', currentUser).canViewGroups()">{{ $t('header.groups') }}</router-link>

@@ -1,9 +1,12 @@
 <template>
   <div>
-    <div class="form-group" :class="{ 'has-error': errors.ip_address}">
-      <label class="form-label">{{ $t('company.allowedIPs.labels.ipAddress') }}</label>
-      <input class="form-input" type="text" v-model="params">
-      <p class="form-input-hint" v-if="errors.ip_address">{{ $t('company.allowedIPs.labels.ipAddress') }} {{ errors.ip_address[0] }}</p>
+    <div class="form-group">
+      <label class="form-label">{{ $t('label.ipAddress') }}</label>
+      <input class="form-input" type="text" v-model.trim="$v.params.$model" :class="{ 'is-error': $v.params.$error }">
+      <p class="form-input-hint text-error" v-if="$v.params.$error">
+        <span v-if="!$v.params.required">{{ $t('validation.required', { name: $t('label.ipAddress') }) }}</span>
+        <span v-else-if="!$v.params.isValid">{{ $t('validation.invalid', { name: $t('label.ipAddress') }) }}</span>
+      </p>
     </div>
     <div class="form-group">
       <button
@@ -11,34 +14,33 @@
         class="btn btn-success btn-submit"
         @click="localAddIp"
         v-if="!targetIp"
-        :disabled="isDisable">{{ $t('company.allowedIPs.btn.submit') }}</button>
+        :disabled="isDisabled">{{ $t('button.common.submit') }}</button>
       <button
         ref="editAllowedIpButton"
         class="btn btn-success btn-submit"
         @click="localEditIp"
         v-if="targetIp"
-        :disabled="isDisable">{{ $t('company.allowedIPs.btn.save') }}</button>
+        :disabled="isDisabled">{{ $t('button.common.save') }}</button>
     </div>
   </div>
 </template>
 
 <script>
-import { CLEAR_IP_ERRORS } from '../store/mutation-types'
-import { mapState, mapActions, mapMutations } from 'vuex'
+import { mapActions } from 'vuex'
 import handleSuccess from '../mixins/handle-success'
+import allowedIpValidate from '../validations/allowed-ip-validate'
 
 export default {
   name: 'allowed-ip-form',
-
-  mixins: [handleSuccess],
 
   props: {
     targetIp: Object
   },
 
+  mixins: [allowedIpValidate, handleSuccess],
+
   data() {
     return {
-      isDisable: false,
       data: {
         emitType: 'afterModify',
         message: ''
@@ -50,36 +52,38 @@ export default {
   methods: {
     ...mapActions('companyAllowedIPs', ['createIP', 'updateIP']),
 
-    ...mapMutations('companyAllowedIPs', [CLEAR_IP_ERRORS]),
-
     localAddIp() {
-      this.isDisable = true
       this.createIP({ ip_address: this.params }).then(response => {
         this.data.message = this.$t('messages.ip.createSuccess')
         this.handleSuccess(this.data)
       })
-      .catch(() => { this.isDisable = false })
     },
 
     localEditIp() {
-      this.isDisable = true
       this.updateIP({ id: this.targetIp.id, ip_address: this.params }).then(response => {
         this.data.message = this.$t('messages.ip.updateSuccess')
         this.handleSuccess(this.data)
       })
-      .catch(() => { this.isDisable = false })
     }
   },
 
   computed: {
-    ...mapState('companyAllowedIPs', ['errors'])
+    isDisabled() {
+      if (this.$v.params.$error) return true
+
+      let flag = false
+      if (this.targetIp) {
+        flag = this.params === this.targetIp.ip_address
+      } else {
+        flag = this.params === ''
+      }
+
+      return flag
+    }
   },
 
   created() {
-    this[CLEAR_IP_ERRORS]()
-    if (this.targetIp) {
-      this.params = this.targetIp.ip_address
-    }
+    if (this.targetIp) this.params = this.targetIp.ip_address
   }
 }
 </script>

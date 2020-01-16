@@ -41,21 +41,21 @@
 
     <modal ref="requestModal" :title="titleModal" :modal-open.sync="isRequestModalOpen">
       <div class="form-group">
-        <label class="form-label">{{ $t('dashboard.request.label') }}</label>
+        <label class="form-label">{{ $t('label.kind') }}</label>
         <select class="form-select" v-model="selectedRequestKind" @change="changeTitleConfirmModal">
           <option value=""></option>
-          <option :value="kind" v-for="kind in ['attendance', 'annual_leave']" :key="kind">{{ $t(`dashboard.request.kind.${kind}`) }}</option>}
+          <option :value="kind" v-for="kind in ['attendance', 'annual_leave']" :key="kind">{{ $t(`modal.request.kind.${kind}`) }}</option>}
         </select>
       </div>
       <request-form v-if="this.selectedRequestKind === 'attendance'" :attendance="attendance" @afterModify="isRequestModalOpen = false"></request-form>
       <annual-leave-form v-if="this.selectedRequestKind === 'annual_leave'" :annual-day="annualLeaveDay" @finishRequest="isRequestModalOpen = false"/>
     </modal>
 
-    <modal ref="editModal" :title="$t('attendances.modal.addTitle')" :modal-open.sync="isEditModalOpen">
+    <modal ref="editModal" :title="$t('modal.request.addTitle')" :modal-open.sync="isEditModalOpen">
       <request-form v-if="isEditModalOpen" :attendance="attendance" @afterModify="isEditModalOpen = false"></request-form>
     </modal>
 
-    <modal ref="addModal" :title="$t('annualLeave.title')" :modal-open.sync="isAddModalOpen">
+    <modal ref="addModal" :title="$t('modal.annualLeave.title')" :modal-open.sync="isAddModalOpen">
       <annual-leave-form v-if="isAddModalOpen" :annual-day="annualLeaveDay" @finishRequest="isAddModalOpen = false"/>
     </modal>
   </div>
@@ -81,7 +81,7 @@ export default {
       days: this.$moment.weekdaysShort(),
       attendances: [],
       annualLeaveDay: '',
-      titleModal: this.$t('dashboard.request.title'),
+      titleModal: this.$t('modal.request.title'),
       selectedRequestKind: {},
       isRequestModalOpen: false
     }
@@ -221,7 +221,7 @@ export default {
 
     toggleConfirmModal(data) {
       this.selectedRequestKind = ''
-      this.titleModal = this.$t('dashboard.request.title')
+      this.titleModal = this.$t('modal.request.title')
       this.annualLeaveDay = data.day
       this.attendance = data
 
@@ -234,9 +234,9 @@ export default {
 
     changeTitleConfirmModal() {
       if (this.selectedRequestKind === '') {
-        this.titleModal = this.$t('dashboard.request.title')
+        this.titleModal = this.$t('modal.request.title')
       } else {
-        this.selectedRequestKind === 'attendance' ? (this.titleModal = this.$t('attendances.modal.addTitle')) : (this.titleModal = this.$t('annualLeave.title'))
+        this.selectedRequestKind === 'attendance' ? (this.titleModal = this.$t('modal.request.addTitle')) : (this.titleModal = this.$t('modal.annualLeave.title'))
       }
     }
   },
