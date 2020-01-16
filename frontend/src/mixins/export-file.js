@@ -9,7 +9,7 @@ export default {
           headers: { Accept: `application/${data.type}` },
           params: {
             date: this.dateData.date,
-            date_type: this.dateData.type || 'month',
+            date_type: this.dateData.type || 'range',
             from_date: this.dateData.from_date,
             to_date: this.dateData.to_date
           },
