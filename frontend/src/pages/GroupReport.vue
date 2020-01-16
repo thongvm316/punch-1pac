@@ -4,12 +4,16 @@
 
     <div class="toolbar mt-5 clearfix">
       <div class="float-left">
-        <month-year-picker v-model="dateData"/>
+         <flat-pickr
+        :config="{mode: 'range', locale: flatpickrLocaleMapper[currentUser.language]}"
+        class="form-input daterange-picker"
+        @on-close="onCloseFlatpickr"
+        :value="getFormattedInitDateRange()"/>
         <input type="search" class="form-input filter-input" :placeholder="$t('attendances.placeholder.filterByUser')" v-model="searchText">
       </div>
       <div v-if="isValidTime" class="float-right">
-        <button class="btn btn-success mx-2" @click="exportFile($event,{ type: 'zip', requestPath: `/groups/${$route.params.id}/report`, fileName: `report_${group.name}_${dateData.date}` })">{{ $t('groups.btn.exportZIPGroupReport') }}</button>
-        <button class="btn btn-success" @click="exportFile($event, { type: 'csv', requestPath: `/groups/${$route.params.id}/report`, fileName: `report_${group.name}_${dateData.date}` })">{{ $t('groups.btn.exportCSVGroupReport') }}</button>
+        <button class="btn btn-success mx-2" @click="exportFile($event,{ type: 'zip', requestPath: `/groups/${$route.params.id}/report`, fileName: `report_${group.name}_${dateData.from_date}-${dateData.to_date}` })">{{ $t('groups.btn.exportZIPGroupReport') }}</button>
+        <button class="btn btn-success" @click="exportFile($event, { type: 'csv', requestPath: `/groups/${$route.params.id}/report`, fileName: `report_${group.name}_${dateData.from_date}-${dateData.to_date}` })">{{ $t('groups.btn.exportCSVGroupReport') }}</button>
       </div>
     </div>
 
@@ -54,21 +58,22 @@
 </template>
 
 <script>
-import exportFile from '../mixins/export-file'
+import flatpickrLocale from '../mixins/flatpickr-locale'
+import groupReport from '../mixins/group-report'
 import { mapState, mapActions } from 'vuex'
-const MonthYearPicker = () => import('../components/MonthYearPicker')
 const MainLayout = () => import('../layouts/Main')
 const GroupTab = () => import('../components/GroupTab')
+const flatPickr = () => import('vue-flatpickr-component')
 
 export default {
-  mixins: [exportFile],
+  mixins: [flatpickrLocale, groupReport],
 
   data() {
     return {
       searchText: '',
       dateData: {
-        date: this.$moment().format('YYYY-MM-DD'),
-        type: 'month'
+        from_date: '',
+        to_date: ''
       },
       sortKey: 'name',
       sortOrders: 'asc'
@@ -78,15 +83,13 @@ export default {
   components: {
     MainLayout,
     GroupTab,
-    MonthYearPicker
+    flatPickr
   },
 
   computed: {
-    ...mapState('groupAttendances', ['usersInGroup']),
-
     ...mapState('group', ['group']),
 
-    ...mapState('initialStates', ['meta']),
+    ...mapState('initialStates', ['meta', 'currentCompany']),
 
     ...mapState('groupReport', ['results', 'reportMeta']),
 
@@ -131,7 +134,6 @@ export default {
   },
 
   created() {
-    this.getGroupReport({ group_id: this.$route.params.id, ...this.dateData })
     this.getGroup(this.$route.params.id)
   },
 

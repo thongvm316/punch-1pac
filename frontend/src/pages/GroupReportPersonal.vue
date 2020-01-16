@@ -6,7 +6,8 @@
       <flat-pickr
         :config="{mode: 'range', locale: flatpickrLocaleMapper[currentUser.language]}"
         class="form-input daterange-picker"
-        v-model="dateRange"/>
+        @on-close="onCloseFlatpickr"
+        :value="getFormattedInitDateRange()" />
       <select class="form-select" v-model="userId">
         <option v-for="user in usersInGroup" :key="user.id" :value="user.id">{{ user.email }}</option>
       </select>
@@ -51,14 +52,14 @@
 
 <script>
 import flatpickrLocale from '../mixins/flatpickr-locale'
-import exportFile from '../mixins/export-file'
+import groupReport from '../mixins/group-report'
 import { mapState, mapActions } from 'vuex'
 const MainLayout = () => import('../layouts/Main')
 const GroupTab = () => import('../components/GroupTab')
 const flatPickr = () => import('vue-flatpickr-component')
 
 export default {
-  mixins: [exportFile, flatpickrLocale],
+  mixins: [flatpickrLocale, groupReport],
 
   data() {
     return {
@@ -69,8 +70,7 @@ export default {
       },
       userId: this.$route.params.user_id,
       dateContext: this.$moment().locale('en'),
-      today: this.$moment(),
-      dateRange: ''
+      today: this.$moment()
     }
   },
 
@@ -105,21 +105,6 @@ export default {
     ...mapActions('groupReport', ['getPersonalReport']),
 
     ...mapActions('calendar', ['getCalendarAttendances']),
-
-    initDateData() {
-      const defaultMonthlyReportDay = 1
-
-      if (parseInt(this.currentCompany.company_monthly_report) === defaultMonthlyReportDay) {
-        this.dateRange = `${this.$moment().subtract(1, 'months').startOf('month').format('YYYY-MM-DD')} to ${this.$moment().subtract(1, 'months').endOf('month').format('YYYY-MM-DD')}`
-      } else if (parseInt(this.currentCompany.company_monthly_report) > 28
-        && (this.$moment().month() === 1 || this.$moment().month() === 2)) {
-          this.dateRange = `${this.$moment().startOf('month').format('YYYY-MM-DD')} to ${this.$moment().endOf('month').format('YYYY-MM-DD')}`
-      } else {
-        const fromDate = this.$moment().subtract(1, 'months').date(this.currentCompany.company_monthly_report).add(1, 'days').format('YYYY-MM-DD')
-        const toDate = this.dateContext.date(this.currentCompany.company_monthly_report).format('YYYY-MM-DD')
-        this.dateRange = `${fromDate} to ${toDate}`
-      }
-    },
 
     isInDeactivatedTime(currentDay) {
       if (currentDay.isBetween(this.currentUser.deactivated_at, this.currentUser.activated_at, null, '[]')) return true
@@ -197,7 +182,6 @@ export default {
   },
 
   created() {
-    this.initDateData()
     this.getUsersInGroup(this.$route.params.id)
     if (!this.group) this.getGroup(this.$route.params.id)
   },
@@ -218,12 +202,6 @@ export default {
       this.getPersonalReport({ group_id: this.$route.params.id, user_id: this.userId, ...this.dateData, type: 'range' }).then(response => {
         this.formatAttendances(response.data, this.dateData)
       })
-    },
-
-    dateRange() {
-      const dates = this.dateRange.split(' ')
-      this.dateData.from_date = dates[0]
-      this.dateData.to_date = dates[2]
     }
   }
 }
