@@ -58,7 +58,7 @@ export default {
 
     getFormattedInitDateRange() {
       const dateRange = this.initDateRange(this.currentCompany.monthly_report)
-      return `${dateRange.from_date} to ${dateRange.to_date}`
+      return `${dateRange.from_date}${this.$t('flatpickr.rangeSeparator')}${dateRange.to_date}`
     },
 
     onCloseFlatpickr(dates) {
