@@ -17,20 +17,20 @@
         <option v-for="user in usersInGroup" :key="user.id" :value="user.id">{{ user.email }}</option>
       </select>
 
-      <button v-if="isValidTime" class="btn btn-success float-right" @click="exportFile($event, { type: 'csv', requestPath: `/groups/${$route.params.id}/users/${$route.params.user_id}/report`, fileName: fileExportedName })">{{ $t('groups.btn.exportCSVGroupReport') }}</button>
+      <button v-if="isValidTime" class="btn btn-success float-right" @click="exportFile($event, { type: 'csv', requestPath: `/groups/${$route.params.id}/users/${$route.params.user_id}/report`, fileName: fileExportedName })">{{ $t('button.group.exportCSVGroupReport') }}</button>
     </div>
 
     <table v-if="isValidTime" class="table table-bordered has-fixed-head bg-light mt-5">
       <thead>
-        <th>{{ $t('groups.report.date') }}</th>
-        <th>{{ $t('groups.report.check_in') }}</th>
-        <th>{{ $t('groups.report.check_out') }}</th>
-        <th>{{ $t('groups.report.late') }}</th>
-        <th>{{ $t('groups.report.leave_early') }}</th>
-        <th>{{ $t('groups.report.day_off') }}</th>
-        <th>{{ $t('groups.report.mins_attend_late') }}</th>
-        <th>{{ $t('groups.report.mins_leave_early') }}</th>
-        <th>{{ $t('groups.report.working_hours') }}</th>
+        <th>{{ $t('tableHeader.date') }}</th>
+        <th>{{ $t('tableHeader.check_in') }}</th>
+        <th>{{ $t('tableHeader.check_out') }}</th>
+        <th>{{ $t('tableHeader.late') }}</th>
+        <th>{{ $t('tableHeader.leave_early') }}</th>
+        <th>{{ $t('tableHeader.day_off') }}</th>
+        <th>{{ $t('tableHeader.mins_attend_late') }}</th>
+        <th>{{ $t('tableHeader.mins_leave_early') }}</th>
+        <th>{{ $t('tableHeader.working_hours') }}</th>
       </thead>
       <tbody>
         <tr v-for="attendance in attendances" :key="attendance.id" :class="{'is-holiday': attendance.holiday, 'is-breakday': isBreakday(attendance)}">

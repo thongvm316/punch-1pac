@@ -1,42 +1,42 @@
 <template>
   <div>
     <div class="form-group" :class="{ 'has-error': $v.day.$error }">
-      <label class="form-label">{{ $t('attendances.labels.date') }}</label>
+      <label class="form-label">{{ $t('label.date') }}</label>
       <flat-pickr
         :config="{ enable: [day], locale: flatpickrLocaleMapper[currentUser.language] }"
         class="form-input daterange-picker"
         v-model="$v.day.$model"/>
       <p class="form-input-hint" v-if="$v.day.$error">
-        {{ $t('validation.required', { name: $t('attendances.labels.date') }) }}
+        {{ $t('validation.required', { name: $t('label.date') }) }}
       </p>
     </div>
     <div class="form-group" :class="{ 'has-error': $v.params.attended_at.$error || errors.attended_at }">
-      <label class="form-label">{{ $t('attendances.labels.attendedAt') }}</label>
+      <label class="form-label">{{ $t('label.attendedAt') }}</label>
       <input type="time" step="60" class="form-input" v-model="$v.params.attended_at.$model">
       <p class="form-input-hint" v-if="$v.params.attended_at.$error && !errors.attended_at">
-        {{ $t('validation.required', { name: $t('attendances.labels.attendedAt') }) }}
+        {{ $t('validation.required', { name: $t('label.attendedAt') }) }}
       </p>
-      <p class="form-input-hint" v-if="errors.attended_at">{{ $t('attendances.labels.attendedAt') }} {{ errors.attended_at[0] }}</p>
+      <p class="form-input-hint" v-if="errors.attended_at">{{ $t('label.attendedAt') }} {{ errors.attended_at[0] }}</p>
     </div>
     <div class="form-group" :class="{ 'has-error': $v.params.left_at.$error || errors.left_at }">
-      <label class="form-label">{{ $t('attendances.labels.leftAt') }}</label>
+      <label class="form-label">{{ $t('label.leftAt') }}</label>
       <input type="time" step="60" class="form-input" v-model="$v.params.left_at.$model">
       <p class="form-input-hint" v-if="$v.params.left_at.$error && !errors.left_at">
-        {{ $t('validation.required', { name: $t('attendances.labels.leftAt') }) }}
+        {{ $t('validation.required', { name: $t('label.leftAt') }) }}
       </p>
-      <p class="form-input-hint" v-if="errors.left_at">{{ $t('attendances.labels.leftAt') }} {{ errors.left_at[0] }}</p>
+      <p class="form-input-hint" v-if="errors.left_at">{{ $t('label.leftAt') }} {{ errors.left_at[0] }}</p>
     </div>
     <div class="form-group" :class="{ 'has-error': $v.params.reason.$error || errors.reason }">
-      <label class="form-label">{{ $t('attendances.labels.reason') }}</label>
+      <label class="form-label">{{ $t('label.reason') }}</label>
       <textarea class="form-input" v-model="$v.params.reason.$model"></textarea>
       <p class="form-input-hint" v-if="$v.params.reason.$error && !errors.reason">
-        {{ $t('validation.required', { name: $t('attendances.labels.reason') }) }}
+        {{ $t('validation.required', { name: $t('label.reason') }) }}
       </p>
-      <p class="form-input-hint" v-if="errors.reason">{{ $t('attendances.labels.reason') }} {{ errors.reason[0] }}</p>
+      <p class="form-input-hint" v-if="errors.reason">{{ $t('label.reason') }} {{ errors.reason[0] }}</p>
     </div>
     <div class="form-group">
-      <button ref="localAddRequestButton" type="button" class="btn btn-success btn-submit" @click="localAddRequest" v-if="attendance" :disabled="isDisabled">{{ $t('attendances.btn.add') }}</button>
-      <button ref="localEditRequestButton" type="button" class="btn btn-success btn-submit" @click="localEditRequest" v-else :disabled="isDisabled">{{ $t('requests.btn.save') }}</button>
+      <button ref="localAddRequestButton" type="button" class="btn btn-success btn-submit" @click="localAddRequest" v-if="attendance" :disabled="isDisabled">{{ $t('button.common.add') }}</button>
+      <button ref="localEditRequestButton" type="button" class="btn btn-success btn-submit" @click="localEditRequest" v-else :disabled="isDisabled">{{ $t('button.common.save') }}</button>
     </div>
   </div>
 </template>

@@ -1,14 +1,12 @@
 <template>
-  <div>
-    <main>
-      <div class="container grid-xl">
-        <announcements/>
-        <remind-punch-in/>
-        <h1 class="title">{{ title }}</h1>
-        <slot></slot>
-      </div>
-    </main>
-  </div>
+  <main>
+    <div class="container grid-xl">
+      <announcements/>
+      <remind-punch-in/>
+      <h1 class="title">{{ title }}</h1>
+      <slot></slot>
+    </div>
+  </main>
 </template>
 
 <script>

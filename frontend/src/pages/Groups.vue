@@ -1,9 +1,9 @@
 <template>
   <main-layout :title="$t('groups.title')">
     <div class="toolbar mt-5 clearfix">
-      <input type="search" class="form-input" :placeholder="$t('groups.placeholder.filterByName')" v-model="name">
+      <input type="search" class="form-input" :placeholder="$t('placeholder.filterByName')" v-model="name">
       <button type="button" class="btn btn-success float-right" @click="toggleAddModal()" v-if="$auth('Group', currentUser).canCreate()">
-        {{ $t('groups.btn.add') }}
+        {{ $t('button.group.add') }}
       </button>
     </div>
 
@@ -26,7 +26,7 @@
       </div>
     </div>
 
-    <modal :title="$t('groups.modal.addTitle')" :modal-open.sync="isAddModalOpen">
+    <modal :title="$t('modal.group.addTitle')" :modal-open.sync="isAddModalOpen">
       <group-form v-if="isAddModalOpen" @afterModify="isAddModalOpen = false"></group-form>
     </modal>
   </main-layout>

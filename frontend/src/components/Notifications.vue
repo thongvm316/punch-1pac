@@ -21,7 +21,7 @@
                 <img :src="notification.user.avatar_url" class="avatar avatar-md" :alt="notification.user.name">
               </div>
               <div class="tile-content">
-                <p class="tile-title" v-html="$t(`notifications.${notification.activitable_type.toLowerCase()}.${notification.kind}`, { name: notification.user.name })"></p>
+                <p class="tile-title" v-html="$t(`notification.${notification.activitable_type.toLowerCase()}.${notification.kind}`, { name: notification.user.name })"></p>
                 <p class="tile-subtitle">{{ notification.created_at | moment_activity }}</p>
               </div>
               <div class="tile-action" v-if="notification.activitable.status === 'pending'">
@@ -35,9 +35,9 @@
         </p>
       </div>
     </div>
-    <modal ref="requestModal" :title="$t('notifications.title')" :modal-open.sync="isAddModalOpen" v-if="isEditable(notification)">
+    <modal ref="requestModal" :title="$t('notification.title')" :modal-open.sync="isAddModalOpen" v-if="isEditable(notification)">
       <div class="form-group">
-        <label class="form-label">{{ $t('notifications.labels.date') }}</label>
+        <label class="form-label">{{ $t('label.date') }}</label>
         <flat-pickr
           :config="{ enable: [notification.activitable.attendance_day], locale: flatpickrLocaleMapper[currentUser.language] }"
           class="form-input daterange-picker"
@@ -45,24 +45,24 @@
           disabled />
       </div>
       <div class="form-group">
-        <label class="form-label">{{ $t('notifications.labels.attendedAt') }}</label>
+        <label class="form-label">{{ $t('label.attendedAt') }}</label>
         <input type="time" class="form-input" :value="notification.activitable.attended_at" disabled>
       </div>
       <div class="form-group">
-        <label class="form-label">{{ $t('notifications.labels.leftAt') }}</label>
+        <label class="form-label">{{ $t('label.leftAt') }}</label>
         <input type="time" class="form-input" :value="notification.activitable.left_at" disabled>
       </div>
       <div class="form-group">
-        <label class="form-label">{{ $t('notifications.labels.reason') }}</label>
+        <label class="form-label">{{ $t('label.reason') }}</label>
         <textarea class="form-input" :value="notification.activitable.reason" disabled></textarea>
       </div>
       <div class="form-group">
-        <label class="form-label">{{ $t('notifications.labels.rejectReason') }}</label>
-        <textarea class="form-input" :placeholder="$t('notifications.labels.rejectReason')" v-model="rejectReason"></textarea>
+        <label class="form-label">{{ $t('label.rejectReason') }}</label>
+        <textarea class="form-input" :placeholder="$t('label.rejectReason')" v-model="rejectReason"></textarea>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-success" @click="submitAddModal(notification.activitable_id, approveNotificationRequest, $t('messages.request.approvedSuccess'))">{{ $t('notifications.btn.approve') }}</button>
-        <button type="button" class="btn btn-error" @click="submitAddModal({ id: notification.activitable_id, admin_reason: rejectReason }, rejectNotificationRequest, $t('messages.request.rejectedSuccess'))">{{ $t('notifications.btn.reject') }}</button>
+        <button type="button" class="btn btn-success" @click="submitAddModal(notification.activitable_id, approveNotificationRequest, $t('messages.request.approvedSuccess'))">{{ $t('button.common.approve') }}</button>
+        <button type="button" class="btn btn-error" @click="submitAddModal({ id: notification.activitable_id, admin_reason: rejectReason }, rejectNotificationRequest, $t('messages.request.rejectedSuccess'))">{{ $t('button.common.reject') }}</button>
       </div>
     </modal>
   </div>

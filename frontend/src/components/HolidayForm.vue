@@ -1,33 +1,33 @@
 <template>
   <div>
     <div class="form-group" :class="{ 'has-error': $v.params.name.$error || errors.name }">
-      <label class="form-label">{{ $t('company.holidays.labels.name') }}</label>
+      <label class="form-label">{{ $t('label.name') }}</label>
       <input class="form-input" type="text" v-model="$v.params.name.$model">
       <p class="form-input-hint" v-if="$v.params.name.$error && !errors.name">
-        {{ $t('validation.required', { name: $t('company.holidays.labels.name') }) }}
+        {{ $t('validation.required', { name: $t('label.name') }) }}
       </p>
-      <p class="form-input-hint" v-if="errors.name">{{ $t('company.holidays.labels.name') }} {{ errors.name[0] }}</p>
+      <p class="form-input-hint" v-if="errors.name">{{ $t('label.name') }} {{ errors.name[0] }}</p>
     </div>
     <div class="form-group" :class="{ 'has-error': $v.params.started_at.$error || errors.started_at }">
-      <label class="form-label">{{ $t('company.holidays.labels.startAt') }}</label>
+      <label class="form-label">{{ $t('label.startAt') }}</label>
       <flat-pickr
         :config="{ locale: flatpickrLocaleMapper[currentUser.language] }"
         class="form-input daterange-picker"
         v-model="$v.params.started_at.$model"/>
-      <p class="form-input-hint" v-if="errors.started_at">{{ $t('company.holidays.labels.startAt') }} {{ errors.started_at[0] }}</p>
+      <p class="form-input-hint" v-if="errors.started_at">{{ $t('label.startAt') }} {{ errors.started_at[0] }}</p>
       <p class="form-input-hint" v-if="$v.params.started_at.$error && !errors.started_at">
-        {{ $t('validation.required', { name: $t('company.holidays.labels.startAt') }) }}
+        {{ $t('validation.required', { name: $t('label.startAt') }) }}
       </p>
     </div>
     <div class="form-group" :class="{ 'has-error': $v.params.ended_at.$error || errors.ended_at }">
-      <label class="form-label">{{ $t('company.holidays.labels.endAt') }}</label>
+      <label class="form-label">{{ $t('label.endAt') }}</label>
       <flat-pickr
         :config="{ locale: flatpickrLocaleMapper[currentUser.language] }"
         class="form-input daterange-picker"
         v-model="$v.params.ended_at.$model"/>
-      <p class="form-input-hint" v-if="errors.ended_at">{{ $t('company.holidays.labels.endAt') }} {{ errors.ended_at[0] }}</p>
+      <p class="form-input-hint" v-if="errors.ended_at">{{ $t('label.endAt') }} {{ errors.ended_at[0] }}</p>
       <p class="form-input-hint" v-if="$v.params.ended_at.$error && !errors.ended_at">
-        {{ $t('validation.required', { name: $t('company.holidays.labels.endAt') }) }}
+        {{ $t('validation.required', { name: $t('label.endAt') }) }}
       </p>
     </div>
     <div class="form-group">
@@ -37,7 +37,7 @@
         @click="localAddHoliday"
         v-if="!targetHoliday"
         :disabled="isDisabled">
-        {{ $t('company.holidays.btn.submit') }}
+        {{ $t('button.common.submit') }}
       </button>
       <button
         class="btn btn-success btn-submit"
@@ -45,7 +45,7 @@
         @click="localEditHoliday"
         v-if="targetHoliday"
         :disabled="isDisabled">
-        {{ $t('company.holidays.btn.save') }}
+        {{ $t('button.common.save') }}
       </button>
     </div>
   </div>

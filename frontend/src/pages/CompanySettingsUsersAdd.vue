@@ -3,40 +3,40 @@
     <p class="mb-2">{{ $t('company.users.add.note') }}</p>
     <form class="setting-form">
       <div class="form-group" :class="{ 'has-error': $v.params.name.$error || errors.name }">
-        <label class="form-label">{{ $t('company.users.add.labels.name') }}</label>
-        <input class="form-input" type="text" :placeholder="$t('company.users.add.placeholder.name')" v-model="$v.params.name.$model">
+        <label class="form-label">{{ $t('label.name') }}</label>
+        <input class="form-input" type="text" :placeholder="$t('placeholder.name')" v-model="$v.params.name.$model">
         <p class="form-input-hint" v-if="$v.params.name.$error && !errors.name">
-          {{ $t('validation.required', { name: $t('company.users.add.labels.name') }) }}
+          {{ $t('validation.required', { name: $t('label.name') }) }}
         </p>
-        <p class="form-input-hint" v-if="errors.name">{{ $t('company.users.add.labels.name') }} {{ errors.name[0] }}</p>
+        <p class="form-input-hint" v-if="errors.name">{{ $t('label.name') }} {{ errors.name[0] }}</p>
       </div>
       <div class="form-group" :class="{ 'has-error':  $v.params.email.$anyError || errors.email }">
-        <label class="form-label">{{ $t('company.users.add.labels.email') }}</label>
-        <input class="form-input" type="text" :placeholder="$t('company.users.add.placeholder.email')" v-model="$v.params.email.$model">
+        <label class="form-label">{{ $t('label.email') }}</label>
+        <input class="form-input" type="text" :placeholder="$t('placeholder.email')" v-model="$v.params.email.$model">
         <p class="form-input-hint" v-if="$v.params.email.$anyError && !errors.email">
-          <span v-if="!$v.params.email.required">{{ $t('validation.required', { name: $t('company.users.add.labels.email') }) }}</span>
-          <span v-if="!$v.params.email.email">{{ $t('validation.invalid', { name: $t('company.users.add.labels.email') }) }}</span>
+          <span v-if="!$v.params.email.required">{{ $t('validation.required', { name: $t('label.email') }) }}</span>
+          <span v-if="!$v.params.email.email">{{ $t('validation.invalid', { name: $t('label.email') }) }}</span>
         </p>
-        <p class="form-input-hint" v-if="errors.email">{{ $t('company.users.add.labels.email') }} {{ errors.email[0] }}</p>
+        <p class="form-input-hint" v-if="errors.email">{{ $t('label.email') }} {{ errors.email[0] }}</p>
       </div>
       <div class="form-group">
-        <label class="form-label">{{ $t('company.users.add.labels.role') }}</label>
+        <label class="form-label">{{ $t('label.role') }}</label>
         <select class="form-select" v-model="params.role">
           <option :value="role" v-for="(role, key) in meta.roles" :key="key">{{ $t(`meta.roles.${role}`) }}</option>
         </select>
       </div>
       <div class="form-group" :class="{ 'has-error':  $v.params.group_id.$error || errors.group }">
-        <label class="form-label">{{ $t('company.users.add.labels.group') }}</label>
+        <label class="form-label">{{ $t('label.group') }}</label>
         <group-select v-model="$v.params.group_id.$model">
-          <option slot="placeholder" value="">{{ $t('company.users.add.placeholder.chooseGroup') }}</option>
+          <option slot="placeholder" value="">{{ $t('placeholder.chooseGroup') }}</option>
         </group-select>
         <p class="form-input-hint" v-if="$v.params.group_id.$error && !errors.group">
-          {{ $t('validation.required', { name: $t('company.users.add.labels.group') }) }}
+          {{ $t('validation.required', { name: $t('label.group') }) }}
         </p>
-        <p class="form-input-hint" v-if="errors.group">{{ $t('company.users.add.labels.group') }} {{ errors.group[0] }}</p>
+        <p class="form-input-hint" v-if="errors.group">{{ $t('label.group') }} {{ errors.group[0] }}</p>
       </div>
       <div class="form-group">
-        <button type="button" class="btn btn-success btn-submit" @click="create(params)" :disabled="isDisabled">{{ $t('company.users.add.btn.submit') }}</button>
+        <button type="button" class="btn btn-success btn-submit" @click="create(params)" :disabled="isDisabled">{{ $t('button.common.submit') }}</button>
       </div>
     </form>
   </setting-layout>

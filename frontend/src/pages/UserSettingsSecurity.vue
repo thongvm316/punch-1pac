@@ -3,10 +3,10 @@
     <table class="table bg-light mt-5">
       <thead>
         <tr>
-          <th>{{ $t('user.security.tableHeader.client') }}</th>
-          <th>{{ $t('user.security.tableHeader.os') }}</th>
-          <th>{{ $t('user.security.tableHeader.ip') }}</th>
-          <th>{{ $t('user.security.tableHeader.lastSignedIn') }}</th>
+          <th>{{ $t('tableHeader.client') }}</th>
+          <th>{{ $t('tableHeader.os') }}</th>
+          <th>{{ $t('tableHeader.ip') }}</th>
+          <th>{{ $t('tableHeader.lastSignedIn') }}</th>
           <th></th>
         </tr>
       </thead>
@@ -33,7 +33,7 @@
           <td>{{ session.os }}</td>
           <td>{{ session.ip_address }}</td>
           <td>{{ session.updated_at | moment_llll }}</td>
-          <td><button type="button" class="btn btn-error" @click="deleteSession(session.id)">{{ $t('user.security.btn.revoke') }}</button></td>
+          <td><button type="button" class="btn btn-error" @click="deleteSession(session.id)">{{ $t('button.common.revoke') }}</button></td>
         </tr>
       </tbody>
     </table>
