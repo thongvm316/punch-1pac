@@ -61,9 +61,9 @@
         </select>
         <p class="form-input-hint" v-if="companyErrors.timezone">{{ $t('label.timezone') }} {{ companyErrors.timezone[0] }}</p>
       </div>
-      <div class="form-group">
+      <div class="form-group" :class="{ 'has-error': $v.params.company_monthly_report.$error || companyErrors.company_monthly_report }">
         <label class="form-label">{{ $t('label.reportDay') }}</label>
-        <input class="form-input" type="number" v-model="params.company_monthly_report">
+        <input class="form-input" type="number" v-model="$v.params.company_monthly_report.$model">
       </div>
       <div class="form-group" :class="{ 'has-error': companyErrors.punch_method }">
         <label class="form-label">{{ $t('label.punchMethod') }}</label>
