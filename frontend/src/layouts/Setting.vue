@@ -1,23 +1,21 @@
 <template>
-  <div>
-    <main>
-      <div class="container grid-xl mt-10">
-        <div class="columns">
-          <div class="column col-3">
-            <company-settings-sidebar v-if="sidebarType === 'company'"/>
-            <user-settings-sidebar v-if="sidebarType === 'user'"/>
-          </div>
+  <main>
+    <div class="container grid-xl mt-10">
+      <div class="columns">
+        <div class="column col-3">
+          <company-settings-sidebar v-if="sidebarType === 'company'"/>
+          <user-settings-sidebar v-if="sidebarType === 'user'"/>
+        </div>
 
-          <div class="column col-9">
-            <div class="box-setting">
-              <h2>{{ subtitle }}</h2>
-              <slot></slot>
-            </div>
+        <div class="column col-9">
+          <div class="box-setting">
+            <h2>{{ subtitle }}</h2>
+            <slot></slot>
           </div>
         </div>
       </div>
-    </main>
-  </div>
+    </div>
+  </main>
 </template>
 
 <script>

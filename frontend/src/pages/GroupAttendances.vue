@@ -8,20 +8,20 @@
         class="form-input daterange-picker"
         v-model="dateRange"/>
       <attendance-status-select v-model="params.status">
-        <option slot="placeholder" value="">{{ $t('attendances.placeholder.filterByStatus') }}</option>
+        <option slot="placeholder" value="">{{ $t('placeholder.filterByStatus') }}</option>
       </attendance-status-select>
 
-      <input type="search" class="form-input filter-input" :placeholder="$t('attendances.placeholder.filterByUser')" v-model="params.name_or_email">
+      <input type="search" class="form-input filter-input" :placeholder="$t('placeholder.filterByUser')" v-model="params.name_or_email">
     </div>
 
     <table class="table bg-light mt-5">
       <thead>
-        <th>{{ $t('attendances.tableHeader.name') }}</th>
-        <th>{{ $t('attendances.tableHeader.email') }}</th>
-        <th>{{ $t('attendances.tableHeader.date') }}</th>
-        <th>{{ $t('attendances.tableHeader.attendedAt') }}</th>
-        <th>{{ $t('attendances.tableHeader.leftAt') }}</th>
-        <th>{{ $t('attendances.tableHeader.status') }}</th>
+        <th>{{ $t('tableHeader.name') }}</th>
+        <th>{{ $t('tableHeader.email') }}</th>
+        <th>{{ $t('tableHeader.date') }}</th>
+        <th>{{ $t('tableHeader.attendedAt') }}</th>
+        <th>{{ $t('tableHeader.leftAt') }}</th>
+        <th>{{ $t('tableHeader.status') }}</th>
       </thead>
       <tbody>
         <tr v-for="attendance in attendances" :key="attendance.id">

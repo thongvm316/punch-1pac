@@ -1,47 +1,47 @@
 <template>
   <div>
     <div class="form-group" :class="{ 'has-error': $v.params.weekday.$error || errors.weekday }">
-      <label class="form-label">{{ $t('company.businessDays.labels.weekday') }}</label>
+      <label class="form-label">{{ $t('label.weekday') }}</label>
       <select class="form-select" v-model="$v.params.weekday.$model">
-        <option value="">{{ $t('company.businessDays.placeholder.chooseWeekday') }}</option>
+        <option value="">{{ $t('placeholder.chooseWeekday') }}</option>
         <option :value="weekday" v-for="(weekday, key) in meta.weekdays" :key="key">{{ $t(`meta.weekdays.${weekday}`) }}</option>
       </select>
       <p class="form-input-hint" v-if="$v.params.weekday.$error && !errors.weekday">
-        {{ $t('validation.required', { name: $t('company.businessDays.labels.weekday') }) }}
+        {{ $t('validation.required', { name: $t('label.weekday') }) }}
       </p>
-      <p class="form-input-hint" v-if="errors.weekday">{{ $t('company.businessDays.labels.weekday') }} {{ errors.weekday[0] }}</p>
+      <p class="form-input-hint" v-if="errors.weekday">{{ $t('label.weekday') }} {{ errors.weekday[0] }}</p>
     </div>
     <div class="form-group" :class="{ 'has-error': $v.params.morning_started_at.$error || errors.morning_started_at }">
-      <label class="form-label">{{ $t('company.businessDays.labels.morningStartAt') }}</label>
+      <label class="form-label">{{ $t('label.morningStartAt') }}</label>
       <input class="form-input" type="time" step="300" v-model="$v.params.morning_started_at.$model">
       <p class="form-input-hint" v-if="$v.params.morning_started_at.$error && !errors.morning_started_at">
-        {{ $t('validation.required', { name: $t('company.businessDays.labels.morningStartAt') }) }}
+        {{ $t('validation.required', { name: $t('label.morningStartAt') }) }}
       </p>
-      <p class="form-input-hint" v-if="errors.morning_started_at">{{ $t('company.businessDays.labels.morningStartAt') }} {{ errors.morning_started_at[0] }}</p>
+      <p class="form-input-hint" v-if="errors.morning_started_at">{{ $t('label.morningStartAt') }} {{ errors.morning_started_at[0] }}</p>
     </div>
     <div class="form-group" :class="{ 'has-error': $v.params.morning_ended_at.$error || errors.morning_ended_at }">
-      <label class="form-label">{{ $t('company.businessDays.labels.morningEndAt') }}</label>
+      <label class="form-label">{{ $t('label.morningEndAt') }}</label>
       <input class="form-input" type="time" step="300" v-model="$v.params.morning_ended_at.$model">
       <p class="form-input-hint" v-if="$v.params.morning_ended_at.$error && !errors.morning_ended_at">
-        {{ $t('validation.required', { name: $t('company.businessDays.labels.morningEndAt') }) }}
+        {{ $t('validation.required', { name: $t('label.morningEndAt') }) }}
       </p>
-      <p class="form-input-hint" v-if="errors.morning_ended_at">{{ $t('company.businessDays.labels.morningEndAt') }} {{ errors.morning_ended_at[0] }}</p>
+      <p class="form-input-hint" v-if="errors.morning_ended_at">{{ $t('label.morningEndAt') }} {{ errors.morning_ended_at[0] }}</p>
     </div>
     <div class="form-group" :class="{ 'has-error': $v.params.afternoon_started_at.$error || errors.afternoon_started_at }">
-      <label class="form-label">{{ $t('company.businessDays.labels.afternoonStartAt') }}</label>
+      <label class="form-label">{{ $t('label.afternoonStartAt') }}</label>
       <input class="form-input" type="time" step="300" v-model="$v.params.afternoon_started_at.$model">
       <p class="form-input-hint" v-if="$v.params.afternoon_started_at.$error && !errors.afternoon_started_at">
-        {{ $t('validation.required', { name: $t('company.businessDays.labels.afternoonStartAt') }) }}
+        {{ $t('validation.required', { name: $t('label.afternoonStartAt') }) }}
       </p>
-      <p class="form-input-hint" v-if="errors.afternoon_started_at">{{ $t('company.businessDays.labels.afternoonStartAt') }} {{ errors.afternoon_started_at[0] }}</p>
+      <p class="form-input-hint" v-if="errors.afternoon_started_at">{{ $t('label.afternoonStartAt') }} {{ errors.afternoon_started_at[0] }}</p>
     </div>
     <div class="form-group" :class="{ 'has-error': $v.params.afternoon_ended_at.$error || errors.afternoon_ended_at }">
-      <label class="form-label">{{ $t('company.businessDays.labels.afternoonEndAt') }}</label>
+      <label class="form-label">{{ $t('label.afternoonEndAt') }}</label>
       <input class="form-input" type="time" step="300" v-model="$v.params.afternoon_ended_at.$model">
       <p class="form-input-hint" v-if="$v.params.afternoon_ended_at.$error && !errors.afternoon_ended_at">
-        {{ $t('validation.required', { name: $t('company.businessDays.labels.afternoonEndAt') }) }}
+        {{ $t('validation.required', { name: $t('label.afternoonEndAt') }) }}
       </p>
-      <p class="form-input-hint" v-if="errors.afternoon_ended_at">{{ $t('company.businessDays.labels.afternoonEndAt') }} {{ errors.afternoon_ended_at[0] }}</p>
+      <p class="form-input-hint" v-if="errors.afternoon_ended_at">{{ $t('label.afternoonEndAt') }} {{ errors.afternoon_ended_at[0] }}</p>
     </div>
     <div class="form-group">
       <button
@@ -51,7 +51,7 @@
         v-if="!targetBusinessDay"
         @click="localAddBusinessDay"
         :disabled="isDisabled">
-        {{ $t('company.businessDays.btn.submit') }}
+        {{ $t('button.common.submit') }}
       </button>
       <button
         ref="editBusinessDayButton"
@@ -60,7 +60,7 @@
         v-if="targetBusinessDay"
         @click="localEditBusinessDay"
         :disabled="isDisabled">
-        {{ $t('company.businessDays.btn.save') }}
+        {{ $t('button.common.save') }}
       </button>
     </div>
   </div>

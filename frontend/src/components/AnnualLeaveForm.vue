@@ -1,30 +1,30 @@
 <template>
   <div>
     <div class="form-group" :class="{ 'has-error': $v.params.attendance_day.$error || errors.attendance_day }">
-      <label class="form-label">{{ $t('annualLeave.labels.annualLeaveDay') }}</label>
+      <label class="form-label">{{ $t('label.annualLeaveDay') }}</label>
       <flat-pickr
         :config="{mode: 'single', locale: flatpickrLocaleMapper[currentUser.language]}"
         class="form-input daterange-picker"
         v-model="$v.params.attendance_day.$model"/>
       <p class="form-input-hint" v-if="$v.params.attendance_day.$error">
-        {{ $t('validation.required', { name: $t('annualLeave.labels.annualLeaveDay') }) }}
+        {{ $t('validation.required', { name: $t('label.annualLeaveDay') }) }}
       </p>
-      <p class="form-input-hint" v-if="errors.attendance_day">{{ $t('annualLeave.labels.annualLeaveDay') }} {{ errors.attendance_day[0] }}</p>
+      <p class="form-input-hint" v-if="errors.attendance_day">{{ $t('label.annualLeaveDay') }} {{ errors.attendance_day[0] }}</p>
     </div>
     <div class="form-group" :class="{ 'has-error': $v.params.reason.$error || errors.reason }">
-      <label class="form-label">{{ $t('annualLeave.labels.reason') }}</label>
+      <label class="form-label">{{ $t('label.reason') }}</label>
       <textarea class="form-input" v-model="$v.params.reason.$model"></textarea>
       <p class="form-input-hint" v-if="$v.params.reason.$error">
-        {{ $t('validation.required', { name: $t('annualLeave.labels.reason') }) }}
+        {{ $t('validation.required', { name: $t('label.reason') }) }}
       </p>
-      <p class="form-input-hint" v-if="errors.reason">{{ $t('annualLeave.labels.reason') }} {{ errors.reason[0] }}</p>
+      <p class="form-input-hint" v-if="errors.reason">{{ $t('label.reason') }} {{ errors.reason[0] }}</p>
     </div>
     <div class="form-group">
       <button ref="createAnnualLeaveBtn" type="button" class="btn btn-success btn-submit" @click="create()" v-if="!request" :disabled="isDisable">
-        {{ $t('annualLeave.submit') }}
+        {{ $t('button.common.submit') }}
       </button>
       <button ref="updateAnnualLeaveBtn" type="button" class="btn btn-success btn-submit" @click="update()" v-if="request" :disabled="isDisable">
-        {{ $t('annualLeave.save') }}
+        {{ $t('button.common.save') }}
       </button>
     </div>
   </div>
@@ -88,7 +88,7 @@ export default {
       axios
         .post('/requests', Object.assign(this.params, { kind: 'annual_leave' }))
         .then(response => {
-          this.data.message = this.$t('annualLeave.createSuccessMsg')
+          this.data.message = this.$t('messages.request.createSuccess')
           this.handleSuccess(this.data)
         })
         .catch(error => {
@@ -102,7 +102,7 @@ export default {
       axios
         .put(`/requests/${this.request.id}`, Object.assign(this.params, { kind: 'annual_leave' }))
         .then(response => {
-          this.data.message = this.$t('annualLeave.updateSuccessMsg')
+          this.data.message = this.$t('messages.request.updateSuccess')
           this.handleSuccess(this.data)
         })
         .catch(error => {

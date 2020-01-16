@@ -1,11 +1,11 @@
 <template>
   <div>
     <div class="form-group">
-      <label class="form-label">{{ $t('company.allowedIPs.labels.ipAddress') }}</label>
+      <label class="form-label">{{ $t('label.ipAddress') }}</label>
       <input class="form-input" type="text" v-model.trim="$v.params.$model" :class="{ 'is-error': $v.params.$error }">
       <p class="form-input-hint text-error" v-if="$v.params.$error">
-        <span v-if="!$v.params.required">{{ $t('validation.required', { name: $t('company.allowedIPs.labels.ipAddress') }) }}</span>
-        <span v-else-if="!$v.params.isValid">{{ $t('validation.invalid', { name: $t('company.allowedIPs.labels.ipAddress') }) }}</span>
+        <span v-if="!$v.params.required">{{ $t('validation.required', { name: $t('label.ipAddress') }) }}</span>
+        <span v-else-if="!$v.params.isValid">{{ $t('validation.invalid', { name: $t('label.ipAddress') }) }}</span>
       </p>
     </div>
     <div class="form-group">
@@ -14,13 +14,13 @@
         class="btn btn-success btn-submit"
         @click="localAddIp"
         v-if="!targetIp"
-        :disabled="isDisabled">{{ $t('company.allowedIPs.btn.submit') }}</button>
+        :disabled="isDisabled">{{ $t('button.common.submit') }}</button>
       <button
         ref="editAllowedIpButton"
         class="btn btn-success btn-submit"
         @click="localEditIp"
         v-if="targetIp"
-        :disabled="isDisabled">{{ $t('company.allowedIPs.btn.save') }}</button>
+        :disabled="isDisabled">{{ $t('button.common.save') }}</button>
     </div>
   </div>
 </template>
