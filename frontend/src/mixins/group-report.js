@@ -57,7 +57,7 @@ export default {
     },
 
     getFormattedInitDateRange() {
-      const dateRange = this.initDateRange(this.currentCompany.company_monthly_report)
+      const dateRange = this.initDateRange(this.currentCompany.monthly_report)
       return `${dateRange.from_date} to ${dateRange.to_date}`
     },
 
@@ -68,6 +68,6 @@ export default {
   },
 
   created() {
-    this.dateData = this.initDateRange(this.currentCompany.company_monthly_report)
+    this.dateData = this.initDateRange(this.currentCompany.monthly_report)
   }
 }

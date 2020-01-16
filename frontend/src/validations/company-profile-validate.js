@@ -13,7 +13,7 @@ export default {
           return phoneNum.test(params)
         }
       },
-      company_monthly_report: {
+      monthly_report: {
         required,
         between: between(1, 31)
       }
