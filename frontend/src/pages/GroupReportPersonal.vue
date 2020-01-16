@@ -6,7 +6,7 @@
       <flat-pickr
         :config="{mode: 'range', locale: flatpickrLocaleMapper[currentUser.language]}"
         class="form-input daterange-picker"
-        v-model="dateRange"/>
+        v-model="dateRange" />
       <select class="form-select" v-model="userId">
         <option v-for="user in usersInGroup" :key="user.id" :value="user.id">{{ user.email }}</option>
       </select>

@@ -31,7 +31,12 @@ const actions = {
     return callApi({
       method: 'get',
       url: `/groups/${params.group_id}/report`,
-      params: { date: params.date, date_type: params.type }
+      params: {
+        date: params.date,
+        date_type: 'range',
+        from_date: params.from_date,
+        to_date: params.to_date
+      }
     })
     .then(response => {
       commit(types.FETCH_GROUP_REPORT, response.data)
@@ -48,7 +53,7 @@ const actions = {
       url: `/groups/${params.group_id}/users/${params.user_id}/report`,
       params: {
         date: params.date,
-        date_type: params.type || 'month',
+        date_type: 'range',
         from_date: params.from_date,
         to_date: params.to_date
       }

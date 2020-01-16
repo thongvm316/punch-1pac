@@ -4,7 +4,11 @@
 
     <div class="toolbar mt-5 clearfix">
       <div class="float-left">
-        <month-year-picker v-model="dateData"/>
+         <flat-pickr
+        :config="{mode: 'range', locale: flatpickrLocaleMapper[currentUser.language]}"
+        class="form-input daterange-picker"
+        @on-close="onCloseFlatpickr"
+        :value="getFormattedInitDateRange()"/>
         <input type="search" class="form-input filter-input" :placeholder="$t('attendances.placeholder.filterByUser')" v-model="searchText">
       </div>
       <div v-if="isValidTime" class="float-right">
@@ -54,21 +58,22 @@
 </template>
 
 <script>
+import flatpickrLocale from '../mixins/flatpickr-locale'
 import exportFile from '../mixins/export-file'
 import { mapState, mapActions } from 'vuex'
-const MonthYearPicker = () => import('../components/MonthYearPicker')
 const MainLayout = () => import('../layouts/Main')
 const GroupTab = () => import('../components/GroupTab')
+const flatPickr = () => import('vue-flatpickr-component')
 
 export default {
-  mixins: [exportFile],
+  mixins: [exportFile, flatpickrLocale],
 
   data() {
     return {
       searchText: '',
       dateData: {
-        date: this.$moment().format('YYYY-MM-DD'),
-        type: 'month'
+        from_date: '',
+        to_date: ''
       },
       sortKey: 'name',
       sortOrders: 'asc'
@@ -78,15 +83,13 @@ export default {
   components: {
     MainLayout,
     GroupTab,
-    MonthYearPicker
+    flatPickr
   },
 
   computed: {
-    ...mapState('groupAttendances', ['usersInGroup']),
-
     ...mapState('group', ['group']),
 
-    ...mapState('initialStates', ['meta']),
+    ...mapState('initialStates', ['meta', 'currentCompany']),
 
     ...mapState('groupReport', ['results', 'reportMeta']),
 
@@ -124,6 +127,38 @@ export default {
 
     ...mapActions('groupReport', ['getGroupReport']),
 
+    initDateRange(currentCompanyMonthlyDateReport) {
+      const defaultMonthlyReportDay = 1
+
+      if (parseInt(currentCompanyMonthlyDateReport) === defaultMonthlyReportDay) {
+        return {
+          from_date: this.$moment().subtract(1, 'months').startOf('month').format('YYYY-MM-DD'),
+          to_date: this.$moment().subtract(1, 'months').endOf('month').format('YYYY-MM-DD')
+        }
+      } else if (parseInt(currentCompanyMonthlyDateReport) > 28 &&
+                (this.$moment().month() === 1 || this.$moment().month() === 2)) {
+        return {
+          from_date: this.$moment().startOf('month').format('YYYY-MM-DD'),
+          to_date: this.$moment().endOf('month').format('YYYY-MM-DD')
+        }
+      } else {
+        return {
+          from_date: this.$moment().subtract(1, 'months').date(currentCompanyMonthlyDateReport).add(1, 'days').format('YYYY-MM-DD'),
+          to_date: this.$moment().date(currentCompanyMonthlyDateReport).format('YYYY-MM-DD')
+        }
+      }
+    },
+
+    getFormattedInitDateRange() {
+      const dateRange = this.initDateRange(this.currentCompany.company_monthly_report)
+      return `${dateRange.from_date} to ${dateRange.to_date}`
+    },
+
+    onCloseFlatpickr(dates) {
+      this.dateData.from_date = this.$moment(dates[0]).format('YYYY-MM-DD')
+      this.dateData.to_date = this.$moment(dates[1]).format('YYYY-MM-DD')
+    },
+
     sortBy(key) {
       this.sortKey = key
       this.sortOrders = this.sortOrders === 'asc' ? 'desc' : 'asc'
@@ -131,7 +166,7 @@ export default {
   },
 
   created() {
-    this.getGroupReport({ group_id: this.$route.params.id, ...this.dateData })
+    this.dateData = this.initDateRange(this.currentCompany.company_monthly_report)
     this.getGroup(this.$route.params.id)
   },
 
