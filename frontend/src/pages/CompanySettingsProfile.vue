@@ -61,6 +61,11 @@
         </select>
         <p class="form-input-hint" v-if="companyErrors.timezone">{{ $t('label.timezone') }} {{ companyErrors.timezone[0] }}</p>
       </div>
+      <div class="form-group" :class="{ 'has-error': $v.params.company_monthly_report.$error || companyErrors.company_monthly_report }">
+        <label class="form-label">{{ $t('label.reportDay') }}</label>
+        <input class="form-input" type="number" v-model="$v.params.company_monthly_report.$model">
+        <p class="form-input-hint" v-if="$v.params.company_monthly_report.$error">{{ $t('validation.between', { name: $t('label.reportDay'), min: 1, max: 31 }) }} </p>
+      </div>
       <div class="form-group" :class="{ 'has-error': companyErrors.punch_method }">
         <label class="form-label">{{ $t('label.punchMethod') }}</label>
         <label class="form-radio">
@@ -101,7 +106,8 @@ export default {
         postal_code: '',
         tax_code: '',
         timezone: '',
-        punch_method: 'default'
+        punch_method: 'default',
+        company_monthly_report: 1
       }
     }
   },

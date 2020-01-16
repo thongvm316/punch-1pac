@@ -18,6 +18,7 @@ export default {
   timezone: 'Timezone',
   postalCode: 'Postal code',
   taxCode: 'Tax code',
+  reportDay: 'Report Day',
   punchMethod: 'Punch method',
   description: 'Description',
   image: 'Image',
