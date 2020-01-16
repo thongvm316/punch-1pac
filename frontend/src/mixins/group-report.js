@@ -40,17 +40,19 @@ export default {
           from_date: this.$moment().subtract(1, 'months').startOf('month').format('YYYY-MM-DD'),
           to_date: this.$moment().subtract(1, 'months').endOf('month').format('YYYY-MM-DD')
         }
-      } else if (parseInt(currentCompanyMonthlyDateReport) > 28 &&
-                (this.$moment().month() === 1 || this.$moment().month() === 2)) {
+      }
+
+      if (parseInt(currentCompanyMonthlyDateReport) > 28 &&
+        (this.$moment().month() === 1 || this.$moment().month() === 2)) {
         return {
           from_date: this.$moment().startOf('month').format('YYYY-MM-DD'),
           to_date: this.$moment().endOf('month').format('YYYY-MM-DD')
         }
-      } else {
-        return {
-          from_date: this.$moment().subtract(1, 'months').date(currentCompanyMonthlyDateReport).add(1, 'days').format('YYYY-MM-DD'),
-          to_date: this.$moment().date(currentCompanyMonthlyDateReport).format('YYYY-MM-DD')
-        }
+      }
+
+      return {
+        from_date: this.$moment().subtract(1, 'months').date(currentCompanyMonthlyDateReport).add(1, 'days').format('YYYY-MM-DD'),
+        to_date: this.$moment().date(currentCompanyMonthlyDateReport).format('YYYY-MM-DD')
       }
     },
 
