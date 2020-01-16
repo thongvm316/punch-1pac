@@ -1,4 +1,4 @@
-import * as types from '../mutation-types'
+import { FETCH_GROUP_REPORT, FETCH_PERSONAL_REPORT } from '../mutation-types'
 import callApi from '../api-caller'
 
 const state = {
@@ -12,12 +12,12 @@ const state = {
 }
 
 const mutations = {
-  [types.FETCH_GROUP_REPORT](state, payload) {
+  [FETCH_GROUP_REPORT](state, payload) {
     state.results = payload.results
     state.reportMeta = payload.meta
   },
 
-  [types.FETCH_PERSONAL_REPORT](state, payload) {
+  [FETCH_PERSONAL_REPORT](state, payload) {
     state.personalReport = {
       report: payload.report,
       totalWorkingDays: payload.meta.company_total_working_days_in_month,
@@ -39,7 +39,7 @@ const actions = {
       }
     })
     .then(response => {
-      commit(types.FETCH_GROUP_REPORT, response.data)
+      commit(FETCH_GROUP_REPORT, response.data)
       return response
     })
     .catch(error => {
@@ -59,7 +59,7 @@ const actions = {
       }
     })
     .then(response => {
-      commit(types.FETCH_PERSONAL_REPORT, response.data)
+      commit(FETCH_PERSONAL_REPORT, response.data)
       return response
     })
     .catch(error => {

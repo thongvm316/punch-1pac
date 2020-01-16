@@ -1,4 +1,10 @@
-import * as types from '../mutation-types.js'
+import {
+  FETCH_HEADER_NOTIFICATIONS,
+  FETCH_MORE_HEADER_NOTIFICATIONS,
+  READ_NOTIFICATIONS,
+  APPROVE_NOTIFICATION_REQUEST,
+  REJECT_NOTIFICATION_REQUEST
+} from '../mutation-types.js'
 import callApi from '../api-caller'
 
 const state = {
@@ -15,29 +21,29 @@ const getters = {
 }
 
 const mutations = {
-  [types.FETCH_HEADER_NOTIFICATIONS](state, payload) {
+  [FETCH_HEADER_NOTIFICATIONS](state, payload) {
     state.headerNotifications = payload.notifications
     state.unreadNotificationsCount = payload.meta.unread_notifications_count
     state.lastUnreadNotificationsCount = payload.meta.unread_notifications_count
     state.pager = payload.meta
   },
 
-  [types.FETCH_MORE_HEADER_NOTIFICATIONS](state, payload) {
+  [FETCH_MORE_HEADER_NOTIFICATIONS](state, payload) {
     state.headerNotifications = state.headerNotifications.concat(payload.notifications)
     state.pager = payload.meta
   },
 
-  [types.READ_NOTIFICATIONS](state) {
+  [READ_NOTIFICATIONS](state) {
     state.unreadNotificationsCount = 0
     state.lastUnreadNotificationsCount = 0
   },
 
-  [types.APPROVE_NOTIFICATION_REQUEST](state, notificationId) {
+  [APPROVE_NOTIFICATION_REQUEST](state, notificationId) {
     const index = state.headerNotifications.findIndex(notification => notification.activitable_id === notificationId)
     state.headerNotifications[index].activitable.status = 'approved'
   },
 
-  [types.REJECT_NOTIFICATION_REQUEST](state, notificationId) {
+  [REJECT_NOTIFICATION_REQUEST](state, notificationId) {
     const index = state.headerNotifications.findIndex(notification => notification.activitable_id === notificationId)
     state.headerNotifications[index].activitable.status = 'rejected'
   }
@@ -50,7 +56,7 @@ const actions = {
       url: '/notifications',
       params: Object.assign({ per_page: 20 }, params)
     })
-      .then(response => commit(types.FETCH_HEADER_NOTIFICATIONS, response.data))
+      .then(response => commit(FETCH_HEADER_NOTIFICATIONS, response.data))
       .catch(error => {
         throw error
       })
@@ -62,7 +68,7 @@ const actions = {
       url: '/notifications',
       params: Object.assign({ per_page: 20 }, params)
     })
-      .then(response => commit(types.FETCH_MORE_HEADER_NOTIFICATIONS, response.data))
+      .then(response => commit(FETCH_MORE_HEADER_NOTIFICATIONS, response.data))
       .catch(error => {
         throw error
       })
@@ -73,7 +79,7 @@ const actions = {
 
     return callApi({ method: 'post', url: `/notifications/${id}/read` })
       .then(response => {
-        commit(types.READ_NOTIFICATIONS)
+        commit(READ_NOTIFICATIONS)
         return response
       })
       .catch(error => {
@@ -89,7 +95,7 @@ const actions = {
       headers: { 'Content-Type': 'application/json' }
     })
       .then(response => {
-        commit(types.REJECT_NOTIFICATION_REQUEST, params.id)
+        commit(REJECT_NOTIFICATION_REQUEST, params.id)
         return response
       })
       .catch(error => {
@@ -103,7 +109,7 @@ const actions = {
       url: `/requests/${notificationId}/approve`
     })
       .then(response => {
-        commit(types.APPROVE_NOTIFICATION_REQUEST, notificationId)
+        commit(APPROVE_NOTIFICATION_REQUEST, notificationId)
         return response
       })
       .catch(error => {

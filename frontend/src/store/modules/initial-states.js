@@ -1,4 +1,15 @@
-import * as types from '../mutation-types.js'
+import {
+  INITIAL_STATES_SET_USER,
+  INITIAL_STATES_UPDATE_USER,
+  INITIAL_STATES_SET_COMPANY,
+  INITIAL_STATES_UPDATE_COMPANY,
+  INITIAL_STATES_SET_USER_ERRORS,
+  INITIAL_STATES_CLEAR_USER_ERRORS,
+  INITIAL_STATES_SET_COMPANY_ERRORS,
+  INITIAL_STATES_CLEAR_COMPANY_ERRORS,
+  INITIAL_STATES_SET_META,
+  INITIAL_STATES_UPDATE_PASSWORD_CHANGED
+} from '../mutation-types.js'
 import callApi from '../api-caller'
 import 'formdata-polyfill'
 
@@ -11,43 +22,43 @@ const state = {
 }
 
 const mutations = {
-  [types.INITIAL_STATES_SET_USER](state, payload) {
+  [INITIAL_STATES_SET_USER](state, payload) {
     state.currentUser = payload
   },
 
-  [types.INITIAL_STATES_UPDATE_USER](state, payload) {
+  [INITIAL_STATES_UPDATE_USER](state, payload) {
     state.currentUser = payload
   },
 
-  [types.INITIAL_STATES_SET_COMPANY](state, payload) {
+  [INITIAL_STATES_SET_COMPANY](state, payload) {
     state.currentCompany = payload
   },
 
-  [types.INITIAL_STATES_UPDATE_COMPANY](state, payload) {
+  [INITIAL_STATES_UPDATE_COMPANY](state, payload) {
     state.currentCompany = payload
   },
 
-  [types.INITIAL_STATES_SET_USER_ERRORS](state, payload) {
+  [INITIAL_STATES_SET_USER_ERRORS](state, payload) {
     state.userErrors = payload.errors
   },
 
-  [types.INITIAL_STATES_CLEAR_USER_ERRORS](state, payload) {
+  [INITIAL_STATES_CLEAR_USER_ERRORS](state) {
     state.userErrors = {}
   },
 
-  [types.INITIAL_STATES_SET_COMPANY_ERRORS](state, payload) {
+  [INITIAL_STATES_SET_COMPANY_ERRORS](state, payload) {
     state.companyErrors = payload.errors
   },
 
-  [types.INITIAL_STATES_CLEAR_COMPANY_ERRORS](state, payload) {
+  [INITIAL_STATES_CLEAR_COMPANY_ERRORS](state) {
     state.companyErrors = {}
   },
 
-  [types.INITIAL_STATES_SET_META](state, payload) {
+  [INITIAL_STATES_SET_META](state, payload) {
     state.meta = payload
   },
 
-  [types.INITIAL_STATES_UPDATE_PASSWORD_CHANGED](state, value) {
+  [INITIAL_STATES_UPDATE_PASSWORD_CHANGED](state, value) {
     state.currentUser.password_changed = value
   }
 }
@@ -64,11 +75,11 @@ const actions = {
       headers: { 'Content-Type': 'multipart/form-data' }
     })
       .then(response => {
-        commit(types.INITIAL_STATES_UPDATE_USER, response.data)
+        commit(INITIAL_STATES_UPDATE_USER, response.data)
         return response
       })
       .catch(error => {
-        if (error.response && error.response.status === 422) commit(types.INITIAL_STATES_SET_USER_ERRORS, error.response.data)
+        if (error.response && error.response.status === 422) commit(INITIAL_STATES_SET_USER_ERRORS, error.response.data)
         throw error
       })
   },
@@ -90,10 +101,10 @@ const actions = {
       headers: { 'Content-Type': 'multipart/form-data' }
     })
       .then(response => {
-        commit(types.INITIAL_STATES_UPDATE_COMPANY, response.data)
+        commit(INITIAL_STATES_UPDATE_COMPANY, response.data)
       })
       .catch(error => {
-        if (error.response && error.response.status === 422) commit(types.INITIAL_STATES_SET_COMPANY_ERRORS, error.response.data)
+        if (error.response && error.response.status === 422) commit(INITIAL_STATES_SET_COMPANY_ERRORS, error.response.data)
         throw error
       })
   }

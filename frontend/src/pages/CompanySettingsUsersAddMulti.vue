@@ -5,15 +5,15 @@
     <p class="mb-2">{{ $t('company.users.addMulti.templateGuide') }}</p>
     <form class="setting-form">
       <div class="form-group" :class="{ 'has-error': errors.csv_file }">
-        <label class="form-label">{{ $t('company.users.addMulti.labels.csvFile') }}</label>
+        <label class="form-label">{{ $t('label.csvFile') }}</label>
         <input class="form-input" type="file" @change="setCsvFile">
-        <p class="form-input-hint" v-if="errors.csv_file">{{ $t('company.users.addMulti.labels.csvFile') }} {{ errors.csv_file[0] }}</p>
+        <p class="form-input-hint" v-if="errors.csv_file">{{ $t('label.csvFile') }} {{ errors.csv_file[0] }}</p>
       </div>
       <div class="form-group" v-if="errors.lines && errors.lines.length > 0">
         <p class="form-input-hint text-error">{{ $t('company.users.addMulti.errorMsg', { lines: errors.lines.join(', ') }) }}</p>
       </div>
       <div class="form-group">
-        <button type="button" class="btn btn-success btn-submit" @click="upload(params)" :disabled="isDisable">{{ $t('company.users.addMulti.btn.submit') }}</button>
+        <button type="button" class="btn btn-success btn-submit" @click="upload(params)" :disabled="isDisable">{{ $t('button.common.submit') }}</button>
       </div>
     </form>
   </setting-layout>

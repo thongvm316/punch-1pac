@@ -10,8 +10,8 @@
         <div class="content">{{ $t('popup.changePassword.description') }}</div>
       </div>
       <div class="modal-footer">
-        <router-link ref="btnChangePassword" class="btn btn-success" to="/settings/password" @click.native="remind">{{ $t('popup.changePassword.btnChange') }}</router-link>
-        <button ref="btnCancel" type="button" class="btn" @click="remind">{{ $t('popup.changePassword.btnRemind') }}</button>
+        <router-link ref="btnChangePassword" class="btn btn-success" to="/settings/password" @click.native="remind">{{ $t('button.popup.btnChange') }}</router-link>
+        <button ref="btnCancel" type="button" class="btn" @click="remind">{{ $t('button.popup.btnRemind') }}</button>
       </div>
     </div>
   </div>

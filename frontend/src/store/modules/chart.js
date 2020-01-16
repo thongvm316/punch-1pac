@@ -1,4 +1,4 @@
-import * as types from '../mutation-types.js'
+import { FETCH_CHART_DATA } from '../mutation-types.js'
 import axios from 'axios'
 
 const state = {
@@ -6,7 +6,7 @@ const state = {
 }
 
 const mutations = {
-  [types.FETCH_CHART_DATA](state, data) {
+  [FETCH_CHART_DATA](state, data) {
     state.chartData = data
   }
 }
@@ -16,7 +16,7 @@ const actions = {
     return axios
       .get('/attendances/chart', { params: { date: month } })
       .then(response => {
-        commit(types.FETCH_CHART_DATA, response.data)
+        commit(FETCH_CHART_DATA, response.data)
         return response
       })
       .catch(error => {

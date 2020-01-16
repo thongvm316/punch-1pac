@@ -1,24 +1,30 @@
 <template>
   <div>
-    <div class="form-group" :class="{ 'has-error': errors.attendance_day }">
-      <label class="form-label">{{ $t('annualLeave.labels.annualLeaveDay') }}</label>
+    <div class="form-group" :class="{ 'has-error': $v.params.attendance_day.$error || errors.attendance_day }">
+      <label class="form-label">{{ $t('label.annualLeaveDay') }}</label>
       <flat-pickr
         :config="{mode: 'single', locale: flatpickrLocaleMapper[currentUser.language]}"
         class="form-input daterange-picker"
-        v-model="params.attendance_day"/>
-      <p class="form-input-hint" v-if="errors.attendance_day">{{ $t('annualLeave.labels.annualLeaveDay') }} {{ errors.attendance_day[0] }}</p>
+        v-model="$v.params.attendance_day.$model"/>
+      <p class="form-input-hint" v-if="$v.params.attendance_day.$error">
+        {{ $t('validation.required', { name: $t('label.annualLeaveDay') }) }}
+      </p>
+      <p class="form-input-hint" v-if="errors.attendance_day">{{ $t('label.annualLeaveDay') }} {{ errors.attendance_day[0] }}</p>
     </div>
-    <div class="form-group" :class="{ 'has-error': errors.reason }">
-      <label class="form-label">{{ $t('annualLeave.labels.reason') }}</label>
-      <textarea class="form-input" v-model="params.reason"></textarea>
-      <p class="form-input-hint" v-if="errors.reason">{{ $t('annualLeave.labels.reason') }} {{ errors.reason[0] }}</p>
+    <div class="form-group" :class="{ 'has-error': $v.params.reason.$error || errors.reason }">
+      <label class="form-label">{{ $t('label.reason') }}</label>
+      <textarea class="form-input" v-model="$v.params.reason.$model"></textarea>
+      <p class="form-input-hint" v-if="$v.params.reason.$error">
+        {{ $t('validation.required', { name: $t('label.reason') }) }}
+      </p>
+      <p class="form-input-hint" v-if="errors.reason">{{ $t('label.reason') }} {{ errors.reason[0] }}</p>
     </div>
     <div class="form-group">
       <button ref="createAnnualLeaveBtn" type="button" class="btn btn-success btn-submit" @click="create()" v-if="!request" :disabled="isDisable">
-        {{ $t('annualLeave.submit') }}
+        {{ $t('button.common.submit') }}
       </button>
       <button ref="updateAnnualLeaveBtn" type="button" class="btn btn-success btn-submit" @click="update()" v-if="request" :disabled="isDisable">
-        {{ $t('annualLeave.save') }}
+        {{ $t('button.common.save') }}
       </button>
     </div>
   </div>
@@ -28,6 +34,8 @@
 import flatpickrLocale from '../mixins/flatpickr-locale'
 import handleSuccess from '../mixins/handle-success'
 import axios from 'axios'
+import { isEqual } from 'underscore'
+import annualLeaveValidate from '../validations/annual-leave-validate'
 const flatPickr = () => import('vue-flatpickr-component')
 
 export default {
@@ -35,7 +43,6 @@ export default {
 
   data() {
     return {
-      isDisable: false,
       errors: {},
       params: {
         attendance_day: '',
@@ -48,7 +55,7 @@ export default {
     }
   },
 
-  mixins: [flatpickrLocale, handleSuccess],
+  mixins: [flatpickrLocale, handleSuccess, annualLeaveValidate],
 
   props: {
     request: Object,
@@ -60,13 +67,28 @@ export default {
     flatPickr
   },
 
+  computed: {
+    isDisable() {
+      if (this.$v.params.$anyError) return true
+
+      let flag = false
+      if (this.request) {
+        flag = isEqual(this.params, this.request)
+      } else {
+        flag = isEqual(this.params, { attendance_day: '', reason: '' })
+      }
+
+      return flag
+    }
+  },
+
   methods: {
     create() {
       this.isDisable = true
       axios
         .post('/requests', Object.assign(this.params, { kind: 'annual_leave' }))
         .then(response => {
-          this.data.message = this.$t('annualLeave.createSuccessMsg')
+          this.data.message = this.$t('messages.request.createSuccess')
           this.handleSuccess(this.data)
         })
         .catch(error => {
@@ -80,7 +102,7 @@ export default {
       axios
         .put(`/requests/${this.request.id}`, Object.assign(this.params, { kind: 'annual_leave' }))
         .then(response => {
-          this.data.message = this.$t('annualLeave.updateSuccessMsg')
+          this.data.message = this.$t('messages.request.updateSuccess')
           this.handleSuccess(this.data)
         })
         .catch(error => {
@@ -91,15 +113,8 @@ export default {
   },
 
   created() {
-    if (this.request) {
-      Object.keys(this.params).forEach(key => {
-        this.params[key] = this.request[key]
-      })
-    }
-
-    if (this.annualDay) {
-      this.params.attendance_day = this.annualDay
-    }
+    if (this.request) this.params = { ...this.request }
+    if (this.annualDay) this.params.attendance_day = this.annualDay
   }
 }
 </script>

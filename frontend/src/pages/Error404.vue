@@ -10,7 +10,7 @@
       <p class="text-center mb-0">{{ $t('page404.content') }}</p>
       <p class="text-center">{{ $t('page404.instruction') }}</p>
       <div class="form-group text-center mt-10">
-        <router-link to="/dashboard" class="btn btn-primary" tag="button">{{ $t('page404.btn.goHome') }}</router-link>
+        <router-link to="/dashboard" class="btn btn-primary" tag="button">{{ $t('button.common.goHome') }}</router-link>
       </div>
     </div>
   </main-layout>

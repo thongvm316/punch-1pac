@@ -1,9 +1,9 @@
 <template>
   <main-layout :title="$t('groups.title')">
     <div class="toolbar mt-5 clearfix">
-      <input type="search" class="form-input" :placeholder="$t('groups.placeholder.filterByName')" v-model="name">
+      <input type="search" class="form-input" :placeholder="$t('placeholder.filterByName')" v-model="name">
       <button type="button" class="btn btn-success float-right" @click="toggleAddModal()" v-if="$auth('Group', currentUser).canCreate()">
-        {{ $t('groups.btn.add') }}
+        {{ $t('button.group.add') }}
       </button>
     </div>
 
@@ -26,7 +26,7 @@
       </div>
     </div>
 
-    <modal :title="$t('groups.modal.addTitle')" :modal-open.sync="isAddModalOpen">
+    <modal :title="$t('modal.group.addTitle')" :modal-open.sync="isAddModalOpen">
       <group-form v-if="isAddModalOpen" @afterModify="isAddModalOpen = false"></group-form>
     </modal>
   </main-layout>
@@ -36,6 +36,7 @@
 import modal from '../mixins/modal'
 import { CLEAR_GROUPS_ERRORS } from '../store/mutation-types'
 import { mapState, mapGetters, mapActions, mapMutations } from 'vuex'
+import { isEmpty } from 'underscore'
 const MainLayout = () => import('../layouts/Main')
 const GroupForm = () => import('../components/GroupForm')
 
@@ -68,7 +69,7 @@ export default {
   },
 
   computed: {
-    ...mapState('groups', ['groups']),
+    ...mapState('groups', ['groups', 'errors']),
 
     ...mapGetters('groups', ['filterGroups'])
   },
@@ -79,7 +80,7 @@ export default {
     ...mapMutations('groups', [CLEAR_GROUPS_ERRORS]),
 
     toggleAddModal() {
-      this[CLEAR_GROUPS_ERRORS]()
+      if (!isEmpty(this.errors)) this[CLEAR_GROUPS_ERRORS]()
       this.isAddModalOpen = !this.isAddModalOpen
     }
   },

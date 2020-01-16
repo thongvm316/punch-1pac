@@ -1,4 +1,4 @@
-import * as types from '../mutation-types.js'
+import { RECEIVE_ATTENDANCES } from '../mutation-types.js'
 import callApi from '../api-caller'
 
 const state = {
@@ -41,7 +41,7 @@ const getters = {
 }
 
 const mutations = {
-  [types.RECEIVE_ATTENDANCES](state, payload) {
+  [RECEIVE_ATTENDANCES](state, payload) {
     state.attendances = payload.attendances
     state.forgotPunchInDays = payload.meta.forgot_punch_in_days
   }
@@ -51,7 +51,7 @@ const actions = {
   getAttendances({ commit, state }, params = {}) {
     return callApi({ method: 'get', url: '/attendances', params: Object.assign(state.params, params, { per_page: 1000 }) })
       .then(response => {
-        commit(types.RECEIVE_ATTENDANCES, response.data)
+        commit(RECEIVE_ATTENDANCES, response.data)
         return response
       })
       .catch(error => {
