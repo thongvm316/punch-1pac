@@ -13,7 +13,14 @@
     </div>
     <div class="form-group" :class="{ 'has-error': $v.params.morning_started_at.$error || errors.morning_started_at }">
       <label class="form-label">{{ $t('label.morningStartAt') }}</label>
-      <input class="form-input" type="time" step="300" v-model="$v.params.morning_started_at.$model">
+      <flatPickr
+        v-model="$v.params.morning_started_at.$model"
+        class="form-input time-picker"
+        :config="{
+          enableTime: true,
+          noCalendar: true,
+          dateFormat: 'H:i',
+          time_24hr: true}" />
       <p class="form-input-hint" v-if="$v.params.morning_started_at.$error && !errors.morning_started_at">
         {{ $t('validation.required', { name: $t('label.morningStartAt') }) }}
       </p>
@@ -21,7 +28,14 @@
     </div>
     <div class="form-group" :class="{ 'has-error': $v.params.morning_ended_at.$error || errors.morning_ended_at }">
       <label class="form-label">{{ $t('label.morningEndAt') }}</label>
-      <input class="form-input" type="time" step="300" v-model="$v.params.morning_ended_at.$model">
+      <flatPickr
+        v-model="$v.params.morning_ended_at.$model"
+        class="form-input time-picker"
+        :config="{
+          enableTime: true,
+          noCalendar: true,
+          dateFormat: 'H:i',
+          time_24hr: true}" />
       <p class="form-input-hint" v-if="$v.params.morning_ended_at.$error && !errors.morning_ended_at">
         {{ $t('validation.required', { name: $t('label.morningEndAt') }) }}
       </p>
@@ -29,7 +43,14 @@
     </div>
     <div class="form-group" :class="{ 'has-error': $v.params.afternoon_started_at.$error || errors.afternoon_started_at }">
       <label class="form-label">{{ $t('label.afternoonStartAt') }}</label>
-      <input class="form-input" type="time" step="300" v-model="$v.params.afternoon_started_at.$model">
+      <flatPickr
+        v-model="$v.params.afternoon_started_at.$model"
+        class="form-input time-picker"
+        :config="{
+          enableTime: true,
+          noCalendar: true,
+          dateFormat: 'H:i',
+          time_24hr: true}" />
       <p class="form-input-hint" v-if="$v.params.afternoon_started_at.$error && !errors.afternoon_started_at">
         {{ $t('validation.required', { name: $t('label.afternoonStartAt') }) }}
       </p>
@@ -37,7 +58,14 @@
     </div>
     <div class="form-group" :class="{ 'has-error': $v.params.afternoon_ended_at.$error || errors.afternoon_ended_at }">
       <label class="form-label">{{ $t('label.afternoonEndAt') }}</label>
-      <input class="form-input" type="time" step="300" v-model="$v.params.afternoon_ended_at.$model">
+      <flatPickr
+        v-model="$v.params.afternoon_ended_at.$model"
+        class="form-input time-picker"
+        :config="{
+          enableTime: true,
+          noCalendar: true,
+          dateFormat: 'H:i',
+          time_24hr: true}" />
       <p class="form-input-hint" v-if="$v.params.afternoon_ended_at.$error && !errors.afternoon_ended_at">
         {{ $t('validation.required', { name: $t('label.afternoonEndAt') }) }}
       </p>
@@ -72,6 +100,7 @@ import { mapState, mapActions, mapMutations } from 'vuex'
 import { isEmpty, isEqual } from 'underscore'
 import handleSuccess from '../mixins/handle-success'
 import businessDayValidate from '../validations/business-day-validate'
+const flatPickr = () => import('vue-flatpickr-component')
 
 export default {
   name: 'business-day-form',
@@ -86,16 +115,20 @@ export default {
     return {
       params: {
         weekday: '',
-        morning_started_at: '',
-        morning_ended_at: '',
-        afternoon_started_at: '',
-        afternoon_ended_at: ''
+        morning_started_at: '08:00',
+        morning_ended_at: '12:00',
+        afternoon_started_at: '13:30',
+        afternoon_ended_at: '17:30'
       },
       data: {
         emitType: 'afterModify',
         message: ''
       }
     }
+  },
+
+  components: {
+    flatPickr
   },
 
   methods: {
@@ -132,10 +165,10 @@ export default {
       } else {
         const emptyParams = {
           weekday: '',
-          morning_started_at: '',
-          morning_ended_at: '',
-          afternoon_started_at: '',
-          afternoon_ended_at: ''
+          morning_started_at: '08:00',
+          morning_ended_at: '12:00',
+          afternoon_started_at: '13:30',
+          afternoon_ended_at: '17:30'
         }
 
         flag = isEqual(this.params, emptyParams)

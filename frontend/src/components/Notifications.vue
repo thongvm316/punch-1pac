@@ -46,11 +46,11 @@
       </div>
       <div class="form-group">
         <label class="form-label">{{ $t('label.attendedAt') }}</label>
-        <input type="time" class="form-input" :value="notification.activitable.attended_at" disabled>
+        <input type="time" class="form-input time-picker" :value="notification.activitable.attended_at" disabled>
       </div>
       <div class="form-group">
         <label class="form-label">{{ $t('label.leftAt') }}</label>
-        <input type="time" class="form-input" :value="notification.activitable.left_at" disabled>
+        <input type="time" class="form-input time-picker" :value="notification.activitable.left_at" disabled>
       </div>
       <div class="form-group">
         <label class="form-label">{{ $t('label.reason') }}</label>

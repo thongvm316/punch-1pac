@@ -12,7 +12,14 @@
     </div>
     <div class="form-group" :class="{ 'has-error': $v.params.attended_at.$error || errors.attended_at }">
       <label class="form-label">{{ $t('label.attendedAt') }}</label>
-      <input type="time" step="60" class="form-input" v-model="$v.params.attended_at.$model">
+      <flatPickr
+        v-model="$v.params.attended_at.$model"
+        class="form-input time-picker"
+        :config="{
+          enableTime: true,
+          noCalendar: true,
+          dateFormat: 'H:i',
+          time_24hr: true}" />
       <p class="form-input-hint" v-if="$v.params.attended_at.$error && !errors.attended_at">
         {{ $t('validation.required', { name: $t('label.attendedAt') }) }}
       </p>
@@ -20,7 +27,14 @@
     </div>
     <div class="form-group" :class="{ 'has-error': $v.params.left_at.$error || errors.left_at }">
       <label class="form-label">{{ $t('label.leftAt') }}</label>
-      <input type="time" step="60" class="form-input" v-model="$v.params.left_at.$model">
+      <flatPickr
+        v-model="$v.params.left_at.$model"
+        class="form-input time-picker"
+        :config="{
+          enableTime: true,
+          noCalendar: true,
+          dateFormat: 'H:i',
+          time_24hr: true}" />
       <p class="form-input-hint" v-if="$v.params.left_at.$error && !errors.left_at">
         {{ $t('validation.required', { name: $t('label.leftAt') }) }}
       </p>
