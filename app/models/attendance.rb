@@ -58,17 +58,16 @@ class Attendance < ApplicationRecord
   }
 
   def self.in_period(params = {})
-    str_date = params[:date]
-    str_type = params[:date_type]
+    date     = TimeInDay.range_date(params)
+    from, to = date.first, date.last
 
-    date = str_date.present? ? Date.parse(str_date) : Date.current
-    raise ArgumentError if date.blank?
-    if str_type == 'year'
-      where('extract(year from day) = ?', date.year)
-    elsif str_type == 'range'
-      where(day: TimeInDay.range_date(params))
+    raise ArgumentError if from.blank?
+    if params[:date_type] == 'year'
+      where('extract(year from day) = ?', date.first.year)
+    elsif params[:date_type] == 'range'
+      where(day: (from..to))
     else
-      where(day: date.beginning_of_month..date.end_of_month)
+      where(day: (from..to))
     end
   rescue TypeError, ArgumentError
     where(id: nil)

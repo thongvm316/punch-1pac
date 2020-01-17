@@ -18,7 +18,10 @@ class UserCSV
     end
 
     def report_csv(attendances, params = {})
-      TimeInDay.range_date(params).to_a.each_with_object([]) do |day, arr|
+      date     = TimeInDay.range_date(params)
+      from, to = date.first, date.second
+
+      (from..to).to_a.each_with_object([]) do |day, arr|
         attendance = attendances.find_by(day: day)
         arr << (attendance ? row_data(attendance) : [day])
       end
