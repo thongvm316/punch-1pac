@@ -30,7 +30,7 @@ const mutations = {
   },
 
   [CREATE_MULTI_USER](state, payload) {
-    state.users = [...state.users, ...payload.users]
+    state.users = state.users.concat(payload.users)
   },
 
   [FETCH_USERS](state, payload) {
