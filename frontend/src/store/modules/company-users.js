@@ -1,4 +1,6 @@
 import {
+  CREATE_USER,
+  CREATE_MULTI_USER,
   DELETE_USER,
   FETCH_USERS,
   UPDATE_USER,
@@ -23,6 +25,14 @@ const mutations = {
     state.users = state.users.filter(user => user.id !== id)
   },
 
+  [CREATE_USER](state, payload) {
+    state.users.push(payload)
+  },
+
+  [CREATE_MULTI_USER](state, payload) {
+    state.users = [...state.users, ...payload.users]
+  },
+
   [FETCH_USERS](state, payload) {
     state.users = payload.users
   },
@@ -44,6 +54,36 @@ const mutations = {
 }
 
 const actions = {
+  createUser({ commit }, data) {
+    return callApi({ method: 'post', url: '/users', data: { user: data } })
+      .then(response => {
+        commit(CREATE_USER, response.data)
+        return response
+      })
+      .catch(error => {
+        throw error
+      })
+  },
+
+  createMultiUser({ commit }, data) {
+    let formData = new FormData()
+    formData.append('csv_file', data.csv_file)
+
+    return callApi({
+      method: 'post',
+      url: '/users/create_multi',
+      data: formData,
+      headers: { 'Content-Type': 'multipart/form-data' }
+    })
+      .then(response => {
+        commit(CREATE_MULTI_USER, response.data)
+        return response
+      })
+      .catch(error => {
+        throw error
+      })
+  },
+
   fetchUsers({ commit }, params) {
     return callApi({ method: 'get', url: '/users', params: Object.assign({ per_page: 1000 }, params) })
       .then(response => {

@@ -1,5 +1,5 @@
 <template>
-  <setting-layout sidebar-type="company" :title="$t('company.title')" :subtitle="$t('company.users.addMulti.title')">
+  <div>
     <p class="mb-2">{{ $t('company.users.addMulti.note') }}</p>
     <a :href="meta.csv_template_url" class="label label-success mb-2">{{ $t('company.users.addMulti.download') }}</a>
     <p class="mb-2">{{ $t('company.users.addMulti.templateGuide') }}</p>
@@ -16,17 +16,17 @@
         <button type="button" class="btn btn-success btn-submit" @click="upload(params)" :disabled="isDisable">{{ $t('button.common.submit') }}</button>
       </div>
     </form>
-  </setting-layout>
+  </div>
 </template>
 
 <script>
-import axios from 'axios'
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 import 'formdata-polyfill'
 import handleSuccess from '../mixins/handle-success'
-const SettingLayout = () => import('../layouts/Setting.vue')
 
 export default {
+  name: 'add-multi-user-form',
+
   data() {
     return {
       isDisable: false,
@@ -39,26 +39,20 @@ export default {
 
   mixins: [handleSuccess],
 
-  components: {
-    SettingLayout
-  },
-
   computed: {
     ...mapState('initialStates', ['meta'])
   },
 
   methods: {
+    ...mapActions('companyUsers', ['createMultiUser']),
+
     upload(params) {
       this.isDisable = true
 
-      if (!params.csv_file) return
-      let formData = new FormData()
-      formData.append('csv_file', params.csv_file)
-      axios
-        .post('/users/create_multi', formData, { headers: { 'Content-Type': 'multipart/form-data' } })
+      this.createMultiUser(params)
         .then(response => {
           const message = this.$t('messages.user.addMultiSuccess')
-          this.handleSuccess({ message })
+          this.handleSuccess({ message, emitType: 'afterAdded' })
           this.errors = response.data.errors
         })
         .catch(error => {

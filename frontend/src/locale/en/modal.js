@@ -19,7 +19,9 @@ export default {
     editTitle: 'Edit Group'
   },
   user: {
-    editTitle: 'Edit User'
+    editTitle: 'Edit User',
+    addTitle: 'Add User',
+    addMultiTitle: 'Add Multiple User'
   },
   businessDays: {
     addTitle: 'Add business day',

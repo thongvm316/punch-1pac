@@ -23,6 +23,8 @@ export const PUNCH_OUT = 'PUNCH_OUT'
 export const PUNCH_INIT_ATTENDANCE = 'PUNCH_INIT_ATTENDANCE'
 
 // company-users
+export const CREATE_USER = 'CREATE_USER'
+export const CREATE_MULTI_USER = 'CREATE_MULTI_USER'
 export const FETCH_USERS = 'FETCH_USERS'
 export const DELETE_USER = 'DELETE_USER'
 export const UPDATE_USER = 'UPDATE_USER'
