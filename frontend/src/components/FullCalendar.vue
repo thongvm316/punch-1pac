@@ -246,8 +246,8 @@ export default {
   },
 
   watch: {
-    dateContext(value) {
-      this.getCalendarAttendances(value).then(response => this.formatAttendances(response.data))
+    dateContext(newValue) {
+      this.getCalendarAttendances(newValue.format('YYYY-MM-DD')).then(response => this.formatAttendances(response.data))
     }
   }
 }
