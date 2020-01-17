@@ -69,11 +69,7 @@ export default {
         email: '',
         role: ''
       },
-      errors: {},
-      data: {
-        emitType: 'afterUserProfileUpdated',
-        message: ''
-      }
+      errors: {}
     }
   },
 
@@ -110,8 +106,10 @@ export default {
           }
           if (this.objectType === 'company') this[types.UPDATE_USER](response.data)
           if (this.objectType === 'group') this[types.UPDATE_GROUP_USER](response.data)
-          this.data.message = this.$t('messages.user.updateProfileSuccess')
-          this.handleSuccess(this.data)
+          this.handleSuccess({
+            emitType: 'afterUserProfileUpdated',
+            message: this.$t('messages.user.updateProfileSuccess')
+          })
           this.errors = {}
         })
         .catch(error => {

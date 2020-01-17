@@ -46,10 +46,6 @@ export default {
       params: {
         attendance_day: '',
         reason: ''
-      },
-      data: {
-        emitType: 'finishRequest',
-        message: ''
       }
     }
   },
@@ -71,8 +67,10 @@ export default {
       axios
         .post('/requests', Object.assign(this.params, { kind: 'annual_leave' }))
         .then(response => {
-          this.data.message = this.$t('messages.request.createSuccess')
-          this.handleSuccess(this.data)
+          this.handleSuccess({
+            emitType: 'finishRequest',
+            message: this.$t('messages.request.createSuccess')
+          })
         })
         .catch(error => {
           if (error.response && error.response.status === 422) this.errors = error.response.data.errors
@@ -83,8 +81,10 @@ export default {
       axios
         .put(`/requests/${this.request.id}`, Object.assign(this.params, { kind: 'annual_leave' }))
         .then(response => {
-          this.data.message = this.$t('messages.request.updateSuccess')
-          this.handleSuccess(this.data)
+          this.handleSuccess({
+            emitType: 'finishRequest',
+            message: this.$t('messages.request.updateSuccess')
+          })
         })
         .catch(error => {
           if (error.response && error.response.status === 422) this.errors = error.response.data.errors

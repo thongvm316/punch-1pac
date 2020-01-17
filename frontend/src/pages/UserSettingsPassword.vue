@@ -66,8 +66,7 @@ export default {
 
     localUpdatePassword() {
       this.updatePassword(this.updateParams).then(response => {
-        const message = this.$t('messages.user.updatePwdSuccess')
-        this.handleSuccess({ message })
+        this.handleSuccess({ message: this.$t('messages.user.updatePwdSuccess') })
         this.updateParams = {
           current_password: '',
           password: '',

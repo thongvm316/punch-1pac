@@ -47,11 +47,7 @@ export default {
         description: '',
         image: ''
       },
-      errors: {},
-      data: {
-        emitType: 'afterModify',
-        message: ''
-      }
+      errors: {}
     }
   },
 
@@ -63,8 +59,10 @@ export default {
     localAddGroup() {
       this.addGroup(this.params)
         .then(response => {
-          this.data.message = this.$t('messages.group.createSuccess')
-          this.handleSuccess(this.data)
+          this.handleSuccess({
+            emitType: 'afterModify',
+            message: this.$t('messages.group.createSuccess')
+          })
         })
         .catch(error => {
           if (error.response && error.response.status === 422) this.errors = error.response.data.errors
@@ -74,8 +72,10 @@ export default {
     localEditGroup() {
       this.updateGroup({ groupId: this.targetGroup.id, editParams: this.params })
         .then(response => {
-          this.data.message = this.$t('messages.group.updateSuccess')
-          this.handleSuccess(this.data)
+          this.handleSuccess({
+            emitType: 'afterModify',
+            message: this.$t('messages.group.updateSuccess')
+          })
         })
         .catch(error => {
           if (error.response && error.response.status === 422) this.errors = error.response.data.errors

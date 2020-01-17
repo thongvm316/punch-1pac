@@ -79,10 +79,6 @@ export default {
         name: '',
         started_at: '',
         ended_at: ''
-      },
-      data: {
-        emitType: 'afterModify',
-        message: ''
       }
     }
   },
@@ -97,15 +93,19 @@ export default {
         Object.keys(this.params).forEach(key => {
           this.params[key] = ''
         })
-        this.data.message = this.$t('messages.holiday.createSuccess')
-        this.handleSuccess(this.data)
+        this.handleSuccess({
+          emitType: 'afterModify',
+          message: this.$t('messages.holiday.createSuccess')
+        })
       })
     },
 
     localEditHoliday() {
       this.updateHoliday({ holidayID: this.targetHoliday.id, updateParams: this.params }).then(response => {
-        this.data.message = this.$t('messages.holiday.updateSuccess')
-        this.handleSuccess(this.data)
+        this.handleSuccess({
+          emitType: 'afterModify',
+          message: this.$t('messages.holiday.updateSuccess')
+        })
       })
     }
   },
