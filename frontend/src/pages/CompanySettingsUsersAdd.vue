@@ -79,8 +79,7 @@ export default {
       axios
         .post('/users', { user: params }, { headers: { 'Content-Type': 'application/json' } })
         .then(response => {
-          const message = this.$t('messages.user.addSuccess')
-          this.handleSuccess({ message })
+          this.handleSuccess({ message: this.$t('messages.user.addSuccess') })
         })
         .catch(error => {
           if (error.response && error.response.status === 422) this.errors = error.response.data.errors

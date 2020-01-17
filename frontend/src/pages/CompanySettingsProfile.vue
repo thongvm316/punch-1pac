@@ -136,8 +136,7 @@ export default {
     localUpdateCompany() {
       this.isDisable = true
       this.updateCompany(this.params).then(response => {
-        const message = this.$t('messages.company.updateSuccess')
-        this.handleSuccess({ message })
+        this.handleSuccess({ message: this.$t('messages.company.updateSuccess') })
       })
       .catch(() => { this.isDisable = false })
     }

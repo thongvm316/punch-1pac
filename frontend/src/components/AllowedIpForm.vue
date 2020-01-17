@@ -41,10 +41,6 @@ export default {
 
   data() {
     return {
-      data: {
-        emitType: 'afterModify',
-        message: ''
-      },
       params: ''
     }
   },
@@ -54,15 +50,19 @@ export default {
 
     localAddIp() {
       this.createIP({ ip_address: this.params }).then(response => {
-        this.data.message = this.$t('messages.ip.createSuccess')
-        this.handleSuccess(this.data)
+        this.handleSuccess({
+          emitType: 'afterModify',
+          message: this.$t('messages.ip.createSuccess')
+        })
       })
     },
 
     localEditIp() {
       this.updateIP({ id: this.targetIp.id, ip_address: this.params }).then(response => {
-        this.data.message = this.$t('messages.ip.updateSuccess')
-        this.handleSuccess(this.data)
+        this.handleSuccess({
+          emitType: 'afterModify',
+          message: this.$t('messages.ip.updateSuccess')
+        })
       })
     }
   },

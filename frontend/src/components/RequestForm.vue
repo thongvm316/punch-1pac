@@ -82,10 +82,6 @@ export default {
         attended_at: '',
         left_at: '',
         reason: ''
-      },
-      data: {
-        emitType: 'afterModify',
-        message: ''
       }
     }
   },
@@ -105,15 +101,19 @@ export default {
 
     localAddRequest() {
       this.addRequest(this.params).then(response => {
-        this.data.message = this.$t('messages.request.createSuccess')
-        this.handleSuccess(this.data)
+        this.handleSuccess({
+          emitType: 'afterModify',
+          message: this.$t('messages.request.createSuccess')
+        })
       })
     },
 
     localEditRequest() {
       this.updateRequest({ id: this.request.id, params: this.params }).then(response => {
-        this.data.message = this.$t('messages.request.updateSuccess')
-        this.handleSuccess(this.data)
+        this.handleSuccess({
+          emitType: 'afterModify',
+          message: this.$t('messages.request.updateSuccess')
+        })
       })
     }
   },

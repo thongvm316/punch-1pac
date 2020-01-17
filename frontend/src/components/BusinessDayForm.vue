@@ -119,10 +119,6 @@ export default {
         morning_ended_at: '12:00',
         afternoon_started_at: '13:30',
         afternoon_ended_at: '17:30'
-      },
-      data: {
-        emitType: 'afterModify',
-        message: ''
       }
     }
   },
@@ -139,14 +135,19 @@ export default {
     localAddBusinessDay() {
       this.addBusinessDay(this.params).then(response => {
         this.data.message = this.$t('messages.businessDay.createSuccess')
-        this.handleSuccess(this.data)
+        this.handleSuccess({
+          emitType: 'afterModify',
+          message: this.$t('messages.businessDay.createSuccess')
+        })
       })
     },
 
     localEditBusinessDay() {
       this.updateBusinessDay({ businessDayId: this.targetBusinessDay.id, updateParams: this.params }).then(response => {
-        this.data.message = this.$t('messages.businessDay.updateSuccess')
-        this.handleSuccess(this.data)
+        this.handleSuccess({
+          emitType: 'afterModify',
+          message: this.$t('messages.businessDay.updateSuccess')
+        })
       })
     }
   },
