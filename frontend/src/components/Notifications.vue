@@ -35,7 +35,7 @@
         </p>
       </div>
     </div>
-    <modal ref="requestModal" :title="$t('notification.title')" :modal-open.sync="isAddModalOpen" v-if="isEditable(notification)">
+    <modal ref="requestModal" :title="isRequestDayOff ? $t('modal.annualLeave.title') : $t('modal.attendance.editTitle') " :modal-open.sync="isAddModalOpen" v-if="isEditable(notification)">
       <div class="form-group">
         <label class="form-label">{{ $t('label.date') }}</label>
         <flat-pickr
@@ -44,11 +44,11 @@
           :value="notification.activitable.attendance_day"
           disabled />
       </div>
-      <div class="form-group">
+      <div class="form-group" v-if="!isRequestDayOff">
         <label class="form-label">{{ $t('label.attendedAt') }}</label>
         <input type="time" class="form-input time-picker" :value="notification.activitable.attended_at" disabled>
       </div>
-      <div class="form-group">
+      <div class="form-group" v-if="!isRequestDayOff">
         <label class="form-label">{{ $t('label.leftAt') }}</label>
         <input type="time" class="form-input time-picker" :value="notification.activitable.left_at" disabled>
       </div>
@@ -93,7 +93,11 @@ export default {
   computed: {
     ...mapState('notifications', ['unreadNotificationsCount', 'headerNotifications', 'pager']),
 
-    ...mapGetters('notifications', ['displayNotificationsCount'])
+    ...mapGetters('notifications', ['displayNotificationsCount']),
+
+    isRequestDayOff() {
+      return this.notification.activitable.kind === 'annual_leave'
+    }
   },
 
   methods: {

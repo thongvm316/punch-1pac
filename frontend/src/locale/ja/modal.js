@@ -11,6 +11,9 @@ export default {
   annualLeave: {
     title: '休暇申請'
   },
+  attendance: {
+    editTitle: 'Xin chỉnh sửa giờ làm'
+  },
   group: {
     addTitle: 'グループの追加',
     editTitle: 'グループ情報の編集'
