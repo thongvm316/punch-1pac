@@ -37,7 +37,7 @@
 <script>
 import { CLEAR_USER_PASSWORD_ERRORS } from '../store/mutation-types'
 import { mapState, mapActions, mapMutations } from 'vuex'
-import { isEmpty, isEqual } from 'underscore'
+import { isEmpty } from 'underscore'
 import handleSuccess from '../mixins/handle-success'
 import userPasswordValidate from '../validations/user-password-validate'
 const SettingLayout = () => import('../layouts/Setting.vue')
@@ -80,18 +80,7 @@ export default {
   },
 
   computed: {
-    ...mapState('userPassword', ['errors']),
-
-    isDisabled() {
-      let emptyParams = {
-        current_password: '',
-        password: '',
-        password_confirmation: ''
-      }
-
-      if (this.$v.updateParams.$anyError || isEqual(this.updateParams, emptyParams)) return true
-      return false
-    }
+    ...mapState('userPassword', ['errors'])
   },
 
   created() {

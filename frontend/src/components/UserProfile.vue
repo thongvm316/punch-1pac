@@ -57,7 +57,6 @@ import userProfileValidate from '../validations/user-profile-validate'
 import * as types from '../store/mutation-types'
 import axios from 'axios'
 import 'formdata-polyfill'
-import { isEqual } from 'underscore'
 
 export default {
   data() {
@@ -89,12 +88,7 @@ export default {
   },
 
   computed: {
-    ...mapState('initialStates', ['meta']),
-
-    isDisabled() {
-      if (this.$v.params.$anyError || isEqual(this.params, this.targetUser)) return true
-      return false
-    }
+    ...mapState('initialStates', ['meta'])
   },
 
   methods: {

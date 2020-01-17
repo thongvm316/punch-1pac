@@ -1,6 +1,16 @@
 import { required } from 'vuelidate/lib/validators'
 
 export default {
+  computed: {
+    isDisabled() {
+      if (this.$v.params.$error) return true
+      let flag = false
+      flag = this.targetIp ? this.params === this.targetIp.ip_address : this.params === ''
+
+      return flag
+    }
+  },
+
   validations: {
     params: {
       required,

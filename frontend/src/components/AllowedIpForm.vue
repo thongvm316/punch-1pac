@@ -67,21 +67,6 @@ export default {
     }
   },
 
-  computed: {
-    isDisabled() {
-      if (this.$v.params.$error) return true
-
-      let flag = false
-      if (this.targetIp) {
-        flag = this.params === this.targetIp.ip_address
-      } else {
-        flag = this.params === ''
-      }
-
-      return flag
-    }
-  },
-
   created() {
     if (this.targetIp) this.params = this.targetIp.ip_address
   }

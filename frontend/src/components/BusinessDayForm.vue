@@ -97,7 +97,7 @@
 <script>
 import { CLEAR_BUSINESS_DAY_ERRORS } from '../store/mutation-types'
 import { mapState, mapActions, mapMutations } from 'vuex'
-import { isEmpty, isEqual } from 'underscore'
+import { isEmpty } from 'underscore'
 import handleSuccess from '../mixins/handle-success'
 import businessDayValidate from '../validations/business-day-validate'
 const flatPickr = () => import('vue-flatpickr-component')
@@ -154,27 +154,7 @@ export default {
   computed: {
     ...mapState('initialStates', ['meta']),
 
-    ...mapState('companyBusinessDays', ['errors']),
-
-    isDisabled() {
-      if (this.$v.params.$anyError) return true
-
-      let flag = false
-      if (this.targetBusinessDay) {
-        flag = isEqual(this.params, this.targetBusinessDay)
-      } else {
-        const emptyParams = {
-          weekday: '',
-          morning_started_at: '08:00',
-          morning_ended_at: '12:00',
-          afternoon_started_at: '13:30',
-          afternoon_ended_at: '17:30'
-        }
-
-        flag = isEqual(this.params, emptyParams)
-      }
-      return flag
-    }
+    ...mapState('companyBusinessDays', ['errors'])
   },
 
   created() {
