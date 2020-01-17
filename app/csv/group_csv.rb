@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class GroupCSV
+  HEADER = I18n.t(['group.report.email', 'group.report.name', 'group.report.attend_ok', 'group.report.attend_late', 'group.report.leave_ok', 'group.report.leave_early', 'group.report.annual_leave', 'user.report.min_attend_late', 'user.report.min_leave_early', 'group.report.working_hours'])
+
   class << self
     def row_data(attendance)
       [
@@ -11,7 +13,9 @@ class GroupCSV
         attendance.leave_ok.to_i,
         attendance.leave_early.to_i,
         attendance.annual_leave.to_i,
-        "#{attendance.working_hours.to_i / 3600}h#{attendance.working_hours.to_i % 3600 / 60}m"
+        time(attendance.minutes_attend_late),
+        time(attendance.minutes_leave_early),
+        time(attendance.working_hours)
       ]
     end
 
@@ -24,10 +28,14 @@ class GroupCSV
 
       users.each do |user|
         zos.put_next_entry "#{user.name}_#{user.email}.csv"
-        attendances = AttendanceQuery.new(user.attendances).relation.in_period(params[:date]).order(day: :asc)
+        attendances = user.attendances.in_period(params).order(day: :asc)
         content     = document.export_csv(attendances)
         zos.print content
       end
+    end
+
+    def time(data)
+      "#{data.to_i / 3600}h#{data.to_i % 3600 / 60}m"
     end
   end
 end

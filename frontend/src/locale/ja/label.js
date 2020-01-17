@@ -17,6 +17,7 @@ export default {
   phoneNum: '電話番号',
   timezone: 'タイムゾーン',
   postalCode: '郵便番号',
+  reportDay: 'Report Day',
   taxCode: '納税者番号',
   punchMethod: '打刻方法',
   description: '説明',

@@ -14,9 +14,20 @@ class TimeInDay
       Time.zone.local(2000, 1, 1, Time.current.hour, Time.current.min, Time.current.sec)
     end
 
-    def setting_report(str_date)
-      advance = str_date + 1.month
-      (str_date..advance)
+    def range_date(params)
+      if params[:date]
+        date      = Date.parse(params[:date])
+        from_date = date.beginning_of_month
+        to_date   = date.end_of_month
+      else
+        from_date = Date.parse(params[:from_date])
+        to_date   = Date.parse(params[:to_date])
+      end
+
+      (from_date..to_date)
+    rescue TypeError, ArgumentError
+      date = Date.current
+      date.beginning_of_month..date.end_of_month
     end
   end
 end

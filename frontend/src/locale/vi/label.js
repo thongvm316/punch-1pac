@@ -18,6 +18,7 @@ export default {
   phoneNum: 'Điện thoại',
   postalCode: 'Mã vùng',
   taxCode: 'Mã số thuế',
+  reportDay: 'Report Day',
   punchMethod: 'Phương thức chấm công',
   image: 'Ảnh đại diện',
   kind: 'Loại yêu cầu',

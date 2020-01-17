@@ -61,7 +61,7 @@ class Api::V1::GroupsController < Api::V1::BaseController
   def report
     authorize! @group
 
-    results  = UserPresenter.report_attendances_users_in_month(@group, params)
+    results  = Attendance.report_attendances_users_in_month(@group, params)
     document = DocumentService.new('Group', params)
     respond_to do |format|
       format.json do
@@ -69,17 +69,16 @@ class Api::V1::GroupsController < Api::V1::BaseController
                 root: 'results',
                 each_serializer: GroupReportSerializer,
                 meta: {
-                  company_total_working_hours_on_month: current_company.total_working_hours_on_month(params[:date], params[:date_type]),
-                  company_total_working_days_in_month:  current_company.total_working_days_in_month(params[:date], params[:date_type]),
-                  company_monthly_report:               current_company.date_of_monthly_report&.min_value || 1
+                  company_total_working_hours_on_month: current_company.total_working_hours_on_month(params),
+                  company_total_working_days_in_month:  current_company.total_working_days_in_month(params)
                 },
                 params: params,
                 adapter: :json,
                 status: :ok
       end
 
-      format.csv { send_data(document.export_csv(results),      document.option('report.csv', 'CSV_TYPE')) }
-      format.zip { send_data(document.export_zip(@group.users), document.option('report.zip', 'ZIP_TYPE')) }
+      format.csv { send_data(document.export_csv(results),      document.option('report.csv', 'text/csv')) }
+      format.zip { send_data(document.export_zip(@group.users), document.option('report.zip', 'text/zip')) }
     end
   end
 
@@ -88,22 +87,22 @@ class Api::V1::GroupsController < Api::V1::BaseController
     user = @group.users.find(params[:user_id])
 
     if user
-      attendances = UserPresenter.new(user, params).single_personal_attendances
-      report      = UserPresenter.new(user, params).single_report_attendances
+      attendances = user.attendances.in_period(params).order(day: :asc)
+      chart       = user.attendances.chart_in_month(params).first
       document    = DocumentService.new('User', params)
       holidays    = current_company.holidays.in_month(params[:date])
 
+      report_json      = ActiveModelSerializers::SerializableResource.new(chart, serializer: AttendanceChartSerializer).as_json
       attendances_json = ActiveModelSerializers::SerializableResource.new(attendances, each_serializer: AttendanceSerializer).as_json
       holidays_json    = ActiveModelSerializers::SerializableResource.new(holidays, each_serializer: HolidaySerializer).as_json
       meta_json = {
-        company_total_working_hours_on_month: current_company.total_working_hours_on_month(params[:date], params[:date_type]),
-        company_total_working_days_in_month:  current_company.total_working_days_in_month(params[:date], params[:date_type]),
-        company_monthly_report:               current_company.date_of_monthly_report&.min_value || 1
+        company_total_working_hours_on_month: current_company.total_working_hours_on_month(params),
+        company_total_working_days_in_month:  current_company.total_working_days_in_month(params)
       }
 
       respond_to do |format|
-        format.json { render json: { attendances: attendances_json, holidays: holidays_json, report: report, meta: meta_json }, status: :ok }
-        format.csv { send_data(document.export_csv(attendances), document.option("#{params[:user_id]}.csv", 'CSV_TYPE')) }
+        format.json { render json: { attendances: attendances_json, holidays: holidays_json, report: report_json, meta: meta_json }, status: :ok }
+        format.csv { send_data(document.export_csv(attendances), document.option("#{params[:user_id]}.csv", 'text/csv')) }
       end
     end
   end

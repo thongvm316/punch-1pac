@@ -37,7 +37,7 @@ RSpec.describe Attendance, type: :model do
       end
 
       it "returns attendances with status attend_ok and day in range #{Date.current} - #{2.days.from_now}" do
-        expect(AttendanceQuery.new(Attendance.all, params).search_by).to eq([attendance_ok])
+        expect(Attendance.all.search_by(params)).to eq([attendance_ok])
       end
     end
   end

@@ -40,7 +40,18 @@ class Holiday < ApplicationRecord
   def self.in_month(str_time)
     time = str_time ? Date.parse(str_time) : Date.current
     raise ArgumentError if time.blank?
-    where("date_trunc('month', started_at) = ? OR date_trunc('month', ended_at) = ?", time.beginning_of_month, time.beginning_of_month)
+    clause_started = where(started_at: time.beginning_of_month..time.end_of_month)
+    clause_ended = where(ended_at: time.beginning_of_month..time.end_of_month)
+    clause_started.or(clause_ended)
+  rescue TypeError, ArgumentError
+    none
+  end
+
+  def self.range_time(from_date, to_date)
+    raise ArgumentError if from_date.blank? || to_date.blank?
+    clause_started = where(started_at: from_date..to_date)
+    clause_ended   = where(ended_at: from_date..to_date)
+    clause_started.or(clause_ended)
   rescue TypeError, ArgumentError
     none
   end

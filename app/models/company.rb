@@ -20,6 +20,7 @@
 #  updated_at        :datetime         not null
 #  app_blocked_by_ip :boolean          default(FALSE), not null
 #  punch_method      :integer          default("default"), not null
+#  monthly_report    :integer          default(1), not null
 #
 # Indexes
 #
@@ -27,8 +28,6 @@
 #
 
 class Company < ApplicationRecord
-  include Settingable
-
   INDUSTRIES = %w[hr_agency cafe_shop restaurant software_company startup interior_design].freeze
   TIMEZONES = ActiveSupport::TimeZone.all.map { |tz| tz.tzinfo.name }.uniq
 
@@ -56,8 +55,8 @@ class Company < ApplicationRecord
     holidays.in_holiday(target_date).exists?
   end
 
-  def total_working_hours_on_month(date, date_type = nil)
-    weekdays = weekdays_in_month(date, date_type)
+  def total_working_hours_on_month(params = {})
+    weekdays = weekdays_in_month(params)
 
     business_days.reduce(0) do |total, business_day|
       working_hours_of_day = (business_day.morning_ended_at.to_i - business_day.morning_started_at.to_i) + (business_day.afternoon_ended_at.to_i - business_day.afternoon_started_at.to_i)
@@ -65,8 +64,8 @@ class Company < ApplicationRecord
     end
   end
 
-  def total_working_days_in_month(date, date_type = nil)
-    weekdays = weekdays_in_month(date, date_type)
+  def total_working_days_in_month(params = {})
+    weekdays = weekdays_in_month(params)
     business_days.reduce(0) { |total, business_day| total + weekdays[business_day.weekday] }
   end
 
@@ -76,17 +75,18 @@ class Company < ApplicationRecord
 
   private
 
-  def weekdays_in_month(date, date_type)
+  def weekdays_in_month(params)
     wdays = weekdays
-    now = date ? Time.zone.parse(date) : Time.current
-    return wdays unless now
-    hdays = holidays.in_month(now.strftime('%Y-%m-%d'))
-    adate = date_range(now, date_type)
 
-    (adate[:start_at].to_i..adate[:end_at].to_i).step(1.day) do |t|
-      current_day = Time.zone.at(t).to_date
-      next if hdays.find { |holiday| current_day.between?(holiday.started_at, holiday.ended_at) }
-      weekday = current_day.strftime('%A').downcase
+    from_date = params[:from_date] ? Date.parse(params[:from_date]) : Date.current.beginning_of_month
+    to_date   = params[:to_date]   ? Date.parse(params[:to_date])   : Date.current.end_of_month
+
+    hdays = holidays.range_time(from_date, to_date)
+
+    (from_date..to_date).to_a.each do |day|
+      next if hdays.find { |holiday| day.between?(holiday.started_at, holiday.ended_at) }
+      weekday = day.strftime('%A').downcase
+
       wdays[weekday] += 1
     end
 
