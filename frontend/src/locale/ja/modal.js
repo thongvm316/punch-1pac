@@ -1,6 +1,6 @@
 export default {
   request: {
-    addTitle: '修正を依頼する',
+    addTitle: '修正の依頼',
     editTitle: '申請の編集',
     title: '何を申請しますか？',
     kind: {
@@ -12,7 +12,7 @@ export default {
     title: '休暇申請'
   },
   attendance: {
-    editTitle: 'Xin chỉnh sửa giờ làm'
+    editTitle: '労働時間の修正'
   },
   group: {
     addTitle: 'グループの追加',
