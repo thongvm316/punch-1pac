@@ -11,6 +11,9 @@ export default {
   annualLeave: {
     title: 'Request a leave'
   },
+  editAttendance: {
+    title: 'Edit attendance'
+  },
   group: {
     addTitle: 'Add group',
     editTitle: 'Edit Group'

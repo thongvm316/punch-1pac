@@ -11,6 +11,9 @@ export default {
   annualLeave: {
     title: 'Xin nghỉ'
   },
+  editAttendance: {
+    title: 'Xin chỉnh sửa giờ làm'
+  },
   group: {
     addTitle: 'Tạo nhóm',
     editTitle: 'Sửa thông tin nhóm'

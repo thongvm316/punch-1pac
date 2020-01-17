@@ -1,6 +1,4 @@
 export default {
-  dayOff: 'Xin nghỉ',
-  editAttendance: 'Xin chỉnh sửa giờ đi làm',
   attendance: {
     punch_in: '<span class="text-bold-600">{name}</span> đã đến văn phòng',
     punch_out: '<span class="text-bold-600">{name}</span> đã rời khỏi văn phòng'

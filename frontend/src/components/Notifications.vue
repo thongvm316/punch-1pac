@@ -35,7 +35,7 @@
         </p>
       </div>
     </div>
-    <modal ref="requestModal" :title="isRequestDayOff ? $t('notification.dayOff') : $t('notification.editAttendance') " :modal-open.sync="isAddModalOpen" v-if="isEditable(notification)">
+    <modal ref="requestModal" :title="isRequestDayOff ? $t('modal.annualLeave.title') : $t('modal.editAttendance.title') " :modal-open.sync="isAddModalOpen" v-if="isEditable(notification)">
       <div class="form-group">
         <label class="form-label">{{ $t('label.date') }}</label>
         <flat-pickr

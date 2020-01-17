@@ -1,6 +1,4 @@
 export default {
-  dayOff: 'Day Off',
-  editAttendance: 'Edit Attendance',
   attendance: {
     punch_in: '<span class="text-bold-600">{name}</span>さんは出勤しました。',
     punch_out: '<span class="text-bold-600">{name}</span>さんは退勤しました。'
