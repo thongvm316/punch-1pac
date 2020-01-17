@@ -63,7 +63,7 @@ namespace :deploy do
       # execute "mkdir -p #{shared_path}/config/puma"
       # execute "mkdir -p #{shared_path}/frontend/node_modules"
       # upload!(".env.#{fetch(:stage)}", "#{shared_path}/.env.#{fetch(:stage)}")
-      # upload!('frontend/package.json', "#{shared_path}/frontend/package.json")
+      upload!('frontend/package.json', "#{shared_path}/frontend/package.json")
       # upload!("config/puma/#{fetch(:stage)}.rb", "#{shared_path}/config/puma/#{fetch(:stage)}.rb")
       # upload!('config/database.yml', "#{shared_path}/config/database.yml")
       # upload!('config/secrets.yml', "#{shared_path}/config/secrets.yml")
