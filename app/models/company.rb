@@ -55,7 +55,7 @@ class Company < ApplicationRecord
     holidays.in_holiday(target_date).exists?
   end
 
-  def total_working_hours_on_month(params)
+  def total_working_hours_on_month(params = {})
     weekdays = weekdays_in_month(params)
 
     business_days.reduce(0) do |total, business_day|
@@ -64,7 +64,7 @@ class Company < ApplicationRecord
     end
   end
 
-  def total_working_days_in_month(params)
+  def total_working_days_in_month(params = {})
     weekdays = weekdays_in_month(params)
     business_days.reduce(0) { |total, business_day| total + weekdays[business_day.weekday] }
   end
@@ -78,8 +78,8 @@ class Company < ApplicationRecord
   def weekdays_in_month(params)
     wdays = weekdays
 
-    from_date = Date.parse(params[:from_date])
-    to_date   = Date.parse(params[:to_date])
+    from_date = params[:from_date] ? Date.parse(params[:from_date]) : Date.current.beginning_of_month
+    to_date   = params[:to_date]   ? Date.parse(params[:to_date])   : Date.current.end_of_month
 
     hdays = holidays.range_time(from_date, to_date)
 
