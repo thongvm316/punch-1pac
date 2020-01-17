@@ -69,9 +69,8 @@ class Api::V1::GroupsController < Api::V1::BaseController
                 root: 'results',
                 each_serializer: GroupReportSerializer,
                 meta: {
-                  company_total_working_hours_on_month: current_company.total_working_hours_on_month(params[:date], params[:date_type]),
-                  company_total_working_days_in_month:  current_company.total_working_days_in_month(params[:date], params[:date_type]),
-                  monthly_report:               current_company.monthly_report
+                  company_total_working_hours_on_month: current_company.total_working_hours_on_month(params),
+                  company_total_working_days_in_month:  current_company.total_working_days_in_month(params)
                 },
                 params: params,
                 adapter: :json,
@@ -97,9 +96,8 @@ class Api::V1::GroupsController < Api::V1::BaseController
       attendances_json = ActiveModelSerializers::SerializableResource.new(attendances, each_serializer: AttendanceSerializer).as_json
       holidays_json    = ActiveModelSerializers::SerializableResource.new(holidays, each_serializer: HolidaySerializer).as_json
       meta_json = {
-        company_total_working_hours_on_month: current_company.total_working_hours_on_month(params[:date], params[:date_type]),
-        company_total_working_days_in_month:  current_company.total_working_days_in_month(params[:date], params[:date_type]),
-        monthly_report:               current_company.monthly_report
+        company_total_working_hours_on_month: current_company.total_working_hours_on_month(params),
+        company_total_working_days_in_month:  current_company.total_working_days_in_month(params)
       }
 
       respond_to do |format|
