@@ -1,9 +1,6 @@
 # frozen_string_literal: true
 
 class DocumentService
-  CSV_TYPE = 'text/csv; charset=utf-8; header=present'
-  ZIP_TYPE = 'text/zip; charset=utf-8; header=present'
-
   def initialize(model, params = {})
     @model  = "#{model}CSV".constantize
     @params = params
@@ -24,7 +21,7 @@ class DocumentService
   end
 
   def option(filename, type)
-    { type: DocumentService.const_get(type), filename: filename, disposition: 'attachment' }
+    { type: "#{type}; charset=utf-8; header=present", filename: filename, disposition: 'attachment' }
   end
 
   private

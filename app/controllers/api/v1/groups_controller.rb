@@ -78,8 +78,8 @@ class Api::V1::GroupsController < Api::V1::BaseController
                 status: :ok
       end
 
-      format.csv { send_data(document.export_csv(results),      document.option('report.csv', 'CSV_TYPE')) }
-      format.zip { send_data(document.export_zip(@group.users), document.option('report.zip', 'ZIP_TYPE')) }
+      format.csv { send_data(document.export_csv(results),      document.option('report.csv', 'text/csv')) }
+      format.zip { send_data(document.export_zip(@group.users), document.option('report.zip', 'text/zip')) }
     end
   end
 
@@ -104,7 +104,7 @@ class Api::V1::GroupsController < Api::V1::BaseController
 
       respond_to do |format|
         format.json { render json: { attendances: attendances_json, holidays: holidays_json, report: report_json, meta: meta_json }, status: :ok }
-        format.csv { send_data(document.export_csv(attendances), document.option("#{params[:user_id]}.csv", 'CSV_TYPE')) }
+        format.csv { send_data(document.export_csv(attendances), document.option("#{params[:user_id]}.csv", 'text/csv')) }
       end
     end
   end

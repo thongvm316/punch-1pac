@@ -28,10 +28,10 @@ class UserCSV
       working_hours = data.sum(:working_hours)
       attend_late   = data.sum(:minutes_attend_late)
       leave_early   = data.sum(:minutes_leave_early)
-  
+
       ['Total', '', '', '', '', time(attend_late), time(leave_early), time(working_hours)]
     end
-  
+
     def time(data)
       "#{data.to_i / 3600}h#{data.to_i % 3600 / 60}m"
     end
