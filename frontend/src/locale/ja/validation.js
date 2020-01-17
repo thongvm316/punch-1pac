@@ -1,8 +1,8 @@
 export default {
-  required: '{name} can\'t be blank',
-  invalid: '{name} is invalid',
-  minLength: '{name} is too short (minimum is {length} characters)',
-  maxLength: '{name} is too long (maximum is {length} characters)',
-  sameAs: '{name} must be identical',
-  between: '{name} must between {min} and {max}'
+  required: '{name}は空白にできません。',
+  invalid: '{name}は無効です。',
+  minLength: '{name}が短すぎます。（最小は{length}文字です）',
+  maxLength: '{name}が長すぎます。（最大{length}文字です）',
+  sameAs: '{name} は同様である必要です。',
+  between: '{name}は{min}〜{max}の間である必要です。'
 }
