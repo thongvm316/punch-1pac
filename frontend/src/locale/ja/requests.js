@@ -1,6 +1,6 @@
 export default {
   title: '申請一覧',
-  groupTitle: '{name}グループの申請',
+  groupTitle: 'グループ{name}の申請',
   errors: {
     bothAttendedLeft: '出勤時間と退勤時間{msg}'
   },
