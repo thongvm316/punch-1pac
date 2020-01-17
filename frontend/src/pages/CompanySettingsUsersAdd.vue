@@ -45,7 +45,6 @@
 <script>
 import axios from 'axios'
 import { mapState } from 'vuex'
-import { isEqual } from 'underscore'
 import handleSuccess from '../mixins/handle-success'
 import userAddValidate from '../validations/user-add-validate'
 const SettingLayout = () => import('../layouts/Setting.vue')
@@ -67,20 +66,7 @@ export default {
   mixins: [handleSuccess, userAddValidate],
 
   computed: {
-    ...mapState('initialStates', ['meta']),
-
-    isDisabled() {
-      if (this.$v.params.$anyError) return true
-      let emtyParams = {
-        name: '',
-        email: '',
-        role: 'member',
-        group_id: ''
-      }
-      if (isEqual(this.params, emtyParams)) return true
-
-      return false
-    }
+    ...mapState('initialStates', ['meta'])
   },
 
   components: {

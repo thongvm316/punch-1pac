@@ -34,7 +34,6 @@
 import flatpickrLocale from '../mixins/flatpickr-locale'
 import handleSuccess from '../mixins/handle-success'
 import axios from 'axios'
-import { isEqual } from 'underscore'
 import annualLeaveValidate from '../validations/annual-leave-validate'
 const flatPickr = () => import('vue-flatpickr-component')
 
@@ -67,24 +66,8 @@ export default {
     flatPickr
   },
 
-  computed: {
-    isDisable() {
-      if (this.$v.params.$anyError) return true
-
-      let flag = false
-      if (this.request) {
-        flag = isEqual(this.params, this.request)
-      } else {
-        flag = isEqual(this.params, { attendance_day: '', reason: '' })
-      }
-
-      return flag
-    }
-  },
-
   methods: {
     create() {
-      this.isDisable = true
       axios
         .post('/requests', Object.assign(this.params, { kind: 'annual_leave' }))
         .then(response => {
@@ -92,13 +75,11 @@ export default {
           this.handleSuccess(this.data)
         })
         .catch(error => {
-          this.isDisable = false
           if (error.response && error.response.status === 422) this.errors = error.response.data.errors
         })
     },
 
     update() {
-      this.isDisable = true
       axios
         .put(`/requests/${this.request.id}`, Object.assign(this.params, { kind: 'annual_leave' }))
         .then(response => {
@@ -106,7 +87,6 @@ export default {
           this.handleSuccess(this.data)
         })
         .catch(error => {
-          this.isDisable = false
           if (error.response && error.response.status === 422) this.errors = error.response.data.errors
         })
     }

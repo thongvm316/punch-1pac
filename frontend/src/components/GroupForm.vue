@@ -28,7 +28,6 @@
 
 <script>
 import { mapActions } from 'vuex'
-import { isEqual } from 'underscore'
 import handleSuccess from '../mixins/handle-success'
 import groupFormValidate from '../validations/group-form-validate'
 
@@ -53,21 +52,6 @@ export default {
         emitType: 'afterModify',
         message: ''
       }
-    }
-  },
-
-  computed: {
-    isDisabled() {
-      if (this.$v.params.$anyError) return true
-
-      let flag = false
-      if (this.targetGroup) {
-        flag = isEqual(this.params, this.targetGroup)
-      } else {
-        flag = this.params.name === ''
-      }
-
-      return flag
     }
   },
 

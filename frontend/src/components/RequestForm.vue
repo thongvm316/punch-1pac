@@ -61,7 +61,7 @@ import handleSuccess from '../mixins/handle-success'
 import requestFormValidate from '../validations/request-form-valiate'
 import { CLEAR_REQUEST_ERRORS } from '../store/mutation-types'
 import { mapState, mapActions, mapMutations } from 'vuex'
-import { isEmpty, isEqual } from 'underscore'
+import { isEmpty } from 'underscore'
 const flatPickr = () => import('vue-flatpickr-component')
 
 export default {
@@ -95,27 +95,7 @@ export default {
   },
 
   computed: {
-    ...mapState('requests', ['errors']),
-
-    isDisabled() {
-      if (this.$v.params.$anyError) return true
-
-      let flag = false
-      if (this.request) {
-        flag = this.day === this.request.attendance_day && isEqual(this.params, this.request)
-      } else if (this.attendance) {
-        let emtyParams = {
-          attendance_day: this.attendance.day,
-          attended_at: '',
-          left_at: '',
-          reason: ''
-        }
-
-        flag = (this.day === '' || this.day === this.attendance.day) && isEqual(this.params, emtyParams)
-      }
-
-      return flag
-    }
+    ...mapState('requests', ['errors'])
   },
 
   methods: {

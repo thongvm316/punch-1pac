@@ -57,7 +57,7 @@ import handleSuccess from '../mixins/handle-success'
 import holidayFormValidate from '../validations/holiday-form-validate'
 import { CLEAR_HOLIDAY_ERRORS } from '../store/mutation-types'
 import { mapState, mapActions, mapMutations } from 'vuex'
-import { isEqual, isEmpty } from 'underscore'
+import { isEmpty } from 'underscore'
 const flatPickr = () => import('vue-flatpickr-component')
 
 export default {
@@ -111,26 +111,7 @@ export default {
   },
 
   computed: {
-    ...mapState('companyHolidays', ['errors']),
-
-    isDisabled() {
-      if (this.$v.params.$anyError) return true
-
-      let flag = false
-      if (this.targetHoliday) {
-        flag = isEqual(this.params, this.targetHoliday)
-      } else {
-        let emtyParams = {
-          name: '',
-          started_at: '',
-          ended_at: ''
-        }
-
-        flag = isEqual(this.params, emtyParams)
-      }
-
-      return flag
-    }
+    ...mapState('companyHolidays', ['errors'])
   },
 
   created() {
