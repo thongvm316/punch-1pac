@@ -78,12 +78,10 @@ class Company < ApplicationRecord
   def weekdays_in_month(params)
     wdays = weekdays
 
-    from_date = params[:from_date] ? Date.parse(params[:from_date]) : Date.current.beginning_of_month
-    to_date   = params[:to_date]   ? Date.parse(params[:to_date])   : Date.current.end_of_month
+    date  = TimeInDay.range_date(params)
+    hdays = holidays.range_date(date.first, date.last)
 
-    hdays = holidays.range_time(from_date, to_date)
-
-    (from_date..to_date).to_a.each do |day|
+    (date.first..date.second).to_a.each do |day|
       next if hdays.find { |holiday| day.between?(holiday.started_at, holiday.ended_at) }
       weekday = day.strftime('%A').downcase
 

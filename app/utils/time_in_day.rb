@@ -14,20 +14,19 @@ class TimeInDay
       Time.zone.local(2000, 1, 1, Time.current.hour, Time.current.min, Time.current.sec)
     end
 
-    def range_date(params)
+    def range_date(params = {})
+      date      = Date.current
+      from_date = date.beginning_of_month
+      to_date   = date.end_of_month
+  
       if params[:date]
-        date      = Date.parse(params[:date])
-        from_date = date.beginning_of_month
-        to_date   = date.end_of_month
-      else
+        from_date = Date.parse(params[:date]).beginning_of_month
+        to_date   = Date.parse(params[:date]).end_of_month
+      elsif params[:from_date]
         from_date = Date.parse(params[:from_date])
         to_date   = Date.parse(params[:to_date])
       end
-
-      (from_date..to_date)
-    rescue TypeError, ArgumentError
-      date = Date.current
-      date.beginning_of_month..date.end_of_month
+      [from_date, to_date]
     end
   end
 end
