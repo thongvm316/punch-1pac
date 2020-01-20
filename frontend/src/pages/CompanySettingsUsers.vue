@@ -1,5 +1,6 @@
 <template>
-  <setting-layout sidebar-type="company" :title="$t('company.title')" :subtitle="$t('company.users.title')">
+  <div>
+    <h2>{{ $t('company.users.title') }}</h2>
     <div class="toolbar mt-5 clearfix">
       <input type="search" class="form-input" :placeholder="$t('placeholder.filterByUser')" v-model="searchText">
       <button type="button" class="btn btn-success float-right" @click="toggleAddModal">
@@ -64,14 +65,13 @@
     <modal :title="$t('modal.user.addMultiTitle')" :modal-open.sync="isAddMultiUserModalOpen">
       <users-add-form @afterAdded="isAddMultiUserModalOpen = false"/>
     </modal>
-  </setting-layout>
+  </div>
 </template>
 
 <script>
 import confirmDialog from '../mixins/confirm-dialog'
 import modal from '../mixins/modal'
 import { mapGetters, mapActions } from 'vuex'
-const SettingLayout = () => import('../layouts/Setting')
 const UserProfile = () => import('../components/UserProfile')
 const UserAddForm = () => import('../components/UserAddForm')
 const UsersAddForm = () => import('../components/UsersAddForm')
@@ -88,7 +88,6 @@ export default {
   mixins: [confirmDialog, modal],
 
   components: {
-    SettingLayout,
     UserProfile,
     UserAddForm,
     UsersAddForm

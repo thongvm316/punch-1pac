@@ -1,5 +1,6 @@
 <template>
-  <setting-layout sidebar-type="company" :title="$t('company.title')" :subtitle="$t('company.allowedIPs.title')">
+  <div>
+    <h2>{{ $t('company.allowedIPs.title') }}</h2>
     <div class="toolbar clearfix mt-5">
       <button ref="btnAddIpAddress" type="button" class="btn btn-success float-right" @click="toggleAddModal()">
         {{ $t('button.common.add') }}
@@ -45,14 +46,13 @@
       >
       <p>{{ $t('company.allowedIPs.confirmDialog.msg', { name: targetIp.ip_address }) }}</p>
     </confirm-dialog>
-  </setting-layout>
+  </div>
 </template>
 
 <script>
 import { mapState, mapActions } from 'vuex'
 import modal from '../mixins/modal'
 const AllowedIpForm = () => import('../components/AllowedIpForm.vue')
-const SettingLayout = () => import('../layouts/Setting.vue')
 const ConfirmDialog = () => import('../components/ConfirmDialog')
 
 export default {
@@ -67,7 +67,6 @@ export default {
   },
 
   components: {
-    SettingLayout,
     AllowedIpForm,
     ConfirmDialog
   },

@@ -1,5 +1,6 @@
 <template>
-  <setting-layout sidebar-type="company" :title="$t('company.title')" :subtitle="$t('company.businessDays.title')">
+  <div>
+    <h2>{{ $t('company.businessDays.title') }}</h2>
     <div class="toolbar text-right mt-5">
       <button ref="btnAddBusinessDay" type="button" class="btn btn-success" @click="toggleAddModal()">
         {{ $t('button.common.add') }}
@@ -51,13 +52,12 @@
       >
       <p>{{ $t('company.businessDays.confirmDialog.msg') }}</p>
     </confirm-dialog>
-  </setting-layout>
+  </div>
 </template>
 
 <script>
 import modal from '../mixins/modal'
 import { mapState, mapActions } from 'vuex'
-const SettingLayout = () => import('../layouts/Setting.vue')
 const BusinessDayForm = () => import('../components/BusinessDayForm.vue')
 const ConfirmDialog = () => import('../components/ConfirmDialog')
 
@@ -72,7 +72,6 @@ export default {
   },
 
   components: {
-    SettingLayout,
     BusinessDayForm,
     ConfirmDialog
   },

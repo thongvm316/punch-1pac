@@ -24,12 +24,7 @@ const router = new Router({
     { path: '/groups/:id', redirect: '/groups/:id/users' },
     { path: '/groups', name: 'groups', component: lazyLoadRoute('Groups'), meta: { title: `Groups - ${appName}` } },
     { path: '/settings', name: 'user-settings', component: lazyLoadRoute('UserSettings'), meta: { title: `User Settings - ${appName}` } },
-    { path: '/company/settings/profile', name: 'company-settings-profile', component: lazyLoadRoute('CompanySettingsProfile'), meta: { title: `Company Settings Profile - ${appName}` } },
-    { path: '/company/settings/users', name: 'company-settings-users', component: lazyLoadRoute('CompanySettingsUsers'), meta: { title: `Company Settings Users - ${appName}` } },
-    { path: '/company/settings/business-days', name: 'company-settings-business-days', component: lazyLoadRoute('CompanySettingsBusinessDays'), meta: { title: `Company Settings Business Days - ${appName}` } },
-    { path: '/company/settings/holidays', name: 'company-settings-holidays', component: lazyLoadRoute('CompanySettingsHolidays'), meta: { title: `Company Settings Holidays - ${appName}` } },
-    { path: '/company/settings/allowed-ips', name: 'company-settings-allowed-ips', component: lazyLoadRoute('CompanySettingsAllowedIPs'), meta: { title: `Company Settings Allowed IPs - ${appName}` } },
-    { path: '/company/settings', redirect: '/company/settings/profile' },
+    { path: '/company/settings', component: lazyLoadRoute('CompanySettings'), meta: { title: `Company Settings - ${appName}` } },
     { path: '/404', name: 'error-404', component: lazyLoadRoute('Error404'), meta: { title: '404 Page not found' } },
     { path: '*', redirect: '/404' }
   ]

@@ -1,5 +1,6 @@
 <template>
-  <setting-layout sidebar-type="company" :title="$t('company.title')" :subtitle="$t('company.holidays.title')">
+  <div>
+    <h2>{{ $t('company.holidays.title') }}</h2>
     <div class="input-group mt-5">
       <select class="form-select" v-model="country">
         <option value="">{{ $t('placeholder.chooseCountry') }}</option>
@@ -67,7 +68,7 @@
       >
       <p>{{ $t('company.holidays.confirmDialog.msg', { name: holiday.name }) }}</p>
     </confirm-dialog>
-  </setting-layout>
+  </div>
 </template>
 
 <script>
@@ -75,7 +76,6 @@ import { SET_FLASH_MESSAGE } from '../store/mutation-types'
 import { mapState, mapGetters, mapActions, mapMutations } from 'vuex'
 import modal from '../mixins/modal'
 const ConfirmDialog = () => import('../components/ConfirmDialog')
-const SettingLayout = () => import('../layouts/Setting')
 const HolidayForm = () => import('../components/HolidayForm.vue')
 const Datepicker = () => import('vuejs-datepicker')
 
@@ -96,7 +96,6 @@ export default {
   },
 
   components: {
-    SettingLayout,
     HolidayForm,
     Datepicker,
     ConfirmDialog
