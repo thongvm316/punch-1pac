@@ -2,7 +2,7 @@
   <ul class="tab mt-4">
     <router-link tag="li"
       class="tab-item"
-      :to="`/groups/${groupId}/users`">
+      :to="`/groups/${groupId}/users`" exact>
       <a href="#">{{ $t('group.users') }}</a>
     </router-link>
     <router-link tag="li"
@@ -20,7 +20,7 @@
     <router-link tag="li"
       class="tab-item"
       v-if="hasUser"
-      :to="`/groups/${groupId}/report`" exact>
+      :to="`/groups/${groupId}/report`">
       <a href="#">{{ $t('group.report') }}</a>
     </router-link>
   </ul>
