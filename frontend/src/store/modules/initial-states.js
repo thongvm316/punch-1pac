@@ -1,6 +1,7 @@
 import {
   INITIAL_STATES_SET_USER,
   INITIAL_STATES_UPDATE_USER,
+  INITIAL_STATES_UPDATE_USER_LANGUAGE,
   INITIAL_STATES_SET_COMPANY,
   INITIAL_STATES_UPDATE_COMPANY,
   INITIAL_STATES_SET_USER_ERRORS,
@@ -28,6 +29,10 @@ const mutations = {
 
   [INITIAL_STATES_UPDATE_USER](state, payload) {
     state.currentUser = payload
+  },
+
+  [INITIAL_STATES_UPDATE_USER_LANGUAGE](state, payload) {
+    state.currentUser.language = payload
   },
 
   [INITIAL_STATES_SET_COMPANY](state, payload) {

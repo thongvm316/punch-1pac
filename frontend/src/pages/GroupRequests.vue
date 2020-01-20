@@ -4,7 +4,7 @@
 
     <div class="toolbar mt-5">
       <flat-pickr
-        :config="{mode: 'range', locale: flatpickrLocaleMapper[currentUser.language]}"
+        :config="{mode: 'range', locale: flatpickrLocaleMapper[pickrLocale]}"
         class="form-input daterange-picker"
         v-model="dateRange"/>
       <select class="form-select" v-model="params.status">

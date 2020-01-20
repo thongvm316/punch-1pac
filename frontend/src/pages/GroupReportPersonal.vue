@@ -4,7 +4,7 @@
 
     <div class="toolbar z-index-10 mt-5 clearfix">
       <flat-pickr
-        :config="{mode: 'range', locale: flatpickrLocaleMapper[currentUser.language]}"
+        :config="{mode: 'range', locale: flatpickrLocaleMapper[pickrLocale]}"
         class="form-input daterange-picker"
         @on-close="onCloseFlatpickr"
         :value="getFormattedInitDateRange()" />

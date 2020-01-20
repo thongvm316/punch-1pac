@@ -4,11 +4,11 @@
 
     <div class="toolbar mt-5 clearfix">
       <div class="float-left">
-         <flat-pickr
-        :config="{mode: 'range', locale: flatpickrLocaleMapper[currentUser.language]}"
-        class="form-input daterange-picker"
-        @on-close="onCloseFlatpickr"
-        :value="getFormattedInitDateRange()"/>
+        <flat-pickr
+          :config="{mode: 'range', locale: flatpickrLocaleMapper[pickrLocale]}"
+          class="form-input daterange-picker"
+          @on-close="onCloseFlatpickr"
+          :value="getFormattedInitDateRange()"/>
         <input type="search" class="form-input filter-input" :placeholder="$t('placeholder.filterByUser')" v-model="searchText">
       </div>
       <div v-if="isValidTime" class="float-right">

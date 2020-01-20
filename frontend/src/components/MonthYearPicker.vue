@@ -10,7 +10,7 @@
       </div>
       <datepicker
         :inline="true"
-        :language="currentUser.language"
+        :language="$i18n.locale"
         :minimumView="isMonthPicker ? 'month' : 'year'"
         :maximumView="isMonthPicker ? 'month' : 'year'"
         :input-class="'form-input'"
