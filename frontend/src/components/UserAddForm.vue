@@ -34,7 +34,7 @@
       <p class="form-input-hint" v-if="errors.group">{{ $t('label.group') }} {{ errors.group[0] }}</p>
     </div>
     <div class="form-group">
-      <button type="button" class="btn btn-success btn-submit" @click="create(params)" :disabled="isDisabled">{{ $t('button.common.submit') }}</button>
+      <button type="button" class="btn btn-success btn-submit" @click="create()" :disabled="isDisabled">{{ $t('button.common.submit') }}</button>
     </div>
   </form>
 </template>
@@ -46,7 +46,7 @@ import userAddValidate from '../validations/user-add-validate'
 const GroupSelect = () => import('./GroupSelect.vue')
 
 export default {
-  name: 'add-user-form',
+  name: 'user-add-form',
 
   data() {
     return {
@@ -73,8 +73,8 @@ export default {
   methods: {
     ...mapActions('companyUsers', ['createUser']),
 
-    create(params) {
-      this.createUser(params)
+    create() {
+      this.createUser(this.params)
         .then(response => {
           this.handleSuccess({ message: this.$t('messages.user.addSuccess'), emitType: 'afterAdded' })
         })

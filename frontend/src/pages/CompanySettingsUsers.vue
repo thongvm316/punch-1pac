@@ -58,11 +58,11 @@
     </modal>
 
     <modal :title="$t('modal.user.addTitle')" :modal-open.sync="isAddModalOpen">
-      <add-user-form @afterAdded="isAddModalOpen = false"/>
+      <user-add-form @afterAdded="isAddModalOpen = false"/>
     </modal>
 
     <modal :title="$t('modal.user.addMultiTitle')" :modal-open.sync="isAddMultiUserModalOpen">
-      <add-multi-user-form @afterAdded="isAddMultiUserModalOpen = false"/>
+      <users-add-form @afterAdded="isAddMultiUserModalOpen = false"/>
     </modal>
   </setting-layout>
 </template>
@@ -73,8 +73,8 @@ import modal from '../mixins/modal'
 import { mapGetters, mapActions } from 'vuex'
 const SettingLayout = () => import('../layouts/Setting')
 const UserProfile = () => import('../components/UserProfile')
-const AddUserForm = () => import('../components/AddUserForm')
-const AddMultiUserForm = () => import('../components/AddMultiUserForm')
+const UserAddForm = () => import('../components/UserAddForm')
+const UsersAddForm = () => import('../components/UsersAddForm')
 
 export default {
   data() {
@@ -90,8 +90,8 @@ export default {
   components: {
     SettingLayout,
     UserProfile,
-    AddUserForm,
-    AddMultiUserForm
+    UserAddForm,
+    UsersAddForm
   },
 
   methods: {

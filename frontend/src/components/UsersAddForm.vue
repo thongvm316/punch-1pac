@@ -13,7 +13,7 @@
         <p class="form-input-hint text-error">{{ $t('company.users.addMulti.errorMsg', { lines: errors.lines.join(', ') }) }}</p>
       </div>
       <div class="form-group">
-        <button type="button" class="btn btn-success btn-submit" @click="upload(params)" :disabled="isDisable">{{ $t('button.common.submit') }}</button>
+        <button type="button" class="btn btn-success btn-submit" @click="upload()" :disabled="isDisable">{{ $t('button.common.submit') }}</button>
       </div>
     </form>
   </div>
@@ -25,7 +25,7 @@ import 'formdata-polyfill'
 import handleSuccess from '../mixins/handle-success'
 
 export default {
-  name: 'add-multi-user-form',
+  name: 'users-add-form',
 
   data() {
     return {
@@ -46,10 +46,10 @@ export default {
   methods: {
     ...mapActions('companyUsers', ['createMultiUser']),
 
-    upload(params) {
+    upload() {
       this.isDisable = true
 
-      this.createMultiUser(params)
+      this.createMultiUser(this.params)
         .then(response => {
           const message = this.$t('messages.user.addMultiSuccess')
           this.handleSuccess({ message, emitType: 'afterAdded' })
