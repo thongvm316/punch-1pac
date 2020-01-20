@@ -11,7 +11,7 @@ const lazyLoadRoute = pageName => {
 
 const router = new Router({
   mode: 'history',
-  linkActiveClass: 'active',
+  linkExactActiveClass: 'active',
   routes: [
     { path: '/dashboard', name: 'dashboard', component: lazyLoadRoute('Dashboard'), meta: { title: `Dashboard - ${appName}` } },
     { path: '/attendances', name: 'attendances', component: lazyLoadRoute('Attendances'), meta: { title: `Attendances - ${appName}` } },

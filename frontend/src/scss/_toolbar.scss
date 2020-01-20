@@ -12,6 +12,11 @@
     &.filter-input {
       width: 20rem;
     }
+
+    &.email-select {
+      width: auto;
+      padding-right: 2.5rem;
+    }
   }
 
   .v-select {
