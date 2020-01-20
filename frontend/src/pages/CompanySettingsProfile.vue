@@ -1,5 +1,6 @@
 <template>
-  <setting-layout sidebar-type="company" :title="$t('company.title')" :subtitle="$t('company.profile.title')">
+  <div>
+    <h2>{{ $t('company.profile.title') }}</h2>
     <form class="setting-form">
       <div class="form-group" :class="{ 'has-error': companyErrors.logo }">
         <label class="form-label">{{ $t('label.logo') }}</label>
@@ -81,7 +82,7 @@
         <button ref="btnSave" type="button" class="btn btn-success btn-submit" @click="localUpdateCompany" :disabled="isDisable">{{ $t('button.common.save') }}</button>
       </div>
     </form>
-  </setting-layout>
+  </div>
 </template>
 
 <script>
@@ -89,7 +90,6 @@ import handleSuccess from '../mixins/handle-success'
 import companyProfileValidate from '../validations/company-profile-validate'
 import { INITIAL_STATES_CLEAR_COMPANY_ERRORS } from '../store/mutation-types'
 import { mapState, mapActions, mapMutations } from 'vuex'
-const SettingLayout = () => import('../layouts/Setting.vue')
 
 export default {
   data() {
@@ -113,10 +113,6 @@ export default {
   },
 
   mixins: [handleSuccess, companyProfileValidate],
-
-  components: {
-    SettingLayout
-  },
 
   computed: {
     ...mapState('initialStates', ['meta', 'currentCompany', 'companyErrors'])
