@@ -134,7 +134,6 @@ export default {
 
     localAddBusinessDay() {
       this.addBusinessDay(this.params).then(response => {
-        this.data.message = this.$t('messages.businessDay.createSuccess')
         this.handleSuccess({
           emitType: 'afterModify',
           message: this.$t('messages.businessDay.createSuccess')
