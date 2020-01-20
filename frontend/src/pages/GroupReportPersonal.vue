@@ -8,7 +8,7 @@
         class="form-input daterange-picker"
         @on-close="onCloseFlatpickr"
         :value="getFormattedInitDateRange()" />
-      <select class="form-select" v-model="userId">
+      <select class="form-select email-select" v-model="userId">
         <option v-for="user in usersInGroup" :key="user.id" :value="user.id">{{ user.email }}</option>
       </select>
 
