@@ -6,7 +6,8 @@
       <flat-pickr
         :config="{ mode: 'range', locale: flatpickrLocaleMapper[pickrLocale] }"
         class="form-input daterange-picker"
-        v-model="dateRange"/>
+        @on-close="onCloseFlatpickr"
+        :value="getFormattedInitDateRange()"/>
       <attendance-status-select v-model="params.status">
         <option slot="placeholder" value="">{{ $t('placeholder.filterByStatus') }}</option>
       </attendance-status-select>
@@ -24,7 +25,7 @@
         <th>{{ $t('tableHeader.status') }}</th>
       </thead>
       <tbody>
-        <tr v-for="attendance in attendances" :key="attendance.id">
+        <tr v-for="attendance in filterAttendances(params.name_or_email)" :key="attendance.id">
           <td>
             <div class="tile tile-centered">
               <div class="tile-icon">
@@ -65,7 +66,6 @@ export default {
 
   data() {
     return {
-      dateRange: [this.$moment().format('YYYY-MM-DD'), this.$moment().format('YYYY-MM-DD')],
       params: {
         self: null,
         user_id: '',
@@ -100,8 +100,18 @@ export default {
     ...mapActions('group', ['getGroup']),
 
     debouncedGetAttendances: debounce(function() {
-      this.getAttendances(Object.assign({ page: 1 }, this.params))
-    }, 350)
+      this.getAttendances({ ...this.params, page: 1 })
+    }, 350),
+
+    getFormattedInitDateRange() {
+      const today = this.$moment().format('YYYY-MM-DD')
+      return `${today}${this.$t('flatpickr.rangeSeparator')}${today}`
+    },
+
+    onCloseFlatpickr(dates) {
+      this.params.from_date = this.$moment(dates[0]).format('YYYY-MM-DD')
+      this.params.to_date = this.$moment(dates[1]).format('YYYY-MM-DD')
+    }
   },
 
   created() {
@@ -115,12 +125,6 @@ export default {
         this.debouncedGetAttendances()
       },
       deep: true
-    },
-
-    dateRange: function() {
-      const dates = this.dateRange.split(' ')
-      this.params.from_date = dates[0]
-      this.params.to_date = dates[2]
     }
   }
 }
