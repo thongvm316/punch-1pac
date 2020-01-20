@@ -2,12 +2,12 @@
   <setting-layout sidebar-type="company" :title="$t('company.title')" :subtitle="$t('company.users.title')">
     <div class="toolbar mt-5 clearfix">
       <input type="search" class="form-input" :placeholder="$t('placeholder.filterByUser')" v-model="searchText">
-      <router-link to="/company/settings/users/add" tag="button" class="btn btn-success float-right">
+      <button type="button" class="btn btn-success float-right" @click="toggleAddModal">
         {{ $t('button.user.add') }}
-      </router-link>
-      <router-link to="/company/settings/users/add-multi" tag="button" class="btn btn-success float-right mr-2">
+      </button>
+      <button type="button" class="btn btn-success float-right mr-2" @click="toggleAddMultiUserModal">
         {{ $t('button.user.addMulti') }}
-      </router-link>
+      </button>
     </div>
 
     <table class="table bg-light mt-5">
@@ -56,6 +56,14 @@
     <modal :title="$t('modal.user.editTitle')" :modal-open.sync="isEditModalOpen">
       <user-profile :target-user="selectedUser" object-type="company" @afterUserProfileUpdated="isEditModalOpen = false" v-if="selectedUser"/>
     </modal>
+
+    <modal :title="$t('modal.user.addTitle')" :modal-open.sync="isAddModalOpen">
+      <user-add-form @afterAdded="isAddModalOpen = false"/>
+    </modal>
+
+    <modal :title="$t('modal.user.addMultiTitle')" :modal-open.sync="isAddMultiUserModalOpen">
+      <users-add-form @afterAdded="isAddMultiUserModalOpen = false"/>
+    </modal>
   </setting-layout>
 </template>
 
@@ -65,12 +73,15 @@ import modal from '../mixins/modal'
 import { mapGetters, mapActions } from 'vuex'
 const SettingLayout = () => import('../layouts/Setting')
 const UserProfile = () => import('../components/UserProfile')
+const UserAddForm = () => import('../components/UserAddForm')
+const UsersAddForm = () => import('../components/UsersAddForm')
 
 export default {
   data() {
     return {
       searchText: '',
-      selectedUser: {}
+      selectedUser: {},
+      isAddMultiUserModalOpen: false
     }
   },
 
@@ -78,7 +89,9 @@ export default {
 
   components: {
     SettingLayout,
-    UserProfile
+    UserProfile,
+    UserAddForm,
+    UsersAddForm
   },
 
   methods: {
@@ -87,6 +100,10 @@ export default {
     toggleEditModal(user) {
       this.selectedUser = user
       this.isEditModalOpen = !this.isEditModalOpen
+    },
+
+    toggleAddMultiUserModal() {
+      this.isAddMultiUserModalOpen = !this.isAddMultiUserModalOpen
     }
   },
 

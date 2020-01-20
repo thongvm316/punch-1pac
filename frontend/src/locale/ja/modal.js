@@ -19,7 +19,9 @@ export default {
     editTitle: 'グループ情報の編集'
   },
   user: {
-    editTitle: 'ユーザー情報の編集'
+    editTitle: 'ユーザー情報の編集',
+    addTitle: 'Add User',
+    addMultiTitle: 'Add Multiple User'
   },
   businessDays: {
     addTitle: '営業日の追加',

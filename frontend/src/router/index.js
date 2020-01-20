@@ -29,8 +29,6 @@ const router = new Router({
     { path: '/settings', redirect: '/settings/profile' },
     { path: '/company/settings/profile', name: 'company-settings-profile', component: lazyLoadRoute('CompanySettingsProfile'), meta: { title: `Company Settings Profile - ${appName}` } },
     { path: '/company/settings/users', name: 'company-settings-users', component: lazyLoadRoute('CompanySettingsUsers'), meta: { title: `Company Settings Users - ${appName}` } },
-    { path: '/company/settings/users/add', name: 'company-settings-users-add', component: lazyLoadRoute('CompanySettingsUsersAdd'), meta: { title: `Company Settings Add User - ${appName}` } },
-    { path: '/company/settings/users/add-multi', name: 'company-settings-users-add-multi', component: lazyLoadRoute('CompanySettingsUsersAddMulti'), meta: { title: `Company Settings Add Multiple Users - ${appName}` } },
     { path: '/company/settings/business-days', name: 'company-settings-business-days', component: lazyLoadRoute('CompanySettingsBusinessDays'), meta: { title: `Company Settings Business Days - ${appName}` } },
     { path: '/company/settings/holidays', name: 'company-settings-holidays', component: lazyLoadRoute('CompanySettingsHolidays'), meta: { title: `Company Settings Holidays - ${appName}` } },
     { path: '/company/settings/allowed-ips', name: 'company-settings-allowed-ips', component: lazyLoadRoute('CompanySettingsAllowedIPs'), meta: { title: `Company Settings Allowed IPs - ${appName}` } },

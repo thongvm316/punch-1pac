@@ -19,7 +19,9 @@ export default {
     editTitle: 'Sửa thông tin nhóm'
   },
   user: {
-    editTitle: 'Sửa thông tin thành viên'
+    editTitle: 'Sửa thông tin thành viên',
+    addTitle: 'Thêm thành viên',
+    addMultiTitle: 'Thêm nhiều thành viên'
   },
   businessDays: {
     addTitle: 'Tạo ngày đi làm',
