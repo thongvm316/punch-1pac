@@ -25,7 +25,7 @@
         <th>{{ $t('tableHeader.status') }}</th>
       </thead>
       <tbody>
-        <tr v-for="attendance in filterAttendances(params.name_or_email)" :key="attendance.id">
+        <tr v-for="attendance in attendances" :key="attendance.id">
           <td>
             <div class="tile tile-centered">
               <div class="tile-icon">
@@ -53,7 +53,7 @@
 
 <script>
 import flatpickrLocale from '../mixins/flatpickr-locale'
-import { mapState, mapActions, mapGetters } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 import debounce from 'lodash.debounce'
 const MainLayout = () => import('../layouts/Main')
 const Pagination = () => import('../components/Pagination')
@@ -69,8 +69,8 @@ export default {
       params: {
         self: null,
         user_id: '',
-        from_date: this.$moment().format('YYYY-MM-DD'),
-        to_date: this.$moment().format('YYYY-MM-DD'),
+        from_date: '',
+        to_date: '',
         group_id: this.$route.params.id,
         name_or_email: '',
         status: ''
@@ -89,9 +89,7 @@ export default {
   computed: {
     ...mapState('groupAttendances', ['pager', 'attendances']),
 
-    ...mapState('group', ['group']),
-
-    ...mapGetters('groupAttendances', ['filterAttendances'])
+    ...mapState('group', ['group'])
   },
 
   methods: {

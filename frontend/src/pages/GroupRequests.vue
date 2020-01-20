@@ -6,7 +6,8 @@
       <flat-pickr
         :config="{mode: 'range', locale: flatpickrLocaleMapper[pickrLocale]}"
         class="form-input daterange-picker"
-        v-model="dateRange"/>
+        @on-close="onCloseFlatpickr"
+        :value="getFormattedInitDateRange()"/>
       <select class="form-select" v-model="params.status">
         <option value="">{{ $t('placeholder.filterByStatus') }}</option>
         <option :value="status" v-for="(status, key) in meta.request_statuses" :key="key">{{ $t(`meta.request_statuses.${status}`) }}</option>
@@ -112,26 +113,14 @@ export default {
 
   data() {
     return {
-      dateRange: [
-        this.$moment()
-          .startOf('month')
-          .format('YYYY-MM-DD'),
-        this.$moment()
-          .endOf('month')
-          .format('YYYY-MM-DD')
-      ],
       params: {
         self: null,
         status: this.$route.query.status || '',
         kind: '',
         group_id: this.$route.params.id,
         name_or_email: '',
-        from_date: this.$moment()
-          .startOf('month')
-          .format('YYYY-MM-DD'),
-        to_date: this.$moment()
-          .endOf('month')
-          .format('YYYY-MM-DD')
+        from_date: '',
+        to_date: ''
       },
       requestParams: {
         admin: null,
@@ -184,7 +173,17 @@ export default {
 
     debouncedGetRequests: debounce(function() {
       this.getRequests(Object.assign({ page: 1 }, this.params))
-    }, 350)
+    }, 350),
+
+    getFormattedInitDateRange() {
+      const today = this.$moment().format('YYYY-MM-DD')
+      return `${today}${this.$t('flatpickr.rangeSeparator')}${today}`
+    },
+
+    onCloseFlatpickr(dates) {
+      this.params.from_date = this.$moment(dates[0]).format('YYYY-MM-DD')
+      this.params.to_date = this.$moment(dates[1]).format('YYYY-MM-DD')
+    }
   },
 
   created() {
@@ -198,12 +197,6 @@ export default {
         this.debouncedGetRequests()
       },
       deep: true
-    },
-
-    dateRange: function() {
-      const dates = this.dateRange.split(' ')
-      this.params.from_date = dates[0]
-      this.params.to_date = dates[2]
     }
   }
 }
