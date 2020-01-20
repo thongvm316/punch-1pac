@@ -1,16 +1,15 @@
 <template>
-  <setting-layout sidebar-type="user" :title="$t('user.title', { name: currentUser.name })" :subtitle="$t('user.profile.title')">
+  <div>
+    <h2>{{ $t('user.profile.title') }}</h2>
     <user-profile :targetUser="currentUser"/>
-  </setting-layout>
+  </div>
 </template>
 
 <script>
-const SettingLayout = () => import('../layouts/Setting')
 const UserProfile = () => import('../components/UserProfile')
 
 export default {
   components: {
-    SettingLayout,
     UserProfile
   }
 }

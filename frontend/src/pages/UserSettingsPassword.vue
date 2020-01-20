@@ -1,5 +1,6 @@
 <template>
-  <setting-layout sidebar-type="user" :title="$t('user.title', { name: currentUser.name })" :subtitle="$t('user.password.title')">
+  <div>
+    <h2>{{ $t('user.password.title') }}</h2>
     <form class="setting-form">
       <div class="form-group" :class="{ 'has-error': $v.updateParams.current_password.$error || errors.current_password }">
         <label class="form-label">{{ $t('label.currentPassword') }}</label>
@@ -31,7 +32,7 @@
         <button type="button" class="btn btn-success btn-submit" @click="localUpdatePassword" :disabled="isDisabled">{{ $t('button.common.save') }}</button>
       </div>
     </form>
-  </setting-layout>
+  </div>
 </template>
 
 <script>
@@ -40,7 +41,6 @@ import { mapState, mapActions, mapMutations } from 'vuex'
 import { isEmpty } from 'underscore'
 import handleSuccess from '../mixins/handle-success'
 import userPasswordValidate from '../validations/user-password-validate'
-const SettingLayout = () => import('../layouts/Setting.vue')
 
 export default {
   data() {
@@ -54,10 +54,6 @@ export default {
   },
 
   mixins: [handleSuccess, userPasswordValidate],
-
-  components: {
-    SettingLayout
-  },
 
   methods: {
     ...mapActions('userPassword', ['updatePassword']),
