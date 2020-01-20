@@ -34,7 +34,9 @@
                 <a class="btn-back" @click="toggleLangSelect"></a>
                 <p>{{ $t('header.languages') }}</p>
               </li>
-              <li class="menu-item" v-for="(language, key) in meta.languages" :key="key"><a @click="updateUser(language)">{{ $t(`meta.languages.${language}`) }}</a></li>
+              <li class="menu-item" v-for="(language, key) in meta.languages" :key="key">
+                <a @click="updateUser(language)" :class="{ active: language === $i18n.locale }">{{ $t(`meta.languages.${language}`) }}</a>
+              </li>
             </ul>
           </div>
         </section>
@@ -78,8 +80,10 @@ export default {
     },
 
     updateUser(language) {
-      axios.put(`/users/${this.currentUser.id}`, { user: { language: language } }).then(response => {
-        this.$router.go()
+      if (this.$i18n.locale === language) return
+
+      axios.put(`/users/${this.currentUser.id}`, { user: { language } }).then(response => {
+        this.$i18n.locale = language
       })
     }
   },
