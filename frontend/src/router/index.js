@@ -11,7 +11,7 @@ const lazyLoadRoute = pageName => {
 
 const router = new Router({
   mode: 'history',
-  linkActiveClass: 'active',
+  linkExactActiveClass: 'active',
   routes: [
     { path: '/dashboard', name: 'dashboard', component: lazyLoadRoute('Dashboard'), meta: { title: `Dashboard - ${appName}` } },
     { path: '/attendances', name: 'attendances', component: lazyLoadRoute('Attendances'), meta: { title: `Attendances - ${appName}` } },
@@ -19,7 +19,7 @@ const router = new Router({
     { path: '/groups/:id/requests', name: 'group-requests', component: lazyLoadRoute('GroupRequests'), meta: { title: `Group Requests - ${appName}` } },
     { path: '/groups/:id/attendances', name: 'group-attendances', component: lazyLoadRoute('GroupAttendances'), meta: { title: `Group Attendances - ${appName}` } },
     { path: '/groups/:id/report', name: 'group-report', component: lazyLoadRoute('GroupReport'), meta: { title: `Group Report - ${appName}` } },
-    { path: '/groups/:id/user/:user_id/report', name: 'group-report-personal', component: lazyLoadRoute('GroupReportPersonal'), meta: { title: `Group Report Personal - ${appName}` } },
+    { path: '/groups/:id/users/:user_id/report', name: 'group-report-personal', component: lazyLoadRoute('GroupReportPersonal'), meta: { title: `Group Report Personal - ${appName}` } },
     { path: '/groups/:id/users', name: 'group', component: lazyLoadRoute('Group'), meta: { title: `Group - ${appName}` } },
     { path: '/groups/:id', redirect: '/groups/:id/users' },
     { path: '/groups', name: 'groups', component: lazyLoadRoute('Groups'), meta: { title: `Groups - ${appName}` } },
