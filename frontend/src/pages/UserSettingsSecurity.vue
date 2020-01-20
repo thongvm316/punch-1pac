@@ -1,5 +1,6 @@
 <template>
-  <setting-layout sidebar-type="user" :title="$t('user.title', { name: currentUser.name })" :subtitle="$t('user.security.title')">
+  <div>
+    <h2>{{ $t('user.security.title') }}</h2>
     <table class="table bg-light mt-5">
       <thead>
         <tr>
@@ -37,22 +38,17 @@
         </tr>
       </tbody>
     </table>
-  </setting-layout>
+  </div>
 </template>
 
 <script>
 import { mapState, mapActions } from 'vuex'
-const SettingLayout = () => import('../layouts/Setting.vue')
 
 export default {
   data() {
     return {
       isInfoOpen: false
     }
-  },
-
-  components: {
-    SettingLayout
   },
 
   methods: {
