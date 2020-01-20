@@ -11,7 +11,7 @@
     <div class="form-group" :class="{ 'has-error': $v.params.started_at.$error || errors.started_at }">
       <label class="form-label">{{ $t('label.startAt') }}</label>
       <flat-pickr
-        :config="{ locale: flatpickrLocaleMapper[currentUser.language] }"
+        :config="{ mode: 'single', locale: flatpickrLocaleMapper[pickrLocale] }"
         class="form-input daterange-picker"
         v-model="$v.params.started_at.$model"/>
       <p class="form-input-hint" v-if="errors.started_at">{{ $t('label.startAt') }} {{ errors.started_at[0] }}</p>
@@ -22,7 +22,7 @@
     <div class="form-group" :class="{ 'has-error': $v.params.ended_at.$error || errors.ended_at }">
       <label class="form-label">{{ $t('label.endAt') }}</label>
       <flat-pickr
-        :config="{ locale: flatpickrLocaleMapper[currentUser.language] }"
+        :config="{ mode: 'single', locale: flatpickrLocaleMapper[pickrLocale] }"
         class="form-input daterange-picker"
         v-model="$v.params.ended_at.$model"/>
       <p class="form-input-hint" v-if="errors.ended_at">{{ $t('label.endAt') }} {{ errors.ended_at[0] }}</p>

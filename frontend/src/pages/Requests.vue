@@ -2,7 +2,7 @@
   <main-layout :title="$t('requests.title')">
     <div class="toolbar mt-5">
       <datepicker
-        :language="currentUser.language"
+        :language="$i18n.locale"
         :format="function (date) { return $moment(date).format('LLL') }"
         :minimumView="'month'"
         :maximumView="'month'"

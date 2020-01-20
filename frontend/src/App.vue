@@ -10,7 +10,11 @@
 
 <script>
 import { mapMutations } from 'vuex'
-import { INITIAL_STATES_SET_USER, INITIAL_STATES_SET_COMPANY, INITIAL_STATES_SET_META, RECEIVE_HEADER_ANNOUNCEMENTS } from './store/mutation-types'
+import {
+  INITIAL_STATES_SET_USER,
+  INITIAL_STATES_SET_COMPANY,
+  INITIAL_STATES_SET_META,
+  RECEIVE_HEADER_ANNOUNCEMENTS } from './store/mutation-types'
 const AppHeader = () => import('./components/AppHeader')
 const AppFooter = () => import('./components/AppFooter')
 const Flash = () => import('./components/Flash')

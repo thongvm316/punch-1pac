@@ -39,7 +39,7 @@
       <div class="form-group">
         <label class="form-label">{{ $t('label.date') }}</label>
         <flat-pickr
-          :config="{ enable: [notification.activitable.attendance_day], locale: flatpickrLocaleMapper[currentUser.language] }"
+          :config="{ mode: 'single', enable: [notification.activitable.attendance_day], locale: flatpickrLocaleMapper[pickrLocale] }"
           class="form-input daterange-picker"
           :value="notification.activitable.attendance_day"
           disabled />

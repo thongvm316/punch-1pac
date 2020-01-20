@@ -3,7 +3,7 @@
     <div class="form-group" :class="{ 'has-error': $v.day.$error }">
       <label class="form-label">{{ $t('label.date') }}</label>
       <flat-pickr
-        :config="{ enable: [day], locale: flatpickrLocaleMapper[currentUser.language] }"
+        :config="{ enable: [day], locale: flatpickrLocaleMapper[pickrLocale] }"
         class="form-input daterange-picker"
         v-model="$v.day.$model"/>
       <p class="form-input-hint" v-if="$v.day.$error">

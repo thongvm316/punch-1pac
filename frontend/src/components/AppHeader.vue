@@ -48,7 +48,8 @@
 <script>
 import axios from 'axios'
 import dropdown from '../mixins/dropdown'
-import { mapState } from 'vuex'
+import { mapState, mapMutations } from 'vuex'
+import { INITIAL_STATES_UPDATE_USER_LANGUAGE } from '../store/mutation-types'
 const Notifications = () => import('./Notifications')
 const Punch = () => import('./Punch')
 const AnnualLeave = () => import('./AnnualLeave')
@@ -64,6 +65,8 @@ export default {
   },
 
   methods: {
+    ...mapMutations('initialStates', [INITIAL_STATES_UPDATE_USER_LANGUAGE]),
+
     logout() {
       axios.post('/logout', {}, { baseURL: '' }).then(() => {
         window.location.href = '/'
@@ -84,6 +87,7 @@ export default {
 
       axios.put(`/users/${this.currentUser.id}`, { user: { language } }).then(response => {
         this.$i18n.locale = language
+        this[INITIAL_STATES_UPDATE_USER_LANGUAGE](language)
       })
     }
   },

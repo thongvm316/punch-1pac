@@ -3,7 +3,7 @@
     <div class="form-group" :class="{ 'has-error': $v.params.attendance_day.$error || errors.attendance_day }">
       <label class="form-label">{{ $t('label.annualLeaveDay') }}</label>
       <flat-pickr
-        :config="{mode: 'single', locale: flatpickrLocaleMapper[currentUser.language]}"
+        :config="{mode: 'single', locale: flatpickrLocaleMapper[pickrLocale]}"
         class="form-input daterange-picker"
         v-model="$v.params.attendance_day.$model"/>
       <p class="form-input-hint" v-if="$v.params.attendance_day.$error">
