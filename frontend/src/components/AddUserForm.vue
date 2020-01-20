@@ -41,7 +41,6 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
-import { isEqual } from 'underscore'
 import handleSuccess from '../mixins/handle-success'
 import userAddValidate from '../validations/user-add-validate'
 const GroupSelect = () => import('./GroupSelect.vue')
@@ -64,20 +63,7 @@ export default {
   mixins: [handleSuccess, userAddValidate],
 
   computed: {
-    ...mapState('initialStates', ['meta']),
-
-    isDisabled() {
-      if (this.$v.params.$anyError) return true
-      let emtyParams = {
-        name: '',
-        email: '',
-        role: 'member',
-        group_id: ''
-      }
-      if (isEqual(this.params, emtyParams)) return true
-
-      return false
-    }
+    ...mapState('initialStates', ['meta'])
   },
 
   components: {
@@ -86,11 +72,11 @@ export default {
 
   methods: {
     ...mapActions('companyUsers', ['createUser']),
+
     create(params) {
       this.createUser(params)
         .then(response => {
-          const message = this.$t('messages.user.addSuccess')
-          this.handleSuccess({ message, emitType: 'afterAdded' })
+          this.handleSuccess({ message: this.$t('messages.user.addSuccess'), emitType: 'afterAdded' })
         })
         .catch(error => {
           if (error.response && error.response.status === 422) this.errors = error.response.data.errors
