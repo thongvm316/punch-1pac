@@ -53,6 +53,7 @@
 
 <script>
 import flatpickrLocale from '../mixins/flatpickr-locale'
+import dateRangePicker from '../mixins/date-range-picker'
 import { mapState, mapActions } from 'vuex'
 import debounce from 'lodash.debounce'
 const MainLayout = () => import('../layouts/Main')
@@ -62,7 +63,7 @@ const AttendanceStatusSelect = () => import('../components/AttendanceStatusSelec
 const flatPickr = () => import('vue-flatpickr-component')
 
 export default {
-  mixins: [flatpickrLocale],
+  mixins: [flatpickrLocale, dateRangePicker],
 
   data() {
     return {
@@ -99,20 +100,11 @@ export default {
 
     debouncedGetAttendances: debounce(function() {
       this.getAttendances({ ...this.params, page: 1 })
-    }, 350),
-
-    getFormattedInitDateRange() {
-      const today = this.$moment().format('YYYY-MM-DD')
-      return `${today}${this.$t('flatpickr.rangeSeparator')}${today}`
-    },
-
-    onCloseFlatpickr(dates) {
-      this.params.from_date = this.$moment(dates[0]).format('YYYY-MM-DD')
-      this.params.to_date = this.$moment(dates[1]).format('YYYY-MM-DD')
-    }
+    }, 350)
   },
 
   created() {
+    this.params = { ...this.params, ...this.initDateRange() }
     if (!this.group) this.getGroup(this.$route.params.id)
     this.getAttendances(this.params)
   },

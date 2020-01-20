@@ -96,6 +96,7 @@
 
 <script>
 import modal from '../mixins/modal'
+import dateRangePicker from '../mixins/date-range-picker'
 import flatpickrLocale from '../mixins/flatpickr-locale'
 import { CLEAR_REJECT_GROUP_REQUEST_ERRORS } from '../store/mutation-types'
 import { mapState, mapActions, mapMutations } from 'vuex'
@@ -109,7 +110,7 @@ const flatPickr = () => import('vue-flatpickr-component')
 export default {
   name: 'group-requests',
 
-  mixins: [modal, flatpickrLocale],
+  mixins: [modal, flatpickrLocale, dateRangePicker],
 
   data() {
     return {
@@ -173,20 +174,11 @@ export default {
 
     debouncedGetRequests: debounce(function() {
       this.getRequests(Object.assign({ page: 1 }, this.params))
-    }, 350),
-
-    getFormattedInitDateRange() {
-      const today = this.$moment().format('YYYY-MM-DD')
-      return `${today}${this.$t('flatpickr.rangeSeparator')}${today}`
-    },
-
-    onCloseFlatpickr(dates) {
-      this.params.from_date = this.$moment(dates[0]).format('YYYY-MM-DD')
-      this.params.to_date = this.$moment(dates[1]).format('YYYY-MM-DD')
-    }
+    }, 350)
   },
 
   created() {
+    this.params = { ...this.params, ...this.initDateRange() }
     if (!this.group) this.getGroup(this.$route.params.id)
     this.getRequests(this.params)
   },
