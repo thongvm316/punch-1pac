@@ -135,7 +135,7 @@ export default {
   },
 
   created() {
-    this.params = { ...this.params, ...this.initDateRange(this.currentCompany.monthly_report) }
+    this.params = this.initDateRange(this.currentCompany.monthly_report)
     this.getGroup(this.$route.params.id)
   },
 
