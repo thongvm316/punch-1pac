@@ -178,7 +178,10 @@ export default {
   },
 
   created() {
-    this.params = { ...this.params, ...this.initDateRange() }
+    this.params = { ...this.params, ...{
+      from_date: this.$moment().format('YYYY-MM-DD'),
+      to_date: this.$moment().format('YYYY-MM-DD')
+    } }
     if (!this.group) this.getGroup(this.$route.params.id)
     this.getRequests(this.params)
   },

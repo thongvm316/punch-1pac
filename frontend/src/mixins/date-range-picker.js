@@ -3,13 +3,6 @@ export default {
     initDateRange(currentCompanyMonthlyDateReport) {
       const defaultMonthlyReportDay = 1
 
-      if (!currentCompanyMonthlyDateReport) {
-        return {
-          from_date: this.$moment().format('YYYY-MM-DD'),
-          to_date: this.$moment().format('YYYY-MM-DD')
-        }
-      }
-
       if (parseInt(currentCompanyMonthlyDateReport) === defaultMonthlyReportDay) {
         return {
           from_date: this.$moment().subtract(1, 'months').startOf('month').format('YYYY-MM-DD'),
