@@ -16,7 +16,7 @@ import pageAuthorization from './mixins/page-authorization'
 import './scss/main.scss'
 
 axios.defaults.baseURL = 'http://namespace_1.localhost:3000/api/v1'
-axios.defaults.headers.common['Authorization'] = 'Bear eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1ODE0OTQxNTEsImp0aSI6IjQyODRmZDdjLTk3MWQtNDlkNC04MTJlLWVhY2NlZDU3OTcwZSIsInN1YiI6Mn0.5wPjB18WkGOosnpwzJA4_5aOkhYSr3V5ogemw9sAoQ4'
+axios.defaults.headers.common['Authorization'] = 'Bear eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1ODIyNTcwMzUsImp0aSI6IjMwYzQ4ZjlkLTkyMGQtNDBkNi05YmQyLWI3NTA1NjI3NmM0NyIsInN1YiI6Mn0.lB8rCqKLQ2ZGBX83cPfzzOY0HaCQMtkkT3ze68hqjTw'
 axios.defaults.headers.common['Accept'] = 'application/json'
 
 Vue.use(Vuelidate)

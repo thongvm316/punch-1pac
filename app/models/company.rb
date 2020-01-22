@@ -73,8 +73,6 @@ class Company < ApplicationRecord
     BusinessDay::WEEKDAYS - business_days.pluck(:weekday)
   end
 
-  private
-
   def weekdays_in_month(params)
     wdays = weekdays
 

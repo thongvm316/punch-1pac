@@ -235,20 +235,6 @@ ActiveRecord::Schema.define(version: 2020_01_15_034604) do
     t.index ["user_id"], name: "index_sessions_on_user_id"
   end
 
-  create_table "settings", force: :cascade do |t|
-    t.string "settingable_type"
-    t.bigint "settingable_id"
-    t.integer "name", default: 0, null: false
-    t.json "options", default: {}, null: false
-    t.integer "min_value", default: 0
-    t.integer "max_value", default: 0
-    t.boolean "active", default: false, null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["settingable_type", "settingable_id", "name"], name: "index_settings_on_settingable_type_and_settingable_id_and_name", unique: true
-    t.index ["settingable_type", "settingable_id"], name: "index_settings_on_settingable_type_and_settingable_id"
-  end
-
   create_table "user_groups", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "group_id", null: false
