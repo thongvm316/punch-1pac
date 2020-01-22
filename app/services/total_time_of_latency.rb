@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 class TotalTimeOfLatency
-  def initialize(company, attendance = nil)
+  def initialize(company, now, attendance = nil)
     @business_day = company.business_days.find_by(weekday: Date.current.strftime('%A').downcase)
-    @check_time   = TimeInDay.current.to_i
+    @check_time   = Time.zone.local(2000, 1, 1, now.hour, now.min, now.sec).to_i
     @start_day    = TimeInDay.started.to_i
     @attendance   = attendance
   end

@@ -58,8 +58,9 @@ class Attendance < ApplicationRecord
   }
 
   def self.in_period(params = {})
-    date     = TimeInDay.range_date(params)
-    from, to = date.first, date.last
+    date = TimeInDay.range_date(params)
+    from = date.first
+    to = date.last
 
     raise ArgumentError if from.blank?
     if params[:date_type] == 'year'
