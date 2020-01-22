@@ -4,7 +4,7 @@ company = FactoryBot.create(:company)
 user = FactoryBot.create(:user, email: 'wofi.minh@1pac.vn', password: 'password', password_confirmation: 'password', company: company, created_at: Time.current.beginning_of_year)
 superadmin = FactoryBot.create(:user, email: 'example@1pac.vn', password: 'password', password_confirmation: 'password', company: company, role: 'superadmin', created_at: Time.current.beginning_of_year)
 
-%w[monday tuesday wednesday thursday friday].each { |day| FactoryBot.create(:business_day, weekday: day, morning_started_at: '08:00', morning_ended_at: '12:00', afternoon_started_at: '13:30', afternoon_ended_at: '17:30', company: company) }
+%w[monday tuesday wednesday thursday friday].each { |day| FactoryBot.create(:business_day, weekday: day, morning_started_at: '01:00', morning_ended_at: '05:00', afternoon_started_at: '06:30', afternoon_ended_at: '10:30', company: company) }
 FactoryBot.create(:allowed_ip, ip_address: '127.0.0.1', company: company)
 FactoryBot.create_list(:allowed_ip, 3, company: company)
 FactoryBot.create_list(:session, 4, user: superadmin, device_type: %w[desktop smartphone tablet][rand(3)])
@@ -28,10 +28,10 @@ month        = Date.current - 1.month
 prev_month   = month.beginning_of_month
 month_in_now = Date.current
 
-attend_ok   = Time.zone.local(2000, 1, 1, 8, 0, 0)
-attend_late = Time.zone.local(2000, 1, 1, 9, 0, 0)
-left_ok     = Time.zone.local(2000, 1, 1, 18, 0, 0)
-left_early  = Time.zone.local(2000, 1, 1, 17, 0, 0)
+attend_ok   = Time.zone.local(2000, 1, 1, 1, 0, 0)
+attend_late = Time.zone.local(2000, 1, 1, 2, 0, 0)
+left_ok     = Time.zone.local(2000, 1, 1, 10, 30, 0)
+left_early  = Time.zone.local(2000, 1, 1, 10, 0, 0)
 
 attend_leave_ok       = { attending_status: 'attend_ok',   leaving_status: 'leave_ok',    attended_at: attend_ok,   left_at: left_ok }
 attend_late_leave_ok  = { attending_status: 'attend_late', leaving_status: 'leave_ok',    attended_at: attend_late, left_at: left_ok }
