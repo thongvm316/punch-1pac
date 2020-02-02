@@ -13,7 +13,7 @@
     <div class="toolbar clearfix mt-5">
       <datepicker
         :language="$i18n.locale"
-        :format="function (date) { return $moment(date).format('YYYY') }"
+        format="yyyy"
         :minimumView="'year'"
         :maximumView="'year'"
         :input-class="'datepicker-input form-input'"

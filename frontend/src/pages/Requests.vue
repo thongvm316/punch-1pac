@@ -3,7 +3,7 @@
     <div class="toolbar mt-5">
       <datepicker
         :language="$i18n.locale"
-        :format="function (date) { return $moment(date).format('LLL') }"
+        format="MMMM yyyy"
         :minimumView="'month'"
         :maximumView="'month'"
         :input-class="'datepicker-input form-input'"
