@@ -88,10 +88,6 @@ export default {
   methods: {
     ...mapActions('attendances', ['getAttendances']),
 
-    close(value) {
-      console.log('value')
-    },
-
     toggleAddModal(attendance) {
       this.isAddModalOpen = !this.isAddModalOpen
       this.attendance = attendance
