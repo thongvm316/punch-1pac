@@ -24,9 +24,9 @@ FactoryBot.create(:user_group, user: user, group: Group.last)
 FactoryBot.create(:user_group, user: superadmin, group: Group.first)
 FactoryBot.create(:user_group, user: superadmin, group: Group.last)
 
-month        = Date.current - 1.month
-prev_month   = month.beginning_of_month
-month_in_now = Date.current
+month         = Date.current - 2.month
+two_month_ago = month.beginning_of_month
+month_in_now  = Date.current - 1.day
 
 attend_ok   = Time.zone.local(2000, 1, 1, 1, 0, 0)
 attend_late = Time.zone.local(2000, 1, 1, 2, 0, 0)
@@ -40,10 +40,10 @@ attend_late_leave_ok  = { attending_status: 'attend_late', leaving_status: 'leav
 
 status = [attend_leave_ok, attend_late_leave_ok, attend_ok_leave_early, attend_late_leave_ok]
 
-FactoryBot.create(:holiday, company: company, name: 'Tet Holiday', started_at: Date.parse('2020-1-23'), ended_at: Date.parse('2020-2-3'))
+FactoryBot.create(:holiday, company: company, name: 'Tet Holiday', started_at: Date.parse('2020-1-23'), ended_at: Date.parse('2020-2-2'))
 
-(prev_month..month_in_now).to_a.each do |day|
-  hdays = company.holidays.range_date(prev_month, month_in_now)
+(two_month_ago..month_in_now).to_a.each do |day|
+  hdays = company.holidays.range_date(two_month_ago, month_in_now)
 
   next if hdays.find { |holiday| day.between?(holiday.started_at, holiday.ended_at) }
   next unless company.business_days.find_by(weekday: day.strftime('%A').downcase)
