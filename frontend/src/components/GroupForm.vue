@@ -1,27 +1,90 @@
 <template>
   <div>
-    <div class="form-group" :class="{ 'has-error': $v.params.name.$error || errors.name }">
+    <div
+      class="form-group"
+      :class="{ 'has-error': $v.params.name.$error || errors.name }"
+    >
       <label class="form-label">{{ $t('label.name') }}</label>
-      <input class="form-input" type="text" :placeholder="$t('label.name')" v-model="$v.params.name.$model">
-      <p class="form-input-hint" v-if="$v.params.name.$error && !errors.name">
+      <input
+        v-model="$v.params.name.$model"
+        class="form-input"
+        type="text"
+        :placeholder="$t('label.name')"
+      >
+      <p
+        v-if="$v.params.name.$error && !errors.name"
+        class="form-input-hint"
+      >
         {{ $t('validation.required', { name: $t('label.name') }) }}
       </p>
-      <p class="form-input-hint" v-if="errors.name">{{ $t('label.name') }} {{ errors.name[0] }}</p>
+      <p
+        v-if="errors.name"
+        class="form-input-hint"
+      >
+        {{ $t('label.name') }} {{ errors.name[0] }}
+      </p>
     </div>
-    <div class="form-group" :class="{ 'has-error': errors.image }">
+    <div
+      class="form-group"
+      :class="{ 'has-error': errors.image }"
+    >
       <label class="form-label">{{ $t('label.image') }}</label>
-      <img class="img-profile" :src="targetGroup.image_url" alt="" v-if="targetGroup">
-      <input class="form-input" type="file" @change="setImageFile">
-      <p class="form-input-hint" v-if="errors.image">{{ $t('label.image') }} {{ errors.image[0] }}</p>
+      <img
+        v-if="targetGroup"
+        class="img-profile"
+        :src="targetGroup.image_url"
+        alt=""
+      >
+      <input
+        class="form-input"
+        type="file"
+        @change="setImageFile"
+      >
+      <p
+        v-if="errors.image"
+        class="form-input-hint"
+      >
+        {{ $t('label.image') }} {{ errors.image[0] }}
+      </p>
     </div>
-    <div class="form-group" :class="{ 'has-error': errors.description }">
+    <div
+      class="form-group"
+      :class="{ 'has-error': errors.description }"
+    >
       <label class="form-label">{{ $t('label.description') }}</label>
-      <textarea class="form-input" :placeholder="$t('label.description')" v-model="params.description"></textarea>
-      <p class="form-input-hint" v-if="errors.description">{{ $t('label.description') }} {{ errors.description[0] }}</p>
+      <textarea
+        v-model="params.description"
+        class="form-input"
+        :placeholder="$t('label.description')"
+      />
+      <p
+        v-if="errors.description"
+        class="form-input-hint"
+      >
+        {{ $t('label.description') }} {{ errors.description[0] }}
+      </p>
     </div>
     <div class="form-group">
-      <button ref="localAddGroupButton" type="button" class="btn btn-success btn-submit" @click="localAddGroup" v-if="!targetGroup" :disabled="isDisabled">{{ $t('button.common.submit') }}</button>
-      <button ref="localEditGroupButton" type="button" class="btn btn-success btn-submit" @click="localEditGroup" v-if="targetGroup" :disabled="isDisabled">{{ $t('button.common.save') }}</button>
+      <button
+        v-if="!targetGroup"
+        ref="localAddGroupButton"
+        type="button"
+        class="btn btn-success btn-submit"
+        :disabled="isDisabled"
+        @click="localAddGroup"
+      >
+        {{ $t('button.common.submit') }}
+      </button>
+      <button
+        v-if="targetGroup"
+        ref="localEditGroupButton"
+        type="button"
+        class="btn btn-success btn-submit"
+        :disabled="isDisabled"
+        @click="localEditGroup"
+      >
+        {{ $t('button.common.save') }}
+      </button>
     </div>
   </div>
 </template>
@@ -32,7 +95,7 @@ import handleSuccess from '../mixins/handle-success'
 import groupFormValidate from '../validations/group-form-validate'
 
 export default {
-  name: 'group-form',
+  name: 'GroupForm',
 
   mixins: [handleSuccess, groupFormValidate],
 

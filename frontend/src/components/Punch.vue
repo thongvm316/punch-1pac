@@ -2,13 +2,40 @@
   <div>
     <div class="punch">
       <span v-if="attendance.attended_at">{{ $t('header.in') }}: {{ attendance.attended_at }}</span>
-      <span class="mx-2" v-if="attendance.attended_at">-</span>
-      <span class="mr-5" v-if="attendance.left_at">{{ $t('header.out') }}: {{ attendance.left_at }}</span>
-      <span class="mr-5" v-else>{{ currentTime }}</span>
-      <button ref="btnPunchIn" class="btn btn-primary mr-5" @click="debouncePunchIn()" v-if="!attendance.attended_at">{{ $t('button.common.punchIn') }}</button>
-      <button ref="btnPunchOut" class="btn btn-primary mr-5" @click="openConfirmDialog()" v-if="attendance.attended_at && !attendance.left_at">{{ $t('button.common.punchOut') }}</button>
+      <span
+        v-if="attendance.attended_at"
+        class="mx-2"
+      >-</span>
+      <span
+        v-if="attendance.left_at"
+        class="mr-5"
+      >{{ $t('header.out') }}: {{ attendance.left_at }}</span>
+      <span
+        v-else
+        class="mr-5"
+      >{{ currentTime }}</span>
+      <button
+        v-if="!attendance.attended_at"
+        ref="btnPunchIn"
+        class="btn btn-primary mr-5"
+        @click="debouncePunchIn()"
+      >
+        {{ $t('button.common.punchIn') }}
+      </button>
+      <button
+        v-if="attendance.attended_at && !attendance.left_at"
+        ref="btnPunchOut"
+        class="btn btn-primary mr-5"
+        @click="openConfirmDialog()"
+      >
+        {{ $t('button.common.punchOut') }}
+      </button>
     </div>
-    <confirm-dialog :title="$t('header.punchOutTitle')" :deleteObject="debouncePunchOut" :modal-open.sync="isOpenConfirmDialog">
+    <confirm-dialog
+      :title="$t('header.punchOutTitle')"
+      :delete-object="debouncePunchOut"
+      :modal-open.sync="isOpenConfirmDialog"
+    >
       <p>{{ $t('header.punchOutConfirm', { at: $moment().format('HH:mm') }) }}</p>
     </confirm-dialog>
   </div>
@@ -20,7 +47,7 @@ import { PUNCH_INIT_ATTENDANCE, SET_FLASH_MESSAGE } from '../store/mutation-type
 import { mapState, mapActions, mapMutations } from 'vuex'
 
 export default {
-  name: 'punch',
+  name: 'Punch',
 
   mixins: [confirmDialog],
 

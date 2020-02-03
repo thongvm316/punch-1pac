@@ -1,29 +1,69 @@
 <template>
   <div>
-    <div class="form-group" :class="{ 'has-error': $v.params.attendance_day.$error || errors.attendance_day }">
+    <div
+      class="form-group"
+      :class="{ 'has-error': $v.params.attendance_day.$error || errors.attendance_day }"
+    >
       <label class="form-label">{{ $t('label.annualLeaveDay') }}</label>
       <flat-pickr
+        v-model="$v.params.attendance_day.$model"
         :config="{mode: 'single', locale: flatpickrLocaleMapper[pickrLocale]}"
         class="form-input daterange-picker"
-        v-model="$v.params.attendance_day.$model"/>
-      <p class="form-input-hint" v-if="$v.params.attendance_day.$error">
+      />
+      <p
+        v-if="$v.params.attendance_day.$error"
+        class="form-input-hint"
+      >
         {{ $t('validation.required', { name: $t('label.annualLeaveDay') }) }}
       </p>
-      <p class="form-input-hint" v-if="errors.attendance_day">{{ $t('label.annualLeaveDay') }} {{ errors.attendance_day[0] }}</p>
+      <p
+        v-if="errors.attendance_day"
+        class="form-input-hint"
+      >
+        {{ $t('label.annualLeaveDay') }} {{ errors.attendance_day[0] }}
+      </p>
     </div>
-    <div class="form-group" :class="{ 'has-error': $v.params.reason.$error || errors.reason }">
+    <div
+      class="form-group"
+      :class="{ 'has-error': $v.params.reason.$error || errors.reason }"
+    >
       <label class="form-label">{{ $t('label.reason') }}</label>
-      <textarea class="form-input" v-model="$v.params.reason.$model"></textarea>
-      <p class="form-input-hint" v-if="$v.params.reason.$error">
+      <textarea
+        v-model="$v.params.reason.$model"
+        class="form-input"
+      />
+      <p
+        v-if="$v.params.reason.$error"
+        class="form-input-hint"
+      >
         {{ $t('validation.required', { name: $t('label.reason') }) }}
       </p>
-      <p class="form-input-hint" v-if="errors.reason">{{ $t('label.reason') }} {{ errors.reason[0] }}</p>
+      <p
+        v-if="errors.reason"
+        class="form-input-hint"
+      >
+        {{ $t('label.reason') }} {{ errors.reason[0] }}
+      </p>
     </div>
     <div class="form-group">
-      <button ref="createAnnualLeaveBtn" type="button" class="btn btn-success btn-submit" @click="create()" v-if="!request" :disabled="isDisable">
+      <button
+        v-if="!request"
+        ref="createAnnualLeaveBtn"
+        type="button"
+        class="btn btn-success btn-submit"
+        :disabled="isDisable"
+        @click="create()"
+      >
         {{ $t('button.common.submit') }}
       </button>
-      <button ref="updateAnnualLeaveBtn" type="button" class="btn btn-success btn-submit" @click="update()" v-if="request" :disabled="isDisable">
+      <button
+        v-if="request"
+        ref="updateAnnualLeaveBtn"
+        type="button"
+        class="btn btn-success btn-submit"
+        :disabled="isDisable"
+        @click="update()"
+      >
         {{ $t('button.common.save') }}
       </button>
     </div>
@@ -38,7 +78,19 @@ import annualLeaveValidate from '../validations/annual-leave-validate'
 const flatPickr = () => import('vue-flatpickr-component')
 
 export default {
-  name: 'annual-leave',
+  name: 'AnnualLeave',
+
+  components: {
+    flatPickr
+  },
+
+  mixins: [flatpickrLocale, handleSuccess, annualLeaveValidate],
+
+  props: {
+    request: Object,
+    type: String,
+    annualDay: String
+  },
 
   data() {
     return {
@@ -50,16 +102,9 @@ export default {
     }
   },
 
-  mixins: [flatpickrLocale, handleSuccess, annualLeaveValidate],
-
-  props: {
-    request: Object,
-    type: String,
-    annualDay: String
-  },
-
-  components: {
-    flatPickr
+  created() {
+    if (this.request) this.params = { ...this.request }
+    if (this.annualDay) this.params.attendance_day = this.annualDay
   },
 
   methods: {
@@ -90,11 +135,6 @@ export default {
           if (error.response && error.response.status === 422) this.errors = error.response.data.errors
         })
     }
-  },
-
-  created() {
-    if (this.request) this.params = { ...this.request }
-    if (this.annualDay) this.params.attendance_day = this.annualDay
   }
 }
 </script>

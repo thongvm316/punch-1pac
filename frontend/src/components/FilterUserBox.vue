@@ -1,18 +1,27 @@
 <template>
   <v-select
+    v-model="selectedUser"
     label="email"
     :filterable="false"
+    :placeholder="placeholder"
+    :options="optionUsers"
     @search="filterUsers"
     @input="updateSelectedUser"
-    :placeholder="placeholder"
-    v-model="selectedUser"
-    :options="optionUsers">
-    <template slot="option" slot-scope="option">
+  >
+    <template
+      slot="option"
+      slot-scope="option"
+    >
       <div class="tile tile-centered">
         <div class="tile-icon">
-          <img :src="option.avatar_url" class="avatar avatar-md">
+          <img
+            :src="option.avatar_url"
+            class="avatar avatar-md"
+          >
         </div>
-        <div class="tile-content">{{ option.name }} ({{ option.email }})</div>
+        <div class="tile-content">
+          {{ option.name }} ({{ option.email }})
+        </div>
       </div>
     </template>
     <span slot="no-options">{{ $t('filterUserBox.noOptions') }}</span>
@@ -25,11 +34,9 @@ import debounce from 'lodash.debounce'
 const vSelect = () => import('vue-select')
 
 export default {
-  data() {
-    return {
-      optionUsers: [],
-      selectedUser: null
-    }
+
+  components: {
+    vSelect
   },
 
   props: {
@@ -40,9 +47,11 @@ export default {
     placeholder: String,
     user: Object
   },
-
-  components: {
-    vSelect
+  data() {
+    return {
+      optionUsers: [],
+      selectedUser: null
+    }
   },
 
   methods: {
@@ -68,15 +77,15 @@ export default {
     }
   },
 
-  created() {
-    this.search('', false)
-  },
-
   watch: {
     user: function() {
       this.optionUsers = []
       this.selectedUser = this.user
     }
+  },
+
+  created() {
+    this.search('', false)
   }
 }
 </script>

@@ -1,7 +1,7 @@
 <template>
   <div>
     <h2>{{ $t('user.profile.title') }}</h2>
-    <user-profile :targetUser="currentUser"/>
+    <user-profile :target-user="currentUser" />
   </div>
 </template>
 

@@ -1,21 +1,40 @@
 <template>
   <main-layout :title="$t('attendances.groupTitle', { name: group.name })">
-    <group-tab :group-id="$route.params.id"/>
+    <group-tab :group-id="$route.params.id" />
 
     <div class="toolbar z-index-10 mt-5 clearfix">
       <flat-pickr
         :config="{mode: 'range', locale: flatpickrLocaleMapper[pickrLocale]}"
         class="form-input daterange-picker"
+        :value="getFormattedInitDateRange()"
         @on-close="onCloseFlatpickr"
-        :value="getFormattedInitDateRange()" />
-      <select class="form-select email-select" v-model="userId">
-        <option v-for="user in usersInGroup" :key="user.id" :value="user.id">{{ user.email }}</option>
+      />
+      <select
+        v-model="userId"
+        class="form-select email-select"
+      >
+        <option
+          v-for="user in usersInGroup"
+          :key="user.id"
+          :value="user.id"
+        >
+          {{ user.email }}
+        </option>
       </select>
 
-      <button v-if="isValidTime" class="btn btn-success float-right" @click="exportFile($event, { type: 'csv', requestPath: `/groups/${$route.params.id}/users/${$route.params.user_id}/report`, fileName: fileExportedName })">{{ $t('button.group.exportCSVGroupReport') }}</button>
+      <button
+        v-if="isValidTime"
+        class="btn btn-success float-right"
+        @click="exportFile($event, { type: 'csv', requestPath: `/groups/${$route.params.id}/users/${$route.params.user_id}/report`, fileName: fileExportedName })"
+      >
+        {{ $t('button.group.exportCSVGroupReport') }}
+      </button>
     </div>
 
-    <table v-if="isValidTime" class="table table-bordered has-fixed-head bg-light mt-5">
+    <table
+      v-if="isValidTime"
+      class="table table-bordered has-fixed-head bg-light mt-5"
+    >
       <thead>
         <th>{{ $t('tableHeader.date') }}</th>
         <th>{{ $t('tableHeader.check_in') }}</th>
@@ -26,13 +45,22 @@
         <th>{{ $t('tableHeader.working_hours') }}</th>
       </thead>
       <tbody>
-        <tr v-for="attendance in attendances" :key="attendance.id" :class="{'is-holiday': attendance.holiday, 'is-breakday': isBreakday(attendance)}">
+        <tr
+          v-for="attendance in attendances"
+          :key="attendance.id"
+          :class="{'is-holiday': attendance.holiday, 'is-breakday': isBreakday(attendance)}"
+        >
           <td>{{ getFormattedDate(attendance.day) }}</td>
           <td><span :class="{'label label-warning w-full text-bold-700': attendance.attending_status === 'attend_late'}">{{ attendance.attended_at ? attendance.attended_at : handleEmptyData(attendance) }}</span></td>
           <td><span :class="{'label label-error w-full text-bold-700': attendance.leaving_status === 'leave_early'}">{{ attendance.left_at ? attendance.left_at : handleEmptyData(attendance) }}</span></td>
           <td>{{ attendance.attending_status === 'attend_late' ? getFormattedHours(attendance.attend_late) : handleEmptyData(attendance) }}</td>
           <td>{{ attendance.leaving_status === 'leave_early' ? getFormattedHours(attendance.leave_early) : handleEmptyData(attendance) }}</td>
-          <td :class="{'is-overflow tooltip': getDayOffStatus(attendance).length > 1}" :data-tooltip="getDayOffStatus(attendance)"><span :class="{'text-notice text-bold-700' : attendance.off_status || attendance.holiday}">{{ getDayOffStatus(attendance) }}</span></td>
+          <td
+            :class="{'is-overflow tooltip': getDayOffStatus(attendance).length > 1}"
+            :data-tooltip="getDayOffStatus(attendance)"
+          >
+            <span :class="{'text-notice text-bold-700' : attendance.off_status || attendance.holiday}">{{ getDayOffStatus(attendance) }}</span>
+          </td>
           <td>{{ attendance.working_hours ? getFormattedHours(attendance.working_hours) : handleEmptyData(attendance) }}</td>
         </tr>
         <tr>
@@ -46,7 +74,12 @@
         </tr>
       </tbody>
     </table>
-    <p v-else class="mt-5">{{ $t('groups.report.no_data') }}</p>
+    <p
+      v-else
+      class="mt-5"
+    >
+      {{ $t('groups.report.no_data') }}
+    </p>
   </main-layout>
 </template>
 
@@ -60,6 +93,12 @@ const GroupTab = () => import('../components/GroupTab')
 const flatPickr = () => import('vue-flatpickr-component')
 
 export default {
+
+  components: {
+    MainLayout,
+    GroupTab,
+    flatPickr
+  },
   mixins: [flatpickrLocale, dateRangePicker, exportCsv],
 
   data() {
@@ -73,12 +112,6 @@ export default {
       dateContext: this.$moment().locale('en'),
       today: this.$moment()
     }
-  },
-
-  components: {
-    MainLayout,
-    GroupTab,
-    flatPickr
   },
 
   computed: {
@@ -182,12 +215,6 @@ export default {
     }
   },
 
-  created() {
-    this.params = this.initDateRange(this.currentCompany.monthly_report)
-    this.getUsersInGroup(this.$route.params.id)
-    if (!this.group) this.getGroup(this.$route.params.id)
-  },
-
   watch: {
     params: {
       handler: function() {
@@ -205,6 +232,12 @@ export default {
         this.formatAttendances(response.data, this.params)
       })
     }
+  },
+
+  created() {
+    this.params = this.initDateRange(this.currentCompany.monthly_report)
+    this.getUsersInGroup(this.$route.params.id)
+    if (!this.group) this.getGroup(this.$route.params.id)
   }
 }
 </script>

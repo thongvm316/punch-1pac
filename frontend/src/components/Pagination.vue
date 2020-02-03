@@ -1,20 +1,45 @@
 <template>
   <ul class="pagination mt-4">
-    <li ref="pagePrev" class="page-item" v-show="pager.current_page > 1">
-      <a @click="go(pager.current_page - 1)"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M16.67 0l2.83 2.829-9.339 9.175 9.339 9.167-2.83 2.829-12.17-11.996z"/></svg></a>
+    <li
+      v-show="pager.current_page > 1"
+      ref="pagePrev"
+      class="page-item"
+    >
+      <a @click="go(pager.current_page - 1)"><svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="currentColor"
+        viewBox="0 0 24 24"
+      ><path d="M16.67 0l2.83 2.829-9.339 9.175 9.339 9.167-2.83 2.829-12.17-11.996z" /></svg></a>
     </li>
-    <li ref="pageNumber" class="page-item" :class="{ active: n === pager.current_page }" v-for="(n, key) in items" :key="key">
-      <a href="#" @click.prevent="go(n)">{{ n }}</a>
+    <li
+      v-for="(n, key) in items"
+      ref="pageNumber"
+      :key="key"
+      class="page-item"
+      :class="{ active: n === pager.current_page }"
+    >
+      <a
+        href="#"
+        @click.prevent="go(n)"
+      >{{ n }}</a>
     </li>
-    <li ref="pageNext" class="page-item" v-show="pager.current_page + 1 <= pager.total_pages">
-      <a @click="go(pager.current_page + 1)"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M7.33 24l-2.83-2.829 9.339-9.175-9.339-9.167 2.83-2.829 12.17 11.996z"/></svg></a>
+    <li
+      v-show="pager.current_page + 1 <= pager.total_pages"
+      ref="pageNext"
+      class="page-item"
+    >
+      <a @click="go(pager.current_page + 1)"><svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="currentColor"
+        viewBox="0 0 24 24"
+      ><path d="M7.33 24l-2.83-2.829 9.339-9.175-9.339-9.167 2.83-2.829 12.17 11.996z" /></svg></a>
     </li>
   </ul>
 </template>
 
 <script>
 export default {
-  name: 'pagination',
+  name: 'Pagination',
 
   props: {
     action: {
@@ -40,6 +65,19 @@ export default {
     }
   },
 
+  watch: {
+    pager: {
+      handler: function() {
+        this.items = this.buildItems()
+      },
+      deep: true
+    }
+  },
+
+  mounted() {
+    this.items = this.buildItems()
+  },
+
   methods: {
     go(n) {
       document.activeElement.blur()
@@ -63,19 +101,6 @@ export default {
     fetchItems(page) {
       this.$store.dispatch(`${this.namespace}/${this.action}`, { page, per_page: this.pager.per_page })
     }
-  },
-
-  watch: {
-    pager: {
-      handler: function() {
-        this.items = this.buildItems()
-      },
-      deep: true
-    }
-  },
-
-  mounted() {
-    this.items = this.buildItems()
   }
 }
 </script>

@@ -20,7 +20,7 @@
 import { mapState } from 'vuex'
 
 export default {
-  name: 'app-footer',
+  name: 'AppFooter',
 
   computed: {
     ...mapState('initialStates', ['meta'])

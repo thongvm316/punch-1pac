@@ -1,10 +1,10 @@
 <template>
   <div id="app">
-    <app-header></app-header>
-    <router-view/>
-    <app-footer></app-footer>
-    <flash/>
-    <popup-change-password/>
+    <app-header />
+    <router-view />
+    <app-footer />
+    <flash />
+    <popup-change-password />
   </div>
 </template>
 
@@ -21,7 +21,7 @@ const Flash = () => import('./components/Flash')
 const PopupChangePassword = () => import('./components/PopupChangePassword')
 
 export default {
-  name: 'app',
+  name: 'App',
 
   components: {
     AppHeader,

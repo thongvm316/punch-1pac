@@ -73,14 +73,14 @@ const actions = {
         request: { admin_reason: params.admin_reason }
       }
     })
-    .then(response => {
-      commit(REJECT_GROUP_REQUEST, params)
-      return response
-    })
-    .catch(error => {
-      if (error.response && error.response.status === 422) commit(REJECT_GROUP_REQUEST_ERRORS, error.response.data)
-      throw error
-    })
+      .then(response => {
+        commit(REJECT_GROUP_REQUEST, params)
+        return response
+      })
+      .catch(error => {
+        if (error.response && error.response.status === 422) commit(REJECT_GROUP_REQUEST_ERRORS, error.response.data)
+        throw error
+      })
   }
 }
 
