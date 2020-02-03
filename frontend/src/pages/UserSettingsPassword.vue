@@ -95,8 +95,8 @@ import handleSuccess from '../mixins/handle-success'
 import userPasswordValidate from '../validations/user-password-validate'
 
 export default {
-
   mixins: [handleSuccess, userPasswordValidate],
+
   data() {
     return {
       updateParams: {
@@ -105,6 +105,14 @@ export default {
         password_confirmation: ''
       }
     }
+  },
+
+  computed: {
+    ...mapState('userPassword', ['errors'])
+  },
+
+  created() {
+    if (!isEmpty(this.errors)) this[CLEAR_USER_PASSWORD_ERRORS]()
   },
 
   methods: {
@@ -124,14 +132,6 @@ export default {
         if (!isEmpty(this.errors)) this[CLEAR_USER_PASSWORD_ERRORS]()
       })
     }
-  },
-
-  computed: {
-    ...mapState('userPassword', ['errors'])
-  },
-
-  created() {
-    if (!isEmpty(this.errors)) this[CLEAR_USER_PASSWORD_ERRORS]()
   }
 }
 </script>
