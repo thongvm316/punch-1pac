@@ -220,7 +220,7 @@ export default {
   created() {
     this.getRequests(this.params)
   },
-  
+
   methods: {
     toggleEditModal(request) {
       this.selectedRequest = request
