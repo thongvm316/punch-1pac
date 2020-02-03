@@ -164,14 +164,14 @@
       :object-id="selectedObject.id"
       :modal-open.sync="isOpenConfirmDialog"
     >
-      <p v-html="$t('group.confirmDialog.deactivateUserMsg', { name: selectedObject.name })" />
+      <p>{{ $t('group.confirmDialog.deactivateUserMsg', { name: selectedObject.name }) }}</p>
     </confirm-dialog>
 
     <confirm-dialog
       :title="$t('group.confirmDialog.deleteGroupTitle')"
       :modal-open.sync="isOpenDeleteGroupConfirmDialog"
     >
-      <p v-html="$t('group.confirmDialog.deleteGroupMsg', { name: selectedObject.name })" />
+      <p>{{ $t('group.confirmDialog.deleteGroupMsg', { name: selectedObject.name }) }}</p>
       <template slot="confirmBtn">
         <button
           type="button"
@@ -190,7 +190,7 @@
       :delete-object="localRemoveUser"
       :object-id="targetUser.id"
     >
-      <p v-html="$t('group.confirmDialog.removeUserMsg', { name: targetUser.name })" />
+      <p>{{ $t('group.confirmDialog.removeUserMsg', { name: targetUser.name }) }}</p>
       <template slot="confirm-btn">
         <button
           type="button"
@@ -271,6 +271,18 @@ export default {
     }
   },
 
+  watch: {
+    $route: function(val) {
+      this.getUsersInGroup(this.$route.params.id)
+      this.getGroup(this.$route.params.id)
+    }
+  },
+
+  created() {
+    this.getUsersInGroup(this.$route.params.id)
+    this.getGroup(this.$route.params.id)
+  },
+
   methods: {
     openDeleteGroupConfirmDialog() {
       this.selectedObject = this.group
@@ -314,18 +326,6 @@ export default {
         this[SET_FLASH_MESSAGE]({ message: this.$t('messages.group.addMemberSuccess') })
       })
     }
-  },
-
-  watch: {
-    $route: function(val) {
-      this.getUsersInGroup(this.$route.params.id)
-      this.getGroup(this.$route.params.id)
-    }
-  },
-
-  created() {
-    this.getUsersInGroup(this.$route.params.id)
-    this.getGroup(this.$route.params.id)
   }
 }
 </script>

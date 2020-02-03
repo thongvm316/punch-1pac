@@ -259,6 +259,14 @@ export default {
     ...mapState('initialStates', ['meta', 'currentCompany', 'companyErrors'])
   },
 
+  created() {
+    this[INITIAL_STATES_CLEAR_COMPANY_ERRORS]()
+
+    Object.keys(this.params).forEach(key => {
+      if (key !== 'logo') this.params[key] = this.currentCompany[key]
+    })
+  },
+
   methods: {
     ...mapActions('initialStates', ['updateCompany']),
 
@@ -277,14 +285,6 @@ export default {
       })
         .catch(() => { this.isDisable = false })
     }
-  },
-
-  created() {
-    this[INITIAL_STATES_CLEAR_COMPANY_ERRORS]()
-
-    Object.keys(this.params).forEach(key => {
-      if (key !== 'logo') this.params[key] = this.currentCompany[key]
-    })
   }
 }
 </script>

@@ -35,37 +35,37 @@
       </thead>
       <tbody>
         <tr
-          v-for="attendance in formattedAttendances"
-          :key="attendance.id"
+          v-for="attendanceItem in formattedAttendances"
+          :key="attendanceItem.id"
         >
-          <td>{{ attendance.day | moment_l }}</td>
-          <td :class="{ 'text-warning': attendance.attending_status === 'attend_late', 'text-success': attendance.attending_status === 'attend_ok'}">
-            {{ attendance.attended_at }}
+          <td>{{ attendanceItem.day | moment_l }}</td>
+          <td :class="{ 'text-warning': attendanceItem.attending_status === 'attend_late', 'text-success': attendanceItem.attending_status === 'attend_ok'}">
+            {{ attendanceItem.attended_at }}
           </td>
-          <td :class="{ 'text-error': attendance.leaving_status === 'leave_early', 'text-success': attendance.leaving_status === 'leave_ok'}">
-            {{ attendance.left_at }}
+          <td :class="{ 'text-error': attendanceItem.leaving_status === 'leave_early', 'text-success': attendanceItem.leaving_status === 'leave_ok'}">
+            {{ attendanceItem.left_at }}
           </td>
           <td>
             <span
-              v-if="attendance.attending_status"
+              v-if="attendanceItem.attending_status"
               class="label"
-              :class="{ 'label-warning': attendance.attending_status === 'attend_late', 'label-success': attendance.attending_status === 'attend_ok'}"
-            >{{ $t(`meta.attendance_statuses.${attendance.attending_status}`) }}</span>
+              :class="{ 'label-warning': attendanceItem.attending_status === 'attend_late', 'label-success': attendanceItem.attending_status === 'attend_ok'}"
+            >{{ $t(`meta.attendance_statuses.${attendanceItem.attending_status}`) }}</span>
             <span
-              v-if="attendance.leaving_status"
+              v-if="attendanceItem.leaving_status"
               class="label"
-              :class="{ 'label-error': attendance.leaving_status === 'leave_early', 'label-success': attendance.leaving_status === 'leave_ok'}"
-            >{{ $t(`meta.attendance_statuses.${attendance.leaving_status}`) }}</span>
+              :class="{ 'label-error': attendanceItem.leaving_status === 'leave_early', 'label-success': attendanceItem.leaving_status === 'leave_ok'}"
+            >{{ $t(`meta.attendance_statuses.${attendanceItem.leaving_status}`) }}</span>
             <span
-              v-if="attendance.off_status"
+              v-if="attendanceItem.off_status"
               class="label label-notice"
-            >{{ $t(`meta.attendance_statuses.${attendance.off_status}`) }}</span>
+            >{{ $t(`meta.attendance_statuses.${attendanceItem.off_status}`) }}</span>
           </td>
           <td>
             <button
               class="btn btn-action btn-link tooltip"
               :data-tooltip="$t('tooltip.request.add')"
-              @click="toggleAddModal(attendance)"
+              @click="toggleAddModal(attendanceItem)"
             >
               <svg
                 width="24px"
@@ -128,19 +128,6 @@ export default {
     ...mapGetters('attendances', ['formattedAttendances'])
   },
 
-  methods: {
-    ...mapActions('attendances', ['getAttendances']),
-
-    toggleAddModal(attendance) {
-      this.isAddModalOpen = !this.isAddModalOpen
-      this.attendance = attendance
-    },
-
-    onInputDatepicker() {
-      this.params.date = this.$moment(this.params.date).format('YYYY-MM-DD')
-    }
-  },
-
   watch: {
     params: {
       handler: function() {
@@ -152,6 +139,19 @@ export default {
 
   created() {
     this.getAttendances(this.params)
+  },
+
+  methods: {
+    ...mapActions('attendances', ['getAttendances']),
+
+    toggleAddModal(attendance) {
+      this.isAddModalOpen = !this.isAddModalOpen
+      this.attendance = attendance
+    },
+
+    onInputDatepicker() {
+      this.params.date = this.$moment(this.params.date).format('YYYY-MM-DD')
+    }
   }
 }
 </script>

@@ -64,10 +64,9 @@
                     >
                   </div>
                   <div class="tile-content">
-                    <p
-                      class="tile-title"
-                      v-html="$t(`activity.${activity.activitable_type.toLowerCase()}.${activity.kind}`, { name: activity.user.name })"
-                    />
+                    <p class="tile-title">
+                      {{ $t(`activity.${activity.activitable_type.toLowerCase()}.${activity.kind}`, { name: activity.user.name }) }}
+                    </p>
                     <p class="tile-subtitle">
                       {{ activity.created_at | moment_activity }}
                     </p>
@@ -107,16 +106,16 @@ const FullCalendar = () => import('../components/FullCalendar.vue')
 const StatusCards = () => import('../components/StatusCards.vue')
 
 export default {
-  methods: {
-    ...mapActions('activities', ['getActivities', 'getMoreActivities']),
-
-    ...mapActions('groupPendingRequests', ['getGroupPendingRequests'])
-  },
-
   components: {
     MainLayout,
     FullCalendar,
     StatusCards
+  },
+
+  computed: {
+    ...mapState('activities', ['pager', 'activities']),
+
+    ...mapState('groupPendingRequests', ['pendingRequests'])
   },
 
   created() {
@@ -124,10 +123,10 @@ export default {
     if (this.$auth('Page', this.currentUser).canViewPendingBlock()) this.getGroupPendingRequests()
   },
 
-  computed: {
-    ...mapState('activities', ['pager', 'activities']),
+  methods: {
+    ...mapActions('activities', ['getActivities', 'getMoreActivities']),
 
-    ...mapState('groupPendingRequests', ['pendingRequests'])
+    ...mapActions('groupPendingRequests', ['getGroupPendingRequests'])
   }
 }
 </script>

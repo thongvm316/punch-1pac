@@ -126,7 +126,7 @@
       :object-id="selectedObject.id"
       :modal-open.sync="isOpenConfirmDialog"
     >
-      <p v-html="$t('company.users.confirmDialog.deleteUserMsg', { name: selectedObject.name })" />
+      <p>{{ $t('company.users.confirmDialog.deleteUserMsg', { name: selectedObject.name }) }}</p>
     </confirm-dialog>
 
     <modal
@@ -182,6 +182,14 @@ export default {
     }
   },
 
+  computed: {
+    ...mapGetters('companyUsers', ['filterByEmail'])
+  },
+
+  created() {
+    this.fetchUsers({ include_deactivated: true })
+  },
+
   methods: {
     ...mapActions('companyUsers', ['deleteUser', 'fetchUsers', 'deactivateUser', 'activateUser']),
 
@@ -193,14 +201,6 @@ export default {
     toggleAddMultiUserModal() {
       this.isAddMultiUserModalOpen = !this.isAddMultiUserModalOpen
     }
-  },
-
-  computed: {
-    ...mapGetters('companyUsers', ['filterByEmail'])
-  },
-
-  created() {
-    this.fetchUsers({ include_deactivated: true })
   }
 }
 </script>

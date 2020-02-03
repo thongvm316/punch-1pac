@@ -106,6 +106,7 @@ export default {
     AllowedIpForm,
     ConfirmDialog
   },
+
   mixins: [modal],
 
   data() {
@@ -114,6 +115,14 @@ export default {
       targetIp: null,
       isOpenDeleteIPConfirmDialog: false
     }
+  },
+
+  computed: {
+    ...mapState('companyAllowedIPs', ['allowedIPs'])
+  },
+
+  created() {
+    this.fetchIPs()
   },
 
   methods: {
