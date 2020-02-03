@@ -83,12 +83,12 @@ Rails.application.configure do
   #   config.logger    = ActiveSupport::TaggedLogging.new(logger)
   # end
 
-  config.logger = Logglier.new("https://logs-01.loggly.com/inputs/#{ENV['LOGGLY_TOKEN']}/tag/rails/", threaded: true)
-  config.lograge.enabled = true
-  config.lograge.formatter = Lograge::Formatters::Json.new
-  config.lograge.custom_options = ->(event) do
-    event.payload[:params].except('controller', 'action')
-  end
+  # config.logger = Logglier.new("https://logs-01.loggly.com/inputs/#{ENV['LOGGLY_TOKEN']}/tag/rails/", threaded: true)
+  # config.lograge.enabled = true
+  # config.lograge.formatter = Lograge::Formatters::Json.new
+  # config.lograge.custom_options = ->(event) do
+  #   event.payload[:params].except('controller', 'action')
+  # end
 
   config.action_mailer.perform_deliveries = true
   config.action_mailer.default_options = { from: 'PUNCH <no-reply@punch.ooo>' }

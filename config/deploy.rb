@@ -137,6 +137,12 @@ namespace :deploy do
   end
 end
 
+task :log do
+  on roles(:app) do
+    execute "cd #{shared_path}/log && tail -f #{fetch(:stage)}.log"
+  end
+end
+
 before 'deploy:check', 'deploy:upload_yml'
 
 after 'deploy:upload_yml', 'yarn:install'
