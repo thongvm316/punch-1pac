@@ -6,6 +6,13 @@ const state = {
   attendances: []
 }
 
+const getters = {
+  filterAttendances: state => query => {
+    const regex = new RegExp(`${query.trim()}`, 'gi')
+    return query ? state.attendances.filter(attendance => (attendance.user.name.match(regex)) || (attendance.user.email.match(regex))) : state.attendances
+  }
+}
+
 const mutations = {
   [RECEIVE_GROUP_ATTENDANCES](state, payload) {
     state.pager = payload.meta
@@ -29,6 +36,7 @@ const actions = {
 export default {
   namespaced: true,
   state,
+  getters,
   mutations,
   actions
 }
