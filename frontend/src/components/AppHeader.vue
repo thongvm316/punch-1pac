@@ -3,39 +3,108 @@
     <div class="container">
       <div class="navbar">
         <section class="navbar-section">
-          <router-link to="/dashboard" class="navbar-brand mr-4">
-            <img :src="currentCompany.logo_url" :alt="currentCompany.name">
+          <router-link
+            to="/dashboard"
+            class="navbar-brand mr-4"
+          >
+            <img
+              :src="currentCompany.logo_url"
+              :alt="currentCompany.name"
+            >
           </router-link>
-          <router-link class="mr-5" to="/attendances">{{ $t('header.attendances') }}</router-link>
-          <router-link class="mr-5" to="/requests">{{ $t('header.requests') }}</router-link>
-          <router-link class="mr-5" to="/groups" v-if="$auth('Page', currentUser).canViewGroups()">{{ $t('header.groups') }}</router-link>
+          <router-link
+            class="mr-5"
+            to="/attendances"
+          >
+            {{ $t('header.attendances') }}
+          </router-link>
+          <router-link
+            class="mr-5"
+            to="/requests"
+          >
+            {{ $t('header.requests') }}
+          </router-link>
+          <router-link
+            v-if="$auth('Page', currentUser).canViewGroups()"
+            class="mr-5"
+            to="/groups"
+          >
+            {{ $t('header.groups') }}
+          </router-link>
         </section>
         <section class="navbar-section">
-          <punch/>
-          <annual-leave/>
-          <notifications/>
-          <div class="dropdown" :class="{ active: isDropdownActive }" @click="toggleDropdown" ref="dropdownMenu">
+          <punch />
+          <annual-leave />
+          <notifications />
+          <div
+            ref="dropdownMenu"
+            class="dropdown"
+            :class="{ active: isDropdownActive }"
+            @click="toggleDropdown"
+          >
             <a class="dropdown-toggle">
               <div class="tile tile-centered mr-2">
                 <div class="tile-icon">
-                  <img :src="currentUser.avatar_url" class="avatar avatar-md" :alt="currentUser.name">
+                  <img
+                    :src="currentUser.avatar_url"
+                    class="avatar avatar-md"
+                    :alt="currentUser.name"
+                  >
                 </div>
               </div>
             </a>
-            <ul class="menu triangle-top" v-if="!isLangSelectActive">
-              <li class="menu-item"><router-link to="/settings">{{ $t('header.settings') }}</router-link></li>
-              <li class="menu-item"><router-link to="/company/settings" v-if="$auth('Page', currentUser).canViewCompanySettings()">{{ $t('header.companySettings') }}</router-link></li>
-              <li class="menu-item"><a @click="toggleLangSelect" ref="toggleLangSelectBtn">{{ $t('header.changeLanguage') }}...</a></li>
-              <li class="menu-item"><a href="#" @click="logout($event)" ref="logoutBtn">{{ $t('header.logout') }}</a></li>
+            <ul
+              v-if="!isLangSelectActive"
+              class="menu triangle-top"
+            >
+              <li class="menu-item">
+                <router-link to="/settings">
+                  {{ $t('header.settings') }}
+                </router-link>
+              </li>
+              <li class="menu-item">
+                <router-link
+                  v-if="$auth('Page', currentUser).canViewCompanySettings()"
+                  to="/company/settings"
+                >
+                  {{ $t('header.companySettings') }}
+                </router-link>
+              </li>
+              <li class="menu-item">
+                <a
+                  ref="toggleLangSelectBtn"
+                  @click="toggleLangSelect"
+                >{{ $t('header.changeLanguage') }}...</a>
+              </li>
+              <li class="menu-item">
+                <a
+                  ref="logoutBtn"
+                  href="#"
+                  @click="logout($event)"
+                >{{ $t('header.logout') }}</a>
+              </li>
             </ul>
 
-            <ul class="menu triangle-top lang-select" v-else>
+            <ul
+              v-else
+              class="menu triangle-top lang-select"
+            >
               <li class="header">
-                <a class="btn-back" @click="toggleLangSelect"></a>
+                <a
+                  class="btn-back"
+                  @click="toggleLangSelect"
+                />
                 <p>{{ $t('header.languages') }}</p>
               </li>
-              <li class="menu-item" v-for="(language, key) in meta.languages" :key="key">
-                <a @click="updateUser(language)" :class="{ active: language === $i18n.locale }">{{ $t(`meta.languages.${language}`) }}</a>
+              <li
+                v-for="(language, key) in meta.languages"
+                :key="key"
+                class="menu-item"
+              >
+                <a
+                  :class="{ active: language === $i18n.locale }"
+                  @click="updateUser(language)"
+                >{{ $t(`meta.languages.${language}`) }}</a>
               </li>
             </ul>
           </div>
@@ -55,14 +124,14 @@ const Punch = () => import('./Punch')
 const AnnualLeave = () => import('./AnnualLeave')
 
 export default {
-  name: 'app-header',
-  mixins: [dropdown],
+  name: 'AppHeader',
 
   components: {
     Notifications,
     AnnualLeave,
     Punch
   },
+  mixins: [dropdown],
 
   methods: {
     ...mapMutations('initialStates', [INITIAL_STATES_UPDATE_USER_LANGUAGE]),

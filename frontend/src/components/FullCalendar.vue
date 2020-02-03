@@ -3,21 +3,53 @@
     <div class="calendar calendar-lg">
       <div class="calendar-nav">
         <div class="calendar-nav-section">
-          <h3 class="m-0">{{ dateContext.locale(currentUser.language) | moment_lll }}</h3>
+          <h3 class="m-0">
+            {{ dateContext.locale(currentUser.language) | moment_lll }}
+          </h3>
         </div>
         <div class="calendar-nav-section">
-          <button ref="lastMonthBtn" class="btn btn-secondary btn-action" @click="lastMonth">
-            <svg width="14px" height="24px" viewBox="0 0 14 24" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="currentColor" fill-rule="evenodd">
-              <path d="M.72223,12.85657l10.8297,10.78914a1.22274,1.22274,0,0,0,1.7215,0,1.2062,1.2062,0,0,0,0-1.712L3.30272,
-              12.0006l9.9695-9.93308a1.20763,1.20763,0,0,0,0-1.71323,1.22274,1.22274,0,0,0-1.7215,0L.721,11.14343A1.21956,1.21956,0,0,0,.72223,12.85657Z"/>
+          <button
+            ref="lastMonthBtn"
+            class="btn btn-secondary btn-action"
+            @click="lastMonth"
+          >
+            <svg
+              width="14px"
+              height="24px"
+              viewBox="0 0 14 24"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              fill="currentColor"
+              fill-rule="evenodd"
+            >
+              <path
+                d="M.72223,12.85657l10.8297,10.78914a1.22274,1.22274,0,0,0,1.7215,0,1.2062,1.2062,0,0,0,0-1.712L3.30272,
+              12.0006l9.9695-9.93308a1.20763,1.20763,0,0,0,0-1.71323,1.22274,1.22274,0,0,0-1.7215,0L.721,11.14343A1.21956,1.21956,0,0,0,.72223,12.85657Z"
+              />
             </svg>
           </button>
-          <button ref="currentMonthBtn" class="btn btn-secondary" @click="currentMonth">
+          <button
+            ref="currentMonthBtn"
+            class="btn btn-secondary"
+            @click="currentMonth"
+          >
             {{ $t('dashboard.calendarToday') }}
           </button>
-          <button ref="nextMonthBtn" class="btn btn-secondary btn-action" @click="nextMonth">
-            <svg width="14px" height="24px" viewBox="0 0 14 24" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="currentColor" fill-rule="evenodd">
-              <path d="M18.2777749,11.1434337 L7.44807493,0.354286569 C6.97287493,-0.118095523 6.20297493,-0.118095523 5.72657493,0.354286569 C5.25137493,0.82666866 5.25137493,1.59394075 5.72657493,2.06632284 L15.6972749,11.999402 L5.72777493,21.9324813 C5.25257493,22.4048633 5.25257493,23.1721354 5.72777493,23.6457134 C6.20297493,24.1180955 6.97407493,24.1180955 7.44927493,23.6457134 L18.2789749,12.8565663 C18.7469749,12.3890674 18.7469749,11.6097367 18.2777749,11.1434337 Z"></path>
+          <button
+            ref="nextMonthBtn"
+            class="btn btn-secondary btn-action"
+            @click="nextMonth"
+          >
+            <svg
+              width="14px"
+              height="24px"
+              viewBox="0 0 14 24"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              fill="currentColor"
+              fill-rule="evenodd"
+            >
+              <path d="M18.2777749,11.1434337 L7.44807493,0.354286569 C6.97287493,-0.118095523 6.20297493,-0.118095523 5.72657493,0.354286569 C5.25137493,0.82666866 5.25137493,1.59394075 5.72657493,2.06632284 L15.6972749,11.999402 L5.72777493,21.9324813 C5.25257493,22.4048633 5.25257493,23.1721354 5.72777493,23.6457134 C6.20297493,24.1180955 6.97407493,24.1180955 7.44927493,23.6457134 L18.2789749,12.8565663 C18.7469749,12.3890674 18.7469749,11.6097367 18.2777749,11.1434337 Z" />
             </svg>
           </button>
         </div>
@@ -25,38 +57,100 @@
 
       <div class="calendar-container">
         <div class="calendar-header">
-          <div class="calendar-date h5 text-dark" v-for="day in days" :key="day">{{ day }}</div>
+          <div
+            v-for="day in days"
+            :key="day"
+            class="calendar-date h5 text-dark"
+          >
+            {{ day }}
+          </div>
         </div>
         <div class="calendar-body">
-          <div class="calendar-date prev-month disabled" v-for="date in lastDaysPreviousMonth" :key="date">
-            <button class="date-item">{{ date }}</button>
+          <div
+            v-for="date in lastDaysPreviousMonth"
+            :key="date"
+            class="calendar-date prev-month disabled"
+          >
+            <button class="date-item">
+              {{ date }}
+            </button>
           </div>
-          <calendar-date :calendar-attendance="attendance" :today="today" v-for="attendance in attendances" :key="attendance.day" @click.native="toggleConfirmModal(attendance)"/>
-          <div class="calendar-date next-month disabled" v-for="date in firstDaysNextMonth" :key="date">
-            <button class="date-item">{{ date }}</button>
+          <calendar-date
+            v-for="attendance in attendances"
+            :key="attendance.day"
+            :calendar-attendance="attendance"
+            :today="today"
+            @click.native="toggleConfirmModal(attendance)"
+          />
+          <div
+            v-for="date in firstDaysNextMonth"
+            :key="date"
+            class="calendar-date next-month disabled"
+          >
+            <button class="date-item">
+              {{ date }}
+            </button>
           </div>
         </div>
       </div>
     </div>
 
-    <modal ref="requestModal" :title="titleModal" :modal-open.sync="isRequestModalOpen">
+    <modal
+      ref="requestModal"
+      :title="titleModal"
+      :modal-open.sync="isRequestModalOpen"
+    >
       <div class="form-group">
         <label class="form-label">{{ $t('label.kind') }}</label>
-        <select class="form-select" v-model="selectedRequestKind" @change="changeTitleConfirmModal">
-          <option value=""></option>
-          <option :value="kind" v-for="kind in ['attendance', 'annual_leave']" :key="kind">{{ $t(`modal.request.kind.${kind}`) }}</option>}
+        <select
+          v-model="selectedRequestKind"
+          class="form-select"
+          @change="changeTitleConfirmModal"
+        >
+          <option value="" />
+          <option
+            v-for="kind in ['attendance', 'annual_leave']"
+            :key="kind"
+            :value="kind"
+          >
+            {{ $t(`modal.request.kind.${kind}`) }}
+          </option>}
         </select>
       </div>
-      <request-form v-if="this.selectedRequestKind === 'attendance'" :attendance="attendance" @afterModify="isRequestModalOpen = false"></request-form>
-      <annual-leave-form v-if="this.selectedRequestKind === 'annual_leave'" :annual-day="annualLeaveDay" @finishRequest="isRequestModalOpen = false"/>
+      <request-form
+        v-if="this.selectedRequestKind === 'attendance'"
+        :attendance="attendance"
+        @afterModify="isRequestModalOpen = false"
+      />
+      <annual-leave-form
+        v-if="this.selectedRequestKind === 'annual_leave'"
+        :annual-day="annualLeaveDay"
+        @finishRequest="isRequestModalOpen = false"
+      />
     </modal>
 
-    <modal ref="editModal" :title="$t('modal.request.addTitle')" :modal-open.sync="isEditModalOpen">
-      <request-form v-if="isEditModalOpen" :attendance="attendance" @afterModify="isEditModalOpen = false"></request-form>
+    <modal
+      ref="editModal"
+      :title="$t('modal.request.addTitle')"
+      :modal-open.sync="isEditModalOpen"
+    >
+      <request-form
+        v-if="isEditModalOpen"
+        :attendance="attendance"
+        @afterModify="isEditModalOpen = false"
+      />
     </modal>
 
-    <modal ref="addModal" :title="$t('modal.annualLeave.title')" :modal-open.sync="isAddModalOpen">
-      <annual-leave-form v-if="isAddModalOpen" :annual-day="annualLeaveDay" @finishRequest="isAddModalOpen = false"/>
+    <modal
+      ref="addModal"
+      :title="$t('modal.annualLeave.title')"
+      :modal-open.sync="isAddModalOpen"
+    >
+      <annual-leave-form
+        v-if="isAddModalOpen"
+        :annual-day="annualLeaveDay"
+        @finishRequest="isAddModalOpen = false"
+      />
     </modal>
   </div>
 </template>
@@ -69,7 +163,13 @@ const RequestForm = () => import('../components/RequestForm')
 const AnnualLeaveForm = () => import('../components/AnnualLeaveForm')
 
 export default {
-  name: 'full-calendar',
+  name: 'FullCalendar',
+
+  components: {
+    CalendarDate,
+    RequestForm,
+    AnnualLeaveForm
+  },
 
   mixins: [modal],
 
@@ -85,12 +185,6 @@ export default {
       selectedRequestKind: {},
       isRequestModalOpen: false
     }
-  },
-
-  components: {
-    CalendarDate,
-    RequestForm,
-    AnnualLeaveForm
   },
 
   computed: {
@@ -241,14 +335,14 @@ export default {
     }
   },
 
-  created() {
-    this.getCalendarAttendances(this.formattedDateContext).then(response => this.formatAttendances(response.data))
-  },
-
   watch: {
     dateContext(newValue) {
       this.getCalendarAttendances(newValue.format('YYYY-MM-DD')).then(response => this.formatAttendances(response.data))
     }
+  },
+
+  created() {
+    this.getCalendarAttendances(this.formattedDateContext).then(response => this.formatAttendances(response.data))
   }
 }
 </script>

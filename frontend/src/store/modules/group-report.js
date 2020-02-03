@@ -38,13 +38,13 @@ const actions = {
         to_date: params.to_date
       }
     })
-    .then(response => {
-      commit(FETCH_GROUP_REPORT, response.data)
-      return response
-    })
-    .catch(error => {
-      throw error
-    })
+      .then(response => {
+        commit(FETCH_GROUP_REPORT, response.data)
+        return response
+      })
+      .catch(error => {
+        throw error
+      })
   },
 
   getPersonalReport({ commit }, params) {
@@ -58,13 +58,13 @@ const actions = {
         to_date: params.to_date
       }
     })
-    .then(response => {
-      commit(FETCH_PERSONAL_REPORT, response.data)
-      return response
-    })
-    .catch(error => {
-      throw error
-    })
+      .then(response => {
+        commit(FETCH_PERSONAL_REPORT, response.data)
+        return response
+      })
+      .catch(error => {
+        throw error
+      })
   }
 }
 

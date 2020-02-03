@@ -1,23 +1,52 @@
 <template>
   <main-layout :title="$t('groups.title')">
     <div class="toolbar mt-5 clearfix">
-      <input type="search" class="form-input" :placeholder="$t('placeholder.filterByName')" v-model="name">
-      <button type="button" class="btn btn-success float-right" @click="toggleAddModal()" v-if="$auth('Group', currentUser).canCreate()">
+      <input
+        v-model="name"
+        type="search"
+        class="form-input"
+        :placeholder="$t('placeholder.filterByName')"
+      >
+      <button
+        v-if="$auth('Group', currentUser).canCreate()"
+        type="button"
+        class="btn btn-success float-right"
+        @click="toggleAddModal()"
+      >
         {{ $t('button.group.add') }}
       </button>
     </div>
 
     <div class="columns mt-5">
-      <div class="column col-3 mb-4" v-for="group in filterGroups(name)" :key="group.id">
+      <div
+        v-for="group in filterGroups(name)"
+        :key="group.id"
+        class="column col-3 mb-4"
+      >
         <div class="box box-group">
           <div class="box-header">
             <div class="tile">
               <div class="tile-icon">
-                <img class="group-avatar" :src="group.image_url" :alt="group.name">
+                <img
+                  class="group-avatar"
+                  :src="group.image_url"
+                  :alt="group.name"
+                >
               </div>
               <div class="tile-content">
-                <router-link tag="h2" :to="`/groups/${group.id}`" class="box-title">{{ group.name | limitedLengthTitle }}</router-link>
-                <p class="group-description" v-if="group.description">{{ group.description | limitedLengthDescription }}</p>
+                <router-link
+                  tag="h2"
+                  :to="`/groups/${group.id}`"
+                  class="box-title"
+                >
+                  {{ group.name | limitedLengthTitle }}
+                </router-link>
+                <p
+                  v-if="group.description"
+                  class="group-description"
+                >
+                  {{ group.description | limitedLengthDescription }}
+                </p>
                 <span>{{ $tc('groups.member', group.users_count, { count: group.users_count }) }}</span>
               </div>
             </div>
@@ -26,8 +55,14 @@
       </div>
     </div>
 
-    <modal :title="$t('modal.group.addTitle')" :modal-open.sync="isAddModalOpen">
-      <group-form v-if="isAddModalOpen" @afterModify="isAddModalOpen = false"></group-form>
+    <modal
+      :title="$t('modal.group.addTitle')"
+      :modal-open.sync="isAddModalOpen"
+    >
+      <group-form
+        v-if="isAddModalOpen"
+        @afterModify="isAddModalOpen = false"
+      />
     </modal>
   </main-layout>
 </template>
@@ -41,13 +76,6 @@ const MainLayout = () => import('../layouts/Main')
 const GroupForm = () => import('../components/GroupForm')
 
 export default {
-  mixins: [modal],
-
-  data() {
-    return {
-      name: ''
-    }
-  },
 
   filters: {
     filterUserNum(userNum) {
@@ -66,6 +94,13 @@ export default {
   components: {
     MainLayout,
     GroupForm
+  },
+  mixins: [modal],
+
+  data() {
+    return {
+      name: ''
+    }
   },
 
   computed: {

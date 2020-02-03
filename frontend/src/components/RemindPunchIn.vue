@@ -1,6 +1,13 @@
 <template>
-  <div class="toast toast-error text-center mt-2" v-if="currentUser.forgot_punch_in_days_in_month.length > 0 && open">
-    <button ref="btnCloseToast" class="btn btn-clear float-right" @click="close"></button>
+  <div
+    v-if="currentUser.forgot_punch_in_days_in_month.length > 0 && open"
+    class="toast toast-error text-center mt-2"
+  >
+    <button
+      ref="btnCloseToast"
+      class="btn btn-clear float-right"
+      @click="close"
+    />
     {{ $t('remind.message', { days: formatDays }) }}
   </div>
 </template>
@@ -10,7 +17,7 @@ import { mapState, mapMutations } from 'vuex'
 import { UPDATE_REMIND_PUNCH_IN } from '../store/mutation-types'
 
 export default {
-  name: 'remind-punch-in',
+  name: 'RemindPunchIn',
 
   computed: {
     ...mapState('remindPunchIn', ['open']),

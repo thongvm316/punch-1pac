@@ -2,25 +2,39 @@
   <div>
     <div class="form-group">
       <label class="form-label">{{ $t('label.ipAddress') }}</label>
-      <input class="form-input" type="text" v-model.trim="$v.params.$model" :class="{ 'is-error': $v.params.$error }">
-      <p class="form-input-hint text-error" v-if="$v.params.$error">
+      <input
+        v-model.trim="$v.params.$model"
+        class="form-input"
+        type="text"
+        :class="{ 'is-error': $v.params.$error }"
+      >
+      <p
+        v-if="$v.params.$error"
+        class="form-input-hint text-error"
+      >
         <span v-if="!$v.params.required">{{ $t('validation.required', { name: $t('label.ipAddress') }) }}</span>
         <span v-else-if="!$v.params.isValid">{{ $t('validation.invalid', { name: $t('label.ipAddress') }) }}</span>
       </p>
     </div>
     <div class="form-group">
       <button
+        v-if="!targetIp"
         ref="createAllowedIpButton"
         class="btn btn-success btn-submit"
+        :disabled="isDisabled"
         @click="localAddIp"
-        v-if="!targetIp"
-        :disabled="isDisabled">{{ $t('button.common.submit') }}</button>
+      >
+        {{ $t('button.common.submit') }}
+      </button>
       <button
+        v-if="targetIp"
         ref="editAllowedIpButton"
         class="btn btn-success btn-submit"
+        :disabled="isDisabled"
         @click="localEditIp"
-        v-if="targetIp"
-        :disabled="isDisabled">{{ $t('button.common.save') }}</button>
+      >
+        {{ $t('button.common.save') }}
+      </button>
     </div>
   </div>
 </template>
@@ -31,13 +45,13 @@ import handleSuccess from '../mixins/handle-success'
 import allowedIpValidate from '../validations/allowed-ip-validate'
 
 export default {
-  name: 'allowed-ip-form',
+  name: 'AllowedIpForm',
+
+  mixins: [allowedIpValidate, handleSuccess],
 
   props: {
     targetIp: Object
   },
-
-  mixins: [allowedIpValidate, handleSuccess],
 
   data() {
     return {

@@ -1,7 +1,16 @@
 <template>
-  <select class="form-select" @change="updateValue($event)">
-    <slot name="placeholder"></slot>
-    <option :value="group.id" v-for="group in groups" :key="group.id">{{ group.name }}</option>
+  <select
+    class="form-select"
+    @change="updateValue($event)"
+  >
+    <slot name="placeholder" />
+    <option
+      v-for="group in groups"
+      :key="group.id"
+      :value="group.id"
+    >
+      {{ group.name }}
+    </option>
   </select>
 </template>
 
@@ -9,7 +18,7 @@
 import axios from 'axios'
 
 export default {
-  name: 'group-select',
+  name: 'GroupSelect',
 
   props: {
     value: String
@@ -19,6 +28,10 @@ export default {
     return {
       groups: []
     }
+  },
+
+  created() {
+    this.fetchAllGroups()
   },
 
   methods: {
@@ -36,10 +49,6 @@ export default {
     updateValue(e) {
       this.$emit('input', e.target.value)
     }
-  },
-
-  created() {
-    this.fetchAllGroups()
   }
 }
 </script>
