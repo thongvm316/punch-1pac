@@ -36,7 +36,7 @@
               stroke-width="2"
               stroke-linecap="round"
               stroke-linejoin="round"
-class="feather feather-smartphone"
+              class="feather feather-smartphone"
             ><rect
               x="5"
               y="2"
@@ -61,7 +61,7 @@ class="feather feather-smartphone"
               stroke-width="2"
               stroke-linecap="round"
               stroke-linejoin="round"
-class="feather feather-tablet"
+              class="feather feather-tablet"
             ><rect
               x="4"
               y="2"
@@ -110,7 +110,7 @@ class="feather feather-tablet"
               stroke-width="2"
               stroke-linecap="round"
               stroke-linejoin="round"
-class="feather feather-smartphone"
+              class="feather feather-smartphone"
             ><rect
               x="5"
               y="2"
@@ -135,7 +135,7 @@ class="feather feather-smartphone"
               stroke-width="2"
               stroke-linecap="round"
               stroke-linejoin="round"
-class="feather feather-tablet"
+              class="feather feather-tablet"
             ><rect
               x="4"
               y="2"
@@ -180,10 +180,6 @@ export default {
     }
   },
 
-  methods: {
-    ...mapActions('userSessions', ['fetchSessions', 'deleteSession'])
-  },
-
   computed: {
     ...mapState('initialStates', ['currentUser']),
 
@@ -192,6 +188,10 @@ export default {
 
   created() {
     this.fetchSessions()
+  },
+
+  methods: {
+    ...mapActions('userSessions', ['fetchSessions', 'deleteSession'])
   }
 }
 </script>
