@@ -10,11 +10,11 @@
           {{ $t('placeholder.chooseCountry') }}
         </option>
         <option
-          v-for="(country, key) in meta.holiday_countries"
+          v-for="(holidayCountry, key) in meta.holiday_countries"
           :key="key"
-          :value="country"
+          :value="holidayCountry"
         >
-          {{ $t(`meta.holiday_countries.${country}`) }}
+          {{ $t(`meta.holiday_countries.${holidayCountry}`) }}
         </option>
       </select>
       <button
@@ -66,17 +66,17 @@
       </thead>
       <tbody>
         <tr
-          v-for="holiday in filterHolidays(name)"
-          :key="holiday.id"
+          v-for="holidayItem in filterHolidays(name)"
+          :key="holidayItem.id"
         >
-          <td>{{ holiday.name }}</td>
-          <td>{{ holiday.started_at | moment_ll }}</td>
-          <td>{{ holiday.ended_at | moment_ll }}</td>
+          <td>{{ holidayItem.name }}</td>
+          <td>{{ holidayItem.started_at | moment_ll }}</td>
+          <td>{{ holidayItem.ended_at | moment_ll }}</td>
           <td>
             <button
               class="btn btn-action btn-link tooltip"
               :data-tooltip="$t('tooltip.holiday.edit')"
-              @click="toggleUpdateModal(holiday)"
+              @click="toggleUpdateModal(holidayItem)"
             >
               <svg
                 width="24px"
@@ -90,7 +90,7 @@
             <button
               class="btn btn-action btn-link tooltip"
               :data-tooltip="$t('tooltip.holiday.delete')"
-              @click="localDeleteHoliday(holiday)"
+              @click="localDeleteHoliday(holidayItem)"
             >
               <svg
                 width="22px"
@@ -172,6 +172,22 @@ export default {
     }
   },
 
+  computed: {
+    ...mapState('initialStates', ['meta']),
+
+    ...mapGetters('companyHolidays', ['filterHolidays'])
+  },
+
+  watch: {
+    year: function() {
+      this.fetchHolidays(this.year)
+    }
+  },
+
+  created() {
+    this.fetchHolidays(this.year)
+  },
+
   methods: {
     ...mapActions('companyHolidays', ['fetchHolidays', 'deleteHoliday', 'importNationalHolidays']),
 
@@ -208,22 +224,6 @@ export default {
       this.holiday = holiday
       this.isOpenDeleteHolidayConfirmDialog = true
     }
-  },
-
-  computed: {
-    ...mapState('initialStates', ['meta']),
-
-    ...mapGetters('companyHolidays', ['filterHolidays'])
-  },
-
-  watch: {
-    year: function() {
-      this.fetchHolidays(this.year)
-    }
-  },
-
-  created() {
-    this.fetchHolidays(this.year)
   }
 }
 </script>
