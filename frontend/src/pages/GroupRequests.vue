@@ -247,6 +247,27 @@ export default {
     ...mapState('group', ['group'])
   },
 
+  watch: {
+    params: {
+      handler: function() {
+        this.debouncedGetRequests()
+      },
+      deep: true
+    }
+  },
+
+  created() {
+    this.params = {
+      ...this.params,
+      ...{
+        from_date: this.$moment().format('YYYY-MM-DD'),
+        to_date: this.$moment().format('YYYY-MM-DD')
+      }
+    }
+    if (!this.group) this.getGroup(this.$route.params.id)
+    this.getRequests(this.params)
+  },
+
   methods: {
     getStatusClass(status) {
       switch (status) {
@@ -276,27 +297,6 @@ export default {
     debouncedGetRequests: debounce(function() {
       this.getRequests(Object.assign({ page: 1 }, this.params))
     }, 350)
-  },
-
-  watch: {
-    params: {
-      handler: function() {
-        this.debouncedGetRequests()
-      },
-      deep: true
-    }
-  },
-
-  created() {
-    this.params = {
-      ...this.params,
-      ...{
-        from_date: this.$moment().format('YYYY-MM-DD'),
-        to_date: this.$moment().format('YYYY-MM-DD')
-      }
-    }
-    if (!this.group) this.getGroup(this.$route.params.id)
-    this.getRequests(this.params)
   }
 }
 </script>

@@ -208,6 +208,19 @@ export default {
     ...mapState('initialStates', ['meta'])
   },
 
+  watch: {
+    params: {
+      handler: function() {
+        this.getRequests(Object.assign({ page: 1 }, this.params))
+      },
+      deep: true
+    }
+  },
+
+  created() {
+    this.getRequests(this.params)
+  },
+  
   methods: {
     toggleEditModal(request) {
       this.selectedRequest = request
@@ -230,19 +243,6 @@ export default {
     onInputDatepicker() {
       this.params.date = this.$moment(this.params.date).format('YYYY-MM-DD')
     }
-  },
-
-  watch: {
-    params: {
-      handler: function() {
-        this.getRequests(Object.assign({ page: 1 }, this.params))
-      },
-      deep: true
-    }
-  },
-
-  created() {
-    this.getRequests(this.params)
   }
 }
 </script>

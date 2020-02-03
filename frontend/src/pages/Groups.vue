@@ -109,6 +109,10 @@ export default {
     ...mapGetters('groups', ['filterGroups'])
   },
 
+  created() {
+    this.getGroups()
+  },
+
   methods: {
     ...mapActions('groups', ['getGroups']),
 
@@ -118,10 +122,6 @@ export default {
       if (!isEmpty(this.errors)) this[CLEAR_GROUPS_ERRORS]()
       this.isAddModalOpen = !this.isAddModalOpen
     }
-  },
-
-  created() {
-    this.getGroups()
   }
 }
 </script>
