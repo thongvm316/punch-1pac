@@ -12,8 +12,8 @@
         <input type="search" class="form-input filter-input" :placeholder="$t('placeholder.filterByUser')" v-model="searchText">
       </div>
       <div v-if="isValidTime" class="float-right">
-        <button class="btn btn-success mx-2" @click="exportFile($event,{ type: 'zip', requestPath: `/groups/${$route.params.id}/report`, fileName: `report_${group.name}_${dateData.from_date}-${dateData.to_date}` })">{{ $t('button.group.exportZIPGroupReport') }}</button>
-        <button class="btn btn-success" @click="exportFile($event, { type: 'csv', requestPath: `/groups/${$route.params.id}/report`, fileName: `report_${group.name}_${dateData.from_date}-${dateData.to_date}` })">{{ $t('button.group.exportCSVGroupReport') }}</button>
+        <button class="btn btn-success mx-2" @click="exportFile($event,{ type: 'zip', requestPath: `/groups/${$route.params.id}/report`, fileName: `report_${group.name}_${params.from_date}-${params.to_date}` })">{{ $t('button.group.exportZIPGroupReport') }}</button>
+        <button class="btn btn-success" @click="exportFile($event, { type: 'csv', requestPath: `/groups/${$route.params.id}/report`, fileName: `report_${group.name}_${params.from_date}-${params.to_date}` })">{{ $t('button.group.exportCSVGroupReport') }}</button>
       </div>
     </div>
 
@@ -59,19 +59,20 @@
 
 <script>
 import flatpickrLocale from '../mixins/flatpickr-locale'
-import groupReport from '../mixins/group-report'
+import dateRangePicker from '../mixins/date-range-picker'
+import exportCsv from '../mixins/export-csv'
 import { mapState, mapActions } from 'vuex'
 const MainLayout = () => import('../layouts/Main')
 const GroupTab = () => import('../components/GroupTab')
 const flatPickr = () => import('vue-flatpickr-component')
 
 export default {
-  mixins: [flatpickrLocale, groupReport],
+  mixins: [flatpickrLocale, dateRangePicker, exportCsv],
 
   data() {
     return {
       searchText: '',
-      dateData: {
+      params: {
         from_date: '',
         to_date: ''
       },
@@ -118,7 +119,7 @@ export default {
     },
 
     isValidTime() {
-      return this.$moment(this.dateData.date).isSameOrBefore(this.$moment(), 'month')
+      return this.$moment(this.params.date).isSameOrBefore(this.$moment(), 'month')
     }
   },
 
@@ -134,13 +135,14 @@ export default {
   },
 
   created() {
+    this.params = this.initDateRange(this.currentCompany.monthly_report)
     this.getGroup(this.$route.params.id)
   },
 
   watch: {
-    dateData: {
+    params: {
       handler: function() {
-        this.getGroupReport({ group_id: this.$route.params.id, ...this.dateData })
+        this.getGroupReport({ group_id: this.$route.params.id, ...this.params })
       },
       deep: true
     }

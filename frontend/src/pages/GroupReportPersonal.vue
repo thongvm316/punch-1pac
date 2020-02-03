@@ -52,19 +52,20 @@
 
 <script>
 import flatpickrLocale from '../mixins/flatpickr-locale'
-import groupReport from '../mixins/group-report'
+import dateRangePicker from '../mixins/date-range-picker'
+import exportCsv from '../mixins/export-csv'
 import { mapState, mapActions } from 'vuex'
 const MainLayout = () => import('../layouts/Main')
 const GroupTab = () => import('../components/GroupTab')
 const flatPickr = () => import('vue-flatpickr-component')
 
 export default {
-  mixins: [flatpickrLocale, groupReport],
+  mixins: [flatpickrLocale, dateRangePicker, exportCsv],
 
   data() {
     return {
       attendances: [],
-      dateData: {
+      params: {
         from_date: '',
         to_date: ''
       },
@@ -89,13 +90,13 @@ export default {
 
     fileExportedName() {
       const targetUserExportedName = this.usersInGroup.find(user => user.id === parseInt(this.userId)).name.replace(/\s/g, '')
-      const dateExported = `${this.$moment(this.dateData.from_date).format('YYYY-MM-DD')}-${this.$moment(this.dateData.to_date).format('YYYY-MM-DD')}`
+      const dateExported = `${this.$moment(this.params.from_date).format('YYYY-MM-DD')}-${this.$moment(this.params.to_date).format('YYYY-MM-DD')}`
 
       return `report_${targetUserExportedName}_${dateExported}`
     },
 
     isValidTime() {
-      return this.$moment(this.dateData.to_date).isBetween(this.currentUser.created_at, this.today, 'month', [])
+      return this.$moment(this.params.to_date).isBetween(this.currentUser.created_at, this.today, 'month', [])
     }
   },
 
@@ -182,25 +183,26 @@ export default {
   },
 
   created() {
+    this.params = this.initDateRange(this.currentCompany.monthly_report)
     this.getUsersInGroup(this.$route.params.id)
     if (!this.group) this.getGroup(this.$route.params.id)
   },
 
   watch: {
-    dateData: {
+    params: {
       handler: function() {
-        this.getPersonalReport({ group_id: this.$route.params.id, user_id: this.userId, ...this.dateData, type: 'range' }).then(response => {
-          this.formatAttendances(response.data, this.dateData)
+        this.getPersonalReport({ group_id: this.$route.params.id, user_id: this.userId, ...this.params, type: 'range' }).then(response => {
+          this.formatAttendances(response.data, this.params)
         })
-        this.dateContext = this.$moment(this.dateData.date)
+        this.dateContext = this.$moment(this.params.date)
       },
       deep: true
     },
 
     userId() {
       this.$router.push({ params: { user_id: this.userId } })
-      this.getPersonalReport({ group_id: this.$route.params.id, user_id: this.userId, ...this.dateData, type: 'range' }).then(response => {
-        this.formatAttendances(response.data, this.dateData)
+      this.getPersonalReport({ group_id: this.$route.params.id, user_id: this.userId, ...this.params, type: 'range' }).then(response => {
+        this.formatAttendances(response.data, this.params)
       })
     }
   }

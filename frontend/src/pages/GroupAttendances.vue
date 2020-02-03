@@ -6,7 +6,8 @@
       <flat-pickr
         :config="{ mode: 'range', locale: flatpickrLocaleMapper[pickrLocale] }"
         class="form-input daterange-picker"
-        v-model="dateRange"/>
+        @on-close="onCloseFlatpickr"
+        :value="getFormattedInitDateRange()"/>
       <attendance-status-select v-model="params.status">
         <option slot="placeholder" value="">{{ $t('placeholder.filterByStatus') }}</option>
       </attendance-status-select>
@@ -52,7 +53,8 @@
 
 <script>
 import flatpickrLocale from '../mixins/flatpickr-locale'
-import { mapState, mapActions, mapGetters } from 'vuex'
+import dateRangePicker from '../mixins/date-range-picker'
+import { mapState, mapActions } from 'vuex'
 import debounce from 'lodash.debounce'
 const MainLayout = () => import('../layouts/Main')
 const Pagination = () => import('../components/Pagination')
@@ -61,16 +63,15 @@ const AttendanceStatusSelect = () => import('../components/AttendanceStatusSelec
 const flatPickr = () => import('vue-flatpickr-component')
 
 export default {
-  mixins: [flatpickrLocale],
+  mixins: [flatpickrLocale, dateRangePicker],
 
   data() {
     return {
-      dateRange: [this.$moment().format('YYYY-MM-DD'), this.$moment().format('YYYY-MM-DD')],
       params: {
         self: null,
         user_id: '',
-        from_date: this.$moment().format('YYYY-MM-DD'),
-        to_date: this.$moment().format('YYYY-MM-DD'),
+        from_date: '',
+        to_date: '',
         group_id: this.$route.params.id,
         name_or_email: '',
         status: ''
@@ -89,9 +90,7 @@ export default {
   computed: {
     ...mapState('groupAttendances', ['pager', 'attendances']),
 
-    ...mapState('group', ['group']),
-
-    ...mapGetters('groupAttendances', ['filterAttendances'])
+    ...mapState('group', ['group'])
   },
 
   methods: {
@@ -100,11 +99,18 @@ export default {
     ...mapActions('group', ['getGroup']),
 
     debouncedGetAttendances: debounce(function() {
-      this.getAttendances(Object.assign({ page: 1 }, this.params))
+      this.getAttendances({ ...this.params, page: 1 })
     }, 350)
   },
 
   created() {
+    this.params = {
+      ...this.params,
+      ...{
+        from_date: this.$moment().format('YYYY-MM-DD'),
+        to_date: this.$moment().format('YYYY-MM-DD')
+      }
+    }
     if (!this.group) this.getGroup(this.$route.params.id)
     this.getAttendances(this.params)
   },
@@ -115,12 +121,6 @@ export default {
         this.debouncedGetAttendances()
       },
       deep: true
-    },
-
-    dateRange: function() {
-      const dates = this.dateRange.split(' ')
-      this.params.from_date = dates[0]
-      this.params.to_date = dates[2]
     }
   }
 }
