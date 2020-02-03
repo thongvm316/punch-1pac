@@ -133,6 +133,31 @@ export default {
     }
   },
 
+  watch: {
+    params: {
+      handler: function() {
+        this.getPersonalReport({ group_id: this.$route.params.id, user_id: this.userId, ...this.params, type: 'range' }).then(response => {
+          this.formatAttendances(response.data, this.params)
+        })
+        this.dateContext = this.$moment(this.params.date)
+      },
+      deep: true
+    },
+
+    userId() {
+      this.$router.push({ params: { user_id: this.userId } })
+      this.getPersonalReport({ group_id: this.$route.params.id, user_id: this.userId, ...this.params, type: 'range' }).then(response => {
+        this.formatAttendances(response.data, this.params)
+      })
+    }
+  },
+
+  created() {
+    this.params = this.initDateRange(this.currentCompany.monthly_report)
+    this.getUsersInGroup(this.$route.params.id)
+    if (!this.group) this.getGroup(this.$route.params.id)
+  },
+
   methods: {
     ...mapActions('group', ['getGroup', 'getUsersInGroup']),
 
@@ -213,31 +238,6 @@ export default {
       if (this.isBreakday(date)) return ''
       return '-'
     }
-  },
-
-  watch: {
-    params: {
-      handler: function() {
-        this.getPersonalReport({ group_id: this.$route.params.id, user_id: this.userId, ...this.params, type: 'range' }).then(response => {
-          this.formatAttendances(response.data, this.params)
-        })
-        this.dateContext = this.$moment(this.params.date)
-      },
-      deep: true
-    },
-
-    userId() {
-      this.$router.push({ params: { user_id: this.userId } })
-      this.getPersonalReport({ group_id: this.$route.params.id, user_id: this.userId, ...this.params, type: 'range' }).then(response => {
-        this.formatAttendances(response.data, this.params)
-      })
-    }
-  },
-
-  created() {
-    this.params = this.initDateRange(this.currentCompany.monthly_report)
-    this.getUsersInGroup(this.$route.params.id)
-    if (!this.group) this.getGroup(this.$route.params.id)
   }
 }
 </script>

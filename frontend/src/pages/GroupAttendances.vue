@@ -133,16 +133,6 @@ export default {
     ...mapState('group', ['group'])
   },
 
-  methods: {
-    ...mapActions('groupAttendances', ['getAttendances']),
-
-    ...mapActions('group', ['getGroup']),
-
-    debouncedGetAttendances: debounce(function() {
-      this.getAttendances({ ...this.params, page: 1 })
-    }, 350)
-  },
-
   watch: {
     params: {
       handler: function() {
@@ -162,6 +152,16 @@ export default {
     }
     if (!this.group) this.getGroup(this.$route.params.id)
     this.getAttendances(this.params)
+  },
+
+  methods: {
+    ...mapActions('groupAttendances', ['getAttendances']),
+
+    ...mapActions('group', ['getGroup']),
+
+    debouncedGetAttendances: debounce(function() {
+      this.getAttendances({ ...this.params, page: 1 })
+    }, 350)
   }
 }
 </script>

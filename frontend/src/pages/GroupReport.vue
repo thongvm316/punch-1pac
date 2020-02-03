@@ -190,17 +190,6 @@ export default {
     }
   },
 
-  methods: {
-    ...mapActions('group', ['getGroup']),
-
-    ...mapActions('groupReport', ['getGroupReport']),
-
-    sortBy(key) {
-      this.sortKey = key
-      this.sortOrders = this.sortOrders === 'asc' ? 'desc' : 'asc'
-    }
-  },
-
   watch: {
     params: {
       handler: function() {
@@ -213,6 +202,17 @@ export default {
   created() {
     this.params = this.initDateRange(this.currentCompany.monthly_report)
     this.getGroup(this.$route.params.id)
+  },
+
+  methods: {
+    ...mapActions('group', ['getGroup']),
+
+    ...mapActions('groupReport', ['getGroupReport']),
+
+    sortBy(key) {
+      this.sortKey = key
+      this.sortOrders = this.sortOrders === 'asc' ? 'desc' : 'asc'
+    }
   }
 }
 </script>
