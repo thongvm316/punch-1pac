@@ -21,7 +21,10 @@ export default {
   name: 'GroupSelect',
 
   props: {
-    value: String
+    value: {
+      type: String,
+      default: ''
+    }
   },
 
   data() {

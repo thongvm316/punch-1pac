@@ -111,7 +111,10 @@ export default {
   mixins: [flatpickrLocale, handleSuccess, holidayFormValidate],
 
   props: {
-    targetHoliday: Object
+    targetHoliday: {
+      type: Object,
+      default: null
+    }
   },
 
   data() {
@@ -122,6 +125,15 @@ export default {
         ended_at: ''
       }
     }
+  },
+
+  computed: {
+    ...mapState('companyHolidays', ['errors'])
+  },
+
+  created() {
+    if (!isEmpty(this.errors)) this[CLEAR_HOLIDAY_ERRORS]()
+    if (this.targetHoliday) this.params = { ...this.targetHoliday }
   },
 
   methods: {
@@ -149,15 +161,6 @@ export default {
         })
       })
     }
-  },
-
-  computed: {
-    ...mapState('companyHolidays', ['errors'])
-  },
-
-  created() {
-    if (!isEmpty(this.errors)) this[CLEAR_HOLIDAY_ERRORS]()
-    if (this.targetHoliday) this.params = { ...this.targetHoliday }
   }
 }
 </script>

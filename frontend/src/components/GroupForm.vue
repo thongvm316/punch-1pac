@@ -100,7 +100,10 @@ export default {
   mixins: [handleSuccess, groupFormValidate],
 
   props: {
-    targetGroup: Object
+    targetGroup: {
+      type: Object,
+      default: null
+    }
   },
 
   data() {
@@ -112,6 +115,10 @@ export default {
       },
       errors: {}
     }
+  },
+
+  created() {
+    if (this.targetGroup) this.params = { ...this.targetGroup }
   },
 
   methods: {
@@ -150,10 +157,6 @@ export default {
       if (!files.length) return
       this.params.image = files[0]
     }
-  },
-
-  created() {
-    if (this.targetGroup) this.params = { ...this.targetGroup }
   }
 }
 </script>
