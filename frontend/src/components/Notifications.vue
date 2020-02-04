@@ -44,9 +44,10 @@
                 >
               </div>
               <div class="tile-content">
-                <p class="tile-title">
-                  {{ $t(`notification.${headerNotification.activitable_type.toLowerCase()}.${headerNotification.kind}`, { name: headerNotification.user.name }) }}
-                </p>
+                <p
+                  class="tile-title"
+                  v-html="$t(`notification.${headerNotification.activitable_type.toLowerCase()}.${headerNotification.kind}`, { name: headerNotification.user.name })"
+                />
                 <p class="tile-subtitle">
                   {{ headerNotification.created_at | moment_activity }}
                 </p>
