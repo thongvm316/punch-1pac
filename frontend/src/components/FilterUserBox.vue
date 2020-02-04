@@ -34,7 +34,6 @@ import debounce from 'lodash.debounce'
 const vSelect = () => import('vue-select')
 
 export default {
-
   components: {
     vSelect
   },
@@ -44,14 +43,32 @@ export default {
       type: Object,
       required: true
     },
-    placeholder: String,
-    user: Object
+    placeholder: {
+      type: String,
+      default: ''
+    },
+    user: {
+      type: Object,
+      default: null
+    }
   },
+
   data() {
     return {
       optionUsers: [],
       selectedUser: null
     }
+  },
+
+  watch: {
+    user: function() {
+      this.optionUsers = []
+      this.selectedUser = this.user
+    }
+  },
+
+  created() {
+    this.search('', false)
   },
 
   methods: {
@@ -75,17 +92,6 @@ export default {
     updateSelectedUser() {
       this.$emit('update:user', this.selectedUser)
     }
-  },
-
-  watch: {
-    user: function() {
-      this.optionUsers = []
-      this.selectedUser = this.user
-    }
-  },
-
-  created() {
-    this.search('', false)
   }
 }
 </script>

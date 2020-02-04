@@ -87,9 +87,18 @@ export default {
   mixins: [flatpickrLocale, handleSuccess, annualLeaveValidate],
 
   props: {
-    request: Object,
-    type: String,
-    annualDay: String
+    request: {
+      type: Object,
+      default: null
+    },
+    type: {
+      type: String,
+      default: ''
+    },
+    annualDay: {
+      type: String,
+      default: ''
+    }
   },
 
   data() {
