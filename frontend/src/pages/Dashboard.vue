@@ -65,7 +65,10 @@
                   </div>
                   <div class="tile-content">
                     <p class="tile-title">
-                      {{ $t(`activity.${activity.activitable_type.toLowerCase()}.${activity.kind}`, { name: activity.user.name }) }}
+                      <span class="text-bold-600">
+                        {{ activity.user.name }}
+                      </span>
+                      {{ $t(`activity.${activity.activitable_type.toLowerCase()}.${activity.kind}`) }}
                     </p>
                     <p class="tile-subtitle">
                       {{ activity.created_at | moment_activity }}
