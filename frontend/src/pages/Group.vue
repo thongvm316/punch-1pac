@@ -164,14 +164,14 @@
       :object-id="selectedObject.id"
       :modal-open.sync="isOpenConfirmDialog"
     >
-      <p>{{ $t('group.confirmDialog.deactivateUserMsg', { name: selectedObject.name }) }}</p>
+      <p v-html="$t('group.confirmDialog.deactivateUserMsg', { name: selectedObject.name })"/>
     </confirm-dialog>
 
     <confirm-dialog
       :title="$t('group.confirmDialog.deleteGroupTitle')"
       :modal-open.sync="isOpenDeleteGroupConfirmDialog"
     >
-      <p>{{ $t('group.confirmDialog.deleteGroupMsg', { name: selectedObject.name }) }}</p>
+      <p v-html="$t('group.confirmDialog.deleteGroupMsg', { name: selectedObject.name })" />
       <template slot="confirmBtn">
         <button
           type="button"
@@ -190,7 +190,7 @@
       :delete-object="localRemoveUser"
       :object-id="targetUser.id"
     >
-      <p>{{ $t('group.confirmDialog.removeUserMsg', { name: targetUser.name }) }}</p>
+      <p v-html="$t('group.confirmDialog.removeUserMsg', { name: targetUser.name })" />
       <template slot="confirm-btn">
         <button
           type="button"

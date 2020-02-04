@@ -64,12 +64,10 @@
                     >
                   </div>
                   <div class="tile-content">
-                    <p class="tile-title">
-                      <span class="text-bold-600">
-                        {{ activity.user.name }}
-                      </span>
-                      {{ $t(`activity.${activity.activitable_type.toLowerCase()}.${activity.kind}`) }}
-                    </p>
+                    <p
+                      class="tile-title"
+                      v-html="$t(`activity.${activity.activitable_type.toLowerCase()}.${activity.kind}`, { name: activity.user.name })"
+                    />
                     <p class="tile-subtitle">
                       {{ activity.created_at | moment_activity }}
                     </p>
