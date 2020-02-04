@@ -62,14 +62,6 @@ export default {
     }
   },
 
-  methods: {
-    ...mapActions('statusCards', ['getStatuses']),
-
-    onInputDatepicker() {
-      this.month = this.$moment(this.month).format('YYYY-MM-DD')
-    }
-  },
-
   watch: {
     month: function() {
       this.getStatuses(this.month)
@@ -78,6 +70,14 @@ export default {
 
   created() {
     this.getStatuses(this.month)
+  },
+
+  methods: {
+    ...mapActions('statusCards', ['getStatuses']),
+
+    onInputDatepicker() {
+      this.month = this.$moment(this.month).format('YYYY-MM-DD')
+    }
   }
 }
 </script>

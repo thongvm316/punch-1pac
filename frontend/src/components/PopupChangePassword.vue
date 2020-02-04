@@ -58,6 +58,10 @@ export default {
     }
   },
 
+  created() {
+    this.open = !this.currentUser.password_changed
+  },
+
   methods: {
     ...mapMutations('initialStates', [INITIAL_STATES_UPDATE_PASSWORD_CHANGED]),
 
@@ -65,10 +69,6 @@ export default {
       this[INITIAL_STATES_UPDATE_PASSWORD_CHANGED](true)
       this.open = !this.currentUser.password_changed
     }
-  },
-
-  created() {
-    this.open = !this.currentUser.password_changed
   }
 }
 </script>

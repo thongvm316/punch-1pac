@@ -21,10 +21,6 @@ export default {
     ...mapState('flash', ['message', 'type', 'timeout'])
   },
 
-  methods: {
-    ...mapMutations('flash', [SET_FLASH_MESSAGE])
-  },
-
   watch: {
     message: function(newMsg) {
       if (newMsg) {
@@ -33,6 +29,10 @@ export default {
         }, this.timeout)
       }
     }
+  },
+
+  methods: {
+    ...mapMutations('flash', [SET_FLASH_MESSAGE])
   }
 }
 </script>

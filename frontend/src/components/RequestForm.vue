@@ -137,8 +137,14 @@ export default {
   mixins: [flatpickrLocale, handleSuccess, requestFormValidate],
 
   props: {
-    attendance: Object,
-    request: Object
+    attendance: {
+      type: Object,
+      default: null
+    },
+    request: {
+      type: Object,
+      default: null
+    }
   },
 
   data() {
@@ -155,6 +161,21 @@ export default {
 
   computed: {
     ...mapState('requests', ['errors'])
+  },
+
+  created() {
+    if (!isEmpty(this.errors)) this[CLEAR_REQUEST_ERRORS]()
+
+    if (this.attendance) {
+      this.day = this.params.attendance_day = this.attendance.day
+      const statuses = ['attended_at', 'left_at']
+      statuses.forEach(key => {
+        this.params[key] = this.attendance[key]
+      })
+    } else if (this.request) {
+      this.day = this.request.attendance_day
+      this.params = { ...this.request }
+    }
   },
 
   methods: {
@@ -178,21 +199,6 @@ export default {
           message: this.$t('messages.request.updateSuccess')
         })
       })
-    }
-  },
-
-  created() {
-    if (!isEmpty(this.errors)) this[CLEAR_REQUEST_ERRORS]()
-
-    if (this.attendance) {
-      this.day = this.params.attendance_day = this.attendance.day
-      const statuses = ['attended_at', 'left_at']
-      statuses.forEach(key => {
-        this.params[key] = this.attendance[key]
-      })
-    } else if (this.request) {
-      this.day = this.request.attendance_day
-      this.params = { ...this.request }
     }
   }
 }
