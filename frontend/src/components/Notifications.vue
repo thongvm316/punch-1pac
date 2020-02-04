@@ -30,30 +30,29 @@
           ref="notiList"
         >
           <li
-            v-for="notification in headerNotifications"
-            :key="notification.id"
-            :class="{ 'notification-pending': notification.activitable.status === 'pending' }"
-            @click="openRequestModal(notification)"
+            v-for="headerNotification in headerNotifications"
+            :key="headerNotification.id"
+            :class="{ 'notification-pending': headerNotification.activitable.status === 'pending' }"
+            @click="openRequestModal(headerNotification)"
           >
             <div class="tile tile-centered tile-activity">
               <div class="tile-icon">
                 <img
-                  :src="notification.user.avatar_url"
+                  :src="headerNotification.user.avatar_url"
                   class="avatar avatar-md"
-                  :alt="notification.user.name"
+                  :alt="headerNotification.user.name"
                 >
               </div>
               <div class="tile-content">
-                <p
-                  class="tile-title"
-                  v-html="$t(`notification.${notification.activitable_type.toLowerCase()}.${notification.kind}`, { name: notification.user.name })"
-                />
+                <p class="tile-title">
+                  {{ $t(`notification.${headerNotification.activitable_type.toLowerCase()}.${headerNotification.kind}`, { name: headerNotification.user.name }) }}
+                </p>
                 <p class="tile-subtitle">
-                  {{ notification.created_at | moment_activity }}
+                  {{ headerNotification.created_at | moment_activity }}
                 </p>
               </div>
               <div
-                v-if="notification.activitable.status === 'pending'"
+                v-if="headerNotification.activitable.status === 'pending'"
                 class="tile-action"
               >
                 <span class="label label-warning">{{ $t('meta.request_statuses.pending') }}</span>
@@ -176,6 +175,10 @@ export default {
     }
   },
 
+  created() {
+    this.getHeaderNotifications()
+  },
+
   methods: {
     loadMoreOnScroll() {
       let el = this.$refs.notiList
@@ -213,10 +216,6 @@ export default {
     isEditable(notification) {
       return ['create', 'update'].includes(notification.kind) && notification.activitable_type === 'Request' && !['approved', 'rejected'].includes(notification.activitable.status)
     }
-  },
-
-  created() {
-    this.getHeaderNotifications()
   }
 }
 </script>
