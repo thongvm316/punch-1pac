@@ -126,7 +126,7 @@
       :object-id="selectedObject.id"
       :modal-open.sync="isOpenConfirmDialog"
     >
-      <p>{{ $t('company.users.confirmDialog.deleteUserMsg', { name: selectedObject.name }) }}</p>
+      <p v-html="$t('company.users.confirmDialog.deleteUserMsg', { name: selectedObject.name })" />
     </confirm-dialog>
 
     <modal
