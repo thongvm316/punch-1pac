@@ -59,6 +59,20 @@ export default {
     }
   },
 
+  computed: {
+    ...mapState('punch', ['isInited', 'attendance'])
+  },
+
+  created() {
+    if (!this.isInited) this[PUNCH_INIT_ATTENDANCE](window.initialStates().attendance)
+    this.updateCurrentTime()
+    this.timer = setInterval(this.updateCurrentTime, 1 * 1000)
+  },
+
+  destroyed() {
+    clearInterval(this.timer)
+  },
+
   methods: {
     updateCurrentTime() {
       this.currentTime = this.$moment().format('HH:mm:ss')
@@ -88,20 +102,6 @@ export default {
         this[SET_FLASH_MESSAGE]({ message: this.$t('header.punchOutSuccess', { at: response.data.left_at }) })
       })
     }
-  },
-
-  computed: {
-    ...mapState('punch', ['isInited', 'attendance'])
-  },
-
-  created() {
-    if (!this.isInited) this[PUNCH_INIT_ATTENDANCE](window.initialStates().attendance)
-    this.updateCurrentTime()
-    this.timer = setInterval(this.updateCurrentTime, 1 * 1000)
-  },
-
-  destroyed() {
-    clearInterval(this.timer)
   }
 }
 </script>

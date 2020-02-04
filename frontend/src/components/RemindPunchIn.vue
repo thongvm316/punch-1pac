@@ -23,9 +23,8 @@ export default {
     ...mapState('remindPunchIn', ['open']),
 
     formatDays() {
-      if (this.currentUser.forgot_punch_in_days_in_month.length) {
-        return this.currentUser.forgot_punch_in_days_in_month.map(day => this.$moment(day).format('L')).join(' , ')
-      }
+      let forgotDays = this.currentUser.forgot_punch_in_days_in_month
+      return forgotDays.length ? forgotDays.map(day => this.$moment(day).format('L')).join(' , ') : null
     }
   },
 

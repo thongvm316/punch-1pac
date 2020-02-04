@@ -112,6 +112,10 @@ const GroupSelect = () => import('./GroupSelect.vue')
 export default {
   name: 'UserAddForm',
 
+  components: {
+    GroupSelect
+  },
+
   mixins: [handleSuccess, userAddValidate],
 
   data() {
@@ -128,10 +132,6 @@ export default {
 
   computed: {
     ...mapState('initialStates', ['meta'])
-  },
-
-  components: {
-    GroupSelect
   },
 
   methods: {

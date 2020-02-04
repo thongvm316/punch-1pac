@@ -131,7 +131,12 @@ export default {
     AnnualLeave,
     Punch
   },
+
   mixins: [dropdown],
+
+  computed: {
+    ...mapState('initialStates', ['currentCompany', 'meta'])
+  },
 
   methods: {
     ...mapMutations('initialStates', [INITIAL_STATES_UPDATE_USER_LANGUAGE]),
@@ -159,10 +164,6 @@ export default {
         this[INITIAL_STATES_UPDATE_USER_LANGUAGE](language)
       })
     }
-  },
-
-  computed: {
-    ...mapState('initialStates', ['currentCompany', 'meta'])
   }
 }
 </script>
