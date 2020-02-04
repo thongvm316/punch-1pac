@@ -1,12 +1,12 @@
 export default {
   attendance: {
-    punch_in: '<span class="text-bold-600">{name}</span> punched in',
-    punch_out: '<span class="text-bold-600">{name}</span> punched out'
+    punch_in: 'punched in',
+    punch_out: 'punched out'
   },
   request: {
-    create: '<span class="text-bold-600">{name}</span> created a request',
-    update: '<span class="text-bold-600">{name}</span> updated a request',
-    approve: '<span class="text-bold-600">{name}</span> approved a request',
-    reject: '<span class="text-bold-600">{name}</span> rejected a request'
+    create: 'created a request',
+    update: 'updated a request',
+    approve: 'approved a request',
+    reject: 'rejected a request'
   }
 }
