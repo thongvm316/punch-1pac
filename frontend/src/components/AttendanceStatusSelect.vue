@@ -20,7 +20,12 @@ import { mapState } from 'vuex'
 export default {
   name: 'AttendanceStatusSelect',
 
-  props: ['value'],
+  props: {
+    value: {
+      type: String,
+      default: ''
+    }
+  },
 
   computed: {
     ...mapState('initialStates', ['meta'])

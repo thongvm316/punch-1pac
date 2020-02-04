@@ -184,7 +184,10 @@ export default {
   mixins: [handleSuccess, businessDayValidate],
 
   props: {
-    targetBusinessDay: Object
+    targetBusinessDay: {
+      type: Object,
+      default: null
+    }
   },
 
   data() {
@@ -197,6 +200,17 @@ export default {
         afternoon_ended_at: '17:30'
       }
     }
+  },
+
+  computed: {
+    ...mapState('initialStates', ['meta']),
+
+    ...mapState('companyBusinessDays', ['errors'])
+  },
+
+  created() {
+    if (!isEmpty(this.errors)) this[CLEAR_BUSINESS_DAY_ERRORS]()
+    if (this.targetBusinessDay) this.params = { ...this.targetBusinessDay }
   },
 
   methods: {
@@ -221,17 +235,6 @@ export default {
         })
       })
     }
-  },
-
-  computed: {
-    ...mapState('initialStates', ['meta']),
-
-    ...mapState('companyBusinessDays', ['errors'])
-  },
-
-  created() {
-    if (!isEmpty(this.errors)) this[CLEAR_BUSINESS_DAY_ERRORS]()
-    if (this.targetBusinessDay) this.params = { ...this.targetBusinessDay }
   }
 }
 </script>

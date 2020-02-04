@@ -50,13 +50,20 @@ export default {
   mixins: [allowedIpValidate, handleSuccess],
 
   props: {
-    targetIp: Object
+    targetIp: {
+      type: Object,
+      default: null
+    }
   },
 
   data() {
     return {
       params: ''
     }
+  },
+
+  created() {
+    if (this.targetIp) this.params = this.targetIp.ip_address
   },
 
   methods: {
@@ -79,10 +86,6 @@ export default {
         })
       })
     }
-  },
-
-  created() {
-    if (this.targetIp) this.params = this.targetIp.ip_address
   }
 }
 </script>
