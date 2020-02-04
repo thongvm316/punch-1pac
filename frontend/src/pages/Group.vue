@@ -164,7 +164,7 @@
       :object-id="selectedObject.id"
       :modal-open.sync="isOpenConfirmDialog"
     >
-      <p v-html="$t('group.confirmDialog.deactivateUserMsg', { name: selectedObject.name })"/>
+      <p v-html="$t('group.confirmDialog.deactivateUserMsg', { name: selectedObject.name })" />
     </confirm-dialog>
 
     <confirm-dialog

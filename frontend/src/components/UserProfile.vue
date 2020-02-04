@@ -142,7 +142,10 @@ export default {
       type: Object,
       required: true
     },
-    objectType: String
+    objectType: {
+      type: String,
+      default: ''
+    }
   },
   data() {
     return {
@@ -160,6 +163,16 @@ export default {
 
   computed: {
     ...mapState('initialStates', ['meta'])
+  },
+
+  watch: {
+    targetUser: function() {
+      this.params = { ...this.targetUser }
+    }
+  },
+
+  created() {
+    this.params = { ...this.targetUser }
   },
 
   methods: {
@@ -197,16 +210,6 @@ export default {
       if (!files.length) return
       this.params.avatar = files[0]
     }
-  },
-
-  watch: {
-    targetUser: function() {
-      this.params = { ...this.targetUser }
-    }
-  },
-
-  created() {
-    this.params = { ...this.targetUser }
   }
 }
 </script>

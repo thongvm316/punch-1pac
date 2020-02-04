@@ -57,8 +57,14 @@ export default {
       type: Boolean,
       required: true
     },
-    deleteObject: Function,
-    objectId: Number
+    deleteObject: {
+      type: Function,
+      default: () => {}
+    },
+    objectId: {
+      type: Number,
+      default: null
+    }
   },
 
   data() {
