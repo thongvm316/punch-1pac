@@ -76,11 +76,11 @@
             </button>
           </div>
           <calendar-date
-            v-for="attendance in attendances"
-            :key="attendance.day"
-            :calendar-attendance="attendance"
+            v-for="attendanceItem in attendances"
+            :key="attendanceItem.day"
+            :calendar-attendance="attendanceItem"
             :today="today"
-            @click.native="toggleConfirmModal(attendance)"
+            @click.native="toggleConfirmModal(attendanceItem)"
           />
           <div
             v-for="date in firstDaysNextMonth"
@@ -118,12 +118,12 @@
         </select>
       </div>
       <request-form
-        v-if="this.selectedRequestKind === 'attendance'"
+        v-if="selectedRequestKind === 'attendance'"
         :attendance="attendance"
         @afterModify="isRequestModalOpen = false"
       />
       <annual-leave-form
-        v-if="this.selectedRequestKind === 'annual_leave'"
+        v-if="selectedRequestKind === 'annual_leave'"
         :annual-day="annualLeaveDay"
         @finishRequest="isRequestModalOpen = false"
       />
@@ -243,6 +243,16 @@ export default {
     }
   },
 
+  watch: {
+    dateContext(newValue) {
+      this.getCalendarAttendances(newValue.format('YYYY-MM-DD')).then(response => this.formatAttendances(response.data))
+    }
+  },
+
+  created() {
+    this.getCalendarAttendances(this.formattedDateContext).then(response => this.formatAttendances(response.data))
+  },
+
   methods: {
     ...mapActions('calendar', ['getCalendarAttendances']),
 
@@ -333,16 +343,6 @@ export default {
         this.selectedRequestKind === 'attendance' ? (this.titleModal = this.$t('modal.request.addTitle')) : (this.titleModal = this.$t('modal.annualLeave.title'))
       }
     }
-  },
-
-  watch: {
-    dateContext(newValue) {
-      this.getCalendarAttendances(newValue.format('YYYY-MM-DD')).then(response => this.formatAttendances(response.data))
-    }
-  },
-
-  created() {
-    this.getCalendarAttendances(this.formattedDateContext).then(response => this.formatAttendances(response.data))
   }
 }
 </script>
