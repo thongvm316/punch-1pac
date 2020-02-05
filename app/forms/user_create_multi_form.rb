@@ -22,7 +22,7 @@ class UserCreateMultiForm < BaseForm
     @lines = []
     CSV.foreach(csv_file.path, headers: true).with_index(1) do |row, line|
       params = user_params(row.to_hash)
-      user = @company.users.build(params)
+      user = @company.users.build(params.merge(role: params['role']&.downcase))
       if user.save
         UserMailer.create(user.id, @company.id, params['password']).deliver_later
         @users << user
