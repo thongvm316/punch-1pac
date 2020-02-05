@@ -1,10 +1,12 @@
 <template>
   <main>
     <div class="container grid-xl">
-      <announcements/>
-      <remind-punch-in/>
-      <h1 class="title">{{ title }}</h1>
-      <slot></slot>
+      <announcements />
+      <remind-punch-in />
+      <h1 class="title">
+        {{ title }}
+      </h1>
+      <slot />
     </div>
   </main>
 </template>
@@ -14,16 +16,19 @@ const Announcements = () => import('../components/Announcements')
 const RemindPunchIn = () => import('../components/RemindPunchIn')
 
 export default {
-  name: 'main-layout',
-
-  props: {
-    title: String,
-    isOpenAnnoucement: Boolean
-  },
+  name: 'MainLayout',
 
   components: {
     Announcements,
     RemindPunchIn
+  },
+
+  props: {
+    title: {
+      type: String,
+      default: ''
+    },
+    isOpenAnnoucement: Boolean
   }
 }
 </script>

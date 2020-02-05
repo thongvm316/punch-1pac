@@ -1,17 +1,42 @@
 <template>
   <div>
-    <div class="form-group" :class="{ 'has-error': $v.params.weekday.$error || errors.weekday }">
+    <div
+      class="form-group"
+      :class="{ 'has-error': $v.params.weekday.$error || errors.weekday }"
+    >
       <label class="form-label">{{ $t('label.weekday') }}</label>
-      <select class="form-select" v-model="$v.params.weekday.$model">
-        <option value="">{{ $t('placeholder.chooseWeekday') }}</option>
-        <option :value="weekday" v-for="(weekday, key) in meta.weekdays" :key="key">{{ $t(`meta.weekdays.${weekday}`) }}</option>
+      <select
+        v-model="$v.params.weekday.$model"
+        class="form-select"
+      >
+        <option value="">
+          {{ $t('placeholder.chooseWeekday') }}
+        </option>
+        <option
+          v-for="(weekday, key) in meta.weekdays"
+          :key="key"
+          :value="weekday"
+        >
+          {{ $t(`meta.weekdays.${weekday}`) }}
+        </option>
       </select>
-      <p class="form-input-hint" v-if="$v.params.weekday.$error && !errors.weekday">
+      <p
+        v-if="$v.params.weekday.$error && !errors.weekday"
+        class="form-input-hint"
+      >
         {{ $t('validation.required', { name: $t('label.weekday') }) }}
       </p>
-      <p class="form-input-hint" v-if="errors.weekday">{{ $t('label.weekday') }} {{ errors.weekday[0] }}</p>
+      <p
+        v-if="errors.weekday"
+        class="form-input-hint"
+      >
+        {{ $t('label.weekday') }} {{ errors.weekday[0] }}
+      </p>
     </div>
-    <div class="form-group" :class="{ 'has-error': $v.params.morning_started_at.$error || errors.morning_started_at }">
+    <div
+      class="form-group"
+      :class="{ 'has-error': $v.params.morning_started_at.$error || errors.morning_started_at }"
+    >
       <label class="form-label">{{ $t('label.morningStartAt') }}</label>
       <flatPickr
         v-model="$v.params.morning_started_at.$model"
@@ -20,13 +45,25 @@
           enableTime: true,
           noCalendar: true,
           dateFormat: 'H:i',
-          time_24hr: true}" />
-      <p class="form-input-hint" v-if="$v.params.morning_started_at.$error && !errors.morning_started_at">
+          time_24hr: true}"
+      />
+      <p
+        v-if="$v.params.morning_started_at.$error && !errors.morning_started_at"
+        class="form-input-hint"
+      >
         {{ $t('validation.required', { name: $t('label.morningStartAt') }) }}
       </p>
-      <p class="form-input-hint" v-if="errors.morning_started_at">{{ $t('label.morningStartAt') }} {{ errors.morning_started_at[0] }}</p>
+      <p
+        v-if="errors.morning_started_at"
+        class="form-input-hint"
+      >
+        {{ $t('label.morningStartAt') }} {{ errors.morning_started_at[0] }}
+      </p>
     </div>
-    <div class="form-group" :class="{ 'has-error': $v.params.morning_ended_at.$error || errors.morning_ended_at }">
+    <div
+      class="form-group"
+      :class="{ 'has-error': $v.params.morning_ended_at.$error || errors.morning_ended_at }"
+    >
       <label class="form-label">{{ $t('label.morningEndAt') }}</label>
       <flatPickr
         v-model="$v.params.morning_ended_at.$model"
@@ -35,13 +72,25 @@
           enableTime: true,
           noCalendar: true,
           dateFormat: 'H:i',
-          time_24hr: true}" />
-      <p class="form-input-hint" v-if="$v.params.morning_ended_at.$error && !errors.morning_ended_at">
+          time_24hr: true}"
+      />
+      <p
+        v-if="$v.params.morning_ended_at.$error && !errors.morning_ended_at"
+        class="form-input-hint"
+      >
         {{ $t('validation.required', { name: $t('label.morningEndAt') }) }}
       </p>
-      <p class="form-input-hint" v-if="errors.morning_ended_at">{{ $t('label.morningEndAt') }} {{ errors.morning_ended_at[0] }}</p>
+      <p
+        v-if="errors.morning_ended_at"
+        class="form-input-hint"
+      >
+        {{ $t('label.morningEndAt') }} {{ errors.morning_ended_at[0] }}
+      </p>
     </div>
-    <div class="form-group" :class="{ 'has-error': $v.params.afternoon_started_at.$error || errors.afternoon_started_at }">
+    <div
+      class="form-group"
+      :class="{ 'has-error': $v.params.afternoon_started_at.$error || errors.afternoon_started_at }"
+    >
       <label class="form-label">{{ $t('label.afternoonStartAt') }}</label>
       <flatPickr
         v-model="$v.params.afternoon_started_at.$model"
@@ -50,13 +99,25 @@
           enableTime: true,
           noCalendar: true,
           dateFormat: 'H:i',
-          time_24hr: true}" />
-      <p class="form-input-hint" v-if="$v.params.afternoon_started_at.$error && !errors.afternoon_started_at">
+          time_24hr: true}"
+      />
+      <p
+        v-if="$v.params.afternoon_started_at.$error && !errors.afternoon_started_at"
+        class="form-input-hint"
+      >
         {{ $t('validation.required', { name: $t('label.afternoonStartAt') }) }}
       </p>
-      <p class="form-input-hint" v-if="errors.afternoon_started_at">{{ $t('label.afternoonStartAt') }} {{ errors.afternoon_started_at[0] }}</p>
+      <p
+        v-if="errors.afternoon_started_at"
+        class="form-input-hint"
+      >
+        {{ $t('label.afternoonStartAt') }} {{ errors.afternoon_started_at[0] }}
+      </p>
     </div>
-    <div class="form-group" :class="{ 'has-error': $v.params.afternoon_ended_at.$error || errors.afternoon_ended_at }">
+    <div
+      class="form-group"
+      :class="{ 'has-error': $v.params.afternoon_ended_at.$error || errors.afternoon_ended_at }"
+    >
       <label class="form-label">{{ $t('label.afternoonEndAt') }}</label>
       <flatPickr
         v-model="$v.params.afternoon_ended_at.$model"
@@ -65,29 +126,40 @@
           enableTime: true,
           noCalendar: true,
           dateFormat: 'H:i',
-          time_24hr: true}" />
-      <p class="form-input-hint" v-if="$v.params.afternoon_ended_at.$error && !errors.afternoon_ended_at">
+          time_24hr: true}"
+      />
+      <p
+        v-if="$v.params.afternoon_ended_at.$error && !errors.afternoon_ended_at"
+        class="form-input-hint"
+      >
         {{ $t('validation.required', { name: $t('label.afternoonEndAt') }) }}
       </p>
-      <p class="form-input-hint" v-if="errors.afternoon_ended_at">{{ $t('label.afternoonEndAt') }} {{ errors.afternoon_ended_at[0] }}</p>
+      <p
+        v-if="errors.afternoon_ended_at"
+        class="form-input-hint"
+      >
+        {{ $t('label.afternoonEndAt') }} {{ errors.afternoon_ended_at[0] }}
+      </p>
     </div>
     <div class="form-group">
       <button
+        v-if="!targetBusinessDay"
         ref="createBusinessDayButton"
         type="button"
         class="btn btn-success btn-submit"
-        v-if="!targetBusinessDay"
+        :disabled="isDisabled"
         @click="localAddBusinessDay"
-        :disabled="isDisabled">
+      >
         {{ $t('button.common.submit') }}
       </button>
       <button
+        v-if="targetBusinessDay"
         ref="editBusinessDayButton"
         type="button"
         class="btn btn-success btn-submit"
-        v-if="targetBusinessDay"
+        :disabled="isDisabled"
         @click="localEditBusinessDay"
-        :disabled="isDisabled">
+      >
         {{ $t('button.common.save') }}
       </button>
     </div>
@@ -103,12 +175,19 @@ import businessDayValidate from '../validations/business-day-validate'
 const flatPickr = () => import('vue-flatpickr-component')
 
 export default {
-  name: 'business-day-form',
+  name: 'BusinessDayForm',
+
+  components: {
+    flatPickr
+  },
 
   mixins: [handleSuccess, businessDayValidate],
 
   props: {
-    targetBusinessDay: Object
+    targetBusinessDay: {
+      type: Object,
+      default: null
+    }
   },
 
   data() {
@@ -123,8 +202,15 @@ export default {
     }
   },
 
-  components: {
-    flatPickr
+  computed: {
+    ...mapState('initialStates', ['meta']),
+
+    ...mapState('companyBusinessDays', ['errors'])
+  },
+
+  created() {
+    if (!isEmpty(this.errors)) this[CLEAR_BUSINESS_DAY_ERRORS]()
+    if (this.targetBusinessDay) this.params = { ...this.targetBusinessDay }
   },
 
   methods: {
@@ -149,17 +235,6 @@ export default {
         })
       })
     }
-  },
-
-  computed: {
-    ...mapState('initialStates', ['meta']),
-
-    ...mapState('companyBusinessDays', ['errors'])
-  },
-
-  created() {
-    if (!isEmpty(this.errors)) this[CLEAR_BUSINESS_DAY_ERRORS]()
-    if (this.targetBusinessDay) this.params = { ...this.targetBusinessDay }
   }
 }
 </script>

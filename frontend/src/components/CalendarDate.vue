@@ -1,25 +1,54 @@
 <template>
-  <div class="calendar-date current-month" :data-tooltip="tooltip" :class="{'disabled': isWeekend || localAttendance.holiday, 'tooltip': tooltip}">
-    <button class="date-item" :class="{ 'date-today': localAttendance.day === today.format('YYYY-MM-DD') }">
+  <div
+    class="calendar-date current-month"
+    :data-tooltip="tooltip"
+    :class="{'disabled': isWeekend || localAttendance.holiday, 'tooltip': tooltip}"
+  >
+    <button
+      class="date-item"
+      :class="{ 'date-today': localAttendance.day === today.format('YYYY-MM-DD') }"
+    >
       {{ localAttendance.day.split('-')[2] }}
     </button>
     <div class="calendar-events">
-      <span class="calendar-event bg-success text-success text-center" v-if="localAttendance.attending_status === 'attend_ok'">
+      <span
+        v-if="localAttendance.attending_status === 'attend_ok'"
+        class="calendar-event bg-success text-success text-center"
+      >
         {{ $t(`meta.attendance_statuses.${localAttendance.attending_status}`) }}
       </span>
-      <span class="calendar-event bg-warning text-warning text-center" v-if="localAttendance.attending_status === 'attend_late'">
+      <span
+        v-if="localAttendance.attending_status === 'attend_late'"
+        class="calendar-event bg-warning text-warning text-center"
+      >
         {{ $t(`meta.attendance_statuses.${localAttendance.attending_status}`) }}
       </span>
-      <span href="#" class="calendar-event bg-success text-success text-center" v-if="localAttendance.leaving_status === 'leave_ok'">
+      <span
+        v-if="localAttendance.leaving_status === 'leave_ok'"
+        href="#"
+        class="calendar-event bg-success text-success text-center"
+      >
         {{ $t(`meta.attendance_statuses.${localAttendance.leaving_status}`) }}
       </span>
-      <span href="#" class="calendar-event bg-error text-error text-center" v-if="localAttendance.leaving_status === 'leave_early'">
+      <span
+        v-if="localAttendance.leaving_status === 'leave_early'"
+        href="#"
+        class="calendar-event bg-error text-error text-center"
+      >
         {{ $t(`meta.attendance_statuses.${localAttendance.leaving_status}`) }}
       </span>
-      <span href="#" class="calendar-event bg-notice text-notice text-center" v-if="localAttendance.off_status && !localAttendance.holiday">
+      <span
+        v-if="localAttendance.off_status && !localAttendance.holiday"
+        href="#"
+        class="calendar-event bg-notice text-notice text-center"
+      >
         {{ $t(`meta.attendance_statuses.${localAttendance.off_status}`) }}
       </span>
-      <span href="#" class="calendar-event bg-gray text-gray text-center" v-if="localAttendance.holiday">
+      <span
+        v-if="localAttendance.holiday"
+        href="#"
+        class="calendar-event bg-gray text-gray text-center"
+      >
         {{ localAttendance.holiday.name }}
       </span>
     </div>
@@ -30,13 +59,7 @@
 import { mapState } from 'vuex'
 
 export default {
-  name: 'calendar-date',
-
-  data() {
-    return {
-      localAttendance: this.calendarAttendance
-    }
-  },
+  name: 'CalendarDate',
 
   props: {
     calendarAttendance: {
@@ -47,6 +70,12 @@ export default {
     today: {
       type: Object,
       required: true
+    }
+  },
+
+  data() {
+    return {
+      localAttendance: this.calendarAttendance
     }
   },
 

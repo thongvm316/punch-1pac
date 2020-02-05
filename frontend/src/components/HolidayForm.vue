@@ -1,50 +1,91 @@
 <template>
   <div>
-    <div class="form-group" :class="{ 'has-error': $v.params.name.$error || errors.name }">
+    <div
+      class="form-group"
+      :class="{ 'has-error': $v.params.name.$error || errors.name }"
+    >
       <label class="form-label">{{ $t('label.name') }}</label>
-      <input class="form-input" type="text" v-model="$v.params.name.$model">
-      <p class="form-input-hint" v-if="$v.params.name.$error && !errors.name">
+      <input
+        v-model="$v.params.name.$model"
+        class="form-input"
+        type="text"
+      >
+      <p
+        v-if="$v.params.name.$error && !errors.name"
+        class="form-input-hint"
+      >
         {{ $t('validation.required', { name: $t('label.name') }) }}
       </p>
-      <p class="form-input-hint" v-if="errors.name">{{ $t('label.name') }} {{ errors.name[0] }}</p>
+      <p
+        v-if="errors.name"
+        class="form-input-hint"
+      >
+        {{ $t('label.name') }} {{ errors.name[0] }}
+      </p>
     </div>
-    <div class="form-group" :class="{ 'has-error': $v.params.started_at.$error || errors.started_at }">
+    <div
+      class="form-group"
+      :class="{ 'has-error': $v.params.started_at.$error || errors.started_at }"
+    >
       <label class="form-label">{{ $t('label.startAt') }}</label>
       <flat-pickr
+        v-model="$v.params.started_at.$model"
         :config="{ mode: 'single', locale: flatpickrLocaleMapper[pickrLocale] }"
         class="form-input daterange-picker"
-        v-model="$v.params.started_at.$model"/>
-      <p class="form-input-hint" v-if="errors.started_at">{{ $t('label.startAt') }} {{ errors.started_at[0] }}</p>
-      <p class="form-input-hint" v-if="$v.params.started_at.$error && !errors.started_at">
+      />
+      <p
+        v-if="errors.started_at"
+        class="form-input-hint"
+      >
+        {{ $t('label.startAt') }} {{ errors.started_at[0] }}
+      </p>
+      <p
+        v-if="$v.params.started_at.$error && !errors.started_at"
+        class="form-input-hint"
+      >
         {{ $t('validation.required', { name: $t('label.startAt') }) }}
       </p>
     </div>
-    <div class="form-group" :class="{ 'has-error': $v.params.ended_at.$error || errors.ended_at }">
+    <div
+      class="form-group"
+      :class="{ 'has-error': $v.params.ended_at.$error || errors.ended_at }"
+    >
       <label class="form-label">{{ $t('label.endAt') }}</label>
       <flat-pickr
+        v-model="$v.params.ended_at.$model"
         :config="{ mode: 'single', locale: flatpickrLocaleMapper[pickrLocale] }"
         class="form-input daterange-picker"
-        v-model="$v.params.ended_at.$model"/>
-      <p class="form-input-hint" v-if="errors.ended_at">{{ $t('label.endAt') }} {{ errors.ended_at[0] }}</p>
-      <p class="form-input-hint" v-if="$v.params.ended_at.$error && !errors.ended_at">
+      />
+      <p
+        v-if="errors.ended_at"
+        class="form-input-hint"
+      >
+        {{ $t('label.endAt') }} {{ errors.ended_at[0] }}
+      </p>
+      <p
+        v-if="$v.params.ended_at.$error && !errors.ended_at"
+        class="form-input-hint"
+      >
         {{ $t('validation.required', { name: $t('label.endAt') }) }}
       </p>
     </div>
     <div class="form-group">
       <button
-        class="btn btn-success btn-submit"
-        ref="localAddHolidayBtn"
-        @click="localAddHoliday"
         v-if="!targetHoliday"
-        :disabled="isDisabled">
+        ref="localAddHolidayBtn"
+        class="btn btn-success btn-submit"
+        :disabled="isDisabled"
+        @click="localAddHoliday"
+      >
         {{ $t('button.common.submit') }}
       </button>
       <button
-        class="btn btn-success btn-submit"
-        ref="localEditHolidayBtn"
-        @click="localEditHoliday"
         v-if="targetHoliday"
-        :disabled="isDisabled">
+        ref="localEditHolidayBtn"
+        class="btn btn-success btn-submit"
+        :disabled="isDisabled"
+        @click="localEditHoliday"
+      >
         {{ $t('button.common.save') }}
       </button>
     </div>
@@ -61,16 +102,19 @@ import { isEmpty } from 'underscore'
 const flatPickr = () => import('vue-flatpickr-component')
 
 export default {
-  name: 'holiday-form',
-
-  mixins: [flatpickrLocale, handleSuccess, holidayFormValidate],
+  name: 'HolidayForm',
 
   components: {
     flatPickr
   },
 
+  mixins: [flatpickrLocale, handleSuccess, holidayFormValidate],
+
   props: {
-    targetHoliday: Object
+    targetHoliday: {
+      type: Object,
+      default: null
+    }
   },
 
   data() {
@@ -81,6 +125,15 @@ export default {
         ended_at: ''
       }
     }
+  },
+
+  computed: {
+    ...mapState('companyHolidays', ['errors'])
+  },
+
+  created() {
+    if (!isEmpty(this.errors)) this[CLEAR_HOLIDAY_ERRORS]()
+    if (this.targetHoliday) this.params = { ...this.targetHoliday }
   },
 
   methods: {
@@ -108,15 +161,6 @@ export default {
         })
       })
     }
-  },
-
-  computed: {
-    ...mapState('companyHolidays', ['errors'])
-  },
-
-  created() {
-    if (!isEmpty(this.errors)) this[CLEAR_HOLIDAY_ERRORS]()
-    if (this.targetHoliday) this.params = { ...this.targetHoliday }
   }
 }
 </script>

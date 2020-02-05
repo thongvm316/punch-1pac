@@ -1,7 +1,16 @@
 <template>
-  <select class="form-select" @change="updateValue($event)">
-    <slot name="placeholder"></slot>
-    <option :value="status" v-for="(status, key) in meta.attendance_statuses" :key="key">{{ $t(`meta.attendance_statuses.${status}`) }}</option>
+  <select
+    class="form-select"
+    @change="updateValue($event)"
+  >
+    <slot name="placeholder" />
+    <option
+      v-for="(status, key) in meta.attendance_statuses"
+      :key="key"
+      :value="status"
+    >
+      {{ $t(`meta.attendance_statuses.${status}`) }}
+    </option>
   </select>
 </template>
 
@@ -9,9 +18,14 @@
 import { mapState } from 'vuex'
 
 export default {
-  name: 'attendance-status-select',
+  name: 'AttendanceStatusSelect',
 
-  props: ['value'],
+  props: {
+    value: {
+      type: String,
+      default: ''
+    }
+  },
 
   computed: {
     ...mapState('initialStates', ['meta'])

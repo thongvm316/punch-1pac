@@ -22,13 +22,7 @@ const CompanySettingsHolidays = () => import('./CompanySettingsHolidays')
 const CompanySettingsAllowedIps = () => import('./CompanySettingsAllowedIPs')
 
 export default {
-  name: 'user-settings',
-
-  data() {
-    return {
-      activeTabName: 'profile'
-    }
-  },
+  name: 'UserSettings',
 
   components: {
     SettingLayout,
@@ -38,6 +32,12 @@ export default {
     CompanySettingsBusinessDays,
     CompanySettingsHolidays,
     CompanySettingsAllowedIps
+  },
+
+  data() {
+    return {
+      activeTabName: 'profile'
+    }
   }
 }
 </script>

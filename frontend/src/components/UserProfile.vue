@@ -1,51 +1,126 @@
 <template>
   <form class="setting-form">
-    <div class="form-group" :class="{ 'has-error': errors.avatar }">
+    <div
+      class="form-group"
+      :class="{ 'has-error': errors.avatar }"
+    >
       <label class="form-label">{{ $t('label.avatar') }}</label>
-      <img class="img-profile" :src="targetUser.avatar_url" :alt="targetUser.name">
-      <input class="form-input" type="file" @change="setAvatarFile">
-      <p class="form-input-hint" v-if="errors.avatar">{{ $t('label.avatar') }} {{ errors.avatar[0] }}</p>
+      <img
+        class="img-profile"
+        :src="targetUser.avatar_url"
+        :alt="targetUser.name"
+      >
+      <input
+        class="form-input"
+        type="file"
+        @change="setAvatarFile"
+      >
+      <p
+        v-if="errors.avatar"
+        class="form-input-hint"
+      >
+        {{ $t('label.avatar') }} {{ errors.avatar[0] }}
+      </p>
     </div>
-    <div class="form-group" :class="{ 'has-error': $v.params.email.$anyError || errors.email }">
+    <div
+      class="form-group"
+      :class="{ 'has-error': $v.params.email.$anyError || errors.email }"
+    >
       <label class="form-label">{{ $t('label.email') }}</label>
-      <input class="form-input" type="text" v-model="$v.params.email.$model">
-      <p class="form-input-hint" v-if="$v.params.email.$anyError && !errors.email">
+      <input
+        v-model="$v.params.email.$model"
+        class="form-input"
+        type="text"
+      >
+      <p
+        v-if="$v.params.email.$anyError && !errors.email"
+        class="form-input-hint"
+      >
         <span v-if="!$v.params.email.required">{{ $t('validation.required', { name: $t('label.email') }) }}</span>
         <span v-if="!$v.params.email.email">{{ $t('validation.invalid', { name: $t('label.email') }) }}</span>
       </p>
-      <p class="form-input-hint" v-if="errors.email">{{ $t('label.email') }} {{ errors.email[0] }}</p>
+      <p
+        v-if="errors.email"
+        class="form-input-hint"
+      >
+        {{ $t('label.email') }} {{ errors.email[0] }}
+      </p>
     </div>
-    <div class="form-group" :class="{ 'has-error': $v.params.name.$error || errors.name }">
+    <div
+      class="form-group"
+      :class="{ 'has-error': $v.params.name.$error || errors.name }"
+    >
       <label class="form-label">{{ $t('label.name') }}</label>
-      <input class="form-input" type="text" v-model="$v.params.name.$model">
-      <p class="form-input-hint" v-if="$v.params.name.$error && !errors.name">
+      <input
+        v-model="$v.params.name.$model"
+        class="form-input"
+        type="text"
+      >
+      <p
+        v-if="$v.params.name.$error && !errors.name"
+        class="form-input-hint"
+      >
         {{ $t('validation.required', { name: $t('label.name') }) }}
       </p>
-      <p class="form-input-hint" v-if="errors.name">{{ $t('label.name') }} {{ errors.name[0] }}</p>
+      <p
+        v-if="errors.name"
+        class="form-input-hint"
+      >
+        {{ $t('label.name') }} {{ errors.name[0] }}
+      </p>
     </div>
     <div class="form-group">
       <label class="form-label">{{ $t('label.gender') }}</label>
       <label class="form-radio">
-        <input type="radio" value="male" v-model="params.gender">
-        <i class="form-icon"></i> {{ $t('meta.gender.male') }}
+        <input
+          v-model="params.gender"
+          type="radio"
+          value="male"
+        >
+        <i class="form-icon" /> {{ $t('meta.gender.male') }}
       </label>
       <label class="form-radio">
-        <input type="radio" value="female" v-model="params.gender">
-        <i class="form-icon"></i> {{ $t('meta.gender.female') }}
+        <input
+          v-model="params.gender"
+          type="radio"
+          value="female"
+        >
+        <i class="form-icon" /> {{ $t('meta.gender.female') }}
       </label>
     </div>
     <div class="form-group">
       <label class="form-label">{{ $t('label.position') }}</label>
-      <input class="form-input" type="text" v-model="params.position">
+      <input
+        v-model="params.position"
+        class="form-input"
+        type="text"
+      >
     </div>
     <div class="form-group">
       <label class="form-label">{{ $t('label.role') }}</label>
-      <select class="form-select" v-model="params.role" :disabled="!$auth('User', currentUser, targetUser).canEditRole()">
-        <option :value="role" v-for="(role, key) in meta.roles" :key="key">{{ $t(`meta.roles.${role}`) }}</option>
+      <select
+        v-model="params.role"
+        class="form-select"
+        :disabled="!$auth('User', currentUser, targetUser).canEditRole()"
+      >
+        <option
+          v-for="(role, key) in meta.roles"
+          :key="key"
+          :value="role"
+        >
+          {{ $t(`meta.roles.${role}`) }}
+        </option>
       </select>
     </div>
     <div class="form-group">
-      <button type="button" class="btn btn-success btn-submit" @click="updateUser" :disabled="isDisabled">{{ $t('button.common.save') }}</button>
+      <button
+        type="button"
+        class="btn btn-success btn-submit"
+        :disabled="isDisabled"
+        @click="updateUser"
+      >
+        {{ $t('button.common.save') }}
+      </button>
     </div>
   </form>
 </template>
@@ -59,6 +134,19 @@ import axios from 'axios'
 import 'formdata-polyfill'
 
 export default {
+
+  mixins: [handleSuccess, userProfileValidate],
+
+  props: {
+    targetUser: {
+      type: Object,
+      required: true
+    },
+    objectType: {
+      type: String,
+      default: ''
+    }
+  },
   data() {
     return {
       params: {
@@ -73,18 +161,18 @@ export default {
     }
   },
 
-  mixins: [handleSuccess, userProfileValidate],
-
-  props: {
-    targetUser: {
-      type: Object,
-      required: true
-    },
-    objectType: String
-  },
-
   computed: {
     ...mapState('initialStates', ['meta'])
+  },
+
+  watch: {
+    targetUser: function() {
+      this.params = { ...this.targetUser }
+    }
+  },
+
+  created() {
+    this.params = { ...this.targetUser }
   },
 
   methods: {
@@ -121,16 +209,6 @@ export default {
       const files = e.target.files || e.dataTransfer.files
       if (!files.length) return
       this.params.avatar = files[0]
-    }
-  },
-
-  created() {
-    this.params = { ...this.targetUser }
-  },
-
-  watch: {
-    targetUser: function() {
-      this.params = { ...this.targetUser }
     }
   }
 }

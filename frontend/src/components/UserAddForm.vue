@@ -1,40 +1,104 @@
 <template>
   <form class="setting-form">
-    <div class="form-group" :class="{ 'has-error': $v.params.name.$error || errors.name }">
+    <div
+      class="form-group"
+      :class="{ 'has-error': $v.params.name.$error || errors.name }"
+    >
       <label class="form-label">{{ $t('label.name') }}</label>
-      <input class="form-input" type="text" :placeholder="$t('placeholder.name')" v-model="$v.params.name.$model">
-      <p class="form-input-hint" v-if="$v.params.name.$error && !errors.name">
+      <input
+        v-model="$v.params.name.$model"
+        class="form-input"
+        type="text"
+        :placeholder="$t('placeholder.name')"
+      >
+      <p
+        v-if="$v.params.name.$error && !errors.name"
+        class="form-input-hint"
+      >
         {{ $t('validation.required', { name: $t('label.name') }) }}
       </p>
-      <p class="form-input-hint" v-if="errors.name">{{ $t('label.name') }} {{ errors.name[0] }}</p>
+      <p
+        v-if="errors.name"
+        class="form-input-hint"
+      >
+        {{ $t('label.name') }} {{ errors.name[0] }}
+      </p>
     </div>
-    <div class="form-group" :class="{ 'has-error':  $v.params.email.$anyError || errors.email }">
+    <div
+      class="form-group"
+      :class="{ 'has-error': $v.params.email.$anyError || errors.email }"
+    >
       <label class="form-label">{{ $t('label.email') }}</label>
-      <input class="form-input" type="text" :placeholder="$t('placeholder.email')" v-model="$v.params.email.$model">
-      <p class="form-input-hint" v-if="$v.params.email.$anyError && !errors.email">
+      <input
+        v-model="$v.params.email.$model"
+        class="form-input"
+        type="text"
+        :placeholder="$t('placeholder.email')"
+      >
+      <p
+        v-if="$v.params.email.$anyError && !errors.email"
+        class="form-input-hint"
+      >
         <span v-if="!$v.params.email.required">{{ $t('validation.required', { name: $t('label.email') }) }}</span>
         <span v-if="!$v.params.email.email">{{ $t('validation.invalid', { name: $t('label.email') }) }}</span>
       </p>
-      <p class="form-input-hint" v-if="errors.email">{{ $t('label.email') }} {{ errors.email[0] }}</p>
+      <p
+        v-if="errors.email"
+        class="form-input-hint"
+      >
+        {{ $t('label.email') }} {{ errors.email[0] }}
+      </p>
     </div>
     <div class="form-group">
       <label class="form-label">{{ $t('label.role') }}</label>
-      <select class="form-select" v-model="params.role">
-        <option :value="role" v-for="(role, key) in meta.roles" :key="key">{{ $t(`meta.roles.${role}`) }}</option>
+      <select
+        v-model="params.role"
+        class="form-select"
+      >
+        <option
+          v-for="(role, key) in meta.roles"
+          :key="key"
+          :value="role"
+        >
+          {{ $t(`meta.roles.${role}`) }}
+        </option>
       </select>
     </div>
-    <div class="form-group" :class="{ 'has-error':  $v.params.group_id.$error || errors.group }">
+    <div
+      class="form-group"
+      :class="{ 'has-error': $v.params.group_id.$error || errors.group }"
+    >
       <label class="form-label">{{ $t('label.group') }}</label>
       <group-select v-model="$v.params.group_id.$model">
-        <option slot="placeholder" value="">{{ $t('placeholder.chooseGroup') }}</option>
+        <option
+          slot="placeholder"
+          value=""
+        >
+          {{ $t('placeholder.chooseGroup') }}
+        </option>
       </group-select>
-      <p class="form-input-hint" v-if="$v.params.group_id.$error && !errors.group">
+      <p
+        v-if="$v.params.group_id.$error && !errors.group"
+        class="form-input-hint"
+      >
         {{ $t('validation.required', { name: $t('label.group') }) }}
       </p>
-      <p class="form-input-hint" v-if="errors.group">{{ $t('label.group') }} {{ errors.group[0] }}</p>
+      <p
+        v-if="errors.group"
+        class="form-input-hint"
+      >
+        {{ $t('label.group') }} {{ errors.group[0] }}
+      </p>
     </div>
     <div class="form-group">
-      <button type="button" class="btn btn-success btn-submit" @click="create()" :disabled="isDisabled">{{ $t('button.common.submit') }}</button>
+      <button
+        type="button"
+        class="btn btn-success btn-submit"
+        :disabled="isDisabled"
+        @click="create()"
+      >
+        {{ $t('button.common.submit') }}
+      </button>
     </div>
   </form>
 </template>
@@ -46,7 +110,13 @@ import userAddValidate from '../validations/user-add-validate'
 const GroupSelect = () => import('./GroupSelect.vue')
 
 export default {
-  name: 'user-add-form',
+  name: 'UserAddForm',
+
+  components: {
+    GroupSelect
+  },
+
+  mixins: [handleSuccess, userAddValidate],
 
   data() {
     return {
@@ -60,14 +130,8 @@ export default {
     }
   },
 
-  mixins: [handleSuccess, userAddValidate],
-
   computed: {
     ...mapState('initialStates', ['meta'])
-  },
-
-  components: {
-    GroupSelect
   },
 
   methods: {

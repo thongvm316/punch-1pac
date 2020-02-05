@@ -1,19 +1,52 @@
 <template>
   <div>
-    <p class="mb-2">{{ $t('company.users.addMulti.note') }}</p>
-    <a :href="meta.csv_template_url" class="label label-success mb-2">{{ $t('company.users.addMulti.download') }}</a>
-    <p class="mb-2">{{ $t('company.users.addMulti.templateGuide') }}</p>
+    <p class="mb-2">
+      {{ $t('company.users.addMulti.note') }}
+    </p>
+    <a
+      :href="meta.csv_template_url"
+      class="label label-success mb-2"
+    >
+      {{ $t('company.users.addMulti.download') }}
+    </a>
+    <p class="mb-2">
+      {{ $t('company.users.addMulti.templateGuide') }}
+    </p>
     <form class="setting-form">
-      <div class="form-group" :class="{ 'has-error': errors.csv_file }">
+      <div
+        class="form-group"
+        :class="{ 'has-error': errors.csv_file }"
+      >
         <label class="form-label">{{ $t('label.csvFile') }}</label>
-        <input class="form-input" type="file" @change="setCsvFile">
-        <p class="form-input-hint" v-if="errors.csv_file">{{ $t('label.csvFile') }} {{ errors.csv_file[0] }}</p>
+        <input
+          class="form-input"
+          type="file"
+          @change="setCsvFile"
+        >
+        <p
+          v-if="errors.csv_file"
+          class="form-input-hint"
+        >
+          {{ $t('label.csvFile') }} {{ errors.csv_file[0] }}
+        </p>
       </div>
-      <div class="form-group" v-if="errors.lines && errors.lines.length > 0">
-        <p class="form-input-hint text-error">{{ $t('company.users.addMulti.errorMsg', { lines: errors.lines.join(', ') }) }}</p>
+      <div
+        v-if="errors.lines && errors.lines.length > 0"
+        class="form-group"
+      >
+        <p class="form-input-hint text-error">
+          {{ $t('company.users.addMulti.errorMsg', { lines: errors.lines.join(', ') }) }}
+        </p>
       </div>
       <div class="form-group">
-        <button type="button" class="btn btn-success btn-submit" @click="upload()" :disabled="isDisable">{{ $t('button.common.submit') }}</button>
+        <button
+          type="button"
+          class="btn btn-success btn-submit"
+          :disabled="isDisable"
+          @click="upload()"
+        >
+          {{ $t('button.common.submit') }}
+        </button>
       </div>
     </form>
   </div>
@@ -25,7 +58,9 @@ import 'formdata-polyfill'
 import handleSuccess from '../mixins/handle-success'
 
 export default {
-  name: 'users-add-form',
+  name: 'UsersAddForm',
+
+  mixins: [handleSuccess],
 
   data() {
     return {
@@ -36,8 +71,6 @@ export default {
       }
     }
   },
-
-  mixins: [handleSuccess],
 
   computed: {
     ...mapState('initialStates', ['meta'])

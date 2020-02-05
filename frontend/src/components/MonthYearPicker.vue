@@ -1,23 +1,37 @@
 <template>
   <div class="month-year-picker">
-    <div class="month-year-picker-result" @click="togglePicker">
+    <div
+      class="month-year-picker-result"
+      @click="togglePicker"
+    >
       {{ monthFormat }}
     </div>
-    <div class="month-year-picker-content" v-show="isOpenMonthYearPicker" ref="result">
+    <div
+      v-show="isOpenMonthYearPicker"
+      ref="result"
+      class="month-year-picker-content"
+    >
       <div class="month-year-picker-control">
-        <span :class="{ 'active': (isOpenMonthYearPicker && isMonthPicker) }" @click="isMonthPicker = true">{{ $t('group.month') }}</span>
-        <span :class="{ 'active': (isOpenMonthYearPicker && !isMonthPicker)}" @click="isMonthPicker = false">{{ $t('group.year') }}</span>
+        <span
+          :class="{ 'active': (isOpenMonthYearPicker && isMonthPicker) }"
+          @click="isMonthPicker = true"
+        >{{ $t('group.month') }}</span>
+        <span
+          :class="{ 'active': (isOpenMonthYearPicker && !isMonthPicker)}"
+          @click="isMonthPicker = false"
+        >{{ $t('group.year') }}</span>
       </div>
       <datepicker
+        v-model="month"
         :inline="true"
         :language="$i18n.locale"
-        :minimumView="isMonthPicker ? 'month' : 'year'"
-        :maximumView="isMonthPicker ? 'month' : 'year'"
+        :minimum-view="isMonthPicker ? 'month' : 'year'"
+        :maximum-view="isMonthPicker ? 'month' : 'year'"
         :input-class="'form-input'"
         :calendar-class="'datepicker-calendar'"
         :wrapper-class="'datepicker'"
-        v-model="month"
-        @input="onInputDatepicker" />
+        @input="onInputDatepicker"
+      />
     </div>
   </div>
 </template>
@@ -26,7 +40,11 @@
 const Datepicker = () => import('vuejs-datepicker')
 
 export default {
-  name: 'month-year-picker',
+  name: 'MonthYearPicker',
+
+  components: {
+    Datepicker
+  },
 
   data() {
     return {
@@ -36,10 +54,6 @@ export default {
       isMonthPicker: true,
       isOpenMonthYearPicker: false
     }
-  },
-
-  components: {
-    Datepicker
   },
 
   computed: {

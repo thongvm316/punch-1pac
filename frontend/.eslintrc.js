@@ -30,6 +30,7 @@ module.exports = {
       "anonymous": "never",
       "named": "never",
       "asyncArrow": "always"
-    }]
+    }],
+    'vue/no-v-html': 'off'
   }
 }

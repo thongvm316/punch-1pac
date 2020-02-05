@@ -17,13 +17,7 @@ const UserSettingsPassword = () => import('./UserSettingsPassword')
 const UserSettingsSecurity = () => import('./UserSettingsSecurity')
 
 export default {
-  name: 'user-settings',
-
-  data() {
-    return {
-      activeTabName: 'profile'
-    }
-  },
+  name: 'UserSettings',
 
   components: {
     SettingLayout,
@@ -31,6 +25,12 @@ export default {
     UserSettingsProfile,
     UserSettingsPassword,
     UserSettingsSecurity
+  },
+
+  data() {
+    return {
+      activeTabName: 'profile'
+    }
   }
 }
 </script>

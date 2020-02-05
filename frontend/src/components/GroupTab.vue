@@ -1,26 +1,35 @@
 <template>
   <ul class="tab mt-4">
-    <router-link tag="li"
+    <router-link
+      tag="li"
       class="tab-item"
-      :to="`/groups/${groupId}/users`" exact>
+      :to="`/groups/${groupId}/users`"
+      exact
+    >
       <a href="#">{{ $t('group.users') }}</a>
     </router-link>
-    <router-link tag="li"
-      class="tab-item"
+    <router-link
       v-if="hasUser"
-      :to="`/groups/${groupId}/attendances`">
+      tag="li"
+      class="tab-item"
+      :to="`/groups/${groupId}/attendances`"
+    >
       <a href="#">{{ $t('group.attendances') }}</a>
     </router-link>
-    <router-link tag="li"
-      class="tab-item"
+    <router-link
       v-if="hasUser"
-      :to="`/groups/${groupId}/requests`">
+      tag="li"
+      class="tab-item"
+      :to="`/groups/${groupId}/requests`"
+    >
       <a href="#">{{ $t('group.requests') }}</a>
     </router-link>
-    <router-link tag="li"
-      class="tab-item"
+    <router-link
       v-if="hasUser"
-      :to="`/groups/${groupId}/report`">
+      tag="li"
+      class="tab-item"
+      :to="`/groups/${groupId}/report`"
+    >
       <a href="#">{{ $t('group.report') }}</a>
     </router-link>
   </ul>
@@ -28,7 +37,7 @@
 
 <script>
 export default {
-  name: 'group-tab',
+  name: 'GroupTab',
 
   props: {
     groupId: {
