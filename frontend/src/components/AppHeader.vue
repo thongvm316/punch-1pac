@@ -54,7 +54,7 @@
               </div>
             </a>
             <ul
-              v-if="!isLangSelectActive"
+              v-show="!isLangSelectActive"
               class="menu triangle-top"
             >
               <li class="menu-item">
@@ -86,7 +86,7 @@
             </ul>
 
             <ul
-              v-else
+              v-show="isLangSelectActive"
               class="menu triangle-top lang-select"
             >
               <li class="header">
