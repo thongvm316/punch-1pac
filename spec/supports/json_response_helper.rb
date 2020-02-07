@@ -192,6 +192,8 @@ module JsonResponseHelper
   def response_attendance_chart
     {
       statuses: {
+        attend_days: Integer,
+        left_days: Integer,
         attend_ok: Integer,
         attend_late: Integer,
         leave_ok: Integer,
@@ -309,6 +311,8 @@ module JsonResponseHelper
 
   def response_user_report
     {
+      attend_days: Integer,
+      left_days: Integer,
       attend_ok: Integer,
       attend_late: Integer,
       leave_ok: Integer,
