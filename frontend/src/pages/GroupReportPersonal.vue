@@ -65,8 +65,8 @@
         </tr>
         <tr>
           <td>{{ $t('groups.report.total') }}</td>
-          <td>{{ personalReport.report.attend_ok }} / {{ personalReport.totalWorkingDays }}</td>
-          <td>{{ personalReport.report.leave_ok }} / {{ personalReport.totalWorkingDays }}</td>
+          <td>{{ personalReport.report.attend_days }} / {{ personalReport.totalWorkingDays }}</td>
+          <td>{{ personalReport.report.left_days }} / {{ personalReport.totalWorkingDays }}</td>
           <td>{{ getFormattedHours(personalReport.report.minutes_attend_late) }} / {{ `${personalReport.totalWorkingHours}h` }}</td>
           <td>{{ getFormattedHours(personalReport.report.minutes_leave_early) }} / {{ `${personalReport.totalWorkingHours}h` }}</td>
           <td>{{ personalReport.report.leave }} / {{ personalReport.totalWorkingDays }}</td>

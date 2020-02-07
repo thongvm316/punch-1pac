@@ -29,13 +29,15 @@ class UserCSV
     end
 
     def footer(data)
+      attend_days   = data.where.not(attended_at: nil).size
+      left_days     = data.where.not(left_at: nil).size
       working_hours = data.sum(:working_hours)
       attend_late   = data.sum(:minutes_attend_late)
       leave_early   = data.sum(:minutes_leave_early)
       times_late    = data.where(attending_status: 'attend_late').size
       times_early   = data.where(leaving_status: 'leave_early').size
 
-      ['Total', '', '', times_late, times_early, time(attend_late), time(leave_early), time(working_hours)]
+      ['Total', attend_days, left_days, times_late, times_early, time(attend_late), time(leave_early), time(working_hours)]
     end
 
     def time(data)
