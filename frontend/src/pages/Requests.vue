@@ -12,9 +12,11 @@
         :wrapper-class="'datepicker'"
         @input="onInputDatepicker"
       />
+
       <select
         v-model="params.status"
         class="form-select"
+        :disabled="!requests.length"
       >
         <option value="">
           {{ $t('placeholder.filterByStatus') }}
@@ -27,9 +29,11 @@
           {{ $t(`meta.request_statuses.${status}`) }}
         </option>
       </select>
+
       <select
         v-model="params.kind"
         class="form-select"
+        :disabled="!requests.length"
       >
         <option value="">
           {{ $t('placeholder.filterByKind') }}

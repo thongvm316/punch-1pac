@@ -13,7 +13,10 @@
         @input="onInputDatepicker"
       />
 
-      <attendance-status-select v-model="params.status">
+      <attendance-status-select
+        v-model="params.status"
+        :is-filter-disabled="!attendances.length"
+      >
         <option
           slot="placeholder"
           value=""
@@ -97,7 +100,7 @@
 
 <script>
 import modal from '../mixins/modal'
-import { mapGetters, mapActions } from 'vuex'
+import { mapState, mapGetters, mapActions } from 'vuex'
 const Datepicker = () => import('vuejs-datepicker')
 const MainLayout = () => import('../layouts/Main')
 const AttendanceStatusSelect = () => import('../components/AttendanceStatusSelect')
@@ -125,7 +128,9 @@ export default {
   },
 
   computed: {
-    ...mapGetters('attendances', ['formattedAttendances'])
+    ...mapGetters('attendances', ['formattedAttendances']),
+
+    ...mapState('attendances', ['attendances'])
   },
 
   watch: {
