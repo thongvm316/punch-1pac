@@ -9,9 +9,11 @@
         :value="getFormattedInitDateRange()"
         @on-close="onCloseFlatpickr"
       />
+
       <select
         v-model="params.status"
         class="form-select"
+        :disabled="!requests.length"
       >
         <option value="">
           {{ $t('placeholder.filterByStatus') }}
@@ -24,9 +26,11 @@
           {{ $t(`meta.request_statuses.${status}`) }}
         </option>
       </select>
+
       <select
         v-model="params.kind"
         class="form-select"
+        :disabled="!requests.length"
       >
         <option value="">
           {{ $t('placeholder.filterByKind') }}
@@ -44,6 +48,7 @@
         v-model="params.name_or_email"
         type="search"
         class="form-input filter-input"
+        :disabled="!requests.length"
         :placeholder="$t('placeholder.filterByUser')"
       >
     </div>
