@@ -9,7 +9,10 @@
         :value="getFormattedInitDateRange()"
         @on-close="onCloseFlatpickr"
       />
-      <attendance-status-select v-model="params.status">
+      <attendance-status-select
+        v-model="params.status"
+        :is-filter-disabled="!attendances.length"
+      >
         <option
           slot="placeholder"
           value=""
@@ -22,6 +25,7 @@
         v-model="params.name_or_email"
         type="search"
         class="form-input filter-input"
+        :disabled="!attendances.length"
         :placeholder="$t('placeholder.filterByUser')"
       >
     </div>
