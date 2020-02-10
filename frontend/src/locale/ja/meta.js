@@ -1,7 +1,9 @@
 export default {
   attendance_statuses: {
+    attend_days: '合計出席日',
     attend_ok: '定刻出勤',
     attend_late: '遅刻',
+    left_days: '総休暇日数',
     leave_early: '早退',
     leave_ok: '定刻退勤',
     unpaid_leave: '無給休暇',

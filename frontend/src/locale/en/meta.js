@@ -1,7 +1,9 @@
 export default {
   attendance_statuses: {
+    attend_days: 'Total Attend Days',
     attend_ok: 'Attend OK',
     attend_late: 'Attend Late',
+    left_days: 'Total Leave Days',
     leave_early: 'Leave Early',
     leave_ok: 'Leave OK',
     unpaid_leave: 'Unpaid leave',
