@@ -1,7 +1,9 @@
 export default {
   attendance_statuses: {
+    attend_days: 'Tổng ngày đến',
     attend_ok: 'Đến đúng giờ',
     attend_late: 'Đến trễ',
+    left_days: 'Tổng ngày về',
     leave_early: 'Về sớm',
     leave_ok: 'Về đúng giờ',
     unpaid_leave: 'Vắng ko phép',
