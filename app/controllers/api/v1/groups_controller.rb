@@ -62,7 +62,8 @@ class Api::V1::GroupsController < Api::V1::BaseController
     authorize! @group
 
     results  = Attendance.report_attendances_users_in_month(@group, params)
-    document = DocumentService.new('Group', params)
+    document = GroupCSV.new(results, params)
+
     respond_to do |format|
       format.json do
         render  json: results,
@@ -77,8 +78,8 @@ class Api::V1::GroupsController < Api::V1::BaseController
                 status: :ok
       end
 
-      format.csv { send_data(document.export_csv(results),      document.option('report.csv', 'text/csv')) }
-      format.zip { send_data(document.export_zip(@group.users), document.option('report.zip', 'text/zip')) }
+      format.csv { send_data(document.to_csv, document.options('report.csv', 'text/csv')) }
+      format.zip { send_data(document.to_zip, document.options('report.zip', 'text/zip')) }
     end
   end
 
@@ -89,7 +90,7 @@ class Api::V1::GroupsController < Api::V1::BaseController
     if user
       attendances = user.attendances.in_period(params).order(day: :asc)
       chart       = user.attendances.chart_in_month(params).first
-      document    = DocumentService.new('User', params)
+      document    = UserCSV.new(attendances, params)
       holidays    = current_company.holidays.in_month(params[:date])
 
       report_json      = ActiveModelSerializers::SerializableResource.new(chart, serializer: AttendanceChartSerializer).as_json
@@ -102,7 +103,7 @@ class Api::V1::GroupsController < Api::V1::BaseController
 
       respond_to do |format|
         format.json { render json: { attendances: attendances_json, holidays: holidays_json, report: report_json, meta: meta_json }, status: :ok }
-        format.csv { send_data(document.export_csv(attendances), document.option("#{params[:user_id]}.csv", 'text/csv')) }
+        format.csv { send_data(document.to_csv, document.options("#{params[:user_id]}.csv", 'text/csv')) }
       end
     end
   end
