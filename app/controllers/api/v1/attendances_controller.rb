@@ -32,7 +32,7 @@ class Api::V1::AttendancesController < Api::V1::BaseController
   def chart
     authorize!
     chart = current_user.attendances.chart_in_month(params).first
-    
+
     render json: chart,
            root: 'statuses',
            serializer: AttendanceChartSerializer,
