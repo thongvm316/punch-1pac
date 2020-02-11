@@ -10,7 +10,6 @@ class GroupCSV < BaseCSV
             'group.report.attend_late',
             'group.report.leave_ok',
             'group.report.leave_early',
-            'group.report.annual_leave',
             'user.report.min_attend_late',
             'user.report.min_leave_early',
             'group.report.days_off',
@@ -18,7 +17,7 @@ class GroupCSV < BaseCSV
   end
 
   def build_csv_footer
-    ['', '', '', '', '', '', '', '', '', '', '']
+    ['', '', '', '', '', '', '', '', '', '']
   end
 
   def build_datum(datum)
@@ -30,7 +29,6 @@ class GroupCSV < BaseCSV
       datum.attend_late.to_i,
       datum.leave_ok.to_i,
       datum.leave_early.to_i,
-      datum.annual_leave.to_i,
       time(datum.minutes_attend_late),
       time(datum.minutes_leave_early),
       days_off,
