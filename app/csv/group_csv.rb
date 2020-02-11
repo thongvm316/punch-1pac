@@ -13,14 +13,16 @@ class GroupCSV < BaseCSV
             'group.report.annual_leave',
             'user.report.min_attend_late',
             'user.report.min_leave_early',
+            'group.report.days_off',
             'group.report.working_hours'])
   end
 
   def build_csv_footer
-    ['', '', '', '', '', '', '', '', '', '']
+    ['', '', '', '', '', '', '', '', '', '', '']
   end
 
   def build_datum(datum)
+    days_off = ForgotPunchInDaysService.new(datum, datum.company, @params).execute.size
     [
       datum.email,
       datum.name,
@@ -31,6 +33,7 @@ class GroupCSV < BaseCSV
       datum.annual_leave.to_i,
       time(datum.minutes_attend_late),
       time(datum.minutes_leave_early),
+      days_off,
       time(datum.working_hours)
     ]
   end
@@ -43,7 +46,8 @@ class GroupCSV < BaseCSV
     users.each do |user|
       zos.put_next_entry "#{user.name}_#{user.email}.csv"
       attendances = user.attendances.in_period(params).order(day: :asc)
-      document    = UserCSV.new(attendances, params)
+      leave_days  = ForgotPunchInDaysService.new(user, user.company, params).execute
+      document    = UserCSV.new(attendances, params.merge(leave_days: leave_days))
       content     = document.to_csv
       zos.print content
     end

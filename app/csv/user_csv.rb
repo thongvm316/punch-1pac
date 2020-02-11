@@ -11,6 +11,7 @@ class UserCSV < BaseCSV
             'user.report.leave_early',
             'user.report.min_attend_late',
             'user.report.min_leave_early',
+            'user.report.days_off',
             'user.report.working_hours'])
   end
 
@@ -23,19 +24,21 @@ class UserCSV < BaseCSV
       datum.leaving_status   == 'leave_early' ? '✓' : '-',
       time(datum.minutes_attend_late),
       time(datum.minutes_leave_early),
+      '',
       time(datum.working_hours)
     ]
   end
 
-  def export_csv
-    range_date = TimeInDay.range_date(@params)
-    from = range_date.first
-    to = range_date.second
+  def datum(day)
+    attendance = @data.find_by(day: day)
+    return build_datum(attendance) if attendance
+    return [day, '', '', '', '', '', '', '✓', ''] if @params[:leave_days].include?(day.to_s)
+    [day]
+  end
 
-    (from..to).to_a.each_with_object([]) do |day, arr|
-      attendance = @data.find_by(day: day)
-      arr << (attendance ? build_datum(attendance) : [day])
-    end
+  def export_csv
+    from, to = TimeInDay.range_date(@params)
+    (from..to).each_with_object([]) { |day, arr| arr << datum(day) }
   end
 
   def build_csv_footer
@@ -47,6 +50,6 @@ class UserCSV < BaseCSV
     times_late    = @data.where(attending_status: 'attend_late').size
     times_early   = @data.where(leaving_status: 'leave_early').size
 
-    ['Total', attend_days, left_days, times_late, times_early, time(attend_late), time(leave_early), time(working_hours)]
+    ['Total', attend_days, left_days, times_late, times_early, time(attend_late), time(leave_early), @params[:leave_days].size, time(working_hours)]
   end
 end

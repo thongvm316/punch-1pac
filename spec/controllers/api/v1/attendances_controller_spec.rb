@@ -116,7 +116,7 @@ RSpec.describe Api::V1::AttendancesController, type: :controller do
       subject { get :calendar, params: { date: 'invalid' } }
 
       its(:code) { is_expected.to eq '200' }
-      its(:body) { is_expected.to be_json_as(attendances: Array.new(0) { response_attendance }) }
+      its(:body) { is_expected.to be_json_as(attendances: Array.new(1) { response_attendance }) }
     end
   end
 

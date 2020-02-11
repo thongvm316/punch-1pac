@@ -43,6 +43,7 @@ vi:
       leave_ok: Về đúng giờ
       leave_early: Về sớm
       annual_leave: Nghỉ phép
+      days_off: Số ngày nghỉ
       working_hours: Số giờ làm việc
   user:
     report:
@@ -53,6 +54,7 @@ vi:
       leave_early: Về sớm
       min_attend_late: Số giờ đi trễ
       min_leave_early: Số giờ về sớm
+      days_off: Số ngày nghỉ
       working_hours: Thời gian làm việc
   activerecord:
     errors:

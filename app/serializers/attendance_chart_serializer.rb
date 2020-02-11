@@ -28,7 +28,7 @@ class AttendanceChartSerializer < ApplicationSerializer
   end
 
   def leave
-    0
+    instance_options[:leave_days].size
   end
 
   def minutes_leave_early
