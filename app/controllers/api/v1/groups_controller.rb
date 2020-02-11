@@ -90,10 +90,11 @@ class Api::V1::GroupsController < Api::V1::BaseController
     if user
       attendances = user.attendances.in_period(params).order(day: :asc)
       chart       = user.attendances.chart_in_month(params).first
-      document    = UserCSV.new(attendances, params)
       holidays    = current_company.holidays.range_date(params[:from_date], params[:to_date])
+      leave_days  = ForgotPunchInDaysService.new(user, current_company, params).execute
+      document    = UserCSV.new(attendances, params.merge(leave_days: leave_days.size))
 
-      report_json      = ActiveModelSerializers::SerializableResource.new(chart, serializer: AttendanceChartSerializer, params: params, user: user).as_json
+      report_json      = ActiveModelSerializers::SerializableResource.new(chart, serializer: AttendanceChartSerializer, leave_days: leave_days).as_json
       attendances_json = ActiveModelSerializers::SerializableResource.new(attendances, each_serializer: AttendanceSerializer).as_json
       holidays_json    = ActiveModelSerializers::SerializableResource.new(holidays, each_serializer: HolidaySerializer).as_json
       meta_json = {
