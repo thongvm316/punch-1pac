@@ -91,9 +91,9 @@ class Api::V1::GroupsController < Api::V1::BaseController
       attendances = user.attendances.in_period(params).order(day: :asc)
       chart       = user.attendances.chart_in_month(params).first
       document    = UserCSV.new(attendances, params)
-      holidays    = current_company.holidays.in_month(params[:date])
+      holidays    = current_company.holidays.range_date(params[:from_date], params[:to_date])
 
-      report_json      = ActiveModelSerializers::SerializableResource.new(chart, serializer: AttendanceChartSerializer).as_json
+      report_json      = ActiveModelSerializers::SerializableResource.new(chart, serializer: AttendanceChartSerializer, params: params, user: user).as_json
       attendances_json = ActiveModelSerializers::SerializableResource.new(attendances, each_serializer: AttendanceSerializer).as_json
       holidays_json    = ActiveModelSerializers::SerializableResource.new(holidays, each_serializer: HolidaySerializer).as_json
       meta_json = {

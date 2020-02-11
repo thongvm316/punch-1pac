@@ -18,6 +18,7 @@ class TimeInDay
       date      = Date.current
       from_date = date.beginning_of_month
       to_date   = date.end_of_month
+      return [from_date, to_date] if params.nil?
 
       if params[:date]
         from_date = Date.parse(params[:date]).beginning_of_month
@@ -26,6 +27,7 @@ class TimeInDay
         from_date = Date.parse(params[:from_date])
         to_date   = Date.parse(params[:to_date])
       end
+
       [from_date, to_date]
     end
   end

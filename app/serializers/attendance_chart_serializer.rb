@@ -28,7 +28,7 @@ class AttendanceChartSerializer < ApplicationSerializer
   end
 
   def leave
-    0
+    ForgotPunchInDaysService.new(instance_options[:user], instance_options[:user].company, instance_options[:params]).execute.size
   end
 
   def minutes_leave_early

@@ -40,7 +40,7 @@ class Api::V1::AttendancesController < Api::V1::BaseController
              company_total_working_hours_on_month: current_company.total_working_hours_on_month(params),
              company_total_working_days_in_month:  current_company.total_working_days_in_month(params)
            },
-           leave_days: ForgotPunchInDaysService.new(current_user, current_company, params[:date]).execute,
+           user: current_user,
            adapter: :json,
            status:  :ok
   end
@@ -58,7 +58,7 @@ class Api::V1::AttendancesController < Api::V1::BaseController
              root: 'attendances',
              each_serializer: AttendanceSerializer,
              adapter: :json,
-             meta: pager(attendances).merge(forgot_punch_in_days: ForgotPunchInDaysService.new(current_user, current_company, params[:date]).execute),
+             meta: pager(attendances).merge(forgot_punch_in_days: ForgotPunchInDaysService.new(current_user, current_company, params).execute),
              status: :ok
     end
   end
@@ -66,6 +66,7 @@ class Api::V1::AttendancesController < Api::V1::BaseController
   def calendar
     authorize!
     attend = current_user.attendances.in_period(params).order(day: :asc)
+
     if stale?(attend)
       render json: attend,
              root: 'attendances',

@@ -24,7 +24,7 @@ class GroupReportSerializer < ApplicationSerializer
   end
 
   def leave
-    ForgotPunchInDaysService.new(object, object.company, instance_options[:params][:date], instance_options[:params][:date_type]).execute.size
+    ForgotPunchInDaysService.new(object, object.company, instance_options[:params]).execute.size
   end
 
   def minutes_leave_early

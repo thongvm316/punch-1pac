@@ -1,24 +1,18 @@
 # frozen_string_literal: true
 
 class ForgotPunchInDaysService
-  def initialize(current_user, current_company, date = nil, date_type = nil)
-    @current_user = current_user
-    @now = Time.current
-    @query_time = date.present? ? Time.zone.parse(date) : @now
-    @current_company = current_company
-    @date_type = date_type
+  def initialize(current_user, current_company, params = {})
+    @current_user        = current_user
+    @now                 = Time.current
+    @from_date, @to_date = TimeInDay.range_date(params)
+    @to_date             = Date.yesterday if @to_date > @now
+    @current_company     = current_company
   end
 
   def execute
-    return [] if @query_time.blank?
-    return [] if @query_time > @now
-
-    @days = []
-
-    (from_date..to_date).step(1.day) do |timestamp|
-      current_day = Time.zone.at(timestamp).to_date
-      next if invalid_forgot_punch_in_day?(current_day)
-      @days << current_day.strftime('%Y-%m-%d')
+    @days = (@from_date..@to_date).each_with_object([]) do |day, arr|
+      next if invalid_forgot_punch_in_day?(day)
+      arr << day.to_s
     end
 
     @days - punch_in_days
@@ -27,7 +21,7 @@ class ForgotPunchInDaysService
   private
 
   def invalid_forgot_punch_in_day?(current_day)
-    return true if current_day < @current_user.created_at
+    return true if current_day < @current_user.activated_at.to_date
     return true if in_holiday?(current_day)
     return true if in_breakday?(current_day)
     return true if in_deactivated_time?(current_day)
@@ -53,19 +47,7 @@ class ForgotPunchInDaysService
   end
 
   def holidays
-    @holidays ||= @current_company.holidays.in_month(@query_time.strftime('%Y-%m-%d'))
-  end
-
-  def to_date
-    if @date_type == 'year'
-      @query_time.end_of_year.to_i
-    else
-      @query_time.month < @now.month ? @query_time.end_of_month.to_i : (@now - 1.day).to_i
-    end
-  end
-
-  def from_date
-    @date_type == 'year' ? @query_time.beginning_of_year.to_i : @query_time.beginning_of_month.to_i
+    @holidays ||= @current_company.holidays.range_date(@from_date, @to_date)
   end
 
   def punch_in_days
