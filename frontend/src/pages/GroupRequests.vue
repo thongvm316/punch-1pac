@@ -6,7 +6,7 @@
       <flat-pickr
         :config="{mode: 'range', locale: flatpickrLocaleMapper[pickrLocale]}"
         class="form-input daterange-picker"
-        :value="getFormattedInitDateRange()"
+        :value="formatDateRange(params)"
         @on-close="onCloseFlatpickr"
       />
 
@@ -262,8 +262,8 @@ export default {
     this.params = {
       ...this.params,
       ...{
-        from_date: this.$moment().format('YYYY-MM-DD'),
-        to_date: this.$moment().format('YYYY-MM-DD')
+        from_date: this.$moment().startOf('month').format('YYYY-MM-DD'),
+        to_date: this.$moment().endOf('month').format('YYYY-MM-DD')
       }
     }
     if (!this.group) this.getGroup(this.$route.params.id)

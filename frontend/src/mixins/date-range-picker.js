@@ -24,14 +24,7 @@ export default {
       }
     },
 
-    getFormattedInitDateRange() {
-      let dateRange = this.currentCompany
-        ? this.initDateRange(this.currentCompany.monthly_report)
-        : {
-          from_date: this.$moment().format('YYYY-MM-DD'),
-          to_date: this.$moment().format('YYYY-MM-DD')
-        }
-
+    formatDateRange(dateRange) {
       return `${dateRange.from_date}${this.$t('flatpickr.rangeSeparator')}${dateRange.to_date}`
     },
 

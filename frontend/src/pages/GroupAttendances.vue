@@ -6,7 +6,7 @@
       <flat-pickr
         :config="{ mode: 'range', locale: flatpickrLocaleMapper[pickrLocale] }"
         class="form-input daterange-picker"
-        :value="getFormattedInitDateRange()"
+        :value="formatDateRange(params)"
         @on-close="onCloseFlatpickr"
       />
       <attendance-status-select
