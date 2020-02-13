@@ -20,11 +20,11 @@ class UserCSV < BaseCSV
       datum.day,
       datum.attended_time,
       datum.left_time,
-      datum.attending_status == 'attend_late' ? '✓' : '-',
-      datum.leaving_status   == 'leave_early' ? '✓' : '-',
+      datum.attending_status == 'attend_late' ? 'X' : '-',
+      datum.leaving_status   == 'leave_early' ? 'X' : '-',
       time(datum.minutes_attend_late),
       time(datum.minutes_leave_early),
-      '',
+      '-',
       time(datum.working_hours)
     ]
   end
@@ -32,7 +32,7 @@ class UserCSV < BaseCSV
   def datum(day)
     attendance = @data.find_by(day: day)
     return build_datum(attendance) if attendance
-    return [day, '', '', '', '', '', '', '✓', ''] if @params[:leave_days].include?(day.to_s)
+    return [day, '-', '-', '-', '-', '-', '-', 'X', '-'] if @params[:leave_days].include?(day.to_s)
     [day]
   end
 
