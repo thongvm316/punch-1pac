@@ -51,6 +51,6 @@ class ForgotPunchInDaysService
   end
 
   def punch_in_days
-    @current_user.attendances.where(day: @days).map { |a| a.day.strftime('%Y-%m-%d') }
+    @current_user.attendances.attended.where(day: @days).map { |a| a.day.strftime('%Y-%m-%d') }
   end
 end
