@@ -13,10 +13,7 @@
         @input="onInputDatepicker"
       />
 
-      <attendance-status-select
-        v-model="params.status"
-        :is-filter-disabled="!attendances.length"
-      >
+      <attendance-status-select v-model="params.status">
         <option
           slot="placeholder"
           value=""

@@ -25,7 +25,6 @@
         v-model="params.name_or_email"
         type="search"
         class="form-input filter-input"
-        :disabled="!attendances.length"
         :placeholder="$t('placeholder.filterByUser')"
       >
     </div>

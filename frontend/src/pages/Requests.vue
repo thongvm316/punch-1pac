@@ -16,7 +16,6 @@
       <select
         v-model="params.status"
         class="form-select"
-        :disabled="!requests.length"
       >
         <option value="">
           {{ $t('placeholder.filterByStatus') }}
@@ -33,7 +32,6 @@
       <select
         v-model="params.kind"
         class="form-select"
-        :disabled="!requests.length"
       >
         <option value="">
           {{ $t('placeholder.filterByKind') }}
