@@ -39,6 +39,7 @@ class AttendanceService
     attendance = @user.attendances.build(
       day: @now,
       attended_at: @now,
+      minutes_attend_late: TotalTimeOfLatency.new(@user.company, @now).execute,
       attending_status: self.class.attending_status(@user.company, @now, @now)
     )
     attendance.save ? attendance : false
@@ -50,6 +51,7 @@ class AttendanceService
     attendance.assign_attributes(
       left_at: @now,
       working_hours: CountWorkingHoursService.new(@user.company, attendance.attended_at, @now, attendance.day).execute,
+      minutes_leave_early: TotalTimeOfLatency.new(@user.company, @now, attendance).execute,
       leaving_status: self.class.leaving_status(@user.company, @now, attendance.day)
     )
     attendance.save ? attendance : false

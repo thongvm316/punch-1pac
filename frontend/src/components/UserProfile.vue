@@ -1,60 +1,154 @@
 <template>
   <form class="setting-form">
-    <div class="form-group" :class="{ 'has-error': errors.avatar }">
-      <label class="form-label">{{ $t('user.profile.labels.avatar') }}</label>
-      <img class="img-profile" :src="targetUser.avatar_url" :alt="targetUser.name">
-      <input class="form-input" type="file" @change="setAvatarFile">
-      <p class="form-input-hint" v-if="errors.avatar">{{ $t('user.profile.labels.avatar') }} {{ errors.avatar[0] }}</p>
+    <div
+      class="form-group"
+      :class="{ 'has-error': errors.avatar }"
+    >
+      <label class="form-label">{{ $t('label.avatar') }}</label>
+      <img
+        class="img-profile"
+        :src="targetUser.avatar_url"
+        :alt="targetUser.name"
+      >
+      <input
+        class="form-input"
+        type="file"
+        @change="setAvatarFile"
+      >
+      <p
+        v-if="errors.avatar"
+        class="form-input-hint"
+      >
+        {{ $t('label.avatar') }} {{ errors.avatar[0] }}
+      </p>
     </div>
-    <div class="form-group" :class="{ 'has-error': errors.email }">
-      <label class="form-label">{{ $t('user.profile.labels.email') }}</label>
-      <input class="form-input" type="text" v-model="params.email">
-      <p class="form-input-hint" v-if="errors.email">{{ $t('user.profile.labels.email') }} {{ errors.email[0] }}</p>
+    <div
+      class="form-group"
+      :class="{ 'has-error': $v.params.email.$anyError || errors.email }"
+    >
+      <label class="form-label">{{ $t('label.email') }}</label>
+      <input
+        v-model="$v.params.email.$model"
+        class="form-input"
+        type="text"
+      >
+      <p
+        v-if="$v.params.email.$anyError && !errors.email"
+        class="form-input-hint"
+      >
+        <span v-if="!$v.params.email.required">{{ $t('validation.required', { name: $t('label.email') }) }}</span>
+        <span v-if="!$v.params.email.email">{{ $t('validation.invalid', { name: $t('label.email') }) }}</span>
+      </p>
+      <p
+        v-if="errors.email"
+        class="form-input-hint"
+      >
+        {{ $t('label.email') }} {{ errors.email[0] }}
+      </p>
     </div>
-    <div class="form-group" :class="{ 'has-error': errors.name }">
-      <label class="form-label">{{ $t('user.profile.labels.name') }}</label>
-      <input class="form-input" type="text" v-model="params.name">
-      <p class="form-input-hint" v-if="errors.name">{{ $t('user.profile.labels.name') }} {{ errors.name[0] }}</p>
-    </div>
-    <div class="form-group" :class="{ 'has-error': errors.gender }">
-      <label class="form-label">{{ $t('user.profile.labels.gender') }}</label>
-      <label class="form-radio">
-        <input type="radio" value="male" v-model="params.gender">
-        <i class="form-icon"></i> {{ $t('meta.gender.male') }}
-      </label>
-      <label class="form-radio">
-        <input type="radio" value="female" v-model="params.gender">
-        <i class="form-icon"></i> {{ $t('meta.gender.female') }}
-      </label>
-      <p class="form-input-hint" v-if="errors.gender">{{ $t('user.profile.labels.gender') }} {{ errors.gender[0] }}</p>
+    <div
+      class="form-group"
+      :class="{ 'has-error': $v.params.name.$error || errors.name }"
+    >
+      <label class="form-label">{{ $t('label.name') }}</label>
+      <input
+        v-model="$v.params.name.$model"
+        class="form-input"
+        type="text"
+      >
+      <p
+        v-if="$v.params.name.$error && !errors.name"
+        class="form-input-hint"
+      >
+        {{ $t('validation.required', { name: $t('label.name') }) }}
+      </p>
+      <p
+        v-if="errors.name"
+        class="form-input-hint"
+      >
+        {{ $t('label.name') }} {{ errors.name[0] }}
+      </p>
     </div>
     <div class="form-group">
-      <label class="form-label">{{ $t('user.profile.labels.position') }}</label>
-      <input class="form-input" type="text" v-model="params.position">
+      <label class="form-label">{{ $t('label.gender') }}</label>
+      <label class="form-radio">
+        <input
+          v-model="params.gender"
+          type="radio"
+          value="male"
+        >
+        <i class="form-icon" /> {{ $t('meta.gender.male') }}
+      </label>
+      <label class="form-radio">
+        <input
+          v-model="params.gender"
+          type="radio"
+          value="female"
+        >
+        <i class="form-icon" /> {{ $t('meta.gender.female') }}
+      </label>
     </div>
-    <div class="form-group" :class="{ 'has-error': errors.role }">
-      <label class="form-label">{{ $t('user.profile.labels.role') }}</label>
-      <select class="form-select" v-model="params.role" :disabled="!$auth('User', currentUser, targetUser).canEditRole()">
-        <option :value="role" v-for="role in meta.roles">{{ $t(`meta.roles.${role}`) }}</option>
+    <div class="form-group">
+      <label class="form-label">{{ $t('label.position') }}</label>
+      <input
+        v-model="params.position"
+        class="form-input"
+        type="text"
+      >
+    </div>
+    <div class="form-group">
+      <label class="form-label">{{ $t('label.role') }}</label>
+      <select
+        v-model="params.role"
+        class="form-select"
+        :disabled="!$auth('User', currentUser, targetUser).canEditRole()"
+      >
+        <option
+          v-for="(role, key) in meta.roles"
+          :key="key"
+          :value="role"
+        >
+          {{ $t(`meta.roles.${role}`) }}
+        </option>
       </select>
-      <p class="form-input-hint" v-if="errors.role">{{ $t('user.profile.labels.role') }} {{ errors.role[0] }}</p>
     </div>
     <div class="form-group">
-      <button type="button" class="btn btn-success btn-submit" @click="updateUser" :disabled="isDisable">{{ $t('user.profile.btn.save') }}</button>
+      <button
+        type="button"
+        class="btn btn-success btn-submit"
+        :disabled="isDisabled"
+        @click="updateUser"
+      >
+        {{ $t('button.common.save') }}
+      </button>
     </div>
   </form>
 </template>
 
 <script>
-import { mapState, mapActions, mapMutations } from 'vuex'
+import { mapState, mapMutations } from 'vuex'
+import handleSuccess from '../mixins/handle-success'
+import userProfileValidate from '../validations/user-profile-validate'
 import * as types from '../store/mutation-types'
 import axios from 'axios'
 import 'formdata-polyfill'
 
 export default {
+
+  mixins: [handleSuccess, userProfileValidate],
+
+  props: {
+    targetUser: {
+      type: Object,
+      required: true
+    },
+    objectType: {
+      type: String,
+      default: ''
+    }
+  },
   data() {
     return {
-      isDisable: false,
       params: {
         avatar: '',
         gender: '',
@@ -67,15 +161,21 @@ export default {
     }
   },
 
-  props: ['targetUser', 'objectType'],
-
   computed: {
     ...mapState('initialStates', ['meta'])
   },
 
-  methods: {
-    ...mapActions('flash', ['setFlashMsg']),
+  watch: {
+    targetUser: function() {
+      this.params = { ...this.targetUser }
+    }
+  },
 
+  created() {
+    this.params = { ...this.targetUser }
+  },
+
+  methods: {
     ...mapMutations('initialStates', [types.INITIAL_STATES_UPDATE_USER]),
 
     ...mapMutations('group', [types.UPDATE_GROUP_USER]),
@@ -83,7 +183,6 @@ export default {
     ...mapMutations('companyUsers', [types.UPDATE_USER]),
 
     updateUser() {
-      this.isDisable = true
       let formData = new FormData()
       Object.keys(this.params).forEach(key => formData.set(`user[${key}]`, this.params[key] || ''))
 
@@ -95,13 +194,13 @@ export default {
           }
           if (this.objectType === 'company') this[types.UPDATE_USER](response.data)
           if (this.objectType === 'group') this[types.UPDATE_GROUP_USER](response.data)
-          this.setFlashMsg({ message: this.$t('messages.user.updateProfileSuccess') })
-          this.$emit('afterUserProfileUpdated')
-          this.isDisable = false
+          this.handleSuccess({
+            emitType: 'afterUserProfileUpdated',
+            message: this.$t('messages.user.updateProfileSuccess')
+          })
           this.errors = {}
         })
         .catch(error => {
-          this.isDisable = false
           if (error.response && error.response.status === 422) this.errors = error.response.data.errors
         })
     },
@@ -110,20 +209,6 @@ export default {
       const files = e.target.files || e.dataTransfer.files
       if (!files.length) return
       this.params.avatar = files[0]
-    }
-  },
-
-  created() {
-    Object.keys(this.params).forEach(key => {
-      this.params[key] = this.targetUser[key]
-    })
-  },
-
-  watch: {
-    targetUser: function() {
-      Object.keys(this.params).forEach(key => {
-        this.params[key] = this.targetUser[key]
-      })
     }
   }
 }

@@ -30,10 +30,12 @@ jobs:
           - 1punch-api-v1-dependencies-{{ checksum "Gemfile.lock" }}
           # fallback to using the latest cache if no exact match is found
           - 1punch-api-v1-dependencies-
+
       - run:
-          name: install dependencies
+          name: Install Rails Dependencies
           command: |
             bundle install --jobs=4 --retry=3 --path vendor/bundle
+
       - save_cache:
           paths:
             - ./vendor/bundle
@@ -46,9 +48,11 @@ jobs:
             - yarn-packages-{{ .Branch }}
             - yarn-packages-master
             - yarn-packages-
+
       - run:
-          name: Install Dependencies
+          name: Install Node Package Dependencies
           command: cd frontend && yarn install
+
       - save_cache:
           name: Save Yarn Package Cache
           key: yarn-packages-{{ .Branch }}-{{ checksum "frontend/yarn.lock" }}
@@ -56,17 +60,18 @@ jobs:
             - node_modules/
 
       - run:
-          name: setup config files
+          name: Setup Config Files
           command: |
             cp config/database.yml.sample config/database.yml
             cp config/secrets.yml.sample config/secrets.yml
+
       # Database setup
       - run: bundle exec rake db:create
       - run: bundle exec rake db:schema:load
 
-      # run tests!
+      # run rspec tests!
       - run:
-          name: run tests
+          name: Run Rspec Tests
           command: |
             mkdir /tmp/test-results
             bundle exec rspec --format progress \
@@ -81,3 +86,17 @@ jobs:
       - store_artifacts:
           path: /tmp/test-results
           destination: test-results
+
+      # # run unit tests frontend!
+      # - run:
+      #     name: Run Unit Tests
+      #     command: |
+      #       cd frontend/
+      #       yarn run test:unit
+
+      # # collect reports
+      # - store_test_results:
+      #     path: /tmp/test-results
+      # - store_artifacts:
+      #     path: /tmp/test-results
+      #     destination: test-results

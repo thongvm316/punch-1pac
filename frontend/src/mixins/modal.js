@@ -1,5 +1,6 @@
-import Modal from '../components/Modal.vue'
-import { mapActions } from 'vuex'
+import { SET_FLASH_MESSAGE } from '../store/mutation-types'
+import { mapMutations } from 'vuex'
+const Modal = () => import('../components/Modal.vue')
 
 export default {
   data() {
@@ -14,7 +15,7 @@ export default {
   },
 
   methods: {
-    ...mapActions('flash', ['setFlashMsg']),
+    ...mapMutations('flash', [SET_FLASH_MESSAGE]),
 
     toggleAddModal() {
       this.isAddModalOpen = !this.isAddModalOpen
@@ -27,14 +28,14 @@ export default {
     submitAddModal(params, callback, msg = '') {
       callback(params).then(response => {
         this.isAddModalOpen = false
-        if (msg) this.setFlashMsg({ message: msg })
+        if (msg) this[SET_FLASH_MESSAGE]({ message: msg })
       })
     },
 
     saveEditModal(params, callback, msg = '') {
       callback(params).then(response => {
         this.isEditModalOpen = false
-        if (msg) this.setFlashMsg({ message: msg })
+        if (msg) this[SET_FLASH_MESSAGE]({ message: msg })
       })
     }
   }

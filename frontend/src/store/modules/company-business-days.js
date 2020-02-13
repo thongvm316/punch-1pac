@@ -1,5 +1,12 @@
-import * as types from '../mutation-types.js'
-import axios from 'axios'
+import {
+  FETCH_BUSINESS_DAYS,
+  ADD_BUSINESS_DAY,
+  DELETE_BUSINESS_DAY,
+  UPDATE_BUSINESS_DAY,
+  UPDATE_BUSINESS_DAY_ERRORS,
+  CLEAR_BUSINESS_DAY_ERRORS
+} from '../mutation-types.js'
+import callApi from '../api-caller'
 
 const state = {
   errors: {},
@@ -7,38 +14,40 @@ const state = {
 }
 
 const mutations = {
-  [types.FETCH_BUSINESS_DAYS](state, payload) {
+  [FETCH_BUSINESS_DAYS](state, payload) {
     state.businessDays = payload
   },
 
-  [types.ADD_BUSINESS_DAY](state, payload) {
+  [ADD_BUSINESS_DAY](state, payload) {
     state.businessDays.push(payload)
   },
 
-  [types.DELETE_BUSINESS_DAY](state, businessDayId) {
+  [DELETE_BUSINESS_DAY](state, businessDayId) {
     state.businessDays = state.businessDays.filter(businessDay => businessDay.id !== businessDayId)
   },
 
-  [types.UPDATE_BUSINESS_DAY](state, payload) {
+  [UPDATE_BUSINESS_DAY](state, payload) {
     const index = state.businessDays.findIndex(businessDay => businessDay.id === payload.id)
     state.businessDays[index] = payload
   },
 
-  [types.UPDATE_BUSINESS_DAY_ERRORS](state, payload) {
+  [UPDATE_BUSINESS_DAY_ERRORS](state, payload) {
     state.errors = payload.errors
   },
 
-  [types.CLEAR_BUSINESS_DAY_ERRORS](state) {
+  [CLEAR_BUSINESS_DAY_ERRORS](state) {
     state.errors = {}
   }
 }
 
 const actions = {
   fetchBusinessDays({ commit }) {
-    return axios
-      .get('/business_days')
+    return callApi({
+      method: 'get',
+      url: '/business_days'
+    })
       .then(response => {
-        commit(types.FETCH_BUSINESS_DAYS, response.data)
+        commit(FETCH_BUSINESS_DAYS, response.data)
         return response
       })
       .catch(error => {
@@ -47,23 +56,28 @@ const actions = {
   },
 
   addBusinessDay({ commit }, params) {
-    return axios
-      .post('/business_days', { business_day: params }, { headers: { 'Content-Type': 'application/json' } })
+    return callApi({
+      method: 'post',
+      url: '/business_days',
+      data: { business_day: params }
+    })
       .then(response => {
-        commit(types.ADD_BUSINESS_DAY, response.data)
+        commit(ADD_BUSINESS_DAY, response.data)
         return response
       })
       .catch(error => {
-        if (error.response && error.response.status === 422) commit(types.UPDATE_BUSINESS_DAY_ERRORS, error.response.data)
+        if (error.response && error.response.status === 422) commit(UPDATE_BUSINESS_DAY_ERRORS, error.response.data)
         throw error
       })
   },
 
   deleteBusinessDay({ commit }, businessDayId) {
-    return axios
-      .delete(`/business_days/${businessDayId}`)
+    return callApi({
+      method: 'delete',
+      url: `/business_days/${businessDayId}`
+    })
       .then(response => {
-        commit(types.DELETE_BUSINESS_DAY, businessDayId)
+        commit(DELETE_BUSINESS_DAY, businessDayId)
         return response
       })
       .catch(error => {
@@ -72,20 +86,19 @@ const actions = {
   },
 
   updateBusinessDay({ commit }, params) {
-    return axios
-      .put(`/business_days/${params.businessDayId}`, { business_day: params.updateParams }, { headers: { 'Content-Type': 'application/json' } })
+    return callApi({
+      method: 'put',
+      url: `/business_days/${params.businessDayId}`,
+      data: { business_day: params.updateParams }
+    })
       .then(response => {
-        commit(types.UPDATE_BUSINESS_DAY, response.data)
+        commit(UPDATE_BUSINESS_DAY, response.data)
         return response
       })
       .catch(error => {
-        if (error.response && error.response.status === 422) commit(types.UPDATE_BUSINESS_DAY_ERRORS, error.response.data)
+        if (error.response && error.response.status === 422) commit(UPDATE_BUSINESS_DAY_ERRORS, error.response.data)
         throw error
       })
-  },
-
-  clearBusinessDayErrors({ commit }) {
-    commit(types.CLEAR_BUSINESS_DAY_ERRORS)
   }
 }
 

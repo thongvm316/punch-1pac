@@ -7,12 +7,19 @@
 }
 
 .form-input {
-  &.daterange-picker {
+  &.daterange-picker,
+  &.time-picker {
     background-color: $light-color;
-    background-image: url('../assets/ico-calendar.svg');
     background-repeat: no-repeat;
     background-position: calc(100% - 0.4rem) 50%;
     background-size: 0.8rem 0.8rem;
+  }
+  &.daterange-picker {
+    background-image: url('../assets/ico-calendar.svg');
+  }
+
+  &.time-picker {
+    background-image: url('../assets/ico_time-picker.svg');
   }
 }
 
@@ -100,3 +107,10 @@ input[type=search] {
   }
 }
 
+.form-input.is-success {
+  border-color: $success-color;
+
+  &:focus {
+    box-shadow: none;
+  }
+}

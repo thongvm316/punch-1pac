@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import Vuelidate from 'vuelidate'
 import App from './App'
 import router from './router'
 import i18n from './locale'
@@ -30,6 +31,7 @@ axios.interceptors.response.use(
   }
 )
 
+Vue.use(Vuelidate)
 Vue.prototype.$moment = moment
 Vue.prototype.$auth = authorization
 Vue.mixin(currentUser)

@@ -1,5 +1,5 @@
-import * as types from '../mutation-types.js'
-import axios from 'axios'
+import { FETCH_SESSIONS, DELETE_SESSION } from '../mutation-types'
+import callApi from '../api-caller'
 
 const state = {
   sessions: [],
@@ -8,22 +8,24 @@ const state = {
 }
 
 const mutations = {
-  [types.FETCH_SESSIONS](state, payload) {
+  [FETCH_SESSIONS](state, payload) {
     state.sessions = payload.sessions
     state.currentSession = payload.meta
   },
 
-  [types.DELETE_SESSION](state, payload) {
+  [DELETE_SESSION](state, payload) {
     state.sessions = state.sessions.filter(session => session.id !== payload)
   }
 }
 
 const actions = {
   fetchSessions({ commit }) {
-    return axios
-      .get('/sessions')
+    return callApi({
+      method: 'get',
+      url: '/sessions'
+    })
       .then(response => {
-        commit(types.FETCH_SESSIONS, response.data)
+        commit(FETCH_SESSIONS, response.data)
         return response
       })
       .catch(error => {
@@ -32,10 +34,12 @@ const actions = {
   },
 
   deleteSession({ commit }, data) {
-    return axios
-      .delete(`/sessions/${data}`)
+    return callApi({
+      method: 'delete',
+      url: `/sessions/${data}`
+    })
       .then(response => {
-        commit(types.DELETE_SESSION, data)
+        commit(DELETE_SESSION, data)
         return response
       })
       .catch(error => {

@@ -1,22 +1,56 @@
 <template>
   <ul class="pagination mt-4">
-    <li class="page-item" v-show="pager.current_page > 1">
-      <a @click="go(pager.current_page - 1)"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M16.67 0l2.83 2.829-9.339 9.175 9.339 9.167-2.83 2.829-12.17-11.996z"/></svg></a>
+    <li
+      v-show="pager.current_page > 1"
+      ref="pagePrev"
+      class="page-item"
+    >
+      <a @click="go(pager.current_page - 1)"><svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="currentColor"
+        viewBox="0 0 24 24"
+      ><path d="M16.67 0l2.83 2.829-9.339 9.175 9.339 9.167-2.83 2.829-12.17-11.996z" /></svg></a>
     </li>
-    <li class="page-item" :class="{ active: n === pager.current_page }" v-for="n in items">
-      <a href="#" @click.prevent="go(n)">{{ n }}</a>
+    <li
+      v-for="(n, key) in items"
+      ref="pageNumber"
+      :key="key"
+      class="page-item"
+      :class="{ active: n === pager.current_page }"
+    >
+      <a
+        href="#"
+        @click.prevent="go(n)"
+      >{{ n }}</a>
     </li>
-    <li class="page-item" v-show="pager.current_page + 1 <= pager.total_pages">
-      <a @click="go(pager.current_page + 1)"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M7.33 24l-2.83-2.829 9.339-9.175-9.339-9.167 2.83-2.829 12.17 11.996z"/></svg></a>
+    <li
+      v-show="pager.current_page + 1 <= pager.total_pages"
+      ref="pageNext"
+      class="page-item"
+    >
+      <a @click="go(pager.current_page + 1)"><svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="currentColor"
+        viewBox="0 0 24 24"
+      ><path d="M7.33 24l-2.83-2.829 9.339-9.175-9.339-9.167 2.83-2.829 12.17 11.996z" /></svg></a>
     </li>
   </ul>
 </template>
 
 <script>
 export default {
-  name: 'pagination',
+  name: 'Pagination',
 
-  props: ['action', 'namespace'],
+  props: {
+    action: {
+      type: String,
+      required: true
+    },
+    namespace: {
+      type: String,
+      required: true
+    }
+  },
 
   data() {
     return {
@@ -31,10 +65,23 @@ export default {
     }
   },
 
+  watch: {
+    pager: {
+      handler: function() {
+        this.items = this.buildItems()
+      },
+      deep: true
+    }
+  },
+
+  mounted() {
+    this.items = this.buildItems()
+  },
+
   methods: {
     go(n) {
       document.activeElement.blur()
-      this.$store.dispatch(`${this.namespace}/${this.action}`, { page: n, per_page: this.pager.per_page })
+      this.fetchItems(n)
     },
 
     buildItems() {
@@ -49,20 +96,11 @@ export default {
         items.push(i)
       }
       return items
-    }
-  },
+    },
 
-  watch: {
-    pager: {
-      handler: function() {
-        this.items = this.buildItems()
-      },
-      deep: true
+    fetchItems(page) {
+      this.$store.dispatch(`${this.namespace}/${this.action}`, { page, per_page: this.pager.per_page })
     }
-  },
-
-  mounted() {
-    this.items = this.buildItems()
   }
 }
 </script>

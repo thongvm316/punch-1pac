@@ -46,7 +46,7 @@ RSpec.describe Company, type: :model do
   describe '#total_working_hours_on_month' do
     let(:company) { create :company, :with_business_days }
 
-    subject { company.total_working_hours_on_month(nil) }
+    subject { company.total_working_hours_on_month }
 
     before { Timecop.freeze(Time.zone.local(2018, 4, 20)) }
     after { Timecop.return }
@@ -58,7 +58,7 @@ RSpec.describe Company, type: :model do
   describe '#total_working_days_in_month' do
     let(:company) { create :company, :with_business_days }
 
-    subject { company.total_working_days_in_month(nil) }
+    subject { company.total_working_days_in_month }
 
     before { Timecop.freeze(Time.zone.local(2018, 4, 20)) }
     after { Timecop.return }

@@ -22,7 +22,7 @@ class Api::V1::AttendancesController < Api::V1::BaseController
     attendance = current_user.attendances.find_by(day: Time.current)
     if attendance
       attendance_json = ActiveModelSerializers::SerializableResource.new(attendance, serializer: AttendanceSerializer).as_json
-      company_json = ActiveModelSerializers::SerializableResource.new(current_company, serializer: CompanySerializer).as_json
+      company_json    = ActiveModelSerializers::SerializableResource.new(current_company, serializer: CompanySerializer).as_json
       render json: { attendance: attendance_json, company: company_json }, status: :ok
     else
       head(:ok)
@@ -31,16 +31,18 @@ class Api::V1::AttendancesController < Api::V1::BaseController
 
   def chart
     authorize!
-    render json: current_user.attendances.chart(params[:date]).first,
+    chart = current_user.attendances.chart_in_month(params).first
+
+    render json: chart,
            root: 'statuses',
            serializer: AttendanceChartSerializer,
            meta: {
-             company_total_working_hours_on_month: current_company.total_working_hours_on_month(params[:date]),
-             company_total_working_days_in_month: current_company.total_working_days_in_month(params[:date])
+             company_total_working_hours_on_month: current_company.total_working_hours_on_month(params),
+             company_total_working_days_in_month:  current_company.total_working_days_in_month(params)
            },
-           leave_days: ForgotPunchInDaysService.new(current_user, current_company, params[:date]).execute,
+           leave_days: ForgotPunchInDaysService.new(current_user, current_company, params).execute,
            adapter: :json,
-           status: :ok
+           status:  :ok
   end
 
   def index
@@ -56,18 +58,19 @@ class Api::V1::AttendancesController < Api::V1::BaseController
              root: 'attendances',
              each_serializer: AttendanceSerializer,
              adapter: :json,
-             meta: pager(attendances).merge(forgot_punch_in_days: ForgotPunchInDaysService.new(current_user, current_company, params[:date]).execute),
+             meta: pager(attendances).merge(forgot_punch_in_days: ForgotPunchInDaysService.new(current_user, current_company, params).execute),
              status: :ok
     end
   end
 
   def calendar
     authorize!
-    attendances = current_user.attendances.in_period(params[:day]).order(day: :asc)
-    if stale?(attendances)
-      render json: attendances,
+    attend = current_user.attendances.in_period(params).order(day: :asc)
+
+    if stale?(attend)
+      render json: attend,
              root: 'attendances',
-             meta: ActiveModelSerializers::SerializableResource.new(current_company.holidays.in_month(params[:day]), each_serializer: HolidaySerializer).as_json,
+             meta: ActiveModelSerializers::SerializableResource.new(current_company.holidays.in_month(params[:date]), each_serializer: HolidaySerializer).as_json,
              meta_key: 'holidays',
              each_serializer: AttendanceSerializer,
              adapter: :json,

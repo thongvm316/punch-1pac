@@ -1,4 +1,4 @@
-import * as types from '../mutation-types.js'
+import { SET_FLASH_MESSAGE } from '../mutation-types.js'
 
 const state = {
   message: null,
@@ -7,22 +7,15 @@ const state = {
 }
 
 const mutations = {
-  [types.SET_FLASH_MESSAGE](state, flash) {
+  [SET_FLASH_MESSAGE](state, flash) {
     state.message = flash.message
     state.type = flash.type || 'success'
     state.timeout = flash.timeout || 3000
   }
 }
 
-const actions = {
-  setFlashMsg({ commit }, flash) {
-    commit(types.SET_FLASH_MESSAGE, flash)
-  }
-}
-
 export default {
   namespaced: true,
   state,
-  mutations,
-  actions
+  mutations
 }

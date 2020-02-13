@@ -1,101 +1,183 @@
 <template>
   <div>
-    <div class="dropdown mr-5" :class="{ active: isDropdownActive }" @click="toggleDropdown" ref="dropdownMenu">
-        <span class="notification" :class="{ badge: unreadNotificationsCount }" :data-badge="displayNotificationsCount">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path
+    <div
+      ref="dropdownMenu"
+      class="dropdown mr-5"
+      :class="{ active: isDropdownActive }"
+      @click="toggleDropdown"
+    >
+      <span
+        class="notification"
+        :class="{ badge: unreadNotificationsCount }"
+        :data-badge="displayNotificationsCount"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="currentColor"
+          viewBox="0 0 24 24"
+        ><path
           d="M15.137 3.945c-.644-.374-1.042-1.07-1.041-1.82v-.003c.001-1.172-.938-2.122-2.096-2.122s-2.097.95-2.097
           2.122v.003c.001.751-.396 1.446-1.041 1.82-4.667 2.712-1.985 11.715-6.862 13.306v1.749h20v-1.749c-4.877-1.591-2.195-10.594-6.863-13.306zm-3.137-2.945c.552
-          0 1 .449 1 1 0 .552-.448 1-1 1s-1-.448-1-1c0-.551.448-1 1-1zm3 20c0 1.598-1.392 3-2.971 3s-3.029-1.402-3.029-3h6z"/></svg>
+          0 1 .449 1 1 0 .552-.448 1-1 1s-1-.448-1-1c0-.551.448-1 1-1zm3 20c0 1.598-1.392 3-2.971 3s-3.029-1.402-3.029-3h6z"
+        /></svg>
       </span>
       <div class="box notifications notification-dropdown triangle-top">
         <div class="notification-header">
           <h4>{{ $t('header.notifications') }}</h4>
         </div>
-        <ul v-if="headerNotifications.length > 0" ref="notiList">
-          <li v-for="notification in headerNotifications"
-              :key="notification.id"
-              @click="openRequestModal(notification)"
-              v-if="notification.activitable"
-              :class="{ 'notification-pending': notification.activitable.status === 'pending' }">
+        <ul
+          v-if="headerNotifications.length"
+          ref="notiList"
+        >
+          <li
+            v-for="headerNotification in headerNotifications"
+            :key="headerNotification.id"
+            :class="{ 'notification-pending': headerNotification.activitable.status === 'pending' }"
+            @click="openRequestModal(headerNotification)"
+          >
             <div class="tile tile-centered tile-activity">
               <div class="tile-icon">
-                <img :src="notification.user.avatar_url" class="avatar avatar-md" :alt="notification.user.name">
+                <img
+                  :src="headerNotification.user.avatar_url"
+                  class="avatar avatar-md"
+                  :alt="headerNotification.user.name"
+                >
               </div>
               <div class="tile-content">
-                <p class="tile-title" v-html="$t(`notifications.${notification.activitable_type.toLowerCase()}.${notification.kind}`, { name: notification.user.name })"></p>
-                <p class="tile-subtitle">{{ notification.created_at | moment_activity }}</p>
+                <p
+                  class="tile-title"
+                  v-html="$t(`notification.${headerNotification.activitable_type.toLowerCase()}.${headerNotification.kind}`, { name: headerNotification.user.name })"
+                />
+                <p class="tile-subtitle">
+                  {{ headerNotification.created_at | moment_activity }}
+                </p>
               </div>
-              <div class="tile-action" v-if="notification.activitable.status === 'pending'">
+              <div
+                v-if="headerNotification.activitable.status === 'pending'"
+                class="tile-action"
+              >
                 <span class="label label-warning">{{ $t('meta.request_statuses.pending') }}</span>
               </div>
             </div>
           </li>
         </ul>
-        <p class="no-notification-msg" v-else>
+        <p
+          v-else
+          class="no-notification-msg"
+        >
           {{ $t('header.noNotificationMsg') }}
         </p>
       </div>
     </div>
-    <modal :title="$t('notifications.title')" :modal-open.sync="isAddModalOpen" v-if="isEditable(notification)">
+    <modal
+      v-if="isEditable(notification)"
+      ref="requestModal"
+      :title="isRequestDayOff ? $t('modal.annualLeave.title') : $t('modal.attendance.editTitle') "
+      :modal-open.sync="isAddModalOpen"
+    >
       <div class="form-group">
-        <label class="form-label">{{ $t('notifications.labels.date') }}</label>
+        <label class="form-label">{{ $t('label.date') }}</label>
         <flat-pickr
-          :config="{ enable: [notification.activitable.attendance_day], locale: flatpickrLocaleMapper[currentUser.language] }"
+          :config="{ mode: 'single', enable: [notification.activitable.attendance_day], locale: flatpickrLocaleMapper[pickrLocale] }"
           class="form-input daterange-picker"
           :value="notification.activitable.attendance_day"
-          disabled />
+          disabled
+        />
+      </div>
+      <div
+        v-if="!isRequestDayOff"
+        class="form-group"
+      >
+        <label class="form-label">{{ $t('label.attendedAt') }}</label>
+        <input
+          type="time"
+          class="form-input time-picker"
+          :value="notification.activitable.attended_at"
+          disabled
+        >
+      </div>
+      <div
+        v-if="!isRequestDayOff"
+        class="form-group"
+      >
+        <label class="form-label">{{ $t('label.leftAt') }}</label>
+        <input
+          type="time"
+          class="form-input time-picker"
+          :value="notification.activitable.left_at"
+          disabled
+        >
       </div>
       <div class="form-group">
-        <label class="form-label">{{ $t('notifications.labels.attendedAt') }}</label>
-        <input type="time" class="form-input" :value="notification.activitable.attended_at" disabled>
+        <label class="form-label">{{ $t('label.reason') }}</label>
+        <textarea
+          class="form-input"
+          :value="notification.activitable.reason"
+          disabled
+        />
       </div>
       <div class="form-group">
-        <label class="form-label">{{ $t('notifications.labels.leftAt') }}</label>
-        <input type="time" class="form-input" :value="notification.activitable.left_at" disabled>
-      </div>
-      <div class="form-group">
-        <label class="form-label">{{ $t('notifications.labels.reason') }}</label>
-        <textarea class="form-input" :value="notification.activitable.reason" disabled></textarea>
-      </div>
-      <div class="form-group">
-        <label class="form-label">{{ $t('notifications.labels.rejectReason') }}</label>
-        <textarea class="form-input" :placeholder="$t('notifications.labels.rejectReason')" v-model="rejectReason"></textarea>
+        <label class="form-label">{{ $t('label.rejectReason') }}</label>
+        <textarea
+          v-model="rejectReason"
+          class="form-input"
+          :placeholder="$t('label.rejectReason')"
+        />
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-success" @click="submitAddModal(notification.activitable_id, approveNotificationRequest, $t('messages.request.approvedSuccess'))">{{ $t('notifications.btn.approve') }}</button>
-        <button type="button" class="btn btn-error" @click="submitAddModal({ id: notification.activitable_id, admin_reason: rejectReason }, rejectNotificationRequest, $t('messages.request.rejectedSuccess'))">{{ $t('notifications.btn.reject') }}</button>
+        <button
+          type="button"
+          class="btn btn-success"
+          @click="submitAddModal(notification.activitable_id, approveNotificationRequest, $t('messages.request.approvedSuccess'))"
+        >
+          {{ $t('button.common.approve') }}
+        </button>
+        <button
+          type="button"
+          class="btn btn-error"
+          @click="submitAddModal({ id: notification.activitable_id, admin_reason: rejectReason }, rejectNotificationRequest, $t('messages.request.rejectedSuccess'))"
+        >
+          {{ $t('button.common.reject') }}
+        </button>
       </div>
     </modal>
   </div>
 </template>
 
 <script>
-import flatPickr from 'vue-flatpickr-component'
 import flatpickrLocale from '../mixins/flatpickr-locale'
 import dropdown from '../mixins/dropdown'
 import modal from '../mixins/modal'
 import { mapState, mapGetters, mapActions } from 'vuex'
+const flatPickr = () => import('vue-flatpickr-component')
 
 export default {
-  name: 'notifications',
+  name: 'Notifications',
+
+  components: {
+    flatPickr
+  },
   mixins: [dropdown, modal, flatpickrLocale],
 
   data() {
     return {
-      notification: '',
-      rejectReason: '',
-      fetchingNotifications: null
+      notification: {},
+      rejectReason: ''
     }
-  },
-
-  components: {
-    flatPickr
   },
 
   computed: {
     ...mapState('notifications', ['unreadNotificationsCount', 'headerNotifications', 'pager']),
 
-    ...mapGetters('notifications', ['displayNotificationsCount'])
+    ...mapGetters('notifications', ['displayNotificationsCount']),
+
+    isRequestDayOff() {
+      return this.notification.activitable.kind === 'annual_leave'
+    }
+  },
+
+  created() {
+    this.getHeaderNotifications()
   },
 
   methods: {
@@ -112,9 +194,9 @@ export default {
 
       this.isDropdownActive = !this.isDropdownActive
       if (this.isDropdownActive && this.headerNotifications[0]) this.readNotifications(this.headerNotifications[0].id)
-      if (this.isDropdownActive && el !== undefined) {
+      if (this.isDropdownActive && el) {
         el.addEventListener('scroll', this.loadMoreOnScroll)
-      } else if (!this.isDropdownActive && el !== undefined) {
+      } else if (!this.isDropdownActive && el) {
         el.removeEventListener('scroll', this.loadMoreOnScroll)
       }
     },
@@ -123,7 +205,6 @@ export default {
       'readNotifications',
       'getHeaderNotifications',
       'getMoreHeaderNotifications',
-      'getNewHeaderNotifications',
       'approveNotificationRequest',
       'rejectNotificationRequest'
     ]),
@@ -136,10 +217,6 @@ export default {
     isEditable(notification) {
       return ['create', 'update'].includes(notification.kind) && notification.activitable_type === 'Request' && !['approved', 'rejected'].includes(notification.activitable.status)
     }
-  },
-
-  created() {
-    this.getHeaderNotifications()
   }
 }
 </script>

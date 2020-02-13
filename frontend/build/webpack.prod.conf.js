@@ -69,6 +69,8 @@ const webpackConfig = merge(baseWebpackConfig, {
         /.*flatpickr.*/,
         /.*numInputWrapper.*/,
         /.*dayContainer.*/,
+        /.*noCalendar.*/,
+        /.*hasTime.*/,
         /.*numInput.*/,
         /.*range.*/i,
         /.*cur-.*/,

@@ -1,41 +1,108 @@
 <template>
   <div>
-    <div class="form-group" :class="{ 'has-error': errors.attendance_day }">
-      <label class="form-label">{{ $t('annualLeave.labels.annualLeaveDay') }}</label>
+    <div
+      class="form-group"
+      :class="{ 'has-error': $v.params.attendance_day.$error || errors.attendance_day }"
+    >
+      <label class="form-label">{{ $t('label.annualLeaveDay') }}</label>
       <flat-pickr
-        :config="{mode: 'single', locale: flatpickrLocaleMapper[currentUser.language]}"
+        v-model="$v.params.attendance_day.$model"
+        :config="{mode: 'single', locale: flatpickrLocaleMapper[pickrLocale]}"
         class="form-input daterange-picker"
-        v-model="params.attendance_day"/>
-      <p class="form-input-hint" v-if="errors.attendance_day">{{ $t('annualLeave.labels.annualLeaveDay') }} {{ errors.attendance_day[0] }}</p>
+      />
+      <p
+        v-if="$v.params.attendance_day.$error"
+        class="form-input-hint"
+      >
+        {{ $t('validation.required', { name: $t('label.annualLeaveDay') }) }}
+      </p>
+      <p
+        v-if="errors.attendance_day"
+        class="form-input-hint"
+      >
+        {{ $t('label.annualLeaveDay') }} {{ errors.attendance_day[0] }}
+      </p>
     </div>
-    <div class="form-group" :class="{ 'has-error': errors.reason }">
-      <label class="form-label">{{ $t('annualLeave.labels.reason') }}</label>
-      <textarea class="form-input" v-model="params.reason"></textarea>
-      <p class="form-input-hint" v-if="errors.reason">{{ $t('annualLeave.labels.reason') }} {{ errors.reason[0] }}</p>
+    <div
+      class="form-group"
+      :class="{ 'has-error': $v.params.reason.$error || errors.reason }"
+    >
+      <label class="form-label">{{ $t('label.reason') }}</label>
+      <textarea
+        v-model="$v.params.reason.$model"
+        class="form-input"
+      />
+      <p
+        v-if="$v.params.reason.$error"
+        class="form-input-hint"
+      >
+        {{ $t('validation.required', { name: $t('label.reason') }) }}
+      </p>
+      <p
+        v-if="errors.reason"
+        class="form-input-hint"
+      >
+        {{ $t('label.reason') }} {{ errors.reason[0] }}
+      </p>
     </div>
     <div class="form-group">
-      <button type="button" class="btn btn-success btn-submit" @click="create()" v-if="!request" :disabled="isDisable">
-        {{ $t('annualLeave.submit') }}
+      <button
+        v-if="!request"
+        ref="createAnnualLeaveBtn"
+        type="button"
+        class="btn btn-success btn-submit"
+        :disabled="isDisable"
+        @click="create()"
+      >
+        {{ $t('button.common.submit') }}
       </button>
-      <button type="button" class="btn btn-success btn-submit" @click="update()" v-if="request" :disabled="isDisable">
-        {{ $t('annualLeave.save') }}
+      <button
+        v-if="request"
+        ref="updateAnnualLeaveBtn"
+        type="button"
+        class="btn btn-success btn-submit"
+        :disabled="isDisable"
+        @click="update()"
+      >
+        {{ $t('button.common.save') }}
       </button>
     </div>
   </div>
 </template>
 
 <script>
-import flatPickr from 'vue-flatpickr-component'
 import flatpickrLocale from '../mixins/flatpickr-locale'
+import handleSuccess from '../mixins/handle-success'
 import axios from 'axios'
-import { mapActions } from 'vuex'
+import annualLeaveValidate from '../validations/annual-leave-validate'
+const flatPickr = () => import('vue-flatpickr-component')
 
 export default {
-  name: 'annual-leave',
+  name: 'AnnualLeave',
+
+  components: {
+    flatPickr
+  },
+
+  mixins: [flatpickrLocale, handleSuccess, annualLeaveValidate],
+
+  props: {
+    request: {
+      type: Object,
+      default: null
+    },
+    type: {
+      type: String,
+      default: ''
+    },
+    annualDay: {
+      type: String,
+      default: ''
+    }
+  },
 
   data() {
     return {
-      isDisable: false,
       errors: {},
       params: {
         attendance_day: '',
@@ -44,57 +111,38 @@ export default {
     }
   },
 
-  props: ['request', 'type', 'annualDay'],
-
-  components: {
-    flatPickr
+  created() {
+    if (this.request) this.params = { ...this.request }
+    if (this.annualDay) this.params.attendance_day = this.annualDay
   },
 
   methods: {
-    ...mapActions('flash', ['setFlashMsg']),
-
     create() {
-      this.isDisable = true
       axios
         .post('/requests', Object.assign(this.params, { kind: 'annual_leave' }))
         .then(response => {
-          this.setFlashMsg({ message: this.$t('annualLeave.createSuccessMsg') })
-          this.$emit('finishRequest')
-          this.isDisable = false
+          this.handleSuccess({
+            emitType: 'finishRequest',
+            message: this.$t('messages.request.createSuccess')
+          })
         })
         .catch(error => {
-          this.isDisable = false
           if (error.response && error.response.status === 422) this.errors = error.response.data.errors
         })
     },
 
     update() {
-      this.isDisable = true
       axios
         .put(`/requests/${this.request.id}`, Object.assign(this.params, { kind: 'annual_leave' }))
         .then(response => {
-          this.setFlashMsg({ message: this.$t('annualLeave.updateSuccessMsg') })
-          this.$emit('finishRequest')
-          this.isDisable = false
+          this.handleSuccess({
+            emitType: 'finishRequest',
+            message: this.$t('messages.request.updateSuccess')
+          })
         })
         .catch(error => {
-          this.isDisable = false
           if (error.response && error.response.status === 422) this.errors = error.response.data.errors
         })
-    }
-  },
-
-  mixins: [flatpickrLocale],
-
-  created() {
-    if (this.request) {
-      Object.keys(this.params).forEach(key => {
-        this.params[key] = this.request[key]
-      })
-    }
-
-    if (this.annualDay) {
-      this.params.attendance_day = this.annualDay
     }
   }
 }

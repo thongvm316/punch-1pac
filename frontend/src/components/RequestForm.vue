@@ -1,49 +1,154 @@
 <template>
   <div>
-    <div class="form-group">
-      <label class="form-label">{{ $t('attendances.labels.date') }}</label>
+    <div
+      class="form-group"
+      :class="{ 'has-error': $v.day.$error }"
+    >
+      <label class="form-label">{{ $t('label.date') }}</label>
       <flat-pickr
-        :config="{ enable: [day], locale: flatpickrLocaleMapper[currentUser.language] }"
+        v-model="$v.day.$model"
+        :config="{ enable: [day], locale: flatpickrLocaleMapper[pickrLocale] }"
         class="form-input daterange-picker"
-        v-model="day"/>
+      />
+      <p
+        v-if="$v.day.$error"
+        class="form-input-hint"
+      >
+        {{ $t('validation.required', { name: $t('label.date') }) }}
+      </p>
     </div>
-    <div class="form-group" :class="{ 'has-error': errors.attended_at }">
-      <label class="form-label">{{ $t('attendances.labels.attendedAt') }}</label>
-      <input type="time" step="60" class="form-input" v-model="params.attended_at">
-      <p class="form-input-hint" v-if="errors.attended_at">{{ $t('attendances.labels.attendedAt') }} {{ errors.attended_at[0] }}</p>
+    <div
+      class="form-group"
+      :class="{ 'has-error': $v.params.attended_at.$error || errors.attended_at }"
+    >
+      <label class="form-label">{{ $t('label.attendedAt') }}</label>
+      <flatPickr
+        v-model="$v.params.attended_at.$model"
+        class="form-input time-picker"
+        :config="{
+          enableTime: true,
+          noCalendar: true,
+          dateFormat: 'H:i',
+          time_24hr: true}"
+      />
+      <p
+        v-if="$v.params.attended_at.$error && !errors.attended_at"
+        class="form-input-hint"
+      >
+        {{ $t('validation.required', { name: $t('label.attendedAt') }) }}
+      </p>
+      <p
+        v-if="errors.attended_at"
+        class="form-input-hint"
+      >
+        {{ $t('label.attendedAt') }} {{ errors.attended_at[0] }}
+      </p>
     </div>
-    <div class="form-group" :class="{ 'has-error': errors.left_at }">
-      <label class="form-label">{{ $t('attendances.labels.leftAt') }}</label>
-      <input type="time" step="60" class="form-input" v-model="params.left_at">
-      <p class="form-input-hint" v-if="errors.left_at">{{ $t('attendances.labels.leftAt') }} {{ errors.left_at[0] }}</p>
+    <div
+      class="form-group"
+      :class="{ 'has-error': $v.params.left_at.$error || errors.left_at }"
+    >
+      <label class="form-label">{{ $t('label.leftAt') }}</label>
+      <flatPickr
+        v-model="$v.params.left_at.$model"
+        class="form-input time-picker"
+        :config="{
+          enableTime: true,
+          noCalendar: true,
+          dateFormat: 'H:i',
+          time_24hr: true}"
+      />
+      <p
+        v-if="$v.params.left_at.$error && !errors.left_at"
+        class="form-input-hint"
+      >
+        {{ $t('validation.required', { name: $t('label.leftAt') }) }}
+      </p>
+      <p
+        v-if="errors.left_at"
+        class="form-input-hint"
+      >
+        {{ $t('label.leftAt') }} {{ errors.left_at[0] }}
+      </p>
     </div>
-    <div class="form-group" :class="{ 'has-error': errors.reason }">
-      <label class="form-label">{{ $t('attendances.labels.reason') }}</label>
-      <textarea class="form-input" v-model="params.reason"></textarea>
-      <p class="form-input-hint" v-if="errors.reason">{{ $t('attendances.labels.reason') }} {{ errors.reason[0] }}</p>
+    <div
+      class="form-group"
+      :class="{ 'has-error': $v.params.reason.$error || errors.reason }"
+    >
+      <label class="form-label">{{ $t('label.reason') }}</label>
+      <textarea
+        v-model="$v.params.reason.$model"
+        class="form-input"
+      />
+      <p
+        v-if="$v.params.reason.$error && !errors.reason"
+        class="form-input-hint"
+      >
+        {{ $t('validation.required', { name: $t('label.reason') }) }}
+      </p>
+      <p
+        v-if="errors.reason"
+        class="form-input-hint"
+      >
+        {{ $t('label.reason') }} {{ errors.reason[0] }}
+      </p>
     </div>
     <div class="form-group">
-      <button type="button" class="btn btn-success btn-submit" @click="localAddRequest" v-if="attendance" :disabled="isDisable">{{ $t('attendances.btn.add') }}</button>
-      <button type="button" class="btn btn-success btn-submit" @click="localEditRequest" v-else :disabled="isDisable">{{ $t('requests.btn.save') }}</button>
+      <button
+        v-if="attendance"
+        ref="localAddRequestButton"
+        type="button"
+        class="btn btn-success btn-submit"
+        :disabled="isDisabled"
+        @click="localAddRequest"
+      >
+        {{ $t('button.common.add') }}
+      </button>
+      <button
+        v-else
+        ref="localEditRequestButton"
+        type="button"
+        class="btn btn-success btn-submit"
+        :disabled="isDisabled"
+        @click="localEditRequest"
+      >
+        {{ $t('button.common.save') }}
+      </button>
     </div>
   </div>
 </template>
 
 <script>
-import flatPickr from 'vue-flatpickr-component'
 import flatpickrLocale from '../mixins/flatpickr-locale'
-import { mapState, mapActions } from 'vuex'
+import handleSuccess from '../mixins/handle-success'
+import requestFormValidate from '../validations/request-form-valiate'
+import { CLEAR_REQUEST_ERRORS } from '../store/mutation-types'
+import { mapState, mapActions, mapMutations } from 'vuex'
+import { isEmpty } from 'underscore'
+const flatPickr = () => import('vue-flatpickr-component')
 
 export default {
-  name: 'request-form',
+  name: 'RequestForm',
 
-  mixins: [flatpickrLocale],
+  components: {
+    flatPickr
+  },
 
-  props: ['attendance', 'request'],
+  mixins: [flatpickrLocale, handleSuccess, requestFormValidate],
+
+  props: {
+    attendance: {
+      type: Object,
+      default: null
+    },
+    request: {
+      type: Object,
+      default: null
+    }
+  },
 
   data() {
     return {
-      isDisable: false,
       day: '',
       params: {
         attendance_day: '',
@@ -54,42 +159,13 @@ export default {
     }
   },
 
-  components: {
-    flatPickr
-  },
-
   computed: {
     ...mapState('requests', ['errors'])
   },
 
-  methods: {
-    ...mapActions('requests', ['addRequest', 'updateRequest', 'clearRequestErrors']),
-
-    ...mapActions('flash', ['setFlashMsg']),
-
-    localAddRequest() {
-      this.isDisable = true
-      this.addRequest(this.params).then(response => {
-        this.setFlashMsg({ message: this.$t('messages.request.createSuccess') })
-        this.$emit('afterModify')
-        this.isDisable = false
-      })
-      .catch(() => { this.isDisable = false })
-    },
-
-    localEditRequest() {
-      this.isDisable = true
-      this.updateRequest({ id: this.request.id, params: this.params }).then(response => {
-        this.setFlashMsg({ message: this.$t('messages.request.updateSuccess') })
-        this.$emit('afterModify')
-        this.isDisable = false
-      })
-      .catch(() => { this.isDisable = false })
-    }
-  },
-
   created() {
-    this.clearRequestErrors()
+    if (!isEmpty(this.errors)) this[CLEAR_REQUEST_ERRORS]()
+
     if (this.attendance) {
       this.day = this.params.attendance_day = this.attendance.day
       const statuses = ['attended_at', 'left_at']
@@ -98,8 +174,30 @@ export default {
       })
     } else if (this.request) {
       this.day = this.request.attendance_day
-      Object.keys(this.params).forEach(key => {
-        this.params[key] = this.request[key]
+      this.params = { ...this.request }
+    }
+  },
+
+  methods: {
+    ...mapActions('requests', ['addRequest', 'updateRequest']),
+
+    ...mapMutations('requests', [CLEAR_REQUEST_ERRORS]),
+
+    localAddRequest() {
+      this.addRequest(this.params).then(response => {
+        this.handleSuccess({
+          emitType: 'afterModify',
+          message: this.$t('messages.request.createSuccess')
+        })
+      })
+    },
+
+    localEditRequest() {
+      this.updateRequest({ id: this.request.id, params: this.params }).then(response => {
+        this.handleSuccess({
+          emitType: 'afterModify',
+          message: this.$t('messages.request.updateSuccess')
+        })
       })
     }
   }

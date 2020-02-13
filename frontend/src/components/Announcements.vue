@@ -1,9 +1,15 @@
 <template>
   <div>
-    <div class="toast text-center mt-2"
-         :class="[{ 'toast-warning': announcement.status === 'urgent' }, { 'toast-success': announcement.status === 'normal' }]"
-         v-for="announcement in headerAnnouncements">
-      <button class="btn btn-clear float-right" @click="readAnnouncement(announcement.id)"></button>
+    <div
+      v-for="announcement in headerAnnouncements"
+      :key="announcement.id"
+      class="toast text-center mt-2"
+      :class="[{ 'toast-warning': announcement.status === 'urgent' }, { 'toast-success': announcement.status === 'normal' }]"
+    >
+      <button
+        class="btn btn-clear float-right"
+        @click="readAnnouncement(announcement.id)"
+      />
       {{ announcement.content }}
     </div>
   </div>
@@ -13,7 +19,7 @@
 import { mapState, mapActions } from 'vuex'
 
 export default {
-  name: 'announcements',
+  name: 'Announcements',
 
   computed: {
     ...mapState('announcements', ['headerAnnouncements'])

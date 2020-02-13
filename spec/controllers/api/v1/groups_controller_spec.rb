@@ -366,7 +366,7 @@ RSpec.describe Api::V1::GroupsController, type: :controller do
       its(:body) { is_expected.to be_json_as(results: Array.new(3) { response_group_report }, meta: Hash) }
     end
 
-    context 'when report has data' do
+    context 'when report csv has data' do
       let(:groups) { create_list :group, 2, company: company }
       let(:login_user) { create :user, company: company, role: 'superadmin', groups: groups }
       let!(:users) { create_list :user, 2, company: company, role: 'member', groups: [groups.first] }
@@ -376,13 +376,13 @@ RSpec.describe Api::V1::GroupsController, type: :controller do
       it do
         is_expected
         headers = response.body.split("\n")
-        expect(headers.first).to include 'Email,Name,Attend Ok,Attend Late,Leave Ok,Leave Early,Annual Leave,Working Hours'
+        expect(headers.first).to include 'Email,Name,Attend Ok,Attend Late,Leave Ok,Leave Early,Number of minutes attend late,Number of minutes leave early,Days off,Working Hours'
         expect(response.header['Content-Type']).to eql 'text/csv; charset=utf-8; header=present'
-        expect(headers.size).to eq(4)
+        expect(headers.size).to eq(5)
       end
     end
 
-    context 'when superadmin export report of empty member group' do
+    context 'when superadmin export report csv of empty member group' do
       let(:group) { create :group, company: company }
       let(:login_user) { create :user, company: company, role: 'superadmin' }
 
@@ -391,9 +391,85 @@ RSpec.describe Api::V1::GroupsController, type: :controller do
       it do
         is_expected
         headers = response.body.split("\n")
-        expect(headers.first).to include 'Email,Name,Attend Ok,Attend Late,Leave Ok,Leave Early,Annual Leave,Working Hours'
+        expect(headers.first).to include 'Email,Name,Attend Ok,Attend Late,Leave Ok,Leave Early,Number of minutes attend late,Number of minutes leave early,Days off,Working Hours'
         expect(response.header['Content-Type']).to eql 'text/csv; charset=utf-8; header=present'
-        expect(headers.size).to eq(1)
+      end
+    end
+
+    context 'when report zip has data' do
+      let(:group) { create :group, company: company }
+      let(:login_user) { create :user, company: company, role: 'superadmin', groups: [group] }
+      let!(:users) { create_list :user, 2, :with_attendance, company: company, role: 'member', groups: [group] }
+
+      subject { get :report, params: { id: group.id, date: Time.current }, format: :zip }
+
+      it do
+        is_expected
+        expect(response.header['Content-Type']).to eql 'text/zip; charset=utf-8; header=present'
+        expect(response.code).to eq '200'
+      end
+    end
+  end
+
+  describe 'GET #personal_report' do
+    context 'when login_user.role = member' do
+      let(:group) { create :group, company: company }
+      let(:login_user) { create :user, company: company, role: 'member', groups: [group] }
+
+      subject { get :personal_report, params: { id: group.id, user_id: login_user.id } }
+
+      its(:code) { is_expected.to eq '401' }
+      its(:body) { is_expected.to be_json_as(response_401) }
+    end
+
+    context 'when login_user.role = admin' do
+      let(:groups) { create_list :group, 2, company: company }
+      let(:login_user) { create :user, company: company, role: 'admin', groups: [groups.first] }
+      let!(:user) { create :user, company: company, role: 'member', groups: [groups.first] }
+
+      context 'when group in login_user.groups' do
+        subject { get :personal_report, params: { id: groups.first.id, user_id: user.id }, format: :json }
+
+        its(:code) { is_expected.to eq '200' }
+        its(:body) { is_expected.to be_json_as(attendances: Array.new { response_attendance }, holidays: Array.new { response_holiday }, report: response_user_report, meta: response_meta) }
+      end
+
+      context 'when group not in login_user.groups' do
+        let(:group) { create :group, company: company }
+
+        subject { get :personal_report, params: { id: group.id, user_id: user.id } }
+
+        its(:code) { is_expected.to eq '401' }
+        its(:body) { is_expected.to be_json_as(response_401) }
+      end
+
+      context 'when user not in group' do
+        let!(:user2) { create :user, company: company, role: 'member', groups: [groups.last] }
+
+        subject { get :personal_report, params: { id: groups.first.id, user_id: user2.id } }
+
+        its(:code) { is_expected.to eq '404' }
+      end
+    end
+
+    context 'when login_user.role = superadmin' do
+      let(:groups) { create_list :group, 2, company: company }
+      let(:login_user) { create :user, company: company, role: 'superadmin', groups: [groups.first] }
+      let!(:user) { create :user, company: company, role: 'member', groups: [groups.first] }
+
+      context 'when group in login_user.groups' do
+        subject { get :personal_report, params: { id: groups.first.id, user_id: user.id }, format: :json }
+
+        its(:code) { is_expected.to eq '200' }
+        its(:body) { is_expected.to be_json_as(attendances: Array.new { response_attendance }, holidays: Array.new { response_holiday }, report: response_user_report, meta: response_meta) }
+      end
+
+      context 'when user not in group' do
+        let!(:user2) { create :user, company: company, role: 'member', groups: [groups.last] }
+
+        subject { get :personal_report, params: { id: groups.first.id, user_id: user2.id } }
+
+        its(:code) { is_expected.to eq '404' }
       end
     end
   end

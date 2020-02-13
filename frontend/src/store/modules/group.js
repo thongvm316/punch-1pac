@@ -1,5 +1,16 @@
-import * as types from '../mutation-types.js'
-import axios from 'axios'
+import {
+  RECEIVE_GROUP,
+  UPDATE_GROUP,
+  ADD_GROUP_USER,
+  DEACTIVATE_GROUP_USER,
+  ACTIVATE_GROUP_USER,
+  UPDATE_GROUP_USER,
+  REMOVE_GROUP_USER,
+  UPDATE_GROUP_ERRORS,
+  CLEAR_GROUP_ERRORS,
+  FETCH_USERS_IN_GROUP
+} from '../mutation-types.js'
+import callApi from '../api-caller'
 import 'formdata-polyfill'
 
 const state = {
@@ -9,65 +20,65 @@ const state = {
 }
 
 const getters = {
-  filterUsers(state) {
-    return function(query) {
-      const regex = new RegExp(`${query.trim()}`, 'gi')
-      return query ? state.usersInGroup.filter(user => (user.name.match(regex) || user.email.match(regex))) : state.usersInGroup
-    }
+  filterUsers: state => query => {
+    const regex = new RegExp(`${query.trim()}`, 'gi')
+    return query ? state.usersInGroup.filter(user => (user.name.match(regex) || user.email.match(regex))) : state.usersInGroup
   }
 }
 
 const mutations = {
-  [types.RECEIVE_GROUP](state, payload) {
+  [RECEIVE_GROUP](state, payload) {
     state.group = payload
   },
 
-  [types.UPDATE_GROUP](state, payload) {
+  [UPDATE_GROUP](state, payload) {
     state.group = payload
   },
 
-  [types.ADD_GROUP_USER](state, user) {
+  [ADD_GROUP_USER](state, user) {
     state.usersInGroup.push(user)
   },
 
-  [types.DEACTIVATE_GROUP_USER](state, userId) {
+  [DEACTIVATE_GROUP_USER](state, userId) {
     const index = state.usersInGroup.findIndex(user => user.id === userId)
     state.usersInGroup[index].activated = false
   },
 
-  [types.ACTIVATE_GROUP_USER](state, userId) {
+  [ACTIVATE_GROUP_USER](state, userId) {
     const index = state.usersInGroup.findIndex(user => user.id === userId)
     state.usersInGroup[index].activated = true
   },
 
-  [types.UPDATE_GROUP_USER](state, user) {
+  [UPDATE_GROUP_USER](state, user) {
     const index = state.usersInGroup.findIndex(u => u.id === user.id)
     state.usersInGroup[index] = user
   },
 
-  [types.REMOVE_GROUP_USER](state, payload) {
+  [REMOVE_GROUP_USER](state, payload) {
     state.usersInGroup = state.usersInGroup.filter(user => user.id !== payload)
   },
 
-  [types.UPDATE_GROUP_ERRORS](state, payload) {
+  [UPDATE_GROUP_ERRORS](state, payload) {
     state.errors = payload.errors
   },
 
-  [types.CLEAR_GROUP_ERRORS](state) {
+  [CLEAR_GROUP_ERRORS](state) {
     state.errors = {}
   },
 
-  [types.FETCH_USERS_IN_GROUP](state, payload) {
+  [FETCH_USERS_IN_GROUP](state, payload) {
     state.usersInGroup = payload.users
   }
 }
 
 const actions = {
   getGroup({ commit, state }, id) {
-    return axios
-      .get(`/groups/${id}`)
+    return callApi({
+      method: 'get',
+      url: `/groups/${id}`
+    })
       .then(response => {
-        commit(types.RECEIVE_GROUP, response.data)
+        commit(RECEIVE_GROUP, response.data)
         return response
       })
       .catch(error => {
@@ -79,23 +90,31 @@ const actions = {
     let formData = new FormData()
     Object.keys(params.editParams).forEach(key => formData.set(`group[${key}]`, params.editParams[key] || ''))
 
-    return axios
-      .put(`/groups/${params.groupId}`, formData, { headers: { 'Content-Type': 'multipart/form-data' } })
+    return callApi({
+      method: 'put',
+      url: `/groups/${params.groupId}`,
+      data: formData,
+      headers: { 'Content-Type': 'multipart/form-data' }
+    })
       .then(response => {
-        commit(types.UPDATE_GROUP, response.data)
+        commit(UPDATE_GROUP, response.data)
         return response
       })
       .catch(error => {
-        if (error.response && error.response.status === 422) commit(types.UPDATE_GROUP_ERRORS, error.response.data)
+        if (error.response && error.response.status === 422) commit(UPDATE_GROUP_ERRORS, error.response.data)
         throw error
       })
   },
 
   addGroupUser({ commit }, params) {
-    return axios
-      .post(`/groups/${params.groupId}/add_user`, { user_id: params.user.id }, { headers: { 'Content-Type': 'application/json' } })
+    return callApi({
+      method: 'post',
+      url: `/groups/${params.groupId}/add_user`,
+      data: { user_id: params.user.id },
+      headers: { 'Content-Type': 'application/json' }
+    })
       .then(response => {
-        commit(types.ADD_GROUP_USER, params.user)
+        commit(ADD_GROUP_USER, params.user)
         return response
       })
       .catch(error => {
@@ -104,10 +123,13 @@ const actions = {
   },
 
   deactivateGroupUser({ commit }, userId) {
-    return axios
-      .post(`/users/${userId}/deactivate`, { headers: { 'Content-Type': 'application/json' } })
+    return callApi({
+      method: 'post',
+      url: `/users/${userId}/deactivate`,
+      headers: { 'Content-Type': 'application/json' }
+    })
       .then(response => {
-        commit(types.DEACTIVATE_GROUP_USER, userId)
+        commit(DEACTIVATE_GROUP_USER, userId)
         return response
       })
       .catch(error => {
@@ -116,10 +138,13 @@ const actions = {
   },
 
   activateGroupUser({ commit }, userId) {
-    return axios
-      .post(`/users/${userId}/activate`, { headers: { 'Content-Type': 'application/json' } })
+    return callApi({
+      method: 'post',
+      url: `/users/${userId}/activate`,
+      headers: { 'Content-Type': 'application/json' }
+    })
       .then(response => {
-        commit(types.ACTIVATE_GROUP_USER, userId)
+        commit(ACTIVATE_GROUP_USER, userId)
         return response
       })
       .catch(error => {
@@ -128,10 +153,12 @@ const actions = {
   },
 
   removeGroupUser({ commit }, params) {
-    return axios
-      .delete(`/groups/${params.groupId}/remove_user?user_id=${params.userId}`)
+    return callApi({
+      method: 'delete',
+      url: `/groups/${params.groupId}/remove_user?user_id=${params.userId}`
+    })
       .then(response => {
-        commit(types.REMOVE_GROUP_USER, params.userId)
+        commit(REMOVE_GROUP_USER, params.userId)
         return response
       })
       .catch(error => {
@@ -139,13 +166,11 @@ const actions = {
       })
   },
 
-  clearGroupErrors({ commit }) {
-    commit(types.CLEAR_GROUP_ERRORS)
-  },
-
   deleteGroup({ commit }, groupId) {
-    return axios
-      .delete(`/groups/${groupId}`)
+    return callApi({
+      method: 'delete',
+      url: `/groups/${groupId}`
+    })
       .then(response => {
         return response
       })
@@ -155,10 +180,13 @@ const actions = {
   },
 
   getUsersInGroup({ commit, state }, groupId) {
-    return axios
-      .get('/users', { params: { group_id: groupId, type: 'users_in_group', per_page: 1000 } })
+    return callApi({
+      method: 'get',
+      url: '/users',
+      params: { group_id: groupId, type: 'users_in_group', per_page: 1000 }
+    })
       .then(response => {
-        commit(types.FETCH_USERS_IN_GROUP, response.data)
+        commit(FETCH_USERS_IN_GROUP, response.data)
         return response
       })
       .catch(error => {

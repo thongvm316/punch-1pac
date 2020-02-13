@@ -1,82 +1,111 @@
 <template>
   <main-layout :title="$t('attendances.groupTitle', { name: group.name })">
-    <group-tab :group-id="$route.params.id"/>
+    <group-tab :group-id="$route.params.id" />
 
     <div class="toolbar mt-5">
       <flat-pickr
-        :config="{mode: 'range', locale: flatpickrLocaleMapper[currentUser.language]}"
+        :config="{ mode: 'range', locale: flatpickrLocaleMapper[pickrLocale] }"
         class="form-input daterange-picker"
-        v-model="dateRange"/>
-      <attendance-status-select v-model="params.status">
-        <option slot="placeholder" value="">{{ $t('attendances.placeholder.filterByStatus') }}</option>
+        :value="formatDateRange(params)"
+        @on-close="onCloseFlatpickr"
+      />
+      <attendance-status-select
+        v-model="params.status"
+        :is-filter-disabled="!attendances.length"
+      >
+        <option
+          slot="placeholder"
+          value=""
+        >
+          {{ $t('placeholder.filterByStatus') }}
+        </option>
       </attendance-status-select>
 
-      <input type="search" class="form-input filter-input" :placeholder="$t('attendances.placeholder.filterByUser')" v-model="params.name_or_email">
+      <input
+        v-model="params.name_or_email"
+        type="search"
+        class="form-input filter-input"
+        :placeholder="$t('placeholder.filterByUser')"
+      >
     </div>
 
     <table class="table bg-light mt-5">
       <thead>
-        <th>{{ $t('attendances.tableHeader.name') }}</th>
-        <th>{{ $t('attendances.tableHeader.email') }}</th>
-        <th>{{ $t('attendances.tableHeader.date') }}</th>
-        <th>{{ $t('attendances.tableHeader.attendedAt') }}</th>
-        <th>{{ $t('attendances.tableHeader.leftAt') }}</th>
-        <th>{{ $t('attendances.tableHeader.status') }}</th>
+        <th>{{ $t('tableHeader.name') }}</th>
+        <th>{{ $t('tableHeader.email') }}</th>
+        <th>{{ $t('tableHeader.date') }}</th>
+        <th>{{ $t('tableHeader.attendedAt') }}</th>
+        <th>{{ $t('tableHeader.leftAt') }}</th>
+        <th>{{ $t('tableHeader.status') }}</th>
       </thead>
       <tbody>
-        <tr v-for="attendance in attendances">
+        <tr
+          v-for="attendance in attendances"
+          :key="attendance.id"
+        >
           <td>
             <div class="tile tile-centered">
               <div class="tile-icon">
-                <img :src="attendance.user.avatar_url" class="avatar avatar-md" :alt="attendance.user.name">
+                <img
+                  :src="attendance.user.avatar_url"
+                  class="avatar avatar-md"
+                  :alt="attendance.user.name"
+                >
               </div>
-              <div class="tile-content">{{ attendance.user.name }}</div>
+              <div class="tile-content">
+                {{ attendance.user.name }}
+              </div>
             </div>
           </td>
           <td>{{ attendance.user.email }}</td>
           <td>{{ attendance.day | moment_l }}</td>
-          <td :class="{ 'text-warning': attendance.attending_status === 'attend_late', 'text-success': attendance.attending_status === 'attend_ok'}">{{ attendance.attended_at }}</td>
-          <td :class="{ 'text-error': attendance.leaving_status === 'leave_early', 'text-success': attendance.leaving_status === 'leave_ok'}">{{ attendance.left_at }}</td>
+          <td :class="{ 'text-warning': attendance.attending_status === 'attend_late', 'text-success': attendance.attending_status === 'attend_ok'}">
+            {{ attendance.attended_at }}
+          </td>
+          <td :class="{ 'text-error': attendance.leaving_status === 'leave_early', 'text-success': attendance.leaving_status === 'leave_ok'}">
+            {{ attendance.left_at }}
+          </td>
           <td>
-            <span class="label" :class="{ 'label-warning': attendance.attending_status === 'attend_late', 'label-success': attendance.attending_status === 'attend_ok'}" v-if="attendance.attending_status">{{ $t(`meta.attendance_statuses.${attendance.attending_status}`) }}</span>
-            <span class="label" :class="{ 'label-error': attendance.leaving_status === 'leave_early', 'label-success': attendance.leaving_status === 'leave_ok'}" v-if="attendance.leaving_status">{{ $t(`meta.attendance_statuses.${attendance.leaving_status}`) }}</span>
-            <span class="label" :class="{ 'label-info': attendance.off_status === 'annual_leave' }" v-if="attendance.off_status">{{ $t(`meta.attendance_statuses.${attendance.off_status}`) }}</span>
+            <span
+              v-if="attendance.attending_status"
+              class="label"
+              :class="{ 'label-warning': attendance.attending_status === 'attend_late', 'label-success': attendance.attending_status === 'attend_ok'}"
+            >{{ $t(`meta.attendance_statuses.${attendance.attending_status}`) }}</span>
+            <span
+              v-if="attendance.leaving_status"
+              class="label"
+              :class="{ 'label-error': attendance.leaving_status === 'leave_early', 'label-success': attendance.leaving_status === 'leave_ok'}"
+            >{{ $t(`meta.attendance_statuses.${attendance.leaving_status}`) }}</span>
+            <span
+              v-if="attendance.off_status"
+              class="label"
+              :class="{ 'label-info': attendance.off_status === 'annual_leave' }"
+            >{{ $t(`meta.attendance_statuses.${attendance.off_status}`) }}</span>
           </td>
         </tr>
       </tbody>
     </table>
 
-    <pagination action="getAttendances" namespace="groupAttendances" v-if="pager.total_pages > 1"/>
+    <pagination
+      v-if="pager.total_pages > 1"
+      action="getAttendances"
+      namespace="groupAttendances"
+    />
   </main-layout>
 </template>
 
 <script>
-import MainLayout from '../layouts/Main'
-import Pagination from '../components/Pagination'
-import GroupTab from '../components/GroupTab'
-import AttendanceStatusSelect from '../components/AttendanceStatusSelect'
-import flatPickr from 'vue-flatpickr-component'
 import flatpickrLocale from '../mixins/flatpickr-locale'
-import { mapState, mapActions, mapGetters } from 'vuex'
+import dateRangePicker from '../mixins/date-range-picker'
+import { mapState, mapActions } from 'vuex'
 import debounce from 'lodash.debounce'
+const MainLayout = () => import('../layouts/Main')
+const Pagination = () => import('../components/Pagination')
+const GroupTab = () => import('../components/GroupTab')
+const AttendanceStatusSelect = () => import('../components/AttendanceStatusSelect')
+const flatPickr = () => import('vue-flatpickr-component')
 
 export default {
-  mixins: [flatpickrLocale],
-
-  data() {
-    return {
-      dateRange: [this.$moment().format('YYYY-MM-DD'), this.$moment().format('YYYY-MM-DD')],
-      params: {
-        self: null,
-        user_id: '',
-        from_date: this.$moment().format('YYYY-MM-DD'),
-        to_date: this.$moment().format('YYYY-MM-DD'),
-        group_id: this.$route.params.id,
-        name_or_email: '',
-        status: ''
-      }
-    }
-  },
 
   components: {
     MainLayout,
@@ -85,28 +114,26 @@ export default {
     Pagination,
     flatPickr
   },
+  mixins: [flatpickrLocale, dateRangePicker],
+
+  data() {
+    return {
+      params: {
+        self: null,
+        user_id: '',
+        from_date: '',
+        to_date: '',
+        group_id: this.$route.params.id,
+        name_or_email: '',
+        status: ''
+      }
+    }
+  },
 
   computed: {
     ...mapState('groupAttendances', ['pager', 'attendances']),
 
-    ...mapState('group', ['group']),
-
-    ...mapGetters('groupAttendances', ['filterAttendances'])
-  },
-
-  methods: {
-    ...mapActions('groupAttendances', ['getAttendances']),
-
-    ...mapActions('group', ['getGroup']),
-
-    debouncedGetAttendances: debounce(function() {
-      this.getAttendances(Object.assign({ page: 1 }, this.params))
-    }, 350)
-  },
-
-  created() {
-    if (!this.group) this.getGroup(this.$route.params.id)
-    this.getAttendances(this.params)
+    ...mapState('group', ['group'])
   },
 
   watch: {
@@ -115,13 +142,29 @@ export default {
         this.debouncedGetAttendances()
       },
       deep: true
-    },
-
-    dateRange: function() {
-      const dates = this.dateRange.split(' ')
-      this.params.from_date = dates[0]
-      this.params.to_date = dates[2]
     }
+  },
+
+  created() {
+    this.params = {
+      ...this.params,
+      ...{
+        from_date: this.$moment().format('YYYY-MM-DD'),
+        to_date: this.$moment().format('YYYY-MM-DD')
+      }
+    }
+    if (!this.group) this.getGroup(this.$route.params.id)
+    this.getAttendances(this.params)
+  },
+
+  methods: {
+    ...mapActions('groupAttendances', ['getAttendances']),
+
+    ...mapActions('group', ['getGroup']),
+
+    debouncedGetAttendances: debounce(function() {
+      this.getAttendances({ ...this.params, page: 1 })
+    }, 350)
   }
 }
 </script>

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Api::V1::GroupsController < Api::V1::BaseController
-  before_action :set_group, only: %i[show update destroy add_user remove_user report]
+  before_action :set_group, only: %i[show update destroy add_user remove_user report personal_report]
 
   def index
     authorize!
@@ -60,21 +60,52 @@ class Api::V1::GroupsController < Api::V1::BaseController
 
   def report
     authorize! @group
-    results = current_company.users.report(params.merge(group_id: params[:id])).order(name: :asc)
+
+    results  = Attendance.report_attendances_users_in_month(@group, params)
+    document = GroupCSV.new(results, params)
+
     respond_to do |format|
       format.json do
         render  json: results,
                 root: 'results',
                 each_serializer: GroupReportSerializer,
                 meta: {
-                  company_total_working_hours_on_month: current_company.total_working_hours_on_month(params[:date], params[:date_type]),
-                  company_total_working_days_in_month: current_company.total_working_days_in_month(params[:date], params[:date_type])
+                  company_total_working_hours_on_month: current_company.total_working_hours_on_month(params),
+                  company_total_working_days_in_month:  current_company.total_working_days_in_month(params)
                 },
                 params: params,
                 adapter: :json,
                 status: :ok
       end
-      format.csv { send_data(Group.report_csv(results), type: 'text/csv; charset=utf-8; header=present', filename: 'report.csv', disposition: 'attachment') }
+
+      format.csv { send_data(document.to_csv, document.options('report.csv', 'text/csv')) }
+      format.zip { send_data(document.to_zip, document.options('report.zip', 'text/zip')) }
+    end
+  end
+
+  def personal_report
+    authorize! @group
+    user = @group.users.find(params[:user_id])
+
+    if user
+      attendances = user.attendances.in_period(params).order(day: :asc)
+      chart       = user.attendances.chart_in_month(params).first
+      holidays    = current_company.holidays.range_date(params[:from_date], params[:to_date])
+      leave_days  = ForgotPunchInDaysService.new(user, current_company, params).execute
+      document    = UserCSV.new(attendances, params.merge(leave_days: leave_days))
+
+      report_json      = ActiveModelSerializers::SerializableResource.new(chart, serializer: AttendanceChartSerializer, leave_days: leave_days).as_json
+      attendances_json = ActiveModelSerializers::SerializableResource.new(attendances, each_serializer: AttendanceSerializer).as_json
+      holidays_json    = ActiveModelSerializers::SerializableResource.new(holidays, each_serializer: HolidaySerializer).as_json
+      meta_json = {
+        company_total_working_hours_on_month: current_company.total_working_hours_on_month(params),
+        company_total_working_days_in_month:  current_company.total_working_days_in_month(params)
+      }
+
+      respond_to do |format|
+        format.json { render json: { attendances: attendances_json, holidays: holidays_json, report: report_json, meta: meta_json }, status: :ok }
+        format.csv { send_data(document.to_csv, document.options("#{params[:user_id]}.csv", 'text/csv')) }
+      end
     end
   end
 

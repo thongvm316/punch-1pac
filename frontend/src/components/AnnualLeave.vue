@@ -1,21 +1,31 @@
 <template>
   <div>
-    <button type="button" class="btn btn-notice mr-5" @click="toggleAddModal">
-      {{ $t('header.btnLeave') }}
+    <button
+      type="button"
+      class="btn btn-notice mr-5"
+      @click="toggleAddModal"
+    >
+      {{ $t('button.common.btnLeave') }}
     </button>
 
-    <modal :title="$t('annualLeave.title')" :modal-open.sync="isAddModalOpen">
-      <annual-leave-form v-if="isAddModalOpen" @finishRequest="isAddModalOpen = false"/>
+    <modal
+      :title="$t('modal.annualLeave.title')"
+      :modal-open.sync="isAddModalOpen"
+    >
+      <annual-leave-form
+        v-if="isAddModalOpen"
+        @finishRequest="isAddModalOpen = false"
+      />
     </modal>
   </div>
 </template>
 
 <script>
 import modal from '../mixins/modal'
-import AnnualLeaveForm from '../components/AnnualLeaveForm'
+const AnnualLeaveForm = () => import('../components/AnnualLeaveForm')
 
 export default {
-  name: 'annual-leave',
+  name: 'AnnualLeave',
 
   components: {
     AnnualLeaveForm

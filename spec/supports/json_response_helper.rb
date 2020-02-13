@@ -76,7 +76,8 @@ module JsonResponseHelper
       timezone: String,
       logo_url: String,
       breakdays: nullable_response(Array),
-      punch_method: String
+      punch_method: String,
+      monthly_report: Integer
     }
   end
 
@@ -191,11 +192,21 @@ module JsonResponseHelper
   def response_attendance_chart
     {
       statuses: {
+        attend_days: Integer,
+        left_days: Integer,
         attend_ok: Integer,
         attend_late: Integer,
         leave_ok: Integer,
         leave_early: Integer,
         leave: Integer,
+        minutes_leave_early: {
+          hours: Integer,
+          mins: Integer
+        },
+        minutes_attend_late: {
+          hours: Integer,
+          mins: Integer
+        },
         working_hours: {
           hours: Integer,
           mins: Integer
@@ -217,7 +228,9 @@ module JsonResponseHelper
       attending_status: nullable_response(String),
       leaving_status:   nullable_response(String),
       off_status:       nullable_response(String),
-      working_hours:    Integer,
+      attend_late:      { hours: Integer, mins: Integer },
+      leave_early:      { hours: Integer, mins: Integer },
+      working_hours:    { hours: Integer, mins: Integer },
       user:             response_user
     }
   end
@@ -281,10 +294,49 @@ module JsonResponseHelper
       leave_ok: Integer,
       leave_early: Integer,
       leave: Integer,
+      minutes_attend_late: {
+        hours: Integer,
+        mins: Integer
+      },
+      minutes_leave_early: {
+        hours: Integer,
+        mins: Integer
+      },
       working_hours: {
         hours: Integer,
         mins: Integer
       }
+    }
+  end
+
+  def response_user_report
+    {
+      attend_days: Integer,
+      left_days: Integer,
+      attend_ok: Integer,
+      attend_late: Integer,
+      leave_ok: Integer,
+      leave_early: Integer,
+      leave: Integer,
+      minutes_leave_early: {
+        hours: Integer,
+        mins: Integer
+      },
+      minutes_attend_late: {
+        hours: Integer,
+        mins: Integer
+      },
+      working_hours: {
+        hours: Integer,
+        mins: Integer
+      }
+    }
+  end
+
+  def response_meta
+    {
+      company_total_working_hours_on_month: Integer,
+      company_total_working_days_in_month: Integer
     }
   end
 

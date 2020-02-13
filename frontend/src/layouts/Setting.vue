@@ -1,47 +1,23 @@
 <template>
-  <div>
-    <app-header></app-header>
-    <main>
-      <div class="container grid-xl mt-10">
-        <div class="columns">
-          <div class="column col-3">
-            <company-settings-sidebar v-if="sidebarType === 'company'"/>
-            <user-settings-sidebar v-if="sidebarType === 'user'"/>
-          </div>
+  <main>
+    <div class="container grid-xl mt-10">
+      <div class="columns">
+        <div class="column col-3">
+          <slot name="sidebar" />
+        </div>
 
-          <div class="column col-9">
-            <div class="box-setting">
-              <h2>{{ subtitle }}</h2>
-              <slot></slot>
-            </div>
+        <div class="column col-9">
+          <div class="box-setting">
+            <slot />
           </div>
         </div>
       </div>
-    </main>
-    <app-footer></app-footer>
-    <flash/>
-    <popup-change-password/>
-  </div>
+    </div>
+  </main>
 </template>
 
 <script>
-import AppHeader from '../components/AppHeader.vue'
-import AppFooter from '../components/AppFooter.vue'
-import CompanySettingsSidebar from '../components/CompanySettingsSidebar.vue'
-import UserSettingsSidebar from '../components/UserSettingsSidebar.vue'
-import Flash from '../components/Flash.vue'
-import PopupChangePassword from '../components/PopupChangePassword'
-
 export default {
-  name: 'setting-layout',
-  props: ['sidebarType', 'title', 'subtitle'],
-  components: {
-    AppHeader,
-    AppFooter,
-    UserSettingsSidebar,
-    CompanySettingsSidebar,
-    Flash,
-    PopupChangePassword
-  }
+  name: 'SettingLayout'
 }
 </script>

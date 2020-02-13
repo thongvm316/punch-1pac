@@ -1,64 +1,124 @@
 <template>
   <div>
-    <div class="form-group" :class="{ 'has-error': errors.name }">
-      <label class="form-label">{{ $t('company.holidays.labels.name') }}</label>
-      <input class="form-input" type="text" v-model="params.name">
-      <p class="form-input-hint" v-if="errors.name">{{ $t('company.holidays.labels.name') }} {{ errors.name[0] }}</p>
+    <div
+      class="form-group"
+      :class="{ 'has-error': $v.params.name.$error || errors.name }"
+    >
+      <label class="form-label">{{ $t('label.name') }}</label>
+      <input
+        v-model="$v.params.name.$model"
+        class="form-input"
+        type="text"
+      >
+      <p
+        v-if="$v.params.name.$error && !errors.name"
+        class="form-input-hint"
+      >
+        {{ $t('validation.required', { name: $t('label.name') }) }}
+      </p>
+      <p
+        v-if="errors.name"
+        class="form-input-hint"
+      >
+        {{ $t('label.name') }} {{ errors.name[0] }}
+      </p>
     </div>
-    <div class="form-group" :class="{ 'has-error': errors.started_at }">
-      <label class="form-label">{{ $t('company.holidays.labels.startAt') }}</label>
+    <div
+      class="form-group"
+      :class="{ 'has-error': $v.params.started_at.$error || errors.started_at }"
+    >
+      <label class="form-label">{{ $t('label.startAt') }}</label>
       <flat-pickr
-        :config="{ locale: flatpickrLocaleMapper[currentUser.language] }"
+        v-model="$v.params.started_at.$model"
+        :config="{ mode: 'single', locale: flatpickrLocaleMapper[pickrLocale] }"
         class="form-input daterange-picker"
-        v-model="params.started_at"/>
-      <p class="form-input-hint" v-if="errors.started_at">{{ $t('company.holidays.labels.startAt') }} {{ errors.started_at[0] }}</p>
+      />
+      <p
+        v-if="errors.started_at"
+        class="form-input-hint"
+      >
+        {{ $t('label.startAt') }} {{ errors.started_at[0] }}
+      </p>
+      <p
+        v-if="$v.params.started_at.$error && !errors.started_at"
+        class="form-input-hint"
+      >
+        {{ $t('validation.required', { name: $t('label.startAt') }) }}
+      </p>
     </div>
-    <div class="form-group" :class="{ 'has-error': errors.ended_at }">
-      <label class="form-label">{{ $t('company.holidays.labels.endAt') }}</label>
+    <div
+      class="form-group"
+      :class="{ 'has-error': $v.params.ended_at.$error || errors.ended_at }"
+    >
+      <label class="form-label">{{ $t('label.endAt') }}</label>
       <flat-pickr
-        :config="{ locale: flatpickrLocaleMapper[currentUser.language] }"
+        v-model="$v.params.ended_at.$model"
+        :config="{ mode: 'single', locale: flatpickrLocaleMapper[pickrLocale] }"
         class="form-input daterange-picker"
-        v-model="params.ended_at"/>
-      <p class="form-input-hint" v-if="errors.ended_at">{{ $t('company.holidays.labels.endAt') }} {{ errors.ended_at[0] }}</p>
+      />
+      <p
+        v-if="errors.ended_at"
+        class="form-input-hint"
+      >
+        {{ $t('label.endAt') }} {{ errors.ended_at[0] }}
+      </p>
+      <p
+        v-if="$v.params.ended_at.$error && !errors.ended_at"
+        class="form-input-hint"
+      >
+        {{ $t('validation.required', { name: $t('label.endAt') }) }}
+      </p>
     </div>
     <div class="form-group">
       <button
-        class="btn btn-success btn-submit"
-        @click="localAddHoliday"
         v-if="!targetHoliday"
-        :disabled="isDisable">
-        {{ $t('company.holidays.btn.submit') }}
+        ref="localAddHolidayBtn"
+        class="btn btn-success btn-submit"
+        :disabled="isDisabled"
+        @click="localAddHoliday"
+      >
+        {{ $t('button.common.submit') }}
       </button>
       <button
-        class="btn btn-success btn-submit"
-        @click="localEditHoliday"
         v-if="targetHoliday"
-        :disabled="isDisable">
-        {{ $t('company.holidays.btn.save') }}
+        ref="localEditHolidayBtn"
+        class="btn btn-success btn-submit"
+        :disabled="isDisabled"
+        @click="localEditHoliday"
+      >
+        {{ $t('button.common.save') }}
       </button>
     </div>
   </div>
 </template>
 
 <script>
-import flatPickr from 'vue-flatpickr-component'
 import flatpickrLocale from '../mixins/flatpickr-locale'
-import { mapState, mapActions } from 'vuex'
+import handleSuccess from '../mixins/handle-success'
+import holidayFormValidate from '../validations/holiday-form-validate'
+import { CLEAR_HOLIDAY_ERRORS } from '../store/mutation-types'
+import { mapState, mapActions, mapMutations } from 'vuex'
+import { isEmpty } from 'underscore'
+const flatPickr = () => import('vue-flatpickr-component')
 
 export default {
-  name: 'holiday-form',
-
-  mixins: [flatpickrLocale],
+  name: 'HolidayForm',
 
   components: {
     flatPickr
   },
 
-  props: ['targetHoliday'],
+  mixins: [flatpickrLocale, handleSuccess, holidayFormValidate],
+
+  props: {
+    targetHoliday: {
+      type: Object,
+      default: null
+    }
+  },
 
   data() {
     return {
-      isDisable: false,
       params: {
         name: '',
         started_at: '',
@@ -67,44 +127,38 @@ export default {
     }
   },
 
-  methods: {
-    ...mapActions('flash', ['setFlashMsg']),
-
-    ...mapActions('companyHolidays', ['createHoliday', 'updateHoliday', 'clearHolidayErrors']),
-
-    localAddHoliday() {
-      this.isDisable = true
-      this.createHoliday(this.params).then(response => {
-        Object.keys(this.params).forEach(key => {
-          this.params[key] = ''
-        })
-        this.setFlashMsg({ message: this.$t('messages.holiday.createSuccess') })
-        this.$emit('afterModify')
-        this.isDisable = false
-      })
-      .catch(() => { this.isDisable = false })
-    },
-
-    localEditHoliday() {
-      this.isDisable = true
-      this.updateHoliday({ holidayID: this.targetHoliday.id, updateParams: this.params }).then(response => {
-        this.setFlashMsg({ message: this.$t('messages.holiday.updateSuccess') })
-        this.$emit('afterModify')
-        this.isDisable = false
-      })
-      .catch(() => { this.isDisable = false })
-    }
-  },
-
   computed: {
     ...mapState('companyHolidays', ['errors'])
   },
 
   created() {
-    this.clearHolidayErrors()
-    if (this.targetHoliday) {
-      Object.keys(this.params).forEach(k => {
-        this.params[k] = this.targetHoliday[k]
+    if (!isEmpty(this.errors)) this[CLEAR_HOLIDAY_ERRORS]()
+    if (this.targetHoliday) this.params = { ...this.targetHoliday }
+  },
+
+  methods: {
+    ...mapActions('companyHolidays', ['createHoliday', 'updateHoliday']),
+
+    ...mapMutations('companyHolidays', [CLEAR_HOLIDAY_ERRORS]),
+
+    localAddHoliday() {
+      this.createHoliday(this.params).then(response => {
+        Object.keys(this.params).forEach(key => {
+          this.params[key] = ''
+        })
+        this.handleSuccess({
+          emitType: 'afterModify',
+          message: this.$t('messages.holiday.createSuccess')
+        })
+      })
+    },
+
+    localEditHoliday() {
+      this.updateHoliday({ holidayID: this.targetHoliday.id, updateParams: this.params }).then(response => {
+        this.handleSuccess({
+          emitType: 'afterModify',
+          message: this.$t('messages.holiday.updateSuccess')
+        })
       })
     }
   }

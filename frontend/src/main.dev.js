@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import Vuelidate from 'vuelidate'
 import App from './App'
 import router from './router'
 import i18n from './locale'
@@ -15,9 +16,10 @@ import pageAuthorization from './mixins/page-authorization'
 import './scss/main.scss'
 
 axios.defaults.baseURL = 'http://namespace_1.localhost:3000/api/v1'
-axios.defaults.headers.common['Authorization'] = 'Bear eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1MzYzOTE0MzksImp0aSI6IjM5YjhhMTdkLWIxYTQtNDJjOS05NTdlLTkwNzY5NzU0NTU1NyIsInN1YiI6Mn0.STP1IcFfmjYg241kQI_V50rtp4d1A9bupZTv5s93dqI'
+axios.defaults.headers.common['Authorization'] = 'Bear eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1ODM2MzE2NTIsImp0aSI6ImU4NjdiYmViLWM5OTQtNGNmOC1iZDUwLWEzNzIxNDk5MjVjOCIsInN1YiI6Mn0.ceJZnwZwTy8qaN8x-Kpcd-BiEiYuQswQfZ9WVymkgDE'
 axios.defaults.headers.common['Accept'] = 'application/json'
 
+Vue.use(Vuelidate)
 Vue.prototype.$moment = moment
 Vue.prototype.$auth = authorization
 Vue.mixin(currentUser)

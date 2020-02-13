@@ -1,18 +1,27 @@
 <template>
   <v-select
+    v-model="selectedUser"
     label="email"
     :filterable="false"
+    :placeholder="placeholder"
+    :options="optionUsers"
     @search="filterUsers"
     @input="updateSelectedUser"
-    :placeholder="placeholder"
-    v-model="selectedUser"
-    :options="optionUsers">
-    <template slot="option" slot-scope="option">
+  >
+    <template
+      slot="option"
+      slot-scope="option"
+    >
       <div class="tile tile-centered">
         <div class="tile-icon">
-          <img :src="option.avatar_url" class="avatar avatar-md">
+          <img
+            :src="option.avatar_url"
+            class="avatar avatar-md"
+          >
         </div>
-        <div class="tile-content">{{ option.name }} ({{ option.email }})</div>
+        <div class="tile-content">
+          {{ option.name }} ({{ option.email }})
+        </div>
       </div>
     </template>
     <span slot="no-options">{{ $t('filterUserBox.noOptions') }}</span>
@@ -21,10 +30,29 @@
 
 <script>
 import axios from 'axios'
-import vSelect from 'vue-select'
 import debounce from 'lodash.debounce'
+const vSelect = () => import('vue-select')
 
 export default {
+  components: {
+    vSelect
+  },
+
+  props: {
+    queryParams: {
+      type: Object,
+      required: true
+    },
+    placeholder: {
+      type: String,
+      default: ''
+    },
+    user: {
+      type: Object,
+      default: null
+    }
+  },
+
   data() {
     return {
       optionUsers: [],
@@ -32,10 +60,15 @@ export default {
     }
   },
 
-  props: ['placeholder', 'queryParams', 'user'],
+  watch: {
+    user: function() {
+      this.optionUsers = []
+      this.selectedUser = this.user
+    }
+  },
 
-  components: {
-    vSelect
+  created() {
+    this.search('', false)
   },
 
   methods: {
@@ -58,17 +91,6 @@ export default {
 
     updateSelectedUser() {
       this.$emit('update:user', this.selectedUser)
-    }
-  },
-
-  created() {
-    this.search('', false)
-  },
-
-  watch: {
-    user: function() {
-      this.optionUsers = []
-      this.selectedUser = this.user
     }
   }
 }

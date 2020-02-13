@@ -2,95 +2,190 @@
   <main-layout :title="$t('requests.title')">
     <div class="toolbar mt-5">
       <datepicker
-        :language="currentUser.language"
-        :format="function (date) { return $moment(date).format('LLL') }"
-        :minimumView="'month'"
-        :maximumView="'month'"
+        v-model="params.date"
+        :language="$i18n.locale"
+        format="MMMM yyyy"
+        :minimum-view="'month'"
+        :maximum-view="'month'"
         :input-class="'datepicker-input form-input'"
         :calendar-class="'datepicker-calendar'"
         :wrapper-class="'datepicker'"
         @input="onInputDatepicker"
-        v-model="params.date"/>
-      <select class="form-select" v-model="params.status">
-        <option value="">{{ $t('requests.placeholder.filterByStatus') }}</option>
-        <option :value="status" v-for="status in meta.request_statuses">{{ $t(`meta.request_statuses.${status}`) }}</option>
+      />
+
+      <select
+        v-model="params.status"
+        class="form-select"
+      >
+        <option value="">
+          {{ $t('placeholder.filterByStatus') }}
+        </option>
+        <option
+          v-for="(status, key) in meta.request_statuses"
+          :key="key"
+          :value="status"
+        >
+          {{ $t(`meta.request_statuses.${status}`) }}
+        </option>
       </select>
-      <select class="form-select" v-model="params.kind">
-        <option value="">{{ $t('requests.placeholder.filterByKind') }}</option>
-        <option :value="kind" v-for="kind in ['annual_leave', 'attendance']">{{ $t(`requests.kinds.${kind}`) }}</option>
+
+      <select
+        v-model="params.kind"
+        class="form-select"
+      >
+        <option value="">
+          {{ $t('placeholder.filterByKind') }}
+        </option>
+        <option
+          v-for="(kind, key) in ['annual_leave', 'attendance']"
+          :key="key"
+          :value="kind"
+        >
+          {{ $t(`requests.kinds.${kind}`) }}
+        </option>
       </select>
     </div>
 
     <table class="table bg-light mt-4">
       <thead>
         <tr>
-          <th class="w-cell-date">{{ $t('requests.tableHeader.date') }}</th>
-          <th>{{ $t('requests.tableHeader.attendedAt') }}</th>
-          <th>{{ $t('requests.tableHeader.leftAt') }}</th>
-          <th>{{ $t('requests.tableHeader.kind') }}</th>
-          <th>{{ $t('requests.tableHeader.reason') }}</th>
-          <th>{{ $t('requests.tableHeader.status') }}</th>
-          <th>{{ $t('requests.tableHeader.admin') }}</th>
-          <th>{{ $t('requests.tableHeader.rejectReason') }}</th>
-          <th>{{ $t('requests.tableHeader.actions') }}</th>
+          <th class="w-cell-date">
+            {{ $t('tableHeader.date') }}
+          </th>
+          <th>{{ $t('tableHeader.attendedAt') }}</th>
+          <th>{{ $t('tableHeader.leftAt') }}</th>
+          <th>{{ $t('tableHeader.kind') }}</th>
+          <th>{{ $t('tableHeader.reason') }}</th>
+          <th>{{ $t('tableHeader.status') }}</th>
+          <th>{{ $t('tableHeader.admin') }}</th>
+          <th>{{ $t('tableHeader.rejectReason') }}</th>
+          <th>{{ $t('tableHeader.actions') }}</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="request in requests">
-          <td class="w-cell-date">{{ request.attendance_day | moment_l }}</td>
+        <tr
+          v-for="request in requests"
+          :key="request.id"
+        >
+          <td class="w-cell-date">
+            {{ request.attendance_day | moment_l }}
+          </td>
           <td>{{ request.attended_at }}</td>
           <td>{{ request.left_at }}</td>
-          <td class="w-cell-kind"><span :class="{ 'text-primary': request.kind === 'attendance', 'text-info': request.kind === 'annual_leave' }">{{ $t(`requests.kinds.${request.kind}`) }}</span></td>
+          <td class="w-cell-kind">
+            <span :class="{ 'text-primary': request.kind === 'attendance', 'text-info': request.kind === 'annual_leave' }">{{ $t(`requests.kinds.${request.kind}`) }}</span>
+          </td>
           <td>{{ request.reason }}</td>
-          <td class="w-cell-status"><span class="label" :class="getStatusClass(request.status)">{{ $t(`meta.request_statuses.${request.status}`) }}</span></td>
+          <td class="w-cell-status">
+            <span
+              class="label"
+              :class="getStatusClass(request.status)"
+            >{{ $t(`meta.request_statuses.${request.status}`) }}</span>
+          </td>
           <td class="w-cell-admin">
-            <div class="tile tile-centered" v-if="request.admin">
+            <div
+              v-if="request.admin"
+              class="tile tile-centered"
+            >
               <div class="tile-icon">
-                <img class="avatar avatar-md" :src="request.admin.avatar_url">
+                <img
+                  class="avatar avatar-md"
+                  :src="request.admin.avatar_url"
+                >
               </div>
               <div class="tile-content">
                 {{ request.admin.name }}
               </div>
             </div>
-            <span v-else></span>
+            <span v-else />
           </td>
-          <td class="w-cell-reason">{{ request.admin_reason }}</td>
+          <td class="w-cell-reason">
+            {{ request.admin_reason }}
+          </td>
           <td class="w-cell-action">
-            <button class="btn btn-action btn-link tooltip" :data-tooltip="$t('requests.tooltip.edit')" @click="toggleEditModal(request)" v-if="request.status === 'pending'">
-              <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="currentColor"><path d="M23.2530524,2.92025954 L21.0782401,0.745259708 C20.084537,-0.24844334 18.4678184,-0.248396465 17.4741154,0.745259708 C16.5385373,1.68093151 2.24841342,15.9721335 1.29342912,16.9271647 C1.19171037,17.0288834 1.12355413,17.1640709 1.09927288,17.2963053 L0.0118667154,23.1688048 C-0.0302739063,23.3964767 0.0422885881,23.6303361 0.20602295,23.7940704 C0.369944813,23.9579923 0.603851044,24.0304141 0.831241652,23.9882735 L6.70322557,22.9007267 C6.83892868,22.8754142 6.97233492,22.8066017 7.07236617,22.7065236 L23.2530524,6.52461863 C24.2490523,5.52861871 24.249193,3.91640009 23.2530524,2.92025954 Z M1.58077284,22.4191799 L2.23856967,18.8668052 L5.13291319,21.7613362 L1.58077284,22.4191799 Z M6.57520995,21.2149144 L2.78494462,17.4244147 L16.6229123,3.58536886 L20.4131776,7.37591544 L6.57520995,21.2149144 Z M22.2586931,5.53025934 L21.40749,6.38155614 L17.6172247,2.59100956 L18.4684278,1.73971276 C18.9137871,1.29430654 19.6384277,1.29425966 20.0838808,1.73971276 L22.2586931,3.91471259 C22.7051774,4.36119693 22.7051774,5.08372812 22.2586931,5.53025934 Z"/></svg>
+            <button
+              v-if="request.status === 'pending'"
+              class="btn btn-action btn-link tooltip"
+              :data-tooltip="$t('tooltip.request.edit')"
+              @click="toggleEditModal(request)"
+            >
+              <svg
+                width="24px"
+                height="24px"
+                viewBox="0 0 24 24"
+                version="1.1"
+                xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+                fill="currentColor"
+              ><path d="M23.2530524,2.92025954 L21.0782401,0.745259708 C20.084537,-0.24844334 18.4678184,-0.248396465 17.4741154,0.745259708 C16.5385373,1.68093151 2.24841342,15.9721335 1.29342912,16.9271647 C1.19171037,17.0288834 1.12355413,17.1640709 1.09927288,17.2963053 L0.0118667154,23.1688048 C-0.0302739063,23.3964767 0.0422885881,23.6303361 0.20602295,23.7940704 C0.369944813,23.9579923 0.603851044,24.0304141 0.831241652,23.9882735 L6.70322557,22.9007267 C6.83892868,22.8754142 6.97233492,22.8066017 7.07236617,22.7065236 L23.2530524,6.52461863 C24.2490523,5.52861871 24.249193,3.91640009 23.2530524,2.92025954 Z M1.58077284,22.4191799 L2.23856967,18.8668052 L5.13291319,21.7613362 L1.58077284,22.4191799 Z M6.57520995,21.2149144 L2.78494462,17.4244147 L16.6229123,3.58536886 L20.4131776,7.37591544 L6.57520995,21.2149144 Z M22.2586931,5.53025934 L21.40749,6.38155614 L17.6172247,2.59100956 L18.4684278,1.73971276 C18.9137871,1.29430654 19.6384277,1.29425966 20.0838808,1.73971276 L22.2586931,3.91471259 C22.7051774,4.36119693 22.7051774,5.08372812 22.2586931,5.53025934 Z" /></svg>
             </button>
-            <button class="btn btn-action btn-link tooltip" :data-tooltip="$t('requests.tooltip.delete')" @click="openConfirmDialog(request)" v-if="request.status === 'pending'">
-              <svg width="22px" height="24px" viewBox="0 0 22 24" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="currentColor"><path d="M22.0148148,3.45394737 L17.017284,3.45394737 L17.017284,2.63980263 C17.017284,1.18421053 15.8320988,0 14.3753086,0 L9.62469136,0 C8.16790123,0 6.98271605,1.18421053 6.98271605,2.63980263 L6.98271605,3.45394737 L1.98518519,3.45394737 C1.61481481,3.45394737 1.31851852,3.75 1.31851852,4.12006579 C1.31851852,4.49013158 1.61481481,4.78618421 1.98518519,4.78618421 L3.19012346,4.78618421 L3.19012346,20.4375 C3.19012346,22.4013158 4.79012346,24 6.75555556,24 L17.2444444,24 C19.2098765,24 20.8098765,22.4013158 20.8098765,20.4375 L20.8098765,4.78618421 L22.0148148,4.78618421 C22.3851852,4.78618421 22.6814815,4.49013158 22.6814815,4.12006579 C22.6814815,3.75 22.3851852,3.45394737 22.0148148,3.45394737 Z M8.31604938,2.63980263 C8.31604938,1.91940789 8.9037037,1.33223684 9.62469136,1.33223684 L14.3753086,1.33223684 C15.0962963,1.33223684 15.6839506,1.91940789 15.6839506,2.63980263 L15.6839506,3.45394737 L8.31604938,3.45394737 L8.31604938,2.63980263 Z M19.4765432,20.4375 C19.4765432,21.6661184 18.4740741,22.6677632 17.2444444,22.6677632 L6.75555556,22.6677632 C5.52592593,22.6677632 4.52345679,21.6661184 4.52345679,20.4375 L4.52345679,4.78618421 L19.4814815,4.78618421 L19.4814815,20.4375 L19.4765432,20.4375 Z M12,20.2796053 C12.3703704,20.2796053 12.6666667,19.9835526 12.6666667,19.6134868 L12.6666667,7.84046053 C12.6666667,7.47039474 12.3703704,7.17434211 12,7.17434211 C11.6296296,7.17434211 11.3333333,7.47039474 11.3333333,7.84046053 L11.3333333,19.6085526 C11.3333333,19.9786184 11.6296296,20.2796053 12,20.2796053 Z M7.64938272,19.5444079 C8.01975309,19.5444079 8.31604938,19.2483553 8.31604938,18.8782895 L8.31604938,8.57072368 C8.31604938,8.20065789 8.01975309,7.90460526 7.64938272,7.90460526 C7.27901235,7.90460526 6.98271605,8.20065789 6.98271605,8.57072368 L6.98271605,18.8782895 C6.98271605,19.2483553 7.28395062,19.5444079 7.64938272,19.5444079 Z M16.3506173,19.5444079 C16.7209877,19.5444079 17.017284,19.2483553 17.017284,18.8782895 L17.017284,8.57072368 C17.017284,8.20065789 16.7209877,7.90460526 16.3506173,7.90460526 C15.9802469,7.90460526 15.6839506,8.20065789 15.6839506,8.57072368 L15.6839506,18.8782895 C15.6839506,19.2483553 15.9802469,19.5444079 16.3506173,19.5444079 Z"/></svg>
+            <button
+              v-if="request.status === 'pending'"
+              class="btn btn-action btn-link tooltip"
+              :data-tooltip="$t('tooltip.request.delete')"
+              @click="openConfirmDialog(request)"
+            >
+              <svg
+                width="22px"
+                height="24px"
+                viewBox="0 0 22 24"
+                xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+                fill="currentColor"
+              ><path d="M22.0148148,3.45394737 L17.017284,3.45394737 L17.017284,2.63980263 C17.017284,1.18421053 15.8320988,0 14.3753086,0 L9.62469136,0 C8.16790123,0 6.98271605,1.18421053 6.98271605,2.63980263 L6.98271605,3.45394737 L1.98518519,3.45394737 C1.61481481,3.45394737 1.31851852,3.75 1.31851852,4.12006579 C1.31851852,4.49013158 1.61481481,4.78618421 1.98518519,4.78618421 L3.19012346,4.78618421 L3.19012346,20.4375 C3.19012346,22.4013158 4.79012346,24 6.75555556,24 L17.2444444,24 C19.2098765,24 20.8098765,22.4013158 20.8098765,20.4375 L20.8098765,4.78618421 L22.0148148,4.78618421 C22.3851852,4.78618421 22.6814815,4.49013158 22.6814815,4.12006579 C22.6814815,3.75 22.3851852,3.45394737 22.0148148,3.45394737 Z M8.31604938,2.63980263 C8.31604938,1.91940789 8.9037037,1.33223684 9.62469136,1.33223684 L14.3753086,1.33223684 C15.0962963,1.33223684 15.6839506,1.91940789 15.6839506,2.63980263 L15.6839506,3.45394737 L8.31604938,3.45394737 L8.31604938,2.63980263 Z M19.4765432,20.4375 C19.4765432,21.6661184 18.4740741,22.6677632 17.2444444,22.6677632 L6.75555556,22.6677632 C5.52592593,22.6677632 4.52345679,21.6661184 4.52345679,20.4375 L4.52345679,4.78618421 L19.4814815,4.78618421 L19.4814815,20.4375 L19.4765432,20.4375 Z M12,20.2796053 C12.3703704,20.2796053 12.6666667,19.9835526 12.6666667,19.6134868 L12.6666667,7.84046053 C12.6666667,7.47039474 12.3703704,7.17434211 12,7.17434211 C11.6296296,7.17434211 11.3333333,7.47039474 11.3333333,7.84046053 L11.3333333,19.6085526 C11.3333333,19.9786184 11.6296296,20.2796053 12,20.2796053 Z M7.64938272,19.5444079 C8.01975309,19.5444079 8.31604938,19.2483553 8.31604938,18.8782895 L8.31604938,8.57072368 C8.31604938,8.20065789 8.01975309,7.90460526 7.64938272,7.90460526 C7.27901235,7.90460526 6.98271605,8.20065789 6.98271605,8.57072368 L6.98271605,18.8782895 C6.98271605,19.2483553 7.28395062,19.5444079 7.64938272,19.5444079 Z M16.3506173,19.5444079 C16.7209877,19.5444079 17.017284,19.2483553 17.017284,18.8782895 L17.017284,8.57072368 C17.017284,8.20065789 16.7209877,7.90460526 16.3506173,7.90460526 C15.9802469,7.90460526 15.6839506,8.20065789 15.6839506,8.57072368 L15.6839506,18.8782895 C15.6839506,19.2483553 15.9802469,19.5444079 16.3506173,19.5444079 Z" /></svg>
             </button>
           </td>
         </tr>
       </tbody>
     </table>
 
-    <modal :title="$t('requests.modal.editTitle')" :modal-open.sync="isEditModalOpen">
+    <modal
+      :title="$t('modal.request.editTitle')"
+      :modal-open.sync="isEditModalOpen"
+    >
       <div v-if="selectedRequest.kind === 'attendance'">
-        <request-form v-if="isEditModalOpen" :request="selectedRequest" @afterModify="isEditModalOpen = false"></request-form>
+        <request-form
+          v-if="isEditModalOpen"
+          :request="selectedRequest"
+          @afterModify="isEditModalOpen = false"
+        />
       </div>
-      <annual-leave-form :request="selectedRequest" v-if="selectedRequest.kind === 'annual_leave'" @finishRequest="isEditModalOpen = false"/>
+      <annual-leave-form
+        v-if="selectedRequest.kind === 'annual_leave'"
+        :request="selectedRequest"
+        @finishRequest="isEditModalOpen = false"
+      />
     </modal>
 
-    <confirm-dialog :title="$t('requests.confirmDialog.deleteTitle')" :deleteObject="deleteRequest" :objectId="selectedObject.id" :modal-open.sync="isOpenConfirmDialog">
+    <confirm-dialog
+      :title="$t('requests.confirmDialog.deleteTitle')"
+      :delete-object="deleteRequest"
+      :object-id="selectedObject.id"
+      :modal-open.sync="isOpenConfirmDialog"
+    >
       <p>{{ $t('requests.confirmDialog.deleteMsg') }}</p>
     </confirm-dialog>
   </main-layout>
 </template>
 
 <script>
-import MainLayout from '../layouts/Main'
 import confirmDialog from '../mixins/confirm-dialog'
-import AnnualLeaveForm from '../components/AnnualLeaveForm'
-import RequestForm from '../components/RequestForm'
 import modal from '../mixins/modal'
-import Datepicker from 'vuejs-datepicker'
 import { mapState, mapActions } from 'vuex'
+const MainLayout = () => import('../layouts/Main')
+const Datepicker = () => import('vuejs-datepicker')
+const AnnualLeaveForm = () => import('../components/AnnualLeaveForm')
+const RequestForm = () => import('../components/RequestForm')
 
 export default {
-  name: 'requests',
+  name: 'Requests',
+
+  components: {
+    MainLayout,
+    AnnualLeaveForm,
+    RequestForm,
+    Datepicker
+  },
 
   mixins: [modal, confirmDialog],
 
@@ -109,17 +204,23 @@ export default {
     }
   },
 
-  components: {
-    MainLayout,
-    AnnualLeaveForm,
-    RequestForm,
-    Datepicker
-  },
-
   computed: {
     ...mapState('requests', ['pager', 'requests']),
 
     ...mapState('initialStates', ['meta'])
+  },
+
+  watch: {
+    params: {
+      handler: function() {
+        this.getRequests(Object.assign({ page: 1 }, this.params))
+      },
+      deep: true
+    }
+  },
+
+  created() {
+    this.getRequests(this.params)
   },
 
   methods: {
@@ -143,19 +244,6 @@ export default {
 
     onInputDatepicker() {
       this.params.date = this.$moment(this.params.date).format('YYYY-MM-DD')
-    }
-  },
-
-  created() {
-    this.getRequests(this.params)
-  },
-
-  watch: {
-    params: {
-      handler: function() {
-        this.getRequests(Object.assign({ page: 1 }, this.params))
-      },
-      deep: true
     }
   }
 }
