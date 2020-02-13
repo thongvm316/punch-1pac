@@ -1,7 +1,6 @@
 <template>
   <select
     class="form-select"
-    :disabled="isFilterDisabled"
     @change="updateValue($event)"
   >
     <slot name="placeholder" />
@@ -25,11 +24,6 @@ export default {
     value: {
       type: String,
       default: ''
-    },
-
-    isFilterDisabled: {
-      type: Boolean,
-      default: false
     }
   },
 
