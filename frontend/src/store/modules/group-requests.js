@@ -44,7 +44,11 @@ const mutations = {
 
 const actions = {
   getRequests({ commit }, params = {}) {
-    return callApi({ method: 'get', url: '/requests', params })
+    return callApi({
+      method: 'get',
+      url: '/requests',
+      params: { ...params, date_type: params.date_type || 'range' }
+    })
       .then(response => {
         commit(RECEIVE_GROUP_REQUESTS, response.data)
         return response
