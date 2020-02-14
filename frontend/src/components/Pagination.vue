@@ -49,6 +49,10 @@ export default {
     namespace: {
       type: String,
       required: true
+    },
+    params: {
+      type: Object,
+      required: false
     }
   },
 
@@ -99,7 +103,7 @@ export default {
     },
 
     fetchItems(page) {
-      this.$store.dispatch(`${this.namespace}/${this.action}`, { page, per_page: this.pager.per_page })
+      this.$store.dispatch(`${this.namespace}/${this.action}`, { page, per_page: this.pager.per_page, ...this.params })
     }
   }
 }
