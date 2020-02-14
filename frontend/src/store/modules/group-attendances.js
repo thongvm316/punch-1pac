@@ -22,7 +22,11 @@ const mutations = {
 
 const actions = {
   getAttendances({ commit, state }, params = {}) {
-    return callApi({ method: 'get', url: '/attendances', params })
+    return callApi({
+      method: 'get',
+      url: '/attendances',
+      params: { ...params, date_type: params.date_type || 'range' }
+    })
       .then(response => {
         commit(RECEIVE_GROUP_ATTENDANCES, response.data)
         return response
