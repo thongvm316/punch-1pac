@@ -162,7 +162,11 @@
       v-if="pager.total_pages > 1"
       namespace="groupRequests"
       action="getRequests"
-      :params="{from_date: params.from_date, to_date: params.to_date}"
+      :params="{
+        from_date: params.from_date,
+        to_date: params.to_date,
+        date_type: 'range'
+      }"
     />
 
     <modal

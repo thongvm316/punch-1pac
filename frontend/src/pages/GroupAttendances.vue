@@ -90,7 +90,11 @@
       v-if="pager.total_pages > 1"
       action="getAttendances"
       namespace="groupAttendances"
-      :params="{from_date: params.from_date, to_date: params.to_date}"
+      :params="{
+        from_date: params.from_date,
+        to_date: params.to_date,
+        date_type: 'range'
+      }"
     />
   </main-layout>
 </template>
