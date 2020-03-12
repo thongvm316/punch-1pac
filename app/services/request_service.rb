@@ -34,19 +34,22 @@ class RequestService
   def attendance_params
     {}.tap do |obj|
       if @req.attended_at.present?
-        obj[:attended_at] = @req.attended_at
+        obj[:attended_at]      = @req.attended_at
         obj[:attending_status] = AttendanceService.attending_status(@user.company, @req.attended_at, @req.attendance_day)
       end
 
       if @req.left_at.present?
-        obj[:left_at] = @req.left_at
+        obj[:left_at]        = @req.left_at
         obj[:leaving_status] = AttendanceService.leaving_status(@user.company, @req.left_at, @req.attendance_day)
       end
 
-      obj[:working_hours] = CountWorkingHoursService.new(
+      obj[:off_status]          = nil
+      obj[:minutes_attend_late] = TotalTimeOfLatency.new(@user.company, @req.attended_at || @attendance&.attended_at).execute
+      obj[:minutes_leave_early] = TotalTimeOfLatency.new(@user.company, @req.left_at || @attendance&.left_at, @attendance).execute
+      obj[:working_hours]       = CountWorkingHoursService.new(
         @user.company,
         @req.attended_at || @attendance&.attended_at,
-        @req.left_at || @attendance&.left_at,
+        @req.left_at     || @attendance&.left_at,
         @req.attendance_day
       ).execute
     end
