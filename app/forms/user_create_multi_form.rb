@@ -25,7 +25,7 @@ class UserCreateMultiForm < BaseForm
       user   = @company.users.build(params)
 
       if user.save
-        UserMailer.create(user.id, @company.id, params['password']).deliver_later
+        UserMailer.create(user.id, @company.id, params['password']).deliver
         @users << user
       else
         @lines << line

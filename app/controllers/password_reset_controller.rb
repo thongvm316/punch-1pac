@@ -13,7 +13,7 @@ class PasswordResetController < ApplicationController
     respond_to do |f|
       if @user
         @user.init_password_reset_token!
-        PasswordResetMailer.create(@user.id).deliver_later
+        PasswordResetMailer.create(@user.id).deliver
         f.html do
           flash[:notice] = t('.valid_email', email: @user.email)
           redirect_to login_url
