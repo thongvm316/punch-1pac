@@ -35,6 +35,7 @@ gem 'activeadmin'
 gem 'devise'
 
 # Application dependencies
+gem 'aws-sdk-rails'
 gem 'active_model_serializers', '~> 0.10.0'
 gem 'activerecord-import'
 gem 'autoprefixer-rails'
