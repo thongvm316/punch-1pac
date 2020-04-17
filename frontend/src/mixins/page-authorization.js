@@ -1,4 +1,4 @@
-const MEMBER_ACCESSABLE_PAGES = ['dashboard', 'notifications', 'attendances', 'requests', 'user-settings-profile', 'user-settings-password', 'user-settings-security']
+const MEMBER_ACCESSABLE_PAGES = ['dashboard', 'notifications', 'attendances', 'requests', 'user-settings']
 
 const GROUP_PAGES = ['group', 'group-attendances', 'group-requests', 'group-report']
 

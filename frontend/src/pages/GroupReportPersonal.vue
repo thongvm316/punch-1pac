@@ -215,12 +215,13 @@ export default {
 
     getDayOfWeek(date) {
       return this.$moment(date)
+        .locale('en')
         .format('dddd')
         .toLowerCase()
     },
 
     getFormattedDate(date) {
-      return this.$moment(date).format('dddd ( D/MM )')
+      return this.$moment(date).locale(this.$i18n.locale).format('dddd ( D/MM )')
     },
 
     getFormattedHours(data) {

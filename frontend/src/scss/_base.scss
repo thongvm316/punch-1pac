@@ -14,12 +14,8 @@ body {
   }
 }
 
-.main {
-  background: $gray-color-lightest;
-  padding: 0.8rem 2rem 0;
-  margin-left: 10rem;
-  width: 100%;
-  min-height: 100vh;
+main {
+  min-height: calc(100vh - 11.3rem);
 }
 
 svg {

@@ -1,10 +1,4 @@
-import {
-  RECEIVE_GROUP_REQUESTS,
-  APPROVE_GROUP_REQUEST,
-  REJECT_GROUP_REQUEST,
-  REJECT_GROUP_REQUEST_ERRORS,
-  CLEAR_REJECT_GROUP_REQUEST_ERRORS
-} from '../mutation-types.js'
+import { RECEIVE_GROUP_REQUESTS, APPROVE_GROUP_REQUEST, REJECT_GROUP_REQUEST, REJECT_GROUP_REQUEST_ERRORS, CLEAR_REJECT_GROUP_REQUEST_ERRORS } from '../mutation-types.js'
 import callApi from '../api-caller'
 
 const state = {
@@ -44,7 +38,11 @@ const mutations = {
 
 const actions = {
   getRequests({ commit }, params = {}) {
-    return callApi({ method: 'get', url: '/requests', params })
+    return callApi({
+      method: 'get',
+      url: '/requests',
+      params: { ...params, date_type: params.date_type || 'range' }
+    })
       .then(response => {
         commit(RECEIVE_GROUP_REQUESTS, response.data)
         return response

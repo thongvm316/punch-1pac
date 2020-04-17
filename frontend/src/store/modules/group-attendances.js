@@ -9,7 +9,7 @@ const state = {
 const getters = {
   filterAttendances: state => query => {
     const regex = new RegExp(`${query.trim()}`, 'gi')
-    return query ? state.attendances.filter(attendance => (attendance.user.name.match(regex)) || (attendance.user.email.match(regex))) : state.attendances
+    return query ? state.attendances.filter(attendance => attendance.user.name.match(regex) || attendance.user.email.match(regex)) : state.attendances
   }
 }
 
@@ -22,7 +22,11 @@ const mutations = {
 
 const actions = {
   getAttendances({ commit, state }, params = {}) {
-    return callApi({ method: 'get', url: '/attendances', params })
+    return callApi({
+      method: 'get',
+      url: '/attendances',
+      params: { ...params, date_type: params.date_type || 'range' }
+    })
       .then(response => {
         commit(RECEIVE_GROUP_ATTENDANCES, response.data)
         return response

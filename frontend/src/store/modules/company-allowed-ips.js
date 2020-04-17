@@ -1,11 +1,4 @@
-import {
-  FETCH_IPS,
-  DELETE_IP,
-  CREATE_IP,
-  UPDATE_IP,
-  UPDATE_IP_ERRORS,
-  CLEAR_IP_ERRORS
-} from '../mutation-types.js'
+import { FETCH_IPS, DELETE_IP, CREATE_IP, UPDATE_IP, UPDATE_IP_ERRORS, CLEAR_IP_ERRORS } from '../mutation-types.js'
 import callApi from '../api-caller'
 
 const state = {

@@ -24,7 +24,7 @@ const router = new Router({
     { path: '/groups/:id', redirect: '/groups/:id/users' },
     { path: '/groups', name: 'groups', component: lazyLoadRoute('Groups'), meta: { title: `Groups - ${appName}` } },
     { path: '/settings', name: 'user-settings', component: lazyLoadRoute('UserSettings'), meta: { title: `User Settings - ${appName}` } },
-    { path: '/company/settings', component: lazyLoadRoute('CompanySettings'), meta: { title: `Company Settings - ${appName}` } },
+    { path: '/company/settings', name: 'company-settings', component: lazyLoadRoute('CompanySettings'), meta: { title: `Company Settings - ${appName}` } },
     { path: '/404', name: 'error-404', component: lazyLoadRoute('Error404'), meta: { title: '404 Page not found' } },
     { path: '*', redirect: '/404' }
   ]

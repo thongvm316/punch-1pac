@@ -91,20 +91,6 @@ Rails.application.configure do
     event.payload[:params].except('controller', 'action')
   end
 
-  config.action_mailer.perform_deliveries = true
-  config.action_mailer.default_options = { from: "#{ENV['APP_NAME']} <no-reply@#{ENV['APP_DOMAIN']}>" }
-  config.action_mailer.delivery_method = :smtp
-  config.action_mailer.default_url_options = { host: ENV['APP_DOMAIN'], protocol: 'https' }
-  config.action_mailer.smtp_settings = {
-    address:              ENV['SMTP_HOST'],
-    domain:               ENV['APP_DOMAIN'],
-    port:                 587,
-    user_name:            ENV['SMTP_USERNAME'],
-    password:             ENV['SMTP_PASSWORD'],
-    authentication:       :login,
-    enable_starttls_auto: true
-  }
-
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 end

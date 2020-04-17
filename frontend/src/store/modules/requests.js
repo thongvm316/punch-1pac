@@ -1,11 +1,4 @@
-import {
-  ADD_REQUEST,
-  UPDATE_REQUEST,
-  RECEIVE_REQUESTS,
-  DELETE_REQUEST,
-  UPDATE_REQUEST_ERRORS,
-  CLEAR_REQUEST_ERRORS
-} from '../mutation-types.js'
+import { ADD_REQUEST, UPDATE_REQUEST, RECEIVE_REQUESTS, DELETE_REQUEST, UPDATE_REQUEST_ERRORS, CLEAR_REQUEST_ERRORS } from '../mutation-types.js'
 import callApi from '../api-caller'
 
 const state = {
