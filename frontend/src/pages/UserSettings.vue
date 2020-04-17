@@ -1,20 +1,21 @@
 <template>
   <setting-layout>
     <template slot="sidebar">
-      <user-settings-sidebar @activeTab="value => { activeTabName = value }" />
+      <user-settings-sidebar @active="activeTabName = $event" />
     </template>
-    <user-settings-profile v-show="activeTabName === 'profile'" />
-    <user-settings-password v-show="activeTabName === 'password'" />
-    <user-settings-security v-show="activeTabName === 'security'" />
+
+    <keep-alive>
+      <component :is="`UserSettings${activeTabName}`" />
+    </keep-alive>
   </setting-layout>
 </template>
 
 <script>
-const SettingLayout = () => import('../layouts/Setting')
-const UserSettingsSidebar = () => import('../components/UserSettingsSidebar')
-const UserSettingsProfile = () => import('./UserSettingsProfile')
-const UserSettingsPassword = () => import('./UserSettingsPassword')
-const UserSettingsSecurity = () => import('./UserSettingsSecurity')
+import SettingLayout from '@/layouts/Setting'
+import UserSettingsSidebar from '@/components/UserSettingsSidebar'
+import UserSettingsProfile from '@/pages/UserSettingsProfile'
+import UserSettingsPassword from '@/pages/UserSettingsPassword'
+import UserSettingsSecurity from '@/pages/UserSettingsSecurity'
 
 export default {
   name: 'UserSettings',
@@ -29,7 +30,7 @@ export default {
 
   data() {
     return {
-      activeTabName: 'profile'
+      activeTabName: 'Profile'
     }
   }
 }

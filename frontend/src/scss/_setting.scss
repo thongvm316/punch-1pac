@@ -8,19 +8,16 @@
 
   li {
     margin-top: 0;
-
-    &:not(:first-child) {
-      border-top: 0.05rem solid $border-color;
-    }
-  }
-
-  a {
     display: flex;
     align-items: center;
     padding: 0.4rem 0.8rem;
     color: $gray-color;
     text-decoration: none;
+    cursor: pointer;
 
+    &:not(:first-child) {
+      border-top: 0.05rem solid $border-color;
+    }
 
     &:hover,
     &.active {
