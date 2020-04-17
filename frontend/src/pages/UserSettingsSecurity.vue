@@ -14,68 +14,17 @@
       <tbody>
         <tr>
           <td>
-            <svg
+            <p-ico-desktop
               v-if="currentSession.device_type === 'desktop'"
-              height="48"
-              version="1.1"
-              viewBox="0 0 16 16"
-              width="48"
-              stroke="currentColor"
-            ><path
-              fill-rule="evenodd"
-              d="M15 2H1c-.55 0-1 .45-1 1v9c0 .55.45 1 1 1h5.34c-.25.61-.86 1.39-2.34 2h8c-1.48-.61-2.09-1.39-2.34-2H15c.55 0 1-.45 1-1V3c0-.55-.45-1-1-1zm0 9H1V3h14v8z"
-            /></svg>
-            <svg
+            />
+
+            <p-ico-smartphone
               v-if="currentSession.device_type === 'smartphone'"
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="feather feather-smartphone"
-            ><rect
-              x="5"
-              y="2"
-              width="14"
-              height="20"
-              rx="2"
-              ry="2"
-            /><line
-              x1="12"
-              y1="18"
-              x2="12"
-              y2="18"
-            /></svg>
-            <svg
+            />
+
+            <p-ico-tablet
               v-if="currentSession.device_type === 'tablet'"
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="feather feather-tablet"
-            ><rect
-              x="4"
-              y="2"
-              width="16"
-              height="20"
-              rx="2"
-              ry="2"
-              transform="rotate(180 12 12)"
-            /><line
-              x1="12"
-              y1="18"
-              x2="12"
-              y2="18"
-            /></svg>
+            />
             {{ currentSession.client }}
           </td>
           <td>{{ currentSession.os }}</td>
@@ -88,68 +37,17 @@
           :key="session.id"
         >
           <td>
-            <svg
+            <p-ico-desktop
               v-if="session.device_type === 'desktop'"
-              height="48"
-              version="1.1"
-              viewBox="0 0 16 16"
-              width="48"
-              stroke="currentColor"
-            ><path
-              fill-rule="evenodd"
-              d="M15 2H1c-.55 0-1 .45-1 1v9c0 .55.45 1 1 1h5.34c-.25.61-.86 1.39-2.34 2h8c-1.48-.61-2.09-1.39-2.34-2H15c.55 0 1-.45 1-1V3c0-.55-.45-1-1-1zm0 9H1V3h14v8z"
-            /></svg>
-            <svg
+            />
+
+            <p-ico-smartphone
               v-if="session.device_type === 'smartphone'"
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="feather feather-smartphone"
-            ><rect
-              x="5"
-              y="2"
-              width="14"
-              height="20"
-              rx="2"
-              ry="2"
-            /><line
-              x1="12"
-              y1="18"
-              x2="12"
-              y2="18"
-            /></svg>
-            <svg
+            />
+
+            <p-ico-tablet
               v-if="session.device_type === 'tablet'"
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="feather feather-tablet"
-            ><rect
-              x="4"
-              y="2"
-              width="16"
-              height="20"
-              rx="2"
-              ry="2"
-              transform="rotate(180 12 12)"
-            /><line
-              x1="12"
-              y1="18"
-              x2="12"
-              y2="18"
-            /></svg>
+            />
             {{ session.client }}
           </td>
           <td>{{ session.os }}</td>
@@ -172,8 +70,17 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
+import PIcoDesktop from '@/punch-ui/punch-icons/PIcoDesktop'
+import PIcoTablet from '@/punch-ui/punch-icons/PIcoTablet'
+import PIcoSmartphone from '@/punch-ui/punch-icons/PIcoSmartphone'
 
 export default {
+  components: {
+    PIcoDesktop,
+    PIcoTablet,
+    PIcoSmartphone
+  },
+
   data() {
     return {
       isInfoOpen: false
