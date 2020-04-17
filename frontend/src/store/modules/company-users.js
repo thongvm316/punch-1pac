@@ -1,12 +1,4 @@
-import {
-  CREATE_USER,
-  CREATE_MULTI_USER,
-  DELETE_USER,
-  FETCH_USERS,
-  UPDATE_USER,
-  DEACTIVATE_USER,
-  ACTIVATE_USER
-} from '../mutation-types.js'
+import { CREATE_USER, CREATE_MULTI_USER, DELETE_USER, FETCH_USERS, UPDATE_USER, DEACTIVATE_USER, ACTIVATE_USER } from '../mutation-types.js'
 import callApi from '../api-caller'
 
 const state = {
@@ -16,7 +8,7 @@ const state = {
 const getters = {
   filterByEmail: state => query => {
     const regex = new RegExp(`${query.trim()}`, 'gi')
-    return query ? state.users.filter(user => (user.name.match(regex)) || (user.email.match(regex))) : state.users
+    return query ? state.users.filter(user => user.name.match(regex) || user.email.match(regex)) : state.users
   }
 }
 

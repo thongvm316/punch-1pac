@@ -9,7 +9,7 @@ const state = {
 const getters = {
   filterAttendances: state => query => {
     const regex = new RegExp(`${query.trim()}`, 'gi')
-    return query ? state.attendances.filter(attendance => (attendance.user.name.match(regex)) || (attendance.user.email.match(regex))) : state.attendances
+    return query ? state.attendances.filter(attendance => attendance.user.name.match(regex) || attendance.user.email.match(regex)) : state.attendances
   }
 }
 

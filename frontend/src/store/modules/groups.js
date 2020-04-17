@@ -1,9 +1,4 @@
-import {
-  RECEIVE_GROUPS,
-  ADD_GROUP,
-  UPDATE_GROUPS_ERRORS,
-  CLEAR_GROUPS_ERRORS
-} from '../mutation-types.js'
+import { RECEIVE_GROUPS, ADD_GROUP, UPDATE_GROUPS_ERRORS, CLEAR_GROUPS_ERRORS } from '../mutation-types.js'
 import callApi from '../api-caller'
 import 'formdata-polyfill'
 
