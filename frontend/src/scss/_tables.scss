@@ -1,7 +1,7 @@
 // Tables
 .table {
-  font-size: 0.7rem;
   border-radius: $border-radius;
+  font-size: 0.7rem;
 
   .w-cell-user {
     width: 140px;
@@ -40,10 +40,10 @@
     white-space: nowrap;
 
     svg {
-      height: 0.6rem;
-      width: 0.6rem;
       color: currentColor;
+      height: 0.6rem;
       margin-left: 0.8rem;
+      width: 0.6rem;
 
       &.sorted {
         transform: rotate(180deg);
@@ -57,15 +57,15 @@
   }
 
   tr.is-holiday {
-    background-color: rgba($notice-color-light, .3);
+    background-color: rgba($notice-color-light, 0.3);
 
     td:first-child {
-      color: rgba($notice-color, .7);
+      color: rgba($notice-color, 0.7);
     }
   }
 
   tr.is-breakday {
-    background-color: rgba($gray-color-light, .4);
+    background-color: rgba($gray-color-light, 0.4);
 
     td:first-child {
       color: $gray-color-crayzola;
@@ -82,8 +82,8 @@
     }
 
     svg {
-      margin-right: 0;
       color: $dark-color;
+      margin-right: 0;
     }
   }
 
@@ -101,44 +101,44 @@
     }
 
     svg {
-      vertical-align: middle;
       opacity: 0;
+      vertical-align: middle;
 
       &.show { opacity: 1; }
     }
   }
 
   &.table-bordered {
-    box-shadow: 0 1px 6px 0 rgba($black-color, .1);
+    box-shadow: 0 1px 6px 0 rgba($black-color, 0.1);
     z-index: 1;
 
     th + th,
     td + td {
       border-left: $border-width solid $border-color;
+      height: 2.4rem;
+      padding: 0 0.9rem;
       text-align: center;
       width: 7rem;
-      padding: 0 .9rem;
-      height: 2.4rem;
     }
 
     th:first-child,
     td:first-child {
-      width: 10.4rem;
       font-weight: 700;
+      width: 10.4rem;
     }
 
     thead th {
-      box-shadow: $border-width $border-width $border-color;
       background-color: $light-color;
+      box-shadow: $border-width $border-width $border-color;
     }
 
     td.is-overflow span {
       display: block;
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-      max-width: 5rem;
       margin: 0 auto;
+      max-width: 5rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
   }
 
@@ -148,7 +148,7 @@
     thead th {
       position: sticky;
       top: 0;
-      z-index: 1
+      z-index: 1;
     }
   }
 }

@@ -19,15 +19,15 @@ main {
 }
 
 svg {
-  width: 0.8rem;
-  height: 0.8rem;
   color: $gray-color;
+  height: 0.8rem;
   vertical-align: text-bottom;
+  width: 0.8rem;
 }
 
 .footer {
-  margin-top: 1rem;
   font-size: 0.6rem;
+  margin-top: 1rem;
   padding: 1.5rem 0;
 
   a {
@@ -35,13 +35,13 @@ svg {
   }
 
   .footer-items {
-    display: flex;
     align-items: center;
+    display: flex;
     justify-content: space-between;
 
     li {
-      vertical-align: middle;
       line-height: 1;
+      vertical-align: middle;
 
       &:first-child {
         padding-left: 0;

@@ -1,14 +1,14 @@
 .tile {
   &.tile-activity {
     .tile-title {
+      font-size: $font-size-sm;
       text-overflow: initial;
       white-space: nowrap;
-      font-size: $font-size-sm;
     }
 
     .tile-subtitle {
-      font-size: $font-size-xs;
       color: $gray-color;
+      font-size: $font-size-xs;
     }
   }
 }

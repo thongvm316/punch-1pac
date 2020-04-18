@@ -16,8 +16,8 @@
 
   &:focus,
   &:hover {
-    border-color: $gray-color-dark;
     background: $bg-color-light;
+    border-color: $gray-color-dark;
     color: $gray-color-dark;
   }
 
@@ -43,9 +43,9 @@
     }
 
     &.disabled {
-      color: $gray-color;
       background-color: $gray-color-light;
       border: $gray-color-light;
+      color: $gray-color;
 
       svg {
         color: $gray-color;
