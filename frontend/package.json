@@ -15,8 +15,8 @@
     "build": "node build/build.js",
     "stylelint-check": "stylelint 'src/scss/**/*.scss' --config=.stylelintrc.json; exit 0",
     "stylelint-fix": "stylelint 'src/scss/**/*.scss' --syntax=scss --config=.stylelintrc.json --fix; exit 0",
-    "prettier-check": "yarn prettier --config .prettierrc --debug-check \"src/**/*.{vue,js}\"",
-    "prettier-fix": "yarn prettier --config .prettierrc --write \"src/**/*.{vue,js}\""
+    "prettier-check": "yarn prettier --config .prettierrc --debug-check \"src/**/*.{js}\"",
+    "prettier-fix": "yarn prettier --config .prettierrc --write \"src/**/*.{js}\""
   },
   "dependencies": {
     "axios": "^0.17.1",

@@ -1,13 +1,13 @@
 .notifications {
   &.notification-dropdown {
-    display: none;
-    position: absolute;
-    z-index: $zindex-1;
-    top: 48px;
-    right: -72px;
-    width: 400px;
-    font-size: 0.6rem;
     animation: slide-down 0.15s ease 1;
+    display: none;
+    font-size: 0.6rem;
+    position: absolute;
+    right: -72px;
+    top: 48px;
+    width: 400px;
+    z-index: $zindex-1;
   }
 
   &.triangle-top {
@@ -21,11 +21,11 @@
   }
 
   .notification-header {
-    padding: 0.4rem 0.8rem;
-    display: flex;
-    justify-content: space-between;
     align-items: center;
     border-bottom: 1px solid $border-color;
+    display: flex;
+    justify-content: space-between;
+    padding: 0.4rem 0.8rem;
   }
 
   &.box {
@@ -33,13 +33,13 @@
   }
 
   h4 {
-    margin: 0;
     font-size: $font-size-sm;
+    margin: 0;
   }
 
   ul {
-    margin: 0;
     list-style: none;
+    margin: 0;
     max-height: calc(100vh - 5.8rem);
     overflow-y: scroll;
   }
@@ -49,9 +49,9 @@
   }
 
   li {
+    border-bottom: 1px solid $border-color;
     margin: 0;
     padding: 0.4rem 0.8rem;
-    border-bottom: 1px solid $border-color;
 
     &.px-0 {
       padding-left: 0;
@@ -63,13 +63,13 @@
     }
 
     &.notification-pending:hover {
-      cursor: pointer;
       background-color: $bg-color;
+      cursor: pointer;
     }
   }
 
   .no-notification-msg {
-    padding: 0.8rem;
     border-bottom: 1px solid $border-color;
+    padding: 0.8rem;
   }
 }

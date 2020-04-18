@@ -1,33 +1,33 @@
 .toolbar {
   .month-year-picker {
-    width: 8rem;
-    height: 2rem;
     display: inline-block;
-    vertical-align: top;
+    height: 2rem;
     position: relative;
+    vertical-align: top;
+    width: 8rem;
 
     .month-year-picker-control {
-      height: 10.1rem;
+      background-color: $light-color;
       border: 0.05rem solid $gray-color;
       border-right: 0;
-      width: 4rem;
-      z-index: 100;
-      background-color: $light-color;
+      height: 10.1rem;
+      left: 0;
       padding: 0.5rem 0.3rem;
       position: absolute;
-      left: 0;
       top: 2.1rem;
+      width: 4rem;
+      z-index: 100;
 
       span {
-        font-size: 0.65rem;
         background-color: $gray-color-lightest;
         border: 1px solid $gray-color-lightest;
         border-radius: 0.2rem;
         color: $primary-color;
-        padding: 0.15rem 0.6rem;
-        margin-bottom: 0.4rem;
-        display: inline-block;
         cursor: pointer;
+        display: inline-block;
+        font-size: 0.65rem;
+        margin-bottom: 0.4rem;
+        padding: 0.15rem 0.6rem;
 
         &:hover,
         &.active {
@@ -39,9 +39,9 @@
     }
 
     .vdp-datepicker__calendar {
-      margin-top: 0.1rem;
-      margin-left: 4rem;
       display: block !important;
+      margin-left: 4rem;
+      margin-top: 0.1rem;
     }
 
     .form-input {
@@ -50,11 +50,11 @@
   }
 
   .month-year-picker-result {
-    border: 0.05rem solid $gray-color;
     background: $light-color url('../assets/ico-calendar.svg') calc(100% - 0.4rem) center/0.8rem 0.8rem no-repeat;
+    border: 0.05rem solid $gray-color;
     border-radius: 0.15rem;
-    padding: 0.425rem 0.4rem;
     margin-right: 0.5rem;
+    padding: 0.425rem 0.4rem;
   }
 }
 
@@ -63,9 +63,9 @@
   vertical-align: top;
 
   .datepicker-input {
-    cursor: pointer;
     background: url('../assets/ico-calendar.svg') no-repeat;
     background-position: 95% 50%;
+    cursor: pointer;
 
     &[readonly] {
       background-color: $light-color;

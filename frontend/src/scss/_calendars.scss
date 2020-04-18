@@ -6,10 +6,10 @@
   }
 
   .calendar-nav {
-    padding: 0.8rem;
     background-color: $light-color;
     display: flex;
     justify-content: space-between;
+    padding: 0.8rem;
   }
 
   .calendar-date {
@@ -19,9 +19,9 @@
 
     .date-item {
       &:hover {
-        color: $gray-color-dark;
-        border: $border-width solid transparent;
         background: transparent;
+        border: $border-width solid transparent;
+        color: $gray-color-dark;
       }
 
       &.date-today {

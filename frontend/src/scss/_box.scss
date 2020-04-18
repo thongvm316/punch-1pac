@@ -1,8 +1,8 @@
 .box {
   @include shadow-variant(0.05rem);
-  padding: 0.8rem;
   background-color: $light-color;
   border-radius: $border-radius;
+  padding: 0.8rem;
 
   + .box {
     margin-top: 1rem;
@@ -10,9 +10,9 @@
 
   &-setting {
     @include shadow-variant(0.05rem);
-    padding: 1.2rem;
     background-color: $light-color;
     border-radius: $border-radius;
+    padding: 1.2rem;
   }
 
   &.box-group {
@@ -23,10 +23,10 @@
     height: 5rem;
 
     .box-title {
-      word-break: break-word;
       cursor: pointer;
-      margin-bottom: 0.2rem;
       line-height: 1;
+      margin-bottom: 0.2rem;
+      word-break: break-word;
 
       &:hover {
         color: $primary-color;
@@ -42,8 +42,8 @@
     }
 
     .group-description {
-      margin-bottom: 0.2rem;
       line-height: 1.2;
+      margin-bottom: 0.2rem;
     }
 
     span {
@@ -55,10 +55,10 @@
     margin-top: 1.7rem;
 
     &.box-content-flex {
-      display: flex;
-      justify-content: space-between;
-      flex: 0 0 auto;
       align-items: center;
+      display: flex;
+      flex: 0 0 auto;
+      justify-content: space-between;
 
       span {
         vertical-align: middle;

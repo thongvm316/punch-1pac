@@ -10,10 +10,11 @@
   &.daterange-picker,
   &.time-picker {
     background-color: $light-color;
-    background-repeat: no-repeat;
     background-position: calc(100% - 0.4rem) 50%;
+    background-repeat: no-repeat;
     background-size: 0.8rem 0.8rem;
   }
+
   &.daterange-picker {
     background-image: url('../assets/ico-calendar.svg');
   }
@@ -35,8 +36,8 @@ input[type=search] {
   background-color: $light-color;
   background-image: url('../assets/ico-search.svg');
   background-position: right 0.4rem center;
-  background-size: 0.8rem;
   background-repeat: no-repeat;
+  background-size: 0.8rem;
 
   &.loading {
     background-image: none;
@@ -48,9 +49,9 @@ input[type=search] {
 }
 
 .dropdown.v-select {
-  width: 30rem;
-  color: $dark-color;
   border-radius: $border-radius;
+  color: $dark-color;
+  width: 30rem;
 
   input[type=search] {
     height: 2rem;
@@ -60,8 +61,10 @@ input[type=search] {
     border: $border-width solid $gray-color;
   }
 
-  &:focus, &.open {
-    .dropdown-toggle, .dropdown-menu {
+  &:focus,
+ &.open {
+    .dropdown-toggle,
+ .dropdown-menu {
       border-color: $gray-color-dark;
     }
 

@@ -22,8 +22,8 @@
       svg {
         color: $dark-color;
         height: 0.6rem;
-        width: 0.6rem;
         transition: color 0.1s ease-in-out;
+        width: 0.6rem;
       }
 
       &:hover {
@@ -39,8 +39,8 @@
 
     .menu {
       left: initial;
-      right: 0;
       overflow-y: unset;
+      right: 0;
     }
   }
 
@@ -49,27 +49,27 @@
 
     svg {
       color: $dark-color;
-      width: 1rem;
       height: 1rem;
+      width: 1rem;
     }
 
     &.badge[data-badge]::after {
-      width: auto;
-      height: 0.8rem;
-      font-size: 0.6rem;
-      top: 0;
-      right: 0.2rem;
-      position: absolute;
       background-color: $error-color;
       box-shadow: none;
+      font-size: 0.6rem;
+      height: 0.8rem;
+      position: absolute;
+      right: 0.2rem;
+      top: 0;
       transform: translate(0.7rem, -0.3rem);
+      width: auto;
     }
   }
 
   a {
     color: $dark-color;
-    text-decoration: none;
     cursor: pointer;
+    text-decoration: none;
     transition: color 0.1s ease-in-out;
 
     &:focus,
@@ -127,8 +127,8 @@
     padding-right: 0;
 
     .menu-item {
-      padding-right: 0.8rem;
       padding-left: 0.8rem;
+      padding-right: 0.8rem;
     }
   }
 }
