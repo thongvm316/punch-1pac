@@ -27,8 +27,7 @@ export default {
     title: {
       type: String,
       default: ''
-    },
-    isOpenAnnoucement: Boolean
+    }
   }
 }
 </script>
