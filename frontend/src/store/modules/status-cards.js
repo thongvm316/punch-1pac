@@ -1,5 +1,7 @@
 import { FETCH_STATUS_CARDS } from '../mutation-types.js'
-import callApi from '../api-caller'
+import Repositories from '@/repository'
+
+const attendancesRepository = Repositories.get('attendances')
 
 const state = {
   statuses: {},
@@ -15,11 +17,9 @@ const mutations = {
 
 const actions = {
   getStatuses({ commit }, month) {
-    return callApi({
-      method: 'get',
-      url: '/attendances/chart',
-      params: { date: month }
-    })
+    const params = { date: month }
+
+    return attendancesRepository.getStatuses(params)
       .then(response => {
         commit(FETCH_STATUS_CARDS, response.data)
         return response

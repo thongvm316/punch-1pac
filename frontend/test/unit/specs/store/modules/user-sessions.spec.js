@@ -1,10 +1,10 @@
 import userSession from '@/store/modules/user-sessions'
-import { userSessionsData } from '../api-data/user-sessions.api.js'
+import userSessionsData from '../../../supports/fixtures/sessions.api'
 import { DELETE_SESSION, FETCH_SESSIONS } from '@/store/mutation-types'
-import callApi from '@/store/api-caller'
+import Repositories from '@/repository'
+jest.mock('@/repository/users')
 
-jest.mock('@/store/api-caller')
-
+const usersRepository = Repositories.get('users')
 const { state, mutations, actions } = userSession
 const commit = jest.fn()
 
@@ -12,7 +12,7 @@ describe('mutations', () => {
   it('FETCH_SESSIONS', () => {
     state.sessions = []
     state.currentSession = {}
-    const payload = userSessionsData()
+    const payload = { ...userSessionsData }
 
     mutations.FETCH_SESSIONS(state, payload)
 
@@ -21,7 +21,7 @@ describe('mutations', () => {
   })
 
   it('DELETE_SESSION', () => {
-    state.sessions = userSessionsData().sessions
+    state.sessions = [...userSessionsData.sessions]
     const id = 2
 
     mutations.DELETE_SESSION(state, id)
@@ -35,8 +35,8 @@ describe('mutations', () => {
 
 describe('actions', () => {
   it('fetchSessions: should commit FETCH_SESSIONS', async () => {
-    const response = { data: userSessionsData() }
-    callApi.mockResolvedValue(response)
+    const response = { data: { ...userSessionsData } }
+    usersRepository.getSessions.mockResolvedValue(response)
 
     await actions.fetchSessions({ commit })
 
@@ -45,7 +45,7 @@ describe('actions', () => {
 
   it('deleteSession: should commit DELETE_SESSION', async () => {
     const id = 1
-    callApi.mockResolvedValue(null)
+    usersRepository.deleteSession.mockResolvedValue(null)
 
     await actions.deleteSession({ commit }, id)
 

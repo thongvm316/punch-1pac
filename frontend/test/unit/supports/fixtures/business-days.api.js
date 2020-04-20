@@ -1,5 +1,5 @@
-export const companyBusinessDaysData = () => {
-  return [
+export default {
+  businessDays: [
     {
       id: 1,
       weekday: 'monday',
@@ -24,18 +24,9 @@ export const companyBusinessDaysData = () => {
       afternoon_started_at: '13:30',
       afternoon_ended_at: '17:30'
     }
-  ]
-}
-export const companyBusinessDaysError = () => {
-  return {
-    response: {
-      status: 422,
-      data: {
-        message: 'Unprocessable Entity',
-        errors: {
-          weekday: [ 'can\'t be blank' ]
-        }
-      }
-    }
+  ],
+
+  errors: {
+    weekday: [ 'không thể để trắng', 'không có trong danh sách' ]
   }
 }

@@ -1,5 +1,7 @@
 import { ADD_REQUEST, UPDATE_REQUEST, RECEIVE_REQUESTS, DELETE_REQUEST, UPDATE_REQUEST_ERRORS, CLEAR_REQUEST_ERRORS } from '../mutation-types.js'
-import callApi from '../api-caller'
+import Repositories from '@/repository'
+
+const requestsRepository = Repositories.get('requests')
 
 const state = {
   errors: {},
@@ -38,11 +40,9 @@ const mutations = {
 
 const actions = {
   getRequests({ commit, state }, params = {}) {
-    return callApi({
-      method: 'get',
-      url: '/requests',
-      params: Object.assign(state.params, params, { per_page: 1000 })
-    })
+    const requestParams = Object.assign(state.params, params, { per_page: 1000 })
+
+    return requestsRepository.getRequests(requestParams)
       .then(response => {
         commit(RECEIVE_REQUESTS, response.data)
         return response
@@ -53,12 +53,9 @@ const actions = {
   },
 
   addRequest({ commit }, params = {}) {
-    return callApi({
-      method: 'post',
-      url: '/requests',
-      data: { request: params },
-      headers: { 'Content-Type': 'application/json' }
-    })
+    const data = { request: params }
+
+    return requestsRepository.addRequest(data)
       .then(response => {
         commit(ADD_REQUEST, response.data)
         return response
@@ -70,12 +67,9 @@ const actions = {
   },
 
   updateRequest({ commit }, request) {
-    return callApi({
-      method: 'patch',
-      url: `/requests/${request.id}`,
-      data: { request: request.params },
-      headers: { 'Content-Type': 'application/json' }
-    })
+    const data = { request: request.params }
+
+    return requestsRepository.updateRequest(request.id, data)
       .then(response => {
         commit(UPDATE_REQUEST, response.data)
         return response
@@ -87,10 +81,7 @@ const actions = {
   },
 
   deleteRequest({ commit }, id) {
-    return callApi({
-      method: 'delete',
-      url: `/requests/${id}`
-    })
+    return requestsRepository.deleteRequest(id)
       .then(response => {
         commit(DELETE_REQUEST, id)
         return response

@@ -24,7 +24,6 @@ import groupRequests from './modules/group-requests'
 import groupPendingRequests from './modules/group-pending-requests'
 import groupReport from './modules/group-report'
 
-import chart from './modules/chart'
 import statusCards from './modules/status-cards'
 import calendar from './modules/calendar'
 import flash from './modules/flash'
@@ -55,7 +54,6 @@ export default new Vuex.Store({
     groupAttendances,
     groupRequests,
     groupReport,
-    chart,
     statusCards,
     calendar,
     flash,

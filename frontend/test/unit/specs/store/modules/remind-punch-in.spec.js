@@ -1,5 +1,4 @@
 import remindPunchIn from '@/store/modules/remind-punch-in'
-import * as types from '@/store/mutation-types.js'
 
 const { state, mutations } = remindPunchIn
 

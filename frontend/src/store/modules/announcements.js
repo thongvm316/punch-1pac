@@ -1,5 +1,7 @@
 import { READ_ANNOUNCEMENT, RECEIVE_HEADER_ANNOUNCEMENTS } from '../mutation-types.js'
-import callApi from '../api-caller'
+import Repository from '@/repository'
+
+const announcementsRepository = Repository.get('announcements')
 
 const state = {
   pager: {},
@@ -19,7 +21,7 @@ const mutations = {
 
 const actions = {
   readAnnouncement({ commit }, id) {
-    return callApi({ method: 'post', url: `/announcements/${id}/read` })
+    return announcementsRepository.readAnnouncement(id)
       .then(response => {
         commit(READ_ANNOUNCEMENT, id)
         return response
@@ -30,7 +32,9 @@ const actions = {
   },
 
   getHeaderAnnouncements({ commit }) {
-    return callApi({ method: 'get', url: '/announcements', params: { per_page: 200, read_status: 'unread' } })
+    const params = { per_page: 200, read_status: 'unread' }
+
+    return announcementsRepository.getHeaderAnnouncements(params)
       .then(response => {
         commit(RECEIVE_HEADER_ANNOUNCEMENTS, response.data)
         return response

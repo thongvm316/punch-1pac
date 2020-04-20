@@ -1,8 +1,10 @@
 import groups from '@/store/modules/groups'
-import callApi from '@/store/api-caller'
-import { groupsData, groupsError } from '../api-data/groups.api.js'
-import { error422 } from '../api-data/promises-error.js'
-jest.mock('@/store/api-caller')
+import Repositories from '@/repository'
+import groupsData from '../../../supports/fixtures/groups.api'
+import errorsData from '../../../supports/fixtures/errors.api'
+jest.mock('@/repository/groups')
+
+const groupsRepository = Repositories.get('groups')
 
 const { state, mutations, actions, getters } = groups
 const commit = jest.fn()
@@ -12,7 +14,7 @@ describe('mutations', () => {
 
   describe('when RECEIVE_GROUPS', () => {
     it('should RECEIVE_GROUPS', () => {
-      payload = groupsData()
+      payload = [...groupsData.groups]
       mutations.RECEIVE_GROUPS(state, payload)
 
       expect(state.groups).toEqual(payload)
@@ -20,10 +22,10 @@ describe('mutations', () => {
   })
 
   describe('when ADD_GROUP', () => {
-    beforeEach(() => { state.groups = groupsData() })
+    beforeEach(() => { state.groups = [...groupsData.groups] })
 
     it('should ADD_GROUP', () => {
-      payload = groupsData()[0]
+      payload = groupsData.groups[0]
       mutations.ADD_GROUP(state, payload)
 
       expect(state.groups).toHaveLength(4)
@@ -33,7 +35,7 @@ describe('mutations', () => {
 
   describe('when UPDATE_GROUPS_ERRORS', () => {
     it('should UPDATE_GROUPS_ERRORS', () => {
-      payload = { errors: groupsError() }
+      payload = { errors: groupsData.errors }
       mutations.UPDATE_GROUPS_ERRORS(state, payload)
 
       expect(state.errors).toEqual(payload.errors)
@@ -54,8 +56,8 @@ describe('actions', () => {
 
   describe('when getGroups', () => {
     it('should commit RECEIVE_GROUPS', async () => {
-      response = { data: groupsData() }
-      callApi.mockResolvedValue(response)
+      response = { data: [...groupsData.groups] }
+      groupsRepository.getGroups.mockResolvedValue(response)
       await actions.getGroups({ commit })
 
       expect(commit).toHaveBeenCalledWith('RECEIVE_GROUPS', response.data)
@@ -70,16 +72,16 @@ describe('actions', () => {
     }
 
     it('should commit ADD_GROUP', async () => {
-      response = { data: groupsData() }
-      callApi.mockResolvedValue(response)
+      response = { data: [...groupsData.groups] }
+      groupsRepository.createGroup.mockResolvedValue(response)
       await actions.addGroup({ commit }, params)
 
       expect(commit).toHaveBeenCalledWith('ADD_GROUP', response.data)
     })
 
     it('should commit UPDATE_GROUPS_ERRORS', async () => {
-      const mockError = error422()
-      callApi.mockRejectedValue(mockError)
+      const mockError = errorsData
+      groupsRepository.createGroup.mockRejectedValue(mockError)
 
       await actions.addGroup({ commit }, params).catch(error => {
         expect(error).toEqual(mockError)
@@ -93,7 +95,7 @@ describe('getters', () => {
   describe('when filterGroups', () => {
     let query, groups
 
-    beforeEach(() => { state.groups = groupsData() })
+    beforeEach(() => { state.groups = [...groupsData.groups ]})
 
     it('should return 0 groups match', () => {
       query = 'xxx'

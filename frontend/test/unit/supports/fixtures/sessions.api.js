@@ -1,4 +1,4 @@
-export const userSessionsData = () => ({
+export default {
   sessions: [
     {
       id: 1,
@@ -37,6 +37,7 @@ export const userSessionsData = () => ({
       updated_at: '2020-01-08T10:48:33+07:00'
     }
   ],
+
   meta: {
     id: 5,
     jti: '4c597c2b-0c8b-442b-8b52-320addd54f59',
@@ -49,4 +50,4 @@ export const userSessionsData = () => ({
     user_agent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.88 Safari/537.36',
     updated_at: '2020-01-08T11:04:51+07:00'
   }
-})
+}

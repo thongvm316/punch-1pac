@@ -1,9 +1,10 @@
 import companyAllowedIPs from '@/store/modules/company-allowed-ips'
-import callApi from '@/store/api-caller'
-import { allowedIPsData } from '../api-data/allowed-ips.api.js'
-import { error422 } from '../api-data/promises-error.js'
-jest.mock('@/store/api-caller')
+import Repository from '@/repository'
+import allowedIPsData from '../../../supports/fixtures/allowed-ips.api'
+import error422 from '../../../supports/fixtures/errors.api'
+jest.mock('@/repository/company-settings')
 
+const companySettingsRepository = Repository.get('companySettings')
 const { state, mutations, actions } = companyAllowedIPs
 const commit = jest.fn()
 
@@ -12,7 +13,7 @@ describe('mutations', () => {
 
   describe('when allowedIPs', () => {
     it('FETCH_IPS', () => {
-      payload = allowedIPsData()
+      payload = [...allowedIPsData.allowedIPs]
       mutations.FETCH_IPS(state, payload)
 
       expect(state.allowedIPs).toEqual(payload)
@@ -20,7 +21,7 @@ describe('mutations', () => {
 
     describe('when handle CUD allowedIPs methods', () => {
       beforeEach(() => {
-        state.allowedIPs = allowedIPsData()
+        state.allowedIPs = [...allowedIPsData.allowedIPs]
       })
 
       it('DELETE_IP', () => {
@@ -50,11 +51,7 @@ describe('mutations', () => {
 
   describe('when errors', () => {
     it('UPDATE_IP_ERRORS', () => {
-      const payload = {
-        errors: {
-          ip_address: ['cant be blank']
-        }
-      }
+      const payload = { errors: allowedIPsData.errors }
       mutations.UPDATE_REQUEST_ERRORS(state, payload)
 
       expect(state.errors.ip_address[0]).toEqual('cant be blank')
@@ -73,8 +70,8 @@ describe('actions', () => {
 
   describe('when fetchIPs', () => {
     it('should commit FETCH_IPS', async () => {
-      response = { data: allowedIPsData() }
-      callApi.mockResolvedValue(response)
+      response = { data: [...allowedIPsData.allowedIPs] }
+      companySettingsRepository.getIPs.mockResolvedValue(response)
       await actions.fetchIPs({ commit })
 
       expect(commit).toHaveBeenCalledWith('FETCH_IPS', response.data)
@@ -89,7 +86,7 @@ describe('actions', () => {
         ip_address: '127.0.0.1'
       }
       const id = 1
-      callApi.mockResolvedValue(response)
+      companySettingsRepository.deleteIP.mockResolvedValue(response)
       await actions.deleteIP({ commit }, id)
 
       expect(commit).toHaveBeenCalledWith('DELETE_IPS', id)
@@ -102,15 +99,15 @@ describe('actions', () => {
     })
 
     it('should resolve response', async () => {
-      callApi.mockResolvedValue(response)
+      companySettingsRepository.createIP.mockResolvedValue(response)
       await actions.createIP({ commit }, response.data)
 
       expect(commit).toHaveBeenCalledWith('CREATE_IPS', response.data)
     })
 
     it('should reject errors', async () => {
-      const mockError = error422()
-      callApi.mockRejectedValue(mockError)
+      const mockError = error422
+      companySettingsRepository.createIP.mockRejectedValue(mockError)
 
       await actions.createIP({ commit }, response.data).catch(error => {
         expect(error).toEqual(mockError)
@@ -131,15 +128,15 @@ describe('actions', () => {
     })
 
     it('should resolve response', async () => {
-      callApi.mockResolvedValue(response)
+      companySettingsRepository.updateIP.mockResolvedValue(response)
       await actions.updateIP({ commit }, response.data)
 
       expect(commit).toHaveBeenCalledWith('UPDATE_IPS', response.data)
     })
 
     it('should reject errors', async () => {
-      const mockError = error422()
-      callApi.mockRejectedValue(mockError)
+      const mockError = error422
+      companySettingsRepository.updateIP.mockRejectedValue(mockError)
 
       await actions.updateIP({ commit }, response.data).catch(error => {
         expect(error).toEqual(mockError)

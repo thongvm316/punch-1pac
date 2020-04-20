@@ -1,5 +1,7 @@
 import { FETCH_HOLIDAYS, DELETE_HOLIDAY, CREATE_HOLIDAY, UPDATE_HOLIDAY, UPDATE_HOLIDAY_ERRORS, CLEAR_HOLIDAY_ERRORS, IMPORT_NATIONAL_HOLIDAYS } from '../mutation-types.js'
-import callApi from '../api-caller'
+import Repositories from '@/repository'
+
+const companySettingsRepository = Repositories.get('companySettings')
 
 const state = {
   holidays: [],
@@ -46,7 +48,9 @@ const mutations = {
 
 const actions = {
   fetchHolidays({ commit }, year) {
-    return callApi({ method: 'get', url: '/holidays', params: { year } })
+    const params = { year }
+
+    return companySettingsRepository.getHolidays(params)
       .then(response => {
         commit(FETCH_HOLIDAYS, response.data)
         return response
@@ -57,7 +61,7 @@ const actions = {
   },
 
   deleteHoliday({ commit }, holidayID) {
-    return callApi({ method: 'delete', url: `/holidays/${holidayID}` })
+    return companySettingsRepository.deleteHoliday(holidayID)
       .then(response => {
         commit(DELETE_HOLIDAY, holidayID)
         return response
@@ -68,7 +72,9 @@ const actions = {
   },
 
   createHoliday({ commit }, data) {
-    return callApi({ method: 'post', url: '/holidays', data: { holiday: data } })
+    const requestData = { holiday: data }
+
+    return companySettingsRepository.createHoliday(requestData)
       .then(response => {
         commit(CREATE_HOLIDAY, response.data)
         return response
@@ -80,7 +86,9 @@ const actions = {
   },
 
   updateHoliday({ commit }, data) {
-    return callApi({ method: 'put', url: `/holidays/${data.holidayID}`, data: { holiday: data.updateParams } })
+    const requestData = { holiday: data.updateParams }
+
+    return companySettingsRepository.updateHoliday(data.holidayID, requestData)
       .then(response => {
         commit(UPDATE_HOLIDAY, response.data)
         return response
@@ -93,7 +101,9 @@ const actions = {
 
   importNationalHolidays({ commit }, country) {
     if (!country) return
-    return callApi({ method: 'post', url: '/holidays/import', data: { country } })
+    const requestData = { country }
+
+    return companySettingsRepository.importNationalHolidays(requestData)
       .then(response => {
         commit(IMPORT_NATIONAL_HOLIDAYS, response.data)
         return response

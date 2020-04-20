@@ -1,9 +1,10 @@
 import punch from '@/store/modules/punch'
-import callApi from '@/store/api-caller'
-import { attendanceData } from '../api-data/punch.api.js'
-import { error422 } from '../api-data/promises-error.js'
-jest.mock('@/store/api-caller')
+import Repositories from '@/repository'
+import punchData from '../../../supports/fixtures/punch.api'
+import error422 from '../../../supports/fixtures/errors.api'
+jest.mock('@/repository/attendances')
 
+const attendancesRepository = Repositories.get('attendances')
 const { state, mutations, actions } = punch
 const commit = jest.fn()
 
@@ -11,7 +12,7 @@ describe('mutations', () => {
   let payload
 
   it('should PUNCH_INIT_ATTENDANCE', () => {
-    payload = attendanceData()
+    payload = { ...punchData }
     mutations.PUNCH_INIT_ATTENDANCE(state, payload)
 
     expect(state.attendance).toEqual(payload)
@@ -19,7 +20,7 @@ describe('mutations', () => {
   })
 
   it('should PUNCH_IN', () => {
-    payload = Object.assign(attendanceData(), {
+    payload = Object.assign({ ...punchData }, {
       leaving_status: null,
       left_at: null
     })
@@ -30,7 +31,7 @@ describe('mutations', () => {
   })
 
   it('should PUNCH_OUT', () => {
-    payload = Object.assign(attendanceData(), {
+    payload = Object.assign({ ...punchData }, {
       leaving_status: 'leave_ok',
       left_at: '18:00'
     })
@@ -43,13 +44,12 @@ describe('mutations', () => {
 })
 
 describe('actions', () => {
-  let response
+  const response = { data: { ...punchData } }
   const userId = 1
 
   describe('when punchIn', () => {
     it('should commit PUNCH_IN', async () => {
-      response = { data: attendanceData() }
-      callApi.mockResolvedValue(response)
+      attendancesRepository.punchIn.mockResolvedValue(response)
       await actions.punchIn({ commit }, userId)
 
       expect(commit).toHaveBeenCalledWith('PUNCH_IN', response.data)
@@ -58,9 +58,8 @@ describe('actions', () => {
 
   describe('when punchOut', () => {
     it('should commit PUNCH_OUT', async () => {
-      response = { data: attendanceData() }
-      callApi.mockResolvedValue(response)
-      state.attendance = attendanceData()
+      attendancesRepository.punchOut.mockResolvedValue(response)
+      state.attendance = { ...punchData }
       await actions.punchOut({ commit, state }, userId)
 
       expect(commit).toHaveBeenCalledWith('PUNCH_OUT', response.data)

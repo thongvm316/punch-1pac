@@ -1,5 +1,5 @@
-export const currentUserData = () => {
-  return {
+export default {
+  currentUser: {
     activated: false,
     activated_at: '2020-01-01',
     avatar_url: 'http://localhost:3000/static/default/user_avatar-751fbd8e7c012f38bb132002fc9d7fab3461c512847921987c2fab06e376b263.png',
@@ -14,11 +14,9 @@ export const currentUserData = () => {
     password_changed: false,
     position: 'Backend Developer',
     role: 'member'
-  }
-}
+  },
 
-export const currentCompanyData = () => {
-  return {
+  currentCompany: {
     address: '27755 Janis Village',
     country: 'French Guiana',
     id: 1,
@@ -30,11 +28,14 @@ export const currentCompanyData = () => {
     postal_code: '44596',
     tax_code: 'Ww534703Rg7f43',
     timezone: 'Asia/Bangkok'
-  }
-}
+  },
 
-export const initError = () => {
-  return {
+  meta: {
+    base_url: 'http://localhost:3000',
+    csv_template_url: '/public/static/template.csv'
+  },
+
+  errors: {
     name: 'error'
   }
 }

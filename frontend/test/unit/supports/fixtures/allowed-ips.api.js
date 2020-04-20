@@ -1,5 +1,5 @@
-export const allowedIPsData = () => {
-  return [
+export default {
+  allowedIPs: [
     {
       created_at: '2020-01-07T09:45:14+07:00',
       id: 1,
@@ -15,5 +15,9 @@ export const allowedIPsData = () => {
       id: 3,
       ip_address: '104.62.45.160'
     }
-  ]
+  ],
+
+  errors: {
+    ip_address: ['cant be blank']
+  }
 }

@@ -1,5 +1,7 @@
 import { FETCH_ACTIVITIES, FETCH_MORE_ACTIVITIES } from '../mutation-types.js'
-import callApi from '../api-caller'
+import Repository from '@/repository'
+
+const activitiesRepository = Repository.get('activities')
 
 const state = {
   activities: [],
@@ -20,7 +22,9 @@ const mutations = {
 
 const actions = {
   getActivities({ commit }, params = {}) {
-    return callApi({ method: 'get', url: '/activities', params: Object.assign({ per_page: 10 }, params) })
+    const requestParams = Object.assign({ per_page: 10 }, params)
+
+    return activitiesRepository.getActivities(requestParams)
       .then(response => commit(FETCH_ACTIVITIES, response.data))
       .catch(error => {
         throw error
@@ -28,7 +32,9 @@ const actions = {
   },
 
   getMoreActivities({ commit }, params = {}) {
-    return callApi({ method: 'get', url: '/activities', params: Object.assign({ per_page: 10 }, params) })
+    const requestParams = Object.assign({ per_page: 10 }, params)
+
+    return activitiesRepository.getActivities(requestParams)
       .then(response => commit(FETCH_MORE_ACTIVITIES, response.data))
       .catch(error => {
         throw error

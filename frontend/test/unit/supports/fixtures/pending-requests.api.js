@@ -1,5 +1,5 @@
-export const pendingRequestsData = () => {
-  return [
+export default {
+  requests: [
     {
       id: 1,
       name: 'default',

@@ -1,6 +1,8 @@
-import { RECEIVE_GROUPS, ADD_GROUP, UPDATE_GROUPS_ERRORS, CLEAR_GROUPS_ERRORS } from '../mutation-types.js'
-import callApi from '../api-caller'
 import 'formdata-polyfill'
+import { RECEIVE_GROUPS, ADD_GROUP, UPDATE_GROUPS_ERRORS, CLEAR_GROUPS_ERRORS } from '../mutation-types.js'
+import Repositories from '@/repository'
+
+const groupsRepository = Repositories.get('groups')
 
 const state = {
   errors: {},
@@ -34,7 +36,7 @@ const mutations = {
 
 const actions = {
   getGroups({ commit }) {
-    return callApi({ method: 'get', url: '/groups' })
+    return groupsRepository.getGroups()
       .then(response => {
         commit(RECEIVE_GROUPS, response.data)
         return response
@@ -48,9 +50,7 @@ const actions = {
     let formData = new FormData()
     Object.keys(params).forEach(key => formData.set(`group[${key}]`, params[key] || ''))
 
-    return callApi({
-      method: 'post',
-      url: '/groups',
+    return groupsRepository.createGroup({
       data: formData,
       headers: { 'Content-Type': 'multipart/form-data' }
     })

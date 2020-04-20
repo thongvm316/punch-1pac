@@ -1,9 +1,10 @@
 import companyHolidays from '@/store/modules/company-holidays'
-import callApi from '@/store/api-caller'
-import { holidaysData } from '../api-data/holidays.api.js'
-import { error422 } from '../api-data/promises-error.js'
-jest.mock('@/store/api-caller')
+import Repositories from '@/repository'
+import holidaysData from '../../../supports/fixtures/holidays.api'
+import error422 from '../../../supports/fixtures/errors.api'
+jest.mock('@/repository/company-settings')
 
+const companySettingsRepository = Repositories.get('companySettings')
 const { state, mutations, actions, getters } = companyHolidays
 const commit = jest.fn()
 
@@ -12,7 +13,7 @@ describe('mutations', () => {
 
   describe('when holidays', () => {
     it('should FETCH_HOLIDAYS', () => {
-      payload = holidaysData()
+      payload = [...holidaysData.holidays]
       mutations.FETCH_HOLIDAYS(state, payload)
 
       expect(state.holidays).toEqual(payload)
@@ -20,7 +21,7 @@ describe('mutations', () => {
 
     describe('when handle CUD methods', () => {
       beforeEach(() => {
-        state.holidays = holidaysData()
+        state.holidays = [...holidaysData.holidays]
       })
 
       it('should DELETE_HOLIDAYS', () => {
@@ -31,12 +32,7 @@ describe('mutations', () => {
       })
 
       it('should CREATE_HOLIDAY', () => {
-        payload = {
-          ended_at: '2020-01-09',
-          id: 4,
-          name: 'quo',
-          started_at: '2020-01-05'
-        }
+        payload = [...holidaysData.holidays][0]
         mutations.CREATE_HOLIDAY(state, payload)
 
         expect(state.holidays).toHaveLength(4)
@@ -56,34 +52,17 @@ describe('mutations', () => {
       })
 
       it('should IMPORT_NATIONAL_HOLIDAYS', () => {
-        payload = [
-          {
-            ended_at: '2020-01-09',
-            id: 4,
-            name: 'Tet Holiday',
-            started_at: '2020-01-05'
-          },
-          {
-            ended_at: '2020-01-09',
-            id: 5,
-            name: 'Quoc Khanh',
-            started_at: '2020-01-05'
-          }
-        ]
-
+        payload = [...holidaysData.holidays]
         mutations.IMPORT_NATIONAL_HOLIDAYS(state, payload)
 
-        expect(state.holidays).toHaveLength(5)
-        expect(state.holidays[4]).toEqual(payload[1])
+        expect(state.holidays).toHaveLength(6)
       })
     })
   })
 
-  describe('wehn errors', () => {
+  describe('when errors', () => {
     it('should UPDATE_HOLIDAY_ERRORS', () => {
-      payload = {
-        errors: { name: 'has been taken' }
-      }
+      payload = holidaysData.errors
       mutations.UPDATE_HOLIDAY_ERRORS(state, payload)
 
       expect(state.errors).toEqual(payload.errors)
@@ -102,10 +81,9 @@ describe('actions', () => {
 
   describe('when fetchHolidays', () => {
     it('should commit FETCH_HOLIDAYS', async () => {
-      response = { data: holidaysData() }
-      callApi.mockResolvedValue(response)
-      const year = 2020
-      await actions.fetchHolidays({ commit }, year)
+      response = { data: [...holidaysData.holidays] }
+      companySettingsRepository.getHolidays.mockResolvedValue(response)
+      await actions.fetchHolidays({ commit }, 2020)
 
       expect(commit).toHaveBeenCalledWith('FETCH_HOLIDAYS', response.data)
     })
@@ -113,30 +91,29 @@ describe('actions', () => {
 
   describe('when deleteHoliday', () => {
     it('should commit FETCH_HOLIDAYS', async () => {
-      response = holidaysData()[0]
-      callApi.mockResolvedValue(response)
-      const holidayID = 1
-      await actions.deleteHoliday({ commit }, holidayID)
+      response = [...holidaysData.holidays][0]
+      companySettingsRepository.deleteHoliday.mockResolvedValue(response)
+      await actions.deleteHoliday({ commit }, 1)
 
-      expect(commit).toHaveBeenCalledWith('DELETE_HOLIDAY', holidayID)
+      expect(commit).toHaveBeenCalledWith('DELETE_HOLIDAY', 1)
     })
   })
 
   describe('when createHoliday', () => {
     beforeEach(() => {
-      response = { data: holidaysData()[0] }
+      response = { data: [...holidaysData.holidays][0] }
     })
 
     it('should commit CREATE_HOLIDAY', async () => {
-      callApi.mockResolvedValue(response)
+      companySettingsRepository.createHoliday.mockResolvedValue(response)
       await actions.createHoliday({ commit }, response.data)
 
       expect(commit).toHaveBeenCalledWith('CREATE_HOLIDAY', response.data)
     })
 
     it('should commit UPDATE_HOLIDAY_ERRORS', async () => {
-      const mockError = error422()
-      callApi.mockRejectedValue(mockError)
+      const mockError = error422
+      companySettingsRepository.createHoliday.mockRejectedValue(mockError)
 
       await actions.createHoliday({ commit }, response.data).catch(error => {
         expect(error).toEqual(mockError)
@@ -147,19 +124,19 @@ describe('actions', () => {
 
   describe('when updateHoliday', () => {
     beforeEach(() => {
-      response = { data: holidaysData()[0] }
+      response = { data: [...holidaysData.holidays][0] }
     })
 
     it('should commit CREATE_HOLIDAY', async () => {
-      callApi.mockResolvedValue(response)
+      companySettingsRepository.updateHoliday.mockResolvedValue(response)
       await actions.updateHoliday({ commit }, response.data)
 
       expect(commit).toHaveBeenCalledWith('UPDATE_HOLIDAY', response.data)
     })
 
     it('should commit UPDATE_HOLIDAY_ERRORS', async () => {
-      const mockError = error422()
-      callApi.mockRejectedValue(mockError)
+      const mockError = error422
+      companySettingsRepository.updateHoliday.mockRejectedValue(mockError)
 
       await actions.updateHoliday({ commit }, response.data).catch(error => {
         expect(error).toEqual(mockError)
@@ -175,10 +152,9 @@ describe('actions', () => {
     })
 
     it('should commit IMPORT_NATIONAL_HOLIDAYS', async () => {
-      response = { data: holidaysData() }
-      const country = 'vi'
-      callApi.mockResolvedValue(response)
-      await actions.importNationalHolidays({ commit }, country)
+      response = { data: [...holidaysData.holidays] }
+      companySettingsRepository.importNationalHolidays.mockResolvedValue(response)
+      await actions.importNationalHolidays({ commit }, 'vi')
 
       expect(commit).toHaveBeenCalledWith('IMPORT_NATIONAL_HOLIDAYS', response.data)
     })
@@ -187,7 +163,7 @@ describe('actions', () => {
 
 describe('getters', () => {
   let holidays, query
-  beforeEach(() => { state.holidays = holidaysData() })
+  beforeEach(() => { state.holidays = [...holidaysData.holidays] })
 
   it('should return no holidays', () => {
     query = 'ww'

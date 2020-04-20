@@ -1,5 +1,7 @@
 import { FETCH_CALENDAR_ATTENDANCES } from '../mutation-types'
-import callApi from '../api-caller'
+import Repository from '@/repository'
+
+const attendancesRepository = Repository.get('attendances')
 
 const state = {
   attendances: [],
@@ -14,8 +16,10 @@ const mutations = {
 }
 
 const actions = {
-  getCalendarAttendances({ commit }, day) {
-    return callApi({ method: 'get', url: '/attendances/calendar', params: { date: day } })
+  getCalendarAttendances({ commit }, date) {
+    const requestParams = { date }
+
+    return attendancesRepository.getCalendarAttendances(requestParams)
       .then(response => {
         commit(FETCH_CALENDAR_ATTENDANCES, response.data)
         return response

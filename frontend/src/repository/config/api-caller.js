@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-export default function callApi(
+export default function apiCaller(
   payload = {
     params: null,
     data: null

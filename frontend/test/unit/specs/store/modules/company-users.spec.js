@@ -1,8 +1,9 @@
 import companyUsers from '@/store/modules/company-users'
-import callApi from '@/store/api-caller'
-import { usersData } from '../api-data/users.api.js'
-jest.mock('@/store/api-caller')
+import Repositories from '@/repository'
+import usersData from '../../../supports/fixtures/users.api'
+jest.mock('@/repository/users')
 
+const usersRepository = Repositories.get('users')
 const { state, mutations, actions, getters } = companyUsers
 const commit = jest.fn()
 
@@ -11,7 +12,7 @@ describe('mutations', () => {
 
   describe('when FETCH_USERS', () => {
     it('should FETCH_USERS', () => {
-      payload = usersData()
+      payload = [...usersData.users]
       mutations.FETCH_USERS(state, payload)
 
       expect(state.users).toEqual(payload.users)
@@ -20,7 +21,14 @@ describe('mutations', () => {
 
   describe('when CUD methods', () => {
     beforeEach(() => {
-      state.users = usersData().users
+      state.users = [...usersData.users]
+    })
+
+    it('should CREATE_USER', () => {
+      payload = [...usersData.users][0]
+      mutations.CREATE_USER(state, payload)
+
+      expect(state.users).toHaveLength(4)
     })
 
     it('should DELETE_USER', () => {
@@ -70,11 +78,12 @@ describe('mutations', () => {
 
 describe('actions', () => {
   let response
+  const userId = 2
 
   describe('when fetchUsers', () => {
     it('should commit FETCH_USERS', async () => {
-      response = { data: usersData() }
-      callApi.mockResolvedValue(response)
+      response = { data: [...usersData.users] }
+      usersRepository.getUsers.mockResolvedValue(response)
       await actions.fetchUsers({ commit }, {})
 
       expect(commit).toHaveBeenCalledWith('FETCH_USERS', response.data)
@@ -83,20 +92,18 @@ describe('actions', () => {
 
   describe('when deleteUser', () => {
     it('should commit DELETE_USER', async () => {
-      response = { data: usersData() }
-      const id = 2
-      callApi.mockResolvedValue(response)
-      await actions.deleteUser({ commit }, id)
+      response = { data: [...usersData.users] }
+      usersRepository.deleteUser.mockResolvedValue(response)
+      await actions.deleteUser({ commit }, userId)
 
-      expect(commit).toHaveBeenCalledWith('DELETE_USER', id)
+      expect(commit).toHaveBeenCalledWith('DELETE_USER', userId)
     })
   })
 
   describe('when deactivateUser', () => {
     it('should commit DEACTIVATE_USER', async () => {
-      response = { data: usersData() }
-      const userId = 2
-      callApi.mockResolvedValue(response)
+      response = { data: [...usersData.users] }
+      usersRepository.deactivateUser.mockResolvedValue(response)
       await actions.deactivateUser({ commit }, userId)
 
       expect(commit).toHaveBeenCalledWith('DEACTIVATE_USER', userId)
@@ -105,9 +112,8 @@ describe('actions', () => {
 
   describe('when activateUser', () => {
     it('should commit ACTIVATE_USER', async () => {
-      response = { data: usersData() }
-      const userId = 2
-      callApi.mockResolvedValue(response)
+      response = { data: [...usersData.users] }
+      usersRepository.activateUser.mockResolvedValue(response)
       await actions.activateUser({ commit }, userId)
 
       expect(commit).toHaveBeenCalledWith('ACTIVATE_USER', userId)
@@ -117,7 +123,7 @@ describe('actions', () => {
 
 describe('getters', () => {
   let users, query
-  beforeEach(() => { state.users = usersData().users })
+  beforeEach(() => { state.users = [...usersData.users] })
 
   it('should return no users', () => {
     query = 'www'

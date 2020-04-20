@@ -1,5 +1,5 @@
-export const holidaysData = () => {
-  return [
+export default {
+  holidays: [
     {
       ended_at: '2020-01-09',
       id: 1,
@@ -18,5 +18,9 @@ export const holidaysData = () => {
       name: 'saepe',
       started_at: '2020-01-02'
     }
-  ]
+  ],
+
+  errors: {
+    name: 'has been taken'
+  }
 }

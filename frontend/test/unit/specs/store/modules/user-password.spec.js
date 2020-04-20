@@ -1,17 +1,16 @@
 import userPassword from '@/store/modules/user-password'
-import { userPasswordError } from '../api-data/user-password.api.js'
+import error422 from '../../../supports/fixtures/errors.api'
 import { UPDATE_USER_PASSWORD_ERRORS } from '@/store/mutation-types'
-import callApi from '@/store/api-caller'
+import Repositories from '@/repository'
+jest.mock('@/repository/users')
 
-jest.mock('@/store/api-caller')
-
+const usersRepository = Repositories.get('users')
 const { state, mutations, actions } = userPassword
 const commit = jest.fn()
 
 describe('mutations', () => {
   it('UPDATE_USER_PASSWORD_ERRORS', () => {
-    state.errors = {}
-    const payload = userPasswordError().data
+    const payload = error422
 
     mutations.UPDATE_USER_PASSWORD_ERRORS(state, payload)
 
@@ -33,8 +32,8 @@ describe('actions', () => {
         password_confirmation: 'meowmeow',
         password: 'meowmeow'
       }
-      const mockError = { response: userPasswordError() }
-      callApi.mockRejectedValue(mockError)
+      const mockError = error422
+      usersRepository.updatePassword.mockRejectedValue(mockError)
 
       await actions.updatePassword({ commit }, params)
         .catch(error => {

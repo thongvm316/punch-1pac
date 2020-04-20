@@ -1,5 +1,5 @@
-export const groupsData = () => {
-  return [
+const groupsData = {
+  groups: [
     {
       description: 'd',
       id: 0,
@@ -21,11 +21,11 @@ export const groupsData = () => {
       name: 'dasda',
       users_count: 0
     }
-  ]
-}
+  ],
 
-export const groupsError = () => {
-  return {
+  errors: {
     name: 'has been taken'
   }
 }
+
+export default groupsData

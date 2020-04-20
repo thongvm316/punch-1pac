@@ -1,5 +1,7 @@
 import { CREATE_USER, CREATE_MULTI_USER, DELETE_USER, FETCH_USERS, UPDATE_USER, DEACTIVATE_USER, ACTIVATE_USER } from '../mutation-types.js'
-import callApi from '../api-caller'
+import Repositories from '@/repository'
+
+const usersRepository = Repositories.get('users')
 
 const state = {
   users: []
@@ -47,7 +49,9 @@ const mutations = {
 
 const actions = {
   createUser({ commit }, data) {
-    return callApi({ method: 'post', url: '/users', data: { user: data } })
+    const dataRequest = { user: data }
+
+    return usersRepository.createUser(dataRequest)
       .then(response => {
         commit(CREATE_USER, response.data)
         return response
@@ -61,12 +65,7 @@ const actions = {
     let formData = new FormData()
     formData.append('csv_file', data.csv_file)
 
-    return callApi({
-      method: 'post',
-      url: '/users/create_multi',
-      data: formData,
-      headers: { 'Content-Type': 'multipart/form-data' }
-    })
+    return usersRepository.createMultiUsers({ data: formData, headers: { 'Content-Type': 'multipart/form-data' } })
       .then(response => {
         commit(CREATE_MULTI_USER, response.data)
         return response
@@ -77,7 +76,9 @@ const actions = {
   },
 
   fetchUsers({ commit }, params) {
-    return callApi({ method: 'get', url: '/users', params: Object.assign({ per_page: 1000 }, params) })
+    const paramsRequest = Object.assign({ per_page: 1000 }, params)
+
+    return usersRepository.getUsers(paramsRequest)
       .then(response => {
         commit(FETCH_USERS, response.data)
         return response
@@ -88,7 +89,7 @@ const actions = {
   },
 
   deleteUser({ commit }, id) {
-    return callApi({ method: 'delete', url: `/users/${id}` })
+    return usersRepository.deleteUser(id)
       .then(response => {
         commit(DELETE_USER, id)
         return response
@@ -99,7 +100,7 @@ const actions = {
   },
 
   deactivateUser({ commit }, userId) {
-    return callApi({ method: 'post', url: `/users/${userId}/deactivate` })
+    return usersRepository.deactivateUser(userId)
       .then(response => {
         commit(DEACTIVATE_USER, userId)
         return response
@@ -110,7 +111,7 @@ const actions = {
   },
 
   activateUser({ commit }, userId) {
-    return callApi({ method: 'post', url: `/users/${userId}/activate` })
+    return usersRepository.activateUser(userId)
       .then(response => {
         commit(ACTIVATE_USER, userId)
         return response

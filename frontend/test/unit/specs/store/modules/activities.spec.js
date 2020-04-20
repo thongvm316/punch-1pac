@@ -1,14 +1,21 @@
 import activities from '@/store/modules/activities'
-import callApi from '@/store/api-caller'
-import { activitiesData, activitiesDataAddOn } from '../api-data/activities.api.js'
-jest.mock('@/store/api-caller')
+import Repository from '@/repository'
+import activitiesData from '../../../supports/fixtures/activities.api'
+import metaData from '../../../supports/fixtures/meta.api'
+jest.mock('@/repository/activities')
 
+const activitiesRepository = Repository.get('activities')
 const { state, mutations, actions } = activities
+const commit = jest.fn()
 
 describe('mutations', () => {
+  const payload = {
+    activities: [...activitiesData.activities],
+    meta: metaData
+  }
+
   describe('FETCH_ACTIVITIES', () => {
     it('should add activities & pager to state', () => {
-      const payload = activitiesData()
       mutations.FETCH_ACTIVITIES(state, payload)
 
       expect(state.activities).toEqual(payload.activities)
@@ -18,7 +25,6 @@ describe('mutations', () => {
 
   describe('FETCH_MORE_ACTIVITIES', () => {
     it('should update activities & pager', () => {
-      const payload = activitiesDataAddOn()
       mutations.FETCH_MORE_ACTIVITIES(state, payload)
 
       expect(state.activities).toHaveLength(4)
@@ -28,23 +34,21 @@ describe('mutations', () => {
 })
 
 describe('actions', () => {
-  let commit, response
-
-  beforeEach(() => {
-    commit = jest.fn()
-    response = {
-      data: activitiesData()
+  const response = {
+    data: {
+      activities: [...activitiesData.activities],
+      meta: metaData
     }
-
-    callApi.mockResolvedValue(response)
-  })
+  }
 
   it('should getActivities called', async () => {
+    activitiesRepository.getActivities.mockResolvedValue(response)
     await actions.getActivities({ commit }, {})
     expect(commit).toHaveBeenCalledWith('FETCH_ACTIVITIES', response.data)
   })
 
   it('should getMoreActivities called', async () => {
+    activitiesRepository.getActivities.mockResolvedValue(response)
     await actions.getMoreActivities({ commit }, {})
     expect(commit).toHaveBeenCalledWith('FETCH_MORE_ACTIVITIES', response.data)
   })

@@ -1,37 +1,36 @@
 import announcements from '@/store/modules/announcements'
-import callApi from '@/store/api-caller'
-import { announcementsData } from '../api-data/annoucements.api.js'
-jest.mock('@/store/api-caller')
+import Repository from '@/repository'
+import announcementsData from '../../../supports/fixtures/annoucements.api'
+jest.mock('@/repository/announcements')
 
+const announcementsRepository = Repository.get('announcements')
 const { state, mutations, actions } = announcements
+const commit = jest.fn()
 
 describe('mutations', () => {
   it('RECEIVE_HEADER_ANNOUNCEMENTS', () => {
-    const payload = announcementsData()
+    const payload = {
+      annoucements: [...announcementsData.announcements]
+    }
     mutations.RECEIVE_HEADER_ANNOUNCEMENTS(state, payload)
 
     expect(state.headerAnnouncements).toEqual(payload.announcements)
   })
 
   it('READ_ANNOUNCEMENT', () => {
+    state.headerAnnouncements = [...announcementsData.announcements]
     mutations.READ_ANNOUNCEMENT(state, 1)
     expect(state.headerAnnouncements).toHaveLength(2)
   })
 })
 
 describe('actions', () => {
-  let commit
-
-  beforeEach(() => {
-    commit = jest.fn()
-  })
-
   it('getHeaderAnnouncements', async () => {
     const response = {
-      data: announcementsData()
+      data: [...announcementsData.announcements]
     }
 
-    callApi.mockResolvedValue(response)
+    announcementsRepository.getHeaderAnnouncements.mockResolvedValue(response)
     await actions.getHeaderAnnouncements({ commit })
 
     expect(commit).toHaveBeenCalledWith('RECEIVE_HEADER_ANNOUNCEMENTS', response.data)
@@ -40,7 +39,7 @@ describe('actions', () => {
   it('readAnnouncement', async () => {
     const response = { status: 200 }
     const id = 1
-    callApi.mockResolvedValue(response)
+    announcementsRepository.readAnnouncement.mockResolvedValue(response)
     await actions.readAnnouncement({ commit }, id)
 
     expect(commit).toHaveBeenCalledWith('READ_ANNOUNCEMENT', id)

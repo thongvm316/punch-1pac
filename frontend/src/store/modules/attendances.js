@@ -1,5 +1,7 @@
 import { RECEIVE_ATTENDANCES } from '../mutation-types.js'
-import callApi from '../api-caller'
+import Repository from '@/repository'
+
+const attendancesRepository = Repository.get('attendances')
 
 const state = {
   params: {},
@@ -49,7 +51,9 @@ const mutations = {
 
 const actions = {
   getAttendances({ commit, state }, params = {}) {
-    return callApi({ method: 'get', url: '/attendances', params: Object.assign(state.params, params, { per_page: 1000 }) })
+    const requestParams = Object.assign(state.params, params, { per_page: 1000 })
+
+    return attendancesRepository.getAttendances(requestParams)
       .then(response => {
         commit(RECEIVE_ATTENDANCES, response.data)
         return response
