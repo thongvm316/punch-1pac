@@ -1,10 +1,10 @@
 import Page from '@/authorization/page'
-import { currUser } from './support/user.js'
+import { currUser } from '../../supports/fixtures/user'
 
-let currentUser = { ...currUser() }
+let currentUser
 let page
 
-afterEach(() => {
+beforeEach(() => {
   currentUser = { ...currUser() }
 })
 
