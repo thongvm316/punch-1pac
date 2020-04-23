@@ -48,5 +48,9 @@ export default {
       position: 'Backend Developer',
       role: 'admin'
     }
-  ]
+  ],
+  errors: {
+    name: ['to have been taken'],
+    email: ['to have been taken']
+  }
 }

@@ -55,7 +55,7 @@
 <script>
 import { mapState, mapActions } from 'vuex'
 import 'formdata-polyfill'
-import handleSuccess from '../mixins/handle-success'
+import handleSuccess from '@/mixins/handle-success'
 
 export default {
   name: 'UsersAddForm',

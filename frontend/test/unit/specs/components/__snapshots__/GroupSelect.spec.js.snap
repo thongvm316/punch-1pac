@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GroupSelect.vue when GroupSelect was mounted should render correctly 1`] = `
+<select class="form-select">
+  <option>Choose a group</option>
+  <option value="0">
+    default
+  </option>
+  <option value="1">
+    enum
+  </option>
+  <option value="2">
+    dasda
+  </option>
+</select>
+`;

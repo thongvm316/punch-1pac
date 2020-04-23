@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Pagination.vue when Pagination was mounted page 2 should be actived 1`] = `
+<ul class="pagination mt-4">
+  <li class="page-item" style=""><a>
+      <picoprevarrow-stub></picoprevarrow-stub>
+    </a></li>
+  <li class="page-item"><a href="#">1</a></li>
+  <li class="page-item active"><a href="#">2</a></li>
+  <li class="page-item"><a href="#">3</a></li>
+  <li class="page-item"><a>
+      <piconextarrow-stub></piconextarrow-stub>
+    </a></li>
+</ul>
+`;
+
+exports[`Pagination.vue when Pagination was mounted should render correctly 1`] = `
+<ul class="pagination mt-4">
+  <li class="page-item" style="display: none;"><a>
+      <picoprevarrow-stub></picoprevarrow-stub>
+    </a></li>
+  <li class="page-item active"><a href="#">1</a></li>
+  <li class="page-item"><a href="#">2</a></li>
+  <li class="page-item"><a href="#">3</a></li>
+  <li class="page-item"><a>
+      <piconextarrow-stub></piconextarrow-stub>
+    </a></li>
+</ul>
+`;
+
+exports[`Pagination.vue when current page is last should not show button next page 1`] = `
+<ul class="pagination mt-4">
+  <li class="page-item" style=""><a>
+      <picoprevarrow-stub></picoprevarrow-stub>
+    </a></li>
+  <li class="page-item"><a href="#">1</a></li>
+  <li class="page-item"><a href="#">2</a></li>
+  <li class="page-item active"><a href="#">3</a></li>
+  <li class="page-item" style="display: none;"><a>
+      <piconextarrow-stub></piconextarrow-stub>
+    </a></li>
+</ul>
+`;

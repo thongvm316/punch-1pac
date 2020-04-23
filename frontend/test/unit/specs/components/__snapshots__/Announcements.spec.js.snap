@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Announcements.vue when Announcements was mounted should render correctly 1`] = `<div></div>`;
+
+exports[`Announcements.vue when have header announcement should dislay normal announcement 1`] = `
+<div>
+  <div class="toast text-center mt-2 toast-success"><button class="btn btn-clear float-right"></button>
+    normal annoucement
+  </div>
+</div>
+`;
+
+exports[`Announcements.vue when have header announcement should dislay urgent announcement 1`] = `
+<div>
+  <div class="toast text-center mt-2 toast-warning"><button class="btn btn-clear float-right"></button>
+    urgent annoucement
+  </div>
+</div>
+`;
+
+exports[`Announcements.vue when have header announcement should display both announcements 1`] = `
+<div>
+  <div class="toast text-center mt-2 toast-success"><button class="btn btn-clear float-right"></button>
+    normal annoucement
+  </div>
+  <div class="toast text-center mt-2 toast-warning"><button class="btn btn-clear float-right"></button>
+    urgent annoucement
+  </div>
+</div>
+`;

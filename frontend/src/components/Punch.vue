@@ -32,6 +32,7 @@
       </button>
     </div>
     <confirm-dialog
+      v-if="!attendance.left_at"
       :title="$t('header.punchOutTitle')"
       :delete-object="debouncePunchOut"
       :modal-open.sync="isOpenConfirmDialog"
@@ -42,9 +43,9 @@
 </template>
 
 <script>
-import confirmDialog from '../mixins/confirm-dialog'
-import { PUNCH_INIT_ATTENDANCE, SET_FLASH_MESSAGE } from '../store/mutation-types'
 import { mapState, mapActions, mapMutations } from 'vuex'
+import confirmDialog from '@/mixins/confirm-dialog'
+import { PUNCH_INIT_ATTENDANCE, SET_FLASH_MESSAGE } from '@/store/mutation-types'
 
 export default {
   name: 'Punch',

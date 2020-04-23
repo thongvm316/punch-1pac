@@ -1,50 +1,31 @@
 import { shallowMount } from '@vue/test-utils'
-
 import localVue from '../../supports/local-vue'
 import wrapperOps from '../../supports/wrapper'
 import setComputed from '../../supports/set-computed'
-
+import initialStatesData from '../../supports/fixtures/initial-states.api'
+import attendancesData from '../../supports/fixtures/attendances.api'
+import punchData from '../../supports/fixtures/punch.api'
 import CalendarDate from '@/components/CalendarDate'
 
-const propsData = {
-  normalDay: {
-    calendarAttendance: {
-      attended_at: '08:13',
-      attending_status: 'attend_ok',
-      day: localVue.prototype.$moment().format('YYYY-MM-DD'),
-      leaving_status: 'leave_early',
-      left_at: '08:13'
-    },
+const today = localVue.prototype.$moment()
 
-    today: localVue.prototype.$moment()
-  },
+const attendances = {
+  normalday: [...attendancesData.attendances][0],
 
   offDay: {
-    calendarAttendance: {
-      day: '2019-12-03',
-      off_status: 'annual_leave'
-    },
-
-    today: localVue.prototype.$moment()
+    day: '2019-12-03',
+    off_status: 'annual_leave'
   },
 
-  weekendDay: {
-    calendarAttendance: {
-      day: '2019-12-08',
-    },
-
-    today: localVue.prototype.$moment()
+  weeksDay: {
+    day: '2019-12-08',
   },
 
   specialDay: {
-    calendarAttendance: {
-      day: '2019-12-13',
-      holiday: {
-        name: 'Tet holiday'
-      }
-    },
-
-    today: localVue.prototype.$moment()
+    day: '2019-12-13',
+    holiday: {
+      name: 'Tet holiday'
+    }
   }
 }
 
@@ -54,82 +35,43 @@ describe('CalendarDate.vue', () => {
   afterEach(() => { wrapper.vm.$destroy() })
 
   // Normal date
-  describe('Normal date', () => {
+  describe('when normal date', () => {
     beforeEach(() => {
-      Object.assign(wrapperOps, { propsData: propsData.normalDay })
-      wrapper = shallowMount(CalendarDate, wrapperOps)
+      const newWrapperOps = {
+        ...wrapperOps,
+        propsData: {
+          calendarAttendance: attendances.normalday,
+          today
+        },
+        computed: {
+          currentCompany: () => initialStatesData.currentCompany,
+          meta: () => initialStatesData.meta,
+          attendance: () => punchData
+        }
+      }
+      wrapper = shallowMount(CalendarDate, newWrapperOps)
     })
 
     describe('when CalendarDate was mounted', () => {
       it('should render correctly', () => {
         expect(wrapper.exists()).toBe(true)
         expect(wrapper.isVueInstance()).toBeTruthy()
-      })
-    })
-
-    describe('when validation propsData', () => {
-      it('should validate props', () => {
-        const { calendarAttendance, today } = wrapper.vm.$options.props
-
-        expect(calendarAttendance.required).toBeTruthy
-        expect(calendarAttendance.type).toBe(Object)
-        expect(today.required).toBeTruthy
-        expect(today.type).toBe(Object)
-      })
-    })
-
-    describe('when tooltip && calendar event', () => {
-      let calendarDateEl
-      let calendarEventEls
-
-      beforeEach(() => {
-        calendarDateEl = wrapper.find('.calendar-date')
-        calendarEventEls = wrapper.findAll('.calendar-event')
-      })
-
-      it('should display data-tooltip with attending_status && leaving_status', () => {
-        expect(calendarDateEl.classes()).toContain('tooltip')
-        expect(calendarDateEl.attributes('data-tooltip')).toEqual('In: 08:13 - Out: 08:13')
-        expect(calendarDateEl.classes()).not.toContain('disabled')
-      })
-
-      it('should display calendar event', () => {
-        expect(calendarEventEls).toHaveLength(2)
-        expect(calendarEventEls.at(0).classes()).toContain('text-success')
-        expect(calendarEventEls.at(0).text()).toEqual('Attend OK')
-        expect(calendarEventEls.at(1).classes()).toContain('text-error')
-        expect(calendarEventEls.at(1).text()).toEqual('Leave Early')
-      })
-
-      it('should display today', () => {
-        expect(wrapper.find('button.date-item').classes()).toContain('date-today')
-        expect(wrapper.find('button.date-item').text()).toEqual(wrapper.vm.localAttendance.day.split('-')[2])
+        expect(wrapper).toMatchSnapshot()
       })
     })
 
     describe('when watcher attendance', () => {
-      let calendarDateEl
-      let calendarEventEls
+      it('should render new attendance', async () => {
+        setComputed(wrapper, {
+          attendance: {
+            ...punchData,
+            attended_at: '10:45',
+            attending_status: 'attend_late',
+            left_at: '20:45',
+          }
+        })
 
-      beforeEach(() => {
-        calendarDateEl = wrapper.find('.calendar-date')
-        calendarEventEls = wrapper.findAll('.calendar-event')
-      })
-
-      it('should render new attendance', () => {
-        setComputed(wrapper, { attendance: {
-          attended_at: '08:13',
-          attending_status: 'attend_late',
-          day: localVue.prototype.$moment().format('YYYY-MM-DD'),
-          leaving_status: 'leave_ok',
-          left_at: '10:13'
-        } })
-
-        expect(calendarEventEls).toHaveLength(2)
-        expect(calendarEventEls.at(0).classes()).toContain('text-warning')
-        expect(calendarEventEls.at(0).text()).toEqual('Attend Late')
-        expect(calendarEventEls.at(1).classes()).toContain('text-success')
-        expect(calendarEventEls.at(1).text()).toEqual('Leave OK')
+        expect(wrapper).toMatchSnapshot()
       })
     })
   })
@@ -137,104 +79,80 @@ describe('CalendarDate.vue', () => {
   // Off date
   describe('when off date', () => {
     beforeEach(() => {
-      Object.assign(wrapperOps, {
-        propsData: propsData.offDay,
+      const newWrapperOps = {
+        ...wrapperOps,
+        propsData: {
+          calendarAttendance: attendances.offDay,
+          today
+        },
         computed: {
-          currentCompany: () => {
-            return { breakdays: ['saturday', 'sunday'] }
-          }
+          currentCompany: () => initialStatesData.currentCompany,
+          meta: () => initialStatesData.meta,
+          attendance: () => punchData
         }
-      })
-      wrapper = shallowMount(CalendarDate, wrapperOps)
+      }
+      wrapper = shallowMount(CalendarDate, newWrapperOps)
     })
 
-    describe('when tooltip', () => {
-      let calendarDateEl
-      let calendarEventEls
-
-      beforeEach(() => {
-        calendarDateEl = wrapper.find('.calendar-date')
-        calendarEventEls = wrapper.findAll('.calendar-event')
-      })
-
-      it('should no tooltip', () => {
-        expect(calendarDateEl.classes()).not.toContain('tooltip')
-        expect(calendarDateEl.attributes('data-tooltip')).toEqual('')
-      })
-
-      it('should display calendar event', () => {
-        expect(calendarEventEls).toHaveLength(1)
-        expect(calendarEventEls.at(0).text()).toEqual('Day Off')
+    describe('when CalendarDate was mounted', () => {
+      it('should render correctly', () => {
+        expect(wrapper.exists()).toBe(true)
+        expect(wrapper.isVueInstance()).toBeTruthy()
+        expect(wrapper).toMatchSnapshot()
       })
     })
   })
 
   // Special day
-  describe('Special day', () => {
+  describe('when special day', () => {
     beforeEach(() => {
-      Object.assign(wrapperOps, {
-        propsData: propsData.specialDay,
+      const newWrapperOps = {
+        ...wrapperOps,
+        propsData: {
+          calendarAttendance: attendances.specialDay,
+          today
+        },
         computed: {
-          currentCompany: () => {
-            return { breakdays: ['saturday', 'sunday'] }
-          }
+          currentCompany: () => initialStatesData.currentCompany,
+          meta: () => initialStatesData.meta,
+          attendance: () => punchData
         }
-      })
-      wrapper = shallowMount(CalendarDate, wrapperOps)
+      }
+      wrapper = shallowMount(CalendarDate, newWrapperOps)
     })
 
-    describe('when tooltip', () => {
-      let calendarDateEl
-      let calendarEventEls
-
-      beforeEach(() => {
-        calendarDateEl = wrapper.find('.calendar-date')
-        calendarEventEls = wrapper.findAll('.calendar-event')
-      })
-
-      it('should display holiday tooltip', () => {
-        expect(calendarDateEl.classes()).toContain('tooltip')
-        expect(calendarDateEl.attributes('data-tooltip')).toEqual('Tet holiday')
-      })
-
-      it('should display calendar event', () => {
-        expect(calendarEventEls).toHaveLength(1)
-        expect(calendarEventEls.at(0).text()).toEqual('Tet holiday')
+    describe('when CalendarDate was mounted', () => {
+      it('should render correctly', () => {
+        expect(wrapper.exists()).toBe(true)
+        expect(wrapper.isVueInstance()).toBeTruthy()
+        expect(wrapper).toMatchSnapshot()
       })
     })
   })
 
   // Weekend day
-  describe('Weekend day', () => {
+  describe('when week day', () => {
     beforeEach(() => {
-      Object.assign(wrapperOps, {
-        propsData: propsData.weekendDay,
+      const newWrapperOps = {
+        ...wrapperOps,
+        propsData: {
+          calendarAttendance: attendances.weeksDay,
+          today
+        },
         computed: {
-          currentCompany: () => {
-            return { breakdays: ['saturday', 'sunday'] }
-          }
+          currentCompany: () => initialStatesData.currentCompany,
+          meta: () => initialStatesData.meta,
+          attendance: () => punchData
         }
-      })
-      wrapper = shallowMount(CalendarDate, wrapperOps)
+      }
+      wrapper = shallowMount(CalendarDate, newWrapperOps)
     })
 
-    describe('when tooltip', () => {
-      let calendarDateEl
-      let calendarEventEls
-
-      beforeEach(() => {
-        calendarDateEl = wrapper.find('.calendar-date')
-        calendarEventEls = wrapper.findAll('.calendar-event')
-      })
-
-      it('should display holiday tooltip', () => {
-        expect(calendarDateEl.classes()).not.toContain('tooltip')
-        expect(calendarDateEl.classes()).toContain('disabled')
-        expect(calendarDateEl.attributes('data-tooltip')).toEqual('')
-      })
-
-      it('should display calendar event', () => {
-        expect(calendarEventEls).toHaveLength(0)
+    describe('when CalendarDate was mounted', () => {
+      it('should render correctly', () => {
+        expect(wrapper.exists()).toBe(true)
+        expect(wrapper.isVueInstance()).toBeTruthy()
+        expect(wrapper).toMatchSnapshot()
       })
     })
   })

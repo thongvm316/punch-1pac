@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AnnualLeave.vue when AnnualLeave was mounted should render correctly 1`] = `
+<div><button type="button" class="btn btn-notice mr-5">
+    Day Off
+  </button>
+  <modal-stub title="Request a leave">
+    <!---->
+  </modal-stub>
+</div>
+`;
+
+exports[`AnnualLeave.vue when click toggle add modal should call method 1`] = `
+<div><button type="button" class="btn btn-notice mr-5">
+    Day Off
+  </button>
+  <modal-stub title="Request a leave" modal-open="true">
+    <annualleaveform-stub></annualleaveform-stub>
+  </modal-stub>
+</div>
+`;

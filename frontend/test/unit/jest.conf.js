@@ -15,7 +15,9 @@ module.exports = {
     '.*\\.(vue)$': '<rootDir>/node_modules/vue-jest'
   },
   testPathIgnorePatterns: [
-    '<rootDir>/test/e2e'
+    '<rootDir>/test/e2e',
+    '<rootDir>/test/unit/specs/pages',
+    '<rootDir>/test/unit/specs/authorization',
   ],
   snapshotSerializers: ['jest-serializer-vue'],
   setupFiles: [

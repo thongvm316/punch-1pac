@@ -99,6 +99,7 @@
               <li
                 v-for="(language, key) in meta.languages"
                 :key="key"
+                ref="languageItem"
                 class="menu-item"
               >
                 <a
@@ -116,9 +117,10 @@
 
 <script>
 import axios from 'axios'
-import dropdown from '../mixins/dropdown'
+import Repositories from '@/repository'
 import { mapState, mapMutations } from 'vuex'
-import { INITIAL_STATES_UPDATE_USER_LANGUAGE } from '../store/mutation-types'
+import dropdown from '@/mixins/dropdown'
+import { INITIAL_STATES_UPDATE_USER_LANGUAGE } from '@/store/mutation-types'
 const Notifications = () => import('./Notifications')
 const Punch = () => import('./Punch')
 const AnnualLeave = () => import('./AnnualLeave')
@@ -158,11 +160,13 @@ export default {
 
     updateUser(language) {
       if (this.$i18n.locale === language) return
+      const usersRepository = Repositories.get('users')
 
-      axios.put(`/users/${this.currentUser.id}`, { user: { language } }).then(response => {
-        this.$i18n.locale = language
-        this[INITIAL_STATES_UPDATE_USER_LANGUAGE](language)
-      })
+      usersRepository.updateUser(this.currentUser.id, { data: { user: { language } } })
+        .then(() => {
+          this.$i18n.locale = language
+          this[INITIAL_STATES_UPDATE_USER_LANGUAGE](language)
+        })
     }
   }
 }

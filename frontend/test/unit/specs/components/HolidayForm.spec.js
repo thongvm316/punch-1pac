@@ -1,130 +1,100 @@
 import { shallowMount } from '@vue/test-utils'
-
 import wrapperOps from '../../supports/wrapper'
 import setComputed from '../../supports/set-computed'
-
-import flatPickr from 'vue-flatpickr-component'
-import flatpickrLocale from '@/mixins/flatpickr-locale'
+import holidaysData from '../../supports/fixtures/holidays.api'
 import HolidayForm from '@/components/HolidayForm'
 
-const localAddHoliday = jest.fn()
-const localEditHoliday = jest.fn()
-const clearHolidayErrors = jest.fn()
-const targetHoliday = {
-  name: 'Tet Holiday',
-  started_at: '2019-23-01',
-  ended_at: '2020-03-02'
+const localAddHoliday = jest.spyOn(HolidayForm.methods, 'localAddHoliday')
+const localEditHoliday = jest.spyOn(HolidayForm.methods, 'localEditHoliday')
+const CLEAR_HOLIDAY_ERRORS = jest.spyOn(HolidayForm.methods, 'CLEAR_HOLIDAY_ERRORS')
+const createHoliday = jest.spyOn(HolidayForm.methods, 'createHoliday').mockResolvedValue(null)
+const updateHoliday = jest.spyOn(HolidayForm.methods, 'updateHoliday').mockResolvedValue(null)
+const handleSuccess = jest.spyOn(HolidayForm.mixins[1].methods, 'handleSuccess')
+
+const targetHoliday = [...holidaysData.holidays][0]
+
+const localWrapperOps = {
+  ...wrapperOps,
+  stubs: {
+    flatPickr: true
+  },
+  computed: {
+    isDisabled: () => false,
+    pickLocale: () => 'en'
+  }
 }
 
 describe('HolidayForm.vue', () => {
-  describe('when have no props', () => {
-    let wrapper
+  let wrapper
 
-    beforeEach(() => {
-      Object.assign(wrapperOps, {
-        mixins: [flatpickrLocale],
-        methods: {
-          localAddHoliday,
-          localEditHoliday,
-          clearHolidayErrors
-        }
+  beforeEach(() => {
+    wrapper = shallowMount(HolidayForm, localWrapperOps)
+  })
+
+  afterEach(() => { wrapper.vm.$destroy() })
+
+  describe('when have no props', () => {
+    describe('when HolidayForm was mounted', () => {
+      it('should render correctly', () => {
+        expect(wrapper.exists()).toBeTruthy()
+        expect(wrapper.isVueInstance()).toBeTruthy()
+        expect(wrapper).toMatchSnapshot()
       })
-      wrapper = shallowMount(HolidayForm, wrapperOps)
     })
 
-    afterEach(() => { wrapper.vm.$destroy() })
+    describe('when localAddHoliday', () => {
+      it('should localAddHoliday hasBeenCalled', async () => {
+        wrapper.find({ ref: 'localAddHolidayBtn' }).trigger('click')
+        await wrapper.vm.$nextTick()
+
+        expect(localAddHoliday).toHaveBeenCalled()
+        expect(createHoliday).toHaveBeenCalledWith(wrapper.vm.params)
+        expect(handleSuccess).toHaveBeenCalledWith({ emitType: 'afterModify', message: 'Holiday is created' })
+      })
+    })
+  })
+
+  describe('when have props', () => {
+    beforeEach(async () => {
+      wrapper.setProps({
+        targetHoliday
+      })
+      await wrapper.vm.$nextTick()
+    })
 
     describe('when HolidayForm was mounted', () => {
       it('should render correctly', () => {
         expect(wrapper.exists()).toBeTruthy()
         expect(wrapper.isVueInstance()).toBeTruthy()
-      })
-
-      it('should have child components', () => {
-        expect(wrapper.find(flatPickr).exists()).toBeTruthy()
-        expect(wrapper.find(flatPickr).isVueInstance()).toBeTruthy()
+        expect(wrapper).toMatchSnapshot()
       })
     })
 
-    describe('when props data', () => {
-      it('should no have params data', () => {
-        const params = {
-          name: '',
-          started_at: '',
-          ended_at: ''
-        }
+    describe('when localEditHoliday', () => {
+      it('should localEditHoliday haveBeenCalled', async () => {
+        wrapper.find({ ref: 'localEditHolidayBtn' }).trigger('click')
+        await wrapper.vm.$nextTick()
 
-        expect(wrapper.vm.params).toEqual(params)
-        expect(wrapper.findAll('.form-group')).toHaveLength(4)
-      })
-
-      it('should display localAddHolidayButton', () => {
-        expect(wrapper.findAll('.form-group button')).toHaveLength(1)
-        expect(wrapper.find({ ref: 'localAddHolidayBtn' }).exists()).toBeTruthy()
-      })
-
-      it('should createdHoliday methods was called', () => {
-        wrapper.find({ ref: 'localAddHolidayBtn' }).trigger('click')
-        expect(localAddHoliday).toHaveBeenCalled()
-      })
-    })
-
-    describe('when errors', () => {
-      describe('when have no errors', () => {
-        it('should have no form-input-hint text error', () => {
-          expect(wrapper.find('.form-group.has-error').exists()).toBeFalsy()
-          expect(wrapper.find('.form-group .form-input-hint').exists()).toBeFalsy()
+        expect(localEditHoliday).toHaveBeenCalled()
+        expect(updateHoliday).toHaveBeenCalledWith({
+          holidayID: targetHoliday.id,
+          updateParams: wrapper.vm.params
         })
-      })
-
-      describe('when have errors', () => {
-        it('should have form-input-hint text error', () => {
-          const errors = {
-            name: ['has been taken'],
-            started_at: ['wrong'],
-            ended_at: ['wrong']
-          }
-          setComputed(wrapper, { errors })
-          const formInputHints = wrapper.findAll('.form-group .form-input-hint')
-
-          expect(wrapper.findAll('.form-group.has-error')).toHaveLength(3)
-          expect(formInputHints).toHaveLength(3)
-          expect(formInputHints.at(0).text()).toEqual('Name has been taken')
-          expect(formInputHints.at(1).text()).toEqual('Start at wrong')
-          expect(formInputHints.at(2).text()).toEqual('End at wrong')
-        })
+        expect(handleSuccess).toHaveBeenCalledWith({ emitType: 'afterModify', message: 'Holiday is updated' })
       })
     })
   })
 
-  describe('when have props data', () => {
-    let wrapper
+  describe('when errors', () => {
+    it('should have text error', () => {
+      const errors = {
+        name: ['has been taken'],
+        started_at: ['wrong'],
+        ended_at: ['wrong']
+      }
+      setComputed(wrapper, { errors })
 
-    beforeEach(() => {
-      Object.assign(wrapperOps, {
-        mixins: [flatpickrLocale],
-        propsData: { targetHoliday },
-        methods: {
-          localAddHoliday,
-          localEditHoliday,
-          clearHolidayErrors
-        }
-      })
-      wrapper = shallowMount(HolidayForm, wrapperOps)
-    })
-
-    it('should have params data', () => {
-      expect(wrapper.vm.params).toEqual(targetHoliday)
-    })
-
-    it('should display localEditHolidayButton', () => {
-      expect(wrapper.findAll('.form-group button')).toHaveLength(1)
-      expect(wrapper.find({ ref: 'localEditHolidayBtn' }).exists()).toBeTruthy()
-    })
-
-    it('should createdHoliday methods was called', () => {
-      wrapper.find({ ref: 'localEditHolidayBtn' }).trigger('click')
-      expect(localEditHoliday).toHaveBeenCalled()
+      expect(wrapper).toMatchSnapshot()
     })
   })
 })

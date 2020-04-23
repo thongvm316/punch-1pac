@@ -1,20 +1,20 @@
 import { shallowMount } from '@vue/test-utils'
-
 import wrapperOps from '../../supports/wrapper'
 import setComputed from '../../supports/set-computed'
-
 import AllowedIpForm from '@/components/AllowedIpForm'
-import handleSuccess from '@/mixins/handle-success'
 
-const localAddIp = jest.fn()
-const localEditIp = jest.fn()
+const localAddIp = jest.spyOn(AllowedIpForm.methods, 'localAddIp')
+const createIP = jest.spyOn(AllowedIpForm.methods, 'createIP').mockResolvedValue()
+const localEditIp = jest.spyOn(AllowedIpForm.methods, 'localEditIp')
+const updateIP = jest.spyOn(AllowedIpForm.methods, 'updateIP').mockResolvedValue()
+const handleSuccessFn = jest.spyOn(AllowedIpForm.mixins[1].methods, 'handleSuccess')
 
 Object.assign(wrapperOps, {
-  methods: {
-    localAddIp,
-    localEditIp
-  },
-  mixins: [handleSuccess]
+  data() {
+    return {
+      params: '192.168.1.1'
+    }
+  }
 })
 
 describe('AllowedIpForm.vue', () => {
@@ -30,54 +30,49 @@ describe('AllowedIpForm.vue', () => {
     it('should display AllowedIpForm Component', () => {
       expect(wrapper.isVueInstance()).toBe(true)
       expect(wrapper.exists()).toBe(true)
+      expect(wrapper).toMatchSnapshot()
     })
   })
 
-  describe('create allowed ip button', () => {
-    it('should display create allowed ip button', () => {
-      expect(wrapper.vm.$data.params).toBe('')
-      expect(wrapper.find({ ref: 'createAllowedIpButton' }).exists()).toBe(true)
-      expect(wrapper.find({ ref: 'editAllowedIpButton' }).exists()).toBe(false)
-    })
-
+  describe('when create allowedIP', () => {
     it('should call localAddIp method', async () => {
+      setComputed(wrapper, {
+        isDisabled: false
+      })
+
       wrapper.find({ ref: 'createAllowedIpButton' }).trigger('click')
       await wrapper.vm.$nextTick()
 
       expect(localAddIp).toHaveBeenCalled()
+      expect(createIP).toHaveBeenCalledWith({ ip_address: '192.168.1.1' })
+      expect(handleSuccessFn).toHaveBeenCalledWith({ emitType: 'afterModify', message: 'Allowed IP address is created' })
     })
   })
 
-  describe('update allowed ip button', () => {
+  describe('when update allowedIP', () => {
     beforeEach(async () => {
-      wrapper.setProps({ targetIp: '192.168.110.1' })
+      wrapper.setProps({
+        targetIp: {
+          ip_address: '192.168.110.1',
+          id: 1
+        }
+      })
       await wrapper.vm.$nextTick()
     })
 
     it('should display update allowed ip button', () => {
-      expect(wrapper.props().targetIp).toEqual('192.168.110.1')
-      expect(wrapper.find({ ref: 'createAllowedIpButton' }).exists()).toBe(false)
-      expect(wrapper.find({ ref: 'editAllowedIpButton' }).exists()).toBe(true)
+      expect(wrapper).toMatchSnapshot()
     })
 
     it('should call localEditIp method', () => {
+      setComputed(wrapper, {
+        isDisabled: false
+      })
       wrapper.find({ ref: 'editAllowedIpButton' }).trigger('click')
 
       expect(localEditIp).toHaveBeenCalled()
-    })
-  })
-
-  describe('form input hint text', () => {
-    it('should no display error text', () => {
-      expect(wrapper.find('.form-group > .form-input-hint').exists()).toBe(false)
-    })
-
-    it('should display error text', async () => {
-      setComputed(wrapper, { errors: { ip_address: ['cant be blank'] } })
-      await wrapper.vm.$nextTick()
-
-      expect(wrapper.find('.form-group > .form-input-hint').exists()).toBe(true)
-      expect(wrapper.find('.form-group > .form-input-hint').text()).toEqual('IP address cant be blank')
+      expect(updateIP).toHaveBeenCalledWith({ id: 1, ip_address: '192.168.1.1' })
+      // expect(handleSuccessFn).toHaveBeenCalledWith({ emitType: 'afterModify', message: 'Allowed IP address is created' })
     })
   })
 })

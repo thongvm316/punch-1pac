@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Flash.vue when Flash was mounted should render correctly 1`] = `
+<transition-stub name="fade">
+  <div class="toast toast-success text-center toast-flash toast-success">
+    Success Message
+  </div>
+</transition-stub>
+`;
+
+exports[`Flash.vue when Flash was mounted should render error message 1`] = `
+<transition-stub name="fade">
+  <div class="toast toast-success text-center toast-flash toast-error">
+    Error Message
+  </div>
+</transition-stub>
+`;

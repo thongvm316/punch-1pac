@@ -1,10 +1,20 @@
-import { CREATE_USER, CREATE_MULTI_USER, DELETE_USER, FETCH_USERS, UPDATE_USER, DEACTIVATE_USER, ACTIVATE_USER } from '../mutation-types.js'
+import {
+  CREATE_USER,
+  CREATE_MULTI_USER,
+  DELETE_USER, FETCH_USERS,
+  UPDATE_USER,
+  DEACTIVATE_USER,
+  ACTIVATE_USER,
+  UPDATE_USER_ERRORS,
+  CLEAR_USER_ERRORS
+} from '../mutation-types.js'
 import Repositories from '@/repository'
 
 const usersRepository = Repositories.get('users')
 
 const state = {
-  users: []
+  users: [],
+  errors: {}
 }
 
 const getters = {
@@ -44,6 +54,14 @@ const mutations = {
   [ACTIVATE_USER](state, userId) {
     const index = state.users.findIndex(user => user.id === userId)
     state.users[index].activated = true
+  },
+
+  [UPDATE_USER_ERRORS](state, payload) {
+    state.errors = payload.errors
+  },
+
+  [CLEAR_USER_ERRORS](state) {
+    state.errors = {}
   }
 }
 
@@ -57,6 +75,7 @@ const actions = {
         return response
       })
       .catch(error => {
+        if (error.response && error.response.status === 422) commit(UPDATE_USER_ERRORS, error.response.data)
         throw error
       })
   },

@@ -118,7 +118,10 @@
       :title="$t('modal.user.addTitle')"
       :modal-open.sync="isAddModalOpen"
     >
-      <user-add-form @afterAdded="isAddModalOpen = false" />
+      <user-add-form
+        v-if="isAddModalOpen"
+        @afterAdded="isAddModalOpen = false"
+      />
     </modal>
 
     <modal

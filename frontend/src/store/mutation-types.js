@@ -31,6 +31,8 @@ export const DELETE_USER = 'DELETE_USER'
 export const UPDATE_USER = 'UPDATE_USER'
 export const DEACTIVATE_USER = 'DEACTIVATE_USER'
 export const ACTIVATE_USER = 'ACTIVATE_USER'
+export const UPDATE_USER_ERRORS = 'UPDATE_USER_ERRORS'
+export const CLEAR_USER_ERRORS = 'CLEAR_USER_ERRORS'
 
 // company-business-days
 export const FETCH_BUSINESS_DAYS = 'FETCH_BUSINESS_DAYS'

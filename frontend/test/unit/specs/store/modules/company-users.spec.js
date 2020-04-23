@@ -1,6 +1,7 @@
 import companyUsers from '@/store/modules/company-users'
 import Repositories from '@/repository'
 import usersData from '../../../supports/fixtures/users.api'
+import error422 from '../../../supports/fixtures/errors.api'
 jest.mock('@/repository/users')
 
 const usersRepository = Repositories.get('users')
@@ -73,12 +74,46 @@ describe('mutations', () => {
 
       expect(state.users.filter(user => user.id === userId)[0].activated).toBe(true)
     })
+
+    it('should UPDATE_USER_ERRORS', () => {
+      const payload = { errors: usersData.errors }
+      mutations.UPDATE_USER_ERRORS(state, payload)
+
+      expect(state.errors).toEqual(payload.errors)
+    })
+
+    it('should CLEAR_USER_ERRORS', () => {
+      state.errors = usersData.errors
+      mutations.CLEAR_USER_ERRORS(state)
+
+      expect(state.errors).toEqual({})
+    })
   })
 })
 
 describe('actions', () => {
   let response
   const userId = 2
+
+  describe('when createUser', () => {
+    it('should commit CREATE_USER', async () => {
+      response = { data: [...usersData.users][0] }
+      usersRepository.createUser.mockResolvedValue(response)
+      await actions.createUser({ commit }, userId)
+
+      expect(commit).toHaveBeenCalledWith('CREATE_USER', response.data)
+    })
+
+    it('should commit UPDATE_USER_ERRORS', async () => {
+      const mockError = error422
+      usersRepository.createUser.mockRejectedValue(mockError)
+
+      await actions.createUser({ commit }, userId).catch(error => {
+        expect(error).toEqual(error422)
+        expect(commit).toHaveBeenCalledWith('UPDATE_USER_ERRORS', mockError.response.data)
+      })
+    })
+  })
 
   describe('when fetchUsers', () => {
     it('should commit FETCH_USERS', async () => {

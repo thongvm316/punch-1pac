@@ -1,0 +1,45 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ConfirmDialog.vue when ConfirmDialog was mounted should render correctly 1`] = `
+<div class="modal"><span class="modal-overlay"></span>
+  <div class="modal-container">
+    <div class="modal-header"><span class="btn btn-clear float-right"></span>
+      <h3 class="modal-title">
+        Confirm Dialog
+      </h3>
+    </div>
+    <div class="modal-body">
+      <div class="content">
+        <p class="default-scoped">Scope slot</p>
+      </div>
+    </div>
+    <div class="modal-footer"><button type="button" class="btn btn-error">
+        Yes
+      </button> <button type="button" class="btn">
+        No
+      </button></div>
+  </div>
+</div>
+`;
+
+exports[`ConfirmDialog.vue when watch modalOpen should active modal 1`] = `
+<div class="modal active"><span class="modal-overlay"></span>
+  <div class="modal-container">
+    <div class="modal-header"><span class="btn btn-clear float-right"></span>
+      <h3 class="modal-title">
+        Confirm Dialog
+      </h3>
+    </div>
+    <div class="modal-body">
+      <div class="content">
+        <p class="default-scoped">Scope slot</p>
+      </div>
+    </div>
+    <div class="modal-footer"><button type="button" class="btn btn-error">
+        Yes
+      </button> <button type="button" class="btn">
+        No
+      </button></div>
+  </div>
+</div>
+`;

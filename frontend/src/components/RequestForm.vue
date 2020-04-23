@@ -119,12 +119,12 @@
 </template>
 
 <script>
-import flatpickrLocale from '../mixins/flatpickr-locale'
-import handleSuccess from '../mixins/handle-success'
-import requestFormValidate from '../validations/request-form-valiate'
-import { CLEAR_REQUEST_ERRORS } from '../store/mutation-types'
 import { mapState, mapActions, mapMutations } from 'vuex'
 import { isEmpty } from 'underscore'
+import flatpickrLocale from '@/mixins/flatpickr-locale'
+import handleSuccess from '@/mixins/handle-success'
+import requestFormValidate from '@/validations/request-form-valiate'
+import { CLEAR_REQUEST_ERRORS } from '@/store/mutation-types'
 const flatPickr = () => import('vue-flatpickr-component')
 
 export default {

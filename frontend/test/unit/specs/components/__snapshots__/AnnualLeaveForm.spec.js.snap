@@ -1,0 +1,105 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AnnualLeaveForm.vue when AnnualLeaveForm was mounted should render correctly 1`] = `
+<div>
+  <div class="form-group"><label class="form-label">Day Off</label>
+    <flatpickr-stub config="[object Object]" value="" class="form-input daterange-picker"></flatpickr-stub>
+    <!---->
+    <!---->
+  </div>
+  <div class="form-group"><label class="form-label">Reason</label> <textarea class="form-input"></textarea>
+    <!---->
+    <!---->
+  </div>
+  <div class="form-group"><button type="button" disabled="disabled" class="btn btn-success btn-submit">
+      Submit
+    </button>
+    <!---->
+  </div>
+</div>
+`;
+
+exports[`AnnualLeaveForm.vue when error should display both errors 1`] = `
+<div>
+  <div class="form-group has-error"><label class="form-label">Day Off</label>
+    <flatpickr-stub config="[object Object]" value="" class="form-input daterange-picker"></flatpickr-stub>
+    <!---->
+    <p class="form-input-hint">
+      Day Off attendance_day error
+    </p>
+  </div>
+  <div class="form-group has-error"><label class="form-label">Reason</label> <textarea class="form-input"></textarea>
+    <!---->
+    <p class="form-input-hint">
+      Reason reason error
+    </p>
+  </div>
+  <div class="form-group"><button type="button" disabled="disabled" class="btn btn-success btn-submit">
+      Submit
+    </button>
+    <!---->
+  </div>
+</div>
+`;
+
+exports[`AnnualLeaveForm.vue when error should display error attendance_day 1`] = `
+<div>
+  <div class="form-group has-error"><label class="form-label">Day Off</label>
+    <flatpickr-stub config="[object Object]" value="" class="form-input daterange-picker"></flatpickr-stub>
+    <!---->
+    <p class="form-input-hint">
+      Day Off something wrong
+    </p>
+  </div>
+  <div class="form-group"><label class="form-label">Reason</label> <textarea class="form-input"></textarea>
+    <!---->
+    <!---->
+  </div>
+  <div class="form-group"><button type="button" disabled="disabled" class="btn btn-success btn-submit">
+      Submit
+    </button>
+    <!---->
+  </div>
+</div>
+`;
+
+exports[`AnnualLeaveForm.vue when error should display error reason 1`] = `
+<div>
+  <div class="form-group has-error"><label class="form-label">Day Off</label>
+    <flatpickr-stub config="[object Object]" value="" class="form-input daterange-picker"></flatpickr-stub>
+    <!---->
+    <p class="form-input-hint">
+      Day Off something wrong
+    </p>
+  </div>
+  <div class="form-group has-error"><label class="form-label">Reason</label> <textarea class="form-input"></textarea>
+    <!---->
+    <p class="form-input-hint">
+      Reason error
+    </p>
+  </div>
+  <div class="form-group"><button type="button" disabled="disabled" class="btn btn-success btn-submit">
+      Submit
+    </button>
+    <!---->
+  </div>
+</div>
+`;
+
+exports[`AnnualLeaveForm.vue when update request should render update button 1`] = `
+<div>
+  <div class="form-group"><label class="form-label">Day Off</label>
+    <flatpickr-stub config="[object Object]" value="" class="form-input daterange-picker"></flatpickr-stub>
+    <!---->
+    <!---->
+  </div>
+  <div class="form-group"><label class="form-label">Reason</label> <textarea class="form-input"></textarea>
+    <!---->
+    <!---->
+  </div>
+  <div class="form-group">
+    <!----> <button type="button" class="btn btn-success btn-submit">
+      Save
+    </button></div>
+</div>
+`;

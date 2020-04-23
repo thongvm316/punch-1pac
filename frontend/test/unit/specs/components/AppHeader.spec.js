@@ -1,24 +1,22 @@
 import { shallowMount } from '@vue/test-utils'
-
 import wrapperOps from '../../supports/wrapper'
-
+import setComputed from '../../supports/set-computed'
+import initialStatesData from '../../supports/fixtures/initial-states.api'
+import Repositories from '@/repository'
 import AppHeader from '@/components/AppHeader'
-import Notifications from '@/components/Notifications'
-import Punch from '@/components/Punch'
-import AnnualLeave from '@/components/AnnualLeave'
+jest.mock('@/repository/users')
 
-const logout = jest.fn()
+const usersRepository = Repositories.get('users')
+const logout = jest.spyOn(AppHeader.methods, 'logout')
 const toggleDropdown = jest.spyOn(AppHeader.methods, 'toggleDropdown')
 const toggleLangSelect = jest.spyOn(AppHeader.methods, 'toggleLangSelect')
-const updateUser = jest.fn()
+const updateUser = jest.spyOn(AppHeader.methods, 'updateUser')
+const INITIAL_STATES_UPDATE_USER_LANGUAGE = jest.spyOn(AppHeader.methods, 'INITIAL_STATES_UPDATE_USER_LANGUAGE')
 
 Object.assign(wrapperOps, {
-  methods: {
-    logout,
-    toggleDropdown,
-    toggleLangSelect,
-    updateUser
-  }
+  Notifications: true,
+  AnnualLeave: true,
+  Punch: true
 })
 
 describe('AppHeader.vue', () => {
@@ -26,6 +24,9 @@ describe('AppHeader.vue', () => {
 
   beforeEach(() => {
     wrapper = shallowMount(AppHeader, wrapperOps)
+    setComputed(wrapper, {
+      meta: initialStatesData.meta
+    })
   })
 
   afterEach(() => { wrapper.vm.$destroy() })
@@ -34,38 +35,29 @@ describe('AppHeader.vue', () => {
     it('should render correctly', () => {
       expect(wrapper.isVueInstance()).toBe(true)
       expect(wrapper.exists()).toBe(true)
-    })
-
-    it('should render sub components', () => {
-      expect(wrapper.find(Notifications).isVueInstance()).toBe(true)
-      expect(wrapper.find(Notifications).exists()).toBe(true)
-      expect(wrapper.find(Punch).isVueInstance()).toBe(true)
-      expect(wrapper.find(Punch).exists()).toBe(true)
-      expect(wrapper.find(AnnualLeave).isVueInstance()).toBe(true)
-      expect(wrapper.find(AnnualLeave).exists()).toBe(true)
+      expect(wrapper).toMatchSnapshot()
     })
   })
 
-  describe('when toggle dropdown', () => {
+  describe('when toggleDropdown', () => {
     it('should called toggleDropdown method', async () => {
-      wrapper.find('.dropdown').trigger('click')
+      wrapper.find({ ref: 'dropdownMenu' }).trigger('click')
       await wrapper.vm.$nextTick()
 
       expect(toggleDropdown).toHaveBeenCalled()
       expect(wrapper.vm.isDropdownActive).toEqual(true)
-      expect(wrapper.find({ ref: 'dropdownMenu' }).classes()).toContain('active')
+      expect(wrapper).toMatchSnapshot()
     })
   })
 
-  describe('when toggle language selector', () => {
-    it('should called toogleLangSelect', async () => {
+  describe('when toggleLanguageSelect', () => {
+    it('should called toogleLangSelect method', async () => {
       wrapper.find({ ref: 'toggleLangSelectBtn' }).trigger('click')
       await wrapper.vm.$nextTick()
 
       expect(toggleLangSelect).toHaveBeenCalled()
       expect(wrapper.vm.isLangSelectActive).toEqual(true)
-      expect(wrapper.findAll('.triangle-top').length).toEqual(1)
-      expect(wrapper.find('.lang-select').exists()).toBe(true)
+      expect(wrapper).toMatchSnapshot()
     })
   })
 
@@ -75,20 +67,19 @@ describe('AppHeader.vue', () => {
       await wrapper.vm.$nextTick()
 
       expect(logout).toHaveBeenCalled()
-      expect(wrapper.find({ ref: 'logoutBtn' }).exists()).toBe(true)
     })
   })
 
-  //describe('when user set language', () => {
-    //beforeEach(async () => {
-      //wrapper.find({ ref: 'toggleLangSelectBtn' }).trigger('click')
-      //await wrapper.vm.$nextTick()
-    //})
+  describe('when user change language', () => {
+    it('should call updateUser method', async () => {
+      usersRepository.updateUser.mockResolvedValue(null)
+      wrapper.setData({ isLangSelectActive: true })
+      wrapper.find({ ref: 'toggleLangSelectBtn' }).trigger('click')
+      await wrapper.vm.$nextTick()
 
-    //it('should call updateUser method', () => {
-      //expect(wrapper.vm.isLangSelectActive).toEqual(true)
-      //expect(wrapper.find({ ref: 'updateUserBtn' }).exists()).toBe(true)
-      //expect(updateUser).toHaveBeenCalled()
-    //})
-  //})
+      wrapper.findAll({ ref: 'languageItem' }).at(2).find('a').trigger('click')
+
+      expect(updateUser).toHaveBeenCalled()
+    })
+  })
 })

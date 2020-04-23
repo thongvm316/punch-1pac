@@ -137,11 +137,11 @@
 </template>
 
 <script>
-import flatpickrLocale from '../mixins/flatpickr-locale'
-import dropdown from '../mixins/dropdown'
-import modal from '../mixins/modal'
 import { mapState, mapGetters, mapActions } from 'vuex'
-import PIcoBell from '@/punch-ui/punch-icons/PIcoBell'
+import flatpickrLocale from '@/mixins/flatpickr-locale'
+import dropdown from '@/mixins/dropdown'
+import modal from '@/mixins/modal'
+const PIcoBell = () => import('@/punch-ui/punch-icons/PIcoBell')
 const flatPickr = () => import('vue-flatpickr-component')
 
 export default {

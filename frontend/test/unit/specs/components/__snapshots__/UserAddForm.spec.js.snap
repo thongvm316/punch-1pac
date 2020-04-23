@@ -1,0 +1,77 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UserAddForm.vue when UserAddForm was mouted should render correctly 1`] = `
+<form class="setting-form">
+  <div class="form-group"><label class="form-label">Name</label> <input type="text" placeholder="Name" class="form-input">
+    <!---->
+    <!---->
+  </div>
+  <div class="form-group"><label class="form-label">Email</label> <input type="text" placeholder="Email" class="form-input">
+    <!---->
+    <!---->
+  </div>
+  <div class="form-group"><label class="form-label">Role</label> <select class="form-select">
+      <option value="member">
+        Member
+      </option>
+      <option value="admin">
+        Admin
+      </option>
+      <option value="superadmin">
+        Superadmin
+      </option>
+    </select></div>
+  <div class="form-group"><label class="form-label">Group</label>
+    <groupselect-stub value="">
+      <option value="">
+        Choose a group
+      </option>
+    </groupselect-stub>
+    <!---->
+    <!---->
+  </div>
+  <div class="form-group"><button type="button" class="btn btn-success btn-submit">
+      Submit
+    </button></div>
+</form>
+`;
+
+exports[`UserAddForm.vue when errors should match snapshot 1`] = `
+<form class="setting-form">
+  <div class="form-group has-error"><label class="form-label">Name</label> <input type="text" placeholder="Name" class="form-input">
+    <!---->
+    <p class="form-input-hint">
+      Name to have been taken
+    </p>
+  </div>
+  <div class="form-group has-error"><label class="form-label">Email</label> <input type="text" placeholder="Email" class="form-input">
+    <!---->
+    <p class="form-input-hint">
+      Email to have been taken
+    </p>
+  </div>
+  <div class="form-group"><label class="form-label">Role</label> <select class="form-select">
+      <option value="member">
+        Member
+      </option>
+      <option value="admin">
+        Admin
+      </option>
+      <option value="superadmin">
+        Superadmin
+      </option>
+    </select></div>
+  <div class="form-group"><label class="form-label">Group</label>
+    <groupselect-stub value="">
+      <option value="">
+        Choose a group
+      </option>
+    </groupselect-stub>
+    <!---->
+    <!---->
+  </div>
+  <div class="form-group"><button type="button" class="btn btn-success btn-submit">
+      Submit
+    </button></div>
+</form>
+`;

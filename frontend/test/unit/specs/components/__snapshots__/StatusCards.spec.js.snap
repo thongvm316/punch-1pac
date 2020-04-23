@@ -1,0 +1,45 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`StatusCards.vue should render correctly 1`] = `
+<div class="status-cards mt-5">
+  <datepicker-stub language="en" format="MMMM yyyy" minimum-view="month" maximum-view="month" input-class="datepicker-input form-input" calendar-class="datepicker-calendar" wrapper-class="datepicker" value="Feb 05, 2019"></datepicker-stub>
+  <div class="columns">
+    <div class="column col-4">
+      <div class="box mt-5">
+        <p>Attend Late</p>
+        <h3>8 / 20 days</h3>
+      </div>
+    </div>
+    <div class="column col-4">
+      <div class="box mt-5">
+        <p>Attend OK</p>
+        <h3>14 / 20 days</h3>
+      </div>
+    </div>
+    <div class="column col-4">
+      <div class="box mt-5">
+        <p>Day Off</p>
+        <h3>0 / 20 days</h3>
+      </div>
+    </div>
+    <div class="column col-4">
+      <div class="box mt-5">
+        <p>Leave Early</p>
+        <h3>12 / 20 days</h3>
+      </div>
+    </div>
+    <div class="column col-4">
+      <div class="box mt-5">
+        <p>Leave OK</p>
+        <h3>10 / 20 days</h3>
+      </div>
+    </div>
+    <div class="column col-4">
+      <div class="box mt-5">
+        <p>Working hours</p>
+        <h3>0h0m / 160h</h3>
+      </div>
+    </div>
+  </div>
+</div>
+`;

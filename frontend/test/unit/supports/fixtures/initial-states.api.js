@@ -27,12 +27,17 @@ export default {
     phone_number: '1-469-970-9015',
     postal_code: '44596',
     tax_code: 'Ww534703Rg7f43',
-    timezone: 'Asia/Bangkok'
+    timezone: 'Asia/Bangkok',
+    breakdays: ['saturday', 'sunday'],
   },
 
   meta: {
     base_url: 'http://localhost:3000',
-    csv_template_url: '/public/static/template.csv'
+    csv_template_url: '/public/static/template.csv',
+    languages: ['en', 'vi', 'ja'],
+    attendance_statuses: ['attend_ok', 'attend_late', 'leave_ok', 'leave_early', 'annual_leave'],
+    weekdays: ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'],
+    roles: ['member', 'admin', 'superadmin']
   },
 
   errors: {

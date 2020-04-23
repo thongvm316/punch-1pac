@@ -1,18 +1,26 @@
 import { shallowMount } from '@vue/test-utils'
-
 import wrapperOps from '../../supports/wrapper'
 import setComputed from '../../supports/set-computed'
-
+import initialStatesData from '../../supports/fixtures/initial-states.api'
 import AttendanceStatusSelect from '@/components/AttendanceStatusSelect'
 
 const updateValue = jest.spyOn(AttendanceStatusSelect.methods, 'updateValue')
-Object.assign(wrapperOps, { methods: { updateValue } })
+const scopedSlots= {
+  placeholder: '<option>Attendance status</option>'
+}
+
+Object.assign(wrapperOps, {
+  scopedSlots
+})
 
 describe('AttendanceStatusSelect.vue', () => {
   let wrapper
 
   beforeEach(() => {
     wrapper = shallowMount(AttendanceStatusSelect, wrapperOps)
+    setComputed(wrapper, {
+      meta: initialStatesData.meta
+    })
   })
 
   afterEach(() => { wrapper.vm.$destroy() })
@@ -21,16 +29,7 @@ describe('AttendanceStatusSelect.vue', () => {
     it('should render correctly', () => {
       expect(wrapper.exists()).toBe(true)
       expect(wrapper.isVueInstance()).toBe(true)
-    })
-  })
-
-  describe('when computed meta data', () => {
-    it('should render options for form-select', () => {
-      const attendance_statuses = ['attend_ok', 'attend_late', 'leave_ok', 'leave_early', 'annual_leave']
-      setComputed(wrapper, { meta: { attendance_statuses } })
-
-      expect(wrapper.find('.form-select option').exists()).toBe(true)
-      expect(wrapper.findAll('.form-select option')).toHaveLength(5)
+      expect(wrapper).toMatchSnapshot()
     })
   })
 

@@ -8,9 +8,18 @@ export default {
     working_hours: {
       hours:0,
       mins:0
+    },
+    minutes_attend_late: {
+      hours: 4,
+      mins: 39
+    },
+    minutes_leave_early: {
+      hours: 1,
+      mins: 20
     }
   },
   meta: {
-    xxx: 'yyy'
+    company_total_working_days_in_month: 20,
+    company_total_working_hours_on_month: 160
   }
 }

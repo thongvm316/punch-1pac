@@ -1,0 +1,68 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GroupForm.vue when GroupForm was mounted should render correctly 1`] = `
+<div>
+  <div class="form-group"><label class="form-label">Name</label> <input type="text" placeholder="Name" class="form-input">
+    <!---->
+    <!---->
+  </div>
+  <div class="form-group"><label class="form-label">Image</label>
+    <!----> <input type="file" class="form-input">
+    <!---->
+  </div>
+  <div class="form-group"><label class="form-label">Description</label> <textarea placeholder="Description" class="form-input"></textarea>
+    <!---->
+  </div>
+  <div class="form-group"><button type="button" class="btn btn-success btn-submit">
+      Submit
+    </button>
+    <!---->
+  </div>
+</div>
+`;
+
+exports[`GroupForm.vue when GroupForm was mounted should render exists groups 1`] = `
+<div>
+  <div class="form-group"><label class="form-label">Name</label> <input type="text" placeholder="Name" class="form-input">
+    <!---->
+    <!---->
+  </div>
+  <div class="form-group"><label class="form-label">Image</label> <img alt="" class="img-profile"> <input type="file" class="form-input">
+    <!---->
+  </div>
+  <div class="form-group"><label class="form-label">Description</label> <textarea placeholder="Description" class="form-input"></textarea>
+    <!---->
+  </div>
+  <div class="form-group">
+    <!----> <button type="button" class="btn btn-success btn-submit">
+      Save
+    </button></div>
+</div>
+`;
+
+exports[`GroupForm.vue when errors should render errors text 1`] = `
+<div>
+  <div class="form-group has-error"><label class="form-label">Name</label> <input type="text" placeholder="Name" class="form-input">
+    <!---->
+    <p class="form-input-hint">
+      Name have been taken
+    </p>
+  </div>
+  <div class="form-group has-error"><label class="form-label">Image</label>
+    <!----> <input type="file" class="form-input">
+    <p class="form-input-hint">
+      Image too large
+    </p>
+  </div>
+  <div class="form-group has-error"><label class="form-label">Description</label> <textarea placeholder="Description" class="form-input"></textarea>
+    <p class="form-input-hint">
+      Description wrong
+    </p>
+  </div>
+  <div class="form-group"><button type="button" class="btn btn-success btn-submit">
+      Submit
+    </button>
+    <!---->
+  </div>
+</div>
+`;

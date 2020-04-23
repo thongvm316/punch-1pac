@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import { mapState, mapActions } from 'vuex'
 
 export default {
   name: 'GroupSelect',
@@ -27,27 +27,16 @@ export default {
     }
   },
 
-  data() {
-    return {
-      groups: []
-    }
+  computed: {
+    ...mapState('groups', ['groups'])
   },
 
   created() {
-    this.fetchAllGroups()
+    this.getGroups()
   },
 
   methods: {
-    fetchAllGroups() {
-      axios
-        .get('/groups')
-        .then(response => {
-          this.groups = response.data
-        })
-        .catch(error => {
-          throw error
-        })
-    },
+    ...mapActions('groups', ['getGroups']),
 
     updateValue(e) {
       this.$emit('input', e.target.value)

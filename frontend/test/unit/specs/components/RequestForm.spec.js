@@ -1,24 +1,20 @@
 import { shallowMount } from '@vue/test-utils'
-
 import wrapperOps from '../../supports/wrapper'
-
-import flatPickr from 'vue-flatpickr-component'
-import flatpickrLocale from '@/mixins/flatpickr-locale'
-import handleSuccess from '@/mixins/handle-success'
+import attendancesData from '../../supports/fixtures/attendances.api'
+import requestsData from '../../supports/fixtures/requests.api'
 import RequestForm from '@/components/RequestForm'
 
-const localAddRequest = jest.fn()
-const localEditRequest = jest.fn()
-const attendance = {
-  day: '2019-12-02',
-  attended_at: '08:00',
-  left_at: '18:00'
-}
-const request = {
-  attendance_day: '2019-12-02',
-  attended_at: '08:00',
-  left_at: '18:00',
-  reason: 'Forgot'
+const localAddRequest = jest.spyOn(RequestForm.methods, 'localAddRequest')
+const localEditRequest = jest.spyOn(RequestForm.methods, 'localEditRequest')
+const addRequest = jest.spyOn(RequestForm.methods, 'addRequest').mockResolvedValue(null)
+const updateRequest = jest.spyOn(RequestForm.methods, 'updateRequest').mockResolvedValue(null)
+const handleSuccess = jest.spyOn(RequestForm.mixins[1].methods, 'handleSuccess')
+
+const attendance = [...attendancesData.attendances][0]
+const request = [...requestsData.requests][0]
+const errors = {
+  attended_at: ['attended_at wrong'],
+  left_at: ['left_at wrong']
 }
 
 describe('RequestForm.vue', () => {
@@ -26,83 +22,109 @@ describe('RequestForm.vue', () => {
 
   afterEach(() => { wrapper.vm.$destroy() })
 
-  describe('when attendance props', () => {
-    beforeEach(() => {
-      Object.assign(wrapperOps, {
-        methods: {
-          localAddRequest,
-          localEditRequest
-        },
-        mixins: [flatpickrLocale, handleSuccess],
-        propsData: { attendance }
-      })
+  describe('when have no props', () => {
+    const localWrapperOps = {
+      ...wrapperOps,
+      stubs: {
+        flatPickr: true
+      }
+    }
 
-      wrapper = shallowMount(RequestForm, wrapperOps)
+    beforeEach(() => {
+      wrapper = shallowMount(RequestForm, localWrapperOps)
     })
 
     it('should render correctly', () => {
       expect(wrapper.exists()).toBeTruthy()
       expect(wrapper.isVueInstance()).toBeTruthy()
-      expect(wrapper.find(flatPickr).exists()).toBeTruthy()
+      expect(wrapper).toMatchSnapshot()
+    })
+  })
+
+
+  describe('when attendance props', () => {
+    const localWrapperOps = {
+      ...wrapperOps,
+      propsData: { attendance },
+      stubs: {
+        flatPickr: true
+      }
+    }
+
+    beforeEach(() => {
+      wrapper = shallowMount(RequestForm, localWrapperOps)
     })
 
-    it('should have correct params', () => {
-      expect(wrapper.vm.day).toEqual(attendance.day)
-      expect(wrapper.vm.params.attendance_day).toEqual(attendance.day)
-      expect(wrapper.vm.params.attended_at).toEqual(attendance.attended_at)
-      expect(wrapper.vm.params.left_at).toEqual(attendance.left_at)
-      expect(wrapper.vm.params.reason).toEqual('')
+    it('should render correctly', () => {
+      expect(wrapper.exists()).toBeTruthy()
+      expect(wrapper.isVueInstance()).toBeTruthy()
+      expect(wrapper).toMatchSnapshot()
     })
 
-    it('should have localAddRequest button', () => {
-      expect(wrapper.findAll('.form-group button')).toHaveLength(1)
-      expect(wrapper.find({ ref: 'localAddRequestButton' }).exists()).toBeTruthy()
-    })
-
-    it('should localAddRequest called', () => {
+    it('should localAddRequest toHaveBeenCalled', async () => {
       wrapper.find({ ref: 'localAddRequestButton' }).trigger('click')
+      await wrapper.vm.$nextTick()
 
       expect(localAddRequest).toHaveBeenCalled()
+      expect(addRequest).toHaveBeenCalledWith(wrapper.vm.params)
+      expect(handleSuccess).toHaveBeenCalledWith({ emitType: 'afterModify', message: 'Request is created' })
     })
   })
 
   describe('when request props', () => {
-    beforeEach(() => {
-      Object.assign(wrapperOps, {
-        methods: {
-          localAddRequest,
-          localEditRequest
-        },
-        mixins: [flatpickrLocale, handleSuccess],
-        propsData: { request }
-      })
+    const localWrapperOps = {
+      ...wrapperOps,
+      propsData: { request },
+      stubs: {
+        flatPickr: true
+      },
+      computed: {
+        isDisabled() {
+          return false
+        }
+      }
+    }
 
-      wrapper = shallowMount(RequestForm, wrapperOps)
+    beforeEach(() => {
+      wrapper = shallowMount(RequestForm, localWrapperOps)
     })
 
     it('should render correctly', () => {
       expect(wrapper.exists()).toBeTruthy()
       expect(wrapper.isVueInstance()).toBeTruthy()
-      expect(wrapper.find(flatPickr).exists()).toBeTruthy()
+      expect(wrapper).toMatchSnapshot()
     })
 
-    it('should have correct params', () => {
-      expect(wrapper.vm.day).toEqual(request.attendance_day)
-      expect(wrapper.vm.params.attendance_day).toEqual(request.attendance_day)
-      expect(wrapper.vm.params.attended_at).toEqual(request.attended_at)
-      expect(wrapper.vm.params.left_at).toEqual(request.left_at)
-      expect(wrapper.vm.params.reason).toEqual(request.reason)
-    })
-
-    it('should have localEditRequest button', () => {
-      expect(wrapper.findAll('.form-group button')).toHaveLength(1)
-      expect(wrapper.find({ ref: 'localEditRequestButton' }).exists()).toBeTruthy()
-    })
-
-    it('should localEditRequest called', () => {
+    it('should localEditRequest toHaveBeenCalled', async () => {
       wrapper.find({ ref: 'localEditRequestButton' }).trigger('click')
+      await wrapper.vm.$nextTick()
 
       expect(localEditRequest).toHaveBeenCalled()
+      expect(updateRequest).toHaveBeenCalledWith({ id: request.id, params: wrapper.vm.params })
+      expect(handleSuccess).toHaveBeenCalledWith({ emitType: 'afterModify', message: 'Request is updated' })
+    })
+  })
+
+  describe('when errors', () => {
+    const localWrapperOps = {
+      ...wrapperOps,
+      propsData: { request },
+      stubs: {
+        flatPickr: true
+      },
+      computed: {
+        errors() {
+          return errors
+        }
+      }
+    }
+
+    beforeEach(() => {
+      wrapper = shallowMount(RequestForm, localWrapperOps)
+    })
+
+    it('should render errors', () => {
+      expect(wrapper).toMatchSnapshot()
     })
   })
 })

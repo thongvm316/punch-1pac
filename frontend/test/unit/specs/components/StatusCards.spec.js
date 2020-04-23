@@ -1,27 +1,39 @@
 import { shallowMount } from '@vue/test-utils'
-
 import wrapperOps from '../../supports/wrapper'
 import localVue from '../../supports/local-vue'
-
-import Datepicker from 'vuejs-datepicker'
+import statusCardsData from '../../supports/fixtures/status-cards.api'
 import StatusCards from '@/components/StatusCards'
 
-const onInputDatepicker = jest.spyOn(StatusCards.methods, 'onInputDatepicker')
-const month = localVue.prototype.$moment().format('LL')
-Object.assign(wrapperOps, {
+const getStatuses = jest.fn()
+
+const localWrapperOps = {
+  ...wrapperOps,
   data: function() {
     return {
-      month
+      month: localVue.prototype.$moment('2019-02-05').format('LL')
     }
   },
-  methods: { onInputDatepicker }
-})
+  stubs: {
+    Datepicker: true
+  },
+  computed: {
+    statuses() {
+      return { ...statusCardsData.statuses }
+    },
+    meta() {
+      return { ...statusCardsData.meta }
+    }
+  },
+  methods: {
+    getStatuses
+  }
+}
 
 describe('StatusCards.vue', () => {
   let wrapper
 
   beforeEach(() => {
-    wrapper = shallowMount(StatusCards, wrapperOps)
+    wrapper = shallowMount(StatusCards, localWrapperOps)
   })
 
   afterEach(() => { wrapper.vm.$destroy() })
@@ -29,12 +41,7 @@ describe('StatusCards.vue', () => {
   it('should render correctly', () => {
     expect(wrapper.exists()).toBeTruthy()
     expect(wrapper.isVueInstance()).toBeTruthy()
-    expect(wrapper.find(Datepicker).exists()).toBeTruthy()
-  })
-
-  it('should return onInputDatePicker', () => {
-    wrapper.vm.onInputDatepicker()
-    const localMonth = wrapper.vm.month
-    expect(localMonth).toEqual(localVue.prototype.$moment(localMonth).format('YYYY-MM-DD'))
+    expect(getStatuses).toHaveBeenCalled()
+    expect(wrapper).toMatchSnapshot()
   })
 })
