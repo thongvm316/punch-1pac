@@ -80,11 +80,11 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
-import modal from '../mixins/modal'
+import modal from '@/mixins/modal'
 import PIcoPencil from '@/punch-ui/punch-icons/PIcoPencil'
 import PIcoTrash from '@/punch-ui/punch-icons/PIcoTrash'
-const AllowedIpForm = () => import('../components/AllowedIpForm.vue')
-const ConfirmDialog = () => import('../components/ConfirmDialog')
+const AllowedIpForm = () => import('@/components/AllowedIpForm.vue')
+const ConfirmDialog = () => import('@/components/ConfirmDialog')
 
 export default {
   components: {

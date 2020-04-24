@@ -29,8 +29,8 @@
       {{ $t('sidebar.company.holidays') }}
     </li>
     <li
-      :class="{ active: activeTabName === 'AllowedIps' }"
-      @click="setActive('AllowedIps')"
+      :class="{ active: activeTabName === 'AllowedIp' }"
+      @click="setActive('AllowedIp')"
     >
       <p-ico-allowed-ip />
       {{ $t('sidebar.company.allowedIPs') }}
