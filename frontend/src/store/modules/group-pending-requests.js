@@ -1,5 +1,7 @@
 import { RECEVIE_GROUP_PENDING_REQUESTS } from '../mutation-types.js'
-import callApi from '../api-caller'
+import Repositories from '@/repository'
+
+const usersRepository = Repositories.get('users')
 
 const state = {
   pendingRequests: []
@@ -13,7 +15,7 @@ const mutations = {
 
 const actions = {
   getGroupPendingRequests({ commit }) {
-    return callApi({ method: 'get', url: '/users/group_pending_requests' })
+    return usersRepository.getGroupPendingRequests()
       .then(response => {
         commit(RECEVIE_GROUP_PENDING_REQUESTS, response.data)
         return response

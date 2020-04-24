@@ -1,0 +1,284 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AppHeader.vue when app header was mounted should render correctly 1`] = `
+<header class="header">
+  <div class="container">
+    <div class="navbar">
+      <section class="navbar-section">
+        <router-link-stub to="/dashboard" tag="a" event="click" class="navbar-brand mr-4"><img></router-link-stub>
+        <router-link-stub to="/attendances" tag="a" event="click" class="mr-5">
+          Attendances
+        </router-link-stub>
+        <router-link-stub to="/requests" tag="a" event="click" class="mr-5">
+          Requests
+        </router-link-stub>
+        <!---->
+      </section>
+      <section class="navbar-section">
+        <div>
+          <div class="punch">
+            <!---->
+            <!----> <span class="mr-5">10:39:37</span> <button class="btn btn-primary mr-5">
+              Punch In
+            </button>
+            <!---->
+          </div>
+          <!---->
+        </div>
+        <div><button type="button" class="btn btn-notice mr-5">
+            Day Off
+          </button>
+          <!---->
+        </div>
+        <div>
+          <div class="dropdown mr-5"><span data-badge="0" class="notification"><p-ico-bell-stub></p-ico-bell-stub></span>
+            <div class="box notifications notification-dropdown triangle-top">
+              <div class="notification-header">
+                <h4>Notifications</h4>
+              </div>
+              <p class="no-notification-msg">
+                You have no new notifications
+              </p>
+            </div>
+          </div>
+          <!---->
+        </div>
+        <div class="dropdown"><a class="dropdown-toggle">
+            <div class="tile tile-centered mr-2">
+              <div class="tile-icon"><img class="avatar avatar-md"></div>
+            </div>
+          </a>
+          <ul class="menu triangle-top">
+            <li class="menu-item">
+              <router-link-stub to="/settings" tag="a" event="click">
+                Settings
+              </router-link-stub>
+            </li>
+            <li class="menu-item">
+              <!---->
+            </li>
+            <li class="menu-item"><a>Change Language...</a></li>
+            <li class="menu-item"><a href="#">Logout</a></li>
+          </ul>
+          <ul class="menu triangle-top lang-select" style="display: none;">
+            <li class="header"><a class="btn-back"></a>
+              <p>Languages</p>
+            </li>
+            <li class="menu-item"><a class="active">English</a></li>
+            <li class="menu-item"><a class="">Vietnamese</a></li>
+            <li class="menu-item"><a class="">Japanese</a></li>
+          </ul>
+        </div>
+      </section>
+    </div>
+  </div>
+</header>
+`;
+
+exports[`AppHeader.vue when toggleDropdown should called toggleDropdown method 1`] = `
+<header class="header">
+  <div class="container">
+    <div class="navbar">
+      <section class="navbar-section">
+        <router-link-stub to="/dashboard" tag="a" event="click" class="navbar-brand mr-4"><img></router-link-stub>
+        <router-link-stub to="/attendances" tag="a" event="click" class="mr-5">
+          Attendances
+        </router-link-stub>
+        <router-link-stub to="/requests" tag="a" event="click" class="mr-5">
+          Requests
+        </router-link-stub>
+        <!---->
+      </section>
+      <section class="navbar-section">
+        <div>
+          <div class="punch">
+            <!---->
+            <!----> <span class="mr-5">10:39:38</span> <button class="btn btn-primary mr-5">
+              Punch In
+            </button>
+            <!---->
+          </div>
+          <div class="modal"><span class="modal-overlay"></span>
+            <div class="modal-container">
+              <div class="modal-header"><span class="btn btn-clear float-right"></span>
+                <h3 class="modal-title">
+                  Punch Out
+                </h3>
+              </div>
+              <div class="modal-body">
+                <div class="content">
+                  <p>Do you intent to punch out at 10:39 ?</p>
+                </div>
+              </div>
+              <div class="modal-footer"><button type="button" class="btn btn-error">
+                  Yes
+                </button> <button type="button" class="btn">
+                  No
+                </button></div>
+            </div>
+          </div>
+        </div>
+        <div><button type="button" class="btn btn-notice mr-5">
+            Day Off
+          </button>
+          <div class="modal"><span class="modal-overlay"></span>
+            <div class="modal-container">
+              <div class="modal-header"><span class="btn btn-clear float-right"></span>
+                <h3 class="modal-title">
+                  Request a leave
+                </h3>
+              </div>
+              <div class="modal-body">
+                <div class="content"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="dropdown mr-5"><span data-badge="0" class="notification"><p-ico-bell-stub></p-ico-bell-stub></span>
+            <div class="box notifications notification-dropdown triangle-top">
+              <div class="notification-header">
+                <h4>Notifications</h4>
+              </div>
+              <p class="no-notification-msg">
+                You have no new notifications
+              </p>
+            </div>
+          </div>
+          <!---->
+        </div>
+        <div class="dropdown active"><a class="dropdown-toggle">
+            <div class="tile tile-centered mr-2">
+              <div class="tile-icon"><img class="avatar avatar-md"></div>
+            </div>
+          </a>
+          <ul class="menu triangle-top">
+            <li class="menu-item">
+              <router-link-stub to="/settings" tag="a" event="click">
+                Settings
+              </router-link-stub>
+            </li>
+            <li class="menu-item">
+              <!---->
+            </li>
+            <li class="menu-item"><a>Change Language...</a></li>
+            <li class="menu-item"><a href="#">Logout</a></li>
+          </ul>
+          <ul class="menu triangle-top lang-select" style="display: none;">
+            <li class="header"><a class="btn-back"></a>
+              <p>Languages</p>
+            </li>
+            <li class="menu-item"><a class="active">English</a></li>
+            <li class="menu-item"><a class="">Vietnamese</a></li>
+            <li class="menu-item"><a class="">Japanese</a></li>
+          </ul>
+        </div>
+      </section>
+    </div>
+  </div>
+</header>
+`;
+
+exports[`AppHeader.vue when toggleLanguageSelect should called toogleLangSelect method 1`] = `
+<header class="header">
+  <div class="container">
+    <div class="navbar">
+      <section class="navbar-section">
+        <router-link-stub to="/dashboard" tag="a" event="click" class="navbar-brand mr-4"><img></router-link-stub>
+        <router-link-stub to="/attendances" tag="a" event="click" class="mr-5">
+          Attendances
+        </router-link-stub>
+        <router-link-stub to="/requests" tag="a" event="click" class="mr-5">
+          Requests
+        </router-link-stub>
+        <!---->
+      </section>
+      <section class="navbar-section">
+        <div>
+          <div class="punch">
+            <!---->
+            <!----> <span class="mr-5">10:39:38</span> <button class="btn btn-primary mr-5">
+              Punch In
+            </button>
+            <!---->
+          </div>
+          <div class="modal"><span class="modal-overlay"></span>
+            <div class="modal-container">
+              <div class="modal-header"><span class="btn btn-clear float-right"></span>
+                <h3 class="modal-title">
+                  Punch Out
+                </h3>
+              </div>
+              <div class="modal-body">
+                <div class="content">
+                  <p>Do you intent to punch out at 10:39 ?</p>
+                </div>
+              </div>
+              <div class="modal-footer"><button type="button" class="btn btn-error">
+                  Yes
+                </button> <button type="button" class="btn">
+                  No
+                </button></div>
+            </div>
+          </div>
+        </div>
+        <div><button type="button" class="btn btn-notice mr-5">
+            Day Off
+          </button>
+          <div class="modal"><span class="modal-overlay"></span>
+            <div class="modal-container">
+              <div class="modal-header"><span class="btn btn-clear float-right"></span>
+                <h3 class="modal-title">
+                  Request a leave
+                </h3>
+              </div>
+              <div class="modal-body">
+                <div class="content"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="dropdown mr-5"><span data-badge="0" class="notification"><p-ico-bell-stub></p-ico-bell-stub></span>
+            <div class="box notifications notification-dropdown triangle-top">
+              <div class="notification-header">
+                <h4>Notifications</h4>
+              </div>
+              <p class="no-notification-msg">
+                You have no new notifications
+              </p>
+            </div>
+          </div>
+          <!---->
+        </div>
+        <div class="dropdown"><a class="dropdown-toggle">
+            <div class="tile tile-centered mr-2">
+              <div class="tile-icon"><img class="avatar avatar-md"></div>
+            </div>
+          </a>
+          <ul class="menu triangle-top" style="display: none;">
+            <li class="menu-item">
+              <router-link-stub to="/settings" tag="a" event="click">
+                Settings
+              </router-link-stub>
+            </li>
+            <li class="menu-item">
+              <!---->
+            </li>
+            <li class="menu-item"><a>Change Language...</a></li>
+            <li class="menu-item"><a href="#">Logout</a></li>
+          </ul>
+          <ul class="menu triangle-top lang-select" style="">
+            <li class="header"><a class="btn-back"></a>
+              <p>Languages</p>
+            </li>
+            <li class="menu-item"><a class="active">English</a></li>
+            <li class="menu-item"><a class="">Vietnamese</a></li>
+            <li class="menu-item"><a class="">Japanese</a></li>
+          </ul>
+        </div>
+      </section>
+    </div>
+  </div>
+</header>
+`;

@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`when AppFooter was mounted should render correctly 1`] = `
+<footer class="footer">
+  <div class="container grid-xl">
+    <div class="footer-items">
+      <ul class="list-inline">
+        <li><img src="../assets/logo.png"></li>
+        <li><a href="http://localhost:3000/terms">Terms</a></li>
+        <li><a href="http://localhost:3000/privacy">Privacy</a></li>
+        <li><a href="http://localhost:3000/help">Help</a></li>
+        <li><a href="http://localhost:3000/contact">Contact us</a></li>
+        <li><a href="http://localhost:3000/about">About</a></li>
+      </ul> <span>© 2018 1PAC Vietnam Co.,Ltd</span>
+    </div>
+  </div>
+</footer>
+`;

@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`RemindPunchIn.vue when user have forgot punch in some day should show the remind punch in toast 1`] = `
+<div class="toast toast-error text-center mt-2"><button class="btn btn-clear float-right"></button>
+  You forgot to punch in on May 07 , May 08 , Jun 20. Please send request to admin for editing attendances on those days !!!
+</div>
+`;
+
+exports[`RemindPunchIn.vue when user remember to punch in all day should render correctly 1`] = ``;

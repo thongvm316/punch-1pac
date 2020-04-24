@@ -1,9 +1,9 @@
 import { shallowMount } from '@vue/test-utils'
-
 import wrapperOps from '../../supports/wrapper'
 import setComputed from '../../supports/set-computed'
-
 import Announcements from '@/components/Announcements'
+
+const readAnnouncement = jest.spyOn(Announcements.methods, 'readAnnouncement')
 
 describe('Announcements.vue', () => {
   let wrapper
@@ -18,12 +18,7 @@ describe('Announcements.vue', () => {
     it('should render correctly', () => {
       expect(wrapper.isVueInstance()).toBe(true)
       expect(wrapper.exists()).toBe(true)
-    })
-  })
-
-  describe('when have no header announcement', () => {
-    it('should no have header announcement', () => {
-      expect(wrapper.findAll('.toast')).toHaveLength(0)
+      expect(wrapper).toMatchSnapshot()
     })
   })
 
@@ -35,9 +30,7 @@ describe('Announcements.vue', () => {
       setComputed(wrapper, { headerAnnouncements: announComputed })
       wrapper.vm.$nextTick()
 
-      expect(wrapper.findAll('.toast')).toHaveLength(1)
-      expect(wrapper.find('.toast-success').exists()).toBe(true)
-      expect(wrapper.find('.toast-success').text()).toEqual('normal annoucement')
+      expect(wrapper).toMatchSnapshot()
     })
 
     it('should dislay urgent announcement', () => {
@@ -47,9 +40,7 @@ describe('Announcements.vue', () => {
       setComputed(wrapper, { headerAnnouncements: announComputed })
       wrapper.vm.$nextTick()
 
-      expect(wrapper.findAll('.toast')).toHaveLength(1)
-      expect(wrapper.find('.toast-warning').exists()).toBe(true)
-      expect(wrapper.find('.toast-warning').text()).toEqual('urgent annoucement')
+      expect(wrapper).toMatchSnapshot()
     })
 
     it('should display both announcements', () => {
@@ -60,22 +51,16 @@ describe('Announcements.vue', () => {
       setComputed(wrapper, { headerAnnouncements: announComputed })
       wrapper.vm.$nextTick()
 
-      expect(wrapper.findAll('.toast')).toHaveLength(2)
-      expect(wrapper.find('.toast-warning').exists()).toBe(true)
-      expect(wrapper.find('.toast-warning').text()).toEqual('urgent annoucement')
-      expect(wrapper.find('.toast-success').exists()).toBe(true)
-      expect(wrapper.find('.toast-success').text()).toEqual('normal annoucement')
+      expect(wrapper).toMatchSnapshot()
     })
   })
 
   describe('when trigger on read announcement', () => {
     it('should call method', () => {
-      const readAnnouncement = jest.fn()
       const announComputed = [
         { status: 'urgent', content: 'urgent annoucement' }
       ]
       setComputed(wrapper, { headerAnnouncements: announComputed })
-      wrapper.setMethods({ readAnnouncement })
       wrapper.find('.toast > button').trigger('click')
 
       expect(readAnnouncement).toHaveBeenCalled()

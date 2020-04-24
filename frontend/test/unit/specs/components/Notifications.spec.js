@@ -1,11 +1,7 @@
 import { shallowMount } from '@vue/test-utils'
-
 import wrapperOps from '../../supports/wrapper'
 import setComputed from '../../supports/set-computed'
-
-import flatpickrLocale from '@/mixins/flatpickr-locale'
-import dropdown from '@/mixins/dropdown'
-import modal from '@/mixins/modal'
+import notificationsData from '../../supports/fixtures/notifications.api'
 import Notifications from '@/components/Notifications'
 
 const headerNotifications = [
@@ -31,28 +27,32 @@ const headerNotifications = [
     create_at: '2019-12-04'
   }
 ]
-const getHeaderNotifications = jest.fn()
+const getHeaderNotifications = jest.spyOn(Notifications.methods, 'getHeaderNotifications')
 const toggleDropdown = jest.spyOn(Notifications.methods, 'toggleDropdown')
 const isEditable = jest.spyOn(Notifications.methods, 'isEditable')
-const loadMoreOnScroll = jest.fn()
+const loadMoreOnScroll = jest.spyOn(Notifications.methods, 'loadMoreOnScroll')
+const openRequestModal = jest.spyOn(Notifications.methods, 'openRequestModal')
 const readNotifications = jest.fn()
 
-Object.assign(wrapperOps, {
-  methods: {
-    getHeaderNotifications,
-    toggleDropdown,
-    loadMoreOnScroll,
-    isEditable,
-    readNotifications
+const localWrapperOps = {
+  ...wrapperOps,
+  data() {
+    return {
+      isDropdownActive: true
+    }
   },
-  mixins: [dropdown, modal, flatpickrLocale]
-})
+  stubs: {
+    flatPickr: true,
+    Modal: true,
+    PIcoBell: true
+  }
+}
 
 describe('Notifications.vue', () => {
   let wrapper
 
   beforeEach(() => {
-    wrapper = shallowMount(Notifications, wrapperOps)
+    wrapper = shallowMount(Notifications, localWrapperOps)
   })
 
   afterEach(() => { wrapper.vm.$destroy() })
@@ -61,28 +61,8 @@ describe('Notifications.vue', () => {
     it('should render correctly', () => {
       expect(wrapper.exists()).toBeTruthy()
       expect(wrapper.isVueInstance()).toBeTruthy()
-    })
-  })
-
-  describe('when click dropdownMenu', () => {
-    it('should call toggleDropdown method', async () => {
-      const dropdownMenu = wrapper.find({ ref: 'dropdownMenu' })
-      dropdownMenu.trigger('click')
-      await wrapper.vm.$nextTick()
-
-      expect(toggleDropdown).toHaveBeenCalled()
-      expect(wrapper.vm.isDropdownActive).toBe(true)
-      expect(dropdownMenu.isVisible()).toBeTruthy()
-    })
-  })
-
-  describe('when dont have headerNotifications', () => {
-    it('should render no header notifications', async () => {
-      setComputed(wrapper, { headerNotifications: [] })
-      await wrapper.vm.$nextTick()
-
-      expect(wrapper.vm.headerNotifications).toHaveLength(0)
-      expect(wrapper.find({ ref: 'notiList' }).exists()).toBeFalsy()
+      expect(getHeaderNotifications).toHaveBeenCalled()
+      expect(wrapper).toMatchSnapshot()
     })
   })
 
@@ -90,7 +70,10 @@ describe('Notifications.vue', () => {
     let editableNoti, uneditableNoti
 
     beforeEach(async () => {
-      setComputed(wrapper, { headerNotifications })
+      setComputed(wrapper, {
+        headerNotifications,
+        isRequestDayOff: false
+      })
       await wrapper.vm.$nextTick()
 
       editableNoti = wrapper.find({ ref: 'notiList' }).find('li:first-child')
@@ -98,39 +81,33 @@ describe('Notifications.vue', () => {
     })
 
     it('should render header notifications', () => {
-      expect(wrapper.vm.headerNotifications).toHaveLength(2)
-      expect(wrapper.find({ ref: 'notiList' }).exists()).toBeTruthy()
-    })
-
-    it('editable noti should show pending label', () => {
-      expect(editableNoti.find('.label-warning').exists()).toBeTruthy()
+      expect(wrapper).toMatchSnapshot()
     })
 
     it('should show modal when click on editable request notification', async () => {
       editableNoti.trigger('click')
       await wrapper.vm.$nextTick()
 
-      expect(wrapper.find({ ref: 'requestModal' }).exists()).toBeTruthy()
-      expect(wrapper.find({ ref: 'requestModal' }).isVisible()).toBeTruthy()
+      expect(wrapper).toMatchSnapshot()
     })
 
-    it('uneditable noti should show pending label', () => {
-      expect(uneditableNoti.find('.label-warning').exists()).toBeFalsy()
-    })
-
-    it('modal should not exist when click on uneditable request notification', async () => {
+    it('should not exist modal when click on uneditable request notification', async () => {
       uneditableNoti.trigger('click')
       await wrapper.vm.$nextTick()
 
-      expect(wrapper.find({ ref: 'requestModal' }).exists()).toBeFalsy()
+      expect(wrapper).toMatchSnapshot()
     })
 
-    it('should call loadMoreOnScroll when user open noti list and trigger scroll', async () => {
+    it('should call toggleDropdown', () => {
       wrapper.find({ ref: 'dropdownMenu' }).trigger('click')
-      wrapper.find({ ref: 'notiList' }).trigger('scroll')
-      await wrapper.vm.$nextTick()
 
-      expect(loadMoreOnScroll).toHaveBeenCalled()
+      expect(toggleDropdown).toHaveBeenCalled()
+    })
+
+    it('should call openRequestModal', async () => {
+      wrapper.findAll('.notification-dropdown li').at(1).trigger('click')
+
+      expect(openRequestModal).toHaveBeenCalledWith(headerNotifications[1])
     })
   })
 })

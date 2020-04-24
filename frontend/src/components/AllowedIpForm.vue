@@ -41,8 +41,8 @@
 
 <script>
 import { mapActions } from 'vuex'
-import handleSuccess from '../mixins/handle-success'
-import allowedIpValidate from '../validations/allowed-ip-validate'
+import handleSuccess from '@/mixins/handle-success'
+import allowedIpValidate from '@/validations/allowed-ip-validate'
 
 export default {
   name: 'AllowedIpForm',

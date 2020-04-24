@@ -1,34 +1,33 @@
 import { shallowMount } from '@vue/test-utils'
-
 import wrapperOps from '../../supports/wrapper'
-
 import ConfirmDialog from '@/components/ConfirmDialog'
 
 const propsData = {
   title: 'Confirm Dialog',
-  modalOpen: false
-}
-const toggle = jest.spyOn(ConfirmDialog.methods, 'toggle')
-const methods = {
-  toggle,
-  confirm: jest.fn()
-}
-const scopedSlots = {
-  default: '<p class="default-scoped">Scope slot</p>',
-  confirmBtn: '<p class="confirm-btn-scoped">Confirm Btn Slot</p>'
+  modalOpen: false,
+  objectId: 0,
+  deleteObject: jest.fn().mockResolvedValue(null)
 }
 
-Object.assign(wrapperOps, {
+const toggle = jest.spyOn(ConfirmDialog.methods, 'toggle')
+const confirm = jest.spyOn(ConfirmDialog.methods, 'confirm')
+
+const scopedSlots = {
+  default: '<p class="default-scoped">Scope slot</p>',
+  // confirmBtn: '<button class="confirm-btn-scoped">Confirm Btn Slot</button>'
+}
+
+const localWrapperOps = {
+  ...wrapperOps,
   propsData,
-  methods,
   scopedSlots
-})
+}
 
 describe('ConfirmDialog.vue', () => {
   let wrapper
 
   beforeEach(() => {
-    wrapper = shallowMount(ConfirmDialog, wrapperOps)
+    wrapper = shallowMount(ConfirmDialog, localWrapperOps)
   })
 
   afterEach(() => { wrapper.vm.$destroy() })
@@ -37,60 +36,41 @@ describe('ConfirmDialog.vue', () => {
     it('should render correctly', () => {
       expect(wrapper.exists()).toBeTruthy()
       expect(wrapper.isVueInstance()).toBeTruthy()
-    })
-
-    it('should render correct props data', () => {
-      const { title, modalOpen } = wrapper.vm.$props
-
-      expect(title).toEqual('Confirm Dialog')
-      expect(wrapper.find('.modal-title').text()).toEqual('Confirm Dialog')
-      expect(modalOpen).toEqual(false)
-      expect(wrapper.find('.modal').classes()).not.toContain('active')
-    })
-
-    it('should render slot', () => {
-      expect(wrapper.find('p.default-scoped').exists()).toBe(true)
-      expect(wrapper.find('.modal-footer .confirm-btn-scoped').exists()).toBe(true)
+      expect(wrapper).toMatchSnapshot()
     })
   })
 
-  describe('when validation propsData', () => {
-    it('should validate prop data', () => {
-      const { title, modalOpen, deleteObject, objectId } = wrapper.vm.$options.props
+  describe('when watch modalOpen', () => {
+    it('should active modal', async () => {
+      wrapper.setProps({ modalOpen: true })
+      await wrapper.vm.$nextTick()
 
-      expect(title.required).toBeTruthy()
-      expect(title.type).toBe(String)
-      expect(modalOpen.required).toBeTruthy()
-      expect(modalOpen.type).toBe(Boolean)
-      expect(deleteObject.type).toBe(Function)
-      expect(objectId.type).toBe(Number)
+      expect(wrapper).toMatchSnapshot()
     })
   })
 
-  describe('when methods confirm dialog', () => {
+  describe('when methods', () => {
     beforeEach(async () => {
       wrapper.setProps({ modalOpen: true })
       await wrapper.vm.$nextTick()
     })
 
-    it('should toggle method is called', () => {
+    it('should toggle haveBeebCalled', () => {
       wrapper.find('.modal-overlay').trigger('click')
 
       expect(toggle).toHaveBeenCalled()
-      expect(wrapper.vm.open).toBe(false)
-      expect(wrapper.emitted('update:modalOpen')).toBeTruthy()
       expect(wrapper.emitted('update:modalOpen')).toHaveLength(1)
       expect(wrapper.emitted('update:modalOpen')[0]).toEqual([false])
     })
-  })
 
-  describe('when watcher modalOpen', () => {
-    it('should open dialog when props change', async () => {
-      expect(wrapper.vm.open).toBe(false)
-
-      wrapper.setProps({ modalOpen: true })
+    it('should confirm toHaveBeenCalled', async () => {
+      wrapper.find('.modal-footer .btn-error').trigger('click')
       await wrapper.vm.$nextTick()
-      expect(wrapper.vm.open).toBe(true)
+
+      expect(confirm).toHaveBeenCalled()
+      expect(wrapper.vm.deleteObject).toHaveBeenCalledWith(0)
+      expect(wrapper.emitted('update:modalOpen')).toHaveLength(1)
+      expect(wrapper.emitted('update:modalOpen')[0]).toEqual([false])
     })
   })
 })

@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import Repositories from '@/repository'
 import debounce from 'lodash.debounce'
 const vSelect = () => import('vue-select')
 
@@ -78,8 +78,9 @@ export default {
     }, 350),
 
     search(search, loading) {
-      axios
-        .get('/users', { params: Object.assign({ name_or_email: search }, this.queryParams) })
+      const params = Object.assign({ name_or_email: search }, this.queryParams)
+
+      Repositories.get('users').getUsers(params)
         .then(response => {
           if (loading) loading(false)
           this.optionUsers = response.data.users

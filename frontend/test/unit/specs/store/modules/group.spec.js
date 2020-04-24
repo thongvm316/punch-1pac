@@ -1,9 +1,14 @@
 import group from '@/store/modules/group'
-import callApi from '@/store/api-caller'
-import { groupData, anotherGroupData, usersInGroupData, userData, groupError } from '../api-data/group.api.js'
+import Repositories from '@/repository'
+import groupsData from '../../../supports/fixtures/groups.api'
+import usersData from '../../../supports/fixtures/users.api'
+import errorsData from '../../../supports/fixtures/errors.api'
 import * as types from '@/store/mutation-types.js'
+jest.mock('@/repository/groups')
+jest.mock('@/repository/users')
 
-jest.mock('@/store/api-caller')
+const groupsRepository = Repositories.get('groups')
+const usersRepository = Repositories.get('users')
 
 const { state, getters, mutations, actions } = group
 const commit = jest.fn()
@@ -11,11 +16,11 @@ const commit = jest.fn()
 describe('getters', () => {
   describe('filterUsers by name/email', () => {
     beforeEach(() => {
-      state.usersInGroup = usersInGroupData().users
+      state.usersInGroup = [...usersData.users]
     })
 
     it('should return 2 users', () => {
-      const query = 'john'
+      const query = 'clara'
       const users = getters.filterUsers(state)(query)
 
       expect(users).toHaveLength(2)
@@ -46,17 +51,15 @@ describe('getters', () => {
 describe('mutations', () => {
   describe('when handle group', () => {
     it('RECEIVE_GROUP', () => {
-      const payload = groupData()
-
+      const payload = [...groupsData.groups]
       mutations.RECEIVE_GROUP(state, payload)
 
       expect(state.group).toEqual(payload)
     })
 
     it('UPDATE_GROUP', () => {
-      state.group = groupData()
-      const payload = anotherGroupData()
-
+      state.group = [...groupsData.groups]
+      const payload = [...groupsData.groups][1]
       mutations.UPDATE_GROUP(state, payload)
 
       expect(state.group).toEqual(payload)
@@ -65,11 +68,11 @@ describe('mutations', () => {
 
   describe('when handle users in group', () => {
     beforeEach(() => {
-      state.usersInGroup = usersInGroupData().users
+      state.usersInGroup = [...usersData.users]
     })
 
     it('ADD_GROUP_USER', () => {
-      const user = userData()
+      const user = [...usersData.users][0]
       mutations.ADD_GROUP_USER(state, user)
 
       expect(state.usersInGroup).toHaveLength(4)
@@ -78,7 +81,6 @@ describe('mutations', () => {
 
     it('DEACTIVATE_GROUP_USER', () => {
       const id = 1
-
       mutations.DEACTIVATE_GROUP_USER(state, id)
 
       expect(state.usersInGroup).toHaveLength(3)
@@ -89,7 +91,6 @@ describe('mutations', () => {
 
     it('ACTIVATE_GROUP_USER', () => {
       const id = 2
-
       mutations.ACTIVATE_GROUP_USER(state, id)
 
       expect(state.usersInGroup).toHaveLength(3)
@@ -126,7 +127,6 @@ describe('mutations', () => {
 
     it('REMOVE_GROUP_USER', () => {
       const id = 1
-
       mutations.REMOVE_GROUP_USER(state, id)
 
       expect(state.usersInGroup).toHaveLength(2)
@@ -137,8 +137,7 @@ describe('mutations', () => {
 
     it('FETCH_USERS_IN_GROUP', () => {
       state.usersInGroup = []
-      const payload = usersInGroupData()
-
+      const payload = {...usersData}
       mutations.FETCH_USERS_IN_GROUP(state, payload)
 
       expect(state.usersInGroup).toHaveLength(3)
@@ -148,8 +147,7 @@ describe('mutations', () => {
 
   describe('when handle errors', () => {
     it('UPDATE_GROUP_ERRORS', () => {
-      const payload = groupError().data
-
+      const payload = [...groupsData.errors]
       mutations.UPDATE_GROUP_ERRORS(state, payload)
 
       expect(state.errors).toEqual(payload.errors)
@@ -165,96 +163,110 @@ describe('mutations', () => {
 
 describe('actions', () => {
   describe('when handle group', () => {
-    it('getGroup: should commit RECEIVE_GROUP', async () => {
-      const id = 1
-      const response = {
-        data: groupData()
-      }
-      callApi.mockResolvedValue(response)
-
-      await actions.getGroup({ commit, state }, id)
-
-      expect(commit).toHaveBeenCalledWith(types.RECEIVE_GROUP, response.data)
-    })
-
+    const response = {
+      data: [...groupsData.groups][0]
+    }
     const params = {
       editParams: {
         name: 'mocking group'
       }
     }
+    const id = 1
 
-    it('updateGroup resolve: should commit UPDATE_GROUP', async () => {
-      const response = { data: groupData() }
-      callApi.mockResolvedValue(response)
+    describe('when fetch Group', () => {
+      it('should commit RECEIVE_GROUP', async () => {
+        groupsRepository.getGroup.mockResolvedValue(response)
 
-      await actions.updateGroup({ commit }, params)
+        await actions.getGroup({ commit }, id)
 
-      expect(commit).toHaveBeenCalledWith(types.UPDATE_GROUP, response.data)
+        expect(commit).toHaveBeenCalledWith(types.RECEIVE_GROUP, response.data)
+      })
     })
 
-    it('updateGroup reject: should commit UPDATE_GROUP_ERRORS', async () => {
-      const mockError = { response: groupError() }
-      callApi.mockRejectedValue(mockError)
+    describe('when edtit Group', () => {
+      it('updateGroup resolve: should commit UPDATE_GROUP', async () => {
+        const response = { data: [...groupsData.groups][0] }
+        groupsRepository.updateGroup.mockResolvedValue(response)
 
-      await actions.updateGroup({ commit }, params)
-        .catch(error => {
-          expect(error).toEqual(mockError)
-          expect(commit).toHaveBeenCalledWith(types.UPDATE_GROUP_ERRORS, error.response.data)
-        })
+        await actions.updateGroup({ commit }, params)
+
+        expect(commit).toHaveBeenCalledWith(types.UPDATE_GROUP, response.data)
+      })
+
+      it('updateGroup reject: should commit UPDATE_GROUP_ERRORS', async () => {
+        const mockError = errorsData
+        groupsRepository.updateGroup.mockRejectedValue(mockError)
+
+        await actions.updateGroup({ commit }, params)
+          .catch(error => {
+            expect(error).toEqual(mockError)
+            expect(commit).toHaveBeenCalledWith(types.UPDATE_GROUP_ERRORS, error.response.data)
+          })
+      })
     })
   })
 
   describe('when handle users in group', () => {
-    it('addGroupUser: should commit ADD_GROUP_USER', async () => {
-      const params = {
-        groupId: 1,
-        user: userData()
-      }
-      callApi.mockResolvedValue(null)
+    const userId = 1
+    const groupId = 1
 
-      await actions.addGroupUser({ commit }, params)
+    describe('when getUsersInGroup', () => {
+      it('getUsersInGroup: should commit FETCH_USERS_IN_GROUP', async () => {
+        const response = { data: [...usersData.users] }
+        usersRepository.getUsers.mockResolvedValue(response)
 
-      expect(commit).toHaveBeenCalledWith(types.ADD_GROUP_USER, params.user)
+        await actions.getUsersInGroup({ commit }, groupId)
+
+        expect(commit).toHaveBeenCalledWith(types.FETCH_USERS_IN_GROUP, response.data)
+      })
     })
 
-    it('deactivateGroupUser: should commit DEACTIVATE_GROUP_USER', async () => {
-      const userId = 1
-      callApi.mockResolvedValue(null)
+    describe('when addGroupUser', () => {
+      it('should commit ADD_GROUP_USER', async () => {
+        const params = {
+          groupId,
+          user: [...usersData.users][0]
+        }
+        groupsRepository.addGroupUser.mockResolvedValue(null)
 
-      await actions.deactivateGroupUser({ commit }, userId)
+        await actions.addGroupUser({ commit }, params)
 
-      expect(commit).toHaveBeenCalledWith(types.DEACTIVATE_GROUP_USER, userId)
+        expect(commit).toHaveBeenCalledWith(types.ADD_GROUP_USER, params.user)
+      })
     })
 
-    it('activateGroupUser: should commit ACTIVATE_GROUP_USER', async () => {
-      const userId = 1
-      callApi.mockResolvedValue(null)
+    describe('when removeGroupUser', () => {
+      it('should commit REMOVE_GROUP_USER', async () => {
+        const params = {
+          userId,
+          groupId
+        }
+        groupsRepository.removeGroupUser.mockResolvedValue(null)
 
-      await actions.activateGroupUser({ commit }, userId)
+        await actions.removeGroupUser({ commit }, params)
 
-      expect(commit).toHaveBeenCalledWith(types.ACTIVATE_GROUP_USER, userId)
+        expect(commit).toHaveBeenCalledWith(types.REMOVE_GROUP_USER, params.userId)
+      })
     })
 
-    it('removeGroupUser: should commit REMOVE_GROUP_USER', async () => {
-      const params = {
-        userId: 1,
-        groupId: 1
-      }
-      callApi.mockResolvedValue(null)
+    describe('when deactivateGroupUser', () => {
+      it('should commit DEACTIVATE_GROUP_USER', async () => {
+        usersRepository.deactivateUser.mockResolvedValue(null)
 
-      await actions.removeGroupUser({ commit }, params)
+        await actions.deactivateGroupUser({ commit }, userId)
 
-      expect(commit).toHaveBeenCalledWith(types.REMOVE_GROUP_USER, params.userId)
+        expect(commit).toHaveBeenCalledWith(types.DEACTIVATE_GROUP_USER, userId)
+      })
     })
 
-    it('getUsersInGroup: should commit FETCH_USERS_IN_GROUP', async () => {
-      const groupId = 1
-      const response = { data: usersInGroupData() }
-      callApi.mockResolvedValue(response)
+    describe('when activateGroupUser', () => {
+      it('activateGroupUser: should commit ACTIVATE_GROUP_USER', async () => {
+        usersRepository.activateUser.mockResolvedValue(null)
 
-      await actions.getUsersInGroup({ commit }, groupId)
+        await actions.activateGroupUser({ commit }, userId)
 
-      expect(commit).toHaveBeenCalledWith(types.FETCH_USERS_IN_GROUP, response.data)
+        expect(commit).toHaveBeenCalledWith(types.ACTIVATE_GROUP_USER, userId)
+      })
     })
   })
 })

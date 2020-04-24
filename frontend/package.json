@@ -7,7 +7,8 @@
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "start": "npm run dev",
-    "test:unit": "jest --config test/unit/jest.conf.js --coverage --silent --maxWorkers=2",
+    "test:unit:ci": "jest test/unit/specs/store/modules --config test/unit/jest.conf.js --silent --maxWorkers=2",
+    "test:unit": "jest --config test/unit/jest.conf.js -u --coverage",
     "tes:e2e": "node test/e2e/runner.js",
     "test": "npm run test:unit && npm run test:e2e",
     "lint": "eslint --ext .js,.vue src",
@@ -15,13 +16,14 @@
     "build": "node build/build.js",
     "stylelint-check": "stylelint 'src/scss/**/*.scss' --config=.stylelintrc.json; exit 0",
     "stylelint-fix": "stylelint 'src/scss/**/*.scss' --syntax=scss --config=.stylelintrc.json --fix; exit 0",
-    "prettier-check": "yarn prettier --config .prettierrc --debug-check \"src/**/*.{vue,js}\"",
-    "prettier-fix": "yarn prettier --config .prettierrc --write \"src/**/*.{vue,js}\""
+    "prettier-check": "yarn prettier --config .prettierrc --debug-check \"src/**/*.{js}\"",
+    "prettier-fix": "yarn prettier --config .prettierrc --write \"src/**/*.{js}\""
   },
   "dependencies": {
     "axios": "^0.17.1",
     "chart.js": "^2.7.2",
     "formdata-polyfill": "^3.0.10",
+    "immutable": "^4.0.0-rc.12",
     "lodash.debounce": "^4.0.8",
     "moment-timezone": "^0.5.14",
     "spectre.css": "^0.5.0",
@@ -71,8 +73,9 @@
     "friendly-errors-webpack-plugin": "^1.6.1",
     "glob-all": "^3.1.0",
     "html-webpack-plugin": "^2.30.1",
+    "husky": "^4.2.5",
     "jest": "^24.9.0",
-    "jest-serializer-vue": "^0.3.0",
+    "jest-serializer-vue": "^2.0.2",
     "nightwatch": "^0.9.12",
     "node-notifier": "^5.1.2",
     "node-sass": "^4.7.2",
@@ -103,11 +106,17 @@
     "webpack-merge": "^4.1.0"
   },
   "engines": {
-    "node": ">= 6.0.0",
-    "npm": ">= 3.0.0"
+    "node": ">= 8.0.0",
+    "npm": ">= 3.0.0",
+    "yarn": ">= 1.17.3"
   },
   "browserslist": [
     "> 1%",
     "last 2 versions"
-  ]
+  ],
+  "husky": {
+    "hooks": {
+      "pre-push": "npm run test:unit"
+    }
+  }
 }

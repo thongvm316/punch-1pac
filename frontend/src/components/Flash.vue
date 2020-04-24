@@ -11,8 +11,8 @@
 </template>
 
 <script>
-import { SET_FLASH_MESSAGE } from '../store/mutation-types'
 import { mapState, mapMutations } from 'vuex'
+import { SET_FLASH_MESSAGE } from '@/store/mutation-types'
 
 export default {
   name: 'Flash',

@@ -1,12 +1,7 @@
-import {
-  FETCH_BUSINESS_DAYS,
-  ADD_BUSINESS_DAY,
-  DELETE_BUSINESS_DAY,
-  UPDATE_BUSINESS_DAY,
-  UPDATE_BUSINESS_DAY_ERRORS,
-  CLEAR_BUSINESS_DAY_ERRORS
-} from '../mutation-types.js'
-import callApi from '../api-caller'
+import { FETCH_BUSINESS_DAYS, ADD_BUSINESS_DAY, DELETE_BUSINESS_DAY, UPDATE_BUSINESS_DAY, UPDATE_BUSINESS_DAY_ERRORS, CLEAR_BUSINESS_DAY_ERRORS } from '../mutation-types.js'
+import Repositories from '@/repository'
+
+const companySettingsRepository = Repositories.get('companySettings')
 
 const state = {
   errors: {},
@@ -42,10 +37,7 @@ const mutations = {
 
 const actions = {
   fetchBusinessDays({ commit }) {
-    return callApi({
-      method: 'get',
-      url: '/business_days'
-    })
+    return companySettingsRepository.getBusinessDays()
       .then(response => {
         commit(FETCH_BUSINESS_DAYS, response.data)
         return response
@@ -56,11 +48,9 @@ const actions = {
   },
 
   addBusinessDay({ commit }, params) {
-    return callApi({
-      method: 'post',
-      url: '/business_days',
-      data: { business_day: params }
-    })
+    const data = { business_day: params }
+
+    return companySettingsRepository.addBusinessDay(data)
       .then(response => {
         commit(ADD_BUSINESS_DAY, response.data)
         return response
@@ -72,10 +62,7 @@ const actions = {
   },
 
   deleteBusinessDay({ commit }, businessDayId) {
-    return callApi({
-      method: 'delete',
-      url: `/business_days/${businessDayId}`
-    })
+    return companySettingsRepository.deleteBusinessDay(businessDayId)
       .then(response => {
         commit(DELETE_BUSINESS_DAY, businessDayId)
         return response
@@ -86,11 +73,9 @@ const actions = {
   },
 
   updateBusinessDay({ commit }, params) {
-    return callApi({
-      method: 'put',
-      url: `/business_days/${params.businessDayId}`,
-      data: { business_day: params.updateParams }
-    })
+    const data = { business_day: params.updateParams }
+
+    return companySettingsRepository.updateBusinessDay(params.businessDayId, data)
       .then(response => {
         commit(UPDATE_BUSINESS_DAY, response.data)
         return response

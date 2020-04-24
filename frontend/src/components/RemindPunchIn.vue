@@ -14,7 +14,7 @@
 
 <script>
 import { mapState, mapMutations } from 'vuex'
-import { UPDATE_REMIND_PUNCH_IN } from '../store/mutation-types'
+import { UPDATE_REMIND_PUNCH_IN } from '@/store/mutation-types'
 
 export default {
   name: 'RemindPunchIn',

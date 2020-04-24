@@ -104,9 +104,10 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
-import handleSuccess from '../mixins/handle-success'
-import userAddValidate from '../validations/user-add-validate'
+import { mapState, mapActions, mapMutations } from 'vuex'
+import { CLEAR_USER_ERRORS } from '@/store/mutation-types'
+import handleSuccess from '@/mixins/handle-success'
+import userAddValidate from '@/validations/user-add-validate'
 const GroupSelect = () => import('./GroupSelect.vue')
 
 export default {
@@ -120,7 +121,6 @@ export default {
 
   data() {
     return {
-      errors: {},
       params: {
         name: '',
         email: '',
@@ -131,20 +131,24 @@ export default {
   },
 
   computed: {
-    ...mapState('initialStates', ['meta'])
+    ...mapState('initialStates', ['meta']),
+
+    ...mapState('companyUsers', ['errors'])
+  },
+
+  created() {
+    this[CLEAR_USER_ERRORS]()
   },
 
   methods: {
     ...mapActions('companyUsers', ['createUser']),
 
+    ...mapMutations('companyUsers', ['CLEAR_USER_ERRORS']),
+
     create() {
       this.createUser(this.params)
         .then(response => {
           this.handleSuccess({ message: this.$t('messages.user.addSuccess'), emitType: 'afterAdded' })
-        })
-        .catch(error => {
-          if (error.response && error.response.status === 422) this.errors = error.response.data.errors
-          else throw error
         })
     }
   }

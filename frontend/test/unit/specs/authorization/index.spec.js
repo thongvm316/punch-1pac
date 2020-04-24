@@ -1,4 +1,4 @@
-import { currUser, targetUser } from './support/user.js'
+import { currUser, targetUser } from '../../supports/fixtures/user'
 import User from '@/authorization/user'
 import Page from '@/authorization/page'
 import Group from '@/authorization/group'

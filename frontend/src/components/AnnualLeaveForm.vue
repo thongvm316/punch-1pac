@@ -71,14 +71,15 @@
 </template>
 
 <script>
-import flatpickrLocale from '../mixins/flatpickr-locale'
-import handleSuccess from '../mixins/handle-success'
-import axios from 'axios'
-import annualLeaveValidate from '../validations/annual-leave-validate'
+import { mapActions, mapState, mapMutations } from 'vuex'
+import flatpickrLocale from '@/mixins/flatpickr-locale'
+import handleSuccess from '@/mixins/handle-success'
+import annualLeaveValidate from '@/validations/annual-leave-validate'
+import { CLEAR_REQUEST_ERRORS } from '@/store/mutation-types'
 const flatPickr = () => import('vue-flatpickr-component')
 
 export default {
-  name: 'AnnualLeave',
+  name: 'AnnualLeaveForm',
 
   components: {
     flatPickr
@@ -91,10 +92,12 @@ export default {
       type: Object,
       default: null
     },
+
     type: {
       type: String,
       default: ''
     },
+
     annualDay: {
       type: String,
       default: ''
@@ -103,11 +106,18 @@ export default {
 
   data() {
     return {
-      errors: {},
       params: {
         attendance_day: '',
         reason: ''
       }
+    }
+  },
+
+  computed: {
+    ...mapState('requests', ['errors']),
+
+    dataRequest() {
+      return Object.assign(this.params, { kind: 'annual_leave' })
     }
   },
 
@@ -117,31 +127,35 @@ export default {
   },
 
   methods: {
+    ...mapMutations('requests', ['CLEAR_REQUEST_ERRORS']),
+    ...mapActions('requests', ['addRequest', 'updateRequest']),
+
     create() {
-      axios
-        .post('/requests', Object.assign(this.params, { kind: 'annual_leave' }))
+      this.addRequest(this.dataRequest)
         .then(response => {
           this.handleSuccess({
             emitType: 'finishRequest',
             message: this.$t('messages.request.createSuccess')
           })
-        })
-        .catch(error => {
-          if (error.response && error.response.status === 422) this.errors = error.response.data.errors
+
+          this[CLEAR_REQUEST_ERRORS]()
         })
     },
 
     update() {
-      axios
-        .put(`/requests/${this.request.id}`, Object.assign(this.params, { kind: 'annual_leave' }))
+      const request = {
+        id: this.request.id,
+        params: this.dataRequest
+      }
+
+      this.updateRequest(request)
         .then(response => {
           this.handleSuccess({
             emitType: 'finishRequest',
             message: this.$t('messages.request.updateSuccess')
           })
-        })
-        .catch(error => {
-          if (error.response && error.response.status === 422) this.errors = error.response.data.errors
+
+          this[CLEAR_REQUEST_ERRORS]()
         })
     }
   }

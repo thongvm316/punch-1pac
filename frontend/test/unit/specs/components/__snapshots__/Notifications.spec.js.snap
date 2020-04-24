@@ -1,0 +1,147 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Notifications.vue when Notifications was mounted should render correctly 1`] = `
+<div>
+  <div class="dropdown mr-5 active"><span data-badge="0" class="notification"><picobell-stub></picobell-stub></span>
+    <div class="box notifications notification-dropdown triangle-top">
+      <div class="notification-header">
+        <h4>Notifications</h4>
+      </div>
+      <p class="no-notification-msg">
+        You have no new notifications
+      </p>
+    </div>
+  </div>
+  <!---->
+</div>
+`;
+
+exports[`Notifications.vue when have headerNotifications should not exist modal when click on uneditable request notification 1`] = `
+<div>
+  <div class="dropdown mr-5"><span data-badge="0" class="notification"><picobell-stub></picobell-stub></span>
+    <div class="box notifications notification-dropdown triangle-top">
+      <div class="notification-header">
+        <h4>Notifications</h4>
+      </div>
+      <ul>
+        <li class="notification-pending">
+          <div class="tile tile-centered tile-activity">
+            <div class="tile-icon"><img class="avatar avatar-md"></div>
+            <div class="tile-content">
+              <p class="tile-title"><span class="text-bold-600"></span> updated a request</p>
+              <p class="tile-subtitle">
+
+              </p>
+            </div>
+            <div class="tile-action"><span class="label label-warning">Pending</span></div>
+          </div>
+        </li>
+        <li class="">
+          <div class="tile tile-centered tile-activity">
+            <div class="tile-icon"><img class="avatar avatar-md"></div>
+            <div class="tile-content">
+              <p class="tile-title"><span class="text-bold-600"></span> updated a request</p>
+              <p class="tile-subtitle">
+
+              </p>
+            </div>
+            <!---->
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <!---->
+</div>
+`;
+
+exports[`Notifications.vue when have headerNotifications should render header notifications 1`] = `
+<div>
+  <div class="dropdown mr-5 active"><span data-badge="0" class="notification"><picobell-stub></picobell-stub></span>
+    <div class="box notifications notification-dropdown triangle-top">
+      <div class="notification-header">
+        <h4>Notifications</h4>
+      </div>
+      <ul>
+        <li class="notification-pending">
+          <div class="tile tile-centered tile-activity">
+            <div class="tile-icon"><img class="avatar avatar-md"></div>
+            <div class="tile-content">
+              <p class="tile-title"><span class="text-bold-600"></span> updated a request</p>
+              <p class="tile-subtitle">
+
+              </p>
+            </div>
+            <div class="tile-action"><span class="label label-warning">Pending</span></div>
+          </div>
+        </li>
+        <li class="">
+          <div class="tile tile-centered tile-activity">
+            <div class="tile-icon"><img class="avatar avatar-md"></div>
+            <div class="tile-content">
+              <p class="tile-title"><span class="text-bold-600"></span> updated a request</p>
+              <p class="tile-subtitle">
+
+              </p>
+            </div>
+            <!---->
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <!---->
+</div>
+`;
+
+exports[`Notifications.vue when have headerNotifications should show modal when click on editable request notification 1`] = `
+<div>
+  <div class="dropdown mr-5"><span data-badge="0" class="notification"><picobell-stub></picobell-stub></span>
+    <div class="box notifications notification-dropdown triangle-top">
+      <div class="notification-header">
+        <h4>Notifications</h4>
+      </div>
+      <ul>
+        <li class="notification-pending">
+          <div class="tile tile-centered tile-activity">
+            <div class="tile-icon"><img class="avatar avatar-md"></div>
+            <div class="tile-content">
+              <p class="tile-title"><span class="text-bold-600"></span> updated a request</p>
+              <p class="tile-subtitle">
+
+              </p>
+            </div>
+            <div class="tile-action"><span class="label label-warning">Pending</span></div>
+          </div>
+        </li>
+        <li class="">
+          <div class="tile tile-centered tile-activity">
+            <div class="tile-icon"><img class="avatar avatar-md"></div>
+            <div class="tile-content">
+              <p class="tile-title"><span class="text-bold-600"></span> updated a request</p>
+              <p class="tile-subtitle">
+
+              </p>
+            </div>
+            <!---->
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <modal-stub title="Edit attendance" modal-open="true">
+    <div class="form-group"><label class="form-label">Date</label>
+      <flatpickr-stub config="[object Object]" disabled="" class="form-input daterange-picker"></flatpickr-stub>
+    </div>
+    <div class="form-group"><label class="form-label">Attended At</label> <input type="time" disabled="disabled" class="form-input time-picker"></div>
+    <div class="form-group"><label class="form-label">Left At</label> <input type="time" disabled="disabled" class="form-input time-picker"></div>
+    <div class="form-group"><label class="form-label">Reason</label> <textarea disabled="disabled" class="form-input"></textarea></div>
+    <div class="form-group"><label class="form-label">Reject Reason</label> <textarea placeholder="Reject Reason" class="form-input"></textarea></div>
+    <div class="modal-footer"><button type="button" class="btn btn-success">
+        Approve
+      </button> <button type="button" class="btn btn-error">
+        Reject
+      </button></div>
+  </modal-stub>
+</div>
+`;

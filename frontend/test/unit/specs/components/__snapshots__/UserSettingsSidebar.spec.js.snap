@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UserSettingsSidebar.vue when UserSettingsSidebar mounted should render correctly 1`] = `
+<ul class="setting-sidebar">
+  <li class="active">
+    <picouser-stub></picouser-stub>
+    Profile
+  </li>
+  <li class="">
+    <picokey-stub></picokey-stub>
+    Password
+  </li>
+  <li class="">
+    <picoshield-stub></picoshield-stub>
+    Security
+  </li>
+</ul>
+`;
+
+exports[`UserSettingsSidebar.vue when setActive should active Holidays tab 1`] = `
+<ul class="setting-sidebar">
+  <li class="">
+    <picouser-stub></picouser-stub>
+    Profile
+  </li>
+  <li class="">
+    <picokey-stub></picokey-stub>
+    Password
+  </li>
+  <li class="active">
+    <picoshield-stub></picoshield-stub>
+    Security
+  </li>
+</ul>
+`;

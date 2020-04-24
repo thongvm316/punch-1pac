@@ -47,7 +47,7 @@
 
 <script>
 import { mapMutations } from 'vuex'
-import { INITIAL_STATES_UPDATE_PASSWORD_CHANGED } from '../store/mutation-types.js'
+import { INITIAL_STATES_UPDATE_PASSWORD_CHANGED } from '@/store/mutation-types.js'
 
 export default {
   name: 'PopupChangePassword',

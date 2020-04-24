@@ -1,22 +1,26 @@
 import {
   CREATE_USER,
   CREATE_MULTI_USER,
-  DELETE_USER,
-  FETCH_USERS,
+  DELETE_USER, FETCH_USERS,
   UPDATE_USER,
   DEACTIVATE_USER,
-  ACTIVATE_USER
+  ACTIVATE_USER,
+  UPDATE_USER_ERRORS,
+  CLEAR_USER_ERRORS
 } from '../mutation-types.js'
-import callApi from '../api-caller'
+import Repositories from '@/repository'
+
+const usersRepository = Repositories.get('users')
 
 const state = {
-  users: []
+  users: [],
+  errors: {}
 }
 
 const getters = {
   filterByEmail: state => query => {
     const regex = new RegExp(`${query.trim()}`, 'gi')
-    return query ? state.users.filter(user => (user.name.match(regex)) || (user.email.match(regex))) : state.users
+    return query ? state.users.filter(user => user.name.match(regex) || user.email.match(regex)) : state.users
   }
 }
 
@@ -50,17 +54,28 @@ const mutations = {
   [ACTIVATE_USER](state, userId) {
     const index = state.users.findIndex(user => user.id === userId)
     state.users[index].activated = true
+  },
+
+  [UPDATE_USER_ERRORS](state, payload) {
+    state.errors = payload.errors
+  },
+
+  [CLEAR_USER_ERRORS](state) {
+    state.errors = {}
   }
 }
 
 const actions = {
   createUser({ commit }, data) {
-    return callApi({ method: 'post', url: '/users', data: { user: data } })
+    const dataRequest = { user: data }
+
+    return usersRepository.createUser(dataRequest)
       .then(response => {
         commit(CREATE_USER, response.data)
         return response
       })
       .catch(error => {
+        if (error.response && error.response.status === 422) commit(UPDATE_USER_ERRORS, error.response.data)
         throw error
       })
   },
@@ -69,12 +84,7 @@ const actions = {
     let formData = new FormData()
     formData.append('csv_file', data.csv_file)
 
-    return callApi({
-      method: 'post',
-      url: '/users/create_multi',
-      data: formData,
-      headers: { 'Content-Type': 'multipart/form-data' }
-    })
+    return usersRepository.createMultiUsers({ data: formData, headers: { 'Content-Type': 'multipart/form-data' } })
       .then(response => {
         commit(CREATE_MULTI_USER, response.data)
         return response
@@ -85,7 +95,9 @@ const actions = {
   },
 
   fetchUsers({ commit }, params) {
-    return callApi({ method: 'get', url: '/users', params: Object.assign({ per_page: 1000 }, params) })
+    const paramsRequest = Object.assign({ per_page: 1000 }, params)
+
+    return usersRepository.getUsers(paramsRequest)
       .then(response => {
         commit(FETCH_USERS, response.data)
         return response
@@ -96,7 +108,7 @@ const actions = {
   },
 
   deleteUser({ commit }, id) {
-    return callApi({ method: 'delete', url: `/users/${id}` })
+    return usersRepository.deleteUser(id)
       .then(response => {
         commit(DELETE_USER, id)
         return response
@@ -107,7 +119,7 @@ const actions = {
   },
 
   deactivateUser({ commit }, userId) {
-    return callApi({ method: 'post', url: `/users/${userId}/deactivate` })
+    return usersRepository.deactivateUser(userId)
       .then(response => {
         commit(DEACTIVATE_USER, userId)
         return response
@@ -118,7 +130,7 @@ const actions = {
   },
 
   activateUser({ commit }, userId) {
-    return callApi({ method: 'post', url: `/users/${userId}/activate` })
+    return usersRepository.activateUser(userId)
       .then(response => {
         commit(ACTIVATE_USER, userId)
         return response

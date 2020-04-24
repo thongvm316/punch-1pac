@@ -1,5 +1,5 @@
 import flash from '@/store/modules/flash'
-import { flashData } from '../api-data/flash.api.js'
+import flashData from '../../../supports/fixtures/flash.api'
 
 const { state, mutations } = flash
 
@@ -7,7 +7,7 @@ describe('mutations', () => {
   let payload
 
   it('should SET_FLASH_MESSAGE #success', () => {
-    payload = flashData().success
+    payload = flashData.success
     mutations.SET_FLASH_MESSAGE(state, payload)
 
     expect(state.message).toEqual('Congratulation!!!')
@@ -16,7 +16,7 @@ describe('mutations', () => {
   })
 
   it('should SET_FLASH_MESSAGE #error', () => {
-    payload = flashData().error
+    payload = flashData.error
     mutations.SET_FLASH_MESSAGE(state, payload)
 
     expect(state.message).toEqual('Error!!!')

@@ -1,0 +1,109 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`RequestForm.vue when attendance props should render correctly 1`] = `
+<div>
+  <div class="form-group"><label class="form-label">Date</label>
+    <flatpickr-stub config="[object Object]" value="2020-01-01" class="form-input daterange-picker"></flatpickr-stub>
+    <!---->
+  </div>
+  <div class="form-group"><label class="form-label">Attended At</label>
+    <flatpickr-stub config="[object Object]" value="09:45" class="form-input time-picker"></flatpickr-stub>
+    <!---->
+    <!---->
+  </div>
+  <div class="form-group"><label class="form-label">Left At</label>
+    <flatpickr-stub config="[object Object]" value="09:45" class="form-input time-picker"></flatpickr-stub>
+    <!---->
+    <!---->
+  </div>
+  <div class="form-group"><label class="form-label">Reason</label> <textarea class="form-input"></textarea>
+    <!---->
+    <!---->
+  </div>
+  <div class="form-group"><button type="button" class="btn btn-success btn-submit">
+      Add
+    </button></div>
+</div>
+`;
+
+exports[`RequestForm.vue when errors should render errors 1`] = `
+<div>
+  <div class="form-group"><label class="form-label">Date</label>
+    <flatpickr-stub config="[object Object]" value="2020-02-07" class="form-input daterange-picker"></flatpickr-stub>
+    <!---->
+  </div>
+  <div class="form-group has-error"><label class="form-label">Attended At</label>
+    <flatpickr-stub config="[object Object]" value="10:48" class="form-input time-picker"></flatpickr-stub>
+    <!---->
+    <p class="form-input-hint">
+      Attended At attended_at wrong
+    </p>
+  </div>
+  <div class="form-group has-error"><label class="form-label">Left At</label>
+    <flatpickr-stub config="[object Object]" value="10:48" class="form-input time-picker"></flatpickr-stub>
+    <!---->
+    <p class="form-input-hint">
+      Left At left_at wrong
+    </p>
+  </div>
+  <div class="form-group"><label class="form-label">Reason</label> <textarea class="form-input"></textarea>
+    <!---->
+    <!---->
+  </div>
+  <div class="form-group"><button type="button" disabled="disabled" class="btn btn-success btn-submit">
+      Save
+    </button></div>
+</div>
+`;
+
+exports[`RequestForm.vue when have no props should render correctly 1`] = `
+<div>
+  <div class="form-group"><label class="form-label">Date</label>
+    <flatpickr-stub config="[object Object]" value="" class="form-input daterange-picker"></flatpickr-stub>
+    <!---->
+  </div>
+  <div class="form-group"><label class="form-label">Attended At</label>
+    <flatpickr-stub config="[object Object]" value="" class="form-input time-picker"></flatpickr-stub>
+    <!---->
+    <!---->
+  </div>
+  <div class="form-group"><label class="form-label">Left At</label>
+    <flatpickr-stub config="[object Object]" value="" class="form-input time-picker"></flatpickr-stub>
+    <!---->
+    <!---->
+  </div>
+  <div class="form-group"><label class="form-label">Reason</label> <textarea class="form-input"></textarea>
+    <!---->
+    <!---->
+  </div>
+  <div class="form-group"><button type="button" class="btn btn-success btn-submit">
+      Save
+    </button></div>
+</div>
+`;
+
+exports[`RequestForm.vue when request props should render correctly 1`] = `
+<div>
+  <div class="form-group"><label class="form-label">Date</label>
+    <flatpickr-stub config="[object Object]" value="2020-02-07" class="form-input daterange-picker"></flatpickr-stub>
+    <!---->
+  </div>
+  <div class="form-group"><label class="form-label">Attended At</label>
+    <flatpickr-stub config="[object Object]" value="10:48" class="form-input time-picker"></flatpickr-stub>
+    <!---->
+    <!---->
+  </div>
+  <div class="form-group"><label class="form-label">Left At</label>
+    <flatpickr-stub config="[object Object]" value="10:48" class="form-input time-picker"></flatpickr-stub>
+    <!---->
+    <!---->
+  </div>
+  <div class="form-group"><label class="form-label">Reason</label> <textarea class="form-input"></textarea>
+    <!---->
+    <!---->
+  </div>
+  <div class="form-group"><button type="button" class="btn btn-success btn-submit">
+      Save
+    </button></div>
+</div>
+`;

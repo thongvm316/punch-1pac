@@ -1,0 +1,81 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CalendarDate.vue when normal date when CalendarDate was mounted should render correctly 1`] = `
+<div data-tooltip="In: 09:45 - Out: 09:45" class="calendar-date current-month tooltip"><button class="date-item">
+    01
+  </button>
+  <div class="calendar-events"><span class="calendar-event bg-success text-success text-center">
+      Attend OK
+    </span>
+    <!----> <span href="#" class="calendar-event bg-success text-success text-center">
+      Leave OK
+    </span>
+    <!---->
+    <!---->
+    <!---->
+  </div>
+</div>
+`;
+
+exports[`CalendarDate.vue when normal date when watcher attendance should render new attendance 1`] = `
+<div data-tooltip="In: 10:45 - Out: 20:45" class="calendar-date current-month tooltip"><button class="date-item">
+    01
+  </button>
+  <div class="calendar-events">
+    <!----> <span class="calendar-event bg-warning text-warning text-center">
+      Attend Late
+    </span> <span href="#" class="calendar-event bg-success text-success text-center">
+      Leave OK
+    </span>
+    <!---->
+    <!---->
+    <!---->
+  </div>
+</div>
+`;
+
+exports[`CalendarDate.vue when off date when CalendarDate was mounted should render correctly 1`] = `
+<div data-tooltip="" class="calendar-date current-month"><button class="date-item">
+    03
+  </button>
+  <div class="calendar-events">
+    <!---->
+    <!---->
+    <!---->
+    <!----> <span href="#" class="calendar-event bg-notice text-notice text-center">
+      Day Off
+    </span>
+    <!---->
+  </div>
+</div>
+`;
+
+exports[`CalendarDate.vue when special day when CalendarDate was mounted should render correctly 1`] = `
+<div data-tooltip="Tet holiday" class="calendar-date current-month disabled tooltip"><button class="date-item">
+    13
+  </button>
+  <div class="calendar-events">
+    <!---->
+    <!---->
+    <!---->
+    <!---->
+    <!----> <span href="#" class="calendar-event bg-gray text-gray text-center">
+      Tet holiday
+    </span></div>
+</div>
+`;
+
+exports[`CalendarDate.vue when week day when CalendarDate was mounted should render correctly 1`] = `
+<div data-tooltip="" class="calendar-date current-month disabled"><button class="date-item">
+    08
+  </button>
+  <div class="calendar-events">
+    <!---->
+    <!---->
+    <!---->
+    <!---->
+    <!---->
+    <!---->
+  </div>
+</div>
+`;

@@ -1,0 +1,227 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FullCalendar.vue when FullCalendar was mounted should render correctly 1`] = `
+<div>
+  <div class="calendar calendar-lg">
+    <div class="calendar-nav">
+      <div class="calendar-nav-section">
+        <h3 class="m-0">
+          en
+        </h3>
+      </div>
+      <div class="calendar-nav-section"><button class="btn btn-secondary btn-action">
+          <picoprevarrow-stub></picoprevarrow-stub>
+        </button> <button class="btn btn-secondary">
+          Today
+        </button> <button class="btn btn-secondary btn-action">
+          <piconextarrow-stub></piconextarrow-stub>
+        </button></div>
+    </div>
+    <div class="calendar-container">
+      <div class="calendar-header">
+        <div class="calendar-date h5 text-dark">
+          Sun
+        </div>
+        <div class="calendar-date h5 text-dark">
+          Mon
+        </div>
+        <div class="calendar-date h5 text-dark">
+          Tue
+        </div>
+        <div class="calendar-date h5 text-dark">
+          Wed
+        </div>
+        <div class="calendar-date h5 text-dark">
+          Thu
+        </div>
+        <div class="calendar-date h5 text-dark">
+          Fri
+        </div>
+        <div class="calendar-date h5 text-dark">
+          Sat
+        </div>
+      </div>
+      <div class="calendar-body">
+        <div class="calendar-date prev-month disabled"><button class="date-item">
+            27
+          </button></div>
+        <div class="calendar-date prev-month disabled"><button class="date-item">
+            28
+          </button></div>
+        <div class="calendar-date prev-month disabled"><button class="date-item">
+            29
+          </button></div>
+        <div class="calendar-date prev-month disabled"><button class="date-item">
+            30
+          </button></div>
+        <div class="calendar-date prev-month disabled"><button class="date-item">
+            31
+          </button></div>
+        <calendardate-stub calendar-attendance="[object Object]" today="Tue Feb 05 2019 00:00:00 GMT+0700"></calendardate-stub>
+        <calendardate-stub calendar-attendance="[object Object]" today="Tue Feb 05 2019 00:00:00 GMT+0700"></calendardate-stub>
+        <calendardate-stub calendar-attendance="[object Object]" today="Tue Feb 05 2019 00:00:00 GMT+0700"></calendardate-stub>
+        <calendardate-stub calendar-attendance="[object Object]" today="Tue Feb 05 2019 00:00:00 GMT+0700"></calendardate-stub>
+        <calendardate-stub calendar-attendance="[object Object]" today="Tue Feb 05 2019 00:00:00 GMT+0700"></calendardate-stub>
+        <calendardate-stub calendar-attendance="[object Object]" today="Tue Feb 05 2019 00:00:00 GMT+0700"></calendardate-stub>
+        <calendardate-stub calendar-attendance="[object Object]" today="Tue Feb 05 2019 00:00:00 GMT+0700"></calendardate-stub>
+        <calendardate-stub calendar-attendance="[object Object]" today="Tue Feb 05 2019 00:00:00 GMT+0700"></calendardate-stub>
+        <calendardate-stub calendar-attendance="[object Object]" today="Tue Feb 05 2019 00:00:00 GMT+0700"></calendardate-stub>
+        <calendardate-stub calendar-attendance="[object Object]" today="Tue Feb 05 2019 00:00:00 GMT+0700"></calendardate-stub>
+        <calendardate-stub calendar-attendance="[object Object]" today="Tue Feb 05 2019 00:00:00 GMT+0700"></calendardate-stub>
+        <calendardate-stub calendar-attendance="[object Object]" today="Tue Feb 05 2019 00:00:00 GMT+0700"></calendardate-stub>
+        <calendardate-stub calendar-attendance="[object Object]" today="Tue Feb 05 2019 00:00:00 GMT+0700"></calendardate-stub>
+        <calendardate-stub calendar-attendance="[object Object]" today="Tue Feb 05 2019 00:00:00 GMT+0700"></calendardate-stub>
+        <calendardate-stub calendar-attendance="[object Object]" today="Tue Feb 05 2019 00:00:00 GMT+0700"></calendardate-stub>
+        <calendardate-stub calendar-attendance="[object Object]" today="Tue Feb 05 2019 00:00:00 GMT+0700"></calendardate-stub>
+        <calendardate-stub calendar-attendance="[object Object]" today="Tue Feb 05 2019 00:00:00 GMT+0700"></calendardate-stub>
+        <calendardate-stub calendar-attendance="[object Object]" today="Tue Feb 05 2019 00:00:00 GMT+0700"></calendardate-stub>
+        <calendardate-stub calendar-attendance="[object Object]" today="Tue Feb 05 2019 00:00:00 GMT+0700"></calendardate-stub>
+        <calendardate-stub calendar-attendance="[object Object]" today="Tue Feb 05 2019 00:00:00 GMT+0700"></calendardate-stub>
+        <calendardate-stub calendar-attendance="[object Object]" today="Tue Feb 05 2019 00:00:00 GMT+0700"></calendardate-stub>
+        <calendardate-stub calendar-attendance="[object Object]" today="Tue Feb 05 2019 00:00:00 GMT+0700"></calendardate-stub>
+        <calendardate-stub calendar-attendance="[object Object]" today="Tue Feb 05 2019 00:00:00 GMT+0700"></calendardate-stub>
+        <calendardate-stub calendar-attendance="[object Object]" today="Tue Feb 05 2019 00:00:00 GMT+0700"></calendardate-stub>
+        <calendardate-stub calendar-attendance="[object Object]" today="Tue Feb 05 2019 00:00:00 GMT+0700"></calendardate-stub>
+        <calendardate-stub calendar-attendance="[object Object]" today="Tue Feb 05 2019 00:00:00 GMT+0700"></calendardate-stub>
+        <calendardate-stub calendar-attendance="[object Object]" today="Tue Feb 05 2019 00:00:00 GMT+0700"></calendardate-stub>
+        <calendardate-stub calendar-attendance="[object Object]" today="Tue Feb 05 2019 00:00:00 GMT+0700"></calendardate-stub>
+        <div class="calendar-date next-month disabled"><button class="date-item">
+            1
+          </button></div>
+        <div class="calendar-date next-month disabled"><button class="date-item">
+            2
+          </button></div>
+      </div>
+    </div>
+  </div>
+  <modal-stub title="What kind of request do you want to send ?">
+    <div class="form-group"><label class="form-label">Kind</label> <select class="form-select">
+        <option value=""></option>
+        <option value="attendance">
+          Request for editing attendance
+        </option>
+        <option value="annual_leave">
+          Request a day off
+        </option>}
+      </select></div>
+    <!---->
+    <!---->
+  </modal-stub>
+  <modal-stub title="Add request">
+    <!---->
+  </modal-stub>
+  <modal-stub title="Request a leave">
+    <!---->
+  </modal-stub>
+</div>
+`;
+
+exports[`FullCalendar.vue when watch dateContext should render the other month 1`] = `
+<div>
+  <div class="calendar calendar-lg">
+    <div class="calendar-nav">
+      <div class="calendar-nav-section">
+        <h3 class="m-0">
+          en
+        </h3>
+      </div>
+      <div class="calendar-nav-section"><button class="btn btn-secondary btn-action">
+          <picoprevarrow-stub></picoprevarrow-stub>
+        </button> <button class="btn btn-secondary">
+          Today
+        </button> <button class="btn btn-secondary btn-action">
+          <piconextarrow-stub></piconextarrow-stub>
+        </button></div>
+    </div>
+    <div class="calendar-container">
+      <div class="calendar-header">
+        <div class="calendar-date h5 text-dark">
+          Sun
+        </div>
+        <div class="calendar-date h5 text-dark">
+          Mon
+        </div>
+        <div class="calendar-date h5 text-dark">
+          Tue
+        </div>
+        <div class="calendar-date h5 text-dark">
+          Wed
+        </div>
+        <div class="calendar-date h5 text-dark">
+          Thu
+        </div>
+        <div class="calendar-date h5 text-dark">
+          Fri
+        </div>
+        <div class="calendar-date h5 text-dark">
+          Sat
+        </div>
+      </div>
+      <div class="calendar-body">
+        <div class="calendar-date prev-month disabled"><button class="date-item">
+            30
+          </button></div>
+        <div class="calendar-date prev-month disabled"><button class="date-item">
+            31
+          </button></div>
+        <calendardate-stub calendar-attendance="[object Object]" today="Tue Feb 05 2019 00:00:00 GMT+0700"></calendardate-stub>
+        <calendardate-stub calendar-attendance="[object Object]" today="Tue Feb 05 2019 00:00:00 GMT+0700"></calendardate-stub>
+        <calendardate-stub calendar-attendance="[object Object]" today="Tue Feb 05 2019 00:00:00 GMT+0700"></calendardate-stub>
+        <calendardate-stub calendar-attendance="[object Object]" today="Tue Feb 05 2019 00:00:00 GMT+0700"></calendardate-stub>
+        <calendardate-stub calendar-attendance="[object Object]" today="Tue Feb 05 2019 00:00:00 GMT+0700"></calendardate-stub>
+        <calendardate-stub calendar-attendance="[object Object]" today="Tue Feb 05 2019 00:00:00 GMT+0700"></calendardate-stub>
+        <calendardate-stub calendar-attendance="[object Object]" today="Tue Feb 05 2019 00:00:00 GMT+0700"></calendardate-stub>
+        <calendardate-stub calendar-attendance="[object Object]" today="Tue Feb 05 2019 00:00:00 GMT+0700"></calendardate-stub>
+        <calendardate-stub calendar-attendance="[object Object]" today="Tue Feb 05 2019 00:00:00 GMT+0700"></calendardate-stub>
+        <calendardate-stub calendar-attendance="[object Object]" today="Tue Feb 05 2019 00:00:00 GMT+0700"></calendardate-stub>
+        <calendardate-stub calendar-attendance="[object Object]" today="Tue Feb 05 2019 00:00:00 GMT+0700"></calendardate-stub>
+        <calendardate-stub calendar-attendance="[object Object]" today="Tue Feb 05 2019 00:00:00 GMT+0700"></calendardate-stub>
+        <calendardate-stub calendar-attendance="[object Object]" today="Tue Feb 05 2019 00:00:00 GMT+0700"></calendardate-stub>
+        <calendardate-stub calendar-attendance="[object Object]" today="Tue Feb 05 2019 00:00:00 GMT+0700"></calendardate-stub>
+        <calendardate-stub calendar-attendance="[object Object]" today="Tue Feb 05 2019 00:00:00 GMT+0700"></calendardate-stub>
+        <calendardate-stub calendar-attendance="[object Object]" today="Tue Feb 05 2019 00:00:00 GMT+0700"></calendardate-stub>
+        <calendardate-stub calendar-attendance="[object Object]" today="Tue Feb 05 2019 00:00:00 GMT+0700"></calendardate-stub>
+        <calendardate-stub calendar-attendance="[object Object]" today="Tue Feb 05 2019 00:00:00 GMT+0700"></calendardate-stub>
+        <calendardate-stub calendar-attendance="[object Object]" today="Tue Feb 05 2019 00:00:00 GMT+0700"></calendardate-stub>
+        <calendardate-stub calendar-attendance="[object Object]" today="Tue Feb 05 2019 00:00:00 GMT+0700"></calendardate-stub>
+        <calendardate-stub calendar-attendance="[object Object]" today="Tue Feb 05 2019 00:00:00 GMT+0700"></calendardate-stub>
+        <calendardate-stub calendar-attendance="[object Object]" today="Tue Feb 05 2019 00:00:00 GMT+0700"></calendardate-stub>
+        <calendardate-stub calendar-attendance="[object Object]" today="Tue Feb 05 2019 00:00:00 GMT+0700"></calendardate-stub>
+        <calendardate-stub calendar-attendance="[object Object]" today="Tue Feb 05 2019 00:00:00 GMT+0700"></calendardate-stub>
+        <calendardate-stub calendar-attendance="[object Object]" today="Tue Feb 05 2019 00:00:00 GMT+0700"></calendardate-stub>
+        <calendardate-stub calendar-attendance="[object Object]" today="Tue Feb 05 2019 00:00:00 GMT+0700"></calendardate-stub>
+        <calendardate-stub calendar-attendance="[object Object]" today="Tue Feb 05 2019 00:00:00 GMT+0700"></calendardate-stub>
+        <calendardate-stub calendar-attendance="[object Object]" today="Tue Feb 05 2019 00:00:00 GMT+0700"></calendardate-stub>
+        <calendardate-stub calendar-attendance="[object Object]" today="Tue Feb 05 2019 00:00:00 GMT+0700"></calendardate-stub>
+        <calendardate-stub calendar-attendance="[object Object]" today="Tue Feb 05 2019 00:00:00 GMT+0700"></calendardate-stub>
+        <calendardate-stub calendar-attendance="[object Object]" today="Tue Feb 05 2019 00:00:00 GMT+0700"></calendardate-stub>
+        <div class="calendar-date next-month disabled"><button class="date-item">
+            1
+          </button></div>
+        <div class="calendar-date next-month disabled"><button class="date-item">
+            2
+          </button></div>
+      </div>
+    </div>
+  </div>
+  <modal-stub title="What kind of request do you want to send ?">
+    <div class="form-group"><label class="form-label">Kind</label> <select class="form-select">
+        <option value=""></option>
+        <option value="attendance">
+          Request for editing attendance
+        </option>
+        <option value="annual_leave">
+          Request a day off
+        </option>}
+      </select></div>
+    <!---->
+    <!---->
+  </modal-stub>
+  <modal-stub title="Add request">
+    <!---->
+  </modal-stub>
+  <modal-stub title="Request a leave">
+    <!---->
+  </modal-stub>
+</div>
+`;

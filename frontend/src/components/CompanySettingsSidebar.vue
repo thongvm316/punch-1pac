@@ -1,65 +1,50 @@
 <template>
   <ul class="setting-sidebar">
-    <li>
-      <a
-        href="#profile"
-        :class="{ active: activeTabName === 'profile' }"
-        @click.prevent="setActive('profile')"
-      >
-        <p-ico-company-profile />
-        {{ $t('sidebar.company.profile') }}
-      </a>
+    <li
+      :class="{ active: activeTabName === 'Profile' }"
+      @click="setActive('Profile')"
+    >
+      <p-ico-company-profile />
+      {{ $t('sidebar.company.profile') }}
     </li>
-    <li>
-      <a
-        href="#users"
-        :class="{ active: activeTabName === 'users' }"
-        @click.prevent="setActive('users')"
-      >
-        <p-ico-users />
-        {{ $t('sidebar.company.users') }}
-      </a>
+    <li
+      :class="{ active: activeTabName === 'Users' }"
+      @click="setActive('Users')"
+    >
+      <p-ico-users />
+      {{ $t('sidebar.company.users') }}
     </li>
-    <li>
-      <a
-        href="#business-days"
-        :class="{ active: activeTabName === 'business-days' }"
-        @click.prevent="setActive('business-days')"
-      >
-        <p-ico-business-day />
-        {{ $t('sidebar.company.businessDays') }}
-      </a>
+    <li
+      :class="{ active: activeTabName === 'BusinessDays' }"
+      @click="setActive('BusinessDays')"
+    >
+      <p-ico-business-day />
+      {{ $t('sidebar.company.businessDays') }}
     </li>
-    <li>
-      <a
-        href="#holidays"
-        :class="{ active: activeTabName === 'holidays' }"
-        @click.prevent="setActive('holidays')"
-      >
-        <p-ico-holiday />
-        {{ $t('sidebar.company.holidays') }}
-      </a>
+    <li
+      :class="{ active: activeTabName === 'Holidays' }"
+      @click="setActive('Holidays')"
+    >
+      <p-ico-holiday />
+      {{ $t('sidebar.company.holidays') }}
     </li>
-    <li>
-      <a
-        href="#allowed-ips"
-        :class="{ active: activeTabName === 'allowed-ips' }"
-        @click.prevent="setActive('allowed-ips')"
-      >
-        <p-ico-allowed-ip />
-        {{ $t('sidebar.company.allowedIPs') }}
-      </a>
+    <li
+      :class="{ active: activeTabName === 'AllowedIps' }"
+      @click="setActive('AllowedIps')"
+    >
+      <p-ico-allowed-ip />
+      {{ $t('sidebar.company.allowedIPs') }}
     </li>
   </ul>
 </template>
 
 <script>
-import activeTab from '../mixins/active-tab'
-import PIcoCompanyProfile from '@/punch-ui/punch-icons/PIcoCompanyProfile'
-import PIcoUsers from '@/punch-ui/punch-icons/PIcoUsers'
-import PIcoBusinessDay from '@/punch-ui/punch-icons/PIcoBusinessDay'
-import PIcoHoliday from '@/punch-ui/punch-icons/PIcoHoliday'
-import PIcoAllowedIp from '@/punch-ui/punch-icons/PIcoAllowedIp'
+import activeTab from '@/mixins/active-tab'
+const PIcoCompanyProfile = () => import('@/punch-ui/punch-icons/PIcoCompanyProfile')
+const PIcoUsers = () => import('@/punch-ui/punch-icons/PIcoUsers')
+const PIcoBusinessDay = () => import('@/punch-ui/punch-icons/PIcoBusinessDay')
+const PIcoHoliday = () => import('@/punch-ui/punch-icons/PIcoHoliday')
+const PIcoAllowedIp = () => import('@/punch-ui/punch-icons/PIcoAllowedIp')
 
 export default {
   name: 'CompanySettingsSidebar',

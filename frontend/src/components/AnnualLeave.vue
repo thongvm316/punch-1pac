@@ -21,8 +21,8 @@
 </template>
 
 <script>
-import modal from '../mixins/modal'
-const AnnualLeaveForm = () => import('../components/AnnualLeaveForm')
+import modal from '@/mixins/modal'
+const AnnualLeaveForm = () => import('@/components/AnnualLeaveForm')
 
 export default {
   name: 'AnnualLeave',

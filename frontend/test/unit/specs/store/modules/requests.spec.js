@@ -1,21 +1,22 @@
 import requests from '@/store/modules/requests'
-import { requestsData, requestData, updateRequestData, requestError } from '../api-data/requests.api.js'
+import requestsData from '../../../supports/fixtures/requests.api'
+import error422 from '../../../supports/fixtures/errors.api'
 import * as types from '@/store/mutation-types'
-import callApi from '@/store/api-caller'
+import Repositories from '@/repository'
+jest.mock('@/repository/requests')
 
-jest.mock('@/store/api-caller')
-
+const requestsRepository = Repositories.get('requests')
 const { state, mutations, actions } = requests
 const commit = jest.fn()
 
 describe('mutations', () => {
   describe('requests CRUD handlers', () => {
     beforeEach(() => {
-      state.requests = requestsData().requests
+      state.requests = [...requestsData.requests]
     })
 
     it('ADD_REQUEST', () => {
-      const payload = requestData()
+      const payload = [...requestsData.requests][0]
 
       mutations.ADD_REQUEST(state, payload)
 
@@ -24,7 +25,7 @@ describe('mutations', () => {
     })
 
     it('UPDATE_REQUEST', () => {
-      const payload = updateRequestData()
+      const payload = {...requestsData.requestUpdate}
 
       mutations.UPDATE_REQUEST(state, payload)
 
@@ -35,7 +36,10 @@ describe('mutations', () => {
     it('RECEIVE_REQUESTS', () => {
       state.requests = []
       state.pager = {}
-      const payload = requestsData()
+      const payload = {
+        requests: [...requestsData.requests],
+        meta: requestsData.meta
+      }
 
       mutations.RECEIVE_REQUESTS(state, payload)
 
@@ -57,8 +61,7 @@ describe('mutations', () => {
 
   describe('error handlers', () => {
     it('UPDATE_REQUEST_ERRORS', () => {
-      state.errors = {}
-      const payload = requestError().data
+      const payload = { errors: requestsData.errors }
 
       mutations.UPDATE_REQUEST_ERRORS(state, payload)
 
@@ -77,8 +80,8 @@ describe('actions', () => {
   describe('requests CRUD handlers', () => {
     describe('getRequests', () => {
       it('should commit RECEIVE_REQUESTS', async () => {
-        const response = { data: requestsData() }
-        callApi.mockResolvedValue(response)
+        const response = { data: { ...requestsData } }
+        requestsRepository.getRequests.mockResolvedValue(response)
 
         await actions.getRequests({ commit, state })
 
@@ -94,8 +97,8 @@ describe('actions', () => {
       }
 
       it('resolve: should commit ADD_REQUEST', async () => {
-        const response = { data: requestData() }
-        callApi.mockResolvedValue(response)
+        const response = { data: [...requestsData.requests][0] }
+        requestsRepository.addRequest.mockResolvedValue(response)
 
         await actions.addRequest({ commit }, params)
 
@@ -103,8 +106,8 @@ describe('actions', () => {
       })
 
       it('reject: should commit UPDATE_REQUEST_ERRORS', async () => {
-        const mockError = { response: requestError() }
-        callApi.mockRejectedValue(mockError)
+        const mockError = error422
+        requestsRepository.addRequest.mockRejectedValue(mockError)
 
         await actions.addRequest({ commit }, params)
           .catch(error => {
@@ -123,8 +126,8 @@ describe('actions', () => {
       }
 
       it('resolve: should commit UPDATE_REQUEST', async () => {
-        const response = { data: updateRequestData() }
-        callApi.mockResolvedValue(response)
+        const response = { data: requestsData.requestUpdate }
+        requestsRepository.updateRequest.mockResolvedValue(response)
 
         await actions.updateRequest({ commit }, request)
 
@@ -132,8 +135,8 @@ describe('actions', () => {
       })
 
       it('reject: should commit UPDATE_REQUEST_ERRORS', async () => {
-        const mockError = { response: requestError() }
-        callApi.mockRejectedValue(mockError)
+        const mockError = error422
+        requestsRepository.updateRequest.mockRejectedValue(mockError)
 
         await actions.updateRequest({ commit }, request)
           .catch(error => {
@@ -146,7 +149,7 @@ describe('actions', () => {
     describe('deleteRequest', () => {
       it('should commit DELETE_REQUEST', async () => {
         const id = 1
-        callApi.mockResolvedValue(null)
+        requestsRepository.deleteRequest.mockResolvedValue(null)
 
         await actions.deleteRequest({ commit }, id)
 

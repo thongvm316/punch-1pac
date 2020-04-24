@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Modal.vue when Modal was mounted should render correctly 1`] = `
+<div class="modal active"><span class="modal-overlay"></span>
+  <div class="modal-container">
+    <div class="modal-header"><span class="btn btn-clear float-right"></span>
+      <h3 class="modal-title">
+        Title
+      </h3>
+    </div>
+    <div class="modal-body">
+      <div class="content">
+        <p class="default-slot">Modal content</p>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Modal.vue when props data was changed should change data 1`] = `
+<div class="modal"><span class="modal-overlay"></span>
+  <div class="modal-container">
+    <div class="modal-header"><span class="btn btn-clear float-right"></span>
+      <h3 class="modal-title">
+        New title
+      </h3>
+    </div>
+    <div class="modal-body">
+      <div class="content">
+        <p class="default-slot">Modal content</p>
+      </div>
+    </div>
+  </div>
+</div>
+`;

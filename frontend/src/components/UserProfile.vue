@@ -114,6 +114,7 @@
     </div>
     <div class="form-group">
       <button
+        ref="updateUserButton"
         type="button"
         class="btn btn-success btn-submit"
         :disabled="isDisabled"
@@ -127,14 +128,13 @@
 
 <script>
 import { mapState, mapMutations } from 'vuex'
-import handleSuccess from '../mixins/handle-success'
-import userProfileValidate from '../validations/user-profile-validate'
-import * as types from '../store/mutation-types'
-import axios from 'axios'
 import 'formdata-polyfill'
+import Repositories from '@/repository'
+import handleSuccess from '@/mixins/handle-success'
+import userProfileValidate from '@/validations/user-profile-validate'
+import { INITIAL_STATES_UPDATE_USER, UPDATE_GROUP_USER, UPDATE_USER } from '@/store/mutation-types'
 
 export default {
-
   mixins: [handleSuccess, userProfileValidate],
 
   props: {
@@ -142,11 +142,13 @@ export default {
       type: Object,
       required: true
     },
+
     objectType: {
       type: String,
       default: ''
     }
   },
+
   data() {
     return {
       params: {
@@ -157,6 +159,7 @@ export default {
         email: '',
         role: ''
       },
+
       errors: {}
     }
   },
@@ -176,24 +179,23 @@ export default {
   },
 
   methods: {
-    ...mapMutations('initialStates', [types.INITIAL_STATES_UPDATE_USER]),
+    ...mapMutations('initialStates', ['INITIAL_STATES_UPDATE_USER']),
 
-    ...mapMutations('group', [types.UPDATE_GROUP_USER]),
+    ...mapMutations('group', ['UPDATE_GROUP_USER']),
 
-    ...mapMutations('companyUsers', [types.UPDATE_USER]),
+    ...mapMutations('companyUsers', ['UPDATE_USER']),
 
     updateUser() {
       let formData = new FormData()
       Object.keys(this.params).forEach(key => formData.set(`user[${key}]`, this.params[key] || ''))
 
-      axios
-        .put(`/users/${this.targetUser.id}`, formData, { headers: { 'Content-Type': 'multipart/form-data' } })
+      Repositories.get('users').updateUser(this.targetUser.id, { data: formData, headers: { 'Content-Type': 'multipart/form-data' } })
         .then(response => {
           if (this.targetUser.id === this.currentUser.id) {
-            this[types.INITIAL_STATES_UPDATE_USER](response.data)
+            this[INITIAL_STATES_UPDATE_USER](response.data)
           }
-          if (this.objectType === 'company') this[types.UPDATE_USER](response.data)
-          if (this.objectType === 'group') this[types.UPDATE_GROUP_USER](response.data)
+          if (this.objectType === 'company') this[UPDATE_USER](response.data)
+          if (this.objectType === 'group') this[UPDATE_GROUP_USER](response.data)
           this.handleSuccess({
             emitType: 'afterUserProfileUpdated',
             message: this.$t('messages.user.updateProfileSuccess')

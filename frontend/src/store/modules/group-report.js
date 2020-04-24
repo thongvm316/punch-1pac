@@ -1,5 +1,7 @@
 import { FETCH_GROUP_REPORT, FETCH_PERSONAL_REPORT } from '../mutation-types'
-import callApi from '../api-caller'
+import Repositories from '@/repository'
+
+const groupsRepository = Repositories.get('groups')
 
 const state = {
   results: [],
@@ -28,11 +30,9 @@ const mutations = {
 
 const actions = {
   getGroupReport({ commit }, params) {
-    return callApi({
-      method: 'get',
-      url: `/groups/${params.group_id}/report`,
-      params: { ...params, date_type: params.date_type || 'range' }
-    })
+    const requestPrams = { ...params, date_type: params.date_type || 'range' }
+
+    return groupsRepository.getGroupReport(requestPrams)
       .then(response => {
         commit(FETCH_GROUP_REPORT, response.data)
         return response
@@ -43,11 +43,9 @@ const actions = {
   },
 
   getPersonalReport({ commit }, params) {
-    return callApi({
-      method: 'get',
-      url: `/groups/${params.group_id}/users/${params.user_id}/report`,
-      params: { ...params, date_type: params.date_type || 'range' }
-    })
+    const requestPrams = { ...params, date_type: params.date_type || 'range' }
+
+    return groupsRepository.getPersonalReport(requestPrams)
       .then(response => {
         commit(FETCH_PERSONAL_REPORT, response.data)
         return response

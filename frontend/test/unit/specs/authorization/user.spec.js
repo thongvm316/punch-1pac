@@ -1,11 +1,11 @@
 import User from '@/authorization/user'
-import { currUser, targetUser } from './support/user.js'
+import { currUser, targetUser } from '../../supports/fixtures/user'
 
-let currentUser = { ...currUser() }
-let record = { ...targetUser() }
+let currentUser
+let record
 let user
 
-afterEach(() => {
+beforeEach(() => {
   currentUser = { ...currUser() }
   record = { ...targetUser() }
 })

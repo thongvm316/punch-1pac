@@ -1,0 +1,179 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BusinessDayForm.vue when have no props when render correctly should display AllowedIpForm Component 1`] = `
+<div>
+  <div class="form-group"><label class="form-label">Weekday</label> <select class="form-select">
+      <option value="">
+        Choose a weekday
+      </option>
+      <option value="monday">
+        Monday
+      </option>
+      <option value="tuesday">
+        Tuesday
+      </option>
+      <option value="wednesday">
+        Wednesday
+      </option>
+      <option value="thursday">
+        Thursday
+      </option>
+      <option value="friday">
+        Friday
+      </option>
+      <option value="saturday">
+        Saturday
+      </option>
+      <option value="sunday">
+        Sunday
+      </option>
+    </select>
+    <!---->
+    <!---->
+  </div>
+  <div class="form-group"><label class="form-label">Morning start at</label>
+    <flatpickr-stub config="[object Object]" value="08:00" class="form-input time-picker"></flatpickr-stub>
+    <!---->
+    <!---->
+  </div>
+  <div class="form-group"><label class="form-label">Morning end at</label>
+    <flatpickr-stub config="[object Object]" value="12:00" class="form-input time-picker"></flatpickr-stub>
+    <!---->
+    <!---->
+  </div>
+  <div class="form-group"><label class="form-label">Afternoon start at</label>
+    <flatpickr-stub config="[object Object]" value="13:30" class="form-input time-picker"></flatpickr-stub>
+    <!---->
+    <!---->
+  </div>
+  <div class="form-group"><label class="form-label">Afternoon end at</label>
+    <flatpickr-stub config="[object Object]" value="17:30" class="form-input time-picker"></flatpickr-stub>
+    <!---->
+    <!---->
+  </div>
+  <div class="form-group"><button type="button" class="btn btn-success btn-submit">
+      Submit
+    </button>
+    <!---->
+  </div>
+</div>
+`;
+
+exports[`BusinessDayForm.vue when have no props when render correctly should show error text 1`] = `
+<div>
+  <div class="form-group has-error"><label class="form-label">Weekday</label> <select class="form-select">
+      <option value="">
+        Choose a weekday
+      </option>
+      <option value="monday">
+        Monday
+      </option>
+      <option value="tuesday">
+        Tuesday
+      </option>
+      <option value="wednesday">
+        Wednesday
+      </option>
+      <option value="thursday">
+        Thursday
+      </option>
+      <option value="friday">
+        Friday
+      </option>
+      <option value="saturday">
+        Saturday
+      </option>
+      <option value="sunday">
+        Sunday
+      </option>
+    </select>
+    <!---->
+    <p class="form-input-hint">
+      Weekday không thể để trắng
+    </p>
+  </div>
+  <div class="form-group"><label class="form-label">Morning start at</label>
+    <flatpickr-stub config="[object Object]" value="08:00" class="form-input time-picker"></flatpickr-stub>
+    <!---->
+    <!---->
+  </div>
+  <div class="form-group"><label class="form-label">Morning end at</label>
+    <flatpickr-stub config="[object Object]" value="12:00" class="form-input time-picker"></flatpickr-stub>
+    <!---->
+    <!---->
+  </div>
+  <div class="form-group"><label class="form-label">Afternoon start at</label>
+    <flatpickr-stub config="[object Object]" value="13:30" class="form-input time-picker"></flatpickr-stub>
+    <!---->
+    <!---->
+  </div>
+  <div class="form-group"><label class="form-label">Afternoon end at</label>
+    <flatpickr-stub config="[object Object]" value="17:30" class="form-input time-picker"></flatpickr-stub>
+    <!---->
+    <!---->
+  </div>
+  <div class="form-group"><button type="button" class="btn btn-success btn-submit">
+      Submit
+    </button>
+    <!---->
+  </div>
+</div>
+`;
+
+exports[`BusinessDayForm.vue when props targetBusinessDay when was mouted should render correctly 1`] = `
+<div>
+  <div class="form-group"><label class="form-label">Weekday</label> <select class="form-select">
+      <option value="">
+        Choose a weekday
+      </option>
+      <option value="monday">
+        Monday
+      </option>
+      <option value="tuesday">
+        Tuesday
+      </option>
+      <option value="wednesday">
+        Wednesday
+      </option>
+      <option value="thursday">
+        Thursday
+      </option>
+      <option value="friday">
+        Friday
+      </option>
+      <option value="saturday">
+        Saturday
+      </option>
+      <option value="sunday">
+        Sunday
+      </option>
+    </select>
+    <!---->
+    <!---->
+  </div>
+  <div class="form-group"><label class="form-label">Morning start at</label>
+    <flatpickr-stub config="[object Object]" value="8:00" class="form-input time-picker"></flatpickr-stub>
+    <!---->
+    <!---->
+  </div>
+  <div class="form-group"><label class="form-label">Morning end at</label>
+    <flatpickr-stub config="[object Object]" value="12:00" class="form-input time-picker"></flatpickr-stub>
+    <!---->
+    <!---->
+  </div>
+  <div class="form-group"><label class="form-label">Afternoon start at</label>
+    <flatpickr-stub config="[object Object]" value="13:00" class="form-input time-picker"></flatpickr-stub>
+    <!---->
+    <!---->
+  </div>
+  <div class="form-group"><label class="form-label">Afternoon end at</label>
+    <flatpickr-stub config="[object Object]" value="17:00" class="form-input time-picker"></flatpickr-stub>
+    <!---->
+    <!---->
+  </div>
+  <div class="form-group">
+    <!----> <button type="button" class="btn btn-success btn-submit">
+      Save
+    </button></div>
+</div>
+`;

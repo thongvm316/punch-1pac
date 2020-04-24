@@ -1,17 +1,17 @@
 import companyBusinessDays from '@/store/modules/company-business-days'
-import callApi from '@/store/api-caller'
-import { companyBusinessDaysData, companyBusinessDaysError } from '../api-data/company-business-days.api.js'
+import Repositories from '@/repository'
+import companyBusinessDaysData from '../../../supports/fixtures/business-days.api'
+import error422 from '../../../supports/fixtures/errors.api'
 import * as types from '@/store/mutation-types.js'
+jest.mock('@/repository/company-settings')
 
-jest.mock('@/store/api-caller')
-
+const companySettingsRepository = Repositories.get('companySettings')
 const { state, mutations, actions } = companyBusinessDays
 const commit = jest.fn()
 
 describe('mutations', () => {
   it('FETCH_BUSINESS_DAYS', () => {
-    const payload = companyBusinessDaysData()
-
+    const payload = [...companyBusinessDaysData.businessDays]
     mutations.FETCH_BUSINESS_DAYS(state, payload)
 
     expect(state.businessDays).toHaveLength(3)
@@ -20,19 +20,11 @@ describe('mutations', () => {
 
   describe('when handle CUD methods', () => {
     beforeEach(() => {
-      state.businessDays = companyBusinessDaysData()
+      state.businessDays = [...companyBusinessDaysData.businessDays]
     })
 
     it('ADD_BUSINESS_DAY', () => {
-      const payload = {
-        id: 4,
-        weekday: 'thursday',
-        morning_started_at: '08:00',
-        morning_ended_at: '12:00',
-        afternoon_started_at: '13:30',
-        afternoon_ended_at: '17:30'
-      }
-
+      const payload = [...companyBusinessDaysData.businessDays][0]
       mutations.ADD_BUSINESS_DAY(state, payload)
 
       expect(state.businessDays).toHaveLength(4)
@@ -41,7 +33,6 @@ describe('mutations', () => {
 
     it('DELETE_BUSINESS_DAY', () => {
       const id = 2
-
       mutations.DELETE_BUSINESS_DAY(state, id)
 
       expect(state.businessDays).toHaveLength(2)
@@ -57,7 +48,6 @@ describe('mutations', () => {
         afternoon_started_at: '13:30',
         afternoon_ended_at: '17:30'
       }
-
       mutations.UPDATE_BUSINESS_DAY(state, payload)
 
       expect(state.businessDays).toHaveLength(3)
@@ -68,12 +58,8 @@ describe('mutations', () => {
   describe('when errors', () => {
     it('UPDATE_BUSINESS_DAY_ERRORS', () => {
       const payload = {
-        message: 'Unprocessable Entity',
-        errors: {
-          weekday: [ 'không thể để trắng', 'không có trong danh sách' ]
-        }
+        errors: companyBusinessDaysData.errors
       }
-
       mutations.UPDATE_BUSINESS_DAY_ERRORS(state, payload)
 
       expect(state.errors).toEqual(payload.errors)
@@ -90,8 +76,8 @@ describe('mutations', () => {
 describe('actions', () => {
   describe('when fetchBusinessDays', () => {
     it('resolve: should commit FETCH_BUSINESS_DAYS', async () => {
-      const response = { data: companyBusinessDaysData() }
-      callApi.mockResolvedValue(response)
+      const response = { data: [...companyBusinessDaysData.businessDays] }
+      companySettingsRepository.getBusinessDays.mockResolvedValue(response)
 
       await actions.fetchBusinessDays({ commit })
 
@@ -101,18 +87,11 @@ describe('actions', () => {
 
   describe('when addBusinessDay', () => {
     const response = {
-      data: {
-        id: 4,
-        weekday: 'sunday',
-        morning_started_at: '08:00',
-        morning_ended_at: '12:00',
-        afternoon_started_at: '13:30',
-        afternoon_ended_at: '17:30'
-      }
+      data: [...companyBusinessDaysData.businessDays][0]
     }
 
     it('resolve: should commit ADD_BUSINESS_DAY', async () => {
-      callApi.mockResolvedValue(response)
+      companySettingsRepository.addBusinessDay.mockResolvedValue(response)
 
       await actions.addBusinessDay({ commit }, response.data)
 
@@ -120,9 +99,8 @@ describe('actions', () => {
     })
 
     it('reject: should commit UPDATE_BUSINESS_DAY_ERRORS', async () => {
-      const mockError = companyBusinessDaysError()
-
-      callApi.mockRejectedValue(mockError)
+      const mockError = error422
+      companySettingsRepository.addBusinessDay.mockRejectedValue(mockError)
 
       await actions.addBusinessDay({ commit }, response.data).catch(error => {
         expect(error).toEqual(mockError)
@@ -133,8 +111,8 @@ describe('actions', () => {
 
   describe('when deleteBusinessDay', () => {
     it('resolve: should commit DELETE_BUSINESS_DAY', async () => {
-      let id = 1
-      callApi.mockResolvedValue(null)
+      const id = 1
+      companySettingsRepository.deleteBusinessDay.mockResolvedValue(null)
 
       await actions.deleteBusinessDay({ commit }, id)
 
@@ -152,16 +130,9 @@ describe('actions', () => {
 
     it('resolve: should commit UPDATE_BUSINESS_DAY', async () => {
       const response = {
-        data: {
-          id: 1,
-          weekday: 'sunday',
-          morning_started_at: '08:00',
-          morning_ended_at: '12:00',
-          afternoon_started_at: '13:30',
-          afternoon_ended_at: '17:30'
-        }
+        data: [...companyBusinessDaysData.businessDays][1]
       }
-      callApi.mockResolvedValue(response)
+      companySettingsRepository.updateBusinessDay.mockResolvedValue(response)
 
       await actions.updateBusinessDay({ commit }, params)
 
@@ -169,9 +140,8 @@ describe('actions', () => {
     })
 
     it('reject: should commit UPDATE_BUSINESS_DAY_ERRORS', async () => {
-      const mockError = companyBusinessDaysError()
-
-      callApi.mockRejectedValue(mockError)
+      const mockError = error422
+      companySettingsRepository.updateBusinessDay.mockRejectedValue(mockError)
 
       await actions.updateBusinessDay({ commit }, params).catch(error => {
         expect(error).toEqual(mockError)

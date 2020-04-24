@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MonthYearPicker.vue when MonthYearPicker was mounted should render correctly 1`] = `
+<div class="month-year-picker">
+  <div class="month-year-picker-result">
+    Jan 2020
+  </div>
+  <div class="month-year-picker-content">
+    <div class="month-year-picker-control"><span class="active">Month</span> <span class="">Year</span></div>
+    <div class="vdp-datepicker datepicker">
+      <div class="">
+        <!----> <input type="hidden" readonly="readonly" class="form-input" value="03 Jan 2020">
+        <!---->
+      </div>
+      <!---->
+      <div class="datepicker-calendar vdp-datepicker__calendar" style="position: static;">
+        <header><span class="prev">&lt;</span> <span class="">2020</span> <span class="next">&gt;</span></header> <span track-by="timestamp" class="cell month selected">January</span><span track-by="timestamp" class="cell month">February</span><span track-by="timestamp" class="cell month">March</span><span track-by="timestamp" class="cell month">April</span><span track-by="timestamp" class="cell month">May</span><span track-by="timestamp" class="cell month">June</span><span track-by="timestamp" class="cell month">July</span><span track-by="timestamp" class="cell month">August</span><span track-by="timestamp" class="cell month">September</span><span track-by="timestamp" class="cell month">October</span><span track-by="timestamp" class="cell month">November</span><span track-by="timestamp" class="cell month">December</span>
+      </div>
+      <!---->
+    </div>
+  </div>
+</div>
+`;

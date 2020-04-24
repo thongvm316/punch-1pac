@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GroupTab.vue when GroupTab was mounted should render correctly 1`] = `
+<ul class="tab mt-4">
+  <router-link-stub to="/groups/1/users" tag="li" exact="true" event="click" class="tab-item"><a href="#">Users</a></router-link-stub>
+  <router-link-stub to="/groups/1/attendances" tag="li" event="click" class="tab-item"><a href="#">Attendances</a></router-link-stub>
+  <router-link-stub to="/groups/1/requests" tag="li" event="click" class="tab-item"><a href="#">Requests</a></router-link-stub>
+  <router-link-stub to="/groups/1/report" tag="li" event="click" class="tab-item"><a href="#">Report</a></router-link-stub>
+</ul>
+`;

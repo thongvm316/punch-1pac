@@ -167,11 +167,11 @@
 </template>
 
 <script>
-import { CLEAR_BUSINESS_DAY_ERRORS } from '../store/mutation-types'
 import { mapState, mapActions, mapMutations } from 'vuex'
 import { isEmpty } from 'underscore'
-import handleSuccess from '../mixins/handle-success'
-import businessDayValidate from '../validations/business-day-validate'
+import { CLEAR_BUSINESS_DAY_ERRORS } from '@/store/mutation-types'
+import handleSuccess from '@/mixins/handle-success'
+import businessDayValidate from '@/validations/business-day-validate'
 const flatPickr = () => import('vue-flatpickr-component')
 
 export default {

@@ -1,8 +1,5 @@
 import { shallowMount } from '@vue/test-utils'
-
 import wrapperOps from '../../supports/wrapper'
-
-import ConfirmDialog from '@/components/ConfirmDialog'
 import Punch from '@/components/Punch'
 
 const fakePunchResponse = {
@@ -21,49 +18,46 @@ const fakePunchResponse = {
 }
 
 const debouncePunchIn = jest.spyOn(Punch.methods, 'debouncePunchIn')
-const debouncePunchOut = jest.spyOn(Punch.methods, 'debouncePunchOut')
-const updateCurrentTime = jest.fn()
-const punchIn = jest.fn().mockResolvedValue(fakePunchResponse.in)
-const punchOut = jest.fn().mockResolvedValue(fakePunchResponse.out)
+const updateCurrentTime = jest.spyOn(Punch.methods, 'updateCurrentTime')
+const punchIn = jest.spyOn(Punch.methods, 'punchIn').mockResolvedValue(fakePunchResponse.in)
+const punchOut = jest.spyOn(Punch.methods, 'punchOut').mockResolvedValue(fakePunchResponse.out)
+const openConfirmDialog = jest.spyOn(Punch.mixins[0].methods, 'openConfirmDialog')
+const PUNCH_INIT_ATTENDANCE = jest.spyOn(Punch.methods, 'PUNCH_INIT_ATTENDANCE')
+const SET_FLASH_MESSAGE = jest.spyOn(Punch.methods, 'SET_FLASH_MESSAGE')
 
 describe('PopupChangePassword.vue', () => {
   let wrapper
 
   afterEach(() => { wrapper.vm.$destroy() })
 
-  it('component should render correctly', () => {
-    wrapper = shallowMount(Punch, wrapperOps)
-
-    expect(wrapper.exists()).toBeTruthy()
-    expect(wrapper.isVueInstance()).toBeTruthy()
-    expect(wrapper.find(ConfirmDialog).exists()).toBeTruthy()
-  })
-
   describe('when user have not punch in yet', () => {
-    beforeEach(() => {
-      wrapper = shallowMount(Punch, {
-        ...wrapperOps,
-        methods: {
-          debouncePunchIn,
-          updateCurrentTime,
-          punchIn
+    const localWrapperOps = {
+      ...wrapperOps,
+      stubs: {
+        ConfirmDialog: true
+      },
+      computed: {
+        isInited () {
+          return false
         },
-        computed: {
-          isInited() { return false },
-          attendance() { return {} }
+        attendance () {
+          return {}
+        },
+        currentUser() {
+          return { id: 0 }
         }
-      })
+      }
+    }
+    beforeEach(() => {
+      wrapper = shallowMount(Punch, localWrapperOps)
     })
 
-    it('should call updateCurrentTime', () => {
+    it('component should render correctly', () => {
+      expect(wrapper.exists()).toBeTruthy()
+      expect(wrapper.isVueInstance()).toBeTruthy()
       expect(updateCurrentTime).toHaveBeenCalled()
-    })
-
-    it('should show punchIn btn, display timer', () => {
-      expect(wrapper.findAll('.punch span').length).toBe(1)
-
-      expect(wrapper.find({ ref: 'btnPunchIn' }).exists()).toBeTruthy()
-      expect(wrapper.find({ ref: 'btnPunchOut' }).exists()).toBeFalsy()
+      expect(PUNCH_INIT_ATTENDANCE).toHaveBeenCalled()
+      expect(wrapper).toMatchSnapshot()
     })
 
     it('should call debouncePunchIn when user click punch In', async () => {
@@ -71,76 +65,70 @@ describe('PopupChangePassword.vue', () => {
       await wrapper.vm.$nextTick()
 
       expect(debouncePunchIn).toHaveBeenCalled()
-      expect(punchIn).toHaveBeenCalled()
+      expect(punchIn).toHaveBeenCalledWith(0)
+      expect(SET_FLASH_MESSAGE).toHaveBeenCalledWith({ message: 'You punched in at 14:30' })
     })
   })
 
   describe('when user have punched in but not punched out yet', () => {
-    beforeEach(() => {
-      wrapper = shallowMount(Punch, {
-        ...wrapperOps,
-        methods: {
-          debouncePunchOut,
-          punchOut
+    const localWrapperOps = {
+      ...wrapperOps,
+      stubs: {
+        ConfirmDialog: true
+      },
+      computed: {
+        isInited () {
+          return false
         },
-        computed: {
-          isInited() { return true },
-          attendance() { return fakePunchResponse.in.data }
+        attendance () {
+          return fakePunchResponse.in.data
+        },
+        currentUser() {
+          return { id: 0 }
         }
-      })
+      }
+    }
+    beforeEach(() => {
+      wrapper = shallowMount(Punch, localWrapperOps)
     })
 
-    it('should display correct timer', () => {
-      expect(wrapper.findAll('.punch span').length).toBe(3)
+    it('component should render correctly', () => {
+      expect(wrapper.exists()).toBeTruthy()
+      expect(wrapper.isVueInstance()).toBeTruthy()
+      expect(updateCurrentTime).toHaveBeenCalled()
+      expect(wrapper).toMatchSnapshot()
     })
 
-    it('should show PunchOut btn', () => {
-      expect(wrapper.find({ ref: 'btnPunchOut' }).exists()).toBeTruthy()
+    it('should openConfirmDialog haveBeenCalled', async () => {
+      wrapper.find({ ref: 'btnPunchOut' }).trigger('click')
+      await wrapper.vm.$nextTick()
+
+      expect(openConfirmDialog).toHaveBeenCalled()
+      expect(wrapper).toMatchSnapshot()
     })
 
-    it('should not show btn Punch In', () => {
-      expect(wrapper.find({ ref: 'timeOut' }).exists()).toBeFalsy()
-    })
+    it('should trigger punchOut', async () => {
+      wrapper.vm.debouncePunchOut()
+      await wrapper.vm.$nextTick()
 
-    describe('when click punchOut btn', () => {
-      beforeEach(async () => {
-        wrapper.find({ ref: 'btnPunchOut' }).trigger('click')
-        await wrapper.vm.$nextTick()
-      })
-
-      it('should show confirm dialog when click punchOut btn', () => {
-        expect(wrapper.find(ConfirmDialog).isVisible()).toBeTruthy()
-      })
-
-      it('shoud call debouncePunchOut when click confirm', async () => {
-        wrapper.vm.debouncePunchOut() // fake click confirm
-        await wrapper.vm.$nextTick()
-
-        expect(punchOut).toHaveBeenCalled()
-        expect(debouncePunchOut).toHaveBeenCalled()
-        expect(wrapper.vm.isOpenConfirmDialog).toBeFalsy()
-      })
+      expect(punchOut).toHaveBeenCalledWith(0)
+      expect(SET_FLASH_MESSAGE).toHaveBeenCalledWith({ message: 'You punched out at 17:30' })
     })
   })
 
   describe('when user have punched in and out', () => {
-    beforeEach(() => {
-      wrapper = shallowMount(Punch, {
-        ...wrapperOps,
-        computed: {
-          isInited() { return true },
-          attendance() { return fakePunchResponse.out.data }
-        }
-      })
-    })
+    const localWrapperOps = {
+      ...wrapperOps,
+      computed: {
+        isInited() { return false },
+        attendance() { return fakePunchResponse.out.data }
+      }
+    }
 
-    it('should display correct timer', () => {
-      expect(wrapper.findAll('.punch span').length).toBe(3)
-    })
+    wrapper = shallowMount(Punch, localWrapperOps)
 
     it('should not show btn PunchIn, btn PunchOut', () => {
-      expect(wrapper.find({ ref: 'btnPunchIn' }).exists()).toBeFalsy()
-      expect(wrapper.find({ ref: 'btnPunchOut' }).exists()).toBeFalsy()
+      expect(wrapper).toMatchSnapshot()
     })
   })
 })

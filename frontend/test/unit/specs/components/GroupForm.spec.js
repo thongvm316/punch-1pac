@@ -1,23 +1,30 @@
 import { shallowMount } from '@vue/test-utils'
-
 import wrapperOps from '../../supports/wrapper'
-
 import GroupForm from '@/components/GroupForm'
 
 const targetGroup = {
+  id: 0,
   name: '1pacvn',
   description: '1pacvn team',
   image: '/'
 }
-const localAddGroup = jest.fn()
-const localEditGroup = jest.fn()
+const localAddGroup = jest.spyOn(GroupForm.methods, 'localAddGroup')
+const localEditGroup = jest.spyOn(GroupForm.methods, 'localEditGroup')
+const addGroup = jest.spyOn(GroupForm.methods, 'addGroup').mockResolvedValue(null)
+const updateGroup = jest.spyOn(GroupForm.methods, 'updateGroup').mockResolvedValue(null)
+const handleSuccess = jest.spyOn(GroupForm.mixins[0].methods, 'handleSuccess')
+const localWrapperOps = {
+  ...wrapperOps,
+  computed: {
+    isDisabled: () => false
+  }
+}
 
 describe('GroupForm.vue', () => {
   let wrapper
 
   beforeEach(() => {
-    Object.assign(wrapperOps, { methods: { localAddGroup } })
-    wrapper = shallowMount(GroupForm, wrapperOps)
+    wrapper = shallowMount(GroupForm, localWrapperOps)
   })
 
   afterEach(() => { wrapper.vm.$destroy() })
@@ -26,20 +33,45 @@ describe('GroupForm.vue', () => {
     it('should render correctly', () => {
       expect(wrapper.exists()).toBeTruthy()
       expect(wrapper.isVueInstance()).toBeTruthy()
+      expect(wrapper).toMatchSnapshot()
     })
 
-    it('should render created GroupForm', () => {
-      expect(wrapper.findAll('.form-group')).toHaveLength(4)
-      expect(wrapper.findAll('.form-group button')).toHaveLength(1)
-      expect(wrapper.find({ ref: 'localAddGroupButton' }).exists()).toBe(true)
+    it('should render exists groups', async () => {
+      wrapper.setProps({
+        targetGroup
+      })
+      await wrapper.vm.$nextTick()
+
+      expect(wrapper).toMatchSnapshot()
     })
   })
 
-  describe('when errors', () => {
-    it('should render no form-input-hint error text', () => {
-      expect(wrapper.findAll('p.form-input-hint')).toHaveLength(0)
+  describe('when methods', () => {
+    it('should localAddGroup', async () => {
+      wrapper.find({ ref: 'localAddGroupButton' }).trigger('click')
+      await wrapper.vm.$nextTick()
+
+      expect(localAddGroup).toHaveBeenCalled()
+      expect(addGroup).toHaveBeenCalledWith(wrapper.vm.params)
+      expect(handleSuccess).toHaveBeenCalledWith({ emitType: 'afterModify', message: 'Group is created' })
     })
 
+    it('should localEditGroup', async () => {
+      wrapper.setProps({
+        targetGroup
+      })
+      await wrapper.vm.$nextTick()
+      wrapper.find({ ref: 'localEditGroupButton' }).trigger('click')
+      await wrapper.vm.$nextTick()
+
+      expect(localEditGroup).toHaveBeenCalled()
+      expect(updateGroup).toHaveBeenCalledWith({ groupId: 0, editParams: wrapper.vm.params })
+      expect(handleSuccess).toHaveBeenCalledWith({ emitType: 'afterModify', message: 'Group is updated' })
+    })
+  })
+
+
+  describe('when errors', () => {
     it('should render errors text', async () => {
       const errors = {
         name: ['have been taken'],
@@ -49,58 +81,7 @@ describe('GroupForm.vue', () => {
       wrapper.setData({ errors })
       await wrapper.vm.$nextTick()
 
-      expect(wrapper.findAll('p.form-input-hint')).toHaveLength(3)
-      expect(wrapper.findAll('p.form-input-hint').at(0).text()).toEqual('Name have been taken')
-      expect(wrapper.findAll('p.form-input-hint').at(1).text()).toEqual('Image too large')
-      expect(wrapper.findAll('p.form-input-hint').at(2).text()).toEqual('Description wrong')
-    })
-
-    it('should render 1 error', async () => {
-      const errors = {
-        name: ['have been taken']
-      }
-      wrapper.setData({ errors })
-      await wrapper.vm.$nextTick()
-
-      expect(wrapper.findAll('p.form-input-hint')).toHaveLength(1)
-      expect(wrapper.findAll('p.form-input-hint').at(0).text()).toEqual('Name have been taken')
-    })
-  })
-
-  describe('when addGroup method', () => {
-    it('should call localAddGroup methods', () => {
-      wrapper.find({ ref: 'localAddGroupButton' }).trigger('click')
-      expect(localAddGroup).toHaveBeenCalled()
-    })
-  })
-})
-
-describe('when GroupForm have props data', () => {
-  let wrapper
-
-  beforeEach(() => {
-    Object.assign(wrapperOps, {
-      methods: { localEditGroup },
-      propsData: { targetGroup }
-    })
-    wrapper = shallowMount(GroupForm, wrapperOps)
-  })
-
-  afterEach(() => { wrapper.vm.$destroy() })
-
-  describe('when render GroupForm', () => {
-    it('should render edit Group Form', () => {
-      expect(wrapper.vm.params).toEqual(targetGroup)
-      expect(wrapper.findAll('.form-group')).toHaveLength(4)
-      expect(wrapper.findAll('.form-group button')).toHaveLength(1)
-      expect(wrapper.find({ ref: 'localEditGroupButton' }).exists()).toBe(true)
-    })
-  })
-
-  describe('when editGroup method', () => {
-    it('should call localEditGroup methods', () => {
-      wrapper.find({ ref: 'localEditGroupButton' }).trigger('click')
-      expect(localEditGroup).toHaveBeenCalled()
+      expect(wrapper).toMatchSnapshot()
     })
   })
 })

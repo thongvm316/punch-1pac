@@ -1,20 +1,22 @@
 import { shallowMount } from '@vue/test-utils'
-
 import wrapperOps from '../../supports/wrapper'
-
 import GroupTab from '@/components/GroupTab'
 
 const propsData = {
-  groupId: '1'
+  groupId: '1',
+  hasUser: true
 }
 
-Object.assign(wrapperOps, { propsData })
+const localWrapperOps = {
+  ...wrapperOps,
+  propsData
+}
 
 describe('GroupTab.vue', () => {
   let wrapper
 
   beforeEach(() => {
-    wrapper = shallowMount(GroupTab, wrapperOps)
+    wrapper = shallowMount(GroupTab, localWrapperOps)
   })
 
   afterEach(() => { wrapper.vm.$destroy() })
@@ -23,6 +25,7 @@ describe('GroupTab.vue', () => {
     it('should render correctly', () => {
       expect(wrapper.exists()).toBeTruthy()
       expect(wrapper.isVueInstance()).toBeTruthy()
+      expect(wrapper).toMatchSnapshot()
     })
   })
 })

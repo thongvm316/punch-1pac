@@ -1,0 +1,78 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`HolidayForm.vue when errors should have text error 1`] = `
+<div>
+  <div class="form-group has-error"><label class="form-label">Name</label> <input type="text" class="form-input">
+    <!---->
+    <p class="form-input-hint">
+      Name has been taken
+    </p>
+  </div>
+  <div class="form-group has-error"><label class="form-label">Start at</label>
+    <flatpickr-stub config="[object Object]" value="" class="form-input daterange-picker"></flatpickr-stub>
+    <p class="form-input-hint">
+      Start at wrong
+    </p>
+    <!---->
+  </div>
+  <div class="form-group has-error"><label class="form-label">End at</label>
+    <flatpickr-stub config="[object Object]" value="" class="form-input daterange-picker"></flatpickr-stub>
+    <p class="form-input-hint">
+      End at wrong
+    </p>
+    <!---->
+  </div>
+  <div class="form-group"><button class="btn btn-success btn-submit">
+      Submit
+    </button>
+    <!---->
+  </div>
+</div>
+`;
+
+exports[`HolidayForm.vue when have no props when HolidayForm was mounted should render correctly 1`] = `
+<div>
+  <div class="form-group"><label class="form-label">Name</label> <input type="text" class="form-input">
+    <!---->
+    <!---->
+  </div>
+  <div class="form-group"><label class="form-label">Start at</label>
+    <flatpickr-stub config="[object Object]" value="" class="form-input daterange-picker"></flatpickr-stub>
+    <!---->
+    <!---->
+  </div>
+  <div class="form-group"><label class="form-label">End at</label>
+    <flatpickr-stub config="[object Object]" value="" class="form-input daterange-picker"></flatpickr-stub>
+    <!---->
+    <!---->
+  </div>
+  <div class="form-group"><button class="btn btn-success btn-submit">
+      Submit
+    </button>
+    <!---->
+  </div>
+</div>
+`;
+
+exports[`HolidayForm.vue when have props when HolidayForm was mounted should render correctly 1`] = `
+<div>
+  <div class="form-group"><label class="form-label">Name</label> <input type="text" class="form-input">
+    <!---->
+    <!---->
+  </div>
+  <div class="form-group"><label class="form-label">Start at</label>
+    <flatpickr-stub config="[object Object]" value="" class="form-input daterange-picker"></flatpickr-stub>
+    <!---->
+    <!---->
+  </div>
+  <div class="form-group"><label class="form-label">End at</label>
+    <flatpickr-stub config="[object Object]" value="" class="form-input daterange-picker"></flatpickr-stub>
+    <!---->
+    <!---->
+  </div>
+  <div class="form-group">
+    <!----> <button class="btn btn-success btn-submit">
+      Save
+    </button></div>
+</div>
+`;

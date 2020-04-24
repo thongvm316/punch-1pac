@@ -5,7 +5,9 @@ import {
   REJECT_GROUP_REQUEST_ERRORS,
   CLEAR_REJECT_GROUP_REQUEST_ERRORS
 } from '../mutation-types.js'
-import callApi from '../api-caller'
+import Repositories from '@/repository'
+
+const requestsRepository = Repositories.get('requests')
 
 const state = {
   errors: {},
@@ -44,11 +46,9 @@ const mutations = {
 
 const actions = {
   getRequests({ commit }, params = {}) {
-    return callApi({
-      method: 'get',
-      url: '/requests',
-      params: { ...params, date_type: params.date_type || 'range' }
-    })
+    const requestParams = { ...params, date_type: params.date_type || 'range' }
+
+    return requestsRepository.getRequests(requestParams)
       .then(response => {
         commit(RECEIVE_GROUP_REQUESTS, response.data)
         return response
@@ -59,7 +59,7 @@ const actions = {
   },
 
   approveRequest({ commit }, requestId) {
-    return callApi({ method: 'post', url: `/requests/${requestId}/approve` })
+    return requestsRepository.approveRequest(requestId)
       .then(response => {
         commit(APPROVE_GROUP_REQUEST, requestId)
         return response
@@ -70,13 +70,9 @@ const actions = {
   },
 
   rejectRequest({ commit }, params) {
-    return callApi({
-      method: 'post',
-      url: `/requests/${params.requestId}/reject`,
-      data: {
-        request: { admin_reason: params.admin_reason }
-      }
-    })
+    const data = { request: { admin_reason: params.admin_reason } }
+
+    return requestsRepository.rejectRequest(params.requestId, { data })
       .then(response => {
         commit(REJECT_GROUP_REQUEST, params)
         return response

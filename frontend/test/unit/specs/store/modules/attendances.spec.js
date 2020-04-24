@@ -1,14 +1,19 @@
 import attendances from '@/store/modules/attendances'
-import callApi from '@/store/api-caller'
-import { attendancesData } from '../api-data/attendances.api.js'
-import rootState from '../supports/root-state.js'
-jest.mock('@/store/api-caller')
+import Repository from '@/repository'
+import attendancesData from '../../../supports/fixtures/attendances.api'
+import rootState from '../../../supports/root-state'
+jest.mock('@/repository/attendances')
 
+const attendancesRepository = Repository.get('attendances')
 const { actions, mutations, state, getters } = attendances
+const commit = jest.fn()
 
 describe('mutations', () => {
   it('RECEIVE_ATTENDANCES', () => {
-    const payload = attendancesData()
+    const payload = {
+      attendances: [...attendancesData.attendances],
+      meta: attendancesData.meta
+    }
     mutations.RECEIVE_ATTENDANCES(state, payload)
 
     expect(state.attendances).toEqual(payload.attendances)
@@ -17,16 +22,15 @@ describe('mutations', () => {
 })
 
 describe('actions', () => {
-  let commit
-
-  beforeEach(() => { commit = jest.fn() })
-
   it('getAttendances', async () => {
     const response = {
-      data: attendancesData()
+      data: {
+        attendances: [...attendancesData.attendances],
+        meta: attendancesData.meta
+      }
     }
 
-    callApi.mockResolvedValue(response)
+    attendancesRepository.getAttendances.mockResolvedValue(response)
     await actions.getAttendances({ commit, state }, {})
 
     expect(commit).toHaveBeenCalledWith('RECEIVE_ATTENDANCES', response.data)
@@ -39,7 +43,7 @@ describe('getters', () => {
 
     beforeEach(() => {
       Object.assign(state, {
-        attendances: attendancesData().attendances
+        attendances: [...attendancesData.attendances]
       })
     })
 

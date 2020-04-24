@@ -55,6 +55,7 @@
           <calendar-date
             v-for="attendanceItem in attendances"
             :key="attendanceItem.day"
+            ref="calendarDate"
             :calendar-attendance="attendanceItem"
             :today="today"
             @click.native="toggleConfirmModal(attendanceItem)"
@@ -134,12 +135,12 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
-import modal from '../mixins/modal'
-import PIcoPrevArrow from '@/punch-ui/punch-icons/PIcoPrevArrow'
-import PIcoNextArrow from '@/punch-ui/punch-icons/PIcoNextArrow'
-const CalendarDate = () => import('../components/CalendarDate.vue')
-const RequestForm = () => import('../components/RequestForm')
-const AnnualLeaveForm = () => import('../components/AnnualLeaveForm')
+import modal from '@/mixins/modal'
+const PIcoPrevArrow = () => import('@/punch-ui/punch-icons/PIcoPrevArrow')
+const PIcoNextArrow = () => import('@/punch-ui/punch-icons/PIcoNextArrow')
+const CalendarDate = () => import('@/components/CalendarDate.vue')
+const RequestForm = () => import('@/components/RequestForm')
+const AnnualLeaveForm = () => import('@/components/AnnualLeaveForm')
 
 export default {
   name: 'FullCalendar',

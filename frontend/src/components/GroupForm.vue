@@ -91,8 +91,8 @@
 
 <script>
 import { mapActions } from 'vuex'
-import handleSuccess from '../mixins/handle-success'
-import groupFormValidate from '../validations/group-form-validate'
+import handleSuccess from '@/mixins/handle-success'
+import groupFormValidate from '@/validations/group-form-validate'
 
 export default {
   name: 'GroupForm',
@@ -128,7 +128,7 @@ export default {
 
     localAddGroup() {
       this.addGroup(this.params)
-        .then(response => {
+        .then(() => {
           this.handleSuccess({
             emitType: 'afterModify',
             message: this.$t('messages.group.createSuccess')
@@ -141,7 +141,7 @@ export default {
 
     localEditGroup() {
       this.updateGroup({ groupId: this.targetGroup.id, editParams: this.params })
-        .then(response => {
+        .then(() => {
           this.handleSuccess({
             emitType: 'afterModify',
             message: this.$t('messages.group.updateSuccess')

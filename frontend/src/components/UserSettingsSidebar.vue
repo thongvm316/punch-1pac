@@ -1,43 +1,34 @@
 <template>
   <ul class="setting-sidebar">
-    <li>
-      <a
-        href="#profile"
-        :class="{ active: activeTabName === 'profile' }"
-        @click.prevent="setActive('profile')"
-      >
-        <p-ico-user />
-        {{ $t('sidebar.user.profile') }}
-      </a>
+    <li
+      :class="{ active: activeTabName === 'Profile' }"
+      @click="setActive('Profile')"
+    >
+      <p-ico-user />
+      {{ $t('sidebar.user.profile') }}
     </li>
-    <li>
-      <a
-        href="#password"
-        :class="{ active: activeTabName === 'password' }"
-        @click.prevent="setActive('password')"
-      >
-        <p-ico-key />
-        {{ $t('sidebar.user.password') }}
-      </a>
+    <li
+      :class="{ active: activeTabName === 'Password' }"
+      @click="setActive('Password')"
+    >
+      <p-ico-key />
+      {{ $t('sidebar.user.password') }}
     </li>
-    <li>
-      <a
-        href="#security"
-        :class="{ active: activeTabName === 'security' }"
-        @click.prevent="setActive('security')"
-      >
-        <p-ico-shield />
-        {{ $t('sidebar.user.security') }}
-      </a>
+    <li
+      :class="{ active: activeTabName === 'Security' }"
+      @click="setActive('Security')"
+    >
+      <p-ico-shield />
+      {{ $t('sidebar.user.security') }}
     </li>
   </ul>
 </template>
 
 <script>
-import PIcoUser from '@/punch-ui/punch-icons/PIcoUser'
-import PIcoKey from '@/punch-ui/punch-icons/PIcoKey'
-import PIcoShield from '@/punch-ui/punch-icons/PIcoShield'
-import activeTab from '../mixins/active-tab'
+import activeTab from '@/mixins/active-tab'
+const PIcoUser = () => import('@/punch-ui/punch-icons/PIcoUser')
+const PIcoKey = () => import('@/punch-ui/punch-icons/PIcoKey')
+const PIcoShield = () => import('@/punch-ui/punch-icons/PIcoShield')
 
 export default {
   name: 'UserSettingsSidebar',

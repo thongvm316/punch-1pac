@@ -1,14 +1,9 @@
 import { shallowMount } from '@vue/test-utils'
-
 import wrapperOps from '../../supports/wrapper'
-
+import initialStatesData from '../../supports/fixtures/initial-states.api'
+import { fakeFebAttendances, fakeJanAttendances, fakeMarAttendances } from '../../supports/fixtures/calendar'
 import moment from '@/moment'
 import FullCalendar from '@/components/FullCalendar'
-import CalendarDate from '@/components/CalendarDate'
-import modal from '@/mixins/modal'
-import { fakeJanAttendances, fakeFebAttendances, fakeMarAttendances } from '../../supports/api/calendar'
-
-const fakeToday = '2019-02-05'
 
 const nextMonth = jest.spyOn(FullCalendar.methods, 'nextMonth')
 const lastMonth = jest.spyOn(FullCalendar.methods, 'lastMonth')
@@ -21,86 +16,148 @@ const getCalendarAttendances = jest.fn().mockImplementation(day => {
   else return Promise.resolve(fakeFebAttendances)
 })
 
-Object.assign(wrapperOps, {
-  data: function() {
-    return {
-      dateContext: moment(fakeToday),
-      today: moment(fakeToday)
-    }
-  },
-  methods: {
-    getCalendarAttendances,
-    nextMonth,
-    lastMonth,
-    currentMonth,
-    toggleConfirmModal
-  },
-  mixins: [modal]
-})
-
 describe('FullCalendar.vue', () => {
   let wrapper
-
-  beforeEach(() => {
-    wrapper = shallowMount(FullCalendar, wrapperOps)
-  })
 
   afterEach(() => { wrapper.vm.$destroy() })
 
   describe('when FullCalendar was mounted', () => {
+    const localWrapperOps = {
+      ...wrapperOps,
+      data: function() {
+        return {
+          dateContext: moment('2019-02-05'),
+          today: moment('2019-02-05')
+        }
+      },
+      stubs: {
+        CalendarDate: true,
+        RequestForm: true,
+        AnnualLeaveForm: true,
+        PIcoPrevArrow: true,
+        PIcoNextArrow: true,
+        Modal: true
+      },
+      computed: {
+        currentCompany() {
+          return initialStatesData.currentCompany
+        }
+      },
+      methods: {
+        getCalendarAttendances
+      }
+    }
+
+    beforeEach(() => {
+      wrapper = shallowMount(FullCalendar, localWrapperOps)
+    })
+
     it('should render correctly', () => {
       expect(wrapper.exists()).toBeTruthy()
       expect(wrapper.isVueInstance()).toBeTruthy()
-      expect(wrapper.vm.attendances).toHaveLength(28)
+      expect(getCalendarAttendances).toHaveBeenCalled()
+      expect(wrapper).toMatchSnapshot()
+    })
+  })
+
+  describe('when watch dateContext', () => {
+    const localWrapperOps = {
+      ...wrapperOps,
+      data: function() {
+        return {
+          dateContext: moment('2019-01-01'),
+          today: moment('2019-02-05')
+        }
+      },
+      stubs: {
+        CalendarDate: true,
+        RequestForm: true,
+        AnnualLeaveForm: true,
+        PIcoPrevArrow: true,
+        PIcoNextArrow: true,
+        Modal: true
+      },
+      computed: {
+        currentCompany() {
+          return initialStatesData.currentCompany
+        }
+      },
+      methods: {
+        getCalendarAttendances
+      }
+    }
+
+    beforeEach(() => {
+      wrapper = shallowMount(FullCalendar, localWrapperOps)
     })
 
-    it('should open modal Edit Attendance when click on day 1', async () => {
-      wrapper.findAll(CalendarDate).at(0).trigger('click')
+    it('should render the other month', async () => {
+      wrapper.setData({
+        dateContext: moment('2019-01-01')
+      })
       await wrapper.vm.$nextTick()
 
-      expect(wrapper.find({ ref: 'editModal' }).isVisible()).toBeTruthy()
+      expect(wrapper).toMatchSnapshot()
+    })
+  })
+
+  describe('when methods', () => {
+    const localWrapperOps = {
+      ...wrapperOps,
+      data: function() {
+        return {
+          dateContext: moment('2019-02-05'),
+          today: moment('2019-02-05')
+        }
+      },
+      stubs: {
+        CalendarDate: true,
+        RequestForm: true,
+        AnnualLeaveForm: true,
+        PIcoPrevArrow: true,
+        PIcoNextArrow: true,
+        Modal: true
+      },
+      computed: {
+        currentCompany() {
+          return initialStatesData.currentCompany
+        }
+      },
+      methods: {
+        getCalendarAttendances
+      }
+    }
+
+    beforeEach(() => {
+      wrapper = shallowMount(FullCalendar, localWrapperOps)
     })
 
-    it('should open modal Request when click on day 4', async () => {
-      wrapper.findAll(CalendarDate).at(3).trigger('click')
+    it('should toggleConfirmModal haveBeenCalled', async () => {
+      wrapper.findAll({ ref: 'calendarDate' }).at(0).trigger('click')
       await wrapper.vm.$nextTick()
 
-      expect(wrapper.find({ ref: 'requestModal' }).isVisible()).toBeTruthy()
+      expect(toggleConfirmModal).toHaveBeenCalledWith(wrapper.vm.attendances[0])
     })
 
-    it('should open modal Add Attendance when click on day 11', async () => {
-      wrapper.findAll(CalendarDate).at(10).trigger('click')
-      await wrapper.vm.$nextTick()
-
-      expect(wrapper.find({ ref: 'addModal' }).isVisible()).toBeTruthy()
-    })
-
-    it('should update data attendances when click btn Last Month', async () => {
+    it('should lastMonth toHaveBeenCalled', async () => {
       wrapper.find({ ref: 'lastMonthBtn' }).trigger('click')
       await wrapper.vm.$nextTick()
 
       expect(lastMonth).toHaveBeenCalled()
-      expect(wrapper.vm.attendances).toHaveLength(31)
     })
 
-    describe('when click btn Next Month', () => {
-      beforeEach(async () => {
-        wrapper.find({ ref: 'nextMonthBtn' }).trigger('click')
-        await wrapper.vm.$nextTick()
-      })
+    it('should nextMonth toHaveBeenCalled', async () => {
+      wrapper.find({ ref: 'nextMonthBtn' }).trigger('click')
+      await wrapper.vm.$nextTick()
 
-      it('should update attendances of next month', () => {
-        expect(nextMonth).toHaveBeenCalled()
-        expect(wrapper.vm.attendances).toHaveLength(31)
-      })
+      expect(nextMonth).toHaveBeenCalled()
+    })
 
-      it('should update attendances of this month when click Today', async () => {
-        wrapper.find({ ref: 'currentMonthBtn' }).trigger('click')
-        await wrapper.vm.$nextTick()
+    it('should currentMonth haveBeenCalled', async () => {
+      wrapper.find({ ref: 'currentMonthBtn' }).trigger('click')
+      await wrapper.vm.$nextTick()
 
-        expect(currentMonth).toHaveBeenCalled()
-        expect(wrapper.vm.attendances).toHaveLength(28)
-      })
+      expect(currentMonth).toHaveBeenCalled()
     })
   })
 })

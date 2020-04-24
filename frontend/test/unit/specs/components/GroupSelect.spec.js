@@ -1,38 +1,26 @@
 import { shallowMount } from '@vue/test-utils'
-
 import wrapperOps from '../../supports/wrapper'
-
+import groupsData from '../../supports/fixtures/groups.api'
 import GroupSelect from '@/components/GroupSelect'
 
-const fetchAllGroups = jest.fn()
+const groups = [...groupsData.groups]
+const scopedSlots = { placeholder: '<option>Choose a group</option>' }
+const getGroups = jest.spyOn(GroupSelect.methods, 'getGroups')
 const updateValue = jest.spyOn(GroupSelect.methods, 'updateValue')
-const groups = [
-  {
-    id: 0,
-    name: '1pacvn'
-  },
-  {
-    id: 1,
-    name: 'gumi'
-  }
-]
-const scopedSlots = {
-  placeholder: '<option>Choose a group</option>'
-}
 
-Object.assign(wrapperOps, {
-  methods: {
-    fetchAllGroups,
-    updateValue
-  },
-  scopedSlots
-})
+const localWrapperOps = {
+  ...wrapperOps,
+  scopedSlots,
+  computed: {
+    groups: () => groups
+  }
+}
 
 describe('GroupSelect.vue', () => {
   let wrapper
 
   beforeEach(() => {
-    wrapper = shallowMount(GroupSelect, wrapperOps)
+    wrapper = shallowMount(GroupSelect, localWrapperOps)
   })
 
   afterEach(() => { wrapper.vm.$destroy() })
@@ -41,26 +29,15 @@ describe('GroupSelect.vue', () => {
     it('should render correctly', () => {
       expect(wrapper.exists()).toBeTruthy()
       expect(wrapper.isVueInstance()).toBeTruthy()
-    })
-
-    it('should have slot', () => {
-      expect(wrapper.findAll('option').at(0).text()).toEqual('Choose a group')
+      expect(getGroups).toHaveBeenCalled()
+      expect(wrapper).toMatchSnapshot()
     })
   })
 
-  describe('when have groups data', () => {
-    it('should have groups data', async () => {
-      wrapper.setData({ groups })
-      await wrapper.vm.$nextTick()
-
-      expect(wrapper.vm.groups).toHaveLength(2)
-      expect(wrapper.findAll('.form-select option')).toHaveLength(3)
-    })
-  })
-
-  describe('when emitted', () => {
+  describe('when updateValue', () => {
     it('should updateValue method called', () => {
       wrapper.find('select').trigger('change')
+
       expect(updateValue).toHaveBeenCalled()
       expect(wrapper.emitted('input')).toBeTruthy()
     })

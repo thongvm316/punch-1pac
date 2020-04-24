@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Main.vue should render Main layout correctly 1`] = `
+<main>
+  <div class="container grid-xl">
+    <announcements-stub></announcements-stub>
+    <remindpunchin-stub></remindpunchin-stub>
+    <h1 class="title">
+      Dashboard
+    </h1>
+    <p class="default-scoped">Dashboard page</p>
+  </div>
+</main>
+`;

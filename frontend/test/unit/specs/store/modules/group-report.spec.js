@@ -1,8 +1,9 @@
 import groupReport from '@/store/modules/group-report.js'
-import callApi from '@/store/api-caller'
-import { groupReportsData, personalReportData } from '../api-data/group-report.api.js'
-jest.mock('@/store/api-caller')
+import Repositories from '@/repository'
+import reportsData from '../../../supports/fixtures/report.api'
+jest.mock('@/repository/groups')
 
+const groupsRepository = Repositories.get('groups')
 const { state, mutations, actions } = groupReport
 const commit = jest.fn()
 
@@ -10,7 +11,10 @@ describe('mutations', () => {
   let payload
 
   it('should FETCH_GROUP_REPORT', () => {
-    payload = groupReportsData()
+    payload = {
+      results: [...reportsData.groups],
+      meta: reportsData.meta
+    }
     mutations.FETCH_GROUP_REPORT(state, payload)
 
     expect(state.results).toEqual(payload.results)
@@ -18,7 +22,10 @@ describe('mutations', () => {
   })
 
   it('should FETCH_PERSONAL_REPORT', () => {
-    payload = personalReportData()
+    payload = {
+      results: {...reportsData.personal},
+      meta: reportsData.meta
+    }
     mutations.FETCH_PERSONAL_REPORT(state, payload)
 
     expect(state.personalReport.report).toEqual(payload.report)
@@ -36,8 +43,8 @@ describe('actions', () => {
 
   describe('when getGroupReport', () => {
     it('should commit FETCH_GROUP_REPORT', async () => {
-      response = { data: groupReportsData() }
-      callApi.mockResolvedValue(response)
+      response = { data: [...reportsData] }
+      groupsRepository.getGroupReport.mockResolvedValue(response)
       await actions.getGroupReport({ commit }, params)
 
       expect(commit).toHaveBeenCalledWith('FETCH_GROUP_REPORT', response.data)
@@ -46,8 +53,8 @@ describe('actions', () => {
 
   describe('when getGroupReport', () => {
     it('should commit FETCH_GROUP_REPORT', async () => {
-      response = { data: personalReportData() }
-      callApi.mockResolvedValue(response)
+      response = { data: [...reportsData] }
+      groupsRepository.getPersonalReport.mockResolvedValue(response)
       await actions.getPersonalReport({ commit }, params)
 
       expect(commit).toHaveBeenCalledWith('FETCH_PERSONAL_REPORT', response.data)

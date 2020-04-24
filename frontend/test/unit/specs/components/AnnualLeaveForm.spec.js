@@ -1,9 +1,21 @@
 import { shallowMount } from '@vue/test-utils'
-
+import setComputed from '../../supports/set-computed'
+import requestsData from '../../supports/fixtures/report.api'
 import wrapperOps from '../../supports/wrapper'
-
 import AnnualLeaveForm from '@/components/AnnualLeaveForm'
-import flatPickr from 'vue-flatpickr-component'
+
+const create = jest.spyOn(AnnualLeaveForm.methods, 'create')
+const update = jest.spyOn(AnnualLeaveForm.methods, 'update')
+const addRequest = jest.spyOn(AnnualLeaveForm.methods, 'addRequest').mockResolvedValue(null)
+const updateRequest = jest.spyOn(AnnualLeaveForm.methods, 'updateRequest').mockResolvedValue(null)
+const handleSuccess = jest.spyOn(AnnualLeaveForm.mixins[1].methods, 'handleSuccess')
+const CLEAR_REQUEST_ERRORS = jest.spyOn(AnnualLeaveForm.methods, 'CLEAR_REQUEST_ERRORS')
+
+Object.assign(wrapperOps, {
+  stubs: {
+    flatPickr: true
+  }
+})
 
 describe('AnnualLeaveForm.vue', () => {
   let wrapper
@@ -18,96 +30,69 @@ describe('AnnualLeaveForm.vue', () => {
     it('should render correctly', () => {
       expect(wrapper.isVueInstance()).toBe(true)
       expect(wrapper.exists()).toBe(true)
-    })
-
-    it('should render sub components', () => {
-      expect(wrapper.find(flatPickr).exists()).toBe(true)
-    })
-
-    it('validation props data', () => {
-      const { request, type, annualDay } = wrapper.vm.$options.props
-
-      expect(request.required).toBeFalsy()
-      expect(request.type).toBe(Object)
-      expect(type.required).toBeFalsy()
-      expect(type.type).toBe(String)
-      expect(annualDay.required).toBeFalsy()
-      expect(annualDay.type).toBe(String)
+      expect(wrapper).toMatchSnapshot()
     })
   })
 
-  describe('when wrapper have no error', () => {
-    it('should error no display', () => {
-      expect(wrapper.find('.form-group.has-error').exists()).toBe(false)
-      expect(wrapper.find('.form-group .form-input-hint').exists()).toBe(false)
-    })
-  })
-
-  describe('when wrapper have error', () => {
+  describe('when error', () => {
     it('should display error attendance_day', async () => {
       wrapper.setData({ errors: { attendance_day: ['something wrong'] } })
       await wrapper.vm.$nextTick()
 
-      expect(wrapper.findAll('.has-error')).toHaveLength(1)
-      expect(wrapper.find('.has-error .form-input-hint').exists()).toBe(true)
-      expect(wrapper.find('.has-error .form-input-hint').text()).toEqual('Day Off something wrong')
+      expect(wrapper).toMatchSnapshot()
     })
 
     it('should display error reason', async () => {
       wrapper.setData({ errors: { reason: ['error'] } })
       await wrapper.vm.$nextTick()
 
-      expect(wrapper.findAll('.has-error')).toHaveLength(1)
-      expect(wrapper.find('.has-error .form-input-hint').exists()).toBe(true)
-      expect(wrapper.find('.has-error .form-input-hint').text()).toEqual('Reason error')
+      expect(wrapper).toMatchSnapshot()
     })
 
     it('should display both errors', async () => {
       wrapper.setData({ errors: { attendance_day: ['attendance_day error'], reason: ['reason error'] } })
       await wrapper.vm.$nextTick()
 
-      expect(wrapper.findAll('.has-error')).toHaveLength(2)
-      expect(wrapper.find('.has-error .form-input-hint').exists()).toBe(true)
+      expect(wrapper).toMatchSnapshot()
     })
   })
 
-  describe('when wrapper have no request', () => {
-    it('should render create button', () => {
-      expect(wrapper.findAll('.form-group button')).toHaveLength(1)
-      expect(wrapper.find({ ref: 'createAnnualLeaveBtn' }).exists()).toBe(true)
-      expect(wrapper.find({ ref: 'updateAnnualLeaveBtn' }).exists()).toBe(false)
-    })
-
-    it('should call create method', () => {
-      const create = jest.fn()
-      const update = jest.fn()
-      wrapper.setMethods({ create, update })
+  describe('when create request', () => {
+    it('should call create method', async () => {
+      setComputed(wrapper, {
+        dataRequest: requestsData[0],
+        isDisable: false
+      })
       wrapper.find({ ref: 'createAnnualLeaveBtn' }).trigger('click')
+      await wrapper.vm.$nextTick
 
       expect(create).toHaveBeenCalled()
-      expect(update).not.toHaveBeenCalled()
+      expect(addRequest).toHaveBeenCalledWith(requestsData[0])
+      expect(handleSuccess).toHaveBeenCalledWith({ emitType: 'finishRequest', message: 'Request is created' })
+      expect(CLEAR_REQUEST_ERRORS).toHaveBeenCalled()
     })
   })
 
-  describe('when wrapper have request', () => {
+  describe('when update request', () => {
     beforeEach(() => {
       wrapper.setProps({ request: { id: 0, reason: 'personal issue' } })
+      setComputed(wrapper, {
+        isDisable: false
+      })
     })
 
     it('should render update button', () => {
-      expect(wrapper.findAll('.form-group button')).toHaveLength(1)
-      expect(wrapper.find({ ref: 'createAnnualLeaveBtn' }).exists()).toBe(false)
-      expect(wrapper.find({ ref: 'updateAnnualLeaveBtn' }).exists()).toBe(true)
+      expect(wrapper).toMatchSnapshot()
     })
 
-    it('should call create method', () => {
-      const create = jest.fn()
-      const update = jest.fn()
-      wrapper.setMethods({ update, create })
+    it('should call update method', async () => {
       wrapper.find({ ref: 'updateAnnualLeaveBtn' }).trigger('click')
+      await wrapper.vm.$nextTick
 
       expect(update).toHaveBeenCalled()
-      expect(create).not.toHaveBeenCalled()
+      expect(updateRequest).toHaveBeenCalledWith({ id: 0, params: { attendance_day: '', kind: 'annual_leave', reason: '' } })
+      expect(handleSuccess).toHaveBeenCalledWith({ emitType: 'finishRequest', message: 'Request is updated' })
+      expect(CLEAR_REQUEST_ERRORS).toHaveBeenCalled()
     })
   })
 })

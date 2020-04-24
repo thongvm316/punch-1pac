@@ -1,5 +1,7 @@
 import { PUNCH_INIT_ATTENDANCE, PUNCH_IN, PUNCH_OUT } from '../mutation-types.js'
-import callApi from '../api-caller'
+import Repositories from '@/repository'
+
+const attendancesRepository = Repositories.get('attendances')
 
 const state = {
   attendance: {},
@@ -23,11 +25,9 @@ const mutations = {
 
 const actions = {
   punchIn({ commit }, userId) {
-    return callApi({
-      method: 'post',
-      url: '/attendances',
-      data: { user_id: userId }
-    })
+    const data = { user_id: userId }
+
+    return attendancesRepository.punchIn(data)
       .then(response => {
         commit(PUNCH_IN, response.data)
         return response
@@ -38,11 +38,9 @@ const actions = {
   },
 
   punchOut({ commit, state }, userId) {
-    return callApi({
-      method: 'patch',
-      url: `/attendances/${state.attendance.id}`,
-      data: { user_id: userId }
-    })
+    const data = { user_id: userId }
+
+    return attendancesRepository.punchOut(state.attendance.id, data)
       .then(response => {
         commit(PUNCH_OUT, response.data)
         return response

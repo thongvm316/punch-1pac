@@ -1,19 +1,22 @@
 import notifications from '@/store/modules/notifications'
-import callApi from '@/store/api-caller'
-import { notificationsData } from '../api-data/notifications.api.js'
-import { error422 } from '../api-data/promises-error.js'
-jest.mock('@/store/api-caller')
+import Repositories from '@/repository'
+import notificationsData from '../../../supports/fixtures/notifications.api'
+import error422 from '../../../supports/fixtures/errors.api'
+jest.mock('@/repository/requests')
+jest.mock('@/repository/notifications')
 
+const notificationsRepository = Repositories.get('notifications')
+const requestsRepository = Repositories.get('requests')
 const { state, mutations, actions, getters } = notifications
 const commit = jest.fn()
 
 describe('mutations', () => {
   let payload
-  let notificationId = 1
+  const notificationId = 1
 
   describe('when FETCH_HEADER_NOTIFICATIONS', () => {
     it('should FETCH_HEADER_NOTIFICATIONS', () => {
-      payload = notificationsData()
+      payload = { ...notificationsData }
       mutations.FETCH_HEADER_NOTIFICATIONS(state, payload)
 
       expect(state.headerNotifications).toEqual(payload.notifications)
@@ -25,11 +28,11 @@ describe('mutations', () => {
 
   describe('when handle exists notifications', () => {
     beforeEach(() => {
-      state.headerNotifications = notificationsData().notifications
+      state.headerNotifications = [...notificationsData.notifications]
     })
 
     it('should FETCH_MORE_HEADER_NOTIFICATIONS', () => {
-      payload = notificationsData()
+      payload = { ...notificationsData }
       mutations.FETCH_MORE_HEADER_NOTIFICATIONS(state, payload)
 
       expect(state.headerNotifications).toHaveLength(6)
@@ -62,8 +65,8 @@ describe('actions', () => {
 
   describe('when getHeaderNotifications', () => {
     it('should commit FETCH_HEADER_NOTIFICATIONS', async () => {
-      response = { data: notificationsData() }
-      callApi.mockResolvedValue(response)
+      response = { data: {...notificationsData} }
+      notificationsRepository.getNotifications.mockResolvedValue(response)
       await actions.getHeaderNotifications({ commit }, {})
 
       expect(commit).toHaveBeenCalledWith('FETCH_HEADER_NOTIFICATIONS', response.data)
@@ -72,8 +75,8 @@ describe('actions', () => {
 
   describe('when getMoreHeaderNotifications', () => {
     it('should commit FETCH_MORE_HEADER_NOTIFICATIONS', async () => {
-      response = { data: notificationsData() }
-      callApi.mockResolvedValue(response)
+      response = { data: {...notificationsData} }
+      notificationsRepository.getNotifications.mockResolvedValue(response)
       await actions.getMoreHeaderNotifications({ commit }, {})
 
       expect(commit).toHaveBeenCalledWith('FETCH_MORE_HEADER_NOTIFICATIONS', response.data)
@@ -84,9 +87,9 @@ describe('actions', () => {
     const id = 1
 
     it('should commit READ_NOTIFICATIONS', async () => {
-      response = { data: notificationsData() }
+      response = { data: {...notificationsData} }
       state.unreadNotificationsCount = 1
-      callApi.mockResolvedValue(response)
+      notificationsRepository.readNotification.mockResolvedValue(response)
       await actions.readNotifications({ commit, state }, id)
 
       expect(commit).toHaveBeenCalledWith('READ_NOTIFICATIONS')
@@ -103,8 +106,8 @@ describe('actions', () => {
   describe('when rejectNotificationRequest', () => {
     it('should commit REJECT_NOTIFICATION_REQUEST', async () => {
       const params = { id: 1, admin_reason: 'no need' }
-      response = { data: notificationsData() }
-      callApi.mockResolvedValue(response)
+      response = { data: {...notificationsData} }
+      requestsRepository.rejectRequest.mockResolvedValue(response)
       await actions.rejectNotificationRequest({ commit }, params)
 
       expect(commit).toHaveBeenCalledWith('REJECT_NOTIFICATION_REQUEST', params.id)
@@ -114,8 +117,8 @@ describe('actions', () => {
   describe('when approveNotificationRequest', () => {
     it('should commit APPROVE_NOTIFICATION_REQUEST', async () => {
       const notificationId = 1
-      response = { data: notificationsData() }
-      callApi.mockResolvedValue(response)
+      response = { data: {...notificationsData} }
+      requestsRepository.approveRequest.mockResolvedValue(response)
       await actions.approveNotificationRequest({ commit }, notificationId)
 
       expect(commit).toHaveBeenCalledWith('APPROVE_NOTIFICATION_REQUEST', notificationId)

@@ -44,6 +44,7 @@ export default {
       type: String,
       required: true
     },
+
     hasUser: {
       type: Boolean,
       default: true

@@ -1,0 +1,52 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PopupChangePassword.vue when user have not punch in yet component should render correctly 1`] = `
+<div>
+  <div class="punch">
+    <!---->
+    <!----> <span class="mr-5">10:39:39</span> <button class="btn btn-primary mr-5">
+      Punch In
+    </button>
+    <!---->
+  </div>
+  <confirmdialog-stub title="Punch Out" delete-object="function () { [native code] }">
+    <p>Do you intent to punch out at 10:39 ?</p>
+  </confirmdialog-stub>
+</div>
+`;
+
+exports[`PopupChangePassword.vue when user have punched in and out should not show btn PunchIn, btn PunchOut 1`] = `
+<div>
+  <div class="punch"><span>In: 14:30</span> <span class="mx-2">-</span> <span class="mr-5">10:39:39</span>
+    <!----> <button class="btn btn-primary mr-5">
+      Punch Out
+    </button></div>
+  <confirmdialog-stub title="Punch Out" delete-object="function () { [native code] }">
+    <p>Do you intent to punch out at 10:39 ?</p>
+  </confirmdialog-stub>
+</div>
+`;
+
+exports[`PopupChangePassword.vue when user have punched in but not punched out yet component should render correctly 1`] = `
+<div>
+  <div class="punch"><span>In: 14:30</span> <span class="mx-2">-</span> <span class="mr-5">10:39:39</span>
+    <!----> <button class="btn btn-primary mr-5">
+      Punch Out
+    </button></div>
+  <confirmdialog-stub title="Punch Out" delete-object="function () { [native code] }">
+    <p>Do you intent to punch out at 10:39 ?</p>
+  </confirmdialog-stub>
+</div>
+`;
+
+exports[`PopupChangePassword.vue when user have punched in but not punched out yet should openConfirmDialog haveBeenCalled 1`] = `
+<div>
+  <div class="punch"><span>In: 14:30</span> <span class="mx-2">-</span> <span class="mr-5">10:39:39</span>
+    <!----> <button class="btn btn-primary mr-5">
+      Punch Out
+    </button></div>
+  <confirmdialog-stub title="Punch Out" delete-object="function () { [native code] }" modal-open="true">
+    <p>Do you intent to punch out at 10:39 ?</p>
+  </confirmdialog-stub>
+</div>
+`;

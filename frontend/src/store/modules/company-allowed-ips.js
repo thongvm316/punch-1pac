@@ -1,12 +1,7 @@
-import {
-  FETCH_IPS,
-  DELETE_IP,
-  CREATE_IP,
-  UPDATE_IP,
-  UPDATE_IP_ERRORS,
-  CLEAR_IP_ERRORS
-} from '../mutation-types.js'
-import callApi from '../api-caller'
+import { FETCH_IPS, DELETE_IP, CREATE_IP, UPDATE_IP, UPDATE_IP_ERRORS, CLEAR_IP_ERRORS } from '../mutation-types.js'
+import Repository from '@/repository'
+
+const companySettingsRepository = Repository.get('companySettings')
 
 const state = {
   allowedIPs: [],
@@ -42,7 +37,7 @@ const mutations = {
 
 const actions = {
   fetchIPs({ commit }) {
-    return callApi({ method: 'get', url: '/allowed_ips' })
+    return companySettingsRepository.getIPs()
       .then(response => {
         commit(FETCH_IPS, response.data)
         return response
@@ -52,19 +47,10 @@ const actions = {
       })
   },
 
-  deleteIP({ commit }, id) {
-    return callApi({ method: 'delete', url: `/allowed_ips/${id}` })
-      .then(response => {
-        commit(DELETE_IP, id)
-        return response
-      })
-      .catch(error => {
-        throw error
-      })
-  },
-
   createIP({ commit }, data) {
-    return callApi({ method: 'post', url: '/allowed_ips/', data: { allowed_ip: data } })
+    const requestData = { allowed_ip: data }
+
+    return companySettingsRepository.createIP(requestData)
       .then(response => {
         commit(CREATE_IP, response.data)
         return response
@@ -76,13 +62,26 @@ const actions = {
   },
 
   updateIP({ commit }, data) {
-    return callApi({ method: 'put', url: `/allowed_ips/${data.id}`, data: { allowed_ip: data } })
+    const requestData = { allowed_ip: data }
+
+    return companySettingsRepository.updateIP(data.id, requestData)
       .then(response => {
         commit(UPDATE_IP, response.data)
         return response
       })
       .catch(error => {
         if (error.response && error.response.status === 422) commit(UPDATE_IP_ERRORS, error.response.data)
+        throw error
+      })
+  },
+
+  deleteIP({ commit }, id) {
+    return companySettingsRepository.deleteIP(id)
+      .then(response => {
+        commit(DELETE_IP, id)
+        return response
+      })
+      .catch(error => {
         throw error
       })
   }

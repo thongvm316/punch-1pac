@@ -1,13 +1,19 @@
 import calendar from '@/store/modules/calendar'
-import callApi from '@/store/api-caller'
-import { calendarData } from '../api-data/calendar.api.js'
-jest.mock('@/store/api-caller')
+import Repository from '@/repository'
+import attendancesData from '../../../supports/fixtures/attendances.api'
+import holidaysData from '../../../supports/fixtures/holidays.api'
+jest.mock('@/repository/attendances')
 
+const attendancesRepository = Repository.get('attendances')
 const { state, mutations, actions } = calendar
+const commit = jest.fn()
 
 describe('mutations', () => {
   it('FETCH_CALENDAR_ATTENDANCES', () => {
-    const payload = calendarData()
+    const payload = {
+      attendances: [...attendancesData.attendances],
+      holidays: [...holidaysData.holidays]
+    }
 
     mutations.FETCH_CALENDAR_ATTENDANCES(state, payload)
 
@@ -18,9 +24,13 @@ describe('mutations', () => {
 
 describe('actions', () => {
   it('getCalendarAttendances', async () => {
-    const commit = jest.fn()
-    const response = { data: calendarData() }
-    callApi.mockResolvedValue(response)
+    const response = {
+      data: {
+        attendances: [...attendancesData.attendances],
+        holidays: [...holidaysData.holidays]
+      }
+    }
+    attendancesRepository.getCalendarAttendances.mockResolvedValue(response)
 
     await actions.getCalendarAttendances({ commit }, '2018-01-24')
 

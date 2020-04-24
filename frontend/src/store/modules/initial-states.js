@@ -11,8 +11,11 @@ import {
   INITIAL_STATES_SET_META,
   INITIAL_STATES_UPDATE_PASSWORD_CHANGED
 } from '../mutation-types.js'
-import callApi from '../api-caller'
+import Repositories from '@/repository'
 import 'formdata-polyfill'
+
+const usersRepository = Repositories.get('users')
+const companySettingsRepository = Repositories.get('companySettings')
 
 const state = {
   userErrors: {},
@@ -73,12 +76,7 @@ const actions = {
     let formData = new FormData()
     Object.keys(data.userParams).forEach(key => formData.set(`user[${key}]`, data.userParams[key] || ''))
 
-    return callApi({
-      method: 'put',
-      url: `/users/${data.userId}`,
-      data: formData,
-      headers: { 'Content-Type': 'multipart/form-data' }
-    })
+    return usersRepository.updateUser(data.userId, { data: formData, headers: { 'Content-Type': 'multipart/form-data' } })
       .then(response => {
         commit(INITIAL_STATES_UPDATE_USER, response.data)
         return response
@@ -99,12 +97,7 @@ const actions = {
       }
     })
 
-    return callApi({
-      method: 'put',
-      url: '/company',
-      data: formData,
-      headers: { 'Content-Type': 'multipart/form-data' }
-    })
+    companySettingsRepository.updateCompany({ data: formData, headers: { 'Content-Type': 'multipart/form-data' } })
       .then(response => {
         commit(INITIAL_STATES_UPDATE_COMPANY, response.data)
       })

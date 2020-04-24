@@ -1,0 +1,51 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CompanySettingsSidebar.vue when mounted should render correctly 1`] = `
+<ul class="setting-sidebar">
+  <li class="active">
+    <picocompanyprofile-stub></picocompanyprofile-stub>
+    Profile
+  </li>
+  <li class="">
+    <picousers-stub></picousers-stub>
+    Users
+  </li>
+  <li class="">
+    <picobusinessday-stub></picobusinessday-stub>
+    Business Days
+  </li>
+  <li class="">
+    <picoholiday-stub></picoholiday-stub>
+    Holidays
+  </li>
+  <li class="">
+    <picoallowedip-stub></picoallowedip-stub>
+    Allowed IPs
+  </li>
+</ul>
+`;
+
+exports[`CompanySettingsSidebar.vue when setActive should active Holidays tab 1`] = `
+<ul class="setting-sidebar">
+  <li class="">
+    <picocompanyprofile-stub></picocompanyprofile-stub>
+    Profile
+  </li>
+  <li class="">
+    <picousers-stub></picousers-stub>
+    Users
+  </li>
+  <li class="">
+    <picobusinessday-stub></picobusinessday-stub>
+    Business Days
+  </li>
+  <li class="active">
+    <picoholiday-stub></picoholiday-stub>
+    Holidays
+  </li>
+  <li class="">
+    <picoallowedip-stub></picoallowedip-stub>
+    Allowed IPs
+  </li>
+</ul>
+`;

@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AttendanceStatusSelect.vue when AttendanceStatusSelect was mounted should render correctly 1`] = `
+<select class="form-select">
+  <option>Attendance status</option>
+  <option value="attend_ok">
+    Attend OK
+  </option>
+  <option value="attend_late">
+    Attend Late
+  </option>
+  <option value="leave_ok">
+    Leave OK
+  </option>
+  <option value="leave_early">
+    Leave Early
+  </option>
+  <option value="annual_leave">
+    Day Off
+  </option>
+</select>
+`;

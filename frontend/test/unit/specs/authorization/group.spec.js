@@ -1,10 +1,10 @@
 import Group from '@/authorization/group'
-import { currUser } from './support/user.js'
+import { currUser } from '../../supports/fixtures/user'
 
-let currentUser = { ...currUser() }
 let group
+let currentUser
 
-afterEach(() => {
+beforeEach(() => {
   currentUser = { ...currUser() }
 })
 
@@ -56,8 +56,6 @@ describe('when canEdit', () => {
   })
 
   describe('when currentUser is admin', () => {
-    beforeEach(() => { currentUser.role = 'admin' })
-
     it('should return true', () => {
       group = new Group(currentUser, 0)
 

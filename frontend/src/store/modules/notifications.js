@@ -5,7 +5,10 @@ import {
   APPROVE_NOTIFICATION_REQUEST,
   REJECT_NOTIFICATION_REQUEST
 } from '../mutation-types.js'
-import callApi from '../api-caller'
+import Repositories from '@/repository'
+
+const notificationsRepository = Repositories.get('notifications')
+const requestsRepository = Repositories.get('requests')
 
 const state = {
   pager: {},
@@ -51,11 +54,9 @@ const mutations = {
 
 const actions = {
   getHeaderNotifications({ commit }, params = {}) {
-    return callApi({
-      method: 'get',
-      url: '/notifications',
-      params: Object.assign({ per_page: 20 }, params)
-    })
+    const requestParams = Object.assign({ per_page: 20 }, params)
+
+    return notificationsRepository.getNotifications(requestParams)
       .then(response => commit(FETCH_HEADER_NOTIFICATIONS, response.data))
       .catch(error => {
         throw error
@@ -63,11 +64,9 @@ const actions = {
   },
 
   getMoreHeaderNotifications({ commit }, params = {}) {
-    return callApi({
-      method: 'get',
-      url: '/notifications',
-      params: Object.assign({ per_page: 20 }, params)
-    })
+    const requestParams = Object.assign({ per_page: 20 }, params)
+
+    return notificationsRepository.getNotifications(requestParams)
       .then(response => commit(FETCH_MORE_HEADER_NOTIFICATIONS, response.data))
       .catch(error => {
         throw error
@@ -77,7 +76,7 @@ const actions = {
   readNotifications({ commit, state }, id) {
     if (state.unreadNotificationsCount === 0) return
 
-    return callApi({ method: 'post', url: `/notifications/${id}/read` })
+    return notificationsRepository.readNotification(id)
       .then(response => {
         commit(READ_NOTIFICATIONS)
         return response
@@ -88,12 +87,9 @@ const actions = {
   },
 
   rejectNotificationRequest({ commit }, params) {
-    return callApi({
-      method: 'post',
-      url: `/requests/${params.id}/reject`,
-      data: { admin_reason: params.admin_reason },
-      headers: { 'Content-Type': 'application/json' }
-    })
+    const data = { admin_reason: params.admin_reason }
+
+    return requestsRepository.rejectRequest(params.id, { data })
       .then(response => {
         commit(REJECT_NOTIFICATION_REQUEST, params.id)
         return response
@@ -104,10 +100,7 @@ const actions = {
   },
 
   approveNotificationRequest({ commit }, notificationId) {
-    return callApi({
-      method: 'post',
-      url: `/requests/${notificationId}/approve`
-    })
+    return requestsRepository.approveRequest(notificationId)
       .then(response => {
         commit(APPROVE_NOTIFICATION_REQUEST, notificationId)
         return response

@@ -34,8 +34,8 @@
 </template>
 
 <script>
-import PIcoPrevArrow from '@/punch-ui/punch-icons/PIcoPrevArrow'
-import PIcoNextArrow from '@/punch-ui/punch-icons/PIcoNextArrow'
+const PIcoPrevArrow = () => import('@/punch-ui/punch-icons/PIcoPrevArrow')
+const PIcoNextArrow = () => import('@/punch-ui/punch-icons/PIcoNextArrow')
 
 export default {
   name: 'Pagination',

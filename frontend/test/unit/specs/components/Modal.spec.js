@@ -1,29 +1,27 @@
 import { shallowMount } from '@vue/test-utils'
-
 import wrapperOps from '../../supports/wrapper'
-
 import Modal from '@/components/Modal'
 
 const propsData = {
   title: 'Title',
-  modalOpen: false
+  modalOpen: true
 }
 const scopedSlots = {
-  default: '<p class="default-slot">Default slot</p>'
+  default: '<p class="default-slot">Modal content</p>'
 }
 const toggle = jest.spyOn(Modal.methods, 'toggle')
 
-Object.assign(wrapperOps, {
+const localWrapperOps = {
+  ...wrapperOps,
   propsData,
-  methods: { toggle },
-  scopedSlots,
-})
+  scopedSlots
+}
 
 describe('Modal.vue', () => {
   let wrapper
 
   beforeEach(() => {
-    wrapper = shallowMount(Modal, wrapperOps)
+    wrapper = shallowMount(Modal, localWrapperOps)
   })
 
   afterEach(() => { wrapper.vm.$destroy() })
@@ -32,19 +30,7 @@ describe('Modal.vue', () => {
     it('should render correctly', () => {
       expect(wrapper.exists()).toBeTruthy()
       expect(wrapper.isVueInstance()).toBeTruthy()
-    })
-
-    it('should data equal props', () => {
-      const { title, modalOpen } = wrapper.vm.$options.props
-
-      expect(wrapper.vm.titleModal).toEqual('Title')
-      expect(wrapper.vm.open).toEqual(false)
-      expect(wrapper.find('.modal').classes()).not.toContain('active')
-      expect(wrapper.find('.modal .modal-title').text()).toEqual('Title')
-    })
-
-    it('should have slot', () => {
-      expect(wrapper.find('.default-slot').exists()).toBeTruthy()
+      expect(wrapper).toMatchSnapshot()
     })
   })
 
@@ -52,31 +38,25 @@ describe('Modal.vue', () => {
     it('should change data', async () => {
       const newProps = {
         title: 'New title',
-        modalOpen: true
+        modalOpen: false
       }
-      wrapper.setProps({ title: newProps.title, modalOpen: newProps.modalOpen })
+      wrapper.setProps({
+        title: newProps.title,
+        modalOpen: newProps.modalOpen
+      })
       await wrapper.vm.$nextTick()
 
-      expect(wrapper.vm.titleModal).toEqual('New title')
-      expect(wrapper.vm.open).toEqual(true)
-      expect(wrapper.find('.modal').classes()).toContain('active')
-      expect(wrapper.find('.modal .modal-title').text()).toEqual('New title')
+      expect(wrapper).toMatchSnapshot()
     })
   })
 
   describe('when toggle method', () => {
     it('should toggle method was called', async () => {
-      const newProps = {
-        modalOpen: true
-      }
-      wrapper.setProps({ modalOpen: newProps.modalOpen })
-      await wrapper.vm.$nextTick()
       wrapper.find('.modal .modal-overlay').trigger('click')
       await wrapper.vm.$nextTick()
 
       expect(toggle).toHaveBeenCalled()
       expect(wrapper.vm.open).toEqual(false)
-      expect(wrapper.find('.modal').classes()).not.toContain('active')
       expect(wrapper.emitted('update:modalOpen')).toBeTruthy()
       expect(wrapper.emitted('update:modalOpen')[0]).toEqual([false])
     })

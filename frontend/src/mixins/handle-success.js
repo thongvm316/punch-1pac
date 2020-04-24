@@ -1,4 +1,4 @@
-import { SET_FLASH_MESSAGE } from '../store/mutation-types'
+import { SET_FLASH_MESSAGE } from '@/store/mutation-types'
 import { mapMutations } from 'vuex'
 
 export default {
@@ -8,7 +8,7 @@ export default {
     handleSuccess(data) {
       this[SET_FLASH_MESSAGE]({ message: data.message })
       data.emitType && this.$emit(data.emitType)
-      this.isDisable = false
+      // this.isDisable = false
     }
   }
 }

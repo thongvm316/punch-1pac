@@ -1,5 +1,7 @@
 import { FETCH_SESSIONS, DELETE_SESSION } from '../mutation-types'
-import callApi from '../api-caller'
+import Repositories from '@/repository'
+
+const usersRepository = Repositories.get('users')
 
 const state = {
   sessions: [],
@@ -20,10 +22,7 @@ const mutations = {
 
 const actions = {
   fetchSessions({ commit }) {
-    return callApi({
-      method: 'get',
-      url: '/sessions'
-    })
+    return usersRepository.getSessions()
       .then(response => {
         commit(FETCH_SESSIONS, response.data)
         return response
@@ -33,13 +32,10 @@ const actions = {
       })
   },
 
-  deleteSession({ commit }, data) {
-    return callApi({
-      method: 'delete',
-      url: `/sessions/${data}`
-    })
+  deleteSession({ commit }, id) {
+    return usersRepository.deleteSession(id)
       .then(response => {
-        commit(DELETE_SESSION, data)
+        commit(DELETE_SESSION, id)
         return response
       })
       .catch(error => {
