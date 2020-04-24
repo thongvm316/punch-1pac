@@ -17,7 +17,7 @@ import CompanySettingsProfile from '@/pages/CompanySettingsProfile'
 import CompanySettingsUsers from '@/pages/CompanySettingsUsers'
 import CompanySettingsBusinessDays from '@/pages/CompanySettingsBusinessDays'
 import CompanySettingsHolidays from '@/pages/CompanySettingsHolidays'
-import CompanySettingsAllowedIps from '@/pages/CompanySettingsAllowedIps'
+import CompanySettingsAllowedIp from '@/pages/CompanySettingsAllowedIp'
 
 export default {
   name: 'UserSettings',
@@ -29,7 +29,7 @@ export default {
     CompanySettingsUsers,
     CompanySettingsBusinessDays,
     CompanySettingsHolidays,
-    CompanySettingsAllowedIps
+    CompanySettingsAllowedIp
   },
 
   data() {
