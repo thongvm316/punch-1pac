@@ -1,35 +1,66 @@
 # punch.ooo
 
-## Build Setup
+## Stacks
+```
+* vue + vue-ecosystem (vuex, vue-router, vuelidate, vue-i18n)
+* axios
+* spectre css-framework
+* moment-timezone
+* jest + vue-test-utils
+* support: eslint, prettier, immutable, underscore, stylelint, husky,...
+```
 
+## Requirement
+``` bash
+Node >= 8.0.0
+yarn >= 1.17.3
+```
+
+## Prject Setup
 ``` bash
 # install dependencies
 yarn install
 
 # serve with hot reload at localhost:8080
-npm run dev
+yarn run start
 
 # build for production with minification
-npm run build
+yarn run build
 
 # build for production and view the bundle analyzer report
-npm run build --report
+yarb run build --report
 
 # run unit tests
-npm run unit
+yarn run test:unit
 
 # run e2e tests
-npm run e2e
+yarn run test:e2e
 
 # run all tests
-npm test
+yarn run test
 ```
 
-## SCSS Linter
+## Project linter
+``` bash
+# run eslint
+yarn run lint
 
+# eslint auto fix
+yarn run lint:fix
+
+# stylelint check
+yarn run stylelint-check
+
+# stylelint fix
+yarn run stylelint-fix
 ```
-gem install scss_lint
+
+## Browers support
+* Not ie 8
+* > 1%
+* last 2 versions
+
+## Git hook
 ```
-```
-gulp scss-lint
+pre-push
 ```
